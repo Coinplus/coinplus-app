@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -131,11 +134,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
     NfcManager.instance.startSession(
       onDiscovered: (tag) async {
         final ndef = Ndef.from(tag);
-        final payloadString =
-            String.fromCharCodes(ndef!.cachedMessage!.records[0].payload);
-
-        final parts = payloadString.split('air.coinplus.com/btc/');
-        final walletAddress = parts[1];
+        final records = ndef!.cachedMessage!.records;
+        dynamic payloadString;
+        for (var i = 0; i < records.length; i++) {
+          final typeString = String.fromCharCodes(records[i].type);
+          if (typeString == 'application/json') {
+            payloadString =
+                json.decode(String.fromCharCodes(records[i].payload));
+          }
+        }
+        // final parts = payloadString.split('air.coinplus.com/btc/');
+        // final walletAddress = parts[1];
+        final walletAddress = payloadString['a'];
         await NfcManager.instance.stopSession();
         await context.pushRoute(CardFillRoute(receivedData: walletAddress));
       },
