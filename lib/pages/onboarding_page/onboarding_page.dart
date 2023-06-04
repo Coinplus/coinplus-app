@@ -47,7 +47,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
             const Text(
               'Hey there,\nlet’s connect your new card',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24, fontFamily: 'RedHatSemiBold'),
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: 'RedHatSemiBold',
+                color: AppColors.primaryTextColor,
+              ),
             ),
             const Gap(39),
             ScaleTap(
@@ -74,7 +78,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       height: 60,
                       width: 60,
                       child: Lottie.asset(
-                          'assets/animated_logo/nfcanimation.json',),
+                        'assets/animated_logo/nfcanimation.json',
+                      ),
                     ),
                   ],
                 ),

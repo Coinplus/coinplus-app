@@ -30,8 +30,6 @@
 .pub-cache/
 .pub/
 .fvm/
-android/
-ios/
 /build/
 
 # Web related
