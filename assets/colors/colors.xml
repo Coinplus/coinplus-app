@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <color name="primary_text_color">#0D2449</color>
+    <color name="secondary_text_color">#29569F</color>
+    <color name="secondary_buttons">#4A83E0</color>
+    <color name="secondary_text_color">#A5A5A5</color>
+    <color name="text_hints_color">#4F6486</color>
+    <color name="important_divider_color">#F0A82F</color>
+    <color name="main_text_color">#FFFFFF</color>
+    <color name="container_border_color">#5E668A33</color>
+    <color name="background_color">#131922</color>
+    <color name="navigation_background_color">#131922</color>
+    <color name="card_color">#161E2B</color>
+    <color name="divider">#131922</color>
+    <color name="red">#E7503B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="silver">#EEEFF4</color>
+    <color name="primary_button_color">#007AFF</color>
+    <color name="primary">#0D2449</color>
+    <color name="scaffoldBackgroundColor">#FFFFFF</color>
+</resources>
