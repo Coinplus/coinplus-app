@@ -2,17 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.coinplus.app</string>
-        </array>
-        <key>CFBundleURLName</key>
-        <string>com.coinplus.app</string>
-      </dict>
-    </array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -33,6 +22,17 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.coinplus.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.coinplus.app</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -74,7 +74,7 @@
 		<string>8FC1</string>
 		<string>FE00</string>
 	</array>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<key>com.apple.developer.nfc.readersession.iso14443.select-identifiers</key>
 	<array>
 		<string>A0000002310100000000000000000000</string>
 		<string>A0000002310200000000000000000000</string>
@@ -349,5 +349,18 @@
 		<string>E828BD080F</string>
 		<string>F0000000030001</string>
 	</array>
+	<key>Privacy - NFC Scan Usage Description</key>
+    <string>This app requires NFC scanning to read ISO14443-3A tags.</string>
+    <key>com.apple.developer.nfc.readersession.iso14443.select-identifiers</key>
+    <array>
+        <dict>
+            <key>Item 0</key>
+            <string>D2760000850101</string>
+        </dict>
+    </array>
+    <key>com.apple.developer.associated-domains</key>
+      <array>
+        <string>applinks:coinplus</string>
+      </array>
 </dict>
 </plist>

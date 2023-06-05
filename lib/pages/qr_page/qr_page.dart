@@ -1,15 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart'
+    show QrScannerOverlayShape;
 
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
-import '../../router.dart';
 
-@RoutePage()
+@RoutePage<String?>()
 class QrScannerPage extends StatefulWidget {
-  const QrScannerPage({Key? key}) : super(key: key);
+  const QrScannerPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<QrScannerPage> createState() => _QrScannerPageState();
@@ -18,12 +22,15 @@ class QrScannerPage extends StatefulWidget {
 class _QrScannerPageState extends State<QrScannerPage> {
   final qrKey = GlobalKey();
 
-  QRViewController? controller;
+
   String qrText = '';
+  final _controller = MobileScannerController(
+    formats: [BarcodeFormat.qrCode],
+  );
 
   @override
   void dispose() {
-    controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -32,32 +39,40 @@ class _QrScannerPageState extends State<QrScannerPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: <Widget>[
-              Expanded(
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: _onQRViewCreated,
-                  overlay: QrScannerOverlayShape(
-                    overlayColor: AppColors.primary.withOpacity(0.9),
-                    borderColor: AppColors.primaryButtonColor,
-                    borderRadius: 12,
-                    borderLength: 20,
-                    borderWidth: 5,
-                    cutOutSize: 260,
-                    cutOutBottomOffset: 10,
-                  ),
+          Center(
+            child: MobileScanner(
+              controller: _controller,
+              placeholderBuilder: (_, widget) {
+                return const Center(
+                  child: CupertinoActivityIndicator(),
+                );
+              },
+              onDetect: (capture) {
+                final _data = capture.barcodes.map((e) => e.displayValue).first;
+                router.pop(_data);
+              },
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: ShapeDecoration(
+                shape: QrScannerOverlayShape(
+                  overlayColor: AppColors.primary.withOpacity(0.9),
+                  borderColor: AppColors.primaryButtonColor,
+                  borderRadius: 12,
+                  borderLength: 20,
+                  borderWidth: 5,
+                  cutOutSize: 260,
+                  cutOutBottomOffset: 10,
                 ),
               ),
-            ],
+            ),
           ),
           Positioned(
             top: 77,
             left: 16,
             child: ScaleTap(
-              onPressed: () => context.popRoute(
-                const OnboardingRoute(),
-              ),
+              onPressed: context.popRoute,
               child: const Icon(
                 Icons.close,
                 color: Colors.white,
@@ -96,23 +111,4 @@ class _QrScannerPageState extends State<QrScannerPage> {
     );
   }
 
-  Future<void> _onQRViewCreated(QRViewController controller) async {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setQRText(scanData.code!);
-      if (qrText.isNotEmpty) {
-        controller.pauseCamera();
-      }
-      if (qrText.isNotEmpty) {
-        controller.pauseCamera();
-        router.popAndPush(
-          CardFillRoute(receivedData: qrText),
-        );
-      }
-    });
-  }
-
-  Future<void> setQRText(String text) async {
-    qrText = text;
-  }
 }

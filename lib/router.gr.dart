@@ -44,7 +44,7 @@ abstract class $Router extends _i7.RootStackRouter {
       );
     },
     QrScannerRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<String?>(
         routeData: routeData,
         child: const _i3.QrScannerPage(),
       );
