@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -156,6 +155,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
         final walletAddress = payloadString['a'];
         await NfcManager.instance.stopSession(alertMessage: 'Complete');
         await context.pushRoute(CardFillRoute(receivedData: walletAddress));
+        // dynamic payloadString;
+        // for (var i = 0; i < records.length; i++) {
+        //   final typeString = String.fromCharCodes(records[i].type);
+        //   if (typeString == 'application/json') {
+        //     payloadString =
+        //         json.decode(String.fromCharCodes(records[i].payload));
+        //   }
+        // }
+        // // final parts = payloadString.split('air.coinplus.com/btc/');
+        // // final walletAddress = parts[1];
+        // final walletAddress = payloadString['a'];
+        // await NfcManager.instance.stopSession();
+        // await context.pushRoute(CardFillRoute(receivedData: walletAddress));
       },
     );
   }
