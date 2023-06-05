@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -12,6 +9,7 @@ import '../../custom_widgets/loading_button.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
+import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 
 @RoutePage()
@@ -23,6 +21,7 @@ class OnboardingPage extends StatefulWidget {
 }
 
 ValueNotifier<dynamic> result = ValueNotifier(null);
+TextEditingController writerController = TextEditingController();
 
 class _OnboardingPageState extends State<OnboardingPage> {
   @override
@@ -90,9 +89,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
             const Gap(137),
             LoadingButton(
-              onPressed: () => context.pushRoute(
-                const QrScannerRoute(),
-              ),
+              onPressed: () async {
+                final res = await context.pushRoute<String?>(
+                  const QrScannerRoute(),
+                );
+                if (res != null) {
+                  await router.push(
+                    CardFillRoute(receivedData: res),
+                  );
+                }
+              },
               child: const Text(
                 'Scan QR',
                 style: TextStyle(
@@ -134,20 +140,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
     NfcManager.instance.startSession(
       onDiscovered: (tag) async {
         final ndef = Ndef.from(tag);
-        final records = ndef!.cachedMessage!.records;
-        dynamic payloadString;
-        for (var i = 0; i < records.length; i++) {
-          final typeString = String.fromCharCodes(records[i].type);
-          if (typeString == 'application/json') {
-            payloadString =
-                json.decode(String.fromCharCodes(records[i].payload));
-          }
-        }
-        // final parts = payloadString.split('air.coinplus.com/btc/');
-        // final walletAddress = parts[1];
-        final walletAddress = payloadString['a'];
-        await NfcManager.instance.stopSession();
+        final payloads = ndef!.cachedMessage!.records
+            .map((e) => String.fromCharCodes(e.payload));
+        final payloadString = payloads.toString();
+        final parts = payloadString.split('air.coinplus.com/btc/');
+        final walletAddress = parts[1];
+        await NfcManager.instance.stopSession(alertMessage: 'Session closed');
         await context.pushRoute(CardFillRoute(receivedData: walletAddress));
+        // dynamic payloadString;
+        // for (var i = 0; i < records.length; i++) {
+        //   final typeString = String.fromCharCodes(records[i].type);
+        //   if (typeString == 'application/json') {
+        //     payloadString =
+        //         json.decode(String.fromCharCodes(records[i].payload));
+        //   }
+        // }
+        // // final parts = payloadString.split('air.coinplus.com/btc/');
+        // // final walletAddress = parts[1];
+        // final walletAddress = payloadString['a'];
+        // await NfcManager.instance.stopSession();
+        // await context.pushRoute(CardFillRoute(receivedData: walletAddress));
       },
     );
   }

@@ -10,6 +10,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: LexendThin
+  static const String lexendThin = 'LexendThin';
+
   /// Font family: RedHatBold
   static const String redHatBold = 'RedHatBold';
 
