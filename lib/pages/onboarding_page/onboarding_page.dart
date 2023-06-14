@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
@@ -138,28 +140,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   void _tagRead() {
     NfcManager.instance.startSession(
+      alertMessage: 'Hold your device near the Coinplus card',
       onDiscovered: (tag) async {
         final ndef = Ndef.from(tag);
-        final payloads = ndef!.cachedMessage!.records
-            .map((e) => String.fromCharCodes(e.payload));
-        final payloadString = payloads.toString();
-        final parts = payloadString.split('air.coinplus.com/btc/');
-        final walletAddress = parts[1];
-        await NfcManager.instance.stopSession(alertMessage: 'Session closed');
+        final records = ndef!.cachedMessage!.records;
+        dynamic payloadString;
+        for (var i = 0; i < records.length; i++) {
+          final typeString = String.fromCharCodes(records[i].type);
+          if (typeString == 'application/json') {
+            payloadString =
+                json.decode(String.fromCharCodes(records[i].payload));
+          }
+        }
+        final walletAddress = payloadString['a'];
+        await NfcManager.instance.stopSession(alertMessage: 'Complete');
         await context.pushRoute(CardFillRoute(receivedData: walletAddress));
-        // dynamic payloadString;
-        // for (var i = 0; i < records.length; i++) {
-        //   final typeString = String.fromCharCodes(records[i].type);
-        //   if (typeString == 'application/json') {
-        //     payloadString =
-        //         json.decode(String.fromCharCodes(records[i].payload));
-        //   }
-        // }
-        // // final parts = payloadString.split('air.coinplus.com/btc/');
-        // // final walletAddress = parts[1];
-        // final walletAddress = payloadString['a'];
-        // await NfcManager.instance.stopSession();
-        // await context.pushRoute(CardFillRoute(receivedData: walletAddress));
       },
     );
   }

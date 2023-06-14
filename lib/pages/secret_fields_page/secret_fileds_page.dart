@@ -49,7 +49,7 @@ class SecretFieldsPage extends HookWidget {
                         child: SizedBox(
                           height: 168,
                           child: Assets.images.secretfileds.image(),
-                        ).paddingHorizontal(37),
+                        ).paddingHorizontal(45),
                       ),
                       Visibility(
                         visible: _textFieldStore.isItemOneSelected,
@@ -80,7 +80,7 @@ class SecretFieldsPage extends HookWidget {
                         ),
                       ),
                       Positioned(
-                        left: 37,
+                        left: 45,
                         top: 68,
                         child: ScaleTap(
                           enableFeedback: false,
@@ -117,7 +117,7 @@ class SecretFieldsPage extends HookWidget {
                       Visibility(
                         visible: _textFieldStore.keyOne.length == 30,
                         child: Positioned(
-                          left: 37,
+                          left: 45,
                           top: 68,
                           child: Row(
                             children: [
@@ -131,7 +131,7 @@ class SecretFieldsPage extends HookWidget {
                         ),
                       ),
                       Positioned(
-                        left: 193,
+                        left: 201,
                         top: 68,
                         child: ScaleTap(
                           enableFeedback: false,
@@ -168,7 +168,7 @@ class SecretFieldsPage extends HookWidget {
                       Visibility(
                         visible: _textFieldStore.keyTwo.length == 30,
                         child: Positioned(
-                          right: 51,
+                          right: 46,
                           top: 68,
                           child: Row(
                             children: [
@@ -273,7 +273,7 @@ class SecretFieldsPage extends HookWidget {
                                     suffixIcon: ScaleTap(
                                       onPressed: () {
                                         context.pushRoute(
-                                          const SecondQrScanner(),
+                                          const QrScannerRoute(),
                                         );
                                       },
                                       child: Container(

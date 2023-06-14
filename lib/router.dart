@@ -27,10 +27,6 @@ class Router extends $Router {
     AdaptiveRoute(
       page: SecretFieldsRoute.page,
     ),
-    AdaptiveRoute(
-      page: SecondQrScanner.page,
-      fullscreenDialog: true,
-    ),
     AdaptiveRoute(page: CardFillRoute.page),
   ];
 }
