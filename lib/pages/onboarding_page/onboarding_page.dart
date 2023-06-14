@@ -155,19 +155,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
         final walletAddress = payloadString['a'];
         await NfcManager.instance.stopSession(alertMessage: 'Complete');
         await context.pushRoute(CardFillRoute(receivedData: walletAddress));
-        // dynamic payloadString;
-        // for (var i = 0; i < records.length; i++) {
-        //   final typeString = String.fromCharCodes(records[i].type);
-        //   if (typeString == 'application/json') {
-        //     payloadString =
-        //         json.decode(String.fromCharCodes(records[i].payload));
-        //   }
-        // }
-        // // final parts = payloadString.split('air.coinplus.com/btc/');
-        // // final walletAddress = parts[1];
-        // final walletAddress = payloadString['a'];
-        // await NfcManager.instance.stopSession();
-        // await context.pushRoute(CardFillRoute(receivedData: walletAddress));
       },
     );
   }
