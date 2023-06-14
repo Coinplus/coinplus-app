@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart'
     show QrScannerOverlayShape;
 
+import '../../custom_widgets/qr_alert_dialog.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
+import '../../store/qr_detect_state/qr_detect_state.dart';
 
 @RoutePage<String?>()
 class QrScannerPage extends StatefulWidget {
@@ -22,7 +25,6 @@ class QrScannerPage extends StatefulWidget {
 class _QrScannerPageState extends State<QrScannerPage> {
   final qrKey = GlobalKey();
 
-
   String qrText = '';
   final _controller = MobileScannerController(
     formats: [BarcodeFormat.qrCode],
@@ -36,6 +38,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final qrDetect = QrDetectState();
     return Scaffold(
       body: Stack(
         children: [
@@ -48,24 +51,37 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 );
               },
               onDetect: (capture) {
-                final _data = capture.barcodes.map((e) => e.displayValue).first;
-                router.pop(_data);
+                final _data =
+                    capture.barcodes.map((e) => e.displayValue).first;
+                if (_data?.length == 34) {
+                  qrDetect.startLoading();
+                    router.pop(_data);
+                } else {
+                    _controller.stop();
+                    showAlertDialog(context);
+                }
               },
             ),
           ),
           Positioned.fill(
-            child: Container(
-              decoration: ShapeDecoration(
-                shape: QrScannerOverlayShape(
-                  overlayColor: AppColors.primary.withOpacity(0.9),
-                  borderColor: AppColors.primaryButtonColor,
-                  borderRadius: 12,
-                  borderLength: 20,
-                  borderWidth: 5,
-                  cutOutSize: 260,
-                  cutOutBottomOffset: 10,
-                ),
-              ),
+            child: Observer(
+              builder: (_) {
+                return Container(
+                  decoration: ShapeDecoration(
+                    shape: QrScannerOverlayShape(
+                      overlayColor: AppColors.primary.withOpacity(0.9),
+                      borderColor: qrDetect.isDetected
+                          ? Colors.green
+                          : AppColors.primaryButtonColor,
+                      borderRadius: 12,
+                      borderLength: 20,
+                      borderWidth: 5,
+                      cutOutSize: 260,
+                      cutOutBottomOffset: 10,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Positioned(
@@ -111,4 +127,32 @@ class _QrScannerPageState extends State<QrScannerPage> {
     );
   }
 
+// Future<void> showAlertDialog(BuildContext context) async {
+//   final okButton = LoadingButton(
+//     child: const Text(
+//       'OK',
+//       style: TextStyle(fontFamily: 'RedHatMedium', fontSize: 16),
+//     ),
+//     onPressed: () {
+//       router.pushAndPopAll(const OnboardingRoute());
+//     },
+//   ).paddingHorizontal(60);
+//   final alert = AlertDialog(
+//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//     contentPadding: const EdgeInsets.all(20),
+//     content: const Text(
+//       'This is not a wallet address, please try to scan th QR on the certificate of the Bar or QR on the back of the card again',
+//       style: TextStyle(fontFamily: 'RedHatLight'),
+//     ),
+//     actions: [
+//       Center(child: okButton),
+//     ],
+//   );
+//   await showDialog(
+//     context: context,
+//     builder: (context) {
+//       return alert;
+//     },
+//   );
+// }
 }
