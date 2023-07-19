@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants/buttons/button_settings.dart';
 import '../gen/colors.gen.dart';
-import '../gen/fonts.gen.dart';
 
 extension ElevatedButtonExtensions on ThemeData {
   ButtonStyle buttonStyle({

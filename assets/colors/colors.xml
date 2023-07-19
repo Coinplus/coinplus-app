@@ -12,6 +12,7 @@
     <color name="navigation_background_color">#131922</color>
     <color name="card_color">#161E2B</color>
     <color name="divider">#131922</color>
+    <color name="divider_light">#EEEFF4</color>
     <color name="red">#E7503B</color>
     <color name="white">#FFFFFF</color>
     <color name="silver">#EEEFF4</color>

@@ -48,7 +48,7 @@ class SecretFieldsPage extends HookWidget {
                         top: 40,
                         child: SizedBox(
                           height: 168,
-                          child: Assets.images.secretfileds.image(),
+                          child: Assets.images.formfactor.image(),
                         ).paddingHorizontal(45),
                       ),
                       Visibility(

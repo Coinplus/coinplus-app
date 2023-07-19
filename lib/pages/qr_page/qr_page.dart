@@ -11,6 +11,7 @@ import '../../custom_widgets/qr_alert_dialog.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../store/validator_animation_state/validator_animation_state.dart';
 
 @RoutePage<String?>()
 class QrScannerPage extends StatefulWidget {
@@ -23,9 +24,8 @@ class QrScannerPage extends StatefulWidget {
 }
 
 class _QrScannerPageState extends State<QrScannerPage> {
-  final qrKey = GlobalKey();
+  final _validationState = ValidationState();
 
-  String qrText = '';
   final _controller = MobileScannerController(
     formats: [BarcodeFormat.qrCode],
   );
@@ -50,15 +50,17 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   child: CupertinoActivityIndicator(),
                 );
               },
-              onDetect: (capture) {
-                final _data =
-                    capture.barcodes.map((e) => e.displayValue).first;
+              onDetect: (capture) async {
+                final _data = capture.barcodes.map((e) => e.displayValue).first;
                 if (_data?.length == 34) {
                   qrDetect.startLoading();
-                    router.pop(_data);
+                  await _controller.stop();
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  _validationState.startLoading();
+                  await router.pop(_data);
                 } else {
-                    _controller.stop();
-                    showAlertDialog(context);
+                  await _controller.stop();
+                  await showAlertDialog(context);
                 }
               },
             ),
@@ -71,7 +73,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                     shape: QrScannerOverlayShape(
                       overlayColor: AppColors.primary.withOpacity(0.9),
                       borderColor: qrDetect.isDetected
-                          ? Colors.green
+                          ? Colors.lightGreenAccent
                           : AppColors.primaryButtonColor,
                       borderRadius: 12,
                       borderLength: 20,
@@ -126,33 +128,4 @@ class _QrScannerPageState extends State<QrScannerPage> {
       ),
     );
   }
-
-// Future<void> showAlertDialog(BuildContext context) async {
-//   final okButton = LoadingButton(
-//     child: const Text(
-//       'OK',
-//       style: TextStyle(fontFamily: 'RedHatMedium', fontSize: 16),
-//     ),
-//     onPressed: () {
-//       router.pushAndPopAll(const OnboardingRoute());
-//     },
-//   ).paddingHorizontal(60);
-//   final alert = AlertDialog(
-//     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//     contentPadding: const EdgeInsets.all(20),
-//     content: const Text(
-//       'This is not a wallet address, please try to scan th QR on the certificate of the Bar or QR on the back of the card again',
-//       style: TextStyle(fontFamily: 'RedHatLight'),
-//     ),
-//     actions: [
-//       Center(child: okButton),
-//     ],
-//   );
-//   await showDialog(
-//     context: context,
-//     builder: (context) {
-//       return alert;
-//     },
-//   );
-// }
 }

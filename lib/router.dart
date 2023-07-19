@@ -27,6 +27,11 @@ class Router extends $Router {
     AdaptiveRoute(
       page: SecretFieldsRoute.page,
     ),
-    AdaptiveRoute(page: CardFillRoute.page),
+    AdaptiveRoute(
+      page: CardFillRoute.page,
+    ),
+    AdaptiveRoute(
+      page: BarFillRoute.page,
+    ),
   ];
 }

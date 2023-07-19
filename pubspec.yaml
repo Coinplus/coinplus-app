@@ -26,89 +26,37 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # A powerful Http client for Dart, which supports Interceptors,
-  # Global configuration, FormData, Request Cancellation, File downloading, Timeout etc.
   dio: ^5.1.2
-
-  # NoSQL persistent embedded file system document-based database
-  # for Dart VM and Flutter with encryption support.
   sembast: ^3.4.5
-
-  # This plugin allows Flutter apps to discover network
-  # connectivity and configure themselves accordingly.
-  # It can distinguish between cellular vs WiFi connection.
-  connectivity_plus: ^4.0.1
-
-  # Simple direct Service Locator that allows to decouple the interface
-  # from a concrete implementation and to access the concrete
-  # implementation from everywhere in your App
+  #connectivity_plus: ^4.0.1
   get_it: ^7.2.0
-
-  # Classes and helper functions that support JSON code generation
-  # via the `json_serializable` package.
   json_annotation: ^4.8.0
-
-  # MobX is a library for reactively managing the state of your applications.
-  # Use the power of observables, actions, and reactions to supercharge your Dart and Flutter apps.
   mobx: ^2.2.0
-
-  # Flutter integration for MobX. It provides a set of Observer widgets
-  # that automatically rebuild when the tracked observables change.
   flutter_mobx: ^2.0.6+5
-
-  # Contains code to deal with internationalized/localized messages,
-  # date and number formatting and parsing, bi-directional text,
-  # and other internationalization issues.
   intl: ^0.18.0
-
-  # Flutter plugin for reading and writing simple key-value pairs.
-  # Wraps NSUserDefaults on iOS and SharedPreferences on Android.
-  shared_preferences: ^2.1.0
-
-  # Official extension image, support placeholder(loading)/ failed state, cache network, zoom/pan,
-  # photo view, slide out page, editor(crop,rotate,flip), painting etc.
-  extended_image: ^7.0.2
-
-  # AutoRoute is a declarative routing solution, where everything
-  # needed for navigation is automatically generated for you.
+  #shared_preferences: ^2.1.0
+  #extended_image: ^8.0.2
   auto_route: ^7.3.2
-
-  # An SVG rendering and widget library for Flutter,
-  # which allows painting and displaying Scalable Vector Graphics 1.1 files.
-  flutter_svg: ^2.0.5
-
-  # Easy and Fast internationalizing and localization your Flutter Apps,
-  # this package simplify the internationalizing process .
+  #flutter_svg: ^2.0.5
   easy_localization: ^3.0.2
-
-  # Annotations for the freezed code-generator. This package does nothing without freezed too.
-  freezed_annotation: ^2.2.0
-
-  # RxDart is an implementation of the popular reactiveX api for asynchronous programming,
-  # leveraging the native Dart Streams api.
-  rxdart: ^0.27.7
-
-  # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes.
+  #rxdart: ^0.27.7
   url_launcher: ^6.1.11
-  flutter_hooks: ^0.18.6
+  flutter_hooks: ^0.19.0
   gap: ^3.0.0
-  styled_text: ^7.0.0
-  sliver_tools: ^0.2.10
+  #styled_text: ^7.0.0
+  #sliver_tools: ^0.2.10
   flutter_scale_tap: ^1.0.5
   lottie: ^2.4.0
   qr_code_scanner: ^1.0.1
   nfc_manager: ^3.2.0
   uni_links: ^0.5.1
   mobile_scanner: ^3.2.0
+  flip_card: ^0.7.0
 
 
 
 
 
-
-
-# Dependencies that are only needed in the development phase
-# of the package itself are listed under dev_dependencies.
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
   flutter_driver:
@@ -205,6 +153,8 @@ flutter:
     - assets/images/
     - assets/colors/
     - assets/animated_logo/nfcanimation.json
+    - assets/animated_logo/qr_animation.json
+    - assets/animated_logo/address_validation_success.json
     - assets/translations/en-US.json
 
   fonts:
