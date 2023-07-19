@@ -12,11 +12,19 @@ import 'package:flutter/widgets.dart';
 class $AssetsAnimatedLogoGen {
   const $AssetsAnimatedLogoGen();
 
+  /// File path: assets/animated_logo/address_validation_success.json
+  String get addressValidationSuccess =>
+      'assets/animated_logo/address_validation_success.json';
+
   /// File path: assets/animated_logo/nfcanimation.json
   String get nfcanimation => 'assets/animated_logo/nfcanimation.json';
 
+  /// File path: assets/animated_logo/qr_animation.json
+  String get qrAnimation => 'assets/animated_logo/qr_animation.json';
+
   /// List of all assets
-  List<String> get values => [nfcanimation];
+  List<String> get values =>
+      [addressValidationSuccess, nfcanimation, qrAnimation];
 }
 
 class $AssetsColorsGen {
@@ -1509,13 +1517,53 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/cardsecretfields.png
-  AssetGenImage get cardsecretfields =>
-      const AssetGenImage('assets/images/cardsecretfields.png');
+  /// File path: assets/images/Inactive_bar.png
+  AssetGenImage get inactiveBar =>
+      const AssetGenImage('assets/images/Inactive_bar.png');
+
+  /// File path: assets/images/Manual fill.png
+  AssetGenImage get manualFill =>
+      const AssetGenImage('assets/images/Manual fill.png');
+
+  /// File path: assets/images/ViewBack.png
+  AssetGenImage get viewBack =>
+      const AssetGenImage('assets/images/ViewBack.png');
+
+  /// File path: assets/images/ViewFront.png
+  AssetGenImage get viewFront =>
+      const AssetGenImage('assets/images/ViewFront.png');
+
+  /// File path: assets/images/bar_end_view.png
+  AssetGenImage get barEndView =>
+      const AssetGenImage('assets/images/bar_end_view.png');
+
+  /// File path: assets/images/bar_form.png
+  AssetGenImage get barForm =>
+      const AssetGenImage('assets/images/bar_form.png');
+
+  /// File path: assets/images/bar_front_view.png
+  AssetGenImage get barFrontView =>
+      const AssetGenImage('assets/images/bar_front_view.png');
+
+  /// File path: assets/images/card_form.png
+  AssetGenImage get cardForm =>
+      const AssetGenImage('assets/images/card_form.png');
 
   /// File path: assets/images/coinpluslogo.png
   AssetGenImage get coinpluslogo =>
       const AssetGenImage('assets/images/coinpluslogo.png');
+
+  /// File path: assets/images/contactless.png
+  AssetGenImage get contactless =>
+      const AssetGenImage('assets/images/contactless.png');
+
+  /// File path: assets/images/form_bar_selected.png
+  AssetGenImage get formBarSelected =>
+      const AssetGenImage('assets/images/form_bar_selected.png');
+
+  /// File path: assets/images/form_card_selected.png
+  AssetGenImage get formCardSelected =>
+      const AssetGenImage('assets/images/form_card_selected.png');
 
   /// File path: assets/images/formcard.png
   AssetGenImage get formcard =>
@@ -1525,13 +1573,41 @@ class $AssetsImagesGen {
   AssetGenImage get formfactor =>
       const AssetGenImage('assets/images/formfactor.png');
 
-  /// File path: assets/images/secretfileds.png
-  AssetGenImage get secretfileds =>
-      const AssetGenImage('assets/images/secretfileds.png');
+  /// File path: assets/images/front_view.png
+  AssetGenImage get frontView =>
+      const AssetGenImage('assets/images/front_view.png');
+
+  /// File path: assets/images/inactive_card.png
+  AssetGenImage get inactiveCard =>
+      const AssetGenImage('assets/images/inactive_card.png');
+
+  /// File path: assets/images/qr_code.png
+  AssetGenImage get qrCode => const AssetGenImage('assets/images/qr_code.png');
+
+  /// File path: assets/images/stylus.png
+  AssetGenImage get stylus => const AssetGenImage('assets/images/stylus.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [cardsecretfields, coinpluslogo, formcard, formfactor, secretfileds];
+  List<AssetGenImage> get values => [
+        inactiveBar,
+        manualFill,
+        viewBack,
+        viewFront,
+        barEndView,
+        barForm,
+        barFrontView,
+        cardForm,
+        coinpluslogo,
+        contactless,
+        formBarSelected,
+        formCardSelected,
+        formcard,
+        formfactor,
+        frontView,
+        inactiveCard,
+        qrCode,
+        stylus
+      ];
 }
 
 class Assets {

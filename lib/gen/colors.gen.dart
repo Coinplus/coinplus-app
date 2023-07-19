@@ -25,6 +25,9 @@ class AppColors {
   /// Color: #131922
   static const Color divider = Color(0xFF131922);
 
+  /// Color: #EEEFF4
+  static const Color dividerLight = Color(0xFFEEEFF4);
+
   /// Color: #F0A82F
   static const Color importantDividerColor = Color(0xFFF0A82F);
 

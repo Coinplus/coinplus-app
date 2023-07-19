@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:nfc_manager/nfc_manager.dart';
 import 'constants/flavor_type.dart';
 import 'main.dart' as app;
 

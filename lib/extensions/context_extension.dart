@@ -22,61 +22,61 @@ extension BuildContextExtensions on BuildContext {
 }
 
 extension ThemeDataHelper on ThemeData {
-  TextStyle get headline1 => textTheme.headline1!;
+  TextStyle get headline1 => textTheme.displayLarge!;
 
-  TextStyle get headline2 => textTheme.headline2!;
+  TextStyle get headline2 => textTheme.displayMedium!;
 
-  TextStyle get headline3 => textTheme.headline3!;
+  TextStyle get headline3 => textTheme.displaySmall!;
 
-  TextStyle get headline4 => textTheme.headline4!;
+  TextStyle get headline4 => textTheme.headlineMedium!;
 
-  TextStyle get headline5 => textTheme.headline5!;
+  TextStyle get headline5 => textTheme.headlineSmall!;
 
-  TextStyle get headline6 => textTheme.headline6!;
+  TextStyle get headline6 => textTheme.titleLarge!;
 
-  TextStyle get subtitle1 => textTheme.subtitle1!;
+  TextStyle get subtitle1 => textTheme.titleMedium!;
 
-  TextStyle get subtitle2 => textTheme.subtitle2!;
+  TextStyle get subtitle2 => textTheme.titleSmall!;
 
-  TextStyle get subtitle3 => textTheme.subtitle2!
+  TextStyle get subtitle3 => textTheme.titleSmall!
       .copyWith(
         fontSize: 14,
         letterSpacing: -0.01,
       )
       .medium;
 
-  TextStyle get button1 => textTheme.button!;
+  TextStyle get button1 => textTheme.labelLarge!;
 
-  TextStyle get button2 => textTheme.button!.copyWith(
+  TextStyle get button2 => textTheme.labelLarge!.copyWith(
         fontSize: 16,
         height: 1.25,
       );
 
-  TextStyle get button3 => textTheme.button!.copyWith(
+  TextStyle get button3 => textTheme.labelLarge!.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 16,
         height: 1,
       );
 
-  TextStyle get button4 => textTheme.button!.copyWith(
+  TextStyle get button4 => textTheme.labelLarge!.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 14,
         height: 1,
       );
 
-  TextStyle get bodyText1 => textTheme.bodyText1!;
+  TextStyle get bodyText1 => textTheme.bodyLarge!;
 
-  TextStyle get bodyText2 => textTheme.bodyText2!;
+  TextStyle get bodyText2 => textTheme.bodyMedium!;
 
-  TextStyle get bodyText3 => textTheme.bodyText2!.bold;
+  TextStyle get bodyText3 => textTheme.bodyMedium!.bold;
 
-  TextStyle get body17 => textTheme.bodyText2!.size(17);
+  TextStyle get body17 => textTheme.bodyMedium!.size(17);
 
-  TextStyle get caption1 => textTheme.caption!;
+  TextStyle get caption1 => textTheme.bodySmall!;
 
-  TextStyle get caption2 => textTheme.caption!.bold;
+  TextStyle get caption2 => textTheme.bodySmall!.bold;
 
-  TextStyle get overline => textTheme.overline!;
+  TextStyle get overline => textTheme.labelSmall!;
 
   ButtonStyle get elevatedButtonStyle => elevatedButtonTheme.style!;
 

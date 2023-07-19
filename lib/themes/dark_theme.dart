@@ -10,13 +10,13 @@ final base = ThemeData.dark();
 const scaffoldBackgroundColor = AppColors.charcoal;
 
 final darkTheme = base.copyWith(
-  shadowColor: AppColors.yellow,
+  shadowColor: AppColors.gray,
   colorScheme: base.colorScheme.copyWith(
     primary: AppColors.charcoal,
     onPrimary: AppColors.white,
   ),
   tabBarTheme: TabBarTheme(
-    unselectedLabelStyle: base.primaryTextTheme.button!.copyWith(
+    unselectedLabelStyle: base.primaryTextTheme.labelLarge!.copyWith(
       color: AppColors.white,
     ),
     labelStyle: const TextStyle(
@@ -38,7 +38,7 @@ final darkTheme = base.copyWith(
       vertical: 5,
     ),
   ),
-  primaryColor: AppColors.yellow,
+  primaryColor: AppColors.gray,
   // shadowColor: Colors.grey[300],
   scaffoldBackgroundColor: AppColors.charcoal,
   dividerColor: AppColors.extraLightGray,
@@ -57,7 +57,7 @@ final darkTheme = base.copyWith(
     iconTheme: const IconThemeData(
       color: AppColors.white,
     ),
-    titleTextStyle: base.primaryTextTheme.headline6!.copyWith(
+    titleTextStyle: base.primaryTextTheme.titleLarge!.copyWith(
       fontFamily: FontFamily.CeraPro,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
@@ -68,28 +68,28 @@ final darkTheme = base.copyWith(
     systemOverlayStyle: SystemUiOverlayStyle.dark,
     toolbarTextStyle: base.textTheme
         .copyWith(
-          bodyText1: base.textTheme.bodyText1!.copyWith(
+          bodyLarge: base.textTheme.bodyLarge!.copyWith(
             fontFamily: FontFamily.CeraPro,
             color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
-          headline6: base.textTheme.headline6!.copyWith(
+          titleLarge: base.textTheme.titleLarge!.copyWith(
             fontFamily: FontFamily.CeraPro,
             color: AppColors.chalkboardBlack,
             fontWeight: FontWeight.bold,
           ),
-          headline3: base.textTheme.headline3!.copyWith(
+          displaySmall: base.textTheme.displaySmall!.copyWith(
             fontFamily: FontFamily.CeraPro,
             color: AppColors.white,
             fontWeight: FontWeight.bold,
           ),
-          headline4: base.textTheme.headline4!.copyWith(
+          headlineMedium: base.textTheme.headlineMedium!.copyWith(
             fontFamily: FontFamily.CeraPro,
             color: AppColors.white,
             fontWeight: FontWeight.w500,
           ),
         )
-        .bodyText2,
+        .bodyMedium,
   ),
   bottomNavigationBarTheme: base.bottomNavigationBarTheme.copyWith(
     backgroundColor: AppColors.charcoal,
@@ -125,7 +125,7 @@ final darkTheme = base.copyWith(
   ),
 
   cupertinoOverrideTheme: const CupertinoThemeData(
-    primaryColor: AppColors.yellow,
+    primaryColor: AppColors.gray,
   ),
 
   brightness: Brightness.dark,
@@ -134,7 +134,7 @@ final darkTheme = base.copyWith(
       color: AppColors.red,
       fontFamily: FontFamily.CeraPro,
     ),
-    hintStyle: base.primaryTextTheme.bodyText1!.copyWith(
+    hintStyle: base.primaryTextTheme.bodyLarge!.copyWith(
       color: AppColors.grayMedium,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -237,7 +237,7 @@ final darkTheme = base.copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: MaterialStateProperty.all(AppColors.yellow),
+      shadowColor: MaterialStateProperty.all(AppColors.gray),
       padding: MaterialStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
@@ -265,8 +265,8 @@ final darkTheme = base.copyWith(
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return states.contains(MaterialState.disabled)
-              ? AppColors.yellow.withOpacity(0.5)
-              : AppColors.yellow;
+              ? AppColors.gray.withOpacity(0.5)
+              : AppColors.gray;
         },
       ),
       overlayColor: MaterialStateProperty.all(
@@ -275,15 +275,14 @@ final darkTheme = base.copyWith(
     ),
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(style: outlineButtonStyle),
-  toggleableActiveColor: AppColors.red,
   textTheme: base.primaryTextTheme.copyWith(
-    headline1: base.primaryTextTheme.headline1!.copyWith(
+    displayLarge: base.primaryTextTheme.displayLarge!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 26,
     ),
-    headline2: base.primaryTextTheme.headline2!.copyWith(
+    displayMedium: base.primaryTextTheme.displayMedium!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
@@ -291,7 +290,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.76,
       height: 1,
     ),
-    headline3: base.primaryTextTheme.headline3!.copyWith(
+    displaySmall: base.primaryTextTheme.displaySmall!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
@@ -299,7 +298,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.56,
       height: 1,
     ),
-    headline4: base.primaryTextTheme.headline4!.copyWith(
+    headlineMedium: base.primaryTextTheme.headlineMedium!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -307,7 +306,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.52,
       height: 1,
     ),
-    headline5: base.primaryTextTheme.headline5!.copyWith(
+    headlineSmall: base.primaryTextTheme.headlineSmall!.copyWith(
       fontFamily: FontFamily.CeraPro,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
@@ -315,7 +314,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.48,
       height: 1.2,
     ),
-    headline6: base.primaryTextTheme.headline6!.copyWith(
+    titleLarge: base.primaryTextTheme.titleLarge!.copyWith(
       fontFamily: FontFamily.CeraPro,
       color: AppColors.white,
       fontWeight: FontWeight.bold,
@@ -323,7 +322,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.4,
       height: 1.1,
     ),
-    subtitle1: base.primaryTextTheme.subtitle1!.copyWith(
+    titleMedium: base.primaryTextTheme.titleMedium!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
@@ -331,7 +330,7 @@ final darkTheme = base.copyWith(
       height: 1.25,
       letterSpacing: -.32,
     ),
-    subtitle2: base.primaryTextTheme.subtitle2!.copyWith(
+    titleSmall: base.primaryTextTheme.titleSmall!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.w500,
@@ -339,7 +338,7 @@ final darkTheme = base.copyWith(
       height: 1.25,
       letterSpacing: -.32,
     ),
-    bodyText1: base.primaryTextTheme.bodyText1!.copyWith(
+    bodyLarge: base.primaryTextTheme.bodyLarge!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -347,7 +346,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.32,
       height: 1.25,
     ),
-    bodyText2: base.primaryTextTheme.bodyText2!.copyWith(
+    bodyMedium: base.primaryTextTheme.bodyMedium!.copyWith(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -355,7 +354,7 @@ final darkTheme = base.copyWith(
       letterSpacing: -.16,
       height: 1.25,
     ),
-    caption: const TextStyle(
+    bodySmall: const TextStyle(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -363,7 +362,7 @@ final darkTheme = base.copyWith(
       height: 1.1,
       letterSpacing: -.16,
     ),
-    overline: const TextStyle(
+    labelSmall: const TextStyle(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
@@ -371,12 +370,35 @@ final darkTheme = base.copyWith(
       height: 1.1,
       letterSpacing: -.1,
     ),
-    button: const TextStyle(
+    labelLarge: const TextStyle(
       color: AppColors.white,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 20,
       height: 1.1,
     ),
-  ),
+  ), checkboxTheme: CheckboxThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return AppColors.red; }
+ return null;
+ }),
+ ), radioTheme: RadioThemeData(
+ fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return AppColors.red; }
+ return null;
+ }),
+ ), switchTheme: SwitchThemeData(
+ thumbColor: MaterialStateProperty.resolveWith<Color?>((states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return AppColors.red; }
+ return null;
+ }),
+ trackColor: MaterialStateProperty.resolveWith<Color?>((states) {
+ if (states.contains(MaterialState.disabled)) { return null; }
+ if (states.contains(MaterialState.selected)) { return AppColors.red; }
+ return null;
+ }),
+ ),
 );
