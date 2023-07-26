@@ -1517,6 +1517,14 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Form bar.png
+  AssetGenImage get formBar =>
+      const AssetGenImage('assets/images/Form bar.png');
+
+  /// File path: assets/images/Form card.png
+  AssetGenImage get formCard =>
+      const AssetGenImage('assets/images/Form card.png');
+
   /// File path: assets/images/Inactive_bar.png
   AssetGenImage get inactiveBar =>
       const AssetGenImage('assets/images/Inactive_bar.png');
@@ -1524,14 +1532,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Manual fill.png
   AssetGenImage get manualFill =>
       const AssetGenImage('assets/images/Manual fill.png');
-
-  /// File path: assets/images/ViewBack.png
-  AssetGenImage get viewBack =>
-      const AssetGenImage('assets/images/ViewBack.png');
-
-  /// File path: assets/images/ViewFront.png
-  AssetGenImage get viewFront =>
-      const AssetGenImage('assets/images/ViewFront.png');
 
   /// File path: assets/images/bar_end_view.png
   AssetGenImage get barEndView =>
@@ -1587,12 +1587,20 @@ class $AssetsImagesGen {
   /// File path: assets/images/stylus.png
   AssetGenImage get stylus => const AssetGenImage('assets/images/stylus.png');
 
+  /// File path: assets/images/view_back.png
+  AssetGenImage get viewBack =>
+      const AssetGenImage('assets/images/view_back.png');
+
+  /// File path: assets/images/view_front.png
+  AssetGenImage get viewFront =>
+      const AssetGenImage('assets/images/view_front.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
+        formBar,
+        formCard,
         inactiveBar,
         manualFill,
-        viewBack,
-        viewFront,
         barEndView,
         barForm,
         barFrontView,
@@ -1606,7 +1614,9 @@ class $AssetsImagesGen {
         frontView,
         inactiveCard,
         qrCode,
-        stylus
+        stylus,
+        viewBack,
+        viewFront
       ];
 }
 

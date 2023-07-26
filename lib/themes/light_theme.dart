@@ -50,7 +50,6 @@ final lightTheme = base.copyWith(
   primaryIconTheme: base.primaryIconTheme.copyWith(color: AppColors.charcoal),
   iconTheme: base.iconTheme.copyWith(color: AppColors.charcoal),
   appBarTheme: base.appBarTheme.copyWith(
-    color: AppColors.white,
     centerTitle: true,
     elevation: 0,
     iconTheme: const IconThemeData(
@@ -123,6 +122,7 @@ final lightTheme = base.copyWith(
     selectionHandleColor: AppColors.yellow,
   ),
   cupertinoOverrideTheme: const CupertinoThemeData(
+
     primaryColor: AppColors.yellow,
   ),
   brightness: Brightness.light,
