@@ -9,29 +9,36 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:flutter/cupertino.dart' as _i9;
 import 'package:flutter/material.dart' as _i8;
 import 'package:flutter_boilerplate/pages/bar_fill_page/bar_fill_page.dart'
-    as _i6;
-import 'package:flutter_boilerplate/pages/card_fill_page/card_fill_page.dart'
-    as _i4;
-import 'package:flutter_boilerplate/pages/onboarding_page/onboarding_page.dart'
-    as _i5;
-import 'package:flutter_boilerplate/pages/qr_page/qr_page.dart' as _i2;
-import 'package:flutter_boilerplate/pages/secret_fields_page/secret_fileds_page.dart'
     as _i1;
+import 'package:flutter_boilerplate/pages/card_fill_page/card_fill_page.dart'
+    as _i5;
+import 'package:flutter_boilerplate/pages/onboarding_page/onboarding_page.dart'
+    as _i6;
+import 'package:flutter_boilerplate/pages/qr_page/qr_page.dart' as _i3;
+import 'package:flutter_boilerplate/pages/secret_fields_page/secret_fileds_page.dart'
+    as _i2;
 import 'package:flutter_boilerplate/pages/splash_screen/splash_screen.dart'
-    as _i3;
+    as _i4;
 
 abstract class $Router extends _i7.RootStackRouter {
   $Router({super.navigatorKey});
 
   @override
   final Map<String, _i7.PageFactory> pagesMap = {
+    BarFillRoute.name: (routeData) {
+      return _i7.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i1.BarFillPage(),
+      );
+    },
     SecretFieldsRoute.name: (routeData) {
       final args = routeData.argsAs<SecretFieldsRouteArgs>();
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.SecretFieldsPage(
+        child: _i2.SecretFieldsPage(
           key: args.key,
           qrData: args.qrData,
         ),
@@ -40,20 +47,20 @@ abstract class $Router extends _i7.RootStackRouter {
     QrScannerRoute.name: (routeData) {
       return _i7.AutoRoutePage<String?>(
         routeData: routeData,
-        child: const _i2.QrScannerPage(),
+        child: const _i3.QrScannerPage(),
       );
     },
     SplashScreenRoute.name: (routeData) {
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.SplashScreenPage(),
+        child: const _i4.SplashScreenPage(),
       );
     },
     CardFillRoute.name: (routeData) {
       final args = routeData.argsAs<CardFillRouteArgs>();
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.CardFillPage(
+        child: _i5.CardFillPage(
           key: args.key,
           receivedData: args.receivedData,
         ),
@@ -62,20 +69,28 @@ abstract class $Router extends _i7.RootStackRouter {
     OnboardingRoute.name: (routeData) {
       return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.OnboardingPage(),
-      );
-    },
-    BarFillRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.BarFillPage(),
+        child: const _i6.OnboardingPage(),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.SecretFieldsPage]
+/// [_i1.BarFillPage]
+class BarFillRoute extends _i7.PageRouteInfo<void> {
+  const BarFillRoute({List<_i7.PageRouteInfo>? children})
+      : super(
+          BarFillRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BarFillRoute';
+
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i2.SecretFieldsPage]
 class SecretFieldsRoute extends _i7.PageRouteInfo<SecretFieldsRouteArgs> {
   SecretFieldsRoute({
     _i8.Key? key,
@@ -113,7 +128,7 @@ class SecretFieldsRouteArgs {
 }
 
 /// generated route for
-/// [_i2.QrScannerPage]
+/// [_i3.QrScannerPage]
 class QrScannerRoute extends _i7.PageRouteInfo<void> {
   const QrScannerRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -127,7 +142,7 @@ class QrScannerRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.SplashScreenPage]
+/// [_i4.SplashScreenPage]
 class SplashScreenRoute extends _i7.PageRouteInfo<void> {
   const SplashScreenRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -141,10 +156,10 @@ class SplashScreenRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.CardFillPage]
+/// [_i5.CardFillPage]
 class CardFillRoute extends _i7.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
-    _i8.Key? key,
+    _i9.Key? key,
     required String receivedData,
     List<_i7.PageRouteInfo>? children,
   }) : super(
@@ -168,7 +183,7 @@ class CardFillRouteArgs {
     required this.receivedData,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final String receivedData;
 
@@ -179,7 +194,7 @@ class CardFillRouteArgs {
 }
 
 /// generated route for
-/// [_i5.OnboardingPage]
+/// [_i6.OnboardingPage]
 class OnboardingRoute extends _i7.PageRouteInfo<void> {
   const OnboardingRoute({List<_i7.PageRouteInfo>? children})
       : super(
@@ -188,20 +203,6 @@ class OnboardingRoute extends _i7.PageRouteInfo<void> {
         );
 
   static const String name = 'OnboardingRoute';
-
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i6.BarFillPage]
-class BarFillRoute extends _i7.PageRouteInfo<void> {
-  const BarFillRoute({List<_i7.PageRouteInfo>? children})
-      : super(
-          BarFillRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'BarFillRoute';
 
   static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }

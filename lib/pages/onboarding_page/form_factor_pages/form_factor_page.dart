@@ -23,7 +23,7 @@ class _FormFactorPageState extends State<FormFactorPage>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1000),
+    duration: const Duration(milliseconds: 400),
   );
   late final Animation<Offset> _cardAnimation =
       Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.44, 0))
@@ -42,7 +42,7 @@ class _FormFactorPageState extends State<FormFactorPage>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Gap(32),
+        const Gap(22),
         const Text(
           'Please select a wallet form: card or bar?',
           style: TextStyle(
@@ -66,7 +66,9 @@ class _FormFactorPageState extends State<FormFactorPage>
                         onTap: () async {
                           _formFactorState.cardSelection();
                           await _controller.forward();
-                          await Future.delayed(const Duration(milliseconds: 100));
+                          await Future.delayed(
+                            const Duration(milliseconds: 100),
+                          );
                           await router.pop(context);
                           await router.push(CardFillRoute(receivedData: ''));
                         },
@@ -109,7 +111,9 @@ class _FormFactorPageState extends State<FormFactorPage>
                         onTap: () async {
                           _formFactorState.barSelection();
                           await _controller.forward();
-                          await Future.delayed(const Duration(milliseconds: 100));
+                          await Future.delayed(
+                            const Duration(milliseconds: 100),
+                          );
                           await router.pop(context);
                           await router.push(const BarFillRoute());
                         },

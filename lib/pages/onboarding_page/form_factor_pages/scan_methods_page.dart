@@ -11,6 +11,7 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../store/balance_store/balance_store.dart';
 
 class ScanMethodsPage extends StatelessWidget {
   const ScanMethodsPage({super.key, required this.controller});
@@ -19,6 +20,7 @@ class ScanMethodsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _balanceState = BalanceStore();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -26,7 +28,6 @@ class ScanMethodsPage extends StatelessWidget {
           enableFeedback: false,
           onPressed: () {
             router.pop(context);
-
             NfcManager.instance.startSession(
               alertMessage:
                   'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
@@ -43,17 +44,20 @@ class ScanMethodsPage extends StatelessWidget {
                     walletAddress = payloadString['a'];
                   }
                   // else if (typeString == 'U') {
-                  //   payloadString = await json.decode(String.fromCharCodes(records[0].payload));
+                  //   payloadString = await json
+                  //       .decode(String.fromCharCodes(records[0].payload));
                   //   final parts = payloadString.split('air.coinplus.com/btc/');
                   //   walletAddress = parts[1];
                   // }
                 }
-
                 await NfcManager.instance.stopSession(alertMessage: 'Complete');
                 await Future.delayed(const Duration(milliseconds: 2000));
+
                 await router.push(
                   CardFillRoute(receivedData: walletAddress.toString()),
+
                 );
+                walletAddress = _balanceState.address;
               },
             );
           },
