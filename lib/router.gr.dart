@@ -8,68 +8,70 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/cupertino.dart' as _i9;
-import 'package:flutter/material.dart' as _i8;
 import 'package:flutter_boilerplate/pages/bar_fill_page/bar_fill_page.dart'
     as _i1;
 import 'package:flutter_boilerplate/pages/card_fill_page/card_fill_page.dart'
-    as _i5;
-import 'package:flutter_boilerplate/pages/onboarding_page/onboarding_page.dart'
     as _i6;
+import 'package:flutter_boilerplate/pages/onboarding_page/onboarding_page.dart'
+    as _i7;
 import 'package:flutter_boilerplate/pages/qr_page/qr_page.dart' as _i3;
-import 'package:flutter_boilerplate/pages/secret_fields_page/secret_fileds_page.dart'
-    as _i2;
 import 'package:flutter_boilerplate/pages/splash_screen/splash_screen.dart'
-    as _i4;
+    as _i5;
+import 'package:flutter_boilerplate/pages/wallet_page/wallet_page.dart' as _i4;
+import 'package:flutter_boilerplate/pages/wallet_protection_page/wallet_protection_page.dart'
+    as _i2;
 
-abstract class $Router extends _i7.RootStackRouter {
+abstract class $Router extends _i8.RootStackRouter {
   $Router({super.navigatorKey});
 
   @override
-  final Map<String, _i7.PageFactory> pagesMap = {
+  final Map<String, _i8.PageFactory> pagesMap = {
     BarFillRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
+      return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.BarFillPage(),
       );
     },
-    SecretFieldsRoute.name: (routeData) {
-      final args = routeData.argsAs<SecretFieldsRouteArgs>();
-      return _i7.AutoRoutePage<dynamic>(
+    WalletProtectionRoute.name: (routeData) {
+      return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.SecretFieldsPage(
-          key: args.key,
-          qrData: args.qrData,
-        ),
+        child: const _i2.WalletProtectionPage(),
       );
     },
     QrScannerRoute.name: (routeData) {
-      return _i7.AutoRoutePage<String?>(
+      return _i8.AutoRoutePage<String?>(
         routeData: routeData,
         child: const _i3.QrScannerPage(),
       );
     },
-    SplashScreenRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
+    WalletRoute.name: (routeData) {
+      return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.SplashScreenPage(),
+        child: const _i4.WalletPage(),
+      );
+    },
+    SplashScreenRoute.name: (routeData) {
+      return _i8.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.SplashScreenPage(),
       );
     },
     CardFillRoute.name: (routeData) {
       final args = routeData.argsAs<CardFillRouteArgs>();
-      return _i7.AutoRoutePage<dynamic>(
+      return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.CardFillPage(
+        child: _i6.CardFillPage(
           key: args.key,
           receivedData: args.receivedData,
         ),
       );
     },
     OnboardingRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
+      return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.OnboardingPage(),
+        child: const _i7.OnboardingPage(),
       );
     },
   };
@@ -77,8 +79,8 @@ abstract class $Router extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.BarFillPage]
-class BarFillRoute extends _i7.PageRouteInfo<void> {
-  const BarFillRoute({List<_i7.PageRouteInfo>? children})
+class BarFillRoute extends _i8.PageRouteInfo<void> {
+  const BarFillRoute({List<_i8.PageRouteInfo>? children})
       : super(
           BarFillRoute.name,
           initialChildren: children,
@@ -86,51 +88,27 @@ class BarFillRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'BarFillRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.SecretFieldsPage]
-class SecretFieldsRoute extends _i7.PageRouteInfo<SecretFieldsRouteArgs> {
-  SecretFieldsRoute({
-    _i8.Key? key,
-    required String qrData,
-    List<_i7.PageRouteInfo>? children,
-  }) : super(
-          SecretFieldsRoute.name,
-          args: SecretFieldsRouteArgs(
-            key: key,
-            qrData: qrData,
-          ),
+/// [_i2.WalletProtectionPage]
+class WalletProtectionRoute extends _i8.PageRouteInfo<void> {
+  const WalletProtectionRoute({List<_i8.PageRouteInfo>? children})
+      : super(
+          WalletProtectionRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SecretFieldsRoute';
+  static const String name = 'WalletProtectionRoute';
 
-  static const _i7.PageInfo<SecretFieldsRouteArgs> page =
-      _i7.PageInfo<SecretFieldsRouteArgs>(name);
-}
-
-class SecretFieldsRouteArgs {
-  const SecretFieldsRouteArgs({
-    this.key,
-    required this.qrData,
-  });
-
-  final _i8.Key? key;
-
-  final String qrData;
-
-  @override
-  String toString() {
-    return 'SecretFieldsRouteArgs{key: $key, qrData: $qrData}';
-  }
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.QrScannerPage]
-class QrScannerRoute extends _i7.PageRouteInfo<void> {
-  const QrScannerRoute({List<_i7.PageRouteInfo>? children})
+class QrScannerRoute extends _i8.PageRouteInfo<void> {
+  const QrScannerRoute({List<_i8.PageRouteInfo>? children})
       : super(
           QrScannerRoute.name,
           initialChildren: children,
@@ -138,13 +116,27 @@ class QrScannerRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'QrScannerRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.SplashScreenPage]
-class SplashScreenRoute extends _i7.PageRouteInfo<void> {
-  const SplashScreenRoute({List<_i7.PageRouteInfo>? children})
+/// [_i4.WalletPage]
+class WalletRoute extends _i8.PageRouteInfo<void> {
+  const WalletRoute({List<_i8.PageRouteInfo>? children})
+      : super(
+          WalletRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WalletRoute';
+
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.SplashScreenPage]
+class SplashScreenRoute extends _i8.PageRouteInfo<void> {
+  const SplashScreenRoute({List<_i8.PageRouteInfo>? children})
       : super(
           SplashScreenRoute.name,
           initialChildren: children,
@@ -152,16 +144,16 @@ class SplashScreenRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'SplashScreenRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.CardFillPage]
-class CardFillRoute extends _i7.PageRouteInfo<CardFillRouteArgs> {
+/// [_i6.CardFillPage]
+class CardFillRoute extends _i8.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
     _i9.Key? key,
     required String receivedData,
-    List<_i7.PageRouteInfo>? children,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
           CardFillRoute.name,
           args: CardFillRouteArgs(
@@ -173,8 +165,8 @@ class CardFillRoute extends _i7.PageRouteInfo<CardFillRouteArgs> {
 
   static const String name = 'CardFillRoute';
 
-  static const _i7.PageInfo<CardFillRouteArgs> page =
-      _i7.PageInfo<CardFillRouteArgs>(name);
+  static const _i8.PageInfo<CardFillRouteArgs> page =
+      _i8.PageInfo<CardFillRouteArgs>(name);
 }
 
 class CardFillRouteArgs {
@@ -194,9 +186,9 @@ class CardFillRouteArgs {
 }
 
 /// generated route for
-/// [_i6.OnboardingPage]
-class OnboardingRoute extends _i7.PageRouteInfo<void> {
-  const OnboardingRoute({List<_i7.PageRouteInfo>? children})
+/// [_i7.OnboardingPage]
+class OnboardingRoute extends _i8.PageRouteInfo<void> {
+  const OnboardingRoute({List<_i8.PageRouteInfo>? children})
       : super(
           OnboardingRoute.name,
           initialChildren: children,
@@ -204,5 +196,5 @@ class OnboardingRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'OnboardingRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }

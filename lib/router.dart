@@ -24,14 +24,19 @@ class Router extends $Router {
       page: QrScannerRoute.page,
       fullscreenDialog: true,
     ),
+
     AdaptiveRoute(
-      page: SecretFieldsRoute.page,
+      page: BarFillRoute.page,
     ),
     AdaptiveRoute(
       page: CardFillRoute.page,
     ),
     AdaptiveRoute(
-      page: BarFillRoute.page,
+      page: WalletProtectionRoute.page,
+    ),
+    AdaptiveRoute(
+      page: WalletRoute.page,
+      fullscreenDialog: true,
     ),
   ];
 }
