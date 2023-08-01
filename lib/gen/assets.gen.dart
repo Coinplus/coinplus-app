@@ -40,8 +40,15 @@ class $AssetsColorsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/BTC_icon.png
+  AssetGenImage get bTCIcon => const AssetGenImage('assets/icons/BTC_icon.png');
+
   /// File path: assets/icons/Buttons.png
   AssetGenImage get buttons => const AssetGenImage('assets/icons/Buttons.png');
+
+  /// File path: assets/icons/Face ID Success.png
+  AssetGenImage get faceIDSuccess =>
+      const AssetGenImage('assets/icons/Face ID Success.png');
 
   /// File path: assets/icons/NFCLogo.png
   AssetGenImage get nFCLogo => const AssetGenImage('assets/icons/NFCLogo.png');
@@ -353,6 +360,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/coffee_tea_cup_alt.png
   AssetGenImage get coffeeTeaCupAlt =>
       const AssetGenImage('assets/icons/coffee_tea_cup_alt.png');
+
+  /// File path: assets/icons/coinplus_vector.png
+  AssetGenImage get coinplusVector =>
+      const AssetGenImage('assets/icons/coinplus_vector.png');
 
   /// File path: assets/icons/comment_chat_message.png
   AssetGenImage get commentChatMessage =>
@@ -1208,7 +1219,9 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        bTCIcon,
         buttons,
+        faceIDSuccess,
         nFCLogo,
         qrbutton,
         accessibilityHandicapDisabilityHandicapWheelchair,
@@ -1289,6 +1302,7 @@ class $AssetsIconsGen {
         codeTechDev,
         coffeeTeaCup,
         coffeeTeaCupAlt,
+        coinplusVector,
         commentChatMessage,
         commentChatMessageAlt,
         commentCircleAltChatMessage,
@@ -1517,6 +1531,14 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Add_Card.png
+  AssetGenImage get addCard =>
+      const AssetGenImage('assets/images/Add_Card.png');
+
+  /// File path: assets/images/Brown_Card.png
+  AssetGenImage get brownCard =>
+      const AssetGenImage('assets/images/Brown_Card.png');
+
   /// File path: assets/images/Form bar.png
   AssetGenImage get formBar =>
       const AssetGenImage('assets/images/Form bar.png');
@@ -1532,6 +1554,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/Manual fill.png
   AssetGenImage get manualFill =>
       const AssetGenImage('assets/images/Manual fill.png');
+
+  /// File path: assets/images/Orange_card.png
+  AssetGenImage get orangeCard =>
+      const AssetGenImage('assets/images/Orange_card.png');
+
+  /// File path: assets/images/Subtract.png
+  AssetGenImage get subtract =>
+      const AssetGenImage('assets/images/Subtract.png');
+
+  /// File path: assets/images/White_Card.png
+  AssetGenImage get whiteCard =>
+      const AssetGenImage('assets/images/White_Card.png');
 
   /// File path: assets/images/bar_end_view.png
   AssetGenImage get barEndView =>
@@ -1595,12 +1629,21 @@ class $AssetsImagesGen {
   AssetGenImage get viewFront =>
       const AssetGenImage('assets/images/view_front.png');
 
+  /// File path: assets/images/wallet_protect_image.png
+  AssetGenImage get walletProtectImage =>
+      const AssetGenImage('assets/images/wallet_protect_image.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
+        addCard,
+        brownCard,
         formBar,
         formCard,
         inactiveBar,
         manualFill,
+        orangeCard,
+        subtract,
+        whiteCard,
         barEndView,
         barForm,
         barFrontView,
@@ -1616,7 +1659,8 @@ class $AssetsImagesGen {
         qrCode,
         stylus,
         viewBack,
-        viewFront
+        viewFront,
+        walletProtectImage
       ];
 }
 

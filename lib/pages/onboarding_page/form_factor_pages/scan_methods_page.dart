@@ -34,29 +34,27 @@ class ScanMethodsPage extends StatelessWidget {
               onDiscovered: (tag) async {
                 final ndef = Ndef.from(tag);
                 final records = ndef!.cachedMessage!.records;
-                dynamic payloadString;
                 dynamic walletAddress;
-                for (var i = 0; i < records.length; i++) {
-                  final typeString = String.fromCharCodes(records[i].type);
-                  if (typeString == 'application/json') {
-                    payloadString = await json
-                        .decode(String.fromCharCodes(records[i].payload));
-                    walletAddress = payloadString['a'];
-                  }
-                  // else if (typeString == 'U') {
-                  //   payloadString = await json
-                  //       .decode(String.fromCharCodes(records[0].payload));
-                  //   final parts = payloadString.split('air.coinplus.com/btc/');
-                  //   walletAddress = parts[1];
-                  // }
+
+                if (records.length >= 2) {
+                  final hasJson = records[1].payload;
+                  final payloadString = String.fromCharCodes(hasJson);
+                  final Map payloadData = await json.decode(payloadString);
+                  walletAddress = payloadData['a'];
+                } else {
+                  final hasUrl = records[0].payload;
+                  final payloadString = String.fromCharCodes(hasUrl);
+                  final parts = payloadString.split('air.coinplus.com/btc/');
+                  walletAddress = parts[1];
                 }
+
                 await NfcManager.instance.stopSession(alertMessage: 'Complete');
                 await Future.delayed(const Duration(milliseconds: 2000));
 
                 await router.push(
                   CardFillRoute(receivedData: walletAddress.toString()),
-
                 );
+
                 walletAddress = _balanceState.address;
               },
             );

@@ -1,32 +1,36 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:blur_container/blur_container.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../custom_widgets/loading_button.dart';
-import '../../extensions/extensions.dart';
+import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/card_model/card_model.dart';
+import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/validator_animation_state/validator_animation_state.dart';
-import 'show_skip_alert.dart';
+import 'skip_button_alert/skip_button_alert.dart';
 
 @RoutePage()
 class CardFillPage extends StatefulWidget {
-  const CardFillPage({
-    Key? key,
-    required this.receivedData,
-  }) : super(key: key);
+  const CardFillPage({super.key, required this.receivedData});
+
   final String receivedData;
 
   @override
@@ -35,29 +39,29 @@ class CardFillPage extends StatefulWidget {
 
 class _CardFillPageState extends State<CardFillPage>
     with TickerProviderStateMixin {
-  late GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
-  late AnimationController _lottieController;
-  late AnimationController _textFieldAnimationController;
-
   late TextEditingController _textController = TextEditingController();
-  final _validationState = ValidationState();
-  final _cardAnimationState = CardAnimationState();
+  late AnimationController _textFieldAnimationController;
+  final _cardAnimationStore = CardAnimationState();
+  final _flipCardController = FlipCardController();
+  late AnimationController _lottieController;
+  final _validationStore = ValidationState();
+  final _addressState = AddressState();
   final _balanceStore = BalanceStore();
   final _focusNode = FocusNode();
-  final balanceStore = BalanceStore();
-  final _addressState = AddressState();
+
 
   @override
   void initState() {
     super.initState();
-    toggleCard();
+    _toggleCard();
     _toggleWidgets();
+    _flipCardController.toggleCard();
     _focusNode.addListener(() {
       _focusNode.hasFocus
           ? _textFieldAnimationController.forward()
           : _textFieldAnimationController.animateBack(0);
     });
-    Future.delayed(const Duration(milliseconds: 1000), _focusNode.requestFocus);
+
     _textController = TextEditingController();
     _textController.text = widget.receivedData;
     _lottieController = AnimationController(
@@ -66,9 +70,9 @@ class _CardFillPageState extends State<CardFillPage>
     );
     _textFieldAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 400),
       lowerBound: 1,
-      upperBound: 1.4,
+      upperBound: 1.3,
     );
   }
 
@@ -82,19 +86,25 @@ class _CardFillPageState extends State<CardFillPage>
 
   @override
   void dispose() {
+    _focusNode.dispose();
+    _textController.dispose();
     _lottieController.dispose();
-    toggleCard();
+    _textFieldAnimationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _addressState.isAddressVisible ? log('visible') : Container();
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+        ),
         elevation: 0,
+        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         title: const Row(
           children: [
@@ -109,62 +119,57 @@ class _CardFillPageState extends State<CardFillPage>
         ),
       ),
       body: Stack(
-        fit: StackFit.expand,
         children: [
-          ListView(
-            shrinkWrap: true,
-            children: [
-              const Gap(50),
-              Observer(
-                builder: (context) {
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 400),
-                    child: _cardAnimationState.showFirstWidget
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: Assets.images.inactiveCard.image(
-                              height: 355,
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              FlipCard(
-                                flipOnTouch: false,
-                                key: cardKey,
-                                fill: Fill.fillBack,
-                                front: Stack(
+          Positioned(
+            top: 15,
+            left: MediaQuery.of(context).size.width * 0.15,
+            right: MediaQuery.of(context).size.width * 0.15,
+            child: SizedBox(
+              height: 1000,
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  FlipCard(
+                    flipOnTouch: false,
+                    controller: _flipCardController,
+                    front: Observer(
+                      builder: (context) {
+                        return AnimatedSwitcher(
+                          switchInCurve: Curves.slowMiddle,
+                          duration: const Duration(milliseconds: 300),
+                          child: _cardAnimationStore.showFirstWidget
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: Assets.images.inactiveCard.image(),
+                                )
+                              : Stack(
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(14),
-                                      child: Assets.images.viewFront.image(
-                                        height: 355,
-                                      ),
+                                      child: Assets.images.viewFront.image(),
                                     ),
                                     if (_addressState.isAddressVisible)
                                       Positioned(
-                                        top: 212,
+                                        top: 255,
                                         left: 10,
                                         right: 10,
-                                        child: BlurryContainer(
+                                        child: BlurContainerWidget(
+                                          height: 40,
                                           padding: const EdgeInsets.all(4),
                                           borderRadius:
                                               BorderRadius.circular(6),
-                                          height: 40,
-                                          width: 176,
                                           color: Colors.black.withOpacity(0.3),
                                           child: Column(
                                             children: [
                                               const Row(
                                                 children: [
-                                                  DefaultTextStyle(
+                                                  Text(
+                                                    'Address',
                                                     style: TextStyle(
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                       fontFamily: FontFamily
                                                           .redHatMedium,
                                                       color: Colors.white,
-                                                    ),
-                                                    child: Text(
-                                                      'Address',
                                                     ),
                                                   ),
                                                 ],
@@ -188,17 +193,17 @@ class _CardFillPageState extends State<CardFillPage>
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             color: Colors.white,
-                                                            fontSize: 10,
+                                                            fontSize: 11,
                                                           ),
                                                         );
-                                                      } else if (snapshot
-                                                          .hasError) {
-                                                        return const Text(
-                                                          'Error',
-                                                        );
                                                       } else {
-                                                        return const CupertinoActivityIndicator(
-                                                          radius: 5,
+                                                        return const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(4),
+                                                          child:
+                                                              CupertinoActivityIndicator(
+                                                            radius: 5,
+                                                          ),
                                                         );
                                                       }
                                                     },
@@ -210,16 +215,15 @@ class _CardFillPageState extends State<CardFillPage>
                                         ),
                                       )
                                     else
-                                      Container(),
+                                      const SizedBox(),
                                     if (_addressState.isAddressVisible)
                                       Positioned(
-                                        top: 260,
+                                        top: 300,
                                         left: 10,
                                         right: 10,
-                                        child: BlurryContainer(
-                                          padding: const EdgeInsets.all(4),
-                                          height: 44,
-                                          width: 176,
+                                        child: BlurContainerWidget(
+                                          height: 55,
+                                          padding: const EdgeInsets.all(5),
                                           borderRadius:
                                               BorderRadius.circular(6),
                                           color: Colors.black.withOpacity(0.3),
@@ -227,14 +231,14 @@ class _CardFillPageState extends State<CardFillPage>
                                             children: [
                                               const Row(
                                                 children: [
-                                                  DefaultTextStyle(
+                                                  Text(
+                                                    'Balance',
                                                     style: TextStyle(
                                                       fontFamily: FontFamily
                                                           .redHatMedium,
                                                       color: Colors.white,
-                                                      fontSize: 10,
+                                                      fontSize: 11,
                                                     ),
-                                                    child: Text('Balance'),
                                                   ),
                                                 ],
                                               ),
@@ -245,6 +249,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         .fetchCardInfo(),
                                                     builder:
                                                         (context, snapshot) {
+                                                      log('future_builder');
                                                       final data = snapshot
                                                           .data?.balance;
                                                       if (snapshot.hasData) {
@@ -257,17 +262,17 @@ class _CardFillPageState extends State<CardFillPage>
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             color: Colors.white,
-                                                            fontSize: 18,
+                                                            fontSize: 20,
                                                           ),
                                                         );
-                                                      } else if (snapshot
-                                                          .hasError) {
-                                                        return const Text(
-                                                          'Error',
-                                                        );
                                                       } else {
-                                                        return const CupertinoActivityIndicator(
-                                                          radius: 5,
+                                                        return const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(4),
+                                                          child:
+                                                              CupertinoActivityIndicator(
+                                                            radius: 5,
+                                                          ),
                                                         );
                                                       }
                                                     },
@@ -279,311 +284,229 @@ class _CardFillPageState extends State<CardFillPage>
                                         ),
                                       )
                                     else
-                                      Container(),
+                                      const SizedBox(),
                                   ],
                                 ),
-                                back: LayoutBuilder(
-                                  builder: (context, constraint) {
-                                    return Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          child: Assets.images.viewBack.image(),
+                        );
+                      },
+                    ),
+                    back: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: Assets.images.viewBack.image(),
+                        ),
+                        Positioned(
+                          top: MediaQuery.of(context).size.width * 0.646,
+                          left: 0,
+                          right: 0,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.141,
+                            ),
+                            child: ScaleTransition(
+                              scale: _textFieldAnimationController,
+                              child: TextField(
+                                controller: _textController,
+                                maxLines: 2,
+                                focusNode: _focusNode,
+                                cursorColor: AppColors.primaryButtonColor,
+                                cursorWidth: 1,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: FontFamily.redHatMedium,
+                                ),
+                                onTapOutside: (_) {
+                                  WidgetsBinding
+                                      .instance.focusManager.primaryFocus
+                                      ?.unfocus();
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Write here your card address ',
+                                  hintMaxLines: 2,
+                                  hintStyle: TextStyle(
+                                    fontFamily: FontFamily.redHatLight,
+                                    fontSize: 12,
+                                    color:
+                                        AppColors.primaryTextColor.withOpacity(
+                                      0.4,
+                                    ),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 5,
+                                    vertical: 16,
+                                  ),
+                                  prefixIconConstraints: const BoxConstraints(
+                                    minWidth: 25,
+                                    minHeight: 25,
+                                  ),
+                                  prefixIcon: Observer(
+                                    builder: (context) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(
+                                          4,
                                         ),
-                                        Positioned(
-                                          top: constraint.maxHeight * 0.593,
-                                          left: 0,
-                                          right: 0,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  constraint.maxHeight * .127,
-                                            ),
-                                            child: ScaleTransition(
-                                              scale:
-                                                  _textFieldAnimationController,
-                                              child: TextField(
-                                                controller: _textController,
-                                                maxLines: 2,
-                                                focusNode: _focusNode,
-                                                cursorColor: AppColors
-                                                    .primaryButtonColor,
-                                                cursorWidth: 1,
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                ),
-                                                onTapOutside: (_) {
-                                                  WidgetsBinding.instance
-                                                      .focusManager.primaryFocus
-                                                      ?.unfocus();
+                                        child: _validationStore.isValid
+                                            ? Lottie.asset(
+                                                'assets/animated_logo/address_validation_success.json',
+                                                height: 24,
+                                                controller: _lottieController,
+                                                onLoaded: (composition) {
+                                                  Future.delayed(
+                                                    const Duration(
+                                                      milliseconds: 1000,
+                                                    ),
+                                                  );
+                                                  _lottieController
+                                                    ..duration =
+                                                        composition.duration
+                                                    ..forward()
+                                                    ..addListener(
+                                                      _addressState
+                                                          .addressVisibility,
+                                                    );
                                                 },
-                                                decoration: InputDecoration(
-                                                  hintText:
-                                                      'Write here your card address ',
-                                                  hintMaxLines: 2,
-                                                  hintStyle: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatLight,
-                                                    fontSize: 10,
-                                                    color: AppColors
-                                                        .primaryTextColor
-                                                        .withOpacity(
-                                                      0.4,
-                                                    ),
-                                                  ),
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                    vertical: 14,
-                                                  ),
-                                                  prefixIconConstraints:
-                                                      const BoxConstraints(
-                                                    minWidth: 25,
-                                                    minHeight: 25,
-                                                  ),
-                                                  prefixIcon: Observer(
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(
-                                                          4,
-                                                        ),
-                                                        child:
-                                                            _validationState
-                                                                    .isValid
-                                                                ? Lottie.asset(
-                                                                    'assets/animated_logo/address_validation_success.json',
-                                                                    height: 24,
-                                                                    controller:
-                                                                        _lottieController,
-                                                                    onLoaded:
-                                                                        (composition) async {
-                                                                      await Future
-                                                                          .delayed(
-                                                                        const Duration(
-                                                                          milliseconds:
-                                                                              1000,
-                                                                        ),
-                                                                      );
-                                                                      _lottieController
-                                                                        ..duration =
-                                                                            composition.duration
-                                                                        ..forward();
-                                                                      _addressState
-                                                                          .addressVisibility();
-                                                                    },
-                                                                  )
-                                                                : ScaleTap(
-                                                                    enableFeedback:
-                                                                        false,
-                                                                    onPressed:
-                                                                        () async {
-                                                                      final res =
-                                                                          await context
-                                                                              .pushRoute<String?>(
-                                                                        const QrScannerRoute(),
-                                                                      );
+                                              )
+                                            : ScaleTap(
+                                                enableFeedback: false,
+                                                onPressed: () async {
+                                                  _focusNode.unfocus();
+                                                  await Future.delayed(const Duration(milliseconds: 300));
+                                                  final res = await context
+                                                      .pushRoute<String?>(
+                                                    const QrScannerRoute(),
+                                                  );
 
-                                                                      _textController
-                                                                              .text =
-                                                                          res!;
-                                                                      _balanceStore
-                                                                              .address =
-                                                                          res;
-                                                                      _validationState
-                                                                          .startLoading();
-                                                                      await Future
-                                                                          .delayed(
-                                                                        const Duration(
-                                                                          milliseconds:
-                                                                              1200,
-                                                                        ),
-                                                                      );
-                                                                      _focusNode
-                                                                          .unfocus();
-                                                                      await toggleCard();
-                                                                    },
-                                                                    child: Assets
-                                                                        .images
-                                                                        .qrCode
-                                                                        .image(
-                                                                      height:
-                                                                          24,
-                                                                      color: AppColors
-                                                                          .secondaryButtons,
-                                                                    ),
-                                                                  ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: AppColors
-                                                          .primaryButtonColor,
+                                                  _textController.text = res!;
+                                                  _balanceStore.address = res;
+                                                  _validationStore
+                                                      .startLoading();
+                                                  await Future.delayed(
+                                                    const Duration(
+                                                      milliseconds: 1200,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      5,
-                                                    ),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Colors.transparent,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      5,
-                                                    ),
-                                                  ),
+                                                  );
+                                                  _focusNode.unfocus();
+                                                  await _toggleCard();
+                                                },
+                                                child:
+                                                    Assets.images.qrCode.image(
+                                                  height: 24,
+                                                  color: AppColors
+                                                      .secondaryButtons,
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: AppColors.primaryButtonColor,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      5,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      5,
+                                    ),
+                                  ),
                                 ),
-                              ).paddingHorizontal(80),
-                            ],
+                              ),
+                            ),
                           ),
-                  );
-                },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
           Positioned(
-            bottom: 40,
+            top: MediaQuery.of(context).size.height * 0.68,
             left: 10,
             right: 10,
-            child: Observer(
-              builder: (context) {
-                return Column(
+            child: BlurContainerWidget(
+              color: Colors.white.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.3),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(14),
+                child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey.withOpacity(0.3)),
-                      ),
-                      child: _addressState.isAddressVisible
-                          ? BlurryContainer(
-                              color: Colors.white.withOpacity(0.7),
-                              padding: const EdgeInsets.all(14),
-                              borderRadius: BorderRadius.circular(8),
-                              child: const Center(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        DefaultTextStyle(
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16,
-                                            color: AppColors.textHintsColor,
-                                          ),
-                                          child: Text(
-                                            'Coinplus Virtual Card',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(4),
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                      child: Text(
-                                        'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : BlurryContainer(
-                              color: Colors.white.withOpacity(0.7),
-                              padding: const EdgeInsets.all(14),
-                              borderRadius: BorderRadius.circular(8),
-                              child: const Center(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        DefaultTextStyle(
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16,
-                                            color: AppColors.textHintsColor,
-                                          ),
-                                          child: Text(
-                                            'Fill in the address of your physical card \nwallet',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Gap(4),
-                                    DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                      child: Text(
-                                        'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                    ).paddingHorizontal(16),
-                    const Gap(34),
-                    LoadingButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Save to wallet',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
-                      ),
-                    ).paddingHorizontal(47),
-                    const Gap(25),
-                    if (_addressState.isAddressVisible)
-                      ScaleTap(
-                        onPressed: () async {
-                          await showSkipAlert(context);
-                        },
-                        child: const Center(
-                          child: DefaultTextStyle(
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatSemiBold,
-                              color: AppColors.primaryTextColor,
-                              fontSize: 17,
-                            ),
-                            child: Text(
-                              'Skip',
-                            ),
+                    Row(
+                      children: [
+                        Text(
+                          'Fill in the address of your physical card \nwallet',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: AppColors.textHintsColor,
                           ),
                         ),
-                      )
-                    else
-                      const SizedBox(),
+                      ],
+                    ),
+                    Gap(4),
+                    Text(
+                      'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 14,
+                        color: AppColors.textHintsColor,
+                      ),
+                    ),
                   ],
-                );
+                ),
+              ),
+            ).paddingHorizontal(16),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.width * 1.8,
+            left: 10,
+            right: 10,
+            child: LoadingButton(
+              onPressed: () {
+                router.push(const WalletProtectionRoute());
               },
+              child: const Text(
+                'Save to wallet',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: FontFamily.redHatSemiBold,
+                ),
+              ),
+            ).paddingHorizontal(49),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.width * 1.98,
+            left: 0,
+            right: 0,
+            child: ScaleTap(
+              enableFeedback: false,
+              onPressed: () {
+                showMyDialog(context);
+              },
+              child: const Center(
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatSemiBold,
+                    color: AppColors.primaryTextColor,
+                    fontSize: 17,
+                  ),
+                  child: Text(
+                    'Skip',
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -592,12 +515,12 @@ class _CardFillPageState extends State<CardFillPage>
   }
 
   Future<void> _toggleWidgets() async {
-    await Future.delayed(const Duration(milliseconds: 400));
-    _cardAnimationState.startLoading();
+    await Future.delayed(const Duration(milliseconds: 600));
+    _cardAnimationStore.startLoading();
   }
 
-  Future<void> toggleCard() async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    await cardKey.currentState?.toggleCard();
+  Future<void> _toggleCard() async {
+    await Future.delayed(const Duration(milliseconds: 800));
+    await _flipCardController.toggleCard();
   }
 }

@@ -12,6 +12,7 @@ class BalanceStore = _BalanceStore with _$BalanceStore;
 abstract class _BalanceStore with Store {
   @observable
   String address = '';
+
   @computed
   String get btcAddress => address;
 

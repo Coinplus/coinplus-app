@@ -46,9 +46,14 @@ dependencies:
   uni_links: ^0.5.1
   mobile_scanner: ^3.2.0
   flip_card: ^0.7.0
-  blurrycontainer: ^1.0.2
+  blur_container: ^0.0.2
+  emerge_alert_dialog: ^0.0.3
+  local_auth: ^2.1.6
+  carousel_slider: ^4.2.1
+  shared_preferences: ^2.2.0
+  toggle_switch: ^2.1.0
   video_player: ^2.7.0
-
+  coingecko_api: ^1.1.1+1
 
 
 
