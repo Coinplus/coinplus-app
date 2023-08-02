@@ -33,6 +33,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$getStringFromLocalStorageAsyncAction =
+      AsyncAction('_BalanceStore.getStringFromLocalStorage', context: context);
+
+  @override
+  Future<String> getStringFromLocalStorage(String key) {
+    return _$getStringFromLocalStorageAsyncAction
+        .run(() => super.getStringFromLocalStorage(key));
+  }
+
   late final _$fetchCardInfoAsyncAction =
       AsyncAction('_BalanceStore.fetchCardInfo', context: context);
 

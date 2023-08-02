@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:blur_container/blur_container.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +12,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../custom_widgets/loading_button.dart';
 import '../../extensions/widget_extension.dart';
@@ -48,7 +49,6 @@ class _CardFillPageState extends State<CardFillPage>
   final _addressState = AddressState();
   final _balanceStore = BalanceStore();
   final _focusNode = FocusNode();
-
 
   @override
   void initState() {
@@ -95,9 +95,7 @@ class _CardFillPageState extends State<CardFillPage>
 
   @override
   Widget build(BuildContext context) {
-    _addressState.isAddressVisible ? log('visible') : Container();
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -153,12 +151,15 @@ class _CardFillPageState extends State<CardFillPage>
                                         top: 255,
                                         left: 10,
                                         right: 10,
-                                        child: BlurContainerWidget(
+                                        child: Container(
                                           height: 40,
                                           padding: const EdgeInsets.all(4),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: Colors.black.withOpacity(0.3),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color: Colors.black
+                                                .withOpacity(0.4),
+                                          ),
                                           child: Column(
                                             children: [
                                               const Row(
@@ -179,27 +180,34 @@ class _CardFillPageState extends State<CardFillPage>
                                                   FutureBuilder<CardModel>(
                                                     future: _balanceStore
                                                         .fetchCardInfo(),
-                                                    builder:
-                                                        (context, snapshot) {
+                                                    builder: (
+                                                      context,
+                                                      snapshot,
+                                                    ) {
                                                       final data = snapshot
                                                           .data?.address;
-                                                      if (snapshot.hasData) {
+                                                      if (snapshot
+                                                          .hasData) {
                                                         return Text(
                                                           data!.toString(),
                                                           style:
                                                               const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily:
+                                                                FontFamily
+                                                                    .redHatMedium,
                                                             fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 11,
+                                                                FontWeight
+                                                                    .w700,
+                                                            color: Colors
+                                                                .white,
+                                                            fontSize: 12,
                                                           ),
                                                         );
                                                       } else {
                                                         return const Padding(
                                                           padding:
-                                                              EdgeInsets.all(4),
+                                                              EdgeInsets
+                                                                  .all(4),
                                                           child:
                                                               CupertinoActivityIndicator(
                                                             radius: 5,
@@ -221,12 +229,15 @@ class _CardFillPageState extends State<CardFillPage>
                                         top: 300,
                                         left: 10,
                                         right: 10,
-                                        child: BlurContainerWidget(
+                                        child: Container(
                                           height: 55,
                                           padding: const EdgeInsets.all(5),
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: Colors.black.withOpacity(0.3),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color: Colors.black
+                                                .withOpacity(0.4),
+                                          ),
                                           child: Column(
                                             children: [
                                               const Row(
@@ -247,28 +258,34 @@ class _CardFillPageState extends State<CardFillPage>
                                                   FutureBuilder<CardModel>(
                                                     future: _balanceStore
                                                         .fetchCardInfo(),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      log('future_builder');
+                                                    builder: (
+                                                      context,
+                                                      snapshot,
+                                                    ) {
                                                       final data = snapshot
                                                           .data?.balance;
-                                                      if (snapshot.hasData) {
+                                                      if (snapshot
+                                                          .hasData) {
                                                         return Text(
                                                           '\$${data!.toString()}.00',
                                                           style:
                                                               const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily:
+                                                                FontFamily
+                                                                    .redHatMedium,
                                                             fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
+                                                                FontWeight
+                                                                    .w700,
+                                                            color: Colors
+                                                                .white,
                                                             fontSize: 20,
                                                           ),
                                                         );
                                                       } else {
                                                         return const Padding(
                                                           padding:
-                                                              EdgeInsets.all(4),
+                                                              EdgeInsets
+                                                                  .all(4),
                                                           child:
                                                               CupertinoActivityIndicator(
                                                             radius: 5,
@@ -372,14 +389,19 @@ class _CardFillPageState extends State<CardFillPage>
                                                 enableFeedback: false,
                                                 onPressed: () async {
                                                   _focusNode.unfocus();
-                                                  await Future.delayed(const Duration(milliseconds: 300));
+                                                  await Future.delayed(
+                                                    const Duration(
+                                                      milliseconds: 300,
+                                                    ),
+                                                  );
                                                   final res = await context
                                                       .pushRoute<String?>(
                                                     const QrScannerRoute(),
                                                   );
 
                                                   _textController.text = res!;
-                                                  _balanceStore.address = res;
+                                                  //_balanceStore.address = res;
+                                                  await saveStringToLocalStorage('address', res);
                                                   _validationStore
                                                       .startLoading();
                                                   await Future.delayed(
@@ -432,11 +454,13 @@ class _CardFillPageState extends State<CardFillPage>
             top: MediaQuery.of(context).size.height * 0.68,
             left: 10,
             right: 10,
-            child: BlurContainerWidget(
-              color: Colors.white.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.grey.withOpacity(0.3),
+                ),
+                color: Colors.white.withOpacity(0.7),
               ),
               child: const Padding(
                 padding: EdgeInsets.all(14),
@@ -475,6 +499,7 @@ class _CardFillPageState extends State<CardFillPage>
             right: 10,
             child: LoadingButton(
               onPressed: () {
+
                 router.push(const WalletProtectionRoute());
               },
               child: const Text(
@@ -512,6 +537,11 @@ class _CardFillPageState extends State<CardFillPage>
         ],
       ),
     );
+  }
+
+  Future<void> saveStringToLocalStorage(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
   }
 
   Future<void> _toggleWidgets() async {

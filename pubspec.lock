@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.2.0"
-  blur_container:
-    dependency: "direct main"
-    description:
-      name: blur_container
-      sha256: "8c8120a5e297f5f5f77a1e894b1654e441aa1e0999757d00fae9656fce80e000"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   boolean_selector:
     dependency: transitive
     description:

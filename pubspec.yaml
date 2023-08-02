@@ -46,7 +46,6 @@ dependencies:
   uni_links: ^0.5.1
   mobile_scanner: ^3.2.0
   flip_card: ^0.7.0
-  blur_container: ^0.0.2
   emerge_alert_dialog: ^0.0.3
   local_auth: ^2.1.6
   carousel_slider: ^4.2.1
