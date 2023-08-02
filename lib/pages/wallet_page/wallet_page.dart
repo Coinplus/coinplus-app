@@ -1,20 +1,22 @@
-import 'dart:developer';
-
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../constants/card_color.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../models/card_model/card_model.dart';
 import '../../models/data_model/data_model.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/store.dart';
+import '../../utils/header_custom_paint.dart';
 import 'btc_price/btc_price.dart';
 
 @RoutePage()
@@ -26,17 +28,22 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
-  final imgList = <String>[
-    'assets/images/Orange_card.png',
-    // 'assets/images/White_Card.png',
-    // 'assets/images/Brown_Card.png',
-    'assets/images/Add_Card.png',
-  ];
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  @override
+  void initState() {
+    super.initState();
+    _balanceStore.getAllCardsInfo();
+  }
+
+  @override
+  void dispose() {
+    reRegisterStoreGetIt();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final _balanceStore = BalanceStore();
-
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Stack(
@@ -47,7 +54,14 @@ class _WalletPageState extends State<WalletPage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Assets.images.subtract.image(),
+            child: CustomPaint(
+              size: Size(
+                context.width,
+                (context.width * 0.44266666666666665).toDouble(),
+              ),
+              //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+              painter: HeaderCustomPainter(),
+            ),
           ),
 
           //Total Balance
@@ -99,161 +113,160 @@ class _WalletPageState extends State<WalletPage> {
             top: 210,
             left: 0,
             right: 0,
-            child: CarouselSlider.builder(
-              itemBuilder: (context, index, constrains) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        blurRadius: 5,
-                        spreadRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: ScaleTap(
-                    onPressed: () {},
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(14),
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            imgList[index],
-                            height: 380,
-                          ),
-                          Positioned(
-                            top: 225,
-                            left: 10,
-                            right: 10,
-                            child: Container(
-                              height: 40,
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: Colors.black.withOpacity(0.3),
-                              ),
-                              child: Column(
-                                children: [
-                                  const Row(
-                                    children: [
-                                      Text(
-                                        'Address',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          fontFamily: FontFamily.redHatMedium,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      FutureBuilder<CardModel>(
-                                        future: _balanceStore.fetchCardInfo(),
-                                        builder: (context, snapshot) {
-                                          log('FutureBuilder');
-                                          final data = snapshot.data?.address;
-                                          if (snapshot.hasData) {
-                                            return Text(
-                                              data!.toString(),
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 10,
-                                              ),
-                                            );
-                                          } else {
-                                            return const Padding(
-                                              padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 5,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 270,
-                            left: 10,
-                            right: 10,
-                            child: Container(
-                              height: 50,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                color: Colors.black.withOpacity(0.3),
-                              ),
-                              child: Column(
-                                children: [
-                                  const Row(
-                                    children: [
-                                      Text(
-                                        'Balance',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          color: Colors.white,
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      FutureBuilder<CardModel>(
-                                        future: _balanceStore.fetchCardInfo(),
-                                        builder: (context, snapshot) {
-                                          log('FutureBuilder');
-                                          final data = snapshot.data?.balance;
-                                          if (snapshot.hasData) {
-                                            return Text(
-                                              '\$${data!.toString()}.00',
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                              ),
-                                            );
-                                          } else {
-                                            return const Padding(
-                                              padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 5,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+            child: Observer(
+              builder: (_) {
+                return CarouselSlider.builder(
+                  itemBuilder: (context, index, constrains) {
+                    if (index == _balanceStore.cards.length) {
+                      return Assets.images.addCard.image();
+                    }
+
+                    final card = _balanceStore.cards[index];
+
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            blurRadius: 5,
+                            spreadRadius: 5,
                           ),
                         ],
                       ),
-                    ),
+                      child: ScaleTap(
+                        onPressed: () {},
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: Stack(
+                            children: [
+                              card.cardColor.image.image(
+                                height: 380,
+                              ),
+                              Positioned(
+                                top: 225,
+                                left: 10,
+                                right: 10,
+                                child: Container(
+                                  height: 40,
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.black.withOpacity(0.3),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Text(
+                                            'Address',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Observer(
+                                        builder: (context) {
+                                          if (_balanceStore
+                                                  .loadings[card.address] ??
+                                              false) {
+                                            return const Padding(
+                                              padding: EdgeInsets.all(4),
+                                              child: CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                          return Text(
+                                            card.address,
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                            ),
+                                          ).expandedHorizontally();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 270,
+                                left: 10,
+                                right: 10,
+                                child: Container(
+                                  height: 50,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.black.withOpacity(0.3),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Text(
+                                            'Balance',
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              color: Colors.white,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Observer(
+                                        builder: (context) {
+                                          if (_balanceStore
+                                                  .loadings[card.address] ??
+                                              false) {
+                                            return const Padding(
+                                              padding: EdgeInsets.all(4),
+                                              child: CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                          return Text(
+                                            (card.balance ?? 0).toString(),
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                              fontSize: 10,
+                                            ),
+                                          ).expandedHorizontally();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                    enableInfiniteScroll: false,
+                    viewportFraction: 0.7,
+                    height: 400,
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.zoom,
                   ),
+                  itemCount: _balanceStore.cards.length + 1,
                 );
               },
-              options: CarouselOptions(
-                enableInfiniteScroll: false,
-                viewportFraction: 0.7,
-                height: 400,
-                enlargeCenterPage: true,
-                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-              ),
-              itemCount: imgList.length,
             ),
           ),
 

@@ -9,28 +9,31 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../custom_widgets/loading_button.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../widgets/loading_button.dart';
 import 'skip_button_alert/skip_button_alert.dart';
 
 @RoutePage()
 class CardFillPage extends StatefulWidget {
-  const CardFillPage({super.key, required this.receivedData});
+  const CardFillPage({
+    super.key,
+    this.receivedData,
+  });
 
-  final String receivedData;
+  final String? receivedData;
 
   @override
   State<CardFillPage> createState() => _CardFillPageState();
@@ -45,8 +48,9 @@ class _CardFillPageState extends State<CardFillPage>
   late AnimationController _lottieController;
   final _validationStore = QrDetectState();
   final _addressState = AddressState();
-  final _balanceStore = BalanceStore();
   final _focusNode = FocusNode();
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   void initState() {
@@ -56,7 +60,7 @@ class _CardFillPageState extends State<CardFillPage>
     _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
     _btcAddressController = TextEditingController();
-    _btcAddressController.text = widget.receivedData;
+    _btcAddressController.text = widget.receivedData ?? '';
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -68,10 +72,18 @@ class _CardFillPageState extends State<CardFillPage>
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 200),
       lowerBound: 1,
       upperBound: 1.3,
     );
+    if (widget.receivedData != null) {
+      onInitWithAddress();
+    }
+  }
+
+  Future<void> onInitWithAddress() async {
+    _lottieController.reset();
+    await _validateBTCAddress();
   }
 
   @override
@@ -87,6 +99,7 @@ class _CardFillPageState extends State<CardFillPage>
     _focusNode.dispose();
     _lottieController.dispose();
     _textFieldAnimationController.dispose();
+    _balanceStore.resetSelectedCard();
     super.dispose();
   }
 
@@ -172,43 +185,36 @@ class _CardFillPageState extends State<CardFillPage>
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: [
-                                                  FutureBuilder<CardModel>(
-                                                    future: _balanceStore
-                                                        .fetchCardInfo(),
-                                                    builder: (
-                                                      context,
-                                                      snapshot,
-                                                    ) {
-                                                      final data = snapshot
-                                                          .data?.address;
-                                                      if (snapshot.hasData) {
-                                                        return Text(
-                                                          data!.toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          ),
-                                                        );
-                                                      } else {
-                                                        return const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(4),
-                                                          child:
-                                                              CupertinoActivityIndicator(
-                                                            radius: 5,
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          _balanceStore
+                                                              .selectedCard
+                                                              ?.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child:
+                                                          CupertinoActivityIndicator(
+                                                        radius: 5,
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    _balanceStore.selectedCard
+                                                            ?.address ??
+                                                        '',
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 10,
+                                                    ),
+                                                  ).expandedHorizontally();
+                                                },
                                               ),
                                             ],
                                           ),
@@ -245,43 +251,37 @@ class _CardFillPageState extends State<CardFillPage>
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                children: [
-                                                  FutureBuilder<CardModel>(
-                                                    future: _balanceStore
-                                                        .fetchCardInfo(),
-                                                    builder: (
-                                                      context,
-                                                      snapshot,
-                                                    ) {
-                                                      final data = snapshot
-                                                          .data?.balance;
-                                                      if (snapshot.hasData) {
-                                                        return Text(
-                                                          '\$${data!.toString()}.00',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        );
-                                                      } else {
-                                                        return const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(4),
-                                                          child:
-                                                              CupertinoActivityIndicator(
-                                                            radius: 5,
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                  ),
-                                                ],
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          _balanceStore
+                                                              .selectedCard
+                                                              ?.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child:
+                                                          CupertinoActivityIndicator(
+                                                        radius: 5,
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    (_balanceStore.selectedCard
+                                                                ?.balance ??
+                                                            0)
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 10,
+                                                    ),
+                                                  ).expandedHorizontally();
+                                                },
                                               ),
                                             ],
                                           ),
@@ -368,9 +368,12 @@ class _CardFillPageState extends State<CardFillPage>
                                                       .pushRoute<String?>(
                                                     const QrScannerRoute(),
                                                   );
+                                                  if (res == null) {
+                                                    return;
+                                                  }
 
                                                   _btcAddressController.text =
-                                                      res!;
+                                                      res;
                                                   await _validateBTCAddress();
                                                 },
                                                 child:
@@ -390,14 +393,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                       milliseconds: 1000,
                                                     ),
                                                   );
-                                                  _lottieController
-                                                    ..duration =
-                                                        composition.duration
-                                                    ..forward()
-                                                    ..addListener(
-                                                      _addressState
-                                                          .addressVisibility,
-                                                    );
+                                                  _lottieController.duration =
+                                                      composition.duration;
                                                 },
                                               ),
                                       );
@@ -480,6 +477,7 @@ class _CardFillPageState extends State<CardFillPage>
             right: 10,
             child: LoadingButton(
               onPressed: () {
+                _balanceStore.saveSelectedCard();
                 router.push(const WalletProtectionRoute());
               },
               child: const Text(
@@ -521,19 +519,24 @@ class _CardFillPageState extends State<CardFillPage>
 
   Future<void> _validateBTCAddress() async {
     final btcAddress = _btcAddressController.text.trim();
-    await saveStringToLocalStorage(
-      'address',
-      btcAddress,
+    unawaited(
+      _balanceStore.getSelectedCard(btcAddress),
     );
     if (isValidBTCAddress(btcAddress)) {
       _validationStore.validate();
       await Future.delayed(
-        const Duration(
-          milliseconds: 1200,
-        ),
+        const Duration(seconds: 1),
       );
       _focusNode.unfocus();
-      await _toggleCard();
+      Future.delayed(
+        const Duration(milliseconds: 600),
+        _toggleCard,
+      );
+      Future.delayed(
+        const Duration(milliseconds: 550),
+        () => _addressState.isAddressVisible = true,
+      );
+      await _lottieController.forward(from: 0);
     } else {}
   }
 
