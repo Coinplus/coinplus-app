@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/card_model/card_model.dart';
 
@@ -17,7 +18,15 @@ abstract class _BalanceStore with Store {
   String get btcAddress => address;
 
   @action
+  Future<String> getStringFromLocalStorage(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    address = prefs.getString(key) ?? '';
+    return prefs.getString(key) ?? '';
+  }
+
+  @action
   Future<CardModel> fetchCardInfo() async {
+    await getStringFromLocalStorage('address');
     final response = await http.get(
       Uri.parse(
         'https://api.blockcypher.com/v1/btc/main/addrs/$btcAddress/balance',

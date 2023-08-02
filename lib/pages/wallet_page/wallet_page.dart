@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:ui';
 
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
@@ -10,10 +13,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/card_model/card_model.dart';
 import '../../models/data_model/data_model.dart';
+import '../../store/balance_store/balance_store.dart';
 
 @RoutePage()
 class WalletPage extends StatefulWidget {
@@ -26,23 +32,11 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   final imgList = <String>[
     'assets/images/Orange_card.png',
-    'assets/images/White_Card.png',
-    'assets/images/Brown_Card.png',
+    // 'assets/images/White_Card.png',
+    // 'assets/images/Brown_Card.png',
     'assets/images/Add_Card.png',
   ];
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(const Duration(seconds: 20), (timer) {
-      getCryptoPrice();
-    });
-  }
 
   Future<DataModel> getCryptoPrice() async {
     final url = Uri.parse(
@@ -57,6 +51,7 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     final buttonCarouselController = CarouselController();
+    final _balanceStore = BalanceStore();
 
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
@@ -138,9 +133,148 @@ class _WalletPageState extends State<WalletPage> {
                     onPressed: () {},
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(14),
-                      child: Image.asset(
-                        imgList[index],
-                        height: 380,
+                      child: Stack(
+                        children: [
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                            child: Image.asset(
+                              imgList[index],
+                              height: 380,
+                            ),
+                          ),
+                          Positioned(
+                            top: 225,
+                            left: 10,
+                            right: 10,
+                            child: Container(
+                              height: 40,
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                              child: Column(
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'Address',
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      FutureBuilder<CardModel>(
+                                        future: _balanceStore
+                                            .fetchCardInfo(),
+                                        builder:
+                                            (context, snapshot) {
+                                              log('FutureBuilder');
+                                              final data = snapshot
+                                              .data?.address;
+                                          if (snapshot.hasData) {
+                                            return Text(
+                                              data!.toString(),
+                                              style:
+                                              const TextStyle(
+                                                fontFamily: FontFamily
+                                                    .redHatMedium,
+                                                fontWeight:
+                                                FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                              ),
+                                            );
+                                          } else {
+                                            return const Padding(
+                                              padding:
+                                              EdgeInsets.all(4),
+                                              child:
+                                              CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 270,
+                            left: 10,
+                            right: 10,
+                            child: Container(
+                              height: 50,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                              child:  Column(
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Text(
+                                        'Balance',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: Colors.white,
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      FutureBuilder<CardModel>(
+                                        future: _balanceStore
+                                            .fetchCardInfo(),
+                                        builder:
+                                            (context, snapshot) {
+                                          log('FutureBuilder');
+                                          final data = snapshot
+                                              .data?.balance;
+                                          if (snapshot.hasData) {
+                                            return Text(
+                                              '\$${data!.toString()}.00',
+                                              style:
+                                              const TextStyle(
+                                                fontFamily: FontFamily
+                                                    .redHatMedium,
+                                                fontWeight:
+                                                FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            );
+                                          } else {
+                                            return const Padding(
+                                              padding:
+                                              EdgeInsets.all(4),
+                                              child:
+                                              CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -388,6 +522,13 @@ class _WalletPageState extends State<WalletPage> {
     );
   }
 
+  Future<String> getStringFromLocalStorage(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final address = prefs.getString(key) ?? '';
+    return address;
+  }
+
+
   Future<void> addWidgetToCarousel() async {
     setState(() {
       imgList.add('assets/images/Brown_Card.png');
@@ -416,12 +557,13 @@ class _WalletPageState extends State<WalletPage> {
 }
 
 Widget buildCoinWidget(DataModel dataModel) {
+  final myFormat = NumberFormat.decimalPattern('en_us');
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '\$${dataModel.price.toString()}',
+          '\$${myFormat.format(dataModel.price)}',
           style: const TextStyle(
             fontSize: 16,
             fontFamily: FontFamily.redHatMedium,
@@ -432,4 +574,3 @@ Widget buildCoinWidget(DataModel dataModel) {
     ),
   );
 }
-
