@@ -1,17 +1,12 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
 
+import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -20,6 +15,7 @@ import '../../gen/fonts.gen.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/data_model/data_model.dart';
 import '../../store/balance_store/balance_store.dart';
+import 'btc_price/btc_price.dart';
 
 @RoutePage()
 class WalletPage extends StatefulWidget {
@@ -37,20 +33,8 @@ class _WalletPageState extends State<WalletPage> {
     'assets/images/Add_Card.png',
   ];
 
-
-  Future<DataModel> getCryptoPrice() async {
-    final url = Uri.parse(
-      'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
-    );
-    final response = await http.get(url);
-    final databody = json.decode(response.body);
-    final dataModel = DataModel.fromJson(databody);
-    return dataModel;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final buttonCarouselController = CarouselController();
     final _balanceStore = BalanceStore();
 
     return Scaffold(
@@ -116,7 +100,6 @@ class _WalletPageState extends State<WalletPage> {
             left: 0,
             right: 0,
             child: CarouselSlider.builder(
-              carouselController: buttonCarouselController,
               itemBuilder: (context, index, constrains) {
                 return Container(
                   decoration: BoxDecoration(
@@ -135,12 +118,9 @@ class _WalletPageState extends State<WalletPage> {
                       borderRadius: BorderRadius.circular(14),
                       child: Stack(
                         children: [
-                          BackdropFilter(
-                            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-                            child: Image.asset(
-                              imgList[index],
-                              height: 380,
-                            ),
+                          Image.asset(
+                            imgList[index],
+                            height: 380,
                           ),
                           Positioned(
                             top: 225,
@@ -170,32 +150,25 @@ class _WalletPageState extends State<WalletPage> {
                                   Row(
                                     children: [
                                       FutureBuilder<CardModel>(
-                                        future: _balanceStore
-                                            .fetchCardInfo(),
-                                        builder:
-                                            (context, snapshot) {
-                                              log('FutureBuilder');
-                                              final data = snapshot
-                                              .data?.address;
+                                        future: _balanceStore.fetchCardInfo(),
+                                        builder: (context, snapshot) {
+                                          log('FutureBuilder');
+                                          final data = snapshot.data?.address;
                                           if (snapshot.hasData) {
                                             return Text(
                                               data!.toString(),
-                                              style:
-                                              const TextStyle(
-                                                fontFamily: FontFamily
-                                                    .redHatMedium,
-                                                fontWeight:
-                                                FontWeight.w700,
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
                                                 color: Colors.white,
                                                 fontSize: 10,
                                               ),
                                             );
                                           } else {
                                             return const Padding(
-                                              padding:
-                                              EdgeInsets.all(4),
-                                              child:
-                                              CupertinoActivityIndicator(
+                                              padding: EdgeInsets.all(4),
+                                              child: CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
@@ -219,7 +192,7 @@ class _WalletPageState extends State<WalletPage> {
                                 borderRadius: BorderRadius.circular(6),
                                 color: Colors.black.withOpacity(0.3),
                               ),
-                              child:  Column(
+                              child: Column(
                                 children: [
                                   const Row(
                                     children: [
@@ -236,32 +209,25 @@ class _WalletPageState extends State<WalletPage> {
                                   Row(
                                     children: [
                                       FutureBuilder<CardModel>(
-                                        future: _balanceStore
-                                            .fetchCardInfo(),
-                                        builder:
-                                            (context, snapshot) {
+                                        future: _balanceStore.fetchCardInfo(),
+                                        builder: (context, snapshot) {
                                           log('FutureBuilder');
-                                          final data = snapshot
-                                              .data?.balance;
+                                          final data = snapshot.data?.balance;
                                           if (snapshot.hasData) {
                                             return Text(
                                               '\$${data!.toString()}.00',
-                                              style:
-                                              const TextStyle(
-                                                fontFamily: FontFamily
-                                                    .redHatMedium,
-                                                fontWeight:
-                                                FontWeight.w700,
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
                                                 color: Colors.white,
                                                 fontSize: 20,
                                               ),
                                             );
                                           } else {
                                             return const Padding(
-                                              padding:
-                                              EdgeInsets.all(4),
-                                              child:
-                                              CupertinoActivityIndicator(
+                                              padding: EdgeInsets.all(4),
+                                              child: CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
@@ -293,11 +259,11 @@ class _WalletPageState extends State<WalletPage> {
 
           //Card and Bar Switch
           Positioned(
-            top: MediaQuery.of(context).size.width * 0.31,
-            right: MediaQuery.of(context).size.width * 0.05,
+            top: MediaQuery.of(context).size.width * 0.309,
+            right: MediaQuery.of(context).size.width * 0.0335,
             child: Container(
-              height: 46,
-              width: 127,
+              height: 45,
+              width: 130,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.white,
@@ -312,33 +278,37 @@ class _WalletPageState extends State<WalletPage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.width * 0.317,
-            right: MediaQuery.of(context).size.width * 0.058,
-            child: ToggleSwitch(
-              curve: Curves.ease,
-              minWidth: 60,
-              cornerRadius: 20,
-              activeBgColors: const [
-                [
-                  AppColors.silver,
-                ],
-                [
-                  AppColors.silver,
-                ]
-              ],
-              activeFgColor: AppColors.primaryTextColor,
-              inactiveBgColor: Colors.white,
-              inactiveFgColor: Colors.grey,
-              totalSwitches: 2,
-              labels: const [
-                'Card',
-                'Bar',
-              ],
-              customTextStyles: const [
-                TextStyle(fontFamily: FontFamily.redHatMedium),
-              ],
-              radiusStyle: true,
-              onToggle: (index) {},
+            top: MediaQuery.of(context).size.width * 0.3153,
+            right: MediaQuery.of(context).size.width * 0.04,
+            child: const SizedBox(
+              height: 40,
+              width: 125,
+              child: DefaultTabController(
+                length: 2,
+                child: SegmentedTabControl(
+                  textStyle: TextStyle(
+                    fontFamily: FontFamily.redHatSemiBold,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  splashColor: Colors.transparent,
+                  indicatorColor: AppColors.silver,
+                  tabs: [
+                    SegmentTab(
+                      label: 'Card',
+                      textColor: Colors.grey,
+                      splashColor: Colors.transparent,
+                      selectedTextColor: AppColors.primaryTextColor,
+                    ),
+                    SegmentTab(
+                      label: 'Bar',
+                      textColor: Colors.grey,
+                      splashColor: Colors.transparent,
+                      selectedTextColor: AppColors.primaryTextColor,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
 
@@ -357,9 +327,7 @@ class _WalletPageState extends State<WalletPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ScaleTap(
-                    onPressed: () {
-                      addWidgetToCarousel();
-                    },
+                    onPressed: () {},
                     child: Row(
                       children: [
                         Assets.icons.arrowBottomRight.image(
@@ -380,9 +348,7 @@ class _WalletPageState extends State<WalletPage> {
                     ),
                   ),
                   ScaleTap(
-                    onPressed: () {
-                      removeWidgetFromCarousel(1);
-                    },
+                    onPressed: () {},
                     child: Row(
                       children: [
                         const Text(
@@ -519,39 +485,6 @@ class _WalletPageState extends State<WalletPage> {
           ),
         ],
       ),
-    );
-  }
-
-  Future<String> getStringFromLocalStorage(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    final address = prefs.getString(key) ?? '';
-    return address;
-  }
-
-
-  Future<void> addWidgetToCarousel() async {
-    setState(() {
-      imgList.add('assets/images/Brown_Card.png');
-    });
-
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList(
-      'imgList',
-      imgList.map((widget) => widget.toString()).toList(),
-    );
-  }
-
-  Future<void> removeWidgetFromCarousel(int index) async {
-    setState(() {
-      if (index >= 0 && index < imgList.length) {
-        imgList.removeAt(index);
-      }
-    });
-
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList(
-      'imgList',
-      imgList.map((widget) => widget.toString()).toList(),
     );
   }
 }

@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.2"
+  animated_segmented_tab_control:
+    dependency: "direct main"
+    description:
+      name: animated_segmented_tab_control
+      sha256: aaaf2ac878dd8fcb8578f5cb1d03fdeecacdb0ca774b1cb9cae1c6a961a82d67
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   ansicolor:
     dependency: transitive
     description:
@@ -193,14 +201,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.0"
-  coingecko_api:
-    dependency: "direct main"
-    description:
-      name: coingecko_api
-      sha256: "0d21655e5ac5cd0df55a96655ba03c6ef02d9b4d95a0862823b68cc0b33bb243"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1+1"
   collection:
     dependency: transitive
     description:
@@ -285,10 +285,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "3866d67f93523161b643187af65f5ac08bc991a5bcdaf41a2d587fe4ccb49993"
+      sha256: "9d6445da1caf8412070670c03c39ad5b12a78cc8c2361417b220905a2bcbdd2f"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.0"
+    version: "5.3.1"
   easy_localization:
     dependency: "direct main"
     description:
@@ -723,10 +723,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_platform_interface
-      sha256: "57585299a729335f1298b43245842678cb9f43a6310351b18fb577d6e33165ec"
+      sha256: bced5679c7df11190e1ddc35f3222c858f328fff85c3942e46e7f5589bf9eb84
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.6"
+    version: "2.1.0"
   path_provider_windows:
     dependency: transitive
     description:
@@ -1032,10 +1032,10 @@ packages:
     dependency: transitive
     description:
       name: test
-      sha256: "67ec5684c7a19b2aba91d2831f3d305a6fd8e1504629c5818f8d64478abf4f38"
+      sha256: b9a384c4b9c4966dbf7215e7c033a78db1da7e5dcaf8da9232c5f24735f65652
       url: "https://pub.dev"
     source: hosted
-    version: "1.24.4"
+    version: "1.24.5"
   test_api:
     dependency: transitive
     description:
@@ -1048,10 +1048,10 @@ packages:
     dependency: transitive
     description:
       name: test_core
-      sha256: "6b753899253c38ca0523bb0eccff3934ec83d011705dae717c61ecf209e333c9"
+      sha256: c6a536288535efef8526eea8adfa4e25fdd2849fa7f457ecb2a52099998ce8f7
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.4"
+    version: "0.5.5"
   theme_tailor:
     dependency: "direct dev"
     description:
@@ -1084,6 +1084,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  toast:
+    dependency: "direct main"
+    description:
+      name: toast
+      sha256: "12433091e3e5a25b3a25f670126e42547c9ade135de30ad9ace45d1ddccd57c9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   toggle_switch:
     dependency: "direct main"
     description:

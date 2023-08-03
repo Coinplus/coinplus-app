@@ -27,15 +27,44 @@ mixin _$QrDetectState on _QrDetectState, Store {
     });
   }
 
+  late final _$_isValidAtom =
+      Atom(name: '_QrDetectState._isValid', context: context);
+
+  bool get isValid {
+    _$_isValidAtom.reportRead();
+    return super._isValid;
+  }
+
+  @override
+  bool get _isValid => isValid;
+
+  @override
+  set _isValid(bool value) {
+    _$_isValidAtom.reportWrite(value, super._isValid, () {
+      super._isValid = value;
+    });
+  }
+
   late final _$_QrDetectStateActionController =
       ActionController(name: '_QrDetectState', context: context);
 
   @override
-  void startLoading() {
+  void validate() {
     final _$actionInfo = _$_QrDetectStateActionController.startAction(
-        name: '_QrDetectState.startLoading');
+        name: '_QrDetectState.validate');
     try {
-      return super.startLoading();
+      return super.validate();
+    } finally {
+      _$_QrDetectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void detectQr() {
+    final _$actionInfo = _$_QrDetectStateActionController.startAction(
+        name: '_QrDetectState.detectQr');
+    try {
+      return super.detectQr();
     } finally {
       _$_QrDetectStateActionController.endAction(_$actionInfo);
     }

@@ -6,9 +6,15 @@ class QrDetectState = _QrDetectState with _$QrDetectState;
 abstract class _QrDetectState with Store {
   @readonly
   bool _isDetected = false;
+  @readonly
+  bool _isValid = true;
 
   @action
-  void startLoading() {
+  void validate() {
+    _isValid = !_isValid;
+  }
+  @action
+  void detectQr() {
     _isDetected = true;
   }
 }
