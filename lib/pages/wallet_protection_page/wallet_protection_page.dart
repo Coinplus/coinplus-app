@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
-import '../../custom_widgets/loading_button.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -13,6 +12,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../widgets/loading_button.dart';
 
 @RoutePage()
 class WalletProtectionPage extends StatelessWidget {
@@ -116,10 +116,8 @@ class WalletProtectionPage extends StatelessWidget {
             child: Observer(
               builder: (context) {
                 return LoadingButton(
-                  onPressed:
-                  _walletProtectState.isToggleSwitched
-                      ?
-                      () {
+                  onPressed: _walletProtectState.isToggleSwitched
+                      ? () {
                           router.pushAndPopAll(const WalletRoute());
                         }
                       : null,

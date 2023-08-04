@@ -11,9 +11,7 @@ abstract class _WalletProtectState with Store {
   bool isToggleSwitched = false;
   @action
   Future<void> onToggleSwitch() async {
-
     try {
-
       final didAuthenticate = await _auth.authenticate(
         localizedReason: 'Please authenticate',
       );
@@ -23,6 +21,7 @@ abstract class _WalletProtectState with Store {
       }
     } catch (_) {}
   }
+
   void initState() {
     _auth.getAvailableBiometrics();
   }

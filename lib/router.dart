@@ -24,7 +24,6 @@ class Router extends $Router {
       page: QrScannerRoute.page,
       fullscreenDialog: true,
     ),
-
     AdaptiveRoute(
       page: BarFillRoute.page,
     ),

@@ -3,30 +3,44 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/card_model/card_model.dart';
+
 class Preferences {
   Preferences._();
+
   static const authToken = 'authToken';
+  static const cards = 'cards';
 }
 
 class StorageUtils {
   static Future<SharedPreferences> get sharedInstance =>
       SharedPreferences.getInstance();
 
-  static Future<String?> getAccessToken() async {
-    return _getString(Preferences.authToken);
+  static Future<List<CardModel>> getCards() async {
+    final cardsJson =
+        await _read<List>(Preferences.cards) ?? <Map<String, dynamic>>[];
+
+    final cards = <CardModel>[];
+    for (final element in cardsJson) {
+      cards.add(
+        CardModel.fromJson(element),
+      );
+    }
+
+    return cards;
   }
 
-  static Future<void> setAccessToken(String authToken) async {
-    await _setString(Preferences.authToken, authToken);
+  static Future<void> addCard(CardModel card) async {
+    final cards = await getCards();
+    cards.add(card);
+    await _save(Preferences.cards, cards.toSet().toList());
   }
 
-  static Future<void> removeAccessToken() async {
-    await _remove(Preferences.authToken);
-  }
-
-  static Future<bool> isLoggedIn() async {
-    final accessToken = await StorageUtils.getAccessToken();
-    return accessToken != null;
+  static Future<void> removeCard(String address) async {
+    final cards = (await _read<List<CardModel>>(Preferences.cards) ??
+        <CardModel>[])
+      ..removeWhere((e) => e.address == address);
+    await _save(Preferences.cards, cards.toList());
   }
 
   /// Private helper functions

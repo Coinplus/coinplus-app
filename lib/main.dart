@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 import 'app.dart';
 import 'constants/flavor_type.dart';
 import 'providers/get_it.dart';
+import 'utils/storage_utils.dart';
 
-Future<void> run({Flavor env = Flavor.DEV}) async {
+Future<void> run({Flavor env = Flavor.PROD}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -19,7 +20,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   await EasyLocalization.ensureInitialized();
 
   registerGetIt(env);
-
+  await StorageUtils.clear();
   runApp(
     EasyLocalization(
       supportedLocales: const [

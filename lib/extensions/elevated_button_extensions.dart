@@ -70,7 +70,7 @@ extension ElevatedButtonExtensions on ThemeData {
       enableFeedback: true,
       overlayColor: MaterialStateProperty.all(overlayColor),
       backgroundColor: MaterialStateProperty.resolveWith(
-            (states) {
+        (states) {
           return states.contains(MaterialState.disabled)
               ? backgroundColor.withOpacity(0.5)
               : backgroundColor;

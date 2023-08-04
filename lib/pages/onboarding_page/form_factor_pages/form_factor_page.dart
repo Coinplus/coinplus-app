@@ -70,7 +70,7 @@ class _FormFactorPageState extends State<FormFactorPage>
                             const Duration(milliseconds: 100),
                           );
                           await router.pop(context);
-                          await router.push(CardFillRoute(receivedData: ''));
+                          await router.push(CardFillRoute());
                         },
                         child: Visibility(
                           visible: _formFactorState.isFirstWidgetVisible,

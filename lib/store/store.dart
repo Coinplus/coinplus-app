@@ -1,13 +1,13 @@
 import 'package:get_it/get_it.dart';
 
-import 'auth/auth_state.dart';
+import 'balance_store/balance_store.dart';
 
 void registerStoreGetIt() {
-  GetIt.I.registerSingleton(AuthState());
+  GetIt.I.registerSingleton(BalanceStore());
 }
 
 void reRegisterStoreGetIt() {
-  final authState = GetIt.I<AuthState>();
-  GetIt.I.unregister(instance: authState);
+  final balancesStore = GetIt.I<BalanceStore>();
+  GetIt.I.unregister(instance: balancesStore);
   registerStoreGetIt();
 }

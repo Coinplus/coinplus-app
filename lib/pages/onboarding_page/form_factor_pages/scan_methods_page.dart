@@ -11,7 +11,6 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
-import '../../../store/balance_store/balance_store.dart';
 
 class ScanMethodsPage extends StatelessWidget {
   const ScanMethodsPage({super.key, required this.controller});
@@ -20,7 +19,6 @@ class ScanMethodsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _balanceState = BalanceStore();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -54,8 +52,6 @@ class ScanMethodsPage extends StatelessWidget {
                 await router.push(
                   CardFillRoute(receivedData: walletAddress.toString()),
                 );
-
-                walletAddress = _balanceState.address;
               },
             );
           },

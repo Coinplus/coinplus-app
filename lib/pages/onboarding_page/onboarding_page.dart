@@ -4,13 +4,13 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../custom_widgets/loading_button.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../themes/app_fonts.dart';
+import '../../widgets/loading_button.dart';
 import 'form_factor_pages/form_factor_page.dart';
 import 'form_factor_pages/scan_methods_page.dart';
 
@@ -24,11 +24,10 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   late PageController _controller = PageController();
+
   @override
   void initState() {
-    _controller = PageController()
-      ..addListener(() {
-      });
+    _controller = PageController()..addListener(() {});
     super.initState();
   }
 
@@ -37,10 +36,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
     _controller.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       body: Align(
@@ -84,8 +82,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             height: 409,
                             decoration: const BoxDecoration(
                               color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.vertical(top: Radius.circular(20)),
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
                             ),
                             child: Column(
                               children: [
@@ -126,10 +125,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                   height: 300,
                                   child: PageView(
                                     controller: _controller,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    children:  [
-                                      ScanMethodsPage(controller: _controller,),
-                                      FormFactorPage(controller: _controller,),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    children: [
+                                      ScanMethodsPage(
+                                        controller: _controller,
+                                      ),
+                                      FormFactorPage(
+                                        controller: _controller,
+                                      ),
                                     ],
                                   ),
                                 ),

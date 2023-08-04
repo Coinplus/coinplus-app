@@ -7,19 +7,19 @@ class FormFactorState = _FormFactorState with _$FormFactorState;
 abstract class _FormFactorState with Store {
   @observable
   bool isFirstWidgetZoomed = false;
-@observable
-bool isSecondWidgetZoomed = false;
-@observable
-bool isFirstWidgetVisible = true;
-@observable
-bool isSecondWidgetVisible = true;
-
+  @observable
+  bool isSecondWidgetZoomed = false;
+  @observable
+  bool isFirstWidgetVisible = true;
+  @observable
+  bool isSecondWidgetVisible = true;
 
   @action
   void cardSelection() {
     isFirstWidgetZoomed = true;
     isSecondWidgetVisible = !isFirstWidgetZoomed;
   }
+
   void barSelection() {
     isSecondWidgetZoomed = true;
     isFirstWidgetVisible = !isSecondWidgetZoomed;
