@@ -19,8 +19,5 @@ Map<String, dynamic> _$$_ConfigToJson(_$_Config instance) => <String, dynamic>{
     };
 
 const _$FlavorEnumMap = {
-  Flavor.TEST: 'TEST',
-  Flavor.DEV: 'DEV',
-  Flavor.STAGING: 'STAGING',
   Flavor.PROD: 'PROD',
 };

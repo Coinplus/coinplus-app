@@ -38,10 +38,12 @@ abstract class _TextFieldStoreBase with Store {
   Future<void> setKeyOne() async {
     _keyOne = _keyOneController.text;
   }
+
   @action
   Future<void> setKeyTwo() async {
     _keyTwo = _keyTwoController.text;
   }
+
   @action
   void selectItemOne() {
     fieldOneSelected = true;

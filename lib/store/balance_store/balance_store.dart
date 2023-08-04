@@ -1,43 +1,111 @@
-import 'dart:convert';
+import 'dart:developer';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/card_type.dart';
+import '../../http/dio.dart';
+import '../../http/repositories/coins_repo.dart';
 import '../../models/card_model/card_model.dart';
+import '../../utils/storage_utils.dart';
 
 part 'balance_store.g.dart';
 
 class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
-  @observable
-  String address = '';
+  @readonly
+  ObservableList<CardModel> _cards = <CardModel>[].asObservable();
+  @readonly
+  ObservableList<CardModel> _bars = <CardModel>[].asObservable();
+  @readonly
+  CardModel? _selectedCard;
+  @readonly
+  ObservableMap<String, bool> _loadings = <String, bool>{}.asObservable();
 
-  @computed
-  String get btcAddress => address;
+  _BalanceStore() {
+    getCardsFromStorage();
+  }
 
-  @action
-  Future<String> getStringFromLocalStorage(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    address = prefs.getString(key) ?? '';
-    return prefs.getString(key) ?? '';
+  Future<void> getCardsFromStorage() async {
+    final allCards = await StorageUtils.getCards();
+    _cards = allCards
+        .where((element) => element.cardType == CardType.CARD)
+        .toList()
+        .asObservable();
+    _bars = allCards
+        .where((element) => element.cardType == CardType.BAR)
+        .toList()
+        .asObservable();
   }
 
   @action
-  Future<CardModel> fetchCardInfo() async {
-    await getStringFromLocalStorage('address');
-    final response = await http.get(
-      Uri.parse(
-        'https://api.blockcypher.com/v1/btc/main/addrs/$btcAddress/balance',
-      ),
-    );
-    if (response.statusCode == 200) {
-      final dynamic data = json.decode(response.body);
-      final cardInfo = CardModel.fromJson(data);
-      return cardInfo;
-    } else {
-      throw Exception('Failed to fetch card info');
+  Future<void> getAllCardsInfo() async {
+    if (_cards.isEmpty) {
+      return;
     }
+    for (final element in _cards) {
+      final card = await _getSingleCardInfo(element.address);
+      if (card != null) {
+        final index = _cards.indexOf(element);
+        _cards.replaceRange(
+          index,
+          index + 1,
+          [
+            element.copyWith(
+              balance: card.balance,
+              totalReceived: card.totalReceived,
+              totalSent: card.totalSent,
+            ),
+          ],
+        );
+      }
+    }
+  }
+
+  @action
+  Future<void> getSelectedCard(String address) async {
+    _selectedCard = CardModel(address: address);
+    _selectedCard = await _getSingleCardInfo(address);
+  }
+
+  Future<CardModel?> _getSingleCardInfo(String address) async {
+    try {
+      _loadings[address] = true;
+      final card = await CoinsClient(dio).getCard(
+        coinName: 'btc',
+        address: address,
+      );
+      return card;
+    } on DioException catch (e, stc) {
+      log(e.message.toString(), stackTrace: stc);
+    } finally {
+      _loadings[address] = false;
+    }
+
+    return null;
+  }
+
+  Future<void> saveToWallet() async {
+    if (_selectedCard == null) {
+      return;
+    }
+    await StorageUtils.addCard(_selectedCard!);
+  }
+
+  void saveSelectedCard() {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    _selectedCard!.cardType == CardType.CARD
+        ? _cards.add(_selectedCard!)
+        : _bars.add(_selectedCard!);
+    StorageUtils.addCard(_selectedCard!);
+  }
+
+  @action
+  void resetSelectedCard() {
+    _selectedCard = null;
   }
 }

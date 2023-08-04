@@ -1,4 +1,3 @@
-
 import 'package:mobx/mobx.dart';
 
 part 'btc_address_validation.g.dart';

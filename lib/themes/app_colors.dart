@@ -8,7 +8,6 @@ class AppColors {
   static const navBarColor = Color(0xFF00457C);
   static const navBarColorWithOpacity = Color(0xFF1F99F0);
 
-
   static const yellow = Color(0xFFFEAE1C);
   static const charcoal = Color(0xFF212121);
   static const chalkboardBlack = Color(0xFF262C2E);

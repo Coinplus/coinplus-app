@@ -7,7 +7,7 @@ part of 'production.dart';
 // **************************************************************************
 
 const _$productionEnvJsonLiteral = {
-  'apiUrl': 'https://example.com',
+  'apiUrl': 'https://api.blockcypher.com/v1',
   'env': 'PROD',
   'production': true
 };

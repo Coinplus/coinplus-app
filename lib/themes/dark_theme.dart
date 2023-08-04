@@ -377,28 +377,47 @@ final darkTheme = base.copyWith(
       fontSize: 20,
       height: 1.1,
     ),
-  ), checkboxTheme: CheckboxThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return AppColors.red; }
- return null;
- }),
- ), radioTheme: RadioThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return AppColors.red; }
- return null;
- }),
- ), switchTheme: SwitchThemeData(
- thumbColor: MaterialStateProperty.resolveWith<Color?>((states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return AppColors.red; }
- return null;
- }),
- trackColor: MaterialStateProperty.resolveWith<Color?>((states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return AppColors.red; }
- return null;
- }),
- ),
+  ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return AppColors.red;
+      }
+      return null;
+    }),
+  ),
+  radioTheme: RadioThemeData(
+    fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return AppColors.red;
+      }
+      return null;
+    }),
+  ),
+  switchTheme: SwitchThemeData(
+    thumbColor: MaterialStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return AppColors.red;
+      }
+      return null;
+    }),
+    trackColor: MaterialStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return AppColors.red;
+      }
+      return null;
+    }),
+  ),
 );
