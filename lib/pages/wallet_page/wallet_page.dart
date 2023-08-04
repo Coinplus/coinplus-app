@@ -59,7 +59,6 @@ class _WalletPageState extends State<WalletPage> {
                 context.width,
                 (context.width * 0.44266666666666665).toDouble(),
               ),
-              //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
               painter: HeaderCustomPainter(),
             ),
           ),
