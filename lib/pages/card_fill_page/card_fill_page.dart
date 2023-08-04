@@ -211,7 +211,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: Colors.white,
-                                                      fontSize: 10,
+                                                      fontSize: 12,
                                                     ),
                                                   ).expandedHorizontally();
                                                 },
@@ -268,9 +268,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                     );
                                                   }
                                                   return Text(
-                                                    (_balanceStore.selectedCard
-                                                                ?.balance ??
-                                                            0)
+                                                    (_balanceStore.selectedCard !=
+                                                                null
+                                                            ? '\$${_balanceStore.selectedCard?.balance}.00'
+                                                            : '')
                                                         .toString(),
                                                     style: const TextStyle(
                                                       fontFamily: FontFamily
@@ -278,7 +279,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: Colors.white,
-                                                      fontSize: 10,
+                                                      fontSize: 20,
                                                     ),
                                                   ).expandedHorizontally();
                                                 },
