@@ -87,7 +87,13 @@ dev_dependencies:
   dart_code_metrics: ^5.7.2
   theme_tailor: ^2.0.0
   retrofit_generator: ^7.0.8
+  flutter_launcher_icons: ^0.13.1
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icons/app_icon.png"
 
 flutter_gen:
   # Optional
