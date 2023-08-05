@@ -331,6 +331,7 @@ class _CardFillPageState extends State<CardFillPage>
                                       ?.unfocus();
                                 },
                                 decoration: InputDecoration(
+                                  fillColor: Colors.white,
                                   hintText: 'Write here your card address ',
                                   hintMaxLines: 2,
                                   hintStyle: TextStyle(

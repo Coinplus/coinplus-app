@@ -2,24 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app_colors.dart';
 import 'app_fonts.dart';
 import 'app_styles.dart';
 
 final base = ThemeData.light();
 
 final lightTheme = base.copyWith(
-  shadowColor: AppColors.gray,
+  shadowColor: Colors.black,
   colorScheme: base.colorScheme.copyWith(
-    primary: AppColors.white,
-    onPrimary: AppColors.charcoal,
+    primary: Colors.white,
+    onPrimary: Colors.black54,
   ),
   tabBarTheme: TabBarTheme(
     unselectedLabelStyle: base.primaryTextTheme.labelLarge!.copyWith(
-      color: AppColors.white,
+      color: Colors.white,
     ),
     labelStyle: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black54,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 16,
@@ -27,37 +26,37 @@ final lightTheme = base.copyWith(
     ),
     indicator: BoxDecoration(
       borderRadius: BorderRadius.circular(13),
-      color: AppColors.white,
+      color: Colors.white,
     ),
     indicatorSize: TabBarIndicatorSize.tab,
-    labelColor: AppColors.charcoal,
-    unselectedLabelColor: AppColors.white,
+    labelColor: Colors.black54,
+    unselectedLabelColor: Colors.white,
     labelPadding: const EdgeInsets.symmetric(
       horizontal: 10,
       vertical: 5,
     ),
   ),
-  primaryColor: AppColors.yellow,
-  // shadowColor: Colors.grey[300],
-  scaffoldBackgroundColor: AppColors.white,
-  dividerColor: AppColors.extraLightGray,
+  primaryColor: Colors.yellow,
+  // shadowColor: Colors.black[300],
+  scaffoldBackgroundColor: Colors.white,
+  dividerColor: Colors.black,
   dividerTheme: base.dividerTheme.copyWith(
     space: 1,
     indent: 24,
     endIndent: 24,
-    color: AppColors.lightGray,
+    color: Colors.black,
   ),
-  primaryIconTheme: base.primaryIconTheme.copyWith(color: AppColors.charcoal),
-  iconTheme: base.iconTheme.copyWith(color: AppColors.charcoal),
+  primaryIconTheme: base.primaryIconTheme.copyWith(color: Colors.black54),
+  iconTheme: base.iconTheme.copyWith(color: Colors.black54),
   appBarTheme: base.appBarTheme.copyWith(
     centerTitle: true,
     elevation: 0,
     iconTheme: const IconThemeData(
-      color: AppColors.charcoal,
+      color: Colors.black,
     ),
     titleTextStyle: base.primaryTextTheme.titleLarge!.copyWith(
       fontFamily: FontFamily.CeraPro,
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontWeight: FontWeight.bold,
       fontSize: 20,
       letterSpacing: -.4,
@@ -68,77 +67,77 @@ final lightTheme = base.copyWith(
         .copyWith(
           bodyLarge: base.textTheme.bodyLarge!.copyWith(
             fontFamily: FontFamily.CeraPro,
-            color: AppColors.charcoal,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           titleLarge: base.textTheme.titleLarge!.copyWith(
             fontFamily: FontFamily.CeraPro,
-            color: AppColors.chalkboardBlack,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           displaySmall: base.textTheme.displaySmall!.copyWith(
             fontFamily: FontFamily.CeraPro,
-            color: AppColors.charcoal,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           headlineMedium: base.textTheme.headlineMedium!.copyWith(
             fontFamily: FontFamily.CeraPro,
-            color: AppColors.charcoal,
+            color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
         )
         .bodyMedium,
   ),
   bottomNavigationBarTheme: base.bottomNavigationBarTheme.copyWith(
-    backgroundColor: AppColors.white,
+    backgroundColor: Colors.white,
     elevation: 0,
   ),
   chipTheme: base.chipTheme.copyWith(
     backgroundColor: Colors.transparent,
     labelPadding: const EdgeInsets.symmetric(horizontal: 20),
     labelStyle: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontWeight: FontWeight.w500,
       fontFamily: FontFamily.CeraPro,
     ),
-    selectedColor: AppColors.charcoal,
+    selectedColor: Colors.black54,
     secondaryLabelStyle: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontWeight: FontWeight.w500,
       fontFamily: FontFamily.CeraPro,
     ),
     secondarySelectedColor: Colors.transparent,
   ),
   sliderTheme: base.sliderTheme.copyWith(
-    activeTrackColor: AppColors.red,
-    inactiveTrackColor: AppColors.extraLightGray,
+    activeTrackColor: Colors.grey,
+    inactiveTrackColor: Colors.black,
     overlayColor: Colors.transparent,
-    thumbColor: AppColors.red,
+    thumbColor: Colors.grey,
     thumbShape: SliderComponentShape.noOverlay,
-    valueIndicatorColor: AppColors.red,
+    valueIndicatorColor: Colors.grey,
   ),
   textSelectionTheme: base.textSelectionTheme.copyWith(
-    cursorColor: AppColors.yellow,
-    selectionHandleColor: AppColors.yellow,
+    cursorColor: Colors.yellow,
+    selectionHandleColor: Colors.yellow,
   ),
   cupertinoOverrideTheme: const CupertinoThemeData(
-    primaryColor: AppColors.yellow,
+    primaryColor: Colors.yellow,
   ),
   brightness: Brightness.light,
   inputDecorationTheme: base.inputDecorationTheme.copyWith(
     errorStyle: const TextStyle(
-      color: AppColors.red,
+      color: Colors.grey,
       fontFamily: FontFamily.CeraPro,
     ),
     hintStyle: base.primaryTextTheme.bodyLarge!.copyWith(
-      color: AppColors.darkGray,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 16,
       letterSpacing: -.32,
       height: 1.25,
     ),
-    fillColor: AppColors.extraLightGray,
+    fillColor: Colors.white,
     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
     border: const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -163,7 +162,7 @@ final lightTheme = base.copyWith(
     ),
     filled: true,
     labelStyle: const TextStyle(
-      color: AppColors.darkGray,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 16,
@@ -173,7 +172,7 @@ final lightTheme = base.copyWith(
   ),
   buttonTheme: base.buttonTheme.copyWith(
     textTheme: ButtonTextTheme.primary,
-    buttonColor: AppColors.white,
+    buttonColor: Colors.white,
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
@@ -187,14 +186,14 @@ final lightTheme = base.copyWith(
         (states) {
           return states.contains(MaterialState.disabled)
               ? TextStyle(
-                  color: AppColors.burgundy.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.5),
                   fontFamily: FontFamily.CeraPro,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1.1,
                 )
               : const TextStyle(
-                  color: AppColors.burgundy,
+                  color: Colors.black,
                   fontFamily: FontFamily.CeraPro,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -209,44 +208,43 @@ final lightTheme = base.copyWith(
       }),
       foregroundColor: MaterialStateProperty.resolveWith((states) {
         return states.contains(MaterialState.disabled)
-            ? AppColors.burgundy.withOpacity(0.4)
-            : AppColors.burgundy;
+            ? Colors.grey.withOpacity(0.4)
+            : Colors.grey;
       }),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return states.contains(MaterialState.disabled)
-              ? AppColors.extraLightGray.withOpacity(0.4)
-              : AppColors.extraLightGray;
+              ? Colors.black.withOpacity(0.4)
+              : Colors.black;
         },
       ),
       overlayColor: MaterialStateProperty.all(
-        AppColors.grayMedium.withOpacity(.5),
+        Colors.black,
       ),
     ),
   ),
   tooltipTheme: TooltipThemeData(
     preferBelow: false,
     decoration: BoxDecoration(
-      color: AppColors.burgundy,
+      color: Colors.grey,
       borderRadius: BorderRadius.circular(8),
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: MaterialStateProperty.all(AppColors.yellow),
+      shadowColor: MaterialStateProperty.all(Colors.yellow),
       padding: MaterialStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 16,
         ),
       ),
-      overlayColor:
-          MaterialStateProperty.all(AppColors.grayMedium.withOpacity(.5)),
+      overlayColor: MaterialStateProperty.all(Colors.black.withOpacity(.5)),
       elevation: MaterialStateProperty.all(0),
       textStyle: MaterialStateProperty.resolveWith(
         (states) {
           return const TextStyle(
-            color: AppColors.white,
+            color: Colors.white,
             fontFamily: FontFamily.CeraPro,
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -259,12 +257,12 @@ final lightTheme = base.copyWith(
           borderRadius: BorderRadius.circular(22),
         ),
       ),
-      foregroundColor: MaterialStateProperty.all(AppColors.white),
+      foregroundColor: MaterialStateProperty.all(Colors.white),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return states.contains(MaterialState.disabled)
-              ? AppColors.yellow.withOpacity(0.5)
-              : AppColors.yellow;
+              ? Colors.yellow.withOpacity(0.5)
+              : Colors.yellow;
         },
       ),
     ),
@@ -272,13 +270,13 @@ final lightTheme = base.copyWith(
   outlinedButtonTheme: OutlinedButtonThemeData(style: outlineButtonStyle),
   textTheme: base.primaryTextTheme.copyWith(
     displayLarge: base.primaryTextTheme.displayLarge!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 26,
     ),
     displayMedium: base.primaryTextTheme.displayMedium!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 38,
@@ -286,7 +284,7 @@ final lightTheme = base.copyWith(
       height: 1,
     ),
     displaySmall: base.primaryTextTheme.displaySmall!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 28,
@@ -294,7 +292,7 @@ final lightTheme = base.copyWith(
       height: 1,
     ),
     headlineMedium: base.primaryTextTheme.headlineMedium!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 26,
@@ -303,7 +301,7 @@ final lightTheme = base.copyWith(
     ),
     headlineSmall: base.primaryTextTheme.headlineSmall!.copyWith(
       fontFamily: FontFamily.CeraPro,
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontWeight: FontWeight.bold,
       fontSize: 24,
       letterSpacing: -.48,
@@ -311,14 +309,14 @@ final lightTheme = base.copyWith(
     ),
     titleLarge: base.primaryTextTheme.titleLarge!.copyWith(
       fontFamily: FontFamily.CeraPro,
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontWeight: FontWeight.bold,
       fontSize: 20,
       letterSpacing: -.4,
       height: 1.1,
     ),
     titleMedium: base.primaryTextTheme.titleMedium!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 16,
@@ -326,7 +324,7 @@ final lightTheme = base.copyWith(
       letterSpacing: -.32,
     ),
     titleSmall: base.primaryTextTheme.titleSmall!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.w500,
       fontSize: 16,
@@ -334,7 +332,7 @@ final lightTheme = base.copyWith(
       letterSpacing: -.32,
     ),
     bodyLarge: base.primaryTextTheme.bodyLarge!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 16,
@@ -342,7 +340,7 @@ final lightTheme = base.copyWith(
       height: 1.25,
     ),
     bodyMedium: base.primaryTextTheme.bodyMedium!.copyWith(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 14,
@@ -350,7 +348,7 @@ final lightTheme = base.copyWith(
       height: 1.25,
     ),
     bodySmall: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 12,
@@ -358,7 +356,7 @@ final lightTheme = base.copyWith(
       letterSpacing: -.16,
     ),
     labelSmall: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.normal,
       fontSize: 10,
@@ -366,7 +364,7 @@ final lightTheme = base.copyWith(
       letterSpacing: -.1,
     ),
     labelLarge: const TextStyle(
-      color: AppColors.charcoal,
+      color: Colors.black,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 20,
@@ -379,7 +377,7 @@ final lightTheme = base.copyWith(
         return null;
       }
       if (states.contains(MaterialState.selected)) {
-        return AppColors.red;
+        return Colors.grey;
       }
       return null;
     }),
@@ -390,7 +388,7 @@ final lightTheme = base.copyWith(
         return null;
       }
       if (states.contains(MaterialState.selected)) {
-        return AppColors.red;
+        return Colors.grey;
       }
       return null;
     }),
@@ -401,7 +399,7 @@ final lightTheme = base.copyWith(
         return null;
       }
       if (states.contains(MaterialState.selected)) {
-        return AppColors.red;
+        return Colors.grey;
       }
       return null;
     }),
@@ -410,7 +408,7 @@ final lightTheme = base.copyWith(
         return null;
       }
       if (states.contains(MaterialState.selected)) {
-        return AppColors.red;
+        return Colors.grey;
       }
       return null;
     }),

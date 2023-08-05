@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,9 +16,12 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/data_model/data_model.dart';
+import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
+import '../onboarding_page/form_factor_pages/form_factor_page.dart';
+import '../onboarding_page/form_factor_pages/scan_methods_page.dart';
 import 'btc_price/btc_price.dart';
 
 @RoutePage()
@@ -29,6 +34,7 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  late final PageController _controller = PageController();
 
   @override
   void initState() {
@@ -109,7 +115,7 @@ class _WalletPageState extends State<WalletPage> {
           ),
           //Cards Slider
           Positioned(
-            top: 210,
+            top: 230,
             left: 0,
             right: 0,
             child: Observer(
@@ -117,7 +123,85 @@ class _WalletPageState extends State<WalletPage> {
                 return CarouselSlider.builder(
                   itemBuilder: (context, index, constrains) {
                     if (index == _balanceStore.cards.length) {
-                      return Assets.images.addCard.image();
+                      return ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return AnimatedOpacity(
+                                duration: const Duration(milliseconds: 300),
+                                opacity: 1,
+                                child: Container(
+                                  height: 409,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Gap(25),
+                                      Row(
+                                        children: [
+                                          const Gap(16),
+                                          ScaleTap(
+                                            enableFeedback: false,
+                                            onPressed: () {
+                                              router.pop(context);
+                                            },
+                                            child: const Icon(
+                                              Icons.close,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          const Gap(75),
+                                          const Text(
+                                            'Add new wallet',
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatSemiBold,
+                                              fontSize: 17,
+                                              color: AppColors.primaryTextColor,
+                                            ),
+                                          ).paddingHorizontal(),
+                                        ],
+                                      ),
+                                      const Gap(20),
+                                      const Divider(
+                                        thickness: 2,
+                                        height: 2,
+                                        indent: 15,
+                                        endIndent: 15,
+                                        color: Color(0xFFF1F1F1),
+                                      ),
+                                      SizedBox(
+                                        height: 300,
+                                        child: PageView(
+                                          controller: _controller,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          children: [
+                                            ScanMethodsPage(
+                                              controller: _controller,
+                                            ),
+                                            FormFactorPage(
+                                              controller: _controller,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Assets.images.addCard.image(),
+                      );
                     }
 
                     final card = _balanceStore.cards[index];
@@ -125,13 +209,13 @@ class _WalletPageState extends State<WalletPage> {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            blurRadius: 5,
-                            spreadRadius: 5,
-                          ),
-                        ],
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Colors.grey.withOpacity(0.2),
+                        //     blurRadius: 5,
+                        //     spreadRadius: 10,
+                        //   ),
+                        // ],
                       ),
                       child: ScaleTap(
                         onPressed: () {},
@@ -140,15 +224,20 @@ class _WalletPageState extends State<WalletPage> {
                           child: Stack(
                             children: [
                               card.cardColor.image.image(
-                                height: 380,
+                                height: 400,
                               ),
                               Positioned(
-                                top: 225,
+                                top: 232,
                                 left: 10,
                                 right: 10,
                                 child: Container(
-                                  height: 40,
-                                  padding: const EdgeInsets.all(4),
+                                  height: 44,
+                                  padding: const EdgeInsets.only(
+                                    left: 4,
+                                    right: 8,
+                                    top: 8,
+                                    bottom: 8,
+                                  ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(6),
                                     color: Colors.black.withOpacity(0.3),
@@ -175,7 +264,8 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
+                                              child:
+                                                  CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
@@ -187,7 +277,7 @@ class _WalletPageState extends State<WalletPage> {
                                                   FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
-                                              fontSize: 10,
+                                              fontSize: 11,
                                             ),
                                           ).expandedHorizontally();
                                         },
@@ -197,12 +287,17 @@ class _WalletPageState extends State<WalletPage> {
                                 ),
                               ),
                               Positioned(
-                                top: 270,
+                                top: 280,
                                 left: 10,
                                 right: 10,
                                 child: Container(
-                                  height: 50,
-                                  padding: const EdgeInsets.all(5),
+                                  height: 55,
+                                  padding: const EdgeInsets.only(
+                                    left: 4,
+                                    right: 8,
+                                    top: 8,
+                                    bottom: 8,
+                                  ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(6),
                                     color: Colors.black.withOpacity(0.3),
@@ -229,19 +324,21 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
+                                              child:
+                                                  CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
                                           }
                                           return Text(
-                                            (card.balance ?? 0).toString(),
+                                            '\$${card.balance}.00'
+                                                .toString(),
                                             style: const TextStyle(
                                               fontFamily:
                                                   FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
-                                              fontSize: 10,
+                                              fontSize: 20,
                                             ),
                                           ).expandedHorizontally();
                                         },
@@ -326,7 +423,7 @@ class _WalletPageState extends State<WalletPage> {
 
           //Send and Receive
           Positioned(
-            bottom: 180,
+            bottom: 150,
             left: 77,
             right: 78,
             child: Container(
@@ -387,7 +484,7 @@ class _WalletPageState extends State<WalletPage> {
 
           //BTC Price
           Positioned(
-            bottom: 63,
+            bottom: 35,
             left: 16,
             right: 16,
             child: Column(

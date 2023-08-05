@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
 import 'app_fonts.dart';
 
 const BoxDecoration splashScreenGradient = BoxDecoration(
@@ -29,7 +28,7 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
 );
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-  backgroundColor: AppColors.red,
+  backgroundColor: Colors.red,
   minimumSize: const Size(88, 36),
   padding: const EdgeInsets.all(16),
   shape: const RoundedRectangleBorder(
@@ -38,7 +37,7 @@ final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
   textStyle: const TextStyle(
     fontFamily: FontFamily.CeraPro,
     fontWeight: FontWeight.w500,
-    color: AppColors.white,
+    color: Colors.white,
   ),
 );
 
@@ -56,7 +55,7 @@ final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
   side: MaterialStateProperty.resolveWith<BorderSide>(
     (states) {
       if (states.contains(MaterialState.pressed)) {
-        return const BorderSide(color: AppColors.red);
+        return const BorderSide(color: Colors.red);
       }
       return const BorderSide();
     },
@@ -64,7 +63,7 @@ final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
 );
 
 const TextStyle pinThemeTextStyle = TextStyle(
-  color: AppColors.charcoal,
+  color: Colors.white,
   fontSize: 27,
   fontFamily: FontFamily.CeraPro,
 );
