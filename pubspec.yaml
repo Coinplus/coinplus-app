@@ -80,6 +80,7 @@ dev_dependencies:
   # Code generator for MobX that adds support for annotating your code with
   # @observable, @computed, @action and also creating Store classes.
   mobx_codegen: ^2.2.0
+  collection: ^1.17.2
 
   # Code generation for immutable classes that has a simple
   # syntax/API without compromising on the features.

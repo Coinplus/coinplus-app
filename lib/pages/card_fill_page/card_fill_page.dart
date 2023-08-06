@@ -479,8 +479,16 @@ class _CardFillPageState extends State<CardFillPage>
             right: 10,
             child: LoadingButton(
               onPressed: () {
-                _balanceStore.saveSelectedCard();
-                router.push(const WalletProtectionRoute());
+                try {
+                  _balanceStore.saveSelectedCard();
+                  router.push(const WalletProtectionRoute());
+                } catch (e) {
+                  if (!router.stackData
+                      .indexWhere((element) => element.name == WalletRoute.name)
+                      .isNegative) {
+                    router.pop();
+                  }
+                }
               },
               child: const Text(
                 'Save to wallet',

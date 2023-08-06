@@ -125,6 +125,9 @@ class $AssetsIconsGen {
   AssetGenImage get apiIntegrationConnection =>
       const AssetGenImage('assets/icons/api_integration_connection.png');
 
+  /// File path: assets/icons/app_icon.png
+  AssetGenImage get appIcon => const AssetGenImage('assets/icons/app_icon.png');
+
   /// File path: assets/icons/apps.png
   AssetGenImage get apps => const AssetGenImage('assets/icons/apps.png');
 
@@ -1241,6 +1244,7 @@ class $AssetsIconsGen {
         alertOctagonError,
         analyticsGraphChart,
         apiIntegrationConnection,
+        appIcon,
         apps,
         archive,
         arrowBottomLeft,
