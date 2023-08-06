@@ -7,6 +7,7 @@ import '../../constants/card_type.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/card_model/card_model.dart';
+import '../../models/coin_dto/coin_dto.dart';
 import '../../utils/storage_utils.dart';
 
 part 'balance_store.g.dart';
@@ -14,6 +15,8 @@ part 'balance_store.g.dart';
 class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
+  @readonly
+  ObservableList<CoinDto> _coins = <CoinDto>[].asObservable();
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
@@ -25,6 +28,11 @@ abstract class _BalanceStore with Store {
 
   _BalanceStore() {
     getCardsFromStorage();
+    getCoins();
+  }
+
+  Future<void> getCoins() async {
+    _coins = (await CoinsClient(dio).getCoins()).asObservable();
   }
 
   Future<void> getCardsFromStorage() async {
@@ -86,22 +94,25 @@ abstract class _BalanceStore with Store {
     return null;
   }
 
-  Future<void> saveToWallet() async {
-    if (_selectedCard == null) {
-      return;
-    }
-    await StorageUtils.addCard(_selectedCard!);
-  }
-
   void saveSelectedCard() {
     if (_selectedCard == null) {
       return;
     }
 
-    _selectedCard!.cardType == CardType.CARD
-        ? _cards.add(_selectedCard!)
-        : _bars.add(_selectedCard!);
-    StorageUtils.addCard(_selectedCard!);
+    final cards = [..._cards, ..._bars];
+
+    final isCardNotExist = cards
+        .indexWhere((element) => element.address == _selectedCard?.address)
+        .isNegative;
+
+    if (isCardNotExist) {
+      _selectedCard!.cardType == CardType.CARD
+          ? _cards.add(_selectedCard!)
+          : _bars.add(_selectedCard!);
+      StorageUtils.addCard(_selectedCard!);
+    } else {
+      throw Exception('Card is already added');
+    }
   }
 
   @action

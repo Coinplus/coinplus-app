@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,14 +14,12 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../models/data_model/data_model.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
 import '../onboarding_page/form_factor_pages/form_factor_page.dart';
 import '../onboarding_page/form_factor_pages/scan_methods_page.dart';
-import 'btc_price/btc_price.dart';
 
 @RoutePage()
 class WalletPage extends StatefulWidget {
@@ -264,8 +261,7 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child:
-                                                  CupertinoActivityIndicator(
+                                              child: CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
@@ -324,15 +320,13 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child:
-                                                  CupertinoActivityIndicator(
+                                              child: CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
                                           }
                                           return Text(
-                                            '\$${card.balance}.00'
-                                                .toString(),
+                                            '\$${card.balance}.00'.toString(),
                                             style: const TextStyle(
                                               fontFamily:
                                                   FontFamily.redHatMedium,
@@ -510,82 +504,73 @@ class _WalletPageState extends State<WalletPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Assets.icons.bTCIcon.image(height: 24),
-                        const Gap(8),
-                        const Text(
-                          'Bitcoin',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Gap(8),
-                        const Text(
-                          'BTC',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 10,
-                            color: AppColors.textHintsColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                    child: Observer(
+                      builder: (_) {
+                        final coin = _balanceStore.coins.firstWhereOrNull(
+                          (element) => element.id == 'bitcoin',
+                        );
+                        if (coin == null) {
+                          return const SizedBox();
+                        }
+
+                        return Row(
                           children: [
-                            FutureBuilder<DataModel>(
-                              future: getCryptoPrice(),
-                              builder: (context, snapData) {
-                                switch (snapData.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    );
-                                  default:
-                                    if (snapData.hasError) {
-                                      return const Text('Loading...');
-                                    } else {
-                                      return buildCoinWidget(snapData.data!);
-                                    }
-                                }
-                              },
+                            Assets.icons.bTCIcon.image(height: 24),
+                            const Gap(8),
+                            Text(
+                              coin.name,
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
                             ),
-                            const Gap(4),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: const Color(0xFF00BA1E),
+                            const Gap(8),
+                            Text(
+                              coin.symbol.toUpperCase(),
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 10,
+                                color: AppColors.textHintsColor,
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(3),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.arrow_drop_up,
-                                      size: 15,
-                                      color: Colors.white,
+                            ),
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                buildCoinWidget(coin.currentPrice),
+                                const Gap(4),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: const Color(0xFF00BA1E),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.arrow_drop_up,
+                                          size: 15,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '1.46%',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -598,14 +583,14 @@ class _WalletPageState extends State<WalletPage> {
   }
 }
 
-Widget buildCoinWidget(DataModel dataModel) {
+Widget buildCoinWidget(num price) {
   final myFormat = NumberFormat.decimalPattern('en_us');
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '\$${myFormat.format(dataModel.price)}',
+          '\$${myFormat.format(price).toString()}',
           style: const TextStyle(
             fontSize: 16,
             fontFamily: FontFamily.redHatMedium,

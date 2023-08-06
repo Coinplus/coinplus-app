@@ -23,6 +23,7 @@ mixin _$Config {
   Flavor get env => throw _privateConstructorUsedError;
   bool get production => throw _privateConstructorUsedError;
   String get apiUrl => throw _privateConstructorUsedError;
+  String get coinsUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $ConfigCopyWith<$Res> {
   factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
       _$ConfigCopyWithImpl<$Res, Config>;
   @useResult
-  $Res call({Flavor env, bool production, String apiUrl});
+  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? env = null,
     Object? production = null,
     Object? apiUrl = null,
+    Object? coinsUrl = null,
   }) {
     return _then(_value.copyWith(
       env: null == env
@@ -67,6 +69,10 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
           ? _value.apiUrl
           : apiUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      coinsUrl: null == coinsUrl
+          ? _value.coinsUrl
+          : coinsUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -77,7 +83,7 @@ abstract class _$$_ConfigCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       __$$_ConfigCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Flavor env, bool production, String apiUrl});
+  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl});
 }
 
 /// @nodoc
@@ -93,6 +99,7 @@ class __$$_ConfigCopyWithImpl<$Res>
     Object? env = null,
     Object? production = null,
     Object? apiUrl = null,
+    Object? coinsUrl = null,
   }) {
     return _then(_$_Config(
       env: null == env
@@ -107,6 +114,10 @@ class __$$_ConfigCopyWithImpl<$Res>
           ? _value.apiUrl
           : apiUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      coinsUrl: null == coinsUrl
+          ? _value.coinsUrl
+          : coinsUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -115,7 +126,10 @@ class __$$_ConfigCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Config implements _Config {
   _$_Config(
-      {required this.env, required this.production, required this.apiUrl});
+      {required this.env,
+      required this.production,
+      required this.apiUrl,
+      required this.coinsUrl});
 
   factory _$_Config.fromJson(Map<String, dynamic> json) =>
       _$$_ConfigFromJson(json);
@@ -126,10 +140,12 @@ class _$_Config implements _Config {
   final bool production;
   @override
   final String apiUrl;
+  @override
+  final String coinsUrl;
 
   @override
   String toString() {
-    return 'Config(env: $env, production: $production, apiUrl: $apiUrl)';
+    return 'Config(env: $env, production: $production, apiUrl: $apiUrl, coinsUrl: $coinsUrl)';
   }
 
   @override
@@ -140,12 +156,15 @@ class _$_Config implements _Config {
             (identical(other.env, env) || other.env == env) &&
             (identical(other.production, production) ||
                 other.production == production) &&
-            (identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl));
+            (identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl) &&
+            (identical(other.coinsUrl, coinsUrl) ||
+                other.coinsUrl == coinsUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, env, production, apiUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, env, production, apiUrl, coinsUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -165,7 +184,8 @@ abstract class _Config implements Config {
   factory _Config(
       {required final Flavor env,
       required final bool production,
-      required final String apiUrl}) = _$_Config;
+      required final String apiUrl,
+      required final String coinsUrl}) = _$_Config;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$_Config.fromJson;
 
@@ -175,6 +195,8 @@ abstract class _Config implements Config {
   bool get production;
   @override
   String get apiUrl;
+  @override
+  String get coinsUrl;
   @override
   @JsonKey(ignore: true)
   _$$_ConfigCopyWith<_$_Config> get copyWith =>

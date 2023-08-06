@@ -8,6 +8,7 @@ part of 'production.dart';
 
 const _$productionEnvJsonLiteral = {
   'apiUrl': 'https://api.blockcypher.com/v1',
+  'coinsUrl': 'https://api.coingecko.com/api/v3',
   'env': 'PROD',
   'production': true
 };
