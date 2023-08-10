@@ -1563,6 +1563,12 @@ class $AssetsImagesGen {
   AssetGenImage get orangeCard =>
       const AssetGenImage('assets/images/Orange_card.png');
 
+  /// File path: assets/images/Secret1.png
+  AssetGenImage get secret1 => const AssetGenImage('assets/images/Secret1.png');
+
+  /// File path: assets/images/Secret2.png
+  AssetGenImage get secret2 => const AssetGenImage('assets/images/Secret2.png');
+
   /// File path: assets/images/Subtract.png
   AssetGenImage get subtract =>
       const AssetGenImage('assets/images/Subtract.png');
@@ -1629,6 +1635,10 @@ class $AssetsImagesGen {
   AssetGenImage get viewBack =>
       const AssetGenImage('assets/images/view_back.png');
 
+  /// File path: assets/images/view_back_card.png
+  AssetGenImage get viewBackCard =>
+      const AssetGenImage('assets/images/view_back_card.png');
+
   /// File path: assets/images/view_front.png
   AssetGenImage get viewFront =>
       const AssetGenImage('assets/images/view_front.png');
@@ -1646,6 +1656,8 @@ class $AssetsImagesGen {
         inactiveBar,
         manualFill,
         orangeCard,
+        secret1,
+        secret2,
         subtract,
         whiteCard,
         barEndView,
@@ -1663,6 +1675,7 @@ class $AssetsImagesGen {
         qrCode,
         stylus,
         viewBack,
+        viewBackCard,
         viewFront,
         walletProtectImage
       ];

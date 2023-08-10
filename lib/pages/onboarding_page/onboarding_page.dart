@@ -41,193 +41,194 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
-      body: Align(
-        alignment: Alignment.bottomCenter,
-        child: ListView(
-          children: [
-            Column(
-              children: [
-                const Gap(184),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Gap(16),
-                    SizedBox(
-                      height: 56,
-                      child: Assets.images.coinpluslogo.image(),
-                    ),
-                  ],
-                ),
-                const Gap(74),
-                const Text(
-                  'Hey there,\nlet’s connect your new wallet',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: FontFamily.RedHatSemiBold,
-                    color: AppColors.primaryTextColor,
-                  ),
-                ),
-                const Gap(74),
-                LoadingButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) {
-                        return AnimatedOpacity(
-                          duration: const Duration(milliseconds: 300),
-                          opacity: 1,
-                          child: Container(
-                            height: 409,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
+      body: Column(
+        children: [
+          const Spacer(
+            flex: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Gap(16),
+              SizedBox(
+                height: 56,
+                child: Assets.images.coinpluslogo.image(),
+              ),
+            ],
+          ),
+          const Spacer(
+            flex: 2,
+          ),
+          const Text(
+            'Hey there,\nlet’s connect your new wallet',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              fontFamily: FontFamily.RedHatSemiBold,
+              color: AppColors.primaryTextColor,
+            ),
+          ),
+          const Spacer(
+            flex: 2,
+          ),
+          LoadingButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return AnimatedOpacity(
+                    duration: const Duration(milliseconds: 300),
+                    opacity: 1,
+                    child: Container(
+                      height: 409,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          const Gap(25),
+                          Row(
+                            children: [
+                              const Gap(16),
+                              IconButton(
+                                onPressed: () {
+                                  router.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.close_sharp,
+                                  size: 25,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            child: Column(
+                              const Gap(28),
+                              const Text(
+                                'Start with your wallet',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.RedHatSemiBold,
+                                  fontSize: 17,
+                                  color: AppColors.primaryTextColor,
+                                ),
+                              ).paddingHorizontal(),
+                            ],
+                          ),
+                          const Gap(10),
+                          const Divider(
+                            thickness: 2,
+                            height: 2,
+                            indent: 15,
+                            endIndent: 15,
+                            color: Color(0xFFF1F1F1),
+                          ),
+                          SizedBox(
+                            height: 290,
+                            child: PageView(
+                              controller: _controller,
+                              physics: const NeverScrollableScrollPhysics(),
                               children: [
-                                const Gap(25),
-                                Row(
-                                  children: [
-                                    const Gap(16),
-                                    ScaleTap(
-                                      enableFeedback: false,
-                                      onPressed: () {
-                                        router.pop(context);
-                                      },
-                                      child: const Icon(
-                                        Icons.close,
-                                        size: 24,
-                                      ),
-                                    ),
-                                    const Gap(58),
-                                    const Text(
-                                      'Start with your wallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.RedHatSemiBold,
-                                        fontSize: 17,
-                                        color: AppColors.primaryTextColor,
-                                      ),
-                                    ).paddingHorizontal(),
-                                  ],
+                                ScanMethodsPage(
+                                  controller: _controller,
                                 ),
-                                const Gap(20),
-                                const Divider(
-                                  thickness: 2,
-                                  height: 2,
-                                  indent: 15,
-                                  endIndent: 15,
-                                  color: Color(0xFFF1F1F1),
-                                ),
-                                SizedBox(
-                                  height: 300,
-                                  child: PageView(
-                                    controller: _controller,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    children: [
-                                      ScanMethodsPage(
-                                        controller: _controller,
-                                      ),
-                                      FormFactorPage(
-                                        controller: _controller,
-                                      ),
-                                    ],
-                                  ),
+                                FormFactorPage(
+                                  controller: _controller,
                                 ),
                               ],
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Text(
-                    'Connect wallet',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.RedHatSemiBold,
-                    ),
-                  ),
-                ).paddingHorizontal(63),
-                const Gap(28),
-                ScaleTap(
-                  enableFeedback: false,
-                  onPressed: () async {
-                    final url = Uri.parse('https://coinplus.com/shop/');
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    }
-                  },
-                  child: const Text(
-                    "Don't have a card?",
-                    style: TextStyle(
-                      fontFamily: FontFamily.RedHatSemiBold,
-                      fontSize: 15,
-                      color: AppColors.primaryTextColor,
-                    ),
-                  ),
-                ),
-                const Gap(50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 1,
-                      width: 146,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: AppColors.dividerLight,
+                        ],
                       ),
                     ),
-                    const Gap(18),
-                    const Text(
-                      'Or',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: FontFamily.RedHatLight,
-                        color: AppColors.primaryTextColor,
-                      ),
-                    ),
-                    const Gap(18),
-                    Container(
-                      height: 1,
-                      width: 146,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: AppColors.dividerLight,
-                      ),
-                    ),
-                  ],
-                ).paddingHorizontal(20),
-                const Gap(52),
-                ScaleTap(
-                  enableFeedback: false,
-                  onPressed: () async {
-                    final res = await context.pushRoute<String?>(
-                      const QrScannerRoute(),
-                    );
-                    if (res != null) {
-                      await router.push(
-                        CardFillRoute(receivedData: res),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'Try with QR scan',
-                    style: TextStyle(
-                      fontFamily: FontFamily.RedHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ],
+                  );
+                },
+              );
+            },
+            child: const Text(
+              'Connect wallet',
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: FontFamily.RedHatSemiBold,
+              ),
             ),
-          ],
-        ),
+          ).paddingHorizontal(63),
+          const Gap(28),
+          ScaleTap(
+            enableFeedback: false,
+            onPressed: () async {
+              final url = Uri.parse('https://coinplus.com/shop/');
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              }
+            },
+            child: const Text(
+              "Don't have a card?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: FontFamily.RedHatSemiBold,
+                fontSize: 15,
+                color: AppColors.primaryTextColor,
+              ),
+            ),
+          ).expandedHorizontally(),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                height: 1,
+                width: 146,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: AppColors.dividerLight,
+                ),
+              ),
+              const Text(
+                'Or',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: FontFamily.RedHatLight,
+                  color: AppColors.primaryTextColor,
+                ),
+              ),
+              Container(
+                height: 1,
+                width: 146,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: AppColors.dividerLight,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          ScaleTap(
+            enableFeedback: false,
+            onPressed: () async {
+              final res = await context.pushRoute<String?>(
+                const QrScannerRoute(),
+              );
+              if (res != null) {
+                await router.push(
+                  CardFillRoute(receivedData: res),
+                );
+              }
+            },
+            child: const Text(
+              'Try with QR scan',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: FontFamily.RedHatMedium,
+                color: AppColors.primaryTextColor,
+                fontSize: 15,
+              ),
+            ),
+          ),
+          const Spacer(
+            flex: 3,
+          ),
+        ],
       ),
     );
   }
