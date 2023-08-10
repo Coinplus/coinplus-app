@@ -105,21 +105,24 @@ class _QrScannerPageState extends State<QrScannerPage> {
             ),
           ),
           Positioned(
-            top: 77,
+            top: MediaQuery.of(context).size.height * 0.066,
             left: 16,
             child: ScaleTap(
               onPressed: context.popRoute,
-              child: const Icon(
-                Icons.close,
-                color: Colors.white,
-                size: 24,
+              child: IconButton(
+                onPressed: router.pop,
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 24,
+                ),
               ),
             ),
           ),
-          const Positioned(
-            top: 77,
-            right: 134,
-            child: Text(
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.08,
+            right: 137,
+            child: const Text(
               'Scan a QR code',
               style: TextStyle(
                 fontFamily: 'RedHatMedium',
@@ -128,11 +131,11 @@ class _QrScannerPageState extends State<QrScannerPage> {
               ),
             ),
           ),
-          const Positioned(
-            top: 179,
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.2,
             right: 58,
             left: 58,
-            child: Text(
+            child: const Text(
               'Hold the QR code inside the square area, \nand it will be automatically scanned',
               textAlign: TextAlign.center,
               style: TextStyle(

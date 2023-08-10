@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../utils/storage_utils.dart';
 
 @RoutePage()
 class SplashScreenPage extends HookWidget {
@@ -14,9 +15,19 @@ class SplashScreenPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
     useEffect(
       () {
-        checkSession();
+        hasShownWallet().then(
+          (hasShown) {
+            if (hasShown) {
+              openWallet();
+            } else {
+              openOnboardingPage();
+            }
+            return;
+          },
+        );
         return;
       },
     );
@@ -32,8 +43,22 @@ class SplashScreenPage extends HookWidget {
     );
   }
 
-  Future<void> checkSession() async {
+  Future<void> openOnboardingPage() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     await router.pushAndPopAll(const OnboardingRoute());
   }
+
+  Future<void> openWallet() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    await router.pushAndPopAll(const WalletRoute());
+  }
 }
+Future<bool> hasShownWallet() async {
+  return StorageUtils.getBool();
+
+}
+
+Future<void> setWalletShown() async {
+  await StorageUtils.setBool( value: true,);
+}
+

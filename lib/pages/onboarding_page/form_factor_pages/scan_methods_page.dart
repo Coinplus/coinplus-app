@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
@@ -22,8 +21,13 @@ class ScanMethodsPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ScaleTap(
-          enableFeedback: false,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.grey.withOpacity(0.5),
+            backgroundColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            shape: const RoundedRectangleBorder(),
+          ),
           onPressed: () {
             router.pop(context);
             NfcManager.instance.startSession(
@@ -63,6 +67,7 @@ class ScanMethodsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
+                  fontWeight: FontWeight.normal,
                   color: AppColors.primaryTextColor,
                 ),
               ),
@@ -74,9 +79,14 @@ class ScanMethodsPage extends StatelessWidget {
             ],
           ),
         ),
-        const Gap(38),
-        ScaleTap(
-          enableFeedback: false,
+        const Gap(10),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.grey.withOpacity(0.5),
+            backgroundColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            shape: const RoundedRectangleBorder(),
+          ),
           onPressed: () async {
             await router.pop(context);
             final res = await context.pushRoute<String?>(
@@ -96,6 +106,7 @@ class ScanMethodsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
+                  fontWeight: FontWeight.normal,
                   color: AppColors.primaryTextColor,
                 ),
               ),
@@ -107,8 +118,14 @@ class ScanMethodsPage extends StatelessWidget {
             ],
           ),
         ),
-        const Gap(38),
-        ScaleTap(
+        const Gap(10),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.grey.withOpacity(0.5),
+            backgroundColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
+            shape: const RoundedRectangleBorder(),
+          ),
           onPressed: () {
             controller.animateToPage(
               1,
@@ -116,7 +133,6 @@ class ScanMethodsPage extends StatelessWidget {
               curve: Curves.ease,
             );
           },
-          enableFeedback: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -125,6 +141,7 @@ class ScanMethodsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
+                  fontWeight: FontWeight.normal,
                   color: AppColors.primaryTextColor,
                 ),
               ),

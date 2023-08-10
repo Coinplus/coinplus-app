@@ -49,7 +49,7 @@ extension ElevatedButtonExtensions on ThemeData {
         (states) {
           return RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(
-              Radius.circular(12),
+              Radius.circular(8),
             ),
             side: BorderSide(
               color: states.contains(MaterialState.disabled)

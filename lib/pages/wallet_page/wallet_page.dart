@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
@@ -20,6 +21,7 @@ import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
 import '../onboarding_page/form_factor_pages/form_factor_page.dart';
 import '../onboarding_page/form_factor_pages/scan_methods_page.dart';
+import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class WalletPage extends StatefulWidget {
@@ -36,7 +38,11 @@ class _WalletPageState extends State<WalletPage> {
   @override
   void initState() {
     super.initState();
+    setWalletShown();
     _balanceStore.getAllCardsInfo();
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      _balanceStore.getCoins();
+    });
   }
 
   @override
@@ -206,15 +212,9 @@ class _WalletPageState extends State<WalletPage> {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey.withOpacity(0.2),
-                        //     blurRadius: 5,
-                        //     spreadRadius: 10,
-                        //   ),
-                        // ],
                       ),
                       child: ScaleTap(
+                        enableFeedback: false,
                         onPressed: () {},
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(14),
@@ -261,8 +261,13 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 5,
+                                              child: SizedBox(
+                                                height: 5,
+                                                width: 5,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             );
                                           }
@@ -320,8 +325,13 @@ class _WalletPageState extends State<WalletPage> {
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 5,
+                                              child: SizedBox(
+                                                height: 5,
+                                                width: 5,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             );
                                           }
@@ -543,17 +553,26 @@ class _WalletPageState extends State<WalletPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4),
-                                    color: const Color(0xFF00BA1E),
+                                    color: coin.priceChangePercentage_24h > 0
+                                        ? const Color(0xFF00BA1E)
+                                        : Colors.red,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(3),
                                     child: Row(
                                       children: [
-                                        const Icon(
-                                          Icons.arrow_drop_up,
-                                          size: 15,
-                                          color: Colors.white,
-                                        ),
+                                        if (coin.priceChangePercentage_24h > 0)
+                                          const Icon(
+                                            Icons.arrow_drop_up,
+                                            size: 15,
+                                            color: Colors.white,
+                                          )
+                                        else
+                                          const Icon(
+                                            Icons.arrow_drop_down,
+                                            size: 15,
+                                            color: Colors.white,
+                                          ),
                                         Text(
                                           '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
                                           style: const TextStyle(

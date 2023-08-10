@@ -56,6 +56,7 @@ dependencies:
   toast: ^0.3.0
   flutter_secure_storage: ^8.0.0
   retrofit: ^4.0.1
+  shimmer: ^3.0.0
 
 
 
@@ -80,7 +81,7 @@ dev_dependencies:
   # Code generator for MobX that adds support for annotating your code with
   # @observable, @computed, @action and also creating Store classes.
   mobx_codegen: ^2.2.0
-  collection: ^1.17.2
+  collection: ^1.17.1
 
   # Code generation for immutable classes that has a simple
   # syntax/API without compromising on the features.

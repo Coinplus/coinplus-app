@@ -232,7 +232,7 @@ final lightTheme = base.copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: MaterialStateProperty.all(Colors.yellow),
+      shadowColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.2)),
       padding: MaterialStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
@@ -252,17 +252,10 @@ final lightTheme = base.copyWith(
           );
         },
       ),
-      shape: MaterialStateProperty.all(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(22),
-        ),
-      ),
       foregroundColor: MaterialStateProperty.all(Colors.white),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
-              ? Colors.yellow.withOpacity(0.5)
-              : Colors.yellow;
+          return Colors.grey.withOpacity(0.2);
         },
       ),
     ),
@@ -270,7 +263,7 @@ final lightTheme = base.copyWith(
   outlinedButtonTheme: OutlinedButtonThemeData(style: outlineButtonStyle),
   textTheme: base.primaryTextTheme.copyWith(
     displayLarge: base.primaryTextTheme.displayLarge!.copyWith(
-      color: Colors.black,
+      color: Colors.grey,
       fontFamily: FontFamily.CeraPro,
       fontWeight: FontWeight.bold,
       fontSize: 26,

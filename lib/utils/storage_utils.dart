@@ -10,6 +10,8 @@ class Preferences {
 
   static const authToken = 'authToken';
   static const cards = 'cards';
+  static const bools = 'bools';
+
 }
 
 class StorageUtils {
@@ -41,6 +43,16 @@ class StorageUtils {
         <CardModel>[])
       ..removeWhere((e) => e.address == address);
     await _save(Preferences.cards, cards.toList());
+  }
+
+  static Future<bool> getBool() async {
+    final prefs = await sharedInstance;
+    return prefs.getBool(Preferences.bools) ?? false;
+  }
+
+  static Future<void> setBool({required bool value}) async {
+    final prefs = await sharedInstance;
+    await prefs.setBool(Preferences.bools, value);
   }
 
   /// Private helper functions

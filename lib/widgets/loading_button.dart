@@ -38,16 +38,12 @@ class LoadingButton extends HookWidget {
         child: ScaleTap(
           onPressed: isDisabled || isLoading ? null : onPressed,
           onLongPress: onLongPress,
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-            ),
-            child: ElevatedButton(
-              onPressed: isDisabled || isLoading ? null : onPressed,
-              onLongPress: onLongPress,
-              style: style ?? context.theme.buttonStyle(),
-              child: child,
-            ),
+          child: ElevatedButton(
+
+            onPressed: isDisabled || isLoading ? null : onPressed,
+            onLongPress: onLongPress,
+            style: style ?? context.theme.buttonStyle(),
+            child: child,
           ),
         ),
       ),
