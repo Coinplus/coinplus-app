@@ -15,7 +15,6 @@ class SplashScreenPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     useEffect(
       () {
         hasShownWallet().then(
@@ -53,12 +52,13 @@ class SplashScreenPage extends HookWidget {
     await router.pushAndPopAll(const WalletRoute());
   }
 }
+
 Future<bool> hasShownWallet() async {
   return StorageUtils.getBool();
-
 }
 
 Future<void> setWalletShown() async {
-  await StorageUtils.setBool( value: true,);
+  await StorageUtils.setBool(
+    value: true,
+  );
 }
-
