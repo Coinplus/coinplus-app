@@ -81,7 +81,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     duration: const Duration(milliseconds: 300),
                     opacity: 1,
                     child: Container(
-                      height: 409,
+                      height: 410,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.vertical(
@@ -124,7 +124,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             color: Color(0xFFF1F1F1),
                           ),
                           SizedBox(
-                            height: 290,
+                            height: 300,
                             child: PageView(
                               controller: _controller,
                               physics: const NeverScrollableScrollPhysics(),

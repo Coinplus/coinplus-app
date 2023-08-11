@@ -408,12 +408,14 @@ class _WalletPageState extends State<WalletPage> {
                   indicatorColor: AppColors.silver,
                   tabs: [
                     SegmentTab(
+                      backgroundColor: Colors.white,
                       label: 'Card',
                       textColor: Colors.grey,
                       splashColor: Colors.transparent,
                       selectedTextColor: AppColors.primaryTextColor,
                     ),
                     SegmentTab(
+                      backgroundColor: Colors.white,
                       label: 'Bar',
                       textColor: Colors.grey,
                       splashColor: Colors.transparent,
@@ -443,7 +445,7 @@ class _WalletPageState extends State<WalletPage> {
                     onPressed: () {},
                     child: Row(
                       children: [
-                        Assets.icons.arrowBottomRight.image(
+                        Assets.icons.charmArrowDownRight.image(
                           height: 20,
                           color: AppColors.secondaryTextColor,
                         ),
@@ -474,7 +476,7 @@ class _WalletPageState extends State<WalletPage> {
                           ),
                         ),
                         const Gap(4),
-                        Assets.icons.arrowTopRight.image(
+                        Assets.icons.charmArrowTopRight.image(
                           height: 20,
                           color: AppColors.secondaryTextColor,
                         ),

@@ -1,6 +1,7 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gap/gap.dart';
 
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
@@ -39,27 +40,31 @@ Future<void> showMyDialog(BuildContext context) {
     builder: (context) {
       return EmergeAlertDialog(
         emergeAlertDialogOptions: EmergeAlertDialogOptions(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+          ),
           content: SizedBox(
-            height: 260,
+            height: 230,
             child: Stack(
               children: [
                 Positioned(
-                  top: 18,
+                  top: 0,
                   left: 0,
                   child: Row(
                     children: [
-                      ScaleTap(
-                        onPressed: () {
-                          router.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.close,
-                          size: 25,
+                      Center(
+                        child: IconButton(
+                          onPressed: () {
+                            router.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.close_sharp,
+                            size: 25,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 35,
-                      ),
+                      const Gap(15),
                       const Text(
                         'Keep it accessible!',
                         style: TextStyle(
@@ -71,7 +76,7 @@ Future<void> showMyDialog(BuildContext context) {
                   ),
                 ),
                 Positioned(
-                  top: 75,
+                  top: 55,
                   left: 30,
                   child: Row(
                     children: [
@@ -84,11 +89,11 @@ Future<void> showMyDialog(BuildContext context) {
                   ),
                 ),
                 const Positioned(
-                  top: 200,
+                  top: 180,
                   left: 0,
                   right: 0,
                   child: Text(
-                    'Save your card or bar to your mobile wallet to track its balance and keep it within reach for \nfuture transactions.',
+                    'Save your card or bar to your mobile wallet to track its balance and keep it within reach for future transactions.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: FontFamily.redHatLight,
@@ -106,6 +111,9 @@ Future<void> showMyDialog(BuildContext context) {
             Padding(
               padding: const EdgeInsets.only(top: 18),
               child: Center(child: skipButton),
+            ),
+            const SizedBox(
+              height: 20,
             ),
           ],
         ),
