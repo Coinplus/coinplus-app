@@ -39,7 +39,6 @@ class LoadingButton extends HookWidget {
           onPressed: isDisabled || isLoading ? null : onPressed,
           onLongPress: onLongPress,
           child: ElevatedButton(
-
             onPressed: isDisabled || isLoading ? null : onPressed,
             onLongPress: onLongPress,
             style: style ?? context.theme.buttonStyle(),

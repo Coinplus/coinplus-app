@@ -11,7 +11,6 @@ class Preferences {
   static const authToken = 'authToken';
   static const cards = 'cards';
   static const bools = 'bools';
-
 }
 
 class StorageUtils {
