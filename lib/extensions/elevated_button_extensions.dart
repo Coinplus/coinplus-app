@@ -38,9 +38,10 @@ extension ElevatedButtonExtensions on ThemeData {
     return ButtonStyle(
       foregroundColor: MaterialStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
-              ? foregroundColor.withOpacity(0.5)
-              : foregroundColor;
+          return textStyle?.color ??
+              (states.contains(MaterialState.disabled)
+                  ? foregroundColor.withOpacity(0.5)
+                  : foregroundColor);
         },
       ),
       shadowColor: const MaterialStatePropertyAll(Colors.transparent),

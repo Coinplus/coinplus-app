@@ -1,5 +1,5 @@
-name: flutter_boilerplate
-description: A boilerplate project created in flutter using MobX.
+name: Coinplus
+description: Crypto Wallet
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -124,7 +124,7 @@ flutter_gen:
       # - dot-delimiter
       style: dot-delimiter
       class_name: Assets
-    exclude: [ 'assets/flags/*.png', 'assets/translations/*.json','assets/icons/1.5x/*', 'assets/icons/2.0x/*', 'assets/icons/3.0x/*', 'assets/icons/4.0x/*', 'assets/images/1.5x/*', 'assets/images/2.0x/*', 'assets/images/3.0x/*', 'assets/images/4.0x/*', ]
+    exclude: [ 'assets/flags/*.png', 'assets/translations/*.json',]
   fonts:
     # Optional
     enabled: true
@@ -159,10 +159,6 @@ flutter:
 
   assets:
     - assets/icons/
-    - assets/icons/1.5x/
-    - assets/icons/2.0x/
-    - assets/icons/3.0x/
-    - assets/icons/4.0x/
     - assets/images/
     - assets/colors/
     - assets/animated_logo/nfcanimation.json
