@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,7 +82,7 @@ class WalletProtectionPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Gap(58),
+                const Spacer(),
                 Observer(
                   builder: (context) {
                     return CupertinoSwitch(

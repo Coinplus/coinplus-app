@@ -28,6 +28,7 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../widgets/loading_button.dart';
+import '../splash_screen/splash_screen.dart';
 import 'skip_button_alert/skip_button_alert.dart';
 
 @RoutePage()
@@ -151,11 +152,10 @@ class _CardFillPageState extends State<CardFillPage>
                                   Assets.images.front.image(),
                                   if (_addressState.isAddressVisible)
                                     Positioned(
-                                      top: context.height * 0.332,
+                                      top: context.height * 0.32,
                                       left: 10,
                                       right: 10,
                                       child: Container(
-                                        height: 40,
                                         padding: const EdgeInsets.all(4),
                                         decoration: BoxDecoration(
                                           borderRadius:
@@ -201,7 +201,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         FontFamily.redHatMedium,
                                                     fontWeight: FontWeight.w700,
                                                     color: Colors.white,
-                                                    fontSize: 12,
+                                                    fontSize: 11,
                                                   ),
                                                 ).expandedHorizontally();
                                               },
@@ -214,7 +214,7 @@ class _CardFillPageState extends State<CardFillPage>
                                     const SizedBox(),
                                   if (_addressState.isAddressVisible)
                                     Positioned(
-                                      top: context.height * 0.385,
+                                      top: context.height * 0.373,
                                       left: 10,
                                       right: 10,
                                       child: Container(
@@ -525,7 +525,14 @@ class _CardFillPageState extends State<CardFillPage>
             onPressed: () {
               try {
                 _balanceStore.saveSelectedCard();
-                router.push(const WalletProtectionRoute());
+                hasShownWallet().then((hasShown) {
+                  if(hasShown ){
+                    router.pop(const WalletRoute());
+                  } else {
+                    router.push(const WalletProtectionRoute());
+                  }
+                } );
+
               } catch (e) {
                 if (!router.stackData
                     .indexWhere((element) => element.name == WalletRoute.name)
