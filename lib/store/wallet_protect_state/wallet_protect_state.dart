@@ -15,7 +15,7 @@ abstract class _WalletProtectState with Store {
       final didAuthenticate = await _auth.authenticate(
         localizedReason: 'Please authenticate',
       );
-      isToggleSwitched = !isToggleSwitched;
+      isToggleSwitched = didAuthenticate;
       if (!didAuthenticate) {
         return;
       }

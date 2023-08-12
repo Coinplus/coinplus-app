@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:math';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
@@ -40,9 +40,6 @@ class _WalletPageState extends State<WalletPage> {
     super.initState();
     setWalletShown();
     _balanceStore.getAllCardsInfo();
-    Timer.periodic(const Duration(minutes: 1), (timer) {
-      _balanceStore.getCoins();
-    });
   }
 
   @override
@@ -55,533 +52,351 @@ class _WalletPageState extends State<WalletPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          //Curved AppBar
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: CustomPaint(
-              size: Size(
-                context.width,
-                (context.width * 0.44266666666666665).toDouble(),
-              ),
-              painter: HeaderCustomPainter(),
-            ),
-          ),
-
-          //Total Balance
-          Positioned(
-            top: 65,
-            left: 22,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              Flexible(
+                child: Stack(
                   children: [
-                    const Text(
-                      'Wallet',
-                      style: TextStyle(
-                        fontFamily: FontFamily.redHatBold,
-                        fontSize: 28,
-                        color: Colors.white,
+                    //Curved AppBar
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: CustomPaint(
+                        size: Size(
+                          context.width,
+                          (context.width * 0.44266666666666665).toDouble(),
+                        ),
+                        painter: HeaderCustomPainter(),
                       ),
                     ),
-                    const Gap(14),
-                    Assets.icons.coinplusVector.image(
-                      height: 26,
-                    ),
-                  ],
-                ),
-                const Text(
-                  'Total balance',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatLight,
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Gap(5),
-                const Text(
-                  r'$0',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatBold,
-                    color: Colors.white,
-                    fontSize: 28,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          //Cards Slider
-          Positioned(
-            top: 230,
-            left: 0,
-            right: 0,
-            child: Observer(
-              builder: (_) {
-                return CarouselSlider.builder(
-                  itemBuilder: (context, index, constrains) {
-                    if (index == _balanceStore.cards.length) {
-                      return ScaleTap(
-                        enableFeedback: false,
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return AnimatedOpacity(
-                                duration: const Duration(milliseconds: 300),
-                                opacity: 1,
-                                child: Container(
-                                  height: 409,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const Gap(25),
-                                      Row(
-                                        children: [
-                                          const Gap(16),
-                                          ScaleTap(
-                                            enableFeedback: false,
-                                            onPressed: () {
-                                              router.pop(context);
-                                            },
-                                            child: const Icon(
-                                              Icons.close,
-                                              size: 24,
-                                            ),
-                                          ),
-                                          const Gap(75),
-                                          const Text(
-                                            'Add new wallet',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatSemiBold,
-                                              fontSize: 17,
-                                              color: AppColors.primaryTextColor,
-                                            ),
-                                          ).paddingHorizontal(),
-                                        ],
-                                      ),
-                                      const Gap(20),
-                                      const Divider(
-                                        thickness: 2,
-                                        height: 2,
-                                        indent: 15,
-                                        endIndent: 15,
-                                        color: Color(0xFFF1F1F1),
-                                      ),
-                                      SizedBox(
-                                        height: 300,
-                                        child: PageView(
-                                          controller: _controller,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          children: [
-                                            ScanMethodsPage(
-                                              controller: _controller,
-                                            ),
-                                            FormFactorPage(
-                                              controller: _controller,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Assets.images.addCard.image(),
-                      );
-                    }
-
-                    final card = _balanceStore.cards[index];
-
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: ScaleTap(
-                        enableFeedback: false,
-                        onPressed: () {},
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
-                          child: Stack(
+                    //Total Balance
+                    Positioned(
+                      top: 56,
+                      left: 22,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             children: [
-                              card.cardColor.image.image(
-                                height: 400,
-                              ),
-                              Positioned(
-                                top: 232,
-                                left: 10,
-                                right: 10,
-                                child: Container(
-                                  height: 44,
-                                  padding: const EdgeInsets.only(
-                                    left: 4,
-                                    right: 8,
-                                    top: 8,
-                                    bottom: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: Colors.black.withOpacity(0.3),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          Text(
-                                            'Address',
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Observer(
-                                        builder: (context) {
-                                          if (_balanceStore
-                                                  .loadings[card.address] ??
-                                              false) {
-                                            return const Padding(
-                                              padding: EdgeInsets.all(4),
-                                              child: SizedBox(
-                                                height: 5,
-                                                width: 5,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          return Text(
-                                            card.address,
-                                            style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.white,
-                                              fontSize: 11,
-                                            ),
-                                          ).expandedHorizontally();
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                              const Text(
+                                'Wallet',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatBold,
+                                  fontSize: 28,
+                                  color: Colors.white,
                                 ),
                               ),
-                              Positioned(
-                                top: 280,
-                                left: 10,
-                                right: 10,
-                                child: Container(
-                                  height: 55,
-                                  padding: const EdgeInsets.only(
-                                    left: 4,
-                                    right: 8,
-                                    top: 8,
-                                    bottom: 8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: Colors.black.withOpacity(0.3),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          Text(
-                                            'Balance',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              color: Colors.white,
-                                              fontSize: 11,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Observer(
-                                        builder: (context) {
-                                          if (_balanceStore
-                                                  .loadings[card.address] ??
-                                              false) {
-                                            return const Padding(
-                                              padding: EdgeInsets.all(4),
-                                              child: SizedBox(
-                                                height: 5,
-                                                width: 5,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          return Text(
-                                            '\$${card.balance}.00'.toString(),
-                                            style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          ).expandedHorizontally();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              const Gap(14),
+                              Assets.icons.coinplusVector.image(
+                                height: 26,
+                              ),
+                            ],
+                          ),
+                          const Text(
+                            'Total balance',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatLight,
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Gap(5),
+                          const Text(
+                            r'$0',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatBold,
+                              color: Colors.white,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //Card and Bar Switch
+                    Positioned(
+                      top: 124,
+                      right: 12,
+                      child: Container(
+                        height: 40,
+                        width: 128,
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                              color: Colors.grey.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                        child: const DefaultTabController(
+                          length: 2,
+                          child: SegmentedTabControl(
+                            textStyle: TextStyle(
+                              fontFamily: FontFamily.redHatSemiBold,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            splashColor: Colors.transparent,
+                            indicatorColor: AppColors.silver,
+                            tabs: [
+                              SegmentTab(
+                                backgroundColor: Colors.white,
+                                label: 'Card',
+                                textColor: Colors.grey,
+                                splashColor: Colors.transparent,
+                                selectedTextColor: AppColors.primaryTextColor,
+                              ),
+                              SegmentTab(
+                                backgroundColor: Colors.white,
+                                label: 'Bar',
+                                textColor: Colors.grey,
+                                splashColor: Colors.transparent,
+                                selectedTextColor: AppColors.primaryTextColor,
                               ),
                             ],
                           ),
                         ),
                       ),
-                    );
-                  },
-                  options: CarouselOptions(
-                    enableInfiniteScroll: false,
-                    viewportFraction: 0.7,
-                    height: 400,
-                    enlargeCenterPage: true,
-                    enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-                  ),
-                  itemCount: _balanceStore.cards.length + 1,
-                );
-              },
-            ),
-          ),
-
-          //Card and Bar Switch
-          Positioned(
-            top: MediaQuery.of(context).size.width * 0.309,
-            right: MediaQuery.of(context).size.width * 0.0335,
-            child: Container(
-              height: 45,
-              width: 130,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                    color: Colors.grey.withOpacity(0.3),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.width * 0.3153,
-            right: MediaQuery.of(context).size.width * 0.04,
-            child: const SizedBox(
-              height: 40,
-              width: 125,
-              child: DefaultTabController(
-                length: 2,
-                child: SegmentedTabControl(
-                  textStyle: TextStyle(
-                    fontFamily: FontFamily.redHatSemiBold,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  splashColor: Colors.transparent,
-                  indicatorColor: AppColors.silver,
-                  tabs: [
-                    SegmentTab(
-                      backgroundColor: Colors.white,
-                      label: 'Card',
-                      textColor: Colors.grey,
-                      splashColor: Colors.transparent,
-                      selectedTextColor: AppColors.primaryTextColor,
-                    ),
-                    SegmentTab(
-                      backgroundColor: Colors.white,
-                      label: 'Bar',
-                      textColor: Colors.grey,
-                      splashColor: Colors.transparent,
-                      selectedTextColor: AppColors.primaryTextColor,
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
 
-          //Send and Receive
-          Positioned(
-            bottom: 150,
-            left: 77,
-            right: 78,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: const Color(0xFFB2D7FF),
-              ),
-              height: 40,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ScaleTap(
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        Assets.icons.charmArrowDownRight.image(
-                          height: 20,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                        const Gap(4),
-                        const Text(
-                          'Receive',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.secondaryTextColor,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ScaleTap(
-                    onPressed: () {},
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Send',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.secondaryTextColor,
-                            fontSize: 15,
-                          ),
-                        ),
-                        const Gap(4),
-                        Assets.icons.charmArrowTopRight.image(
-                          height: 20,
-                          color: AppColors.secondaryTextColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          //BTC Price
-          Positioned(
-            bottom: 35,
-            left: 16,
-            right: 16,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 8, bottom: 12),
-                  child: Text(
-                    'Market',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.textHintsColor,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 73,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
-                    borderRadius: BorderRadius.circular(22),
-                    color: Colors.grey.withOpacity(0.1),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Observer(
-                      builder: (_) {
-                        final coin = _balanceStore.coins.firstWhereOrNull(
-                          (element) => element.id == 'bitcoin',
-                        );
-                        if (coin == null) {
-                          return const SizedBox();
+              //Cards Slider
+              Expanded(
+                flex: 2,
+                child: Observer(
+                  builder: (_) {
+                    return CarouselSlider.builder(
+                      itemBuilder: (context, index, constrains) {
+                        if (index == _balanceStore.cards.length) {
+                          return ScaleTap(
+                            enableFeedback: false,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) {
+                                  return AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 400),
+                                    opacity: 1,
+                                    child: Container(
+                                      height: 400,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const Gap(10),
+                                          Row(
+                                            children: [
+                                              const Gap(16),
+                                              IconButton(
+                                                onPressed: router.pop,
+                                                icon: const Icon(
+                                                  Icons.close_sharp,
+                                                  size: 25,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              const Expanded(
+                                                child: Text(
+                                                  'Add new wallet',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily
+                                                        .redHatSemiBold,
+                                                    fontSize: 17,
+                                                    color: AppColors
+                                                        .primaryTextColor,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 60,
+                                              ),
+                                            ],
+                                          ),
+                                          const Gap(10),
+                                          const Divider(
+                                            thickness: 2,
+                                            height: 2,
+                                            indent: 15,
+                                            endIndent: 15,
+                                            color: Color(0xFFF1F1F1),
+                                          ),
+                                          SizedBox(
+                                            height: 300,
+                                            child: PageView(
+                                              controller: _controller,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              children: [
+                                                ScanMethodsPage(
+                                                  controller: _controller,
+                                                ),
+                                                FormFactorPage(
+                                                  controller: _controller,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Assets.images.addCard.image(
+                            ),
+                          );
                         }
 
-                        return Row(
-                          children: [
-                            Assets.icons.bTCIcon.image(height: 24),
-                            const Gap(8),
-                            Text(
-                              coin.name,
-                              style: const TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const Gap(8),
-                            Text(
-                              coin.symbol.toUpperCase(),
-                              style: const TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 10,
-                                color: AppColors.textHintsColor,
-                              ),
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                        final card = _balanceStore.cards[index];
+
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(14),
+                            child: Stack(
                               children: [
-                                buildCoinWidget(coin.currentPrice),
-                                const Gap(4),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: coin.priceChangePercentage_24h > 0
-                                        ? const Color(0xFF00BA1E)
-                                        : Colors.red,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3),
-                                    child: Row(
+                                card.cardColor.image.image(
+
+                                ),
+                                Positioned(
+                                  top: constraints.maxHeight * 0.28,
+                                  left: 10,
+                                  right: 10,
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 4,
+                                      right: 8,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                    child: Column(
                                       children: [
-                                        if (coin.priceChangePercentage_24h > 0)
-                                          const Icon(
-                                            Icons.arrow_drop_up,
-                                            size: 15,
-                                            color: Colors.white,
-                                          )
-                                        else
-                                          const Icon(
-                                            Icons.arrow_drop_down,
-                                            size: 15,
-                                            color: Colors.white,
-                                          ),
-                                        Text(
-                                          '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        const Row(
+                                          children: [
+                                            Text(
+                                              'Address',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            if (_balanceStore
+                                                    .loadings[card.address] ??
+                                                false) {
+                                              return const Padding(
+                                                padding: EdgeInsets.all(4),
+                                                child: SizedBox(
+                                                  height: 5,
+                                                  width: 5,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Text(
+                                              card.address,
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                              ),
+                                            ).expandedHorizontally();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: constraints.maxHeight * 0.343,
+                                  left: 10,
+                                  right: 10,
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                      left: 4,
+                                      right: 8,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colors.black.withOpacity(0.3),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const Row(
+                                          children: [
+                                            Text(
+                                              'Balance',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                color: Colors.white,
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            if (_balanceStore
+                                                    .loadings[card.address] ??
+                                                false) {
+                                              return const Padding(
+                                                padding: EdgeInsets.all(4),
+                                                child: SizedBox(
+                                                  height: 5,
+                                                  width: 5,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Text(
+                                              '\$${card.balance}.00'.toString(),
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ).expandedHorizontally();
+                                          },
                                         ),
                                       ],
                                     ),
@@ -589,16 +404,188 @@ class _WalletPageState extends State<WalletPage> {
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         );
                       },
+                      options: CarouselOptions(
+                        enableInfiniteScroll: false,
+                        viewportFraction: 0.7,
+                        height: 400,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                      ),
+                      itemCount: _balanceStore.cards.length + 1,
+                    );
+                  },
+                ),
+              ),
+              const Gap(26),
+              //Send and Receive
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: const Color(0xFFB2D7FF),
+                ),
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ScaleTap(
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          Assets.icons.charmArrowDownRight.image(
+                            height: 20,
+                            color: AppColors.secondaryTextColor,
+                          ),
+                          const Gap(4),
+                          const Text(
+                            'Receive',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.secondaryTextColor,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ScaleTap(
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Send',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.secondaryTextColor,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const Gap(4),
+                          Assets.icons.charmArrowTopRight.image(
+                            height: 20,
+                            color: AppColors.secondaryTextColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ).paddingHorizontal(78),
+              const Gap(10),
+              //BTC Price
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8, bottom: 12),
+                    child: Text(
+                      'Market',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.textHintsColor,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
+                  Container(
+                    height: 73,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                      borderRadius: BorderRadius.circular(22),
+                      color: Colors.grey.withOpacity(0.1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Observer(
+                        builder: (_) {
+                          final coin = _balanceStore.coins.firstWhereOrNull(
+                            (element) => element.id == 'bitcoin',
+                          );
+                          if (coin == null) {
+                            return const SizedBox();
+                          }
+
+                          return Row(
+                            children: [
+                              Assets.icons.bTCIcon.image(height: 24),
+                              const Gap(8),
+                              Text(
+                                coin.name,
+                                style: const TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const Gap(8),
+                              Text(
+                                coin.symbol.toUpperCase(),
+                                style: const TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 10,
+                                  color: AppColors.textHintsColor,
+                                ),
+                              ),
+                              const Spacer(),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  buildCoinWidget(coin.currentPrice),
+                                  const Gap(4),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: coin.priceChangePercentage_24h > 0
+                                          ? const Color(0xFF00BA1E)
+                                          : Colors.red,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3),
+                                      child: Row(
+                                        children: [
+                                          if (coin.priceChangePercentage_24h >
+                                              0)
+                                            const Icon(
+                                              Icons.arrow_drop_up,
+                                              size: 15,
+                                              color: Colors.white,
+                                            )
+                                          else
+                                            const Icon(
+                                              Icons.arrow_drop_down,
+                                              size: 15,
+                                              color: Colors.white,
+                                            ),
+                                          Text(
+                                            '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ).paddingHorizontal(16),
+              Gap(max(context.bottomPadding, 51)),
+            ],
+          );
+        },
       ),
     );
   }

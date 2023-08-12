@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
+import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
@@ -28,37 +31,147 @@ class ScanMethodsPage extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
             shape: const RoundedRectangleBorder(),
           ),
-          onPressed: () {
-            router.pop(context);
-            NfcManager.instance.startSession(
-              alertMessage:
-                  'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
-              onDiscovered: (tag) async {
-                final ndef = Ndef.from(tag);
-                final records = ndef!.cachedMessage!.records;
-                dynamic walletAddress;
+          onPressed: Platform.isIOS
+              ? () async {
+                  await router.pop();
+                  await NfcManager.instance.startSession(
+                    alertMessage:
+                        'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
+                    onDiscovered: (tag) async {
+                      final ndef = Ndef.from(tag);
+                      final records = ndef!.cachedMessage!.records;
+                      dynamic walletAddress;
 
-                if (records.length >= 2) {
-                  final hasJson = records[1].payload;
-                  final payloadString = String.fromCharCodes(hasJson);
-                  final Map payloadData = await json.decode(payloadString);
-                  walletAddress = payloadData['a'];
-                } else {
-                  final hasUrl = records[0].payload;
-                  final payloadString = String.fromCharCodes(hasUrl);
-                  final parts = payloadString.split('air.coinplus.com/btc/');
-                  walletAddress = parts[1];
+                      if (records.length >= 2) {
+                        final hasJson = records[1].payload;
+                        final payloadString = String.fromCharCodes(hasJson);
+                        final Map payloadData =
+                            await json.decode(payloadString);
+                        walletAddress = payloadData['a'];
+                      } else {
+                        final hasUrl = records[0].payload;
+                        final payloadString = String.fromCharCodes(hasUrl);
+                        final parts =
+                            payloadString.split('air.coinplus.com/btc/');
+                        walletAddress = parts[1];
+                      }
+
+                      await NfcManager.instance
+                          .stopSession(alertMessage: 'Complete');
+                      await Future.delayed(const Duration(milliseconds: 2500));
+
+                      await router.push(
+                        CardFillRoute(receivedData: walletAddress.toString()),
+                      );
+                    },
+                  );
                 }
+              : () async {
+                  await router.pop();
+                  await showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return AnimatedOpacity(
+                        duration: const Duration(milliseconds: 300),
+                        opacity: 1,
+                        child: Container(
+                          height: 400,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              const Gap(10),
+                              Row(
+                                children: [
+                                  const Gap(16),
+                                  IconButton(
+                                    onPressed: router.pop,
+                                    icon: const Icon(
+                                      Icons.close_sharp,
+                                      size: 25,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const Expanded(
+                                    child: Text(
+                                      'Start with your wallet',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatSemiBold,
+                                        fontSize: 17,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 60,
+                                  ),
+                                ],
+                              ),
+                              const Gap(10),
+                              const Divider(
+                                thickness: 2,
+                                height: 2,
+                                indent: 15,
+                                endIndent: 15,
+                                color: Color(0xFFF1F1F1),
+                              ),
+                              const Gap(42),
+                              SizedBox(
+                                height: 120,
+                                width: 120,
+                                child: Lottie.asset(
+                                  'assets/animated_logo/nfcanimation.json',
+                                ).expandedHorizontally(),
+                              ),
+                              const Gap(20),
+                              const Text(
+                                'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: FontFamily.redHatMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                  await NfcManager.instance.startSession(
+                    onDiscovered: (tag) async {
+                      final ndef = Ndef.from(tag);
+                      final records = ndef!.cachedMessage!.records;
+                      dynamic walletAddress;
 
-                await NfcManager.instance.stopSession(alertMessage: 'Complete');
-                await Future.delayed(const Duration(milliseconds: 2500));
+                      if (records.length >= 2) {
+                        final hasJson = records[1].payload;
+                        final payloadString = String.fromCharCodes(hasJson);
+                        final Map payloadData =
+                            await json.decode(payloadString);
+                        walletAddress = payloadData['a'];
+                      } else {
+                        final hasUrl = records[0].payload;
+                        final payloadString = String.fromCharCodes(hasUrl);
+                        final parts =
+                            payloadString.split('air.coinplus.com/btc/');
+                        walletAddress = parts[1];
+                      }
+                      await NfcManager.instance.stopSession();
+                      await Future.delayed(const Duration(milliseconds: 2500));
 
-                await router.push(
-                  CardFillRoute(receivedData: walletAddress.toString()),
-                );
-              },
-            );
-          },
+                      await router.push(
+                        CardFillRoute(receivedData: walletAddress.toString()),
+                      );
+                    },
+                  );
+                },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
