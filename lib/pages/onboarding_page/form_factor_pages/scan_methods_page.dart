@@ -164,8 +164,6 @@ class ScanMethodsPage extends StatelessWidget {
                         walletAddress = parts[1];
                       }
                       await NfcManager.instance.stopSession();
-                      await Future.delayed(const Duration(milliseconds: 2500));
-
                       await router.push(
                         CardFillRoute(receivedData: walletAddress.toString()),
                       );

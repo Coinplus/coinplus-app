@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -184,82 +186,77 @@ class _WalletPageState extends State<WalletPage> {
                                 context: context,
                                 backgroundColor: Colors.transparent,
                                 builder: (context) {
-                                  return AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 400),
-                                    opacity: 1,
-                                    child: Container(
-                                      height: 400,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
-                                        ),
+                                  return Container(
+                                    height: 400,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20),
                                       ),
-                                      child: Column(
-                                        children: [
-                                          const Gap(10),
-                                          Row(
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const Gap(10),
+                                        Row(
+                                          children: [
+                                            const Gap(16),
+                                            IconButton(
+                                              onPressed: router.pop,
+                                              icon: const Icon(
+                                                Icons.close_sharp,
+                                                size: 25,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const Expanded(
+                                              child: Text(
+                                                'Add new wallet',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      FontFamily.redHatSemiBold,
+                                                  fontSize: 17,
+                                                  color: AppColors
+                                                      .primaryTextColor,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 60,
+                                            ),
+                                          ],
+                                        ),
+                                        const Gap(10),
+                                        const Divider(
+                                          thickness: 2,
+                                          height: 2,
+                                          indent: 15,
+                                          endIndent: 15,
+                                          color: Color(0xFFF1F1F1),
+                                        ),
+                                        SizedBox(
+                                          height: 300,
+                                          child: PageView(
+                                            controller: _controller,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             children: [
-                                              const Gap(16),
-                                              IconButton(
-                                                onPressed: router.pop,
-                                                icon: const Icon(
-                                                  Icons.close_sharp,
-                                                  size: 25,
-                                                  color: Colors.black,
-                                                ),
+                                              ScanMethodsPage(
+                                                controller: _controller,
                                               ),
-                                              const Expanded(
-                                                child: Text(
-                                                  'Add new wallet',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily
-                                                        .redHatSemiBold,
-                                                    fontSize: 17,
-                                                    color: AppColors
-                                                        .primaryTextColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 60,
+                                              FormFactorPage(
+                                                controller: _controller,
                                               ),
                                             ],
                                           ),
-                                          const Gap(10),
-                                          const Divider(
-                                            thickness: 2,
-                                            height: 2,
-                                            indent: 15,
-                                            endIndent: 15,
-                                            color: Color(0xFFF1F1F1),
-                                          ),
-                                          SizedBox(
-                                            height: 300,
-                                            child: PageView(
-                                              controller: _controller,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              children: [
-                                                ScanMethodsPage(
-                                                  controller: _controller,
-                                                ),
-                                                FormFactorPage(
-                                                  controller: _controller,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },
                               );
                             },
-                            child: Assets.images.addCard.image(
-                            ),
+                            child: Assets.images.addCard.image(),
                           );
                         }
 
@@ -269,141 +266,171 @@ class _WalletPageState extends State<WalletPage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(14),
-                            child: Stack(
-                              children: [
-                                card.cardColor.image.image(
-
-                                ),
-                                Positioned(
-                                  top: constraints.maxHeight * 0.28,
-                                  left: 10,
-                                  right: 10,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                      left: 4,
-                                      right: 8,
-                                      top: 8,
-                                      bottom: 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: Colors.black.withOpacity(0.3),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              'Address',
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ],
+                          child: Stack(
+                            children: [
+                              card.cardColor.image.image(),
+                              Positioned(
+                                top: constraints.maxHeight * 0.284,
+                                left: 10,
+                                right: 10,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 5,
+                                          sigmaY: 5,
                                         ),
-                                        Observer(
-                                          builder: (context) {
-                                            if (_balanceStore
-                                                    .loadings[card.address] ??
-                                                false) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(4),
-                                                child: SizedBox(
-                                                  height: 5,
-                                                  width: 5,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Colors.white,
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                            left: 4,
+                                            right: 4,
+                                            top: 12,
+                                            bottom: 12,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const Row(
+                                                children: [
+                                                  Text(
+                                                    'Address',
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            }
-                                            return Text(
-                                              card.address,
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 10,
+                                                ],
                                               ),
-                                            ).expandedHorizontally();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: constraints.maxHeight * 0.343,
-                                  left: 10,
-                                  right: 10,
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                      left: 4,
-                                      right: 8,
-                                      top: 8,
-                                      bottom: 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: Colors.black.withOpacity(0.3),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              'Balance',
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color: Colors.white,
-                                                fontSize: 11,
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          card.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 5,
+                                                            width: 5,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    card.address,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 11,
+                                                    ),
+                                                  ).expandedHorizontally();
+                                                },
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                        Observer(
-                                          builder: (context) {
-                                            if (_balanceStore
-                                                    .loadings[card.address] ??
-                                                false) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(4),
-                                                child: SizedBox(
-                                                  height: 5,
-                                                  width: 5,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: Colors.white,
+                                      ),
+                                    ),
+                                    const Gap(4),
+                                    ClipRRect(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 5,
+                                          sigmaY: 5,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                            left: 4,
+                                            right: 8,
+                                            top: 8,
+                                            bottom: 8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color:
+                                                Colors.black.withOpacity(0.3),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const Row(
+                                                children: [
+                                                  Text(
+                                                    'Balance',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      color: Colors.white,
+                                                      fontSize: 11,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            }
-                                            return Text(
-                                              '\$${card.balance}.00'.toString(),
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 20,
+                                                ],
                                               ),
-                                            ).expandedHorizontally();
-                                          },
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          card.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 5,
+                                                            width: 5,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    '\$${card.balance}.00'
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ).expandedHorizontally();
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         );
                       },
