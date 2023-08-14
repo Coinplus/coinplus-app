@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flip_card/flip_card.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/context_extension.dart';
@@ -25,10 +25,10 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
+import 'edit_address_dialog/edit_address_dialog.dart';
 import 'skip_button_alert/skip_button_alert.dart';
 
 @RoutePage()
@@ -48,7 +48,6 @@ class _CardFillPageState extends State<CardFillPage>
     with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  final _cardAnimationStore = CardAnimationState();
   final _flipCardController = FlipCardController();
   late AnimationController _lottieController;
   final _validationStore = QrDetectState();
@@ -61,7 +60,6 @@ class _CardFillPageState extends State<CardFillPage>
   void initState() {
     super.initState();
     _toggleCard();
-    _toggleWidgets();
     _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
     _btcAddressController = TextEditingController();
@@ -117,7 +115,6 @@ class _CardFillPageState extends State<CardFillPage>
           statusBarBrightness: Brightness.light,
         ),
         elevation: 0,
-        surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         title: const Row(
           children: [
@@ -131,442 +128,493 @@ class _CardFillPageState extends State<CardFillPage>
           ],
         ),
       ),
-      body: Column(
-        children: [
-          const Gap(20),
-          Expanded(
-            child: Stack(
-              children: [
-                FlipCard(
-                  flipOnTouch: false,
-                  controller: _flipCardController,
-                  front: Observer(
-                    builder: (context) {
-                      return AnimatedSwitcher(
-                        switchInCurve: Curves.slowMiddle,
-                        duration: const Duration(milliseconds: 300),
-                        child: _cardAnimationStore.showFirstWidget
-                            ? Assets.images.inactiveCard.image()
-                            : Stack(
-                                children: [
-                                  Assets.images.front.image(),
-                                  if (_addressState.isAddressVisible)
-                                    Positioned(
-                                      top: context.height * 0.32,
-                                      left: 10,
-                                      right: 10,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: Colors.black.withOpacity(0.4),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const Row(
-                                              children: [
-                                                Text(
-                                                  'Address',
-                                                  style: TextStyle(
-                                                    fontSize: 11,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Observer(
-                                              builder: (context) {
-                                                if (_balanceStore.loadings[
-                                                        _balanceStore
-                                                            .selectedCard
-                                                            ?.address] ??
-                                                    false) {
-                                                  return const Padding(
-                                                    padding: EdgeInsets.all(4),
-                                                    child:
-                                                        CupertinoActivityIndicator(
-                                                      radius: 5,
-                                                    ),
-                                                  );
-                                                }
-                                                return Text(
-                                                  _balanceStore.selectedCard
-                                                          ?.address ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.white,
-                                                    fontSize: 11,
-                                                  ),
-                                                ).expandedHorizontally();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  else
-                                    const SizedBox(),
-                                  if (_addressState.isAddressVisible)
-                                    Positioned(
-                                      top: context.height * 0.373,
-                                      left: 10,
-                                      right: 10,
-                                      child: Container(
-                                        height: 55,
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: Colors.black.withOpacity(0.4),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const Row(
-                                              children: [
-                                                Text(
-                                                  'Balance',
-                                                  style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: Colors.white,
-                                                    fontSize: 11,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Observer(
-                                              builder: (context) {
-                                                if (_balanceStore.loadings[
-                                                        _balanceStore
-                                                            .selectedCard
-                                                            ?.address] ??
-                                                    false) {
-                                                  return const Padding(
-                                                    padding: EdgeInsets.all(4),
-                                                    child:
-                                                        CupertinoActivityIndicator(
-                                                      radius: 5,
-                                                    ),
-                                                  );
-                                                }
-                                                return Text(
-                                                  (_balanceStore.selectedCard !=
-                                                              null
-                                                          ? '\$${_balanceStore.selectedCard?.balance}.00'
-                                                          : '')
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                  ),
-                                                ).expandedHorizontally();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  else
-                                    const SizedBox(),
-                                ],
-                              ),
-                      );
-                    },
-                  ),
-                  back: Center(
-                    child: Container(
-                      width: context.width - 74,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: Assets.images.back.image().image,
-                        ),
-                      ),
-                      child: LayoutBuilder(
-                        builder: (_, constraints) {
-                          return Center(
-                            child: SizedBox(
-                              height: constraints.maxHeight * 0.5,
-                              width: constraints.maxWidth * 0.54,
-                              child: Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: const Color(0xFFFBB270),
-                                            width: 2,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              const Gap(20),
+              Expanded(
+                flex: 4,
+                child: Stack(
+                  children: [
+                    FlipCard(
+                      flipOnTouch: false,
+                      controller: _flipCardController,
+                      front: Observer(
+                        builder: (context) {
+                          return Stack(
+                            children: [
+                              Assets.images.front.image(),
+                              if (_addressState.isAddressVisible)
+                                Positioned(
+                                  top: constraints.maxHeight * 0.35,
+                                  left: 10,
+                                  right: 10,
+                                  child: Column(
+                                    children: [
+                                      ClipRRect(
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(
+                                            sigmaX: 5,
+                                            sigmaY: 5,
                                           ),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const Spacer(flex: 7),
-                                            Assets.images.secret1.image(),
-                                            const Spacer(flex: 5),
-                                            Assets.images.secret2.image(),
-                                            const Spacer(flex: 7),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    const Gap(6),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color(0xFFFBB270),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: ScaleTransition(
-                                        scale: _textFieldAnimationController,
-                                        child: TextField(
-                                          onChanged: (_) {
-                                            _validateBTCAddress();
-                                          },
-                                          controller: _btcAddressController,
-                                          maxLines: 2,
-                                          minLines: 1,
-                                          focusNode: _focusNode,
-                                          cursorColor:
-                                              AppColors.primaryButtonColor,
-                                          cursorWidth: 1,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: AppColors.primaryTextColor,
-                                            fontFamily: FontFamily.redHatLight,
-                                          ),
-                                          onTapOutside: (_) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          decoration: InputDecoration(
-                                            fillColor: Colors.white,
-                                            hintText:
-                                                'Write here your card address ',
-                                            hintMaxLines: 2,
-                                            hintStyle: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatLight,
-                                              fontSize: 12,
-                                              color: AppColors.primaryTextColor
-                                                  .withOpacity(
-                                                0.4,
-                                              ),
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                              left: 4,
+                                              right: 4,
+                                              top: 12,
+                                              bottom: 12,
                                             ),
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                              horizontal: 5,
-                                              vertical: 16,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              color: Colors.black.withOpacity(0.4),
                                             ),
-                                            prefixIconConstraints:
-                                                const BoxConstraints(
-                                              minWidth: 25,
-                                              minHeight: 25,
-                                            ),
-                                            prefixIcon: Observer(
-                                              builder: (context) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(
-                                                    4,
-                                                  ),
-                                                  child: _validationStore
-                                                          .isValid
-                                                      ? ScaleTap(
-                                                          enableFeedback: false,
-                                                          onPressed: () async {
-                                                            _focusNode
-                                                                .unfocus();
-                                                            await Future
-                                                                .delayed(
-                                                              const Duration(
-                                                                milliseconds:
-                                                                    300,
-                                                              ),
-                                                            );
-                                                            final res =
-                                                                await context
-                                                                    .pushRoute<
-                                                                        String?>(
-                                                              const QrScannerRoute(),
-                                                            );
-                                                            if (res == null) {
-                                                              return;
-                                                            }
-
-                                                            _btcAddressController
-                                                                .text = res;
-                                                            await _validateBTCAddress();
-                                                          },
-                                                          child: Assets
-                                                              .images.qrCode
-                                                              .image(
-                                                            height: 24,
-                                                            color: AppColors
-                                                                .secondaryButtons,
-                                                          ),
-                                                        )
-                                                      : Lottie.asset(
-                                                          'assets/animated_logo/address_validation_success.json',
-                                                          height: 24,
-                                                          controller:
-                                                              _lottieController,
-                                                          onLoaded:
-                                                              (composition) {
-                                                            Future.delayed(
-                                                              const Duration(
-                                                                milliseconds:
-                                                                    1000,
-                                                              ),
-                                                            );
-                                                            _lottieController
-                                                                    .duration =
-                                                                composition
-                                                                    .duration;
-                                                          },
+                                            child: Column(
+                                              children: [
+                                                const Row(
+                                                  children: [
+                                                    Text(
+                                                      'Address',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        fontFamily:
+                                                            FontFamily.redHatMedium,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Observer(
+                                                  builder: (context) {
+                                                    if (_balanceStore.loadings[
+                                                            _balanceStore
+                                                                .selectedCard
+                                                                ?.address] ??
+                                                        false) {
+                                                      return const Padding(
+                                                        padding: EdgeInsets.all(4),
+                                                        child:
+                                                            CupertinoActivityIndicator(
+                                                          radius: 5,
                                                         ),
-                                                );
-                                              },
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: AppColors
-                                                    .primaryButtonColor,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                5,
-                                              ),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Colors.transparent,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                5,
-                                              ),
+                                                      );
+                                                    }
+                                                    return Text(
+                                                      _balanceStore.selectedCard
+                                                              ?.address ??
+                                                          '',
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                      ),
+                                                    ).expandedHorizontally();
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                      const Gap(4),
+                                      ClipRRect(
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(
+                                            sigmaX: 5,
+                                            sigmaY: 5,
+                                          ),
+                                          child: Container(
+                                            height: 55,
+                                            padding: const EdgeInsets.only(
+                                              left: 4,
+                                              right: 4,
+                                              top: 6,
+                                              bottom: 6,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                              color: Colors.black.withOpacity(0.4),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                const Row(
+                                                  children: [
+                                                    Text(
+                                                      'Balance',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            FontFamily.redHatMedium,
+                                                        color: Colors.white,
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Observer(
+                                                  builder: (context) {
+                                                    if (_balanceStore.loadings[
+                                                            _balanceStore
+                                                                .selectedCard
+                                                                ?.address] ??
+                                                        false) {
+                                                      return const Padding(
+                                                        padding: EdgeInsets.all(4),
+                                                        child:
+                                                            CupertinoActivityIndicator(
+                                                          radius: 5,
+                                                        ),
+                                                      );
+                                                    }
+                                                    return Text(
+                                                      (_balanceStore.selectedCard !=
+                                                                  null
+                                                              ? '\$${_balanceStore.selectedCard?.balance}.00'
+                                                              : '')
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                      ),
+                                                    ).expandedHorizontally();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              else
+                                const SizedBox(),
+                            ],
                           );
                         },
                       ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Gap(20),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
-              ),
-              color: Colors.white.withOpacity(0.7),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(14),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Fill in the address of your physical card \nwallet',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: AppColors.textHintsColor,
+                      back: Center(
+                        child: Container(
+                          width: context.width - 74,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: Assets.images.back.image().image,
+                            ),
+                          ),
+                          child: LayoutBuilder(
+                            builder: (_, constraints) {
+                              return Center(
+                                child: SizedBox(
+                                  height: constraints.maxHeight * 0.5,
+                                  width: constraints.maxWidth * 0.54,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: const Color(0xFFFBB270),
+                                                width: 2,
+                                              ),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                const Spacer(flex: 7),
+                                                Assets.images.secret1.image(),
+                                                const Spacer(flex: 5),
+                                                Assets.images.secret2.image(),
+                                                const Spacer(flex: 7),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const Gap(6),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color(0xFFFBB270),
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: ScaleTransition(
+                                            scale: _textFieldAnimationController,
+                                            child: TextField(
+                                              onChanged: (_) {
+                                                _validateBTCAddress();
+                                              },
+                                              controller: _btcAddressController,
+                                              maxLines: 2,
+                                              minLines: 1,
+                                              focusNode: _focusNode,
+                                              cursorColor:
+                                                  AppColors.primaryButtonColor,
+                                              cursorWidth: 1,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: AppColors.primaryTextColor,
+                                                fontFamily: FontFamily.redHatLight,
+                                              ),
+                                              onTapOutside: (_) {
+                                                WidgetsBinding.instance.focusManager
+                                                    .primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                hintText:
+                                                    'Write here your card address ',
+                                                hintMaxLines: 2,
+                                                hintStyle: TextStyle(
+                                                  fontFamily:
+                                                      FontFamily.redHatLight,
+                                                  fontSize: 12,
+                                                  color: AppColors.primaryTextColor
+                                                      .withOpacity(
+                                                    0.4,
+                                                  ),
+                                                ),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 5,
+                                                  vertical: 16,
+                                                ),
+                                                prefixIconConstraints:
+                                                    const BoxConstraints(
+                                                  minWidth: 25,
+                                                  minHeight: 25,
+                                                ),
+                                                prefixIcon: Observer(
+                                                  builder: (context) {
+                                                    return Padding(
+                                                      padding: const EdgeInsets.all(
+                                                        4,
+                                                      ),
+                                                      child: _validationStore
+                                                              .isValid
+                                                          ? ScaleTap(
+                                                              enableFeedback: false,
+                                                              onPressed: () async {
+                                                                _focusNode
+                                                                    .unfocus();
+                                                                await Future
+                                                                    .delayed(
+                                                                  const Duration(
+                                                                    milliseconds:
+                                                                        300,
+                                                                  ),
+                                                                );
+                                                                final res =
+                                                                    await context
+                                                                        .pushRoute<
+                                                                            String?>(
+                                                                  const QrScannerRoute(),
+                                                                );
+                                                                if (res == null) {
+                                                                  return;
+                                                                }
+
+                                                                _btcAddressController
+                                                                    .text = res;
+                                                                await _validateBTCAddress();
+                                                              },
+                                                              child: Assets
+                                                                  .images.qrCode
+                                                                  .image(
+                                                                height: 24,
+                                                                color: AppColors
+                                                                    .secondaryButtons,
+                                                              ),
+                                                            )
+                                                          : Lottie.asset(
+                                                              'assets/animated_logo/address_validation_success.json',
+                                                              height: 24,
+                                                              controller:
+                                                                  _lottieController,
+                                                              onLoaded:
+                                                                  (composition) {
+                                                                Future.delayed(
+                                                                  const Duration(
+                                                                    milliseconds:
+                                                                        1000,
+                                                                  ),
+                                                                );
+                                                                _lottieController
+                                                                        .duration =
+                                                                    composition
+                                                                        .duration;
+                                                              },
+                                                            ),
+                                                    );
+                                                  },
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: AppColors
+                                                        .primaryButtonColor,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                ),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Colors.transparent,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                    5,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  Gap(4),
-                  Text(
-                    'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      fontSize: 14,
-                      color: AppColors.textHintsColor,
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ).paddingHorizontal(16),
-          const Gap(20),
-          LoadingButton(
-            onPressed: () {
-              try {
-                _balanceStore.saveSelectedCard();
-                hasShownWallet().then((hasShown) {
-                  if(hasShown ){
-                    router.pop(const WalletRoute());
-                  } else {
-                    router.push(const WalletProtectionRoute());
-                  }
-                } );
-
-              } catch (e) {
-                if (!router.stackData
-                    .indexWhere((element) => element.name == WalletRoute.name)
-                    .isNegative) {
-                  router.pop();
-                }
-              }
-            },
-            child: const Text(
-              'Save to wallet',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: FontFamily.redHatSemiBold,
-              ),
-            ),
-          ).paddingHorizontal(49),
-          LoadingButton(
-            onPressed: () => showMyDialog(context),
-            style: context.theme
-                .buttonStyle(
-                  buttonType: ButtonTypes.TRANSPARENT,
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatSemiBold,
-                    color: AppColors.primaryTextColor,
-                    fontSize: 17,
-                  ),
-                )
-                .copyWith(
-                  padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                  ],
                 ),
-            child: const Text('Skip'),
-          ),
-          Gap(max(context.bottomPadding, 12)),
-        ],
+              ),
+              const Gap(20),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
+                  color: Colors.white.withOpacity(0.7),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Observer(
+                    builder: (_) {
+                      return Column(
+                        children: [
+                          AnimatedSwitcher(
+                            switchInCurve: Curves.decelerate,
+                            duration: const Duration(milliseconds: 300),
+                            child: Row(
+                              children: [
+                                if (_addressState.isAddressVisible)
+                                  const Text(
+                                    'Coinplus Virtual Card',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  )
+                                else
+                                  const Text(
+                                    'Fill in the address of your physical card \nwallet',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const Gap(4),
+                          if (_addressState.isAddressVisible)
+                            const Text(
+                              'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 14,
+                                color: AppColors.textHintsColor,
+                              ),
+                            )
+                          else
+                            const Text(
+                              'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 14,
+                                color: AppColors.textHintsColor,
+                              ),
+                            )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ).paddingHorizontal(16),
+              const Gap(20),
+              LoadingButton(
+                onPressed: () {
+                  try {
+                    _balanceStore.saveSelectedCard();
+                    hasShownWallet().then((hasShown) {
+                      if (hasShown) {
+                        router.pop(const WalletRoute());
+                      } else {
+                        router.push(const WalletProtectionRoute());
+                      }
+                    });
+                  } catch (e) {
+                    if (!router.stackData
+                        .indexWhere((element) => element.name == WalletRoute.name)
+                        .isNegative) {
+                      router.pop();
+                      editAddressDialog(context);
+                    }
+                  }
+                },
+                child: const Text(
+                  'Save to wallet',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontFamily: FontFamily.redHatSemiBold,
+                  ),
+                ),
+              ).paddingHorizontal(49),
+              LoadingButton(
+                onPressed: () => showMyDialog(context),
+                style: context.theme
+                    .buttonStyle(
+                      buttonType: ButtonTypes.TRANSPARENT,
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatSemiBold,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 17,
+                      ),
+                    )
+                    .copyWith(
+                      padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                    ),
+                child: const Text('Skip'),
+              ),
+              Gap(max(context.bottomPadding, 12)),
+            ],
+          );
+        },
       ),
     );
   }
@@ -599,18 +647,8 @@ class _CardFillPageState extends State<CardFillPage>
     return btcAddressRegex.hasMatch(address);
   }
 
-  Future<void> saveStringToLocalStorage(String key, String value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
-  }
-
-  Future<void> _toggleWidgets() async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    _cardAnimationStore.startLoading();
-  }
-
   Future<void> _toggleCard() async {
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future.delayed(const Duration(milliseconds: 400));
     await _flipCardController.toggleCard();
   }
 }

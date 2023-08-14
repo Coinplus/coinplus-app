@@ -59,13 +59,17 @@ class $AssetsIconsGen {
   AssetGenImage get coinplusVector =>
       const AssetGenImage('assets/icons/coinplusVector.png');
 
+  /// File path: assets/icons/task_alt.png
+  AssetGenImage get taskAlt => const AssetGenImage('assets/icons/task_alt.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         bTCIcon,
         faceIDSuccess,
         charmArrowDownRight,
         charmArrowTopRight,
-        coinplusVector
+        coinplusVector,
+        taskAlt
       ];
 }
 

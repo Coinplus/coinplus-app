@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'app.dart';
 import 'constants/flavor_type.dart';
 import 'providers/get_it.dart';
+import 'utils/storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.PROD}) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
   await EasyLocalization.ensureInitialized();
 
   registerGetIt(env);
-  //await StorageUtils.clear();
+  await StorageUtils.clear();
   runApp(
     EasyLocalization(
       supportedLocales: const [
