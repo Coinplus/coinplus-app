@@ -1,199 +1,489 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:flip_card/flip_card_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../constants/buttons/button_settings.dart';
+import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../store/address_and_balance_state/address_and_balance_state.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
+import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../widgets/loading_button.dart';
+import '../card_fill_page/edit_address_dialog/edit_address_dialog.dart';
+import '../card_fill_page/skip_button_alert/skip_button_alert.dart';
+import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class BarFillPage extends StatefulWidget {
-  const BarFillPage({super.key});
+  const BarFillPage({super.key, this.receivedData});
+
+  final String? receivedData;
 
   @override
   State<BarFillPage> createState() => _BarFillPageState();
 }
 
-class _BarFillPageState extends State<BarFillPage> {
+class _BarFillPageState extends State<BarFillPage>
+    with TickerProviderStateMixin {
+  late TextEditingController _btcAddressController = TextEditingController();
+  late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
+  final _flipCardController = FlipCardController();
+  late AnimationController _lottieController;
+  final _validationStore = QrDetectState();
+  final _addressState = AddressState();
+  final _focusNode = FocusNode();
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   void initState() {
     super.initState();
     _toggleWidgets();
+    _flipCardController.toggleCard();
+    _btcAddressController.addListener(_validateBTCAddress);
+    _btcAddressController = TextEditingController();
+    _btcAddressController.text = widget.receivedData ?? '';
+    _lottieController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _focusNode.addListener(() {
+      _focusNode.hasFocus
+          ? _textFieldAnimationController.forward()
+          : _textFieldAnimationController.animateBack(0);
+    });
+    _textFieldAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 1,
+      upperBound: 1.3,
+    );
+    if (widget.receivedData != null) {
+      onInitWithAddress();
+    }
+  }
+
+  Future<void> onInitWithAddress() async {
+    _lottieController.reset();
+    await _validateBTCAddress();
   }
 
   Future<void> _toggleWidgets() async {
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future.delayed(const Duration(milliseconds: 600));
     _cardAnimationState.startLoading();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Row(
-          children: [
-            const Text(
-              'Virtual card',
-              style: TextStyle(
-                fontSize: 32,
-                fontFamily: FontFamily.redHatBold,
-              ),
-            ).paddingHorizontal(14),
-          ],
-        ),
-        automaticallyImplyLeading: false,
+        title: const Text(
+          'Virtual bar',
+          style: TextStyle(
+            fontSize: 32,
+            fontFamily: FontFamily.redHatBold,
+          ),
+        ).expandedHorizontally(),
         backgroundColor: AppColors.scaffoldBackgroundColor,
         elevation: 0,
       ),
-      body: ListView(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
+      body: Column(
         children: [
-          const Gap(50),
-          Observer(
-            builder: (context) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 1500),
-                child: _cardAnimationState.showFirstWidget
-                    ? Assets.images.inactiveBar.image(
-                        height: 312,
-                      )
-                    : LayoutBuilder(
-                        builder: (context, constraint) {
-                          return Stack(
-                            children: [
-                              Assets.images.barFrontView.image(
-                                height: 312,
-                              ),
-                              Positioned(
-                                top: 153,
-                                left: 20,
-                                right: 20,
-                                child: TextFormField(
-                                  maxLines: 2,
-                                  cursorColor: AppColors.primaryButtonColor,
-                                  cursorWidth: 1,
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    fontFamily: FontFamily.redHatLight,
-                                  ),
-                                  onTapOutside: (_) {
-                                    WidgetsBinding
-                                        .instance.focusManager.primaryFocus
-                                        ?.unfocus();
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: 'Write here your card \naddress ',
-                                    hintMaxLines: 2,
-                                    hintStyle: TextStyle(
-                                      fontFamily: FontFamily.redHatLight,
-                                      fontSize: 10,
-                                      color: AppColors.primaryTextColor
-                                          .withOpacity(
-                                        0.4,
+          Expanded(
+            child: Observer(
+              builder: (context) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 600),
+                  child: _cardAnimationState.showFirstWidget
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: Assets.images.barSkeleton.image(
+                            height: 400,
+                          ),
+                        )
+                      : Center(
+                          child: AnimatedSwitcher(
+                            switchInCurve: Curves.bounceIn,
+                            duration: const Duration(milliseconds: 600),
+                            child: _addressState.isAddressVisible
+                                ? Container(
+                                    width: context.width - 34,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: Assets.images.barWithAddress
+                                            .image()
+                                            .image,
                                       ),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 10,
-                                      horizontal: 20,
-                                    ),
-                                    prefixIconConstraints: const BoxConstraints(
-                                      minWidth: 20,
-                                      minHeight: 20,
-                                    ),
-                                    prefixIcon: Padding(
-                                      padding: const EdgeInsets.all(4),
-                                      child: ScaleTap(
-                                        enableFeedback: false,
-                                        onPressed: () async {
-                                          final res =
-                                              await context.pushRoute<String?>(
-                                            const QrScannerRoute(),
-                                          );
-
-                                          await Future.delayed(
-                                            const Duration(
-                                              milliseconds: 1200,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Observer(
+                                              builder: (context) {
+                                                if (_balanceStore.loadings[
+                                                        _balanceStore
+                                                            .selectedBar
+                                                            ?.address] ??
+                                                    false) {
+                                                  return const Padding(
+                                                    padding: EdgeInsets.all(4),
+                                                    child:
+                                                        CupertinoActivityIndicator(
+                                                      radius: 5,
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  (_balanceStore.selectedBar !=
+                                                              null
+                                                          ? '\$${_balanceStore.selectedBar?.balance}.00'
+                                                          : '')
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                  ),
+                                                );
+                                              },
                                             ),
-                                          );
-                                        },
-                                        child: Assets.images.qrCode.image(
-                                          height: 24,
-                                          color: AppColors.secondaryButtons,
+                                            const Gap(74),
+                                          ],
                                         ),
+                                        const Gap(18),
+                                        Observer(
+                                          builder: (context) {
+                                            if (_balanceStore.loadings[
+                                                    _balanceStore.selectedBar
+                                                        ?.address] ??
+                                                false) {
+                                              return const Padding(
+                                                padding: EdgeInsets.all(4),
+                                                child:
+                                                    CupertinoActivityIndicator(
+                                                  radius: 5,
+                                                ),
+                                              );
+                                            }
+                                            return Text(
+                                              _balanceStore
+                                                      .selectedBar?.address ??
+                                                  '',
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.black,
+                                                fontSize: 10,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        const Gap(180),
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    width: context.width - 34,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: Assets.images.barFront
+                                            .image()
+                                            .image,
                                       ),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.primaryButtonColor,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
+                                    child: LayoutBuilder(
+                                      builder: (_, constraints) {
+                                        return Center(
+                                          child: SizedBox(
+                                            height: constraints.maxHeight * 0.5,
+                                            width: constraints.maxWidth * 0.5,
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Gap(60),
+                                                  if (_addressState
+                                                      .isAddressVisible)
+                                                    const SizedBox()
+                                                  else
+                                                    ScaleTransition(
+                                                      scale:
+                                                          _textFieldAnimationController,
+                                                      child: TextField(
+                                                        onChanged: (_) {
+                                                          _validateBTCAddress();
+                                                        },
+                                                        controller:
+                                                            _btcAddressController,
+                                                        maxLines: 2,
+                                                        minLines: 1,
+                                                        focusNode: _focusNode,
+                                                        cursorColor: AppColors
+                                                            .primaryButtonColor,
+                                                        cursorWidth: 1,
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color: AppColors
+                                                              .primaryTextColor,
+                                                          fontFamily: FontFamily
+                                                              .redHatLight,
+                                                        ),
+                                                        onTapOutside: (_) {
+                                                          WidgetsBinding
+                                                              .instance
+                                                              .focusManager
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        decoration:
+                                                            InputDecoration(
+                                                          fillColor:
+                                                              Colors.white,
+                                                          hintText:
+                                                              'Write here your \nbar address ',
+                                                          hintMaxLines: 2,
+                                                          hintStyle: TextStyle(
+                                                            fontFamily:
+                                                                FontFamily
+                                                                    .redHatLight,
+                                                            fontSize: 12,
+                                                            color: AppColors
+                                                                .primaryTextColor
+                                                                .withOpacity(
+                                                              0.4,
+                                                            ),
+                                                          ),
+                                                          contentPadding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                            horizontal: 8,
+                                                            vertical: 16,
+                                                          ),
+                                                          prefixIconConstraints:
+                                                              const BoxConstraints(
+                                                            minWidth: 27,
+                                                            minHeight: 27,
+                                                          ),
+                                                          prefixIcon: Observer(
+                                                            builder: (context) {
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                  4,
+                                                                ),
+                                                                child: _validationStore
+                                                                        .isValid
+                                                                    ? IconButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          _focusNode
+                                                                              .unfocus();
+                                                                          await Future
+                                                                              .delayed(
+                                                                            const Duration(
+                                                                              milliseconds: 300,
+                                                                            ),
+                                                                          );
+                                                                          final res =
+                                                                              await context.pushRoute<String?>(
+                                                                            const QrScannerRoute(),
+                                                                          );
+                                                                          if (res ==
+                                                                              null) {
+                                                                            return;
+                                                                          }
+
+                                                                          _btcAddressController.text =
+                                                                              res;
+                                                                          await _validateBTCAddress();
+                                                                        },
+                                                                        icon: Assets
+                                                                            .images
+                                                                            .qrCode
+                                                                            .image(
+                                                                          height:
+                                                                              24,
+                                                                          color:
+                                                                              AppColors.secondaryButtons,
+                                                                        ),
+                                                                      )
+                                                                    : Lottie
+                                                                        .asset(
+                                                                        'assets/animated_logo/address_validation_success.json',
+                                                                        height:
+                                                                            24,
+                                                                        controller:
+                                                                            _lottieController,
+                                                                        onLoaded:
+                                                                            (composition) {
+                                                                          Future
+                                                                              .delayed(
+                                                                            const Duration(
+                                                                              milliseconds: 1000,
+                                                                            ),
+                                                                          );
+                                                                          _lottieController.duration =
+                                                                              composition.duration;
+                                                                        },
+                                                                      ),
+                                                              );
+                                                            },
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: AppColors
+                                                                  .primaryButtonColor,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              5,
+                                                            ),
+                                                          ),
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Colors
+                                                                  .transparent,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              5,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-              ).paddingHorizontal();
-            },
+                          ),
+                        ),
+                );
+              },
+            ),
           ),
-          const Gap(31),
           Container(
-            padding: const EdgeInsets.all(14),
-            width: 343,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.containerBorderColor),
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.3),
+              ),
+              color: Colors.white.withOpacity(0.7),
             ),
-            child: const Center(
-              child: Column(
-                children: [
-                  Row(
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Observer(
+                builder: (_) {
+                  return Column(
                     children: [
-                      Text(
-                        'Fill in the address of your physical card \nwallet',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: AppColors.textHintsColor,
+                      AnimatedSwitcher(
+                        switchInCurve: Curves.decelerate,
+                        duration: const Duration(milliseconds: 300),
+                        child: Row(
+                          children: [
+                            if (_addressState.isAddressVisible)
+                              const Text(
+                                'Coinplus Virtual Bar',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: AppColors.textHintsColor,
+                                ),
+                              )
+                            else
+                              const Text(
+                                'Fill in the address of your physical bar \nwallet',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: AppColors.textHintsColor,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
+                      const Gap(4),
+                      if (_addressState.isAddressVisible)
+                        const Text(
+                          'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 14,
+                            color: AppColors.textHintsColor,
+                          ),
+                        )
+                      else
+                        const Text(
+                          'Please fill the address from your physical bar into the address input field, or scan the QR code.',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 14,
+                            color: AppColors.textHintsColor,
+                          ),
+                        )
                     ],
-                  ),
-                  Gap(4),
-                  Text(
-                    'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      fontSize: 14,
-                      color: AppColors.textHintsColor,
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          ).paddingHorizontal(),
-          const Gap(55),
+          ).paddingHorizontal(16),
+          const Gap(20),
           LoadingButton(
-            onPressed: () {},
+            onPressed: () {
+              try {
+                _balanceStore.saveSelectedBar();
+                hasShownWallet().then((hasShown) {
+                  if (hasShown) {
+                    router.pop(const WalletRoute());
+                  } else {
+                    router.push(const WalletProtectionRoute());
+                  }
+                });
+              } catch (e) {
+                if (!router.stackData
+                    .indexWhere((element) => element.name == WalletRoute.name)
+                    .isNegative) {
+                  router.pop();
+                  editAddressDialog(context);
+                }
+              }
+            },
             child: const Text(
               'Save to wallet',
               style: TextStyle(
@@ -201,23 +491,51 @@ class _BarFillPageState extends State<BarFillPage> {
                 fontFamily: FontFamily.redHatSemiBold,
               ),
             ),
-          ).paddingHorizontal(67),
-          const Gap(20),
-          ScaleTap(
-            onPressed: () => router.pushAndPopAll(const OnboardingRoute()),
-            child: const Center(
-              child: Text(
-                'Back',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatSemiBold,
-                  color: AppColors.primaryTextColor,
-                  fontSize: 17,
+          ).paddingHorizontal(49),
+          const Gap(10),
+          LoadingButton(
+            onPressed: () => showMyDialog(context),
+            style: context.theme
+                .buttonStyle(
+                  buttonType: ButtonTypes.TRANSPARENT,
+                  textStyle: const TextStyle(
+                    fontFamily: FontFamily.redHatSemiBold,
+                    color: AppColors.primaryTextColor,
+                    fontSize: 17,
+                  ),
+                )
+                .copyWith(
+                  padding: const MaterialStatePropertyAll(EdgeInsets.zero),
                 ),
-              ),
-            ),
+            child: const Text('Skip'),
           ),
+          Gap(max(context.bottomPadding, 12)),
         ],
       ),
     );
+  }
+
+  Future<void> _validateBTCAddress() async {
+    final btcAddress = _btcAddressController.text.trim();
+    unawaited(
+      _balanceStore.getSelectedBar(btcAddress),
+    );
+    if (isValidBTCAddress(btcAddress)) {
+      _validationStore.validate();
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+      _focusNode.unfocus();
+      Future.delayed(
+        const Duration(milliseconds: 1200),
+        () => _addressState.isAddressVisible = true,
+      );
+      await _lottieController.forward(from: 0);
+    } else {}
+  }
+
+  bool isValidBTCAddress(String address) {
+    final btcAddressRegex = RegExp(r'^(bc1|[13])[a-zA-HJ-NP-Z0-9]{33,39}$');
+    return btcAddressRegex.hasMatch(address);
   }
 }
