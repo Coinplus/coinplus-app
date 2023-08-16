@@ -6,7 +6,6 @@ import 'package:mobx/mobx.dart';
 import '../../constants/card_type.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
-import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
 import '../../utils/storage_utils.dart';
@@ -21,17 +20,14 @@ abstract class _BalanceStore with Store {
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
-  ObservableList<BarModel> _bars = <BarModel>[].asObservable();
+  ObservableList<CardModel> _bars = <CardModel>[].asObservable();
   @readonly
   CardModel? _selectedCard;
   @readonly
-  BarModel? _selectedBar;
-  @observable
-  ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
+  ObservableMap<String, bool> _loadings = <String, bool>{}.asObservable();
 
   _BalanceStore() {
     getCardsFromStorage();
-    getBarsFromStorage();
     getCoins();
   }
 
@@ -45,10 +41,6 @@ abstract class _BalanceStore with Store {
         .where((element) => element.cardType == CardType.CARD)
         .toList()
         .asObservable();
-  }
-
-  Future<void> getBarsFromStorage() async {
-    final allCards = await StorageUtils.getBars();
     _bars = allCards
         .where((element) => element.cardType == CardType.BAR)
         .toList()
@@ -56,7 +48,7 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<void> getCardsInfo() async {
+  Future<void> getAllCardsInfo() async {
     if (_cards.isEmpty) {
       return;
     }
@@ -80,44 +72,14 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<void> getBarsInfo() async {
-    if (_bars.isEmpty) {
-      return;
-    }
-    for (final element in _bars) {
-      final card = await _getSingleBarInfo(element.address);
-      if (card != null) {
-        final index = _bars.indexOf(element);
-        _bars.replaceRange(
-          index,
-          index + 1,
-          [
-            element.copyWith(
-              balance: card.balance,
-              totalReceived: card.totalReceived,
-              totalSent: card.totalSent,
-            ),
-          ],
-        );
-      }
-    }
-  }
-
-  @action
   Future<void> getSelectedCard(String address) async {
     _selectedCard = CardModel(address: address);
     _selectedCard = await _getSingleCardInfo(address);
   }
 
-  @action
-  Future<void> getSelectedBar(String address) async {
-    _selectedBar = BarModel(address: address);
-    _selectedBar = await _getSingleBarInfo(address);
-  }
-
   Future<CardModel?> _getSingleCardInfo(String address) async {
     try {
-      loadings[address] = true;
+      _loadings[address] = true;
       final card = await CoinsClient(dio).getCard(
         coinName: 'btc',
         address: address,
@@ -126,24 +88,7 @@ abstract class _BalanceStore with Store {
     } on DioException catch (e, stc) {
       log(e.message.toString(), stackTrace: stc);
     } finally {
-      loadings[address] = false;
-    }
-
-    return null;
-  }
-
-  Future<BarModel?> _getSingleBarInfo(String address) async {
-    try {
-      loadings[address] = true;
-      final bar = await CoinsClient(dio).getBar(
-        coinName: 'btc',
-        address: address,
-      );
-      return bar;
-    } on DioException catch (e, stc) {
-      log(e.message.toString(), stackTrace: stc);
-    } finally {
-      loadings[address] = false;
+      _loadings[address] = false;
     }
 
     return null;
@@ -154,43 +99,24 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isCardNotExist = _cards
+    final cards = [..._cards, ..._bars];
+
+    final isCardNotExist = cards
         .indexWhere((element) => element.address == _selectedCard?.address)
         .isNegative;
 
     if (isCardNotExist) {
-      _cards.add(_selectedCard!);
-
+      _selectedCard!.cardType == CardType.CARD
+          ? _cards.add(_selectedCard!)
+          : _bars.add(_selectedCard!);
       StorageUtils.addCard(_selectedCard!);
     } else {
       throw Exception('Card is already added');
     }
   }
 
-  void saveSelectedBar() {
-    if (_selectedBar == null) {
-      return;
-    }
-
-    final isBarNotExist = _bars
-        .indexWhere((element) => element.address == _selectedBar?.address)
-        .isNegative;
-
-    if (isBarNotExist) {
-      _bars.add(_selectedBar!);
-      StorageUtils.addBar(_selectedBar!);
-    } else {
-      throw Exception('Bar is already added');
-    }
-  }
-
   @action
   void resetSelectedCard() {
     _selectedCard = null;
-  }
-
-  @action
-  void resetSelectedBar() {
-    _selectedBar = null;
   }
 }

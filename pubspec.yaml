@@ -50,6 +50,7 @@ dependencies:
   local_auth: ^2.1.6
   carousel_slider: ^4.2.1
   shared_preferences: ^2.2.0
+  toggle_switch: ^2.1.0
   video_player: ^2.7.0
   animated_segmented_tab_control: ^1.1.0
   toast: ^0.3.0
