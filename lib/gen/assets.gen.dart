@@ -59,6 +59,17 @@ class $AssetsIconsGen {
   AssetGenImage get coinplusVector =>
       const AssetGenImage('assets/icons/coinplusVector.png');
 
+  /// File path: assets/icons/content_copy.png
+  AssetGenImage get contentCopy =>
+      const AssetGenImage('assets/icons/content_copy.png');
+
+  /// File path: assets/icons/edit.png
+  AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
+
+  /// File path: assets/icons/settings.png
+  AssetGenImage get settings =>
+      const AssetGenImage('assets/icons/settings.png');
+
   /// File path: assets/icons/task_alt.png
   AssetGenImage get taskAlt => const AssetGenImage('assets/icons/task_alt.png');
 
@@ -69,6 +80,9 @@ class $AssetsIconsGen {
         charmArrowDownRight,
         charmArrowTopRight,
         coinplusVector,
+        contentCopy,
+        edit,
+        settings,
         taskAlt
       ];
 }
@@ -98,10 +112,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Front.png
   AssetGenImage get front => const AssetGenImage('assets/images/Front.png');
 
-  /// File path: assets/images/Inactive_bar.png
-  AssetGenImage get inactiveBar =>
-      const AssetGenImage('assets/images/Inactive_bar.png');
-
   /// File path: assets/images/Orange_card.png
   AssetGenImage get orangeCard =>
       const AssetGenImage('assets/images/Orange_card.png');
@@ -116,17 +126,21 @@ class $AssetsImagesGen {
   AssetGenImage get whiteCard =>
       const AssetGenImage('assets/images/White_Card.png');
 
-  /// File path: assets/images/bar_end_view.png
-  AssetGenImage get barEndView =>
-      const AssetGenImage('assets/images/bar_end_view.png');
-
   /// File path: assets/images/bar_form.png
   AssetGenImage get barForm =>
       const AssetGenImage('assets/images/bar_form.png');
 
-  /// File path: assets/images/bar_front_view.png
-  AssetGenImage get barFrontView =>
-      const AssetGenImage('assets/images/bar_front_view.png');
+  /// File path: assets/images/bar_front.png
+  AssetGenImage get barFront =>
+      const AssetGenImage('assets/images/bar_front.png');
+
+  /// File path: assets/images/bar_skeleton.png
+  AssetGenImage get barSkeleton =>
+      const AssetGenImage('assets/images/bar_skeleton.png');
+
+  /// File path: assets/images/bar_with_address.png
+  AssetGenImage get barWithAddress =>
+      const AssetGenImage('assets/images/bar_with_address.png');
 
   /// File path: assets/images/card_form.png
   AssetGenImage get cardForm =>
@@ -170,14 +184,14 @@ class $AssetsImagesGen {
         formBar,
         formCard,
         front,
-        inactiveBar,
         orangeCard,
         secret1,
         secret2,
         whiteCard,
-        barEndView,
         barForm,
-        barFrontView,
+        barFront,
+        barSkeleton,
+        barWithAddress,
         cardForm,
         coinpluslogo,
         contactless,

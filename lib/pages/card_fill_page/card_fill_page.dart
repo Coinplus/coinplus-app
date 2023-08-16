@@ -168,7 +168,8 @@ class _CardFillPageState extends State<CardFillPage>
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(6),
-                                              color: Colors.black.withOpacity(0.4),
+                                              color:
+                                                  Colors.black.withOpacity(0.4),
                                             ),
                                             child: Column(
                                               children: [
@@ -178,8 +179,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                       'Address',
                                                       style: TextStyle(
                                                         fontSize: 11,
-                                                        fontFamily:
-                                                            FontFamily.redHatMedium,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
                                                         color: Colors.white,
                                                       ),
                                                     ),
@@ -193,7 +194,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                                 ?.address] ??
                                                         false) {
                                                       return const Padding(
-                                                        padding: EdgeInsets.all(4),
+                                                        padding:
+                                                            EdgeInsets.all(4),
                                                         child:
                                                             CupertinoActivityIndicator(
                                                           radius: 5,
@@ -205,9 +207,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                               ?.address ??
                                                           '',
                                                       style: const TextStyle(
-                                                        fontFamily:
-                                                            FontFamily.redHatMedium,
-                                                        fontWeight: FontWeight.w700,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         color: Colors.white,
                                                         fontSize: 12,
                                                       ),
@@ -237,7 +240,8 @@ class _CardFillPageState extends State<CardFillPage>
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(6),
-                                              color: Colors.black.withOpacity(0.4),
+                                              color:
+                                                  Colors.black.withOpacity(0.4),
                                             ),
                                             child: Column(
                                               children: [
@@ -246,8 +250,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                     Text(
                                                       'Balance',
                                                       style: TextStyle(
-                                                        fontFamily:
-                                                            FontFamily.redHatMedium,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
                                                         color: Colors.white,
                                                         fontSize: 11,
                                                       ),
@@ -262,7 +266,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                                 ?.address] ??
                                                         false) {
                                                       return const Padding(
-                                                        padding: EdgeInsets.all(4),
+                                                        padding:
+                                                            EdgeInsets.all(4),
                                                         child:
                                                             CupertinoActivityIndicator(
                                                           radius: 5,
@@ -276,9 +281,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                               : '')
                                                           .toString(),
                                                       style: const TextStyle(
-                                                        fontFamily:
-                                                            FontFamily.redHatMedium,
-                                                        fontWeight: FontWeight.w700,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        fontWeight:
+                                                            FontWeight.w700,
                                                         color: Colors.white,
                                                         fontSize: 20,
                                                       ),
@@ -349,10 +355,12 @@ class _CardFillPageState extends State<CardFillPage>
                                               color: const Color(0xFFFBB270),
                                               width: 2,
                                             ),
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
                                           child: ScaleTransition(
-                                            scale: _textFieldAnimationController,
+                                            scale:
+                                                _textFieldAnimationController,
                                             child: TextField(
                                               onChanged: (_) {
                                                 _validateBTCAddress();
@@ -366,12 +374,14 @@ class _CardFillPageState extends State<CardFillPage>
                                               cursorWidth: 1,
                                               style: const TextStyle(
                                                 fontSize: 12,
-                                                color: AppColors.primaryTextColor,
-                                                fontFamily: FontFamily.redHatLight,
+                                                color:
+                                                    AppColors.primaryTextColor,
+                                                fontFamily:
+                                                    FontFamily.redHatLight,
                                               ),
                                               onTapOutside: (_) {
-                                                WidgetsBinding.instance.focusManager
-                                                    .primaryFocus
+                                                WidgetsBinding.instance
+                                                    .focusManager.primaryFocus
                                                     ?.unfocus();
                                               },
                                               decoration: InputDecoration(
@@ -383,7 +393,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                   fontFamily:
                                                       FontFamily.redHatLight,
                                                   fontSize: 12,
-                                                  color: AppColors.primaryTextColor
+                                                  color: AppColors
+                                                      .primaryTextColor
                                                       .withOpacity(
                                                     0.4,
                                                   ),
@@ -401,14 +412,17 @@ class _CardFillPageState extends State<CardFillPage>
                                                 prefixIcon: Observer(
                                                   builder: (context) {
                                                     return Padding(
-                                                      padding: const EdgeInsets.all(
+                                                      padding:
+                                                          const EdgeInsets.all(
                                                         4,
                                                       ),
                                                       child: _validationStore
                                                               .isValid
                                                           ? ScaleTap(
-                                                              enableFeedback: false,
-                                                              onPressed: () async {
+                                                              enableFeedback:
+                                                                  false,
+                                                              onPressed:
+                                                                  () async {
                                                                 _focusNode
                                                                     .unfocus();
                                                                 await Future
@@ -424,7 +438,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                                             String?>(
                                                                   const QrScannerRoute(),
                                                                 );
-                                                                if (res == null) {
+                                                                if (res ==
+                                                                    null) {
                                                                   return;
                                                                 }
 
@@ -462,7 +477,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                     );
                                                   },
                                                 ),
-                                                focusedBorder: OutlineInputBorder(
+                                                focusedBorder:
+                                                    OutlineInputBorder(
                                                   borderSide: const BorderSide(
                                                     color: AppColors
                                                         .primaryButtonColor,
@@ -472,7 +488,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                     5,
                                                   ),
                                                 ),
-                                                enabledBorder: OutlineInputBorder(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
                                                   borderSide: const BorderSide(
                                                     color: Colors.transparent,
                                                   ),
@@ -580,7 +597,9 @@ class _CardFillPageState extends State<CardFillPage>
                     });
                   } catch (e) {
                     if (!router.stackData
-                        .indexWhere((element) => element.name == WalletRoute.name)
+                        .indexWhere(
+                          (element) => element.name == WalletRoute.name,
+                        )
                         .isNegative) {
                       router.pop();
                       editAddressDialog(context);
@@ -643,7 +662,7 @@ class _CardFillPageState extends State<CardFillPage>
   }
 
   bool isValidBTCAddress(String address) {
-    final btcAddressRegex = RegExp(r'^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$');
+    final btcAddressRegex = RegExp(r'^(bc1|[13])[a-zA-HJ-NP-Z0-9]{33,39}$');
     return btcAddressRegex.hasMatch(address);
   }
 
