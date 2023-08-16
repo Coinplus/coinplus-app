@@ -11,8 +11,8 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../widgets/loading_button.dart';
+import 'form_factor_pages/card_scan_methods_page.dart';
 import 'form_factor_pages/form_factor_page.dart';
-import 'form_factor_pages/scan_methods_page.dart';
 
 @RoutePage()
 class OnboardingPage extends StatefulWidget {
@@ -129,7 +129,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             controller: _controller,
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              ScanMethodsPage(
+                              CardScanMethodsPage(
                                 controller: _controller,
                               ),
                               FormFactorPage(

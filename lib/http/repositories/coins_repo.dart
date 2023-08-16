@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
 
@@ -18,6 +19,11 @@ abstract class CoinsClient {
 
   @GET(_Paths.balance)
   Future<CardModel> getCard({
+    @Path() required String coinName,
+    @Path() required String address,
+  });
+  @GET(_Paths.balance)
+  Future<BarModel> getBar({
     @Path() required String coinName,
     @Path() required String address,
   });
