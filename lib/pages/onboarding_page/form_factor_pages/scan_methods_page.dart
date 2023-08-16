@@ -14,8 +14,8 @@ import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 
-class BarScanMethodsPage extends StatelessWidget {
-  const BarScanMethodsPage({super.key, required this.controller});
+class ScanMethodsPage extends StatelessWidget {
+  const ScanMethodsPage({super.key, required this.controller});
 
   final PageController controller;
 
@@ -61,7 +61,7 @@ class BarScanMethodsPage extends StatelessWidget {
                       await Future.delayed(const Duration(milliseconds: 2500));
 
                       await router.push(
-                        BarFillRoute(receivedData: walletAddress.toString()),
+                        CardFillRoute(receivedData: walletAddress.toString()),
                       );
                     },
                   );
@@ -165,7 +165,7 @@ class BarScanMethodsPage extends StatelessWidget {
                       }
                       await NfcManager.instance.stopSession();
                       await router.push(
-                        BarFillRoute(receivedData: walletAddress.toString()),
+                        CardFillRoute(receivedData: walletAddress.toString()),
                       );
                     },
                   );
@@ -205,7 +205,7 @@ class BarScanMethodsPage extends StatelessWidget {
             );
             if (res != null) {
               await router.push(
-                BarFillRoute(receivedData: res),
+                CardFillRoute(receivedData: res),
               );
             }
           },

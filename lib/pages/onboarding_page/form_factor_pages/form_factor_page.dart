@@ -115,7 +115,7 @@ class _FormFactorPageState extends State<FormFactorPage>
                             const Duration(milliseconds: 100),
                           );
                           await router.pop(context);
-                          await router.push(BarFillRoute());
+                          await router.push(const BarFillRoute());
                         },
                         child: Visibility(
                           visible: _formFactorState.isSecondWidgetVisible,

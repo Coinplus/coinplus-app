@@ -20,7 +20,7 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
   await EasyLocalization.ensureInitialized();
 
   registerGetIt(env);
-  //await StorageUtils.clear();
+  await StorageUtils.clear();
   runApp(
     EasyLocalization(
       supportedLocales: const [

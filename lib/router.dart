@@ -37,8 +37,5 @@ class Router extends $Router {
       page: WalletRoute.page,
       fullscreenDialog: true,
     ),
-    AdaptiveRoute(
-      page: CardSettingsRoute.page,
-    ),
   ];
 }
