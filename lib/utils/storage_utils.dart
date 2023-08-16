@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/bar_model/bar_model.dart';
 import '../models/card_model/card_model.dart';
 
 class Preferences {
@@ -10,6 +11,7 @@ class Preferences {
 
   static const authToken = 'authToken';
   static const cards = 'cards';
+  static const bars = 'bars';
   static const bools = 'bools';
 }
 
@@ -31,10 +33,30 @@ class StorageUtils {
     return cards;
   }
 
+  static Future<List<BarModel>> getBars() async {
+    final barsJson =
+        await _read<List>(Preferences.bars) ?? <Map<String, dynamic>>[];
+
+    final bars = <BarModel>[];
+    for (final element in barsJson) {
+      bars.add(
+        BarModel.fromJson(element),
+      );
+    }
+
+    return bars;
+  }
+
   static Future<void> addCard(CardModel card) async {
     final cards = await getCards();
     cards.add(card);
     await _save(Preferences.cards, cards.toSet().toList());
+  }
+
+  static Future<void> addBar(BarModel bar) async {
+    final bars = await getBars();
+    bars.add(bar);
+    await _save(Preferences.bars, bars.toSet().toList());
   }
 
   static Future<void> removeCard(String address) async {
@@ -42,6 +64,13 @@ class StorageUtils {
         <CardModel>[])
       ..removeWhere((e) => e.address == address);
     await _save(Preferences.cards, cards.toList());
+  }
+
+  static Future<void> removeBar(String address) async {
+    final cards = (await _read<List<BarModel>>(Preferences.cards) ??
+        <BarModel>[])
+      ..removeWhere((e) => e.address == address);
+    await _save(Preferences.bars, cards.toList());
   }
 
   static Future<bool> getBool() async {

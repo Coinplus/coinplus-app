@@ -47,16 +47,16 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   late final _$_barsAtom = Atom(name: '_BalanceStore._bars', context: context);
 
-  ObservableList<CardModel> get bars {
+  ObservableList<BarModel> get bars {
     _$_barsAtom.reportRead();
     return super._bars;
   }
 
   @override
-  ObservableList<CardModel> get _bars => bars;
+  ObservableList<BarModel> get _bars => bars;
 
   @override
-  set _bars(ObservableList<CardModel> value) {
+  set _bars(ObservableList<BarModel> value) {
     _$_barsAtom.reportWrite(value, super._bars, () {
       super._bars = value;
     });
@@ -80,30 +80,54 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_loadingsAtom =
-      Atom(name: '_BalanceStore._loadings', context: context);
+  late final _$_selectedBarAtom =
+      Atom(name: '_BalanceStore._selectedBar', context: context);
 
-  ObservableMap<String, bool> get loadings {
-    _$_loadingsAtom.reportRead();
-    return super._loadings;
+  BarModel? get selectedBar {
+    _$_selectedBarAtom.reportRead();
+    return super._selectedBar;
   }
 
   @override
-  ObservableMap<String, bool> get _loadings => loadings;
+  BarModel? get _selectedBar => selectedBar;
 
   @override
-  set _loadings(ObservableMap<String, bool> value) {
-    _$_loadingsAtom.reportWrite(value, super._loadings, () {
-      super._loadings = value;
+  set _selectedBar(BarModel? value) {
+    _$_selectedBarAtom.reportWrite(value, super._selectedBar, () {
+      super._selectedBar = value;
     });
   }
 
-  late final _$getAllCardsInfoAsyncAction =
-      AsyncAction('_BalanceStore.getAllCardsInfo', context: context);
+  late final _$loadingsAtom =
+      Atom(name: '_BalanceStore.loadings', context: context);
 
   @override
-  Future<void> getAllCardsInfo() {
-    return _$getAllCardsInfoAsyncAction.run(() => super.getAllCardsInfo());
+  ObservableMap<String, bool> get loadings {
+    _$loadingsAtom.reportRead();
+    return super.loadings;
+  }
+
+  @override
+  set loadings(ObservableMap<String, bool> value) {
+    _$loadingsAtom.reportWrite(value, super.loadings, () {
+      super.loadings = value;
+    });
+  }
+
+  late final _$getCardsInfoAsyncAction =
+      AsyncAction('_BalanceStore.getCardsInfo', context: context);
+
+  @override
+  Future<void> getCardsInfo() {
+    return _$getCardsInfoAsyncAction.run(() => super.getCardsInfo());
+  }
+
+  late final _$getBarsInfoAsyncAction =
+      AsyncAction('_BalanceStore.getBarsInfo', context: context);
+
+  @override
+  Future<void> getBarsInfo() {
+    return _$getBarsInfoAsyncAction.run(() => super.getBarsInfo());
   }
 
   late final _$getSelectedCardAsyncAction =
@@ -113,6 +137,14 @@ mixin _$BalanceStore on _BalanceStore, Store {
   Future<void> getSelectedCard(String address) {
     return _$getSelectedCardAsyncAction
         .run(() => super.getSelectedCard(address));
+  }
+
+  late final _$getSelectedBarAsyncAction =
+      AsyncAction('_BalanceStore.getSelectedBar', context: context);
+
+  @override
+  Future<void> getSelectedBar(String address) {
+    return _$getSelectedBarAsyncAction.run(() => super.getSelectedBar(address));
   }
 
   late final _$_BalanceStoreActionController =
@@ -130,9 +162,20 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void resetSelectedBar() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.resetSelectedBar');
+    try {
+      return super.resetSelectedBar();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-
+loadings: ${loadings}
     ''';
   }
 }
