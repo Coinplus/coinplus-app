@@ -295,7 +295,7 @@ class _CardFillPageState extends State<CardFillPage>
                                             ),
                                           ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 )
@@ -576,7 +576,7 @@ class _CardFillPageState extends State<CardFillPage>
                                 fontSize: 14,
                                 color: AppColors.textHintsColor,
                               ),
-                            )
+                            ),
                         ],
                       );
                     },

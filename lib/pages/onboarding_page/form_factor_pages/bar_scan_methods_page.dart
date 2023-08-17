@@ -15,9 +15,8 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 
 class BarScanMethodsPage extends StatelessWidget {
-  const BarScanMethodsPage({super.key, required this.controller});
+  const BarScanMethodsPage({super.key});
 
-  final PageController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -238,11 +237,7 @@ class BarScanMethodsPage extends StatelessWidget {
             shape: const RoundedRectangleBorder(),
           ),
           onPressed: () {
-            controller.animateToPage(
-              1,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.ease,
-            );
+           router.push(BarFillRoute());
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

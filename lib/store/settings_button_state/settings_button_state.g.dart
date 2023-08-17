@@ -9,34 +9,61 @@ part of 'settings_button_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SettingsState on _SettingsState, Store {
-  late final _$currentIndexAtom =
-      Atom(name: '_SettingsState.currentIndex', context: context);
+  late final _$cardCurrentIndexAtom =
+      Atom(name: '_SettingsState.cardCurrentIndex', context: context);
 
   @override
-  int get currentIndex {
-    _$currentIndexAtom.reportRead();
-    return super.currentIndex;
+  int get cardCurrentIndex {
+    _$cardCurrentIndexAtom.reportRead();
+    return super.cardCurrentIndex;
   }
 
   @override
-  set currentIndex(int value) {
-    _$currentIndexAtom.reportWrite(value, super.currentIndex, () {
-      super.currentIndex = value;
+  set cardCurrentIndex(int value) {
+    _$cardCurrentIndexAtom.reportWrite(value, super.cardCurrentIndex, () {
+      super.cardCurrentIndex = value;
     });
   }
 
-  late final _$setCurrentIndexAsyncAction =
-      AsyncAction('_SettingsState.setCurrentIndex', context: context);
+  late final _$barCurrentIndexAtom =
+      Atom(name: '_SettingsState.barCurrentIndex', context: context);
 
   @override
-  Future<void> setCurrentIndex(int index) {
-    return _$setCurrentIndexAsyncAction.run(() => super.setCurrentIndex(index));
+  int get barCurrentIndex {
+    _$barCurrentIndexAtom.reportRead();
+    return super.barCurrentIndex;
+  }
+
+  @override
+  set barCurrentIndex(int value) {
+    _$barCurrentIndexAtom.reportWrite(value, super.barCurrentIndex, () {
+      super.barCurrentIndex = value;
+    });
+  }
+
+  late final _$setCardCurrentIndexAsyncAction =
+      AsyncAction('_SettingsState.setCardCurrentIndex', context: context);
+
+  @override
+  Future<void> setCardCurrentIndex(int index) {
+    return _$setCardCurrentIndexAsyncAction
+        .run(() => super.setCardCurrentIndex(index));
+  }
+
+  late final _$setBarCurrentIndexAsyncAction =
+      AsyncAction('_SettingsState.setBarCurrentIndex', context: context);
+
+  @override
+  Future<void> setBarCurrentIndex(int index) {
+    return _$setBarCurrentIndexAsyncAction
+        .run(() => super.setBarCurrentIndex(index));
   }
 
   @override
   String toString() {
     return '''
-currentIndex: ${currentIndex}
+cardCurrentIndex: ${cardCurrentIndex},
+barCurrentIndex: ${barCurrentIndex}
     ''';
   }
 }

@@ -456,7 +456,7 @@ class _BarFillPageState extends State<BarFillPage>
                             fontSize: 14,
                             color: AppColors.textHintsColor,
                           ),
-                        )
+                        ),
                     ],
                   );
                 },
