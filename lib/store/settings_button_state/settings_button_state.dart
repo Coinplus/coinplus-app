@@ -6,10 +6,17 @@ class SettingsState = _SettingsState with _$SettingsState;
 
 abstract class _SettingsState with Store {
   @observable
-  int currentIndex = 0;
+  int cardCurrentIndex = 0;
+  @observable
+  int barCurrentIndex = 0;
 
   @action
-  Future<void> setCurrentIndex(int index) async {
-    currentIndex = index;
+  Future<void> setCardCurrentIndex(int index) async {
+    cardCurrentIndex = index;
+  }
+
+  @action
+  Future<void> setBarCurrentIndex(int index) async {
+    barCurrentIndex = index;
   }
 }
