@@ -9,7 +9,6 @@ import '../models/card_model/card_model.dart';
 class Preferences {
   Preferences._();
 
-  static const authToken = 'authToken';
   static const cards = 'cards';
   static const bars = 'bars';
   static const bools = 'bools';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -22,8 +24,12 @@ class _ImageRadioRowState extends State<ImageRadioRow> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            GestureDetector(
-              onTap: () => _cardColorState.changeIndex(0),
+            ScaleTap(
+              enableFeedback: false,
+              onPressed: () => {
+                HapticFeedback.selectionClick(),
+                _cardColorState.changeIndex(0),
+              },
               child: Column(
                 children: [
                   Container(
@@ -51,8 +57,12 @@ class _ImageRadioRowState extends State<ImageRadioRow> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _cardColorState.changeIndex(1),
+            ScaleTap(
+              enableFeedback: false,
+              onPressed: () => {
+                HapticFeedback.selectionClick(),
+                _cardColorState.changeIndex(1),
+              },
               child: Column(
                 children: [
                   Container(
@@ -80,8 +90,12 @@ class _ImageRadioRowState extends State<ImageRadioRow> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _cardColorState.changeIndex(2),
+            ScaleTap(
+              enableFeedback: false,
+              onPressed: () => {
+                HapticFeedback.selectionClick(),
+                _cardColorState.changeIndex(2),
+              },
               child: Column(
                 children: [
                   Container(

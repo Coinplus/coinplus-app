@@ -4,16 +4,17 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import 'change_card_color.dart';
+import 'change_card_name.dart';
 
 @RoutePage()
 class CardSettingsPage extends StatefulWidget {
@@ -27,6 +28,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -38,7 +40,16 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
       body: Column(
         children: [
           ListTile(
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return const CardNameChangeModal();
+                },
+              );
+            },
             title: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -52,7 +63,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 ),
                 Gap(6),
                 Text(
-                  'Coinplus virtual card',
+                  'Coinplus Bitcoin card',
                   style: TextStyle(fontFamily: FontFamily.redHatLight),
                 ),
               ],
@@ -69,20 +80,19 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                   text: 'PnP68faffhkss8fsffs6dadadadda',
                 ),
               ).then((_) {
+                HapticFeedback.mediumImpact();
                 showTopSnackBar(
                   padding: const EdgeInsets.only(left: 40, right: 40),
                   displayDuration: const Duration(milliseconds: 400),
                   Overlay.of(context),
                   const CustomSnackBar.success(
-                    backgroundColor: Colors.grey,
-                    icon: Icon(
-                      Icons.check,
-                      size: 40,
-                      color: Colors.transparent,
+                    backgroundColor: Color(0xFF4A4A4A),
+                    message: 'Address was copied',
+                    textStyle: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 14,
+                      color: Colors.white,
                     ),
-                    iconPositionLeft: 20,
-                    iconRotationAngle: 0,
-                    message: 'Address copied to clipboard',
                   ),
                 );
               }),

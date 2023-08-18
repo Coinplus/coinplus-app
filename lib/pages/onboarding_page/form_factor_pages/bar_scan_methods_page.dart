@@ -17,7 +17,6 @@ import '../../../router.gr.dart';
 class BarScanMethodsPage extends StatelessWidget {
   const BarScanMethodsPage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -237,7 +236,7 @@ class BarScanMethodsPage extends StatelessWidget {
             shape: const RoundedRectangleBorder(),
           ),
           onPressed: () {
-           router.push(BarFillRoute());
+            router.push(BarFillRoute());
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

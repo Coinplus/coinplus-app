@@ -1,4 +1,3 @@
-
 import 'package:mobx/mobx.dart';
 
 part 'card_color_state.g.dart';
