@@ -48,7 +48,19 @@ class _BarListState extends State<BarList> {
                 },
                 child: Container(
                   padding: const EdgeInsets.only(top: 30, bottom: 30),
-                  child: Assets.images.addCard.image(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: Assets.images.addCard.image(),
+                  ),
                 ),
               );
             }
@@ -66,19 +78,18 @@ class _BarListState extends State<BarList> {
                     children: [
                       Positioned(
                         top: 0,
-                        left: 0,
-                        right: -270,
+                        right: 0,
                         child: Observer(
                           builder: (context) {
                             return AnimatedSwitcher(
                               duration: const Duration(milliseconds: 400),
                               child: _settingsState.barCurrentIndex == index
                                   ? ScaleTap(
-                                onPressed: () {},
-                                child: Assets.icons.settings.image(
-                                  height: 30,
-                                ),
-                              )
+                                      onPressed: () {},
+                                      child: Assets.icons.settings.image(
+                                        height: 30,
+                                      ),
+                                    )
                                   : const SizedBox(),
                             );
                           },
@@ -86,7 +97,7 @@ class _BarListState extends State<BarList> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(
-                          top: 35,
+                          top: 30,
                           bottom: 30,
                         ),
                         child: card.barColor.image.image(),
@@ -126,7 +137,7 @@ class _BarListState extends State<BarList> {
                                             style: TextStyle(
                                               fontSize: 11,
                                               fontFamily:
-                                              FontFamily.redHatMedium,
+                                                  FontFamily.redHatMedium,
                                               color: Colors.white,
                                             ),
                                           ),
@@ -135,7 +146,7 @@ class _BarListState extends State<BarList> {
                                       Observer(
                                         builder: (context) {
                                           if (_balanceStore
-                                              .loadings[card.address] ??
+                                                  .loadings[card.address] ??
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
@@ -145,7 +156,7 @@ class _BarListState extends State<BarList> {
                                                     height: 5,
                                                     width: 5,
                                                     child:
-                                                    CircularProgressIndicator(
+                                                        CircularProgressIndicator(
                                                       color: Colors.white,
                                                     ),
                                                   ),
@@ -157,7 +168,7 @@ class _BarListState extends State<BarList> {
                                             card.address,
                                             style: const TextStyle(
                                               fontFamily:
-                                              FontFamily.redHatMedium,
+                                                  FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
                                               fontSize: 10,
@@ -198,7 +209,7 @@ class _BarListState extends State<BarList> {
                                             'Balance',
                                             style: TextStyle(
                                               fontFamily:
-                                              FontFamily.redHatMedium,
+                                                  FontFamily.redHatMedium,
                                               color: Colors.white,
                                               fontSize: 11,
                                             ),
@@ -208,7 +219,7 @@ class _BarListState extends State<BarList> {
                                       Observer(
                                         builder: (context) {
                                           if (_balanceStore
-                                              .loadings[card.address] ??
+                                                  .loadings[card.address] ??
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
@@ -218,7 +229,7 @@ class _BarListState extends State<BarList> {
                                                     height: 5,
                                                     width: 5,
                                                     child:
-                                                    CircularProgressIndicator(
+                                                        CircularProgressIndicator(
                                                       color: Colors.white,
                                                     ),
                                                   ),
@@ -230,7 +241,7 @@ class _BarListState extends State<BarList> {
                                             '\$${card.balance}.00'.toString(),
                                             style: const TextStyle(
                                               fontFamily:
-                                              FontFamily.redHatMedium,
+                                                  FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
                                               fontSize: 20,

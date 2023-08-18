@@ -53,7 +53,19 @@ class _CardListState extends State<CardList> {
                     top: 30,
                     bottom: 30,
                   ),
-                  child: Assets.images.addCard.image(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: Assets.images.addCard.image(),
+                  ),
                 ),
               );
             }
@@ -65,23 +77,22 @@ class _CardListState extends State<CardList> {
               children: [
                 Positioned(
                   top: 0,
-                  left: 0,
-                  right: -270,
+                  right: 0,
                   child: Observer(
                     builder: (context) {
                       return AnimatedSwitcher(
                         duration: const Duration(milliseconds: 400),
                         child: _settingsState.cardCurrentIndex == index
                             ? ScaleTap(
-                          onPressed: () {
-                            router.push(
-                              const CardSettingsRoute(),
-                            );
-                          },
-                          child: Assets.icons.settings.image(
-                            height: 30,
-                          ),
-                        )
+                                onPressed: () {
+                                  router.push(
+                                    const CardSettingsRoute(),
+                                  );
+                                },
+                                child: Assets.icons.settings.image(
+                                  height: 30,
+                                ),
+                              )
                             : const SizedBox(),
                       );
                     },
@@ -89,7 +100,7 @@ class _CardListState extends State<CardList> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(
-                    top: 35,
+                    top: 30,
                     bottom: 30,
                   ),
                   child: card.cardColor.image.image(),
@@ -116,7 +127,7 @@ class _CardListState extends State<CardList> {
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withOpacity(0.2),
                             ),
                             child: Column(
                               children: [
@@ -178,7 +189,7 @@ class _CardListState extends State<CardList> {
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withOpacity(0.2),
                             ),
                             child: Column(
                               children: [
