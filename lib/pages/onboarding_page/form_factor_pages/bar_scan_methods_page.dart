@@ -66,6 +66,31 @@ class BarScanMethodsPage extends StatelessWidget {
                 }
               : () async {
                   await router.pop();
+                  await NfcManager.instance.startSession(
+                    onDiscovered: (tag) async {
+                      final ndef = Ndef.from(tag);
+                      final records = ndef!.cachedMessage!.records;
+                      dynamic walletAddress;
+
+                      if (records.length >= 2) {
+                        final hasJson = records[1].payload;
+                        final payloadString = String.fromCharCodes(hasJson);
+                        final Map payloadData =
+                            await json.decode(payloadString);
+                        walletAddress = payloadData['a'];
+                      } else {
+                        final hasUrl = records[0].payload;
+                        final payloadString = String.fromCharCodes(hasUrl);
+                        final parts =
+                            payloadString.split('air.coinplus.com/btc/');
+                        walletAddress = parts[1];
+                      }
+                      await router.pop();
+                      await router.push(
+                        BarFillRoute(receivedData: walletAddress.toString()),
+                      );
+                    },
+                  );
                   await showModalBottomSheet(
                     context: context,
                     backgroundColor: Colors.transparent,
@@ -100,6 +125,7 @@ class BarScanMethodsPage extends StatelessWidget {
                                       'Start with your wallet',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
+
                                         fontFamily: FontFamily.redHatSemiBold,
                                         fontSize: 17,
                                         color: AppColors.primaryTextColor,
@@ -139,31 +165,6 @@ class BarScanMethodsPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                      );
-                    },
-                  );
-                  await NfcManager.instance.startSession(
-                    onDiscovered: (tag) async {
-                      final ndef = Ndef.from(tag);
-                      final records = ndef!.cachedMessage!.records;
-                      dynamic walletAddress;
-
-                      if (records.length >= 2) {
-                        final hasJson = records[1].payload;
-                        final payloadString = String.fromCharCodes(hasJson);
-                        final Map payloadData =
-                            await json.decode(payloadString);
-                        walletAddress = payloadData['a'];
-                      } else {
-                        final hasUrl = records[0].payload;
-                        final payloadString = String.fromCharCodes(hasUrl);
-                        final parts =
-                            payloadString.split('air.coinplus.com/btc/');
-                        walletAddress = parts[1];
-                      }
-                      await NfcManager.instance.stopSession();
-                      await router.push(
-                        BarFillRoute(receivedData: walletAddress.toString()),
                       );
                     },
                   );

@@ -13,6 +13,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/context_extension.dart';
@@ -59,6 +60,7 @@ class _CardFillPageState extends State<CardFillPage>
   @override
   void initState() {
     super.initState();
+    _nfcStop();
     _toggleCard();
     _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
@@ -77,7 +79,7 @@ class _CardFillPageState extends State<CardFillPage>
       vsync: this,
       duration: const Duration(milliseconds: 200),
       lowerBound: 1,
-      upperBound: 1.3,
+      upperBound: 1.2,
     );
     if (widget.receivedData != null) {
       onInitWithAddress();
@@ -87,6 +89,11 @@ class _CardFillPageState extends State<CardFillPage>
   Future<void> onInitWithAddress() async {
     _lottieController.reset();
     await _validateBTCAddress();
+  }
+
+  Future<void> _nfcStop() async {
+    await Future.delayed(const Duration(milliseconds: 10000));
+    await NfcManager.instance.stopSession();
   }
 
   @override
@@ -450,7 +457,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                               child: Assets
                                                                   .images.qrCode
                                                                   .image(
-                                                                height: 24,
+                                                                height: 35,
                                                                 color: AppColors
                                                                     .secondaryButtons,
                                                               ),
@@ -584,51 +591,69 @@ class _CardFillPageState extends State<CardFillPage>
                 ),
               ).paddingHorizontal(16),
               const Gap(20),
-              LoadingButton(
-                onPressed: () {
-                  try {
-                    _balanceStore.saveSelectedCard();
-                    hasShownWallet().then((hasShown) {
-                      if (hasShown) {
-                        router.pop(const WalletRoute());
-                      } else {
-                        router.push(const WalletProtectionRoute());
-                      }
-                    });
-                  } catch (e) {
-                    if (!router.stackData
-                        .indexWhere(
-                          (element) => element.name == WalletRoute.name,
-                        )
-                        .isNegative) {
-                      router.pop();
-                      editAddressDialog(context);
-                    }
-                  }
-                },
-                child: const Text(
-                  'Save to wallet',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: FontFamily.redHatSemiBold,
-                  ),
-                ),
-              ).paddingHorizontal(49),
-              LoadingButton(
-                onPressed: () => showMyDialog(context),
-                style: context.theme
-                    .buttonStyle(
-                      buttonType: ButtonTypes.TRANSPARENT,
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatSemiBold,
-                        color: AppColors.primaryTextColor,
+              Observer(
+                builder: (_) {
+                  return LoadingButton(
+                    onPressed: _addressState.isAddressVisible
+                        ? () {
+                            try {
+                              _balanceStore.saveSelectedCard();
+                              hasShownWallet().then((hasShown) {
+                                if (hasShown) {
+                                  router.pop(const WalletRoute());
+                                } else {
+                                  router.push(const WalletProtectionRoute());
+                                }
+                              });
+                            } catch (e) {
+                              if (!router.stackData
+                                  .indexWhere(
+                                    (element) =>
+                                        element.name == WalletRoute.name,
+                                  )
+                                  .isNegative) {
+                                router.pop();
+                                editAddressDialog(context);
+                              }
+                            }
+                          }
+                        : null,
+                    child: const Text(
+                      'Save to wallet',
+                      style: TextStyle(
                         fontSize: 17,
+                        fontFamily: FontFamily.redHatSemiBold,
                       ),
-                    )
-                    .copyWith(
-                      padding: const MaterialStatePropertyAll(EdgeInsets.zero),
                     ),
-                child: const Text('Skip'),
+                  ).paddingHorizontal(49);
+                },
+              ),
+              Observer(
+                builder: (_) {
+                  return LoadingButton(
+                    onPressed: _addressState.isAddressVisible
+                        ? () {
+                            showMyDialog(context);
+                          }
+                        : () {
+                            router.pop(const OnboardingRoute());
+                          },
+                    style: context.theme
+                        .buttonStyle(
+                          buttonType: ButtonTypes.TRANSPARENT,
+                          textStyle: const TextStyle(
+                            fontFamily: FontFamily.redHatSemiBold,
+                            color: AppColors.primaryTextColor,
+                            fontSize: 17,
+                          ),
+                        )
+                        .copyWith(
+                          padding:
+                              const MaterialStatePropertyAll(EdgeInsets.zero),
+                        ),
+                    child: const Text('Skip'),
+                  );
+                },
               ),
               Gap(max(context.bottomPadding, 12)),
             ],

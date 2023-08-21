@@ -9,6 +9,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/elevated_button_extensions.dart';
@@ -53,6 +54,7 @@ class _BarFillPageState extends State<BarFillPage>
   @override
   void initState() {
     super.initState();
+     _nfcStop();
     _toggleWidgets();
     _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
@@ -88,6 +90,11 @@ class _BarFillPageState extends State<BarFillPage>
     _cardAnimationState.startLoading();
   }
 
+  Future<void> _nfcStop() async {
+    await Future.delayed(const Duration(milliseconds: 10000));
+    await NfcManager.instance.stopSession();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,28 +112,23 @@ class _BarFillPageState extends State<BarFillPage>
       ),
       body: Column(
         children: [
+          const Gap(20),
           Expanded(
             child: Observer(
               builder: (context) {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
                   child: _cardAnimationState.showFirstWidget
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Assets.images.barSkeleton.image(
-                            height: 400,
-                          ),
-                        )
+                      ? Assets.images.barSkeleton.image()
                       : Center(
                           child: AnimatedSwitcher(
                             switchInCurve: Curves.bounceIn,
                             duration: const Duration(milliseconds: 600),
                             child: _addressState.isAddressVisible
                                 ? Container(
-                                    width: context.width - 34,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: Assets.images.barWithAddress
+                                        image: Assets.images.barFront
                                             .image()
                                             .image,
                                       ),
@@ -396,6 +398,7 @@ class _BarFillPageState extends State<BarFillPage>
               },
             ),
           ),
+          const Gap(20),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -464,50 +467,68 @@ class _BarFillPageState extends State<BarFillPage>
             ),
           ).paddingHorizontal(16),
           const Gap(20),
-          LoadingButton(
-            onPressed: () {
-              try {
-                _balanceStore.saveSelectedBar();
-                hasShownWallet().then((hasShown) {
-                  if (hasShown) {
-                    router.pop(const WalletRoute());
-                  } else {
-                    router.push(const WalletProtectionRoute());
-                  }
-                });
-              } catch (e) {
-                if (!router.stackData
-                    .indexWhere((element) => element.name == WalletRoute.name)
-                    .isNegative) {
-                  router.pop();
-                  editAddressDialog(context);
-                }
-              }
-            },
-            child: const Text(
-              'Save to wallet',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: FontFamily.redHatSemiBold,
-              ),
-            ),
-          ).paddingHorizontal(49),
-          const Gap(10),
-          LoadingButton(
-            onPressed: () => showMyDialog(context),
-            style: context.theme
-                .buttonStyle(
-                  buttonType: ButtonTypes.TRANSPARENT,
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatSemiBold,
-                    color: AppColors.primaryTextColor,
+          Observer(
+            builder: (_) {
+              return LoadingButton(
+                onPressed: _addressState.isAddressVisible
+                    ? () {
+                        try {
+                          _balanceStore.saveSelectedBar();
+                          hasShownWallet().then((hasShown) {
+                            if (hasShown) {
+                              router.pop(const WalletRoute());
+                            } else {
+                              router.push(const WalletProtectionRoute());
+                            }
+                          });
+                        } catch (e) {
+                          if (!router.stackData
+                              .indexWhere(
+                                (element) => element.name == WalletRoute.name,
+                              )
+                              .isNegative) {
+                            router.pop();
+                            editAddressDialog(context);
+                          }
+                        }
+                      }
+                    : null,
+                child: const Text(
+                  'Save to wallet',
+                  style: TextStyle(
                     fontSize: 17,
+                    fontFamily: FontFamily.redHatSemiBold,
                   ),
-                )
-                .copyWith(
-                  padding: const MaterialStatePropertyAll(EdgeInsets.zero),
                 ),
-            child: const Text('Skip'),
+              ).paddingHorizontal(49);
+            },
+          ),
+          const Gap(10),
+          Observer(
+            builder: (_) {
+              return LoadingButton(
+                onPressed: _addressState.isAddressVisible
+                    ?
+                     () {
+                        showMyDialog(context);
+                      } : () {
+                  router.pop(const OnboardingRoute());
+                },
+                style: context.theme
+                    .buttonStyle(
+                      buttonType: ButtonTypes.TRANSPARENT,
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatSemiBold,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 17,
+                      ),
+                    )
+                    .copyWith(
+                      padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                    ),
+                child: const Text('Skip'),
+              );
+            },
           ),
           Gap(max(context.bottomPadding, 12)),
         ],

@@ -61,15 +61,9 @@ class CardBottomSheetWidget extends HookWidget {
             endIndent: 15,
             color: Color(0xFFF1F1F1),
           ),
-          SizedBox(
+          const SizedBox(
             height: 300,
-            child: PageView(
-              controller: controller,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                CardScanMethodsPage(controller: controller),
-              ],
-            ),
+            child: CardScanMethodsPage(),
           ),
         ],
       ),

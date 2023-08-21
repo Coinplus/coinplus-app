@@ -75,9 +75,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
           const Text(
             'New name',
             style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 14),
-          )
-            ..expandedHorizontally()
-            ..paddingHorizontal(16),
+          ).expandedHorizontally().paddingHorizontal(16),
           const Gap(4),
           TextField(
             focusNode: _focusNode,
@@ -86,8 +84,26 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
             },
             cursorColor: AppColors.secondaryButtons,
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: AppColors.primaryButtonColor,
+                ),
+                borderRadius: BorderRadius.circular(
+                  8,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.transparent,
+                ),
+                borderRadius: BorderRadius.circular(
+                  8,
+                ),
+              ),
+              contentPadding: const EdgeInsets.all(10),
               hintText: 'Coinplus Bitcoin card',
               hintStyle: TextStyle(
+
                 fontFamily: FontFamily.redHatLight,
                 color: AppColors.primaryTextColor.withOpacity(0.5),
                 fontSize: 14,
