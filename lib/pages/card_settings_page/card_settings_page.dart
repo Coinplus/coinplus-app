@@ -56,6 +56,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 Text(
                   'Card name',
                   style: TextStyle(
+                    letterSpacing: - .32,
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
                     color: AppColors.primaryTextColor,

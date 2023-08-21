@@ -15,9 +15,7 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 
 class CardScanMethodsPage extends StatelessWidget {
-  const CardScanMethodsPage({super.key, required this.controller});
-
-  final PageController controller;
+  const CardScanMethodsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +65,32 @@ class CardScanMethodsPage extends StatelessWidget {
                   );
                 }
               : () async {
+                  await NfcManager.instance.startSession(
+                    onDiscovered: (tag) async {
+                      final ndef = Ndef.from(tag);
+                      final records = ndef!.cachedMessage!.records;
+                      dynamic walletAddress;
+
+                      if (records.length >= 2) {
+                        final hasJson = records[1].payload;
+                        final payloadString = String.fromCharCodes(hasJson);
+                        final Map payloadData =
+                            await json.decode(payloadString);
+                        walletAddress = payloadData['a'];
+                      } else {
+                        final hasUrl = records[0].payload;
+                        final payloadString = String.fromCharCodes(hasUrl);
+                        final parts =
+                            payloadString.split('air.coinplus.com/btc/');
+                        walletAddress = parts[1];
+                      }
+
+                      await router.pop();
+                      await router.push(
+                        CardFillRoute(receivedData: walletAddress.toString()),
+                      );
+                    },
+                  );
                   await router.pop();
                   await showModalBottomSheet(
                     context: context,
@@ -144,31 +168,6 @@ class CardScanMethodsPage extends StatelessWidget {
                       );
                     },
                   );
-                  await NfcManager.instance.startSession(
-                    onDiscovered: (tag) async {
-                      final ndef = Ndef.from(tag);
-                      final records = ndef!.cachedMessage!.records;
-                      dynamic walletAddress;
-
-                      if (records.length >= 2) {
-                        final hasJson = records[1].payload;
-                        final payloadString = String.fromCharCodes(hasJson);
-                        final Map payloadData =
-                            await json.decode(payloadString);
-                        walletAddress = payloadData['a'];
-                      } else {
-                        final hasUrl = records[0].payload;
-                        final payloadString = String.fromCharCodes(hasUrl);
-                        final parts =
-                            payloadString.split('air.coinplus.com/btc/');
-                        walletAddress = parts[1];
-                      }
-                      await NfcManager.instance.stopSession();
-                      await router.push(
-                        CardFillRoute(receivedData: walletAddress.toString()),
-                      );
-                    },
-                  );
                 },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -238,11 +237,9 @@ class CardScanMethodsPage extends StatelessWidget {
             shape: const RoundedRectangleBorder(),
           ),
           onPressed: () {
-            controller.animateToPage(
-              1,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.ease,
-            );
+            router
+              ..pop()
+              ..push(CardFillRoute());
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -21,7 +21,7 @@ Future<void> showMyDialog(BuildContext context) {
       ),
     ),
     onPressed: () {
-      router.pushAndPopAll(const WalletProtectionRoute());
+      router.push(const WalletProtectionRoute());
     },
   ).paddingHorizontal();
 

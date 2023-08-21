@@ -11,7 +11,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../widgets/loading_button.dart';
-import 'form_factor_pages/card_scan_methods_page.dart';
+import '../wallet_page/card_and_bar_lists/card_and_bar_scan.dart';
 import 'form_factor_pages/form_factor_page.dart';
 
 @RoutePage()
@@ -69,7 +69,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
           ),
           const Spacer(
-            flex: 2,
+            flex: 5,
           ),
           LoadingButton(
             onPressed: () {
@@ -129,7 +129,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             controller: _controller,
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              CardScanMethodsPage(
+                              CardAndBarScanMethodsPage(
                                 controller: _controller,
                               ),
                               FormFactorPage(
@@ -157,9 +157,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             enableFeedback: false,
             onPressed: () async {
               final url = Uri.parse('https://coinplus.com/shop/');
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url);
-              }
+              await launchUrl(url);
             },
             child: const Text(
               "Don't have a card?",
@@ -171,61 +169,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
             ),
           ).expandedHorizontally(),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: 1,
-                width: 146,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: AppColors.dividerLight,
-                ),
-              ),
-              const Text(
-                'Or',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: FontFamily.redHatLight,
-                  color: AppColors.primaryTextColor,
-                ),
-              ),
-              Container(
-                height: 1,
-                width: 146,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: AppColors.dividerLight,
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          ScaleTap(
-            enableFeedback: false,
-            onPressed: () async {
-              final res = await context.pushRoute<String?>(
-                const QrScannerRoute(),
-              );
-              if (res != null) {
-                await router.push(
-                  CardFillRoute(receivedData: res),
-                );
-              }
-            },
-            child: const Text(
-              'Try with QR scan',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: FontFamily.redHatSemiBold,
-                color: AppColors.primaryTextColor,
-                fontSize: 15,
-              ),
-            ),
-          ),
           const Spacer(
-            flex: 3,
+            flex: 2,
           ),
         ],
       ),
