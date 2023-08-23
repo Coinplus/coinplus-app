@@ -9,7 +9,6 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
-import '../../router.gr.dart';
 import '../../widgets/loading_button.dart';
 import '../wallet_page/card_and_bar_lists/card_and_bar_scan.dart';
 import 'form_factor_pages/form_factor_page.dart';
@@ -157,10 +156,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
             enableFeedback: false,
             onPressed: () async {
               final url = Uri.parse('https://coinplus.com/shop/');
-              await launchUrl(url);
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              }
             },
             child: const Text(
-              "Don't have a card?",
+              'Buy new Card',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: FontFamily.redHatSemiBold,

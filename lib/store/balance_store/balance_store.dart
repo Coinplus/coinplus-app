@@ -115,6 +115,23 @@ abstract class _BalanceStore with Store {
     _selectedBar = await _getSingleBarInfo(address);
   }
 
+  @action
+  void removeSelectedCard() {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    final index = _cards.indexWhere((element) => element.address == _selectedCard!.address);
+
+    if (index >= 0) {
+      _cards.removeAt(index);
+      StorageUtils.removeCard(_selectedCard!.address);
+      resetSelectedCard();
+    } else {
+      throw Exception('Card does not exist');
+    }
+  }
+
   Future<CardModel?> _getSingleCardInfo(String address) async {
     try {
       loadings[address] = true;

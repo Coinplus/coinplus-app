@@ -89,7 +89,7 @@ class _CardListState extends State<CardList> {
                             ? ScaleTap(
                                 onPressed: () {
                                   router.push(
-                                    const CardSettingsRoute(),
+                                     CardSettingsRoute(card: card),
                                   );
                                 },
                                 child: Assets.icons.settings.image(
@@ -102,16 +102,16 @@ class _CardListState extends State<CardList> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                    top: 30,
-                    bottom: 30,
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.035,
+                    bottom: MediaQuery.of(context).size.height * 0.03,
                   ),
                   child: card.cardColor.image.image(),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height * 0.29,
-                  left: 5,
-                  right: 5,
+                  top: MediaQuery.of(context).size.height * 0.3,
+                  left: MediaQuery.of(context).size.width * 0.07,
+                  right: MediaQuery.of(context).size.width * 0.07,
                   child: Column(
                     children: [
                       ClipRRect(
@@ -121,6 +121,7 @@ class _CardListState extends State<CardList> {
                             sigmaY: 5,
                           ),
                           child: ScaleTap(
+                            enableFeedback: false,
                             onPressed: () {
                               Clipboard.setData(
                                 ClipboardData(
@@ -130,10 +131,6 @@ class _CardListState extends State<CardList> {
                                 (_) {
                                   HapticFeedback.mediumImpact();
                                   showTopSnackBar(
-                                    padding: const EdgeInsets.only(
-                                      left: 40,
-                                      right: 40,
-                                    ),
                                     displayDuration:
                                         const Duration(milliseconds: 400),
                                     Overlay.of(context),
@@ -199,11 +196,13 @@ class _CardListState extends State<CardList> {
                                       }
                                       return Text(
                                         card.address,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
                                         style: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.white,
-                                          fontSize: 10,
+                                          fontSize: 12,
                                         ),
                                       ).expandedHorizontally();
                                     },
@@ -216,6 +215,7 @@ class _CardListState extends State<CardList> {
                       ),
                       const Gap(4),
                       ScaleTap(
+                        enableFeedback: false,
                         onPressed: () {},
                         child: ClipRRect(
                           child: BackdropFilter(
@@ -282,7 +282,7 @@ class _CardListState extends State<CardList> {
                         ),
                       ),
                     ],
-                  ).paddingHorizontal(35),
+                  ),
                 ),
               ],
             );

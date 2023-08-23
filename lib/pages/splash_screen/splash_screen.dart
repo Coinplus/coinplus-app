@@ -49,7 +49,7 @@ class SplashScreenPage extends HookWidget {
 
   Future<void> openWallet() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    await router.pushAndPopAll(const WalletRoute());
+    await router.pushAndPopAll(const Dashboard());
   }
 }
 

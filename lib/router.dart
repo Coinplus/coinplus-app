@@ -28,14 +28,13 @@ class Router extends $Router {
       page: BarFillRoute.page,
     ),
     AdaptiveRoute(
+      page: Dashboard.page,
+    ),
+    AdaptiveRoute(
       page: CardFillRoute.page,
     ),
     AdaptiveRoute(
       page: WalletProtectionRoute.page,
-    ),
-    AdaptiveRoute(
-      page: WalletRoute.page,
-      fullscreenDialog: true,
     ),
     AdaptiveRoute(
       page: CardSettingsRoute.page,

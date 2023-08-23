@@ -12,6 +12,8 @@ class Preferences {
   static const cards = 'cards';
   static const bars = 'bars';
   static const bools = 'bools';
+  static const strings = 'strings';
+  static const ints = 'ints';
 }
 
 class StorageUtils {
@@ -66,7 +68,7 @@ class StorageUtils {
   }
 
   static Future<void> removeBar(String address) async {
-    final cards = (await _read<List<BarModel>>(Preferences.cards) ??
+    final cards = (await _read<List<BarModel>>(Preferences.bars) ??
         <BarModel>[])
       ..removeWhere((e) => e.address == address);
     await _save(Preferences.bars, cards.toList());
@@ -80,6 +82,26 @@ class StorageUtils {
   static Future<void> setBool({required bool value}) async {
     final prefs = await sharedInstance;
     await prefs.setBool(Preferences.bools, value);
+  }
+
+  static Future<void> setString({required String key, required String value}) async {
+    final prefs = await sharedInstance;
+    await prefs.setString(key, value);
+  }
+
+  static Future<String?> getString({required String key}) async {
+    final prefs = await sharedInstance;
+    return prefs.getString(key);
+  }
+
+  static Future<void> setInt({required String key, required int value}) async {
+    final prefs = await sharedInstance;
+    await prefs.setInt(key, value);
+  }
+
+  static Future<int?> getInt({required String key}) async {
+    final prefs = await sharedInstance;
+    return prefs.getInt(key);
   }
 
   /// Private helper functions
@@ -124,5 +146,9 @@ class StorageUtils {
   static Future<String?> _getString(String key) async {
     final prefs = await sharedInstance;
     return prefs.getString(key);
+  }
+
+  static Future<void> _setInt() async {
+
   }
 }

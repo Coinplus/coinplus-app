@@ -1148,6 +1148,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.3"
+  text_link:
+    dependency: "direct main"
+    description:
+      name: text_link
+      sha256: "8f981124a97838bd5e5c432a5f44011aa72332a26dd252c712c4221b93c9989d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   theme_tailor:
     dependency: "direct dev"
     description:

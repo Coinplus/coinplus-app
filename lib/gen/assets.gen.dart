@@ -66,12 +66,31 @@ class $AssetsIconsGen {
   /// File path: assets/icons/edit.png
   AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
 
+  /// File path: assets/icons/history_icon.png
+  AssetGenImage get historyIcon =>
+      const AssetGenImage('assets/icons/history_icon.png');
+
+  /// File path: assets/icons/page_info.png
+  AssetGenImage get pageInfo =>
+      const AssetGenImage('assets/icons/page_info.png');
+
+  /// File path: assets/icons/send_receive.png
+  AssetGenImage get sendReceive =>
+      const AssetGenImage('assets/icons/send_receive.png');
+
   /// File path: assets/icons/settings.png
   AssetGenImage get settings =>
       const AssetGenImage('assets/icons/settings.png');
 
   /// File path: assets/icons/task_alt.png
   AssetGenImage get taskAlt => const AssetGenImage('assets/icons/task_alt.png');
+
+  /// File path: assets/icons/trash.png
+  AssetGenImage get trash => const AssetGenImage('assets/icons/trash.png');
+
+  /// File path: assets/icons/wallet_icon.png
+  AssetGenImage get walletIcon =>
+      const AssetGenImage('assets/icons/wallet_icon.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -82,8 +101,13 @@ class $AssetsIconsGen {
         coinplusVector,
         contentCopy,
         edit,
+        historyIcon,
+        pageInfo,
+        sendReceive,
         settings,
-        taskAlt
+        taskAlt,
+        trash,
+        walletIcon
       ];
 }
 
@@ -142,6 +166,10 @@ class $AssetsImagesGen {
   AssetGenImage get barWithAddress =>
       const AssetGenImage('assets/images/bar_with_address.png');
 
+  /// File path: assets/images/card_and_bar_forms.png
+  AssetGenImage get cardAndBarForms =>
+      const AssetGenImage('assets/images/card_and_bar_forms.png');
+
   /// File path: assets/images/card_form.png
   AssetGenImage get cardForm =>
       const AssetGenImage('assets/images/card_form.png');
@@ -192,6 +220,7 @@ class $AssetsImagesGen {
         barFront,
         barSkeleton,
         barWithAddress,
+        cardAndBarForms,
         cardForm,
         coinpluslogo,
         contactless,

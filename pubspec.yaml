@@ -56,6 +56,7 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   retrofit: ^4.0.1
   shimmer: ^3.0.0
+  text_link: ^1.0.0
 
 
 
@@ -181,7 +182,7 @@ flutter:
     - family: RedHatMedium
       fonts:
         - asset: assets/fonts/RedHatDisplay-Medium.ttf
-          weight: 500
+          weight: 400
 
     - family: LexendThin
       fonts:

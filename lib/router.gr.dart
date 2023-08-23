@@ -9,17 +9,19 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:Coinplus/models/card_model/card_model.dart' as _i12;
 import 'package:Coinplus/pages/bar_fill_page/bar_fill_page.dart' as _i1;
 import 'package:Coinplus/pages/card_fill_page/card_fill_page.dart' as _i2;
 import 'package:Coinplus/pages/card_settings_page/card_settings_page.dart'
     as _i3;
-import 'package:Coinplus/pages/onboarding_page/onboarding_page.dart' as _i4;
-import 'package:Coinplus/pages/qr_page/qr_page.dart' as _i5;
-import 'package:Coinplus/pages/splash_screen/splash_screen.dart' as _i6;
-import 'package:Coinplus/pages/wallet_page/wallet_page.dart' as _i7;
+import 'package:Coinplus/pages/dashboard/dashboard.dart' as _i4;
+import 'package:Coinplus/pages/onboarding_page/onboarding_page.dart' as _i5;
+import 'package:Coinplus/pages/qr_page/qr_page.dart' as _i6;
+import 'package:Coinplus/pages/splash_screen/splash_screen.dart' as _i7;
 import 'package:Coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i8;
 import 'package:flutter/cupertino.dart' as _i10;
+import 'package:flutter/material.dart' as _i11;
 
 abstract class $Router extends _i9.RootStackRouter {
   $Router({super.navigatorKey});
@@ -49,33 +51,37 @@ abstract class $Router extends _i9.RootStackRouter {
       );
     },
     CardSettingsRoute.name: (routeData) {
+      final args = routeData.argsAs<CardSettingsRouteArgs>();
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.CardSettingsPage(),
+        child: _i3.CardSettingsPage(
+          key: args.key,
+          card: args.card,
+        ),
+      );
+    },
+    Dashboard.name: (routeData) {
+      return _i9.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.Dashboard(),
       );
     },
     OnboardingRoute.name: (routeData) {
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.OnboardingPage(),
+        child: const _i5.OnboardingPage(),
       );
     },
     QrScannerRoute.name: (routeData) {
       return _i9.AutoRoutePage<String?>(
         routeData: routeData,
-        child: const _i5.QrScannerPage(),
+        child: const _i6.QrScannerPage(),
       );
     },
     SplashScreenRoute.name: (routeData) {
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.SplashScreenPage(),
-      );
-    },
-    WalletRoute.name: (routeData) {
-      return _i9.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.WalletPage(),
+        child: const _i7.SplashScreenPage(),
       );
     },
     WalletProtectionRoute.name: (routeData) {
@@ -165,20 +171,58 @@ class CardFillRouteArgs {
 
 /// generated route for
 /// [_i3.CardSettingsPage]
-class CardSettingsRoute extends _i9.PageRouteInfo<void> {
-  const CardSettingsRoute({List<_i9.PageRouteInfo>? children})
-      : super(
+class CardSettingsRoute extends _i9.PageRouteInfo<CardSettingsRouteArgs> {
+  CardSettingsRoute({
+    _i11.Key? key,
+    required _i12.CardModel card,
+    List<_i9.PageRouteInfo>? children,
+  }) : super(
           CardSettingsRoute.name,
+          args: CardSettingsRouteArgs(
+            key: key,
+            card: card,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'CardSettingsRoute';
 
+  static const _i9.PageInfo<CardSettingsRouteArgs> page =
+      _i9.PageInfo<CardSettingsRouteArgs>(name);
+}
+
+class CardSettingsRouteArgs {
+  const CardSettingsRouteArgs({
+    this.key,
+    required this.card,
+  });
+
+  final _i11.Key? key;
+
+  final _i12.CardModel card;
+
+  @override
+  String toString() {
+    return 'CardSettingsRouteArgs{key: $key, card: $card}';
+  }
+}
+
+/// generated route for
+/// [_i4.Dashboard]
+class Dashboard extends _i9.PageRouteInfo<void> {
+  const Dashboard({List<_i9.PageRouteInfo>? children})
+      : super(
+          Dashboard.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'Dashboard';
+
   static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.OnboardingPage]
+/// [_i5.OnboardingPage]
 class OnboardingRoute extends _i9.PageRouteInfo<void> {
   const OnboardingRoute({List<_i9.PageRouteInfo>? children})
       : super(
@@ -192,7 +236,7 @@ class OnboardingRoute extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.QrScannerPage]
+/// [_i6.QrScannerPage]
 class QrScannerRoute extends _i9.PageRouteInfo<void> {
   const QrScannerRoute({List<_i9.PageRouteInfo>? children})
       : super(
@@ -206,7 +250,7 @@ class QrScannerRoute extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.SplashScreenPage]
+/// [_i7.SplashScreenPage]
 class SplashScreenRoute extends _i9.PageRouteInfo<void> {
   const SplashScreenRoute({List<_i9.PageRouteInfo>? children})
       : super(
@@ -215,20 +259,6 @@ class SplashScreenRoute extends _i9.PageRouteInfo<void> {
         );
 
   static const String name = 'SplashScreenRoute';
-
-  static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.WalletPage]
-class WalletRoute extends _i9.PageRouteInfo<void> {
-  const WalletRoute({List<_i9.PageRouteInfo>? children})
-      : super(
-          WalletRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WalletRoute';
 
   static const _i9.PageInfo<void> page = _i9.PageInfo<void>(name);
 }

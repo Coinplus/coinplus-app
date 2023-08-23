@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:auto_route/annotations.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,7 +17,6 @@ import 'btc_price/btc_price.dart';
 import 'card_and_bar_lists/bar_list.dart';
 import 'card_and_bar_lists/card_list.dart';
 
-@RoutePage()
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
 
@@ -185,171 +179,85 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          //Send and Receive
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: const Color(0xFFB2D7FF),
-            ),
-            height: 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ScaleTap(
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      Assets.icons.charmArrowDownRight.image(
-                        height: 20,
-                        color: AppColors.secondaryTextColor,
-                      ),
-                      const Gap(4),
-                      const Text(
-                        'Receive',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.secondaryTextColor,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ScaleTap(
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Send',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.secondaryTextColor,
-                          fontSize: 15,
-                        ),
-                      ),
-                      const Gap(4),
-                      Assets.icons.charmArrowTopRight.image(
-                        height: 20,
-                        color: AppColors.secondaryTextColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ).paddingHorizontal(78),
-          const Gap(10),
-          //BTC Price
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 8,
-                ),
-                child: Text(
-                  'Market',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    color: AppColors.textHintsColor,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              const Gap(10),
-              Container(
-                height: 73,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.withOpacity(0.3)),
-                  borderRadius: BorderRadius.circular(22),
-                  color: Colors.grey.withOpacity(0.1),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Observer(
-                    builder: (_) {
-                      final coin = _balanceStore.coins.firstWhereOrNull(
-                        (element) => element.id == 'bitcoin',
-                      );
-                      if (coin == null) {
-                        return const SizedBox();
-                      }
-
-                      return Row(
-                        children: [
-                          Assets.icons.bTCIcon.image(height: 24),
-                          const Gap(8),
-                          Text(
-                            coin.name,
-                            style: const TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Observer(
+                  builder: (_) {
+                    final coin = _balanceStore.coins.firstWhereOrNull(
+                      (element) => element.id == 'bitcoin',
+                    );
+                    if (coin == null) {
+                      return const SizedBox();
+                    }
+                    return Row(
+                      children: [
+                        Assets.icons.bTCIcon.image(height: 24),
+                        const Gap(8),
+                        Text(
+                          coin.name,
+                          style: const TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            color: Colors.black,
+                            fontSize: 16,
                           ),
-                          const Gap(8),
-                          Text(
-                            coin.symbol.toUpperCase(),
-                            style: const TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 10,
-                              color: AppColors.textHintsColor,
-                            ),
+                        ),
+                        const Gap(8),
+                        Text(
+                          coin.symbol.toUpperCase(),
+                          style: const TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 10,
+                            color: AppColors.textHintsColor,
                           ),
-                          const Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              buildCoinWidget(coin.currentPrice),
-                              const Gap(4),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  color: coin.priceChangePercentage_24h > 0
-                                      ? const Color(0xFF00BA1E)
-                                      : Colors.red,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3),
-                                  child: Row(
-                                    children: [
-                                      if (coin.priceChangePercentage_24h > 0)
-                                        const Icon(
-                                          Icons.arrow_drop_up,
-                                          size: 15,
-                                          color: Colors.white,
-                                        )
-                                      else
-                                        const Icon(
-                                          Icons.arrow_drop_down,
-                                          size: 15,
-                                          color: Colors.white,
-                                        ),
-                                      Text(
-                                        '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            buildCoinWidget(coin.currentPrice),
+                            const Gap(4),
+                            Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Row(
+                                children: [
+                                  if (coin.priceChangePercentage_24h > 0)
+                                    const Icon(
+                                      Icons.arrow_drop_up,
+                                      size: 25,
+                                      color: Colors.green,
+                                    )
+                                  else
+                                    const Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 25,
+                                      color: Colors.red,
+                                    ),
+                                  Text(
+                                    '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: coin.priceChangePercentage_24h > 0
+                                          ? Colors.green
+                                          : Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
           ).paddingHorizontal(16),
-          Gap(max(context.bottomPadding, 51)),
+          const Gap(25),
         ],
       ),
     );

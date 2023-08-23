@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
@@ -27,6 +28,8 @@ import '../../router.gr.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 import 'edit_address_dialog/edit_address_dialog.dart';
@@ -159,146 +162,197 @@ class _CardFillPageState extends State<CardFillPage>
                                   right: 10,
                                   child: Column(
                                     children: [
-                                      ClipRRect(
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                            sigmaX: 5,
-                                            sigmaY: 5,
-                                          ),
-                                          child: Container(
-                                            padding: const EdgeInsets.only(
-                                              left: 4,
-                                              right: 4,
-                                              top: 12,
-                                              bottom: 12,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              color:
-                                                  Colors.black.withOpacity(0.4),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                const Row(
-                                                  children: [
-                                                    Text(
-                                                      'Address',
-                                                      style: TextStyle(
-                                                        fontSize: 11,
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        color: Colors.white,
-                                                      ),
+                                      ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: () {
+                                          if (Platform.isIOS) {
+                                            Clipboard.setData(
+                                              ClipboardData(
+                                                text: _balanceStore
+                                                    .selectedCard!.address
+                                                    .toString(),
+                                              ),
+                                            ).then(
+                                              (_) {
+                                                HapticFeedback.mediumImpact();
+                                                showTopSnackBar(
+                                                  displayDuration:
+                                                      const Duration(
+                                                    milliseconds: 400,
+                                                  ),
+                                                  Overlay.of(context),
+                                                  const CustomSnackBar.success(
+                                                    backgroundColor:
+                                                        Color(0xFF4A4A4A),
+                                                    message:
+                                                        'Address was copied',
+                                                    textStyle: TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontSize: 14,
+                                                      color: Colors.white,
                                                     ),
-                                                  ],
-                                                ),
-                                                Observer(
-                                                  builder: (context) {
-                                                    if (_balanceStore.loadings[
-                                                            _balanceStore
-                                                                .selectedCard
-                                                                ?.address] ??
-                                                        false) {
-                                                      return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(4),
-                                                        child:
-                                                            CupertinoActivityIndicator(
-                                                          radius: 5,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          } else {
+                                            Clipboard.setData(
+                                              ClipboardData(
+                                                text: _balanceStore
+                                                    .selectedCard!.address
+                                                    .toString(),
+                                              ),
+                                            ).then(
+                                              (_) {
+                                                HapticFeedback.mediumImpact();
+                                              },
+                                            );
+                                          }
+                                        },
+                                        child: ClipRRect(
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                              sigmaX: 5,
+                                              sigmaY: 5,
+                                            ),
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                left: 8,
+                                                right: 8,
+                                                top: 12,
+                                                bottom: 12,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                color: Colors.black
+                                                    .withOpacity(0.2),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  const Row(
+                                                    children: [
+                                                      Text(
+                                                        'Address',
+                                                        style: TextStyle(
+                                                          fontSize: 11,
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          color: Colors.white,
                                                         ),
-                                                      );
-                                                    }
-                                                    return Text(
-                                                      _balanceStore.selectedCard
-                                                              ?.address ??
-                                                          '',
-                                                      style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: Colors.white,
-                                                        fontSize: 12,
                                                       ),
-                                                    ).expandedHorizontally();
-                                                  },
-                                                ),
-                                              ],
+                                                    ],
+                                                  ),
+                                                  Observer(
+                                                    builder: (context) {
+                                                      if (_balanceStore
+                                                                  .loadings[
+                                                              _balanceStore
+                                                                  .selectedCard
+                                                                  ?.address] ??
+                                                          false) {
+                                                        return const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(4),
+                                                          child:
+                                                              CupertinoActivityIndicator(
+                                                            radius: 5,
+                                                          ),
+                                                        );
+                                                      }
+                                                      return Text(
+                                                        _balanceStore
+                                                                .selectedCard
+                                                                ?.address ??
+                                                            '',
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: const TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ).expandedHorizontally();
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                       const Gap(4),
-                                      ClipRRect(
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                            sigmaX: 5,
-                                            sigmaY: 5,
-                                          ),
-                                          child: Container(
-                                            height: 55,
-                                            padding: const EdgeInsets.only(
-                                              left: 4,
-                                              right: 4,
-                                              top: 6,
-                                              bottom: 6,
+                                      ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: () {},
+                                        child: ClipRRect(
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(
+                                              sigmaX: 5,
+                                              sigmaY: 5,
                                             ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              color:
-                                                  Colors.black.withOpacity(0.4),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                const Row(
-                                                  children: [
-                                                    Text(
-                                                      'Balance',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        color: Colors.white,
-                                                        fontSize: 11,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Observer(
-                                                  builder: (context) {
-                                                    if (_balanceStore.loadings[
-                                                            _balanceStore
-                                                                .selectedCard
-                                                                ?.address] ??
-                                                        false) {
-                                                      return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(4),
-                                                        child:
-                                                            CupertinoActivityIndicator(
-                                                          radius: 5,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
+                                                color: Colors.black
+                                                    .withOpacity(0.2),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  const Row(
+                                                    children: [
+                                                      Text(
+                                                        'Balance',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          color: Colors.white,
+                                                          fontSize: 11,
                                                         ),
-                                                      );
-                                                    }
-                                                    return Text(
-                                                      (_balanceStore.selectedCard !=
-                                                                  null
-                                                              ? '\$${_balanceStore.selectedCard?.balance}.00'
-                                                              : '')
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: Colors.white,
-                                                        fontSize: 20,
                                                       ),
-                                                    ).expandedHorizontally();
-                                                  },
-                                                ),
-                                              ],
+                                                    ],
+                                                  ),
+                                                  Observer(
+                                                    builder: (context) {
+                                                      if (_balanceStore
+                                                                  .loadings[
+                                                              _balanceStore
+                                                                  .selectedCard
+                                                                  ?.address] ??
+                                                          false) {
+                                                        return const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(4),
+                                                          child:
+                                                              CupertinoActivityIndicator(
+                                                            radius: 5,
+                                                          ),
+                                                        );
+                                                      }
+                                                      return Text(
+                                                        (_balanceStore.selectedCard !=
+                                                                    null
+                                                                ? '\$${_balanceStore.selectedCard?.balance}.00'
+                                                                : '')
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: Colors.white,
+                                                          fontSize: 20,
+                                                        ),
+                                                      ).expandedHorizontally();
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -600,7 +654,7 @@ class _CardFillPageState extends State<CardFillPage>
                               _balanceStore.saveSelectedCard();
                               hasShownWallet().then((hasShown) {
                                 if (hasShown) {
-                                  router.pop(const WalletRoute());
+                                  router.pop(const Dashboard());
                                 } else {
                                   router.push(const WalletProtectionRoute());
                                 }
@@ -608,8 +662,7 @@ class _CardFillPageState extends State<CardFillPage>
                             } catch (e) {
                               if (!router.stackData
                                   .indexWhere(
-                                    (element) =>
-                                        element.name == WalletRoute.name,
+                                    (element) => element.name == Dashboard.name,
                                   )
                                   .isNegative) {
                                 router.pop();

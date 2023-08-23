@@ -476,7 +476,7 @@ class _BarFillPageState extends State<BarFillPage>
                           _balanceStore.saveSelectedBar();
                           hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(const WalletRoute());
+                              router.pop(const Dashboard());
                             } else {
                               router.push(const WalletProtectionRoute());
                             }
@@ -484,7 +484,7 @@ class _BarFillPageState extends State<BarFillPage>
                         } catch (e) {
                           if (!router.stackData
                               .indexWhere(
-                                (element) => element.name == WalletRoute.name,
+                                (element) => element.name == Dashboard.name,
                               )
                               .isNegative) {
                             router.pop();

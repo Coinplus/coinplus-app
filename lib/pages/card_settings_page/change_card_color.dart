@@ -2,21 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../constants/card_color.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
+import '../../models/card_model/card_model.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/card_color_state/card_color_state.dart';
 
-class ImageRadioRow extends StatefulWidget {
-  const ImageRadioRow({super.key});
+class ChangeImageColor extends StatefulWidget {
+  const ChangeImageColor({super.key, this.card});
+  final CardModel? card;
 
   @override
-  _ImageRadioRowState createState() => _ImageRadioRowState();
+  _ChangeImageColorState createState() => _ChangeImageColorState();
 }
 
-class _ImageRadioRowState extends State<ImageRadioRow> {
+class _ChangeImageColorState extends State<ChangeImageColor> {
   final _cardColorState = CardColorState();
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+@override
+void initState() {
 
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -62,6 +72,8 @@ class _ImageRadioRowState extends State<ImageRadioRow> {
               onPressed: () => {
                 HapticFeedback.selectionClick(),
                 _cardColorState.changeIndex(1),
+                widget.card?.cardColor == CardColor.WHITE,
+                _balanceStore.saveSelectedCard(),
               },
               child: Column(
                 children: [

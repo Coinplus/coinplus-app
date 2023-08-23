@@ -1,28 +1,41 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/card_model/card_model.dart';
+import '../../providers/screen_service.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../store/selected_card_store/selected_card_store.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import 'change_card_color.dart';
 import 'change_card_name.dart';
+import 'remove_card_modal.dart';
 
 @RoutePage()
 class CardSettingsPage extends StatefulWidget {
-  const CardSettingsPage({super.key});
+  const CardSettingsPage({super.key, required this.card});
+
+  final CardModel card;
 
   @override
   State<CardSettingsPage> createState() => _CardSettingsPageState();
 }
+
+final selectedCardStore = SelectedCardStore();
+
+BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
 class _CardSettingsPageState extends State<CardSettingsPage> {
   @override
@@ -56,16 +69,16 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 Text(
                   'Card name',
                   style: TextStyle(
-                    letterSpacing: - .32,
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
-                    color: AppColors.primaryTextColor,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
                   ),
                 ),
                 Gap(6),
                 Text(
                   'Coinplus Bitcoin card',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight),
+                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -75,44 +88,60 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
           ),
           const Gap(16),
           ListTile(
-            onTap: () => {
-              Clipboard.setData(
-                const ClipboardData(
-                  text: 'PnP68faffhkss8fsffs6dadadadda',
-                ),
-              ).then((_) {
-                HapticFeedback.mediumImpact();
-                showTopSnackBar(
-                  padding: const EdgeInsets.only(left: 40, right: 40),
-                  displayDuration: const Duration(milliseconds: 400),
-                  Overlay.of(context),
-                  const CustomSnackBar.success(
-                    backgroundColor: Color(0xFF4A4A4A),
-                    message: 'Address was copied',
-                    textStyle: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+            onTap: () {
+              if (Platform.isIOS) {
+                Clipboard.setData(
+                  ClipboardData(
+                    text: widget.card.address.toString(),
                   ),
+                ).then(
+                  (_) {
+                    HapticFeedback.mediumImpact();
+                    showTopSnackBar(
+                      displayDuration: const Duration(
+                        milliseconds: 400,
+                      ),
+                      Overlay.of(context),
+                      const CustomSnackBar.success(
+                        backgroundColor: Color(0xFF4A4A4A),
+                        message: 'Address was copied',
+                        textStyle: TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
                 );
-              }),
+              } else {
+                Clipboard.setData(
+                  ClipboardData(
+                    text: widget.card.address.toString(),
+                  ),
+                ).then(
+                  (_) {
+                    HapticFeedback.mediumImpact();
+                  },
+                );
+              }
             },
-            title: const Column(
+            title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Address',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
+                    fontWeight: FontWeight.w600,
                     color: AppColors.primaryTextColor,
                   ),
                 ),
-                Gap(6),
+                const Gap(6),
                 Text(
-                  'PnP68faffhkss8fsffs6dadadadda',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight),
+                  widget.card.address.toString(),
+                  style: const TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -130,13 +159,14 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
+                    fontWeight: FontWeight.w600,
                     color: AppColors.primaryTextColor,
                   ),
                 ),
                 Gap(6),
                 Text(
                   '07/06/2023',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight),
+                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -146,25 +176,28 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
             color: Colors.grey.withOpacity(0.7),
           ),
           const Gap(16),
-          const ListTile(
+          ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Appearance',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
+                    fontWeight: FontWeight.w600,
                     color: AppColors.primaryTextColor,
                   ),
                 ),
-                Gap(6),
-                Text(
+                const Gap(6),
+                const Text(
                   'Choose a color theme for your card',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight),
+                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
                 ),
-                Gap(25),
-                ImageRadioRow(),
+                const Gap(25),
+                ChangeImageColor(
+                  card: widget.card,
+                ),
               ],
             ),
           ),
@@ -174,24 +207,37 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
           ),
           const Gap(26),
           ListTile(
-            onTap: () {},
-            trailing: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 24,
-              color: AppColors.primaryTextColor,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return RemoveCard(
+                    card: widget.card,
+                  );
+                },
+              );
+            },
+            trailing: Assets.icons.trash.image(
+              height: 24,
             ),
             title: const Text(
               'Remove card',
               style: TextStyle(
                 fontFamily: FontFamily.redHatMedium,
-                color: AppColors.primaryTextColor,
+                color: Color(0xFFFD5340),
+                fontWeight: FontWeight.w600,
                 fontSize: 16,
               ),
             ),
           ),
           const Spacer(),
-          const LoadingButton(
-            child: Text(
+          LoadingButton(
+            onPressed: () {
+              _balanceStore.saveSelectedCard();
+              router.pop();
+            },
+            child: const Text(
               'Save',
               style: TextStyle(fontFamily: FontFamily.redHatMedium),
             ),

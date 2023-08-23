@@ -151,6 +151,17 @@ mixin _$BalanceStore on _BalanceStore, Store {
       ActionController(name: '_BalanceStore', context: context);
 
   @override
+  void removeSelectedCard() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.removeSelectedCard');
+    try {
+      return super.removeSelectedCard();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void resetSelectedCard() {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
         name: '_BalanceStore.resetSelectedCard');

@@ -106,7 +106,7 @@ class WalletProtectionPage extends StatelessWidget {
               return LoadingButton(
                 onPressed: _walletProtectState.isToggleSwitched
                     ? () {
-                        router.pushAndPopAll(const WalletRoute());
+                        router.pushAndPopAll(const Dashboard());
                       }
                     : null,
                 child: const Text(

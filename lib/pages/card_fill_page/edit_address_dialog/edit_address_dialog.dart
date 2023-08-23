@@ -20,7 +20,7 @@ Future<void> editAddressDialog(BuildContext context) {
       ),
     ),
     onPressed: () {
-      router.pushAndPopAll(const WalletRoute());
+      router.pushAndPopAll(const Dashboard());
     },
   ).paddingHorizontal(40);
   return showDialog<void>(
