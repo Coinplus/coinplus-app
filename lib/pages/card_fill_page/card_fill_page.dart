@@ -266,7 +266,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                                 .selectedCard
                                                                 ?.address ??
                                                             '',
-                                                        overflow: TextOverflow.ellipsis,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
                                                         style: const TextStyle(
                                                           fontFamily: FontFamily
                                                               .redHatMedium,

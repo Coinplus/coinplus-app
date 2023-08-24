@@ -170,6 +170,18 @@ class $AssetsImagesGen {
   AssetGenImage get cardAndBarForms =>
       const AssetGenImage('assets/images/card_and_bar_forms.png');
 
+  /// File path: assets/images/card_color_brown.png
+  AssetGenImage get cardColorBrown =>
+      const AssetGenImage('assets/images/card_color_brown.png');
+
+  /// File path: assets/images/card_color_orange.png
+  AssetGenImage get cardColorOrange =>
+      const AssetGenImage('assets/images/card_color_orange.png');
+
+  /// File path: assets/images/card_color_white.png
+  AssetGenImage get cardColorWhite =>
+      const AssetGenImage('assets/images/card_color_white.png');
+
   /// File path: assets/images/card_form.png
   AssetGenImage get cardForm =>
       const AssetGenImage('assets/images/card_form.png');
@@ -221,6 +233,9 @@ class $AssetsImagesGen {
         barSkeleton,
         barWithAddress,
         cardAndBarForms,
+        cardColorBrown,
+        cardColorOrange,
+        cardColorWhite,
         cardForm,
         coinpluslogo,
         contactless,

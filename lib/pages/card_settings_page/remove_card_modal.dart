@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/elevated_button_extensions.dart';
@@ -12,6 +12,7 @@ import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../widgets/loading_button.dart';
+import '../dashboard/dashboard.dart';
 
 class RemoveCard extends StatefulWidget {
   const RemoveCard({super.key, required this.card});
@@ -23,6 +24,7 @@ class RemoveCard extends StatefulWidget {
 }
 
 class _RemoveCardState extends State<RemoveCard> {
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +84,11 @@ class _RemoveCardState extends State<RemoveCard> {
           ).paddingHorizontal(31),
           const Gap(32),
           LoadingButton(
+            onPressed: () {
+              _balanceStore..getSelectedCard(widget.card.address)
+              ..removeSelectedCard();
+              router.pop(const Dashboard());
+            },
             child: const Text(
               'Delete',
               style: TextStyle(

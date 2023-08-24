@@ -164,7 +164,7 @@ class __$$_CardModelCopyWithImpl<$Res>
 class _$_CardModel implements _CardModel {
   const _$_CardModel(
       {required this.address,
-      this.cardColor = CardColor.ORANGE,
+      this.cardColor = CardColor.BROWN,
       this.cardType = CardType.CARD,
       this.totalReceived,
       this.totalSent,

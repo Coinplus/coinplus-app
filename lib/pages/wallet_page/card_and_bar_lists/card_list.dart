@@ -51,25 +51,7 @@ class _CardListState extends State<CardList> {
                     },
                   );
                 },
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 30,
-                    bottom: 30,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Assets.images.addCard.image(),
-                  ),
-                ),
+                child: Assets.images.addCard.image(),
               );
             }
 
@@ -78,6 +60,8 @@ class _CardListState extends State<CardList> {
             return Stack(
               fit: StackFit.expand,
               children: [
+
+                card.cardColor.image.image(),
                 Positioned(
                   top: 0,
                   right: 0,
@@ -87,26 +71,19 @@ class _CardListState extends State<CardList> {
                         duration: const Duration(milliseconds: 400),
                         child: _settingsState.cardCurrentIndex == index
                             ? ScaleTap(
-                                onPressed: () {
-                                  router.push(
-                                     CardSettingsRoute(card: card),
-                                  );
-                                },
-                                child: Assets.icons.settings.image(
-                                  height: 30,
-                                ),
-                              )
+                          onPressed: () {
+                            router.push(
+                              CardSettingsRoute(card: card),
+                            );
+                          },
+                          child: Assets.icons.settings.image(
+                            height: 30,
+                          ),
+                        )
                             : const SizedBox(),
                       );
                     },
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.035,
-                    bottom: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  child: card.cardColor.image.image(),
                 ),
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.3,

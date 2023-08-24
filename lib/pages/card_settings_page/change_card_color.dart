@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../constants/card_color.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../models/card_model/card_model.dart';
-import '../../store/balance_store/balance_store.dart';
 import '../../store/card_color_state/card_color_state.dart';
 
 class ChangeImageColor extends StatefulWidget {
@@ -21,7 +18,6 @@ class ChangeImageColor extends StatefulWidget {
 
 class _ChangeImageColorState extends State<ChangeImageColor> {
   final _cardColorState = CardColorState();
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 @override
 void initState() {
 
@@ -52,8 +48,8 @@ void initState() {
                             : Colors.transparent,
                       ),
                     ),
-                    child: Assets.images.orangeCard.image(
-                      height: 120,
+                    child: Assets.images.cardColorOrange.image(
+                      height: 130,
                     ),
                   ),
                   Radio(
@@ -72,8 +68,6 @@ void initState() {
               onPressed: () => {
                 HapticFeedback.selectionClick(),
                 _cardColorState.changeIndex(1),
-                widget.card?.cardColor == CardColor.WHITE,
-                _balanceStore.saveSelectedCard(),
               },
               child: Column(
                 children: [
@@ -87,8 +81,8 @@ void initState() {
                             : Colors.transparent,
                       ),
                     ),
-                    child: Assets.images.whiteCard.image(
-                      height: 120,
+                    child: Assets.images.cardColorWhite.image(
+                      height: 130,
                     ),
                   ),
                   Radio(
@@ -120,8 +114,8 @@ void initState() {
                             : Colors.transparent,
                       ),
                     ),
-                    child: Assets.images.brownCard.image(
-                      height: 120,
+                    child: Assets.images.cardColorBrown.image(
+                      height: 130,
                     ),
                   ),
                   Radio(
