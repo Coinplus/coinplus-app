@@ -257,7 +257,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ),
             ],
           ).paddingHorizontal(16),
-          const Gap(25),
+          const Gap(10),
+          const Spacer(),
         ],
       ),
     );

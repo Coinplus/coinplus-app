@@ -9,7 +9,7 @@ part of 'card_model.dart';
 _$_CardModel _$$_CardModelFromJson(Map json) => _$_CardModel(
       address: json['address'] as String,
       cardColor: $enumDecodeNullable(_$CardColorEnumMap, json['cardColor']) ??
-          CardColor.ORANGE,
+          CardColor.BROWN,
       cardType: $enumDecodeNullable(_$CardTypeEnumMap, json['cardType']) ??
           CardType.CARD,
       totalReceived: json['totalReceived'] as int?,

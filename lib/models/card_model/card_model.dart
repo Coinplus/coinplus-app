@@ -10,7 +10,7 @@ part 'card_model.g.dart';
 class CardModel with _$CardModel {
   const factory CardModel({
     required String address,
-    @Default(CardColor.ORANGE) CardColor cardColor,
+    @Default(CardColor.BROWN) CardColor cardColor,
     @Default(CardType.CARD) CardType cardType,
     int? totalReceived,
     int? totalSent,

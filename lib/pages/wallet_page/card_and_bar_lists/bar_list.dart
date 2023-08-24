@@ -46,22 +46,7 @@ class _BarListState extends State<BarList> {
                     },
                   );
                 },
-                child: Container(
-                  padding: const EdgeInsets.only(top: 30, bottom: 30),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Assets.images.addCard.image(),
-                  ),
-                ),
+                child: Assets.images.addCard.image(),
               );
             }
 

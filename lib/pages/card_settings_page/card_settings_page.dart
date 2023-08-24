@@ -78,7 +78,12 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 Gap(6),
                 Text(
                   'Coinplus Bitcoin card',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatLight,
+                    fontSize: 14,
+                    color: AppColors.primaryTextColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -141,7 +146,12 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 const Gap(6),
                 Text(
                   widget.card.address.toString(),
-                  style: const TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontFamily: FontFamily.redHatLight,
+                    fontSize: 14,
+                    color: AppColors.primaryTextColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -166,7 +176,12 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 Gap(6),
                 Text(
                   '07/06/2023',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatLight,
+                    fontSize: 14,
+                    color: AppColors.primaryTextColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -192,7 +207,12 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 const Gap(6),
                 const Text(
                   'Choose a color theme for your card',
-                  style: TextStyle(fontFamily: FontFamily.redHatLight, fontSize: 14, color: AppColors.primaryTextColor, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatLight,
+                    fontSize: 14,
+                    color: AppColors.primaryTextColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const Gap(25),
                 ChangeImageColor(
