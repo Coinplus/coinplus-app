@@ -9,12 +9,14 @@ part of 'card_model.dart';
 _$_CardModel _$$_CardModelFromJson(Map json) => _$_CardModel(
       address: json['address'] as String,
       cardColor: $enumDecodeNullable(_$CardColorEnumMap, json['cardColor']) ??
-          CardColor.BROWN,
+          CardColor.ORANGE,
       cardType: $enumDecodeNullable(_$CardTypeEnumMap, json['cardType']) ??
           CardType.CARD,
+      cardName: json['cardName'] as String? ?? 'Coinplus Bitcoin Card',
       totalReceived: json['totalReceived'] as int?,
       totalSent: json['totalSent'] as int?,
       balance: json['balance'] as int?,
+      cardAddedDate: json['cardAddedDate'] as String? ?? '01/01/2023',
     );
 
 Map<String, dynamic> _$$_CardModelToJson(_$_CardModel instance) {
@@ -22,6 +24,7 @@ Map<String, dynamic> _$$_CardModelToJson(_$_CardModel instance) {
     'address': instance.address,
     'cardColor': _$CardColorEnumMap[instance.cardColor]!,
     'cardType': _$CardTypeEnumMap[instance.cardType]!,
+    'cardName': instance.cardName,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -33,6 +36,7 @@ Map<String, dynamic> _$$_CardModelToJson(_$_CardModel instance) {
   writeNotNull('totalReceived', instance.totalReceived);
   writeNotNull('totalSent', instance.totalSent);
   writeNotNull('balance', instance.balance);
+  val['cardAddedDate'] = instance.cardAddedDate;
   return val;
 }
 

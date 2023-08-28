@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   late final _tabController = TabController(
     length: 2,
     vsync: this,
-    initialIndex: _balanceStore.cards.isNotEmpty ? 0 : 1,
+    initialIndex: _balanceStore.cards.isEmpty
+        ? _balanceStore.bars.isEmpty
+            ? 0
+            : 1
+        : _balanceStore.cards.isEmpty
+            ? 1
+            : 0,
   );
 
   @override
@@ -53,7 +61,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
         children: [
-          Flexible(
+          Expanded(
             flex: 2,
             child: Stack(
               children: [
@@ -64,15 +72,15 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                   right: 0,
                   child: CustomPaint(
                     size: Size(
-                      context.width,
-                      (context.width * 0.44).toDouble(),
+                      context.height,
+                      (context.height * 0.205).toDouble(),
                     ),
                     painter: HeaderCustomPainter(),
                   ),
                 ),
                 //Total Balance
                 Positioned(
-                  top: 56,
+                  top: max(context.topPadding + 12, 15),
                   left: 22,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,8 +124,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 ),
                 //Card and Bar Switch
                 Positioned(
-                  top: MediaQuery.of(context).size.width * 0.315,
-                  right: MediaQuery.of(context).size.width * 0.035,
+                  top: max(context.topPadding + 78, 15),
+                  right: max(context.topPadding - 35, 15),
                   child: Container(
                     height: 40,
                     width: 128,
@@ -179,85 +187,89 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Observer(
-                  builder: (_) {
-                    final coin = _balanceStore.coins.firstWhereOrNull(
-                      (element) => element.id == 'bitcoin',
-                    );
-                    if (coin == null) {
-                      return const SizedBox();
-                    }
-                    return Row(
-                      children: [
-                        Assets.icons.bTCIcon.image(height: 24),
-                        const Gap(8),
-                        Text(
-                          coin.name,
-                          style: const TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Gap(8),
-                        Text(
-                          coin.symbol.toUpperCase(),
-                          style: const TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 10,
-                            color: AppColors.textHintsColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            buildCoinWidget(coin.currentPrice),
-                            const Gap(4),
-                            Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: Row(
-                                children: [
-                                  if (coin.priceChangePercentage_24h > 0)
-                                    const Icon(
-                                      Icons.arrow_drop_up,
-                                      size: 25,
-                                      color: Colors.green,
-                                    )
-                                  else
-                                    const Icon(
-                                      Icons.arrow_drop_down,
-                                      size: 25,
-                                      color: Colors.red,
-                                    ),
-                                  Text(
-                                    '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: coin.priceChangePercentage_24h > 0
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
+          if (context.height > 667)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Observer(
+                    builder: (_) {
+                      final coin = _balanceStore.coins.firstWhereOrNull(
+                        (element) => element.id == 'bitcoin',
+                      );
+                      if (coin == null) {
+                        return const SizedBox();
+                      }
+                      return Row(
+                        children: [
+                          Assets.icons.bTCIcon.image(height: 24),
+                          const Gap(8),
+                          Text(
+                            coin.name,
+                            style: const TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              color: Colors.black,
+                              fontSize: 16,
                             ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
+                          ),
+                          const Gap(8),
+                          Text(
+                            coin.symbol.toUpperCase(),
+                            style: const TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontSize: 10,
+                              color: AppColors.textHintsColor,
+                            ),
+                          ),
+                          const Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              buildCoinWidget(coin.currentPrice),
+                              const Gap(4),
+                              Padding(
+                                padding: const EdgeInsets.all(3),
+                                child: Row(
+                                  children: [
+                                    if (coin.priceChangePercentage_24h > 0)
+                                      const Icon(
+                                        Icons.arrow_drop_up,
+                                        size: 25,
+                                        color: Colors.green,
+                                      )
+                                    else
+                                      const Icon(
+                                        Icons.arrow_drop_down,
+                                        size: 25,
+                                        color: Colors.red,
+                                      ),
+                                    Text(
+                                      '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color:
+                                            coin.priceChangePercentage_24h > 0
+                                                ? Colors.green
+                                                : Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ).paddingHorizontal(16),
-          const Gap(10),
+              ],
+            ).paddingHorizontal(16)
+          else
+            const SizedBox(),
+          if (context.height > 667) const Gap(10) else const Gap(20),
           const Spacer(),
         ],
       ),

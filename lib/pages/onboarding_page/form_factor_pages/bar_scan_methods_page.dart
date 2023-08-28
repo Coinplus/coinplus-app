@@ -125,7 +125,6 @@ class BarScanMethodsPage extends StatelessWidget {
                                       'Start with your wallet',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-
                                         fontFamily: FontFamily.redHatSemiBold,
                                         fontSize: 17,
                                         color: AppColors.primaryTextColor,

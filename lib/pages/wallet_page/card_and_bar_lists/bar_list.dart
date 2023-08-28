@@ -120,7 +120,6 @@ class _BarListState extends State<BarList> {
                                           Text(
                                             'Address',
                                             style: TextStyle(
-
                                               fontSize: 12,
                                               fontFamily:
                                                   FontFamily.redHatMedium,

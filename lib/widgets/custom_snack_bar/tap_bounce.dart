@@ -32,10 +32,10 @@ class TapBounceContainerState extends State<TapBounceContainer>
       duration: animationDuration,
       upperBound: 0.04,
     )..addListener(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
+        if (mounted) {
+          setState(() {});
+        }
+      });
     super.initState();
   }
 

@@ -4,9 +4,12 @@ import 'package:gap/gap.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../extensions/widget_extension.dart';
+import '../../models/card_model/card_model.dart';
 
 class CardNameChangeModal extends StatefulWidget {
-  const CardNameChangeModal({super.key});
+  const CardNameChangeModal({super.key, required this.card});
+
+  final CardModel card;
 
   @override
   State<CardNameChangeModal> createState() => _CardNameChangeModalState();
@@ -101,9 +104,8 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                 ),
               ),
               contentPadding: const EdgeInsets.all(10),
-              hintText: 'Coinplus Bitcoin card',
+              hintText: widget.card.cardName,
               hintStyle: TextStyle(
-
                 fontFamily: FontFamily.redHatLight,
                 color: AppColors.primaryTextColor.withOpacity(0.5),
                 fontSize: 14,
