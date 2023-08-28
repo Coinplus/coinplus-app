@@ -54,7 +54,7 @@ class _BarFillPageState extends State<BarFillPage>
   @override
   void initState() {
     super.initState();
-     _nfcStop();
+    _nfcStop();
     _toggleWidgets();
     _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
@@ -508,12 +508,12 @@ class _BarFillPageState extends State<BarFillPage>
             builder: (_) {
               return LoadingButton(
                 onPressed: _addressState.isAddressVisible
-                    ?
-                     () {
+                    ? () {
                         showMyDialog(context);
-                      } : () {
-                  router.pop(const OnboardingRoute());
-                },
+                      }
+                    : () {
+                        router.pop(const OnboardingRoute());
+                      },
                 style: context.theme
                     .buttonStyle(
                       buttonType: ButtonTypes.TRANSPARENT,

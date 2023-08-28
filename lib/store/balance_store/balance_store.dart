@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
@@ -120,10 +121,10 @@ abstract class _BalanceStore with Store {
     if (_selectedCard == null) {
       return;
     }
-    final index = _cards.indexWhere((element) => element.address == _selectedCard!.address);
-      _cards.removeAt(index);
-      StorageUtils.removeCard(_selectedCard!.address);
-      resetSelectedCard();
+    final index = _cards
+        .indexWhere((element) => element.address == _selectedCard!.address);
+    _cards.removeAt(index);
+    StorageUtils.removeCard(_selectedCard!.address);
   }
 
   Future<CardModel?> _getSingleCardInfo(String address) async {
@@ -192,6 +193,44 @@ abstract class _BalanceStore with Store {
       StorageUtils.addBar(_selectedBar!);
     } else {
       throw Exception('Bar is already added');
+    }
+  }
+
+  @action
+  void saveReplacedCard() {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    final cardIndex = _cards.indexWhere(
+      (element) => element.address == _selectedCard?.address,
+    );
+
+    if (cardIndex != -1) {
+      final replacedCard = _selectedCard!.copyWith(cardColor: CardColor.WHITE);
+      _cards[cardIndex] = replacedCard;
+
+      StorageUtils.replaceCard(_selectedCard!.address, replacedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
+  void changeCardColorAndSave({
+    required String cardAddress,
+    required CardColor color,
+  }) {
+    final cardIndex =
+        _cards.indexWhere((element) => element.address == cardAddress);
+
+    if (cardIndex != -1) {
+      final updatedCard = _cards[cardIndex].copyWith(cardColor: color);
+      _cards[cardIndex] = updatedCard;
+
+      StorageUtils.replaceCard(cardAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
     }
   }
 

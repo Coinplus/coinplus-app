@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
@@ -81,7 +82,7 @@ class Dashboard extends HookWidget {
             ],
           ),
           Positioned(
-            bottom: 45,
+            bottom: context.height * 0.06,
             child: SizedBox(
               height: 50,
               child: FloatingActionButton(

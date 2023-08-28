@@ -31,7 +31,7 @@ Future<void> showMyDialog(BuildContext context) {
     enableFeedback: false,
     onPressed: () {
       hasShownWallet().then(
-            (hasShown) {
+        (hasShown) {
           if (hasShown) {
             router.pop(const Dashboard());
           } else {

@@ -23,9 +23,11 @@ mixin _$CardModel {
   String get address => throw _privateConstructorUsedError;
   CardColor get cardColor => throw _privateConstructorUsedError;
   CardType get cardType => throw _privateConstructorUsedError;
+  String get cardName => throw _privateConstructorUsedError;
   int? get totalReceived => throw _privateConstructorUsedError;
   int? get totalSent => throw _privateConstructorUsedError;
   int? get balance => throw _privateConstructorUsedError;
+  String get cardAddedDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +44,11 @@ abstract class $CardModelCopyWith<$Res> {
       {String address,
       CardColor cardColor,
       CardType cardType,
+      String cardName,
       int? totalReceived,
       int? totalSent,
-      int? balance});
+      int? balance,
+      String cardAddedDate});
 }
 
 /// @nodoc
@@ -63,9 +67,11 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
     Object? address = null,
     Object? cardColor = null,
     Object? cardType = null,
+    Object? cardName = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
     Object? balance = freezed,
+    Object? cardAddedDate = null,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -80,6 +86,10 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.cardType
           : cardType // ignore: cast_nullable_to_non_nullable
               as CardType,
+      cardName: null == cardName
+          ? _value.cardName
+          : cardName // ignore: cast_nullable_to_non_nullable
+              as String,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
           : totalReceived // ignore: cast_nullable_to_non_nullable
@@ -92,6 +102,10 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
+      cardAddedDate: null == cardAddedDate
+          ? _value.cardAddedDate
+          : cardAddedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -107,9 +121,11 @@ abstract class _$$_CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
       {String address,
       CardColor cardColor,
       CardType cardType,
+      String cardName,
       int? totalReceived,
       int? totalSent,
-      int? balance});
+      int? balance,
+      String cardAddedDate});
 }
 
 /// @nodoc
@@ -126,9 +142,11 @@ class __$$_CardModelCopyWithImpl<$Res>
     Object? address = null,
     Object? cardColor = null,
     Object? cardType = null,
+    Object? cardName = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
     Object? balance = freezed,
+    Object? cardAddedDate = null,
   }) {
     return _then(_$_CardModel(
       address: null == address
@@ -143,6 +161,10 @@ class __$$_CardModelCopyWithImpl<$Res>
           ? _value.cardType
           : cardType // ignore: cast_nullable_to_non_nullable
               as CardType,
+      cardName: null == cardName
+          ? _value.cardName
+          : cardName // ignore: cast_nullable_to_non_nullable
+              as String,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
           : totalReceived // ignore: cast_nullable_to_non_nullable
@@ -155,6 +177,10 @@ class __$$_CardModelCopyWithImpl<$Res>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
+      cardAddedDate: null == cardAddedDate
+          ? _value.cardAddedDate
+          : cardAddedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -164,11 +190,13 @@ class __$$_CardModelCopyWithImpl<$Res>
 class _$_CardModel implements _CardModel {
   const _$_CardModel(
       {required this.address,
-      this.cardColor = CardColor.BROWN,
+      this.cardColor = CardColor.ORANGE,
       this.cardType = CardType.CARD,
+      this.cardName = 'Coinplus Bitcoin Card',
       this.totalReceived,
       this.totalSent,
-      this.balance});
+      this.balance,
+      this.cardAddedDate = '01/01/2023'});
 
   factory _$_CardModel.fromJson(Map<String, dynamic> json) =>
       _$$_CardModelFromJson(json);
@@ -182,15 +210,21 @@ class _$_CardModel implements _CardModel {
   @JsonKey()
   final CardType cardType;
   @override
+  @JsonKey()
+  final String cardName;
+  @override
   final int? totalReceived;
   @override
   final int? totalSent;
   @override
   final int? balance;
+  @override
+  @JsonKey()
+  final String cardAddedDate;
 
   @override
   String toString() {
-    return 'CardModel(address: $address, cardColor: $cardColor, cardType: $cardType, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance)';
+    return 'CardModel(address: $address, cardColor: $cardColor, cardType: $cardType, cardName: $cardName, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, cardAddedDate: $cardAddedDate)';
   }
 
   @override
@@ -203,17 +237,21 @@ class _$_CardModel implements _CardModel {
                 other.cardColor == cardColor) &&
             (identical(other.cardType, cardType) ||
                 other.cardType == cardType) &&
+            (identical(other.cardName, cardName) ||
+                other.cardName == cardName) &&
             (identical(other.totalReceived, totalReceived) ||
                 other.totalReceived == totalReceived) &&
             (identical(other.totalSent, totalSent) ||
                 other.totalSent == totalSent) &&
-            (identical(other.balance, balance) || other.balance == balance));
+            (identical(other.balance, balance) || other.balance == balance) &&
+            (identical(other.cardAddedDate, cardAddedDate) ||
+                other.cardAddedDate == cardAddedDate));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, address, cardColor, cardType,
-      totalReceived, totalSent, balance);
+      cardName, totalReceived, totalSent, balance, cardAddedDate);
 
   @JsonKey(ignore: true)
   @override
@@ -234,9 +272,11 @@ abstract class _CardModel implements CardModel {
       {required final String address,
       final CardColor cardColor,
       final CardType cardType,
+      final String cardName,
       final int? totalReceived,
       final int? totalSent,
-      final int? balance}) = _$_CardModel;
+      final int? balance,
+      final String cardAddedDate}) = _$_CardModel;
 
   factory _CardModel.fromJson(Map<String, dynamic> json) =
       _$_CardModel.fromJson;
@@ -248,11 +288,15 @@ abstract class _CardModel implements CardModel {
   @override
   CardType get cardType;
   @override
+  String get cardName;
+  @override
   int? get totalReceived;
   @override
   int? get totalSent;
   @override
   int? get balance;
+  @override
+  String get cardAddedDate;
   @override
   @JsonKey(ignore: true)
   _$$_CardModelCopyWith<_$_CardModel> get copyWith =>

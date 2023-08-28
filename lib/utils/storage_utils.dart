@@ -48,6 +48,16 @@ class StorageUtils {
     return bars;
   }
 
+  static Future<void> replaceCard(String address, CardModel newCard) async {
+    final cards = await getCards();
+
+    final cardIndex = cards.indexWhere((card) => card.address == address);
+    if (cardIndex != -1) {
+      cards[cardIndex] = newCard;
+      await _save(Preferences.cards, cards.toSet().toList());
+    }
+  }
+
   static Future<void> addCard(CardModel card) async {
     final cards = await getCards();
     cards.add(card);
@@ -61,10 +71,9 @@ class StorageUtils {
   }
 
   static Future<void> removeCard(String address) async {
-    final cards = (await _read<List<CardModel>>(Preferences.cards) ??
-        <CardModel>[])
-      ..removeWhere((e) => e.address == address);
-    await _save(Preferences.cards, cards.toList());
+    final cards = await getCards();
+    cards.removeWhere((card) => card.address == address);
+    await _save(Preferences.cards, cards.toSet().toList());
   }
 
   static Future<void> removeBar(String address) async {
@@ -84,7 +93,10 @@ class StorageUtils {
     await prefs.setBool(Preferences.bools, value);
   }
 
-  static Future<void> setString({required String key, required String value}) async {
+  static Future<void> setString({
+    required String key,
+    required String value,
+  }) async {
     final prefs = await sharedInstance;
     await prefs.setString(key, value);
   }
@@ -148,7 +160,5 @@ class StorageUtils {
     return prefs.getString(key);
   }
 
-  static Future<void> _setInt() async {
-
-  }
+  static Future<void> _setInt() async {}
 }

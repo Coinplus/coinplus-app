@@ -162,6 +162,30 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void saveReplacedCard() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.saveReplacedCard');
+    try {
+      return super.saveReplacedCard();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeCardColorAndSave(
+      {required String cardAddress, required CardColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.changeCardColorAndSave');
+    try {
+      return super
+          .changeCardColorAndSave(cardAddress: cardAddress, color: color);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void resetSelectedCard() {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
         name: '_BalanceStore.resetSelectedCard');
