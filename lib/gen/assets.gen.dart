@@ -166,6 +166,10 @@ class $AssetsImagesGen {
   AssetGenImage get barWithAddress =>
       const AssetGenImage('assets/images/bar_with_address.png');
 
+  /// File path: assets/images/brown_without_shadow.png
+  AssetGenImage get brownWithoutShadow =>
+      const AssetGenImage('assets/images/brown_without_shadow.png');
+
   /// File path: assets/images/card_and_bar_forms.png
   AssetGenImage get cardAndBarForms =>
       const AssetGenImage('assets/images/card_and_bar_forms.png');
@@ -206,6 +210,10 @@ class $AssetsImagesGen {
   AssetGenImage get inactiveCard =>
       const AssetGenImage('assets/images/inactive_card.png');
 
+  /// File path: assets/images/orange_without_shadow.png
+  AssetGenImage get orangeWithoutShadow =>
+      const AssetGenImage('assets/images/orange_without_shadow.png');
+
   /// File path: assets/images/qr_code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/qr_code.png');
 
@@ -215,6 +223,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/wallet_protect_image.png
   AssetGenImage get walletProtectImage =>
       const AssetGenImage('assets/images/wallet_protect_image.png');
+
+  /// File path: assets/images/white_without_shadow.png
+  AssetGenImage get whiteWithoutShadow =>
+      const AssetGenImage('assets/images/white_without_shadow.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -232,6 +244,7 @@ class $AssetsImagesGen {
         barFront,
         barSkeleton,
         barWithAddress,
+        brownWithoutShadow,
         cardAndBarForms,
         cardColorBrown,
         cardColorOrange,
@@ -242,9 +255,11 @@ class $AssetsImagesGen {
         formBarSelected,
         formCardSelected,
         inactiveCard,
+        orangeWithoutShadow,
         qrCode,
         stylus,
-        walletProtectImage
+        walletProtectImage,
+        whiteWithoutShadow
       ];
 }
 

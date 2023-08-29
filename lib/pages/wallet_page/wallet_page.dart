@@ -57,6 +57,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
@@ -124,7 +125,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 ),
                 //Card and Bar Switch
                 Positioned(
-                  top: max(context.topPadding + 78, 15),
+                  top: MediaQuery.of(context).size.height * 0.15,
                   right: max(context.topPadding - 35, 15),
                   child: Container(
                     height: 40,
@@ -192,7 +193,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                   child: Observer(
                     builder: (_) {
                       final coin = _balanceStore.coins.firstWhereOrNull(
@@ -269,7 +270,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             ).paddingHorizontal(16)
           else
             const SizedBox(),
-          if (context.height > 667) const Gap(10) else const Gap(20),
+          if (context.height > 667) const Gap(0) else const Gap(0),
           const Spacer(),
         ],
       ),

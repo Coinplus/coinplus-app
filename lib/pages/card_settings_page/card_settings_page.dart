@@ -230,118 +230,57 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                   const Gap(25),
                   Observer(
                     builder: (_) {
+                      final colorWidgets = <Widget>[];
+
+                      final colors = <CardColor>[
+                        CardColor.ORANGE,
+                        CardColor.WHITE,
+                        CardColor.BROWN,
+                      ];
+
+                      for (var index = 0; index < colors.length; index++) {
+                        colorWidgets.add(
+                          ScaleTap(
+                            enableFeedback: false,
+                            onPressed: () {
+                              HapticFeedback.selectionClick();
+                              _cardSettingsState.changeColor(colors[index]);
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      width: 2,
+                                      color: _cardSettingsState.selectedColor ==
+                                              colors[index]
+                                          ? Colors.blue
+                                          : Colors.transparent,
+                                    ),
+                                  ),
+                                  child: getColorImage(colors[index]),
+                                ),
+                                Radio(
+                                  activeColor: AppColors.secondaryButtons,
+                                  value: index,
+                                  groupValue: colors.indexOf(
+                                    _cardSettingsState.selectedColor,
+                                  ),
+                                  onChanged: (selectedIndex) {
+                                    _cardSettingsState
+                                        .changeColor(colors[selectedIndex!]);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () => {
-                              HapticFeedback.selectionClick(),
-                              _cardSettingsState.changeIndex(0),
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      width: 2,
-                                      color:
-                                          _cardSettingsState.currentIndex == 0
-                                              ? Colors.blue
-                                              : Colors.transparent,
-                                    ),
-                                  ),
-                                  child: Assets.images.cardColorOrange.image(
-                                    height: 130,
-                                  ),
-                                ),
-                                Radio(
-                                  activeColor: AppColors.secondaryButtons,
-                                  value: 0,
-                                  groupValue: _cardSettingsState.currentIndex,
-                                  onChanged: (index) {
-                                    _cardSettingsState.changeIndex(index!);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Observer(
-                            builder: (context) {
-                              return ScaleTap(
-                                enableFeedback: false,
-                                onPressed: () => {
-                                  HapticFeedback.selectionClick(),
-                                  _cardSettingsState.changeIndex(1),
-                                },
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          width: 2,
-                                          color:
-                                              _cardSettingsState.currentIndex ==
-                                                      1
-                                                  ? Colors.blue
-                                                  : Colors.transparent,
-                                        ),
-                                      ),
-                                      child: Assets.images.cardColorWhite.image(
-                                        height: 130,
-                                      ),
-                                    ),
-                                    Radio(
-                                      activeColor: AppColors.secondaryButtons,
-                                      value: 1,
-                                      groupValue:
-                                          _cardSettingsState.currentIndex,
-                                      onChanged: (index) {
-                                        _cardSettingsState.changeIndex(index!);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () => {
-                              HapticFeedback.selectionClick(),
-                              _cardSettingsState.changeIndex(2),
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      width: 2,
-                                      color:
-                                          _cardSettingsState.currentIndex == 2
-                                              ? Colors.blue
-                                              : Colors.transparent,
-                                    ),
-                                  ),
-                                  child: Assets.images.cardColorBrown.image(
-                                    height: 130,
-                                  ),
-                                ),
-                                Radio(
-                                  activeColor: AppColors.secondaryButtons,
-                                  value: 2,
-                                  groupValue: _cardSettingsState.currentIndex,
-                                  onChanged: (index) {
-                                    _cardSettingsState.changeIndex(index!);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        children: colorWidgets,
                       );
                     },
                   ),
@@ -381,24 +320,26 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
             const Gap(20),
             LoadingButton(
               onPressed: () async {
-                await _balanceStore.getSelectedCard(widget.card.address);
-                if (_cardSettingsState.currentIndex == 0) {
+                if (_cardSettingsState.selectedColor == CardColor.ORANGE) {
                   _balanceStore.changeCardColorAndSave(
                     cardAddress: widget.card.address,
                     color: CardColor.ORANGE,
                   );
-                } else if (_cardSettingsState.currentIndex == 1) {
+                } else if (_cardSettingsState.selectedColor ==
+                    CardColor.WHITE) {
                   _balanceStore.changeCardColorAndSave(
                     cardAddress: widget.card.address,
                     color: CardColor.WHITE,
                   );
-                } else if (_cardSettingsState.currentIndex == 2) {
+                } else if (_cardSettingsState.selectedColor ==
+                    CardColor.BROWN) {
                   _balanceStore.changeCardColorAndSave(
                     cardAddress: widget.card.address,
                     color: CardColor.BROWN,
                   );
                 }
                 await router.pop();
+                await _balanceStore.getCardsInfo();
                 showTopSnackBar(
                   displayDuration: const Duration(
                     milliseconds: 600,
@@ -425,5 +366,18 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
         ),
       ),
     );
+  }
+}
+
+Widget getColorImage(CardColor color) {
+  switch (color) {
+    case CardColor.ORANGE:
+      return Assets.images.cardColorOrange.image(height: 130);
+    case CardColor.WHITE:
+      return Assets.images.cardColorWhite.image(height: 130);
+    case CardColor.BROWN:
+      return Assets.images.cardColorBrown.image(height: 130);
+    default:
+      return const SizedBox.shrink();
   }
 }

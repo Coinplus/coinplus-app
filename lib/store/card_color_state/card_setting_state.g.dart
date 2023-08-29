@@ -9,59 +9,34 @@ part of 'card_setting_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CardSettingState on _CardSettingState, Store {
-  late final _$currentIndexAtom =
-      Atom(name: '_CardSettingState.currentIndex', context: context);
+  late final _$selectedColorAtom =
+      Atom(name: '_CardSettingState.selectedColor', context: context);
 
   @override
-  int get currentIndex {
-    _$currentIndexAtom.reportRead();
-    return super.currentIndex;
+  CardColor get selectedColor {
+    _$selectedColorAtom.reportRead();
+    return super.selectedColor;
   }
 
   @override
-  set currentIndex(int value) {
-    _$currentIndexAtom.reportWrite(value, super.currentIndex, () {
-      super.currentIndex = value;
+  set selectedColor(CardColor value) {
+    _$selectedColorAtom.reportWrite(value, super.selectedColor, () {
+      super.selectedColor = value;
     });
   }
 
-  late final _$changeIndexAsyncAction =
-      AsyncAction('_CardSettingState.changeIndex', context: context);
+  late final _$changeColorAsyncAction =
+      AsyncAction('_CardSettingState.changeColor', context: context);
 
   @override
-  Future<void> changeIndex(int index) {
-    return _$changeIndexAsyncAction.run(() => super.changeIndex(index));
-  }
-
-  late final _$_CardSettingStateActionController =
-      ActionController(name: '_CardSettingState', context: context);
-
-  @override
-  void changeCardColor({required CardColor color}) {
-    final _$actionInfo = _$_CardSettingStateActionController.startAction(
-        name: '_CardSettingState.changeCardColor');
-    try {
-      return super.changeCardColor(color: color);
-    } finally {
-      _$_CardSettingStateActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void changeColor() {
-    final _$actionInfo = _$_CardSettingStateActionController.startAction(
-        name: '_CardSettingState.changeColor');
-    try {
-      return super.changeColor();
-    } finally {
-      _$_CardSettingStateActionController.endAction(_$actionInfo);
-    }
+  Future<void> changeColor(CardColor color) {
+    return _$changeColorAsyncAction.run(() => super.changeColor(color));
   }
 
   @override
   String toString() {
     return '''
-currentIndex: ${currentIndex}
+selectedColor: ${selectedColor}
     ''';
   }
 }
