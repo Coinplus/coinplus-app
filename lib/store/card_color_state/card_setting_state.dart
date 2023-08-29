@@ -10,21 +10,15 @@ class CardSettingState = _CardSettingState with _$CardSettingState;
 abstract class _CardSettingState with Store {
   late CardModel card;
 
-  _CardSettingState({required this.card});
-
-  @action
-  void changeCardColor({required CardColor color}) {
-    final updatedCard = card.copyWith(cardColor: color);
-    card = updatedCard;
+  _CardSettingState({required this.card}) {
+    selectedColor = card.cardColor;
   }
 
-  @action
-  void changeColor() {}
   @observable
-  int currentIndex = 0;
+  CardColor selectedColor = CardColor.ORANGE;
 
   @action
-  Future<void> changeIndex(int index) async {
-    currentIndex = index;
+  Future<void> changeColor(CardColor color) async {
+    selectedColor = color;
   }
 }
