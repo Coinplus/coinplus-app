@@ -40,8 +40,8 @@ class AppColors {
   /// Color: #0D2449
   static const Color primary = Color(0xFF0D2449);
 
-  /// Color: #007AFF
-  static const Color primaryButtonColor = Color(0xFF007AFF);
+  /// Color: #FD5340
+  static const Color primaryButtonColor = Color(0xFFFD5340);
 
   /// Color: #0D2449
   static const Color primaryTextColor = Color(0xFF0D2449);

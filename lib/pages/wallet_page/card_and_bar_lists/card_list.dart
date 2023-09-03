@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
@@ -53,16 +52,20 @@ class _CardListState extends State<CardList> {
                     },
                   );
                 },
-                child: Assets.images.addCard.image(),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 25, top: 20),
+                  child: Assets.images.addCard.image(),
+                ),
               );
             }
-
             final card = _balanceStore.cards[index];
-            final isLoading = _balanceStore.loadings[card.address] ?? false;
             final coin = _balanceStore.coins.firstWhereOrNull(
               (element) => element.id == 'bitcoin',
             );
+            final visibleAddress = _getVisibleAddress(card.address);
+
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Flex(
                   direction: Axis.horizontal,
@@ -78,9 +81,8 @@ class _CardListState extends State<CardList> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 28,
-                                        ),
+                                        padding:
+                                            const EdgeInsets.only(left: 25),
                                         child: Text(
                                           card.cardName,
                                           style: const TextStyle(
@@ -116,13 +118,14 @@ class _CardListState extends State<CardList> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Container(
+                        margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 15,
-                              spreadRadius: 1,
+                              blurRadius: 20,
+                              spreadRadius: 0.5,
                             ),
                           ],
                           image: DecorationImage(
@@ -139,263 +142,201 @@ class _CardListState extends State<CardList> {
                                   height: context.height * 0.2,
                                 ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 30,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.width * 0.07,
                                   ),
-                                  child: isLoading
-                                      ? Shimmer.fromColors(
-                                          baseColor: Colors.grey[300]!,
-                                          highlightColor: Colors.grey[100]!,
-                                          child: Container(
-                                            height: 55,
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.only(
-                                              left: 8,
-                                              right: 8,
-                                              top: 12,
-                                              bottom: 12,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                        sigmaX: 5,
+                                        sigmaY: 5,
+                                      ),
+                                      child: ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: () {
+                                          Clipboard.setData(
+                                            ClipboardData(
+                                              text: card.address.toString(),
                                             ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              color: Colors.white.withOpacity(
-                                                0.9,
-                                              ),
+                                          ).then(
+                                            (_) {
+                                              HapticFeedback.mediumImpact();
+                                              showTopSnackBar(
+                                                displayDuration: const Duration(
+                                                  milliseconds: 400,
+                                                ),
+                                                Overlay.of(context),
+                                                const CustomSnackBar.success(
+                                                  backgroundColor:
+                                                      Color(0xFF4A4A4A),
+                                                  message: 'Address was copied',
+                                                  textStyle: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 57,
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.only(
+                                            left: 8,
+                                            right: 8,
+                                            top: 12,
+                                            bottom: 12,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color: Colors.black.withOpacity(
+                                              0.2,
                                             ),
                                           ),
-                                        )
-                                      : ClipRRect(
-                                    borderRadius: BorderRadius.circular(6),
-                                          child: BackdropFilter(
-                                            filter: ImageFilter.blur(
-                                              sigmaX: 5,
-                                              sigmaY: 5,
-                                            ),
-                                            child: ScaleTap(
-                                              enableFeedback: false,
-                                              onPressed: () {
-                                                Clipboard.setData(
-                                                  ClipboardData(
-                                                    text:
-                                                        card.address.toString(),
+                                          child: Column(
+                                            children: [
+                                              const Row(
+                                                children: [
+                                                  Text(
+                                                    'Address',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
-                                                ).then(
-                                                  (_) {
-                                                    HapticFeedback
-                                                        .mediumImpact();
-                                                    showTopSnackBar(
-                                                      displayDuration:
-                                                          const Duration(
-                                                        milliseconds: 400,
+                                                ],
+                                              ),
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          card.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(
+                                                        4,
                                                       ),
-                                                      Overlay.of(context),
-                                                      const CustomSnackBar
-                                                          .success(
-                                                        backgroundColor:
-                                                            Color(0xFF4A4A4A),
-                                                        message:
-                                                            'Address was copied',
-                                                        textStyle: TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                        ),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 10,
+                                                            width: 10,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     );
-                                                  },
-                                                );
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: const EdgeInsets.only(
-                                                  left: 8,
-                                                  right: 8,
-                                                  top: 12,
-                                                  bottom: 12,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  color:
-                                                      Colors.black.withOpacity(
-                                                    0.2,
-                                                  ),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    const Row(
-                                                      children: [
-                                                        Text(
-                                                          'Address',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      ],
+                                                  }
+                                                  return Text(
+                                                    visibleAddress,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    softWrap: true,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 12,
                                                     ),
-                                                    Observer(
-                                                      builder: (context) {
-                                                        if (_balanceStore
-                                                                    .loadings[
-                                                                card.address] ??
-                                                            false) {
-                                                          return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                              4,
-                                                            ),
-                                                            child: Row(
-                                                              children: [
-                                                                SizedBox(
-                                                                  height: 7,
-                                                                  width: 7,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          );
-                                                        }
-                                                        return Text(
-                                                          card.address,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          softWrap: true,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ).expandedHorizontally();
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ).expandedHorizontally();
+                                                },
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 const Gap(4),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 30,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.width * 0.07,
                                   ),
-                                  child: isLoading
-                                      ? Shimmer.fromColors(
-                                          baseColor: Colors.grey[300]!,
-                                          highlightColor: Colors.grey[100]!,
-                                          child: Container(
-                                            height: 55,
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.only(
-                                              left: 8,
-                                              right: 8,
-                                              top: 12,
-                                              bottom: 12,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              color: Colors.white.withOpacity(
-                                                0.9,
-                                              ),
-                                            ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(6),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                        sigmaX: 5,
+                                        sigmaY: 5,
+                                      ),
+                                      child: Container(
+                                        height: 57,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          color: Colors.black.withOpacity(
+                                            0.2,
                                           ),
-                                        )
-                                      : ScaleTap(
-                                          enableFeedback: false,
-                                          onPressed: () {},
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(6),
-                                            child: BackdropFilter(
-                                              filter: ImageFilter.blur(
-                                                sigmaX: 5,
-                                                sigmaY: 5,
-                                              ),
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  color:
-                                                      Colors.black.withOpacity(
-                                                    0.2,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            const Row(
+                                              children: [
+                                                Text(
+                                                  'Balance',
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    color: Colors.white,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
-                                                child: Column(
-                                                  children: [
-                                                    const Row(
+                                              ],
+                                            ),
+                                            Observer(
+                                              builder: (context) {
+                                                if (_balanceStore.loadings[
+                                                        card.address] ??
+                                                    false) {
+                                                  return const Padding(
+                                                    padding: EdgeInsets.all(
+                                                      4,
+                                                    ),
+                                                    child: Row(
                                                       children: [
-                                                        Text(
-                                                          'Balance',
-                                                          style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                        SizedBox(
+                                                          height: 10,
+                                                          width: 10,
+                                                          child:
+                                                              CircularProgressIndicator(
                                                             color: Colors.white,
-                                                            fontSize: 12,
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    Observer(
-                                                      builder: (context) {
-                                                        if (_balanceStore
-                                                                    .loadings[
-                                                                card.address] ??
-                                                            false) {
-                                                          return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                              4,
-                                                            ),
-                                                            child: Row(
-                                                              children: [
-                                                                SizedBox(
-                                                                  height: 7,
-                                                                  width: 7,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          );
-                                                        }
-                                                        return Text(
-                                                          '\$${(card.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ).expandedHorizontally();
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  '\$${(card.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}',
+                                                  style: const TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white,
+                                                    fontSize: 20,
+                                                  ),
+                                                ).expandedHorizontally();
+                                              },
                                             ),
-                                          ),
+                                          ],
                                         ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -413,9 +354,8 @@ class _CardListState extends State<CardList> {
               _settingsState.setCardCurrentIndex(index);
             },
             enlargeFactor: 0.35,
-            disableCenter: true,
             enableInfiniteScroll: false,
-            viewportFraction: 0.82,
+            viewportFraction: 0.79,
             enlargeCenterPage: true,
             enlargeStrategy: CenterPageEnlargeStrategy.zoom,
           ),
@@ -423,5 +363,11 @@ class _CardListState extends State<CardList> {
         );
       },
     );
+  }
+
+  String _getVisibleAddress(String fullAddress) {
+    final start = fullAddress.substring(0, 5);
+    final end = fullAddress.substring(fullAddress.length - 5);
+    return '$start — $end';
   }
 }

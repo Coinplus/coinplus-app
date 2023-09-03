@@ -47,6 +47,16 @@ class $AssetsIconsGen {
   AssetGenImage get faceIDSuccess =>
       const AssetGenImage('assets/icons/Face ID Success.png');
 
+  /// File path: assets/icons/Notch.png
+  AssetGenImage get notch => const AssetGenImage('assets/icons/Notch.png');
+
+  /// File path: assets/icons/arrow_forward_ios.png
+  AssetGenImage get arrowForwardIos =>
+      const AssetGenImage('assets/icons/arrow_forward_ios.png');
+
+  /// File path: assets/icons/buy.png
+  AssetGenImage get buy => const AssetGenImage('assets/icons/buy.png');
+
   /// File path: assets/icons/charm_arrow-down-right.png
   AssetGenImage get charmArrowDownRight =>
       const AssetGenImage('assets/icons/charm_arrow-down-right.png');
@@ -59,20 +69,64 @@ class $AssetsIconsGen {
   AssetGenImage get coinplusVector =>
       const AssetGenImage('assets/icons/coinplusVector.png');
 
+  /// File path: assets/icons/contact_us.png
+  AssetGenImage get contactUs =>
+      const AssetGenImage('assets/icons/contact_us.png');
+
   /// File path: assets/icons/content_copy.png
   AssetGenImage get contentCopy =>
       const AssetGenImage('assets/icons/content_copy.png');
 
+  /// File path: assets/icons/discord.png
+  AssetGenImage get discord => const AssetGenImage('assets/icons/discord.png');
+
   /// File path: assets/icons/edit.png
   AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
+
+  /// File path: assets/icons/face_id_settings.png
+  AssetGenImage get faceIdSettings =>
+      const AssetGenImage('assets/icons/face_id_settings.png');
+
+  /// File path: assets/icons/help.png
+  AssetGenImage get help => const AssetGenImage('assets/icons/help.png');
+
+  /// File path: assets/icons/history.png
+  AssetGenImage get history => const AssetGenImage('assets/icons/history.png');
 
   /// File path: assets/icons/history_icon.png
   AssetGenImage get historyIcon =>
       const AssetGenImage('assets/icons/history_icon.png');
 
+  /// File path: assets/icons/lock.png
+  AssetGenImage get lock => const AssetGenImage('assets/icons/lock.png');
+
+  /// File path: assets/icons/notifications.png
+  AssetGenImage get notifications =>
+      const AssetGenImage('assets/icons/notifications.png');
+
   /// File path: assets/icons/page_info.png
   AssetGenImage get pageInfo =>
       const AssetGenImage('assets/icons/page_info.png');
+
+  /// File path: assets/icons/password.png
+  AssetGenImage get password =>
+      const AssetGenImage('assets/icons/password.png');
+
+  /// File path: assets/icons/privacy.png
+  AssetGenImage get privacy => const AssetGenImage('assets/icons/privacy.png');
+
+  /// File path: assets/icons/receive.png
+  AssetGenImage get receive => const AssetGenImage('assets/icons/receive.png');
+
+  /// File path: assets/icons/reddit.png
+  AssetGenImage get reddit => const AssetGenImage('assets/icons/reddit.png');
+
+  /// File path: assets/icons/schedule.png
+  AssetGenImage get schedule =>
+      const AssetGenImage('assets/icons/schedule.png');
+
+  /// File path: assets/icons/send.png
+  AssetGenImage get send => const AssetGenImage('assets/icons/send.png');
 
   /// File path: assets/icons/send_receive.png
   AssetGenImage get sendReceive =>
@@ -82,11 +136,23 @@ class $AssetsIconsGen {
   AssetGenImage get settings =>
       const AssetGenImage('assets/icons/settings.png');
 
+  /// File path: assets/icons/shop.png
+  AssetGenImage get shop => const AssetGenImage('assets/icons/shop.png');
+
+  /// File path: assets/icons/star.png
+  AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
+
   /// File path: assets/icons/task_alt.png
   AssetGenImage get taskAlt => const AssetGenImage('assets/icons/task_alt.png');
 
+  /// File path: assets/icons/terms.png
+  AssetGenImage get terms => const AssetGenImage('assets/icons/terms.png');
+
   /// File path: assets/icons/trash.png
   AssetGenImage get trash => const AssetGenImage('assets/icons/trash.png');
+
+  /// File path: assets/icons/twitter.png
+  AssetGenImage get twitter => const AssetGenImage('assets/icons/twitter.png');
 
   /// File path: assets/icons/wallet_icon.png
   AssetGenImage get walletIcon =>
@@ -96,17 +162,37 @@ class $AssetsIconsGen {
   List<AssetGenImage> get values => [
         bTCIcon,
         faceIDSuccess,
+        notch,
+        arrowForwardIos,
+        buy,
         charmArrowDownRight,
         charmArrowTopRight,
         coinplusVector,
+        contactUs,
         contentCopy,
+        discord,
         edit,
+        faceIdSettings,
+        help,
+        history,
         historyIcon,
+        lock,
+        notifications,
         pageInfo,
+        password,
+        privacy,
+        receive,
+        reddit,
+        schedule,
+        send,
         sendReceive,
         settings,
+        shop,
+        star,
         taskAlt,
+        terms,
         trash,
+        twitter,
         walletIcon
       ];
 }

@@ -62,7 +62,7 @@ class CardBottomSheetWidget extends HookWidget {
             color: Color(0xFFF1F1F1),
           ),
           const SizedBox(
-            height: 300,
+            height: 200,
             child: CardScanMethodsPage(),
           ),
         ],
