@@ -9,16 +9,16 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i9;
-import 'package:Coinplus/models/card_model/card_model.dart' as _i12;
-import 'package:Coinplus/pages/bar_fill_page/bar_fill_page.dart' as _i1;
-import 'package:Coinplus/pages/card_fill_page/card_fill_page.dart' as _i2;
-import 'package:Coinplus/pages/card_settings_page/card_settings_page.dart'
+import 'package:coinplus/models/card_model/card_model.dart' as _i12;
+import 'package:coinplus/pages/bar_fill_page/bar_fill_page.dart' as _i1;
+import 'package:coinplus/pages/card_fill_page/card_fill_page.dart' as _i2;
+import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
     as _i3;
-import 'package:Coinplus/pages/dashboard/dashboard.dart' as _i4;
-import 'package:Coinplus/pages/onboarding_page/onboarding_page.dart' as _i5;
-import 'package:Coinplus/pages/qr_page/qr_page.dart' as _i6;
-import 'package:Coinplus/pages/splash_screen/splash_screen.dart' as _i7;
-import 'package:Coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
+import 'package:coinplus/pages/dashboard/dashboard.dart' as _i4;
+import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i5;
+import 'package:coinplus/pages/qr_page/qr_page.dart' as _i6;
+import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i7;
+import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i8;
 import 'package:flutter/cupertino.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;

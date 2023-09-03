@@ -19,7 +19,7 @@ extension ElevatedButtonExtensions on ThemeData {
     );
     switch (buttonType) {
       case ButtonTypes.PRIMARY:
-        backgroundColor = AppColors.primaryButtonColor;
+        backgroundColor = const Color(0xFFFD5340);
         foregroundColor = AppColors.mainTextColor;
         borderColor = Colors.transparent;
         break;

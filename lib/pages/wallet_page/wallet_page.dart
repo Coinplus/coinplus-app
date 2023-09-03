@@ -57,7 +57,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
@@ -193,7 +192,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  padding:
+                      const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                   child: Observer(
                     builder: (_) {
                       final coin = _balanceStore.coins.firstWhereOrNull(
@@ -215,13 +215,28 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                             ),
                           ),
                           const Gap(8),
-                          Text(
-                            coin.symbol.toUpperCase(),
-                            style: const TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 10,
-                              color: AppColors.textHintsColor,
-                            ),
+                          Column(
+                            children: [
+                              const Gap(3),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(2),
+                                  color: AppColors.silver,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                  vertical: 2,
+                                ),
+                                child: Text(
+                                  coin.symbol.toUpperCase(),
+                                  style: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 10,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const Spacer(),
                           Column(
@@ -233,6 +248,19 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.all(3),
                                 child: Row(
                                   children: [
+                                    Assets.icons.schedule.image(
+                                      height: 18,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                    const Gap(4),
+                                    const Text(
+                                      '24h',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: AppColors.textHintsColor,
+                                        fontFamily: FontFamily.redHatBold,
+                                      ),
+                                    ),
                                     if (coin.priceChangePercentage_24h > 0)
                                       const Icon(
                                         Icons.arrow_drop_up,

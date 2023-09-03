@@ -1,9 +1,7 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:gap/gap.dart';
 
-import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';

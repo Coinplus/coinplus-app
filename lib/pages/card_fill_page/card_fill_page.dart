@@ -149,7 +149,7 @@ class _CardFillPageState extends State<CardFillPage>
                 child: Stack(
                   children: [
                     FlipCard(
-                      //flipOnTouch: false,
+                      flipOnTouch: false,
                       controller: _flipCardController,
                       front: Stack(
                         children: [

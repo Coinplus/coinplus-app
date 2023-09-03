@@ -11,9 +11,8 @@ import '../../../router.dart';
 import '../../../store/form_factor_state/form_factor_state.dart';
 
 class FormFactorPage extends StatefulWidget {
-  const FormFactorPage({super.key, required this.controller});
+  const FormFactorPage({super.key});
 
-  final PageController controller;
 
   @override
   State<FormFactorPage> createState() => _FormFactorPageState();
