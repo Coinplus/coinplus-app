@@ -6,6 +6,6 @@ enum BarColor {
 
 extension CardColorHelper on BarColor {
   AssetGenImage get image => switch (this) {
-        BarColor.SILVER => Assets.images.barWithAddress,
+        BarColor.SILVER => Assets.images.barEmpty,
       };
 }

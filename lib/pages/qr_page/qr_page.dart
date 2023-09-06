@@ -92,7 +92,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       overlayColor: AppColors.primary.withOpacity(0.9),
                       borderColor: qrDetect.isDetected
                           ? (qrDetect.isValid ? Colors.green : Colors.red)
-                          : AppColors.primaryButtonColor,
+                          : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
                       borderWidth: 5,

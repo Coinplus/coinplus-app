@@ -43,6 +43,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/BTCIcon.png
   AssetGenImage get bTCIcon => const AssetGenImage('assets/icons/BTCIcon.png');
 
+  /// File path: assets/icons/Balance.png
+  AssetGenImage get balance => const AssetGenImage('assets/icons/Balance.png');
+
   /// File path: assets/icons/Face ID Success.png
   AssetGenImage get faceIDSuccess =>
       const AssetGenImage('assets/icons/Face ID Success.png');
@@ -50,9 +53,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Notch.png
   AssetGenImage get notch => const AssetGenImage('assets/icons/Notch.png');
 
+  /// File path: assets/icons/arrow_back.png
+  AssetGenImage get arrowBack =>
+      const AssetGenImage('assets/icons/arrow_back.png');
+
   /// File path: assets/icons/arrow_forward_ios.png
   AssetGenImage get arrowForwardIos =>
       const AssetGenImage('assets/icons/arrow_forward_ios.png');
+
+  /// File path: assets/icons/bar_address_field.png
+  AssetGenImage get barAddressField =>
+      const AssetGenImage('assets/icons/bar_address_field.png');
 
   /// File path: assets/icons/buy.png
   AssetGenImage get buy => const AssetGenImage('assets/icons/buy.png');
@@ -65,6 +76,9 @@ class $AssetsIconsGen {
   AssetGenImage get charmArrowTopRight =>
       const AssetGenImage('assets/icons/charm_arrow-top-right.png');
 
+  /// File path: assets/icons/close.png
+  AssetGenImage get close => const AssetGenImage('assets/icons/close.png');
+
   /// File path: assets/icons/coinplusVector.png
   AssetGenImage get coinplusVector =>
       const AssetGenImage('assets/icons/coinplusVector.png');
@@ -72,6 +86,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/contact_us.png
   AssetGenImage get contactUs =>
       const AssetGenImage('assets/icons/contact_us.png');
+
+  /// File path: assets/icons/contactless.png
+  AssetGenImage get contactless =>
+      const AssetGenImage('assets/icons/contactless.png');
 
   /// File path: assets/icons/content_copy.png
   AssetGenImage get contentCopy =>
@@ -161,14 +179,19 @@ class $AssetsIconsGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         bTCIcon,
+        balance,
         faceIDSuccess,
         notch,
+        arrowBack,
         arrowForwardIos,
+        barAddressField,
         buy,
         charmArrowDownRight,
         charmArrowTopRight,
+        close,
         coinplusVector,
         contactUs,
+        contactless,
         contentCopy,
         discord,
         edit,
@@ -222,6 +245,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/Front.png
   AssetGenImage get front => const AssetGenImage('assets/images/Front.png');
 
+  /// File path: assets/images/Hologram.png
+  AssetGenImage get hologram =>
+      const AssetGenImage('assets/images/Hologram.png');
+
   /// File path: assets/images/Orange_card.png
   AssetGenImage get orangeCard =>
       const AssetGenImage('assets/images/Orange_card.png');
@@ -232,9 +259,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/Secret2.png
   AssetGenImage get secret2 => const AssetGenImage('assets/images/Secret2.png');
 
+  /// File path: assets/images/Top circle.png
+  AssetGenImage get topCircle =>
+      const AssetGenImage('assets/images/Top circle.png');
+
   /// File path: assets/images/White_Card.png
   AssetGenImage get whiteCard =>
       const AssetGenImage('assets/images/White_Card.png');
+
+  /// File path: assets/images/bar_empty.png
+  AssetGenImage get barEmpty =>
+      const AssetGenImage('assets/images/bar_empty.png');
 
   /// File path: assets/images/bar_form.png
   AssetGenImage get barForm =>
@@ -243,6 +278,18 @@ class $AssetsImagesGen {
   /// File path: assets/images/bar_front.png
   AssetGenImage get barFront =>
       const AssetGenImage('assets/images/bar_front.png');
+
+  /// File path: assets/images/bar_logo.png
+  AssetGenImage get barLogo =>
+      const AssetGenImage('assets/images/bar_logo.png');
+
+  /// File path: assets/images/bar_secret_1.png
+  AssetGenImage get barSecret1 =>
+      const AssetGenImage('assets/images/bar_secret_1.png');
+
+  /// File path: assets/images/bar_secret_2.png
+  AssetGenImage get barSecret2 =>
+      const AssetGenImage('assets/images/bar_secret_2.png');
 
   /// File path: assets/images/bar_skeleton.png
   AssetGenImage get barSkeleton =>
@@ -322,12 +369,18 @@ class $AssetsImagesGen {
         formBar,
         formCard,
         front,
+        hologram,
         orangeCard,
         secret1,
         secret2,
+        topCircle,
         whiteCard,
+        barEmpty,
         barForm,
         barFront,
+        barLogo,
+        barSecret1,
+        barSecret2,
         barSkeleton,
         barWithAddress,
         brownWithoutShadow,

@@ -6,13 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../extensions/context_extension.dart';
+import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../widgets/loading_button.dart';
 
 class BarScanMethodsPage extends StatelessWidget {
   const BarScanMethodsPage({super.key});
@@ -22,13 +26,18 @@ class BarScanMethodsPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.grey.withOpacity(0.5),
-            backgroundColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory,
-            shape: const RoundedRectangleBorder(),
-          ),
+        LoadingButton(
+          style: context.theme
+              .buttonStyle(
+                textStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primaryTextColor,
+                  fontSize: 15,
+                ),
+              )
+              .copyWith(
+                backgroundColor: MaterialStateProperty.all(AppColors.silver),
+              ),
           onPressed: Platform.isIOS
               ? () async {
                   await router.pop();
@@ -65,7 +74,6 @@ class BarScanMethodsPage extends StatelessWidget {
                   );
                 }
               : () async {
-                  await router.pop();
                   await NfcManager.instance.startSession(
                     onDiscovered: (tag) async {
                       final ndef = Ndef.from(tag);
@@ -85,12 +93,14 @@ class BarScanMethodsPage extends StatelessWidget {
                             payloadString.split('air.coinplus.com/btc/');
                         walletAddress = parts[1];
                       }
+
                       await router.pop();
                       await router.push(
                         BarFillRoute(receivedData: walletAddress.toString()),
                       );
                     },
                   );
+                  await router.pop();
                   await showModalBottomSheet(
                     context: context,
                     backgroundColor: Colors.transparent,
@@ -169,10 +179,15 @@ class BarScanMethodsPage extends StatelessWidget {
                   );
                 },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Assets.icons.contactless.image(
+                height: 24,
+                width: 24,
+                color: AppColors.primaryButtonColor,
+              ),
+              const Gap(8),
               const Text(
-                'Try with NFC',
+                'Tap to connect',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
@@ -180,22 +195,22 @@ class BarScanMethodsPage extends StatelessWidget {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-              const Gap(16),
-              Assets.images.contactless.image(
-                height: 24,
-                width: 24,
-              ),
             ],
           ),
         ),
-        const Gap(10),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.grey.withOpacity(0.5),
-            backgroundColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory,
-            shape: const RoundedRectangleBorder(),
-          ),
+        const Gap(8),
+        LoadingButton(
+          style: context.theme
+              .buttonStyle(
+                textStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primaryTextColor,
+                  fontSize: 15,
+                ),
+              )
+              .copyWith(
+                backgroundColor: MaterialStateProperty.all(AppColors.silver),
+              ),
           onPressed: () async {
             await router.pop(context);
             final res = await context.pushRoute<String?>(
@@ -203,46 +218,58 @@ class BarScanMethodsPage extends StatelessWidget {
             );
             if (res != null) {
               await router.push(
-                BarFillRoute(receivedData: res),
+                CardFillRoute(receivedData: res),
               );
             }
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Assets.images.qrCode.image(
+                height: 24,
+                width: 24,
+                color: AppColors.primaryButtonColor,
+              ),
+              const Gap(8),
               const Text(
-                'Try with QR scan',
+                'Connect with QR',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
                   fontWeight: FontWeight.normal,
                   color: AppColors.primaryTextColor,
                 ),
-              ),
-              const Gap(16),
-              Assets.images.qrCode.image(
-                height: 24,
-                width: 24,
               ),
             ],
           ),
         ),
-        const Gap(10),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.grey.withOpacity(0.5),
-            backgroundColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory,
-            shape: const RoundedRectangleBorder(),
-          ),
+        const Gap(8),
+        LoadingButton(
+          style: context.theme
+              .buttonStyle(
+                textStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primaryTextColor,
+                  fontSize: 15,
+                ),
+              )
+              .copyWith(
+                backgroundColor: MaterialStateProperty.all(AppColors.silver),
+              ),
           onPressed: () {
-            router.push(BarFillRoute());
+            router
+              ..pop()
+              ..push(BarFillRoute());
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Assets.images.stylus.image(
+                height: 24,
+                width: 24,
+                color: AppColors.primaryButtonColor,
+              ),
+              const Gap(8),
               const Text(
-                'Fill in manually',
+                'Connect manually',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: FontFamily.redHatMedium,
@@ -250,10 +277,44 @@ class BarScanMethodsPage extends StatelessWidget {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-              const Gap(16),
-              Assets.images.stylus.image(
+            ],
+          ),
+        ),
+        const Gap(8),
+        LoadingButton(
+          style: context.theme
+              .buttonStyle(
+                textStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primaryTextColor,
+                  fontSize: 15,
+                ),
+              )
+              .copyWith(
+                backgroundColor: MaterialStateProperty.all(AppColors.silver),
+              ),
+          onPressed: () async {
+            final url = Uri.parse('https://coinplus.com/shop/');
+            if (await canLaunchUrl(url)) {
+              await launchUrl(url);
+            }
+          },
+          child: Row(
+            children: [
+              Assets.icons.shop.image(
                 height: 24,
                 width: 24,
+                color: AppColors.primaryButtonColor,
+              ),
+              const Gap(8),
+              const Text(
+                'Buy new card',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: FontFamily.redHatMedium,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.primaryTextColor,
+                ),
               ),
             ],
           ),

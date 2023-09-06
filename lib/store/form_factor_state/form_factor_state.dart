@@ -13,6 +13,8 @@ abstract class _FormFactorState with Store {
   bool isFirstWidgetVisible = true;
   @observable
   bool isSecondWidgetVisible = true;
+  @observable
+  bool isFirstWidget = true;
 
   @action
   void cardSelection() {
@@ -23,5 +25,10 @@ abstract class _FormFactorState with Store {
   void barSelection() {
     isSecondWidgetZoomed = true;
     isFirstWidgetVisible = !isSecondWidgetZoomed;
+  }
+
+  @action
+  void toggleWidget() {
+    isFirstWidget = !isFirstWidget;
   }
 }

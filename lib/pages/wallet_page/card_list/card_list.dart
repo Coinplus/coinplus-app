@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
@@ -19,7 +20,7 @@ import '../../../store/balance_store/balance_store.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
-import 'card_add_modal.dart';
+import '../../onboarding_page/form_factor_pages/card_scan_methods_page.dart';
 
 class CardList extends StatefulWidget {
   const CardList({super.key});
@@ -32,7 +33,6 @@ class _CardListState extends State<CardList> {
   final _settingsState = SettingsState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  late final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +45,41 @@ class _CardListState extends State<CardList> {
                 enableFeedback: false,
                 onPressed: () {
                   showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     context: context,
-                    backgroundColor: Colors.transparent,
                     builder: (context) {
-                      return CardBottomSheetWidget(controller: _controller);
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Assets.icons.notch.image(
+                              height: 4,
+                            ),
+                          ),
+                          const Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20, top: 10),
+                                child: Text(
+                                  'Add new wallet',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatBold,
+                                    fontSize: 17,
+                                    color: AppColors.primaryTextColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Gap(18),
+                          const CardScanMethodsPage().paddingHorizontal(20),
+                          const Gap(40),
+                        ],
+                      );
                     },
                   );
                 },

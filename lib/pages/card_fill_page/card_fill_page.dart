@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
@@ -793,7 +792,7 @@ class _CardFillPageState extends State<CardFillPage>
                   );
                 },
               ),
-              Gap(max(context.bottomPadding, 12)),
+              const Gap(20),
             ],
           );
         },

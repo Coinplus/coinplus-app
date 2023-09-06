@@ -243,7 +243,7 @@ class SettingsPage extends StatelessWidget {
                               height: 22,
                             ),
                             title: const Text(
-                              'Help centre',
+                              'Help center',
                               style: TextStyle(
                                 fontFamily: FontFamily.redHatMedium,
                                 fontSize: 15,
