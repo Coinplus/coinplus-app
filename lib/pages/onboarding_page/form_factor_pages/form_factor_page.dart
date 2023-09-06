@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
+import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
@@ -12,7 +13,6 @@ import '../../../store/form_factor_state/form_factor_state.dart';
 
 class FormFactorPage extends StatefulWidget {
   const FormFactorPage({super.key});
-
 
   @override
   State<FormFactorPage> createState() => _FormFactorPageState();
@@ -41,18 +41,20 @@ class _FormFactorPageState extends State<FormFactorPage>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Gap(22),
-        const Text(
-          'Please select a wallet form: card or bar?',
-          style: TextStyle(
-            fontFamily: FontFamily.redHatMedium,
-            color: AppColors.primaryTextColor,
-            fontSize: 14,
-          ),
+        Padding(
+          padding: const EdgeInsets.only(left: 50),
+          child: const Text(
+            'Please select a wallet form',
+            style: TextStyle(
+              fontFamily: FontFamily.redHatLight,
+              color: AppColors.primaryTextColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+            ),
+          ).expandedHorizontally(),
         ),
         const Gap(30),
         SizedBox(
-          height: 220,
           child: Observer(
             builder: (context) {
               return Row(
@@ -60,7 +62,7 @@ class _FormFactorPageState extends State<FormFactorPage>
                 children: [
                   Column(
                     children: [
-                      const Gap(30),
+                      const Gap(20),
                       GestureDetector(
                         onTap: () async {
                           _formFactorState.cardSelection();
@@ -86,7 +88,7 @@ class _FormFactorPageState extends State<FormFactorPage>
                                   )
                                 else
                                   Assets.images.cardForm.image(height: 80),
-                                const Gap(50),
+                                const Gap(35),
                                 const Text(
                                   'Card',
                                   style: TextStyle(
@@ -105,7 +107,6 @@ class _FormFactorPageState extends State<FormFactorPage>
                   const Gap(54),
                   Column(
                     children: [
-                      const Gap(10),
                       GestureDetector(
                         onTap: () async {
                           _formFactorState.barSelection();
@@ -127,11 +128,11 @@ class _FormFactorPageState extends State<FormFactorPage>
                               children: [
                                 if (_formFactorState.isSecondWidgetZoomed)
                                   Assets.images.formBarSelected.image(
-                                    height: 160,
+                                    height: 150,
                                   )
                                 else
                                   Assets.images.barForm.image(height: 120),
-                                const Gap(30),
+                                const Gap(20),
                                 const Text(
                                   'Bar',
                                   style: TextStyle(

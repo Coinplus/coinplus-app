@@ -9,30 +9,27 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../store/form_factor_state/form_factor_state.dart';
 import '../../../widgets/loading_button.dart';
 
 class CardAndBarScanMethodsPage extends StatefulWidget {
-  const CardAndBarScanMethodsPage({super.key});
+  const CardAndBarScanMethodsPage({super.key, required this.formFactorState});
 
-
+  final FormFactorState formFactorState;
 
   @override
-  State<CardAndBarScanMethodsPage> createState() => _CardAndBarScanMethodsPageState();
+  State<CardAndBarScanMethodsPage> createState() =>
+      _CardAndBarScanMethodsPageState();
 }
 
-class _CardAndBarScanMethodsPageState extends State<CardAndBarScanMethodsPage> with TickerProviderStateMixin{
-
-
-
-
-
+class _CardAndBarScanMethodsPageState extends State<CardAndBarScanMethodsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          const Gap(18),
+          const Gap(15),
           LoadingButton(
             style: context.theme
                 .buttonStyle(
@@ -90,6 +87,7 @@ class _CardAndBarScanMethodsPageState extends State<CardAndBarScanMethodsPage> w
                   backgroundColor: MaterialStateProperty.all(AppColors.silver),
                 ),
             onPressed: () {
+              widget.formFactorState.toggleWidget();
             },
             child: Row(
               children: [

@@ -159,7 +159,7 @@ class Dashboard extends HookWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Deposit bitcoin to your wallet',
+                                        'Receive crypto on this address',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: FontFamily.redHatMedium,
@@ -216,7 +216,7 @@ class Dashboard extends HookWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Transfer bitcoin to another wallet',
+                                        'Transfer crypto to another wallet',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: FontFamily.redHatMedium,
@@ -273,7 +273,7 @@ class Dashboard extends HookWidget {
                                         ),
                                       ),
                                       Text(
-                                        'Purchase bitcoin with cash',
+                                        'Purchase crypto with cash',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: FontFamily.redHatMedium,

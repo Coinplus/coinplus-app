@@ -76,6 +76,22 @@ mixin _$FormFactorState on _FormFactorState, Store {
     });
   }
 
+  late final _$isFirstWidgetAtom =
+      Atom(name: '_FormFactorState.isFirstWidget', context: context);
+
+  @override
+  bool get isFirstWidget {
+    _$isFirstWidgetAtom.reportRead();
+    return super.isFirstWidget;
+  }
+
+  @override
+  set isFirstWidget(bool value) {
+    _$isFirstWidgetAtom.reportWrite(value, super.isFirstWidget, () {
+      super.isFirstWidget = value;
+    });
+  }
+
   late final _$_FormFactorStateActionController =
       ActionController(name: '_FormFactorState', context: context);
 
@@ -91,12 +107,24 @@ mixin _$FormFactorState on _FormFactorState, Store {
   }
 
   @override
+  void toggleWidget() {
+    final _$actionInfo = _$_FormFactorStateActionController.startAction(
+        name: '_FormFactorState.toggleWidget');
+    try {
+      return super.toggleWidget();
+    } finally {
+      _$_FormFactorStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isFirstWidgetZoomed: ${isFirstWidgetZoomed},
 isSecondWidgetZoomed: ${isSecondWidgetZoomed},
 isFirstWidgetVisible: ${isFirstWidgetVisible},
-isSecondWidgetVisible: ${isSecondWidgetVisible}
+isSecondWidgetVisible: ${isSecondWidgetVisible},
+isFirstWidget: ${isFirstWidget}
     ''';
   }
 }

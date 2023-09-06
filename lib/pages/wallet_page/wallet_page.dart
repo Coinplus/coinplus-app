@@ -15,9 +15,9 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
 import '../splash_screen/splash_screen.dart';
+import 'bar_list/bar_list.dart';
 import 'btc_price/btc_price.dart';
-import 'card_and_bar_lists/bar_list.dart';
-import 'card_and_bar_lists/card_list.dart';
+import 'card_list/card_list.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
