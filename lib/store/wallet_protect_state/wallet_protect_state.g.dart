@@ -33,6 +33,25 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     return _$onToggleSwitchAsyncAction.run(() => super.onToggleSwitch());
   }
 
+  late final _$isBiometricAvailableAsyncAction =
+      AsyncAction('_WalletProtectState.isBiometricAvailable', context: context);
+
+  @override
+  Future<bool> isBiometricAvailable() {
+    return _$isBiometricAvailableAsyncAction
+        .run(() => super.isBiometricAvailable());
+  }
+
+  late final _$authenticateWithBiometricsAsyncAction = AsyncAction(
+      '_WalletProtectState.authenticateWithBiometrics',
+      context: context);
+
+  @override
+  Future<void> authenticateWithBiometrics() {
+    return _$authenticateWithBiometricsAsyncAction
+        .run(() => super.authenticateWithBiometrics());
+  }
+
   @override
   String toString() {
     return '''

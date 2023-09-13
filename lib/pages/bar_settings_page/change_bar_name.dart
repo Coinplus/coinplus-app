@@ -5,12 +5,12 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
-import '../../models/card_model/card_model.dart';
+import '../../models/bar_model/bar_model.dart';
 
 class CardNameChangeModal extends StatefulWidget {
-  const CardNameChangeModal({super.key, required this.card});
+  const CardNameChangeModal({super.key, required this.bar});
 
-  final CardModel card;
+  final BarModel bar;
 
   @override
   State<CardNameChangeModal> createState() => _CardNameChangeModalState();
@@ -55,7 +55,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
               ),
               const Expanded(
                 child: Text(
-                  'Rename the card',
+                  'Rename the bar',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: FontFamily.redHatSemiBold,
@@ -99,7 +99,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                 ),
               ),
               contentPadding: const EdgeInsets.all(10),
-              hintText: widget.card.cardName,
+              hintText: widget.bar.barName,
               hintStyle: TextStyle(
                 fontFamily: FontFamily.redHatLight,
                 color: AppColors.primaryTextColor.withOpacity(0.5),
@@ -110,7 +110,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
           ).paddingHorizontal(12),
           const Gap(8),
           const Text(
-            'Once you rename it, the new name will be shown on the face side of of your card.',
+            'Once you rename it, the new name will be shown on the face side of of your bar.',
             style: TextStyle(
               fontSize: 14,
               fontFamily: FontFamily.redHatMedium,

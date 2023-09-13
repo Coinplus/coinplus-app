@@ -39,5 +39,15 @@ class Router extends $Router {
     AdaptiveRoute(
       page: CardSettingsRoute.page,
     ),
+    AdaptiveRoute(
+      page: SettingsRoute.page,
+    ),
+    AdaptiveRoute(
+      page: BarSettingsRoute.page,
+    ),
+    AdaptiveRoute(
+      page: CreatePinRoute.page,
+    ),
+    AdaptiveRoute(page: PinRoute.page),
   ];
 }

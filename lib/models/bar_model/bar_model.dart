@@ -12,9 +12,11 @@ class BarModel with _$BarModel {
     required String address,
     @Default(BarColor.SILVER) BarColor barColor,
     @Default(CardType.BAR) CardType cardType,
+    @Default('Coinplus Bitcoin Bar') String barName,
     int? totalReceived,
     int? totalSent,
     int? balance,
+    @Default('01/01/2023') String cardAddedDate,
   }) = _BarModel;
 
   factory BarModel.fromJson(Map<String, dynamic> json) =>

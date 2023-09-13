@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
@@ -6,7 +7,10 @@ import 'package:gap/gap.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../providers/screen_service.dart';
+import '../../router.dart';
 
+@RoutePage()
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
@@ -99,7 +103,9 @@ class SettingsPage extends StatelessWidget {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            router.push(const CreatePinRoute());
+                          },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -449,5 +455,9 @@ class SettingsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const SettingsPage());
   }
 }

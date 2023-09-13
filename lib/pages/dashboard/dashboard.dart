@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
@@ -11,19 +11,62 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../providers/screen_service.dart';
+import '../../router.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../widgets/loading_button.dart';
 import '../settings_page/settings_page.dart';
 import '../wallet_page/wallet_page.dart';
 
 @RoutePage()
-class Dashboard extends HookWidget {
+class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
   @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (WidgetsBinding.instance.lifecycleState == AppLifecycleState.paused) {
+        showPasscodePageIfNeeded();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      showPasscodePageIfNeeded();
+    }
+    if (state == AppLifecycleState.inactive) {}
+    if (state == AppLifecycleState.resumed) {}
+  }
+
+  void showPasscodePageIfNeeded() {
+    const shouldShowPasscode = true;
+
+    if (shouldShowPasscode) {
+      router.push(const PinRoute());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _navBarState = useMemoized(NavBarState.new);
-    final _pageController = usePageController();
+    final _navBarState = NavBarState();
+    final _pageController = PageController();
 
     return Scaffold(
       body: Stack(

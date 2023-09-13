@@ -9,17 +9,44 @@ abstract class _WalletProtectState with Store {
   final _auth = LocalAuthentication();
   @observable
   bool isToggleSwitched = false;
+
   @action
   Future<void> onToggleSwitch() async {
+    isToggleSwitched = !isToggleSwitched;
+    // try {
+    //   final didAuthenticate = await _auth.authenticate(
+    //     localizedReason: 'Please authenticate',
+    //   );
+    //   isToggleSwitched = didAuthenticate;
+    //   if (!didAuthenticate) {
+    //     return;
+    //   }
+    // } catch (_) {}
+  }
+
+  @action
+  Future<bool> isBiometricAvailable() async {
     try {
-      final didAuthenticate = await _auth.authenticate(
-        localizedReason: 'Please authenticate',
-      );
-      isToggleSwitched = didAuthenticate;
-      if (!didAuthenticate) {
-        return;
-      }
-    } catch (_) {}
+      return await _auth.isDeviceSupported();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @action
+  Future<void> authenticateWithBiometrics() async {
+    try {
+      if (await isBiometricAvailable()) {
+        final isAuthorized = await _auth.authenticate(
+          localizedReason: 'Authenticate using Face ID',
+        );
+
+        if (isAuthorized) {
+        } else {}
+      } else {}
+    } catch (_) {
+      return;
+    }
   }
 
   void initState() {

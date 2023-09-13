@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
+import '../../constants/buttons/button_settings.dart';
+import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -50,7 +52,7 @@ class WalletProtectionPage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Spacer(
-            flex: 3,
+            flex: 5,
           ),
           // if (Platform.isIOS)
           Container(
@@ -61,8 +63,12 @@ class WalletProtectionPage extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Assets.icons.faceIDSuccess.image(
-                  height: 28,
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Assets.icons.lock.image(
+                    color: const Color(0xFF007AFF),
+                    height: 28,
+                  ),
                 ),
                 const Gap(18),
                 const Column(
@@ -70,15 +76,19 @@ class WalletProtectionPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Face ID',
+                      'App Lock',
                       style: TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
                       ),
                     ),
                     Text(
-                      'Authentication with Face ID',
-                      style: TextStyle(fontFamily: FontFamily.redHatMedium),
+                      'Secure your wallet with passcode',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.textHintsColor,
+                      ),
                     ),
                   ],
                 ),
@@ -88,6 +98,12 @@ class WalletProtectionPage extends StatelessWidget {
                     return CupertinoSwitch(
                       onChanged: (_) async {
                         await _walletProtectState.onToggleSwitch();
+                        await Future.delayed(
+                          const Duration(
+                            milliseconds: 300,
+                          ),
+                        );
+                        await router.push(const CreatePinRoute());
                       },
                       value: _walletProtectState.isToggleSwitched && true,
                     );
@@ -101,26 +117,25 @@ class WalletProtectionPage extends StatelessWidget {
           const Spacer(
             flex: 5,
           ),
-          Observer(
-            builder: (context) {
-              return LoadingButton(
-                onPressed: _walletProtectState.isToggleSwitched
-                    ? () {
-                        router.pushAndPopAll(const Dashboard());
-                      }
-                    : null,
-                child: const Text(
-                  'Next',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatLight,
-                    color: Colors.white,
-                  ),
-                ),
-              ).paddingHorizontal(98);
+          LoadingButton(
+            style: context.theme.buttonStyle(
+              buttonType: ButtonTypes.TRANSPARENT,
+            ),
+            onPressed: () {
+              router.pushAndPopAll(const Dashboard());
             },
-          ),
+            child: const Text(
+              'Not now',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: FontFamily.redHatMedium,
+                fontWeight: FontWeight.normal,
+                color: AppColors.primaryTextColor,
+              ),
+            ),
+          ).paddingHorizontal(60),
           const Spacer(
-            flex: 3,
+            flex: 2,
           ),
         ],
       ),
