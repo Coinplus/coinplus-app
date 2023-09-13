@@ -162,6 +162,17 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void removeSelectedBar() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.removeSelectedBar');
+    try {
+      return super.removeSelectedBar();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void saveReplacedCard() {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
         name: '_BalanceStore.saveReplacedCard');
@@ -180,6 +191,18 @@ mixin _$BalanceStore on _BalanceStore, Store {
     try {
       return super
           .changeCardColorAndSave(cardAddress: cardAddress, color: color);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeBarColorAndSave(
+      {required String barAddress, required BarColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.changeBarColorAndSave');
+    try {
+      return super.changeBarColorAndSave(barAddress: barAddress, color: color);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }

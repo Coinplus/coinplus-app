@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../constants/bar_color.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../http/dio.dart';
@@ -127,6 +128,17 @@ abstract class _BalanceStore with Store {
     StorageUtils.removeCard(_selectedCard!.address);
   }
 
+  @action
+  void removeSelectedBar() {
+    if (_selectedBar == null) {
+      return;
+    }
+    final index =
+        _bars.indexWhere((element) => element.address == _selectedBar!.address);
+    _bars.removeAt(index);
+    StorageUtils.removeBar(_selectedBar!.address);
+  }
+
   Future<CardModel?> _getSingleCardInfo(String address) async {
     try {
       loadings[address] = true;
@@ -229,6 +241,24 @@ abstract class _BalanceStore with Store {
       _cards[cardIndex] = updatedCard;
 
       StorageUtils.replaceCard(cardAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
+  void changeBarColorAndSave({
+    required String barAddress,
+    required BarColor color,
+  }) {
+    final barIndex =
+        _bars.indexWhere((element) => element.address == barAddress);
+
+    if (barIndex != -1) {
+      final updatedCard = _bars[barIndex].copyWith(barColor: color);
+      _bars[barIndex] = updatedCard;
+
+      StorageUtils.replaceBar(barAddress, updatedCard);
     } else {
       throw Exception('Card not found');
     }

@@ -320,7 +320,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 ),
                                 Center(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Observer(
                                         builder: (context) {

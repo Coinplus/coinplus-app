@@ -116,10 +116,9 @@ class _BarFillPageState extends State<BarFillPage>
           Expanded(
             flex: 2,
             child: Observer(
-
               builder: (context) {
                 final coin = _balanceStore.coins.firstWhereOrNull(
-                      (element) => element.id == 'bitcoin',
+                  (element) => element.id == 'bitcoin',
                 );
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
@@ -130,9 +129,7 @@ class _BarFillPageState extends State<BarFillPage>
                         ? Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: Assets.images.barEmpty
-                                    .image()
-                                    .image,
+                                image: Assets.images.barEmpty.image().image,
                               ),
                             ),
                             child: Center(
@@ -151,8 +148,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                 top: 0,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.topCircle
+                                                child: Assets.images.topCircle
                                                     .image(
                                                   height: 165,
                                                 ),
@@ -161,16 +157,14 @@ class _BarFillPageState extends State<BarFillPage>
                                                 top: 1,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.hologram
+                                                child: Assets.images.hologram
                                                     .image(height: 163),
                                               ),
                                               Positioned(
                                                 top: 60,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.barSecret1
+                                                child: Assets.images.barSecret1
                                                     .image(
                                                   height: 40,
                                                 ),
@@ -181,15 +175,13 @@ class _BarFillPageState extends State<BarFillPage>
                                                 right: 0,
                                                 child: Text(
                                                   'Secret 1',
-                                                  textAlign:
-                                                  TextAlign.center,
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontSize: 15,
-                                                    fontFamily: FontFamily
-                                                        .redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     color: Colors.black26,
-                                                    fontWeight:
-                                                    FontWeight.w700,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
                                                 ),
                                               ),
@@ -198,46 +190,51 @@ class _BarFillPageState extends State<BarFillPage>
                                         ),
                                         Expanded(
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
                                                 children: [
                                                   Assets.icons.balance.image(
                                                     height: 12,
                                                   ),
                                                   Observer(
                                                     builder: (context) {
-                                                      if (_balanceStore.loadings[
-                                                      _balanceStore
-                                                          .selectedBar
-                                                          ?.address] ??
+                                                      if (_balanceStore
+                                                                  .loadings[
+                                                              _balanceStore
+                                                                  .selectedBar
+                                                                  ?.address] ??
                                                           false) {
                                                         return const Padding(
-                                                          padding: EdgeInsets.all(4),
+                                                          padding:
+                                                              EdgeInsets.all(4),
                                                           child:
-                                                          CupertinoActivityIndicator(
+                                                              CupertinoActivityIndicator(
                                                             radius: 5,
                                                           ),
                                                         );
                                                       }
                                                       return Text(
                                                         (_balanceStore.selectedBar !=
-                                                            null
-                                                            ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}'
-                                                            : '')
+                                                                    null
+                                                                ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}'
+                                                                : '')
                                                             .toString(),
-                                                        style:  TextStyle(
-                                                          fontFamily:
-                                                          FontFamily.redHatMedium,
-                                                          fontWeight: FontWeight.w700,
-                                                          color: Colors.white.withOpacity(0.7),
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: Colors.white
+                                                              .withOpacity(0.7),
                                                           fontSize: 25,
                                                         ),
                                                       );
                                                     },
                                                   ),
-
                                                 ],
                                               ),
                                             ],
@@ -245,13 +242,24 @@ class _BarFillPageState extends State<BarFillPage>
                                         ),
                                         const Gap(11),
                                         Container(
-                                          decoration: BoxDecoration(image: DecorationImage(image: Assets.icons.barAddressField.image().image)),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: Assets
+                                                  .icons.barAddressField
+                                                  .image()
+                                                  .image,
+                                            ),
+                                          ),
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 10,
+                                              horizontal: 16,
+                                            ),
                                             child: Observer(
                                               builder: (context) {
                                                 if (_balanceStore.loadings[
-                                                        _balanceStore.selectedBar
+                                                        _balanceStore
+                                                            .selectedBar
                                                             ?.address] ??
                                                     false) {
                                                   return const Padding(
@@ -263,8 +271,8 @@ class _BarFillPageState extends State<BarFillPage>
                                                   );
                                                 }
                                                 return Text(
-                                                  _balanceStore
-                                                          .selectedBar?.address ??
+                                                  _balanceStore.selectedBar
+                                                          ?.address ??
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily:
@@ -286,31 +294,25 @@ class _BarFillPageState extends State<BarFillPage>
                                         Container(
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
-                                              image: Assets
-                                                  .images.barSecret2
-                                                  .image(
-
-                                              )
+                                              image: Assets.images.barSecret2
+                                                  .image()
                                                   .image,
                                             ),
                                           ),
                                           child: const Padding(
-                                            padding:
-                                            EdgeInsets.symmetric(
+                                            padding: EdgeInsets.symmetric(
                                               horizontal: 60,
                                               vertical: 16,
                                             ),
                                             child: Text(
                                               'Secret 2',
-                                              textAlign:
-                                              TextAlign.center,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: 15,
-                                                fontFamily: FontFamily
-                                                    .redHatMedium,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
                                                 color: Colors.black26,
-                                                fontWeight:
-                                                FontWeight.w700,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ),
@@ -327,9 +329,7 @@ class _BarFillPageState extends State<BarFillPage>
                             width: context.width - 34,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: Assets.images.barEmpty
-                                    .image()
-                                    .image,
+                                image: Assets.images.barEmpty.image().image,
                               ),
                             ),
                             child: LayoutBuilder(
@@ -349,8 +349,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                 top: 0,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.topCircle
+                                                child: Assets.images.topCircle
                                                     .image(
                                                   height: 165,
                                                 ),
@@ -359,16 +358,14 @@ class _BarFillPageState extends State<BarFillPage>
                                                 top: 1,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.hologram
+                                                child: Assets.images.hologram
                                                     .image(height: 163),
                                               ),
                                               Positioned(
                                                 top: 60,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.barSecret1
+                                                child: Assets.images.barSecret1
                                                     .image(
                                                   height: 40,
                                                 ),
@@ -379,15 +376,13 @@ class _BarFillPageState extends State<BarFillPage>
                                                 right: 0,
                                                 child: Text(
                                                   'Secret 1',
-                                                  textAlign:
-                                                      TextAlign.center,
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontSize: 15,
-                                                    fontFamily: FontFamily
-                                                        .redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     color: Colors.black26,
-                                                    fontWeight:
-                                                        FontWeight.w700,
+                                                    fontWeight: FontWeight.w700,
                                                   ),
                                                 ),
                                               ),
@@ -395,8 +390,7 @@ class _BarFillPageState extends State<BarFillPage>
                                           ),
                                         ),
                                         const Gap(30),
-                                        if (_addressState
-                                            .isAddressVisible)
+                                        if (_addressState.isAddressVisible)
                                           const SizedBox()
                                         else
                                           Expanded(
@@ -419,27 +413,22 @@ class _BarFillPageState extends State<BarFillPage>
                                                   fontSize: 12,
                                                   color: AppColors
                                                       .primaryTextColor,
-                                                  fontFamily: FontFamily
-                                                      .redHatLight,
+                                                  fontFamily:
+                                                      FontFamily.redHatLight,
                                                 ),
                                                 onTapOutside: (_) {
-                                                  WidgetsBinding
-                                                      .instance
-                                                      .focusManager
-                                                      .primaryFocus
+                                                  WidgetsBinding.instance
+                                                      .focusManager.primaryFocus
                                                       ?.unfocus();
                                                 },
-                                                decoration:
-                                                    InputDecoration(
-                                                  fillColor:
-                                                      Colors.white,
+                                                decoration: InputDecoration(
+                                                  fillColor: Colors.white,
                                                   hintText:
                                                       'Write here your \nbar address ',
                                                   hintMaxLines: 2,
                                                   hintStyle: TextStyle(
                                                     fontFamily:
-                                                        FontFamily
-                                                            .redHatLight,
+                                                        FontFamily.redHatLight,
                                                     fontSize: 12,
                                                     color: AppColors
                                                         .primaryTextColor
@@ -466,61 +455,66 @@ class _BarFillPageState extends State<BarFillPage>
                                                                 .all(
                                                           4,
                                                         ),
-                                                        child: _validationStore
-                                                                .isValid
-                                                            ? IconButton(
-                                                                onPressed:
-                                                                    () async {
-                                                                  _focusNode
-                                                                      .unfocus();
-                                                                  await Future
-                                                                      .delayed(
-                                                                    const Duration(
-                                                                      milliseconds: 300,
-                                                                    ),
-                                                                  );
-                                                                  final res =
-                                                                      await context.pushRoute<String?>(
-                                                                    const QrScannerRoute(),
-                                                                  );
-                                                                  if (res ==
-                                                                      null) {
-                                                                    return;
-                                                                  }
+                                                        child:
+                                                            _validationStore
+                                                                    .isValid
+                                                                ? IconButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      _focusNode
+                                                                          .unfocus();
+                                                                      await Future
+                                                                          .delayed(
+                                                                        const Duration(
+                                                                          milliseconds:
+                                                                              300,
+                                                                        ),
+                                                                      );
+                                                                      final res =
+                                                                          await context
+                                                                              .pushRoute<String?>(
+                                                                        const QrScannerRoute(),
+                                                                      );
+                                                                      if (res ==
+                                                                          null) {
+                                                                        return;
+                                                                      }
 
-                                                                  _btcAddressController.text =
-                                                                      res;
-                                                                  await _validateBTCAddress();
-                                                                },
-                                                                icon: Assets
-                                                                    .images
-                                                                    .qrCode
-                                                                    .image(
-                                                                  height:
-                                                                      34,
-                                                                  color:
-                                                                      AppColors.primaryButtonColor,
-                                                                ),
-                                                              )
-                                                            : Lottie
-                                                                .asset(
-                                                                'assets/animated_logo/address_validation_success.json',
-                                                                height:
-                                                                    24,
-                                                                controller:
-                                                                    _lottieController,
-                                                                onLoaded:
-                                                                    (composition) {
-                                                                  Future
-                                                                      .delayed(
-                                                                    const Duration(
-                                                                      milliseconds: 1000,
+                                                                      _btcAddressController
+                                                                              .text =
+                                                                          res;
+                                                                      await _validateBTCAddress();
+                                                                    },
+                                                                    icon: Assets
+                                                                        .images
+                                                                        .qrCode
+                                                                        .image(
+                                                                      height:
+                                                                          34,
+                                                                      color: AppColors
+                                                                          .primaryButtonColor,
                                                                     ),
-                                                                  );
-                                                                  _lottieController.duration =
-                                                                      composition.duration;
-                                                                },
-                                                              ),
+                                                                  )
+                                                                : Lottie.asset(
+                                                                    'assets/animated_logo/address_validation_success.json',
+                                                                    height: 24,
+                                                                    controller:
+                                                                        _lottieController,
+                                                                    onLoaded:
+                                                                        (composition) {
+                                                                      Future
+                                                                          .delayed(
+                                                                        const Duration(
+                                                                          milliseconds:
+                                                                              1000,
+                                                                        ),
+                                                                      );
+                                                                      _lottieController
+                                                                              .duration =
+                                                                          composition
+                                                                              .duration;
+                                                                    },
+                                                                  ),
                                                       );
                                                     },
                                                   ),
@@ -532,8 +526,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                           .primaryButtonColor,
                                                     ),
                                                     borderRadius:
-                                                        BorderRadius
-                                                            .circular(
+                                                        BorderRadius.circular(
                                                       5,
                                                     ),
                                                   ),
@@ -541,12 +534,10 @@ class _BarFillPageState extends State<BarFillPage>
                                                       OutlineInputBorder(
                                                     borderSide:
                                                         const BorderSide(
-                                                      color: Colors
-                                                          .transparent,
+                                                      color: Colors.transparent,
                                                     ),
                                                     borderRadius:
-                                                        BorderRadius
-                                                            .circular(
+                                                        BorderRadius.circular(
                                                       5,
                                                     ),
                                                   ),
@@ -562,31 +553,25 @@ class _BarFillPageState extends State<BarFillPage>
                                         Container(
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
-                                              image: Assets
-                                                  .images.barSecret2
-                                                  .image(
-
-                                                  )
+                                              image: Assets.images.barSecret2
+                                                  .image()
                                                   .image,
                                             ),
                                           ),
                                           child: const Padding(
-                                            padding:
-                                                EdgeInsets.symmetric(
+                                            padding: EdgeInsets.symmetric(
                                               horizontal: 60,
                                               vertical: 16,
                                             ),
                                             child: Text(
                                               'Secret 2',
-                                              textAlign:
-                                                  TextAlign.center,
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: 15,
-                                                fontFamily: FontFamily
-                                                    .redHatMedium,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
                                                 color: Colors.black26,
-                                                fontWeight:
-                                                    FontWeight.w700,
+                                                fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ),

@@ -39,7 +39,6 @@ class _FormFactorPageState extends State<FormFactorPage>
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 50),

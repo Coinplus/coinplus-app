@@ -12,9 +12,11 @@ _$_BarModel _$$_BarModelFromJson(Map json) => _$_BarModel(
           BarColor.SILVER,
       cardType: $enumDecodeNullable(_$CardTypeEnumMap, json['cardType']) ??
           CardType.BAR,
+      barName: json['barName'] as String? ?? 'Coinplus Bitcoin Bar',
       totalReceived: json['totalReceived'] as int?,
       totalSent: json['totalSent'] as int?,
       balance: json['balance'] as int?,
+      cardAddedDate: json['cardAddedDate'] as String? ?? '01/01/2023',
     );
 
 Map<String, dynamic> _$$_BarModelToJson(_$_BarModel instance) {
@@ -22,6 +24,7 @@ Map<String, dynamic> _$$_BarModelToJson(_$_BarModel instance) {
     'address': instance.address,
     'barColor': _$BarColorEnumMap[instance.barColor]!,
     'cardType': _$CardTypeEnumMap[instance.cardType]!,
+    'barName': instance.barName,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -33,11 +36,13 @@ Map<String, dynamic> _$$_BarModelToJson(_$_BarModel instance) {
   writeNotNull('totalReceived', instance.totalReceived);
   writeNotNull('totalSent', instance.totalSent);
   writeNotNull('balance', instance.balance);
+  val['cardAddedDate'] = instance.cardAddedDate;
   return val;
 }
 
 const _$BarColorEnumMap = {
   BarColor.SILVER: 'SILVER',
+  BarColor.GOLD: 'GOLD',
 };
 
 const _$CardTypeEnumMap = {

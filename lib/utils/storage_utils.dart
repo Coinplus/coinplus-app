@@ -35,11 +35,11 @@ class StorageUtils {
   }
 
   static Future<List<BarModel>> getBars() async {
-    final barsJson =
+    final barJson =
         await _read<List>(Preferences.bars) ?? <Map<String, dynamic>>[];
 
     final bars = <BarModel>[];
-    for (final element in barsJson) {
+    for (final element in barJson) {
       bars.add(
         BarModel.fromJson(element),
       );
@@ -55,6 +55,16 @@ class StorageUtils {
     if (cardIndex != -1) {
       cards[cardIndex] = newCard;
       await _save(Preferences.cards, cards.toSet().toList());
+    }
+  }
+
+  static Future<void> replaceBar(String address, BarModel newBar) async {
+    final bars = await getBars();
+
+    final barIndex = bars.indexWhere((bar) => bar.address == address);
+    if (barIndex != -1) {
+      bars[barIndex] = newBar;
+      await _save(Preferences.bars, bars.toSet().toList());
     }
   }
 
@@ -77,10 +87,9 @@ class StorageUtils {
   }
 
   static Future<void> removeBar(String address) async {
-    final cards = (await _read<List<BarModel>>(Preferences.bars) ??
-        <BarModel>[])
-      ..removeWhere((e) => e.address == address);
-    await _save(Preferences.bars, cards.toList());
+    final bars = await getBars();
+    bars.removeWhere((bar) => bar.address == address);
+    await _save(Preferences.bars, bars.toSet().toList());
   }
 
   static Future<bool> getBool() async {
