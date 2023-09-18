@@ -8,6 +8,7 @@ import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../utils/storage_utils.dart';
+import '../custom_pin_code/data/pin_repository.dart';
 
 @RoutePage()
 class SplashScreenPage extends HookWidget {
@@ -49,7 +50,11 @@ class SplashScreenPage extends HookWidget {
 
   Future<void> openWallet() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    await router.pushAndPopAll(const PinRoute());
+    if (await HivePINRepository().isPINSet()) {
+      await router.pushAndPopAll(const PinRoute());
+    } else {
+      await router.pushAndPopAll(const Dashboard());
+    }
   }
 }
 

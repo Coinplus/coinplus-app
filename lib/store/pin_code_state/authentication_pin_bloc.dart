@@ -42,7 +42,7 @@ class AuthenticationPinBloc
           ),
         );
         await Future.delayed(
-          const Duration(seconds: 1),
+          const Duration(milliseconds: 100),
           () => emit(
             const AuthenticationPinState(
               pinStatus: AuthenticationPINStatus.enterPIN,

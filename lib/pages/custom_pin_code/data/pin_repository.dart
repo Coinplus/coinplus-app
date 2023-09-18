@@ -9,6 +9,7 @@ abstract class PINRepository {
 class HivePINRepository extends PINRepository {
   static const String _boxName = 'PIN_BOX';
   static const String _keyName = 'PIN_Key';
+  static const String _pinSetFlagKey = 'PIN_Set_Flag';
 
   @override
   Future<void> addPin(String pin) async {
@@ -17,6 +18,7 @@ class HivePINRepository extends PINRepository {
         : await Hive.openBox(_boxName);
 
     await box.put(_keyName, pin);
+    await box.put(_pinSetFlagKey, true);
   }
 
   @override
@@ -28,13 +30,23 @@ class HivePINRepository extends PINRepository {
     return box.get(_keyName, defaultValue: _keyName) == pin;
   }
 
+  Future<bool> isPINSet() async {
+    final box = await Hive.openBox(_boxName);
+    if (box.containsKey(_pinSetFlagKey)) {
+      await box.close();
+      return true;
+    } else {
+      await box.close();
+      return false;
+    }
+  }
+
+
   @override
   Future<void> close() async {
     if (Hive.isBoxOpen(_boxName)) {
       final box = Hive.box(_boxName);
-      final v = await box.close();
-      return v;
-      //return await Hive.box(_boxName).close();
+      await box.close();
     }
   }
 }

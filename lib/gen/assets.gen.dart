@@ -118,6 +118,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/lock.png
   AssetGenImage get lock => const AssetGenImage('assets/icons/lock.png');
 
+  /// File path: assets/icons/nfc-icon.png
+  AssetGenImage get nfcIcon => const AssetGenImage('assets/icons/nfc-icon.png');
+
   /// File path: assets/icons/notifications.png
   AssetGenImage get notifications =>
       const AssetGenImage('assets/icons/notifications.png');
@@ -176,6 +179,10 @@ class $AssetsIconsGen {
   AssetGenImage get walletIcon =>
       const AssetGenImage('assets/icons/wallet_icon.png');
 
+  /// File path: assets/icons/wrong_pass.png
+  AssetGenImage get wrongPass =>
+      const AssetGenImage('assets/icons/wrong_pass.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         bTCIcon,
@@ -200,6 +207,7 @@ class $AssetsIconsGen {
         history,
         historyIcon,
         lock,
+        nfcIcon,
         notifications,
         pageInfo,
         password,
@@ -216,7 +224,8 @@ class $AssetsIconsGen {
         terms,
         trash,
         twitter,
-        walletIcon
+        walletIcon,
+        wrongPass
       ];
 }
 
@@ -350,6 +359,30 @@ class $AssetsImagesGen {
   /// File path: assets/images/qr_code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/qr_code.png');
 
+  /// File path: assets/images/skeleton_address_field.png
+  AssetGenImage get skeletonAddressField =>
+      const AssetGenImage('assets/images/skeleton_address_field.png');
+
+  /// File path: assets/images/skeleton_circle.png
+  AssetGenImage get skeletonCircle =>
+      const AssetGenImage('assets/images/skeleton_circle.png');
+
+  /// File path: assets/images/skeleton_empty.png
+  AssetGenImage get skeletonEmpty =>
+      const AssetGenImage('assets/images/skeleton_empty.png');
+
+  /// File path: assets/images/skeleton_logo.png
+  AssetGenImage get skeletonLogo =>
+      const AssetGenImage('assets/images/skeleton_logo.png');
+
+  /// File path: assets/images/skeleton_secret_1.png
+  AssetGenImage get skeletonSecret1 =>
+      const AssetGenImage('assets/images/skeleton_secret_1.png');
+
+  /// File path: assets/images/skeleton_secret_2.png
+  AssetGenImage get skeletonSecret2 =>
+      const AssetGenImage('assets/images/skeleton_secret_2.png');
+
   /// File path: assets/images/stylus.png
   AssetGenImage get stylus => const AssetGenImage('assets/images/stylus.png');
 
@@ -396,6 +429,12 @@ class $AssetsImagesGen {
         inactiveCard,
         orangeWithoutShadow,
         qrCode,
+        skeletonAddressField,
+        skeletonCircle,
+        skeletonEmpty,
+        skeletonLogo,
+        skeletonSecret1,
+        skeletonSecret2,
         stylus,
         walletProtectImage,
         whiteWithoutShadow

@@ -28,6 +28,9 @@ class Router extends $Router {
       page: BarFillRoute.page,
     ),
     AdaptiveRoute(
+      page: BarFillWithNfc.page,
+    ),
+    AdaptiveRoute(
       page: Dashboard.page,
     ),
     AdaptiveRoute(
@@ -48,6 +51,6 @@ class Router extends $Router {
     AdaptiveRoute(
       page: CreatePinRoute.page,
     ),
-    AdaptiveRoute(page: PinRoute.page),
+    AdaptiveRoute(page: PinRoute.page, fullscreenDialog: true),
   ];
 }

@@ -15,6 +15,7 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../widgets/loading_button.dart';
+import '../custom_pin_code/data/pin_repository.dart';
 import '../settings_page/settings_page.dart';
 import '../wallet_page/wallet_page.dart';
 
@@ -51,15 +52,11 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
     if (state == AppLifecycleState.paused) {
       showPasscodePageIfNeeded();
     }
-    if (state == AppLifecycleState.inactive) {}
-    if (state == AppLifecycleState.resumed) {}
   }
 
-  void showPasscodePageIfNeeded() {
-    const shouldShowPasscode = true;
-
-    if (shouldShowPasscode) {
-      router.push(const PinRoute());
+  Future<void> showPasscodePageIfNeeded() async {
+    if (await HivePINRepository().isPINSet()) {
+      await router.push(const PinRoute());
     }
   }
 

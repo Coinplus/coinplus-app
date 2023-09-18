@@ -206,15 +206,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                       final coin = _balanceStore.coins.firstWhereOrNull(
                         (element) => element.id == 'bitcoin',
                       );
-                      if (coin == null) {
-                        return const SizedBox();
-                      }
                       return Row(
                         children: [
                           Assets.icons.bTCIcon.image(height: 24),
                           const Gap(8),
                           Text(
-                            coin.name,
+                            coin!.name,
                             style: const TextStyle(
                               fontFamily: FontFamily.redHatMedium,
                               color: Colors.black,

@@ -678,10 +678,9 @@ class _CardFillPageState extends State<CardFillPage>
                           duration: const Duration(milliseconds: 300),
                           child: Observer(
                             builder: (context) {
-                              return Row(
+                              return const Row(
                                 children: [
-                                  if (_addressState.isAddressVisible)
-                                    const Text(
+                                    Text(
                                       'Coinplus Virtual Card',
                                       style: TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -689,35 +688,16 @@ class _CardFillPageState extends State<CardFillPage>
                                         fontSize: 16,
                                         color: AppColors.textHintsColor,
                                       ),
-                                    )
-                                  else
-                                    const Text(
-                                      'Fill in the address of your physical card \nwallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
                                     ),
+
                                 ],
                               );
                             },
                           ),
                         ),
                         const Gap(4),
-                        if (_addressState.isAddressVisible)
                           const Text(
                             'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 14,
-                              color: AppColors.textHintsColor,
-                            ),
-                          )
-                        else
-                          const Text(
-                            'Please fill the address from your physical card into the address input field, or scan the QR code.',
                             style: TextStyle(
                               fontFamily: FontFamily.redHatMedium,
                               fontSize: 14,
@@ -740,7 +720,7 @@ class _CardFillPageState extends State<CardFillPage>
                                 if (hasShown) {
                                   router.pop(const Dashboard());
                                 } else {
-                                  router.push(const WalletProtectionRoute());
+                                  router.pushAndPopAll(const WalletProtectionRoute());
                                 }
                               });
                             } catch (e) {

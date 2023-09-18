@@ -2,8 +2,9 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:gap/gap.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -11,6 +12,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../store/pin_code_state/authentication_pin_bloc.dart';
+import '../../../store/pin_code_state/incorrect_pin.dart';
 import '../data/pin_repository.dart';
 import 'widget/button_of_numpad.dart';
 import 'widget/pin_sphere.dart';
@@ -28,14 +30,37 @@ class PinPage extends StatefulWidget {
 }
 
 class _PinPageState extends State<PinPage> {
+  final ShakeAnimationController _shakeAnimationController =
+      ShakeAnimationController();
+
+
   @override
   void initState() {
     super.initState();
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final _pinState = PinState();
+
+    Future<void> pinCheck() async {
+      _pinState.pinCheck();
+      await Future.delayed(const Duration(milliseconds: 1500),);
+      _pinState.pinCheck();
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+      ),
       body: BlocProvider(
         lazy: false,
         create: (_) =>
@@ -44,19 +69,48 @@ class _PinPageState extends State<PinPage> {
           listener: (context, state) {
             if (state.pinStatus == AuthenticationPINStatus.equals) {
               HapticFeedback.lightImpact();
-              router.pushAndPopAll(const Dashboard());
+              router.popAndPush(const Dashboard());
             } else if (state.pinStatus == AuthenticationPINStatus.unequals) {
               HapticFeedback.vibrate();
+              _shakeAnimationController.start();
+              pinCheck();
             }
           },
-          child: Column(
-            children: [
-              const Spacer(
-                flex: 2,
-              ),
-              Expanded(flex: 2, child: _MainPart()),
-              Flexible(flex: 6, child: _NumPad()),
-            ],
+          child: Observer(
+            builder: (context) {
+              return Column(
+                children: [
+                  const Spacer(
+                  ),
+                  if (_pinState.isCorrect) const Text(
+                    'Enter your passcode',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 20,
+                      fontFamily: FontFamily.redHatMedium,
+                    ),
+                  ) else const Text(
+                    'Incorrect passcode',
+                    style: TextStyle(
+                      color: AppColors.red,
+                      fontSize: 20,
+                      fontFamily: FontFamily.redHatMedium,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: ShakeAnimationWidget(
+                      isForward: false,
+                      shakeAnimationController: _shakeAnimationController,
+                      shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                      shakeRange: 0.5,
+                      child: _MainPart(),
+                    ),
+                  ),
+                  Flexible(flex: 6, child: _NumPad()),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -65,32 +119,17 @@ class _PinPageState extends State<PinPage> {
 }
 
 class _MainPart extends StatelessWidget {
-  static const String enterYourPIN = 'Enter your passcode';
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationPinBloc, AuthenticationPinState>(
       buildWhen: (previous, current) => previous.pin != current.pin,
       builder: (context, state) {
-        return Column(
-          children: [
-            const Text(
-              enterYourPIN,
-              style: TextStyle(
-                color: AppColors.primary,
-                fontSize: 20,
-                fontFamily: FontFamily.redHatMedium,
-              ),
-            ),
-            const Gap(90),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                4,
-                (index) => PinSphere(input: index < state.getCountsOfPIN()),
-              ),
-            ),
-          ],
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            4,
+            (index) => PinSphere(input: index < state.getCountsOfPIN()),
+          ),
         );
       },
     );
@@ -271,5 +310,7 @@ class _NumPad extends StatelessWidget {
         ],
       ),
     );
+
   }
+
 }

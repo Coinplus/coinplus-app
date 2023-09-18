@@ -991,6 +991,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.5.0+1"
+  shake_animation_widget:
+    dependency: "direct main"
+    description:
+      name: shake_animation_widget
+      sha256: f3b4edf5a0305b239afd84857e36e9364a792fee283ab3d4d25e8d5e2dd82e4a
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.4"
   shared_preferences:
     dependency: "direct main"
     description:

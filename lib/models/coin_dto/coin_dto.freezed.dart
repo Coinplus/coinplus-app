@@ -27,8 +27,6 @@ mixin _$CoinDto {
   @JsonKey(name: 'current_price', defaultValue: 0)
   num get currentPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'price_change_24h', defaultValue: 0)
-  num get priceChange24h => throw _privateConstructorUsedError;
-  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
   num get priceChangePercentage_24h => throw _privateConstructorUsedError;
   @JsonKey(name: 'high_24h', defaultValue: 0)
   num get high24h => throw _privateConstructorUsedError;
@@ -51,8 +49,7 @@ abstract class $CoinDtoCopyWith<$Res> {
       String name,
       String image,
       @JsonKey(name: 'current_price', defaultValue: 0) num currentPrice,
-      @JsonKey(name: 'price_change_24h', defaultValue: 0) num priceChange24h,
-      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
+      @JsonKey(name: 'price_change_24h', defaultValue: 0)
       num priceChangePercentage_24h,
       @JsonKey(name: 'high_24h', defaultValue: 0) num high24h,
       @JsonKey(name: 'low_24h', defaultValue: 0) num low24h});
@@ -76,7 +73,6 @@ class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto>
     Object? name = null,
     Object? image = null,
     Object? currentPrice = null,
-    Object? priceChange24h = null,
     Object? priceChangePercentage_24h = null,
     Object? high24h = null,
     Object? low24h = null,
@@ -101,10 +97,6 @@ class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto>
       currentPrice: null == currentPrice
           ? _value.currentPrice
           : currentPrice // ignore: cast_nullable_to_non_nullable
-              as num,
-      priceChange24h: null == priceChange24h
-          ? _value.priceChange24h
-          : priceChange24h // ignore: cast_nullable_to_non_nullable
               as num,
       priceChangePercentage_24h: null == priceChangePercentage_24h
           ? _value.priceChangePercentage_24h
@@ -135,8 +127,7 @@ abstract class _$$_CoinDtoCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
       String name,
       String image,
       @JsonKey(name: 'current_price', defaultValue: 0) num currentPrice,
-      @JsonKey(name: 'price_change_24h', defaultValue: 0) num priceChange24h,
-      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
+      @JsonKey(name: 'price_change_24h', defaultValue: 0)
       num priceChangePercentage_24h,
       @JsonKey(name: 'high_24h', defaultValue: 0) num high24h,
       @JsonKey(name: 'low_24h', defaultValue: 0) num low24h});
@@ -157,7 +148,6 @@ class __$$_CoinDtoCopyWithImpl<$Res>
     Object? name = null,
     Object? image = null,
     Object? currentPrice = null,
-    Object? priceChange24h = null,
     Object? priceChangePercentage_24h = null,
     Object? high24h = null,
     Object? low24h = null,
@@ -182,10 +172,6 @@ class __$$_CoinDtoCopyWithImpl<$Res>
       currentPrice: null == currentPrice
           ? _value.currentPrice
           : currentPrice // ignore: cast_nullable_to_non_nullable
-              as num,
-      priceChange24h: null == priceChange24h
-          ? _value.priceChange24h
-          : priceChange24h // ignore: cast_nullable_to_non_nullable
               as num,
       priceChangePercentage_24h: null == priceChangePercentage_24h
           ? _value.priceChangePercentage_24h
@@ -214,8 +200,6 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
       @JsonKey(name: 'current_price', defaultValue: 0)
       required this.currentPrice,
       @JsonKey(name: 'price_change_24h', defaultValue: 0)
-      required this.priceChange24h,
-      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
       required this.priceChangePercentage_24h,
       @JsonKey(name: 'high_24h', defaultValue: 0) required this.high24h,
       @JsonKey(name: 'low_24h', defaultValue: 0) required this.low24h});
@@ -236,9 +220,6 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
   final num currentPrice;
   @override
   @JsonKey(name: 'price_change_24h', defaultValue: 0)
-  final num priceChange24h;
-  @override
-  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
   final num priceChangePercentage_24h;
   @override
   @JsonKey(name: 'high_24h', defaultValue: 0)
@@ -249,7 +230,7 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CoinDto(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice, priceChange24h: $priceChange24h, priceChangePercentage_24h: $priceChangePercentage_24h, high24h: $high24h, low24h: $low24h)';
+    return 'CoinDto(id: $id, symbol: $symbol, name: $name, image: $image, currentPrice: $currentPrice, priceChangePercentage_24h: $priceChangePercentage_24h, high24h: $high24h, low24h: $low24h)';
   }
 
   @override
@@ -262,7 +243,6 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('image', image))
       ..add(DiagnosticsProperty('currentPrice', currentPrice))
-      ..add(DiagnosticsProperty('priceChange24h', priceChange24h))
       ..add(DiagnosticsProperty(
           'priceChangePercentage_24h', priceChangePercentage_24h))
       ..add(DiagnosticsProperty('high24h', high24h))
@@ -280,8 +260,6 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
             (identical(other.image, image) || other.image == image) &&
             (identical(other.currentPrice, currentPrice) ||
                 other.currentPrice == currentPrice) &&
-            (identical(other.priceChange24h, priceChange24h) ||
-                other.priceChange24h == priceChange24h) &&
             (identical(other.priceChangePercentage_24h,
                     priceChangePercentage_24h) ||
                 other.priceChangePercentage_24h == priceChangePercentage_24h) &&
@@ -292,7 +270,7 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, symbol, name, image,
-      currentPrice, priceChange24h, priceChangePercentage_24h, high24h, low24h);
+      currentPrice, priceChangePercentage_24h, high24h, low24h);
 
   @JsonKey(ignore: true)
   @override
@@ -317,8 +295,6 @@ abstract class _CoinDto implements CoinDto {
       @JsonKey(name: 'current_price', defaultValue: 0)
       required final num currentPrice,
       @JsonKey(name: 'price_change_24h', defaultValue: 0)
-      required final num priceChange24h,
-      @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
       required final num priceChangePercentage_24h,
       @JsonKey(name: 'high_24h', defaultValue: 0) required final num high24h,
       @JsonKey(name: 'low_24h', defaultValue: 0)
@@ -339,9 +315,6 @@ abstract class _CoinDto implements CoinDto {
   num get currentPrice;
   @override
   @JsonKey(name: 'price_change_24h', defaultValue: 0)
-  num get priceChange24h;
-  @override
-  @JsonKey(name: 'price_change_percentage_24h', defaultValue: 0)
   num get priceChangePercentage_24h;
   @override
   @JsonKey(name: 'high_24h', defaultValue: 0)

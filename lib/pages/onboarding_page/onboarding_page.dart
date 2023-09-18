@@ -236,12 +236,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             },
                           );
                         },
-                  child: const Text(
-                    'Connect wallet',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatSemiBold,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Gap(5),
+                      const Text(
+                        'Connect wallet',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: FontFamily.redHatSemiBold,
+                        ),
+                      ),
+                      const Gap(5),
+                      Assets.icons.nfcIcon.image(
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ).paddingHorizontal(63)
               else
