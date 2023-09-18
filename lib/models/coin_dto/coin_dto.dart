@@ -21,11 +21,6 @@ class CoinDto with _$CoinDto {
       name: 'price_change_24h',
       defaultValue: 0,
     )
-    required num priceChange24h,
-    @JsonKey(
-      name: 'price_change_percentage_24h',
-      defaultValue: 0,
-    )
     required num priceChangePercentage_24h,
     @JsonKey(
       name: 'high_24h',

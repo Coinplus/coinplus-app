@@ -68,7 +68,7 @@ class BarScanMethodsPage extends StatelessWidget {
                       await Future.delayed(const Duration(milliseconds: 2500));
 
                       await router.push(
-                        BarFillRoute(receivedData: walletAddress.toString()),
+                        BarFillWithNfc(receivedData: walletAddress.toString()),
                       );
                     },
                   );

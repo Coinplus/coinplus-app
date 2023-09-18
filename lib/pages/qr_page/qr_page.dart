@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:hive/hive.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart'
     show QrScannerOverlayShape;
@@ -58,7 +59,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
               },
               onDetect: (capture) async {
                 qrDetect.detectQr();
-                //detect = true
                 final _data = capture.barcodes.map((e) => e.displayValue).first;
                 await _qrController.stop();
                 if (_data?.length == 63) {

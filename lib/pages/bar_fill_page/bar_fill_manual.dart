@@ -491,8 +491,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                                         .image(
                                                                       height:
                                                                           34,
-                                                                      color: AppColors
-                                                                          .primaryButtonColor,
+                                                                      color: AppColors.primaryTextColor,
                                                                     ),
                                                                   )
                                                                 : Lottie.asset(
