@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -214,11 +213,8 @@ class _BarListState extends State<BarList> {
                                         ),
                                         Observer(
                                           builder: (context) {
-                                            final coin = _balanceStore.coins
-                                                .firstWhereOrNull(
-                                              (element) =>
-                                                  element.id == 'bitcoin',
-                                            );
+                                            final data =
+                                                _balanceStore.coin?.coins.first;
                                             if (_balanceStore
                                                     .loadings[bar.address] ??
                                                 false) {
@@ -232,7 +228,7 @@ class _BarListState extends State<BarList> {
                                             }
                                             return Text(
                                               (bar.balance != null
-                                                      ? '\$${(bar.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}'
+                                                      ? '\$${(bar.balance! / 100000000 * data!.price).toStringAsFixed(2)}'
                                                       : '')
                                                   .toString(),
                                               style: TextStyle(

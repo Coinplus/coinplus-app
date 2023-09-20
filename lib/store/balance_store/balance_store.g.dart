@@ -9,21 +9,20 @@ part of 'balance_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BalanceStore on _BalanceStore, Store {
-  late final _$_coinsAtom =
-      Atom(name: '_BalanceStore._coins', context: context);
+  late final _$_coinAtom = Atom(name: '_BalanceStore._coin', context: context);
 
-  ObservableList<CoinDto> get coins {
-    _$_coinsAtom.reportRead();
-    return super._coins;
+  CoinDto? get coin {
+    _$_coinAtom.reportRead();
+    return super._coin;
   }
 
   @override
-  ObservableList<CoinDto> get _coins => coins;
+  CoinDto? get _coin => coin;
 
   @override
-  set _coins(ObservableList<CoinDto> value) {
-    _$_coinsAtom.reportWrite(value, super._coins, () {
-      super._coins = value;
+  set _coin(CoinDto? value) {
+    _$_coinAtom.reportWrite(value, super._coin, () {
+      super._coin = value;
     });
   }
 

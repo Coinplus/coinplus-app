@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -93,15 +92,11 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
             flex: 2,
             child: Observer(
               builder: (context) {
-                final coin = _balanceStore.coins.firstWhereOrNull(
-                  (element) => element.id == 'bitcoin',
-                );
+                final data = _balanceStore.coin?.coins.first;
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 800),
-                   child:
-                  _addressState.isAddressVisible
-                      ?
-                  Container(
+                  child: _addressState.isAddressVisible
+                      ? Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: Assets.images.barEmpty.image().image,
@@ -123,8 +118,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                               top: 0,
                                               left: 0,
                                               right: 0,
-                                              child: Assets.images.topCircle
-                                                  .image(
+                                              child:
+                                                  Assets.images.topCircle.image(
                                                 height: 165,
                                               ),
                                             ),
@@ -177,8 +172,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                 ),
                                                 Observer(
                                                   builder: (context) {
-                                                    if (_balanceStore
-                                                                .loadings[
+                                                    if (_balanceStore.loadings[
                                                             _balanceStore
                                                                 .selectedBar
                                                                 ?.address] ??
@@ -195,7 +189,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                     return Text(
                                                       (_balanceStore.selectedBar !=
                                                                   null
-                                                              ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}'
+                                                              ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * data!.price).toStringAsFixed(2)}'
                                                               : '')
                                                           .toString(),
                                                       style: const TextStyle(
@@ -203,8 +197,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                             .redHatMedium,
                                                         fontWeight:
                                                             FontWeight.w700,
-                                                        color: Colors.black
-                                                            ,
+                                                        color: Colors.black,
                                                         fontSize: 25,
                                                       ),
                                                     );
@@ -219,8 +212,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                       Container(
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
-                                            image: Assets
-                                                .icons.barAddressField
+                                            image: Assets.icons.barAddressField
                                                 .image()
                                                 .image,
                                           ),
@@ -233,8 +225,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                           child: Observer(
                                             builder: (context) {
                                               if (_balanceStore.loadings[
-                                                      _balanceStore
-                                                          .selectedBar
+                                                      _balanceStore.selectedBar
                                                           ?.address] ??
                                                   false) {
                                                 return const Padding(
@@ -246,8 +237,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                 );
                                               }
                                               return Text(
-                                                _balanceStore.selectedBar
-                                                        ?.address ??
+                                                _balanceStore
+                                                        .selectedBar?.address ??
                                                     '',
                                                 style: const TextStyle(
                                                   fontFamily:
@@ -300,9 +291,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                             ),
                           ),
                         )
-                      :
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                      : AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
                           width: context.width - 34,
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -326,7 +316,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                               top: 0,
                                               left: 0,
                                               right: 0,
-                                              child: Assets.images.skeletonCircle
+                                              child: Assets
+                                                  .images.skeletonCircle
                                                   .image(
                                                 height: 165,
                                               ),
@@ -335,7 +326,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                               top: 60,
                                               left: 0,
                                               right: 0,
-                                              child: Assets.images.skeletonSecret1
+                                              child: Assets
+                                                  .images.skeletonSecret1
                                                   .image(
                                                 height: 40,
                                               ),
@@ -343,8 +335,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                           ],
                                         ),
                                       ),
-                                      Assets.images.skeletonAddressField.image(
-                                      ),
+                                      Assets.images.skeletonAddressField
+                                          .image(),
                                       const Gap(20),
                                       Assets.images.skeletonLogo.image(
                                         height: 38,
@@ -381,28 +373,27 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                     duration: Duration(milliseconds: 300),
                     child: Row(
                       children: [
-                          Text(
-                            'Coinplus Virtual Bar',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              color: AppColors.textHintsColor,
-                            ),
+                        Text(
+                          'Coinplus Virtual Bar',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: AppColors.textHintsColor,
                           ),
+                        ),
                       ],
                     ),
                   ),
                   Gap(4),
-                    Text(
-                      'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                      style: TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        fontSize: 14,
-                        color: AppColors.textHintsColor,
-                      ),
+                  Text(
+                    'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                    style: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 14,
+                      color: AppColors.textHintsColor,
                     ),
-
+                  ),
                 ],
               ),
             ),

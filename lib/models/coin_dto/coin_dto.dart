@@ -8,32 +8,24 @@ part 'coin_dto.g.dart';
 @freezed
 class CoinDto with _$CoinDto {
   const factory CoinDto({
-    required String id,
-    required String symbol,
-    required String name,
-    required String image,
-    @JsonKey(
-      name: 'current_price',
-      defaultValue: 0,
-    )
-    required num currentPrice,
-    @JsonKey(
-      name: 'price_change_24h',
-      defaultValue: 0,
-    )
-    required num priceChangePercentage_24h,
-    @JsonKey(
-      name: 'high_24h',
-      defaultValue: 0,
-    )
-    required num high24h,
-    @JsonKey(
-      name: 'low_24h',
-      defaultValue: 0,
-    )
-    required num low24h,
+    required List<Coin> coins,
   }) = _CoinDto;
 
   factory CoinDto.fromJson(Map<String, dynamic> json) =>
       _$CoinDtoFromJson(json);
+}
+
+@freezed
+class Coin with _$Coin {
+  const factory Coin({
+    required String id,
+    required String icon,
+    required String name,
+    required String symbol,
+    required double price,
+    @JsonKey(name: 'priceChange1d', defaultValue: 0)
+    required double priceChange1d,
+  }) = _Coin;
+
+  factory Coin.fromJson(Map<String, dynamic> json) => _$CoinFromJson(json);
 }

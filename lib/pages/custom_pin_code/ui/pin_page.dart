@@ -33,7 +33,6 @@ class _PinPageState extends State<PinPage> {
   final ShakeAnimationController _shakeAnimationController =
       ShakeAnimationController();
 
-
   @override
   void initState() {
     super.initState();
@@ -50,7 +49,9 @@ class _PinPageState extends State<PinPage> {
 
     Future<void> pinCheck() async {
       _pinState.pinCheck();
-      await Future.delayed(const Duration(milliseconds: 1500),);
+      await Future.delayed(
+        const Duration(milliseconds: 1500),
+      );
       _pinState.pinCheck();
     }
 
@@ -80,23 +81,25 @@ class _PinPageState extends State<PinPage> {
             builder: (context) {
               return Column(
                 children: [
-                  const Spacer(
-                  ),
-                  if (_pinState.isCorrect) const Text(
-                    'Enter your passcode',
-                    style: TextStyle(
-                      color: AppColors.primary,
-                      fontSize: 20,
-                      fontFamily: FontFamily.redHatMedium,
+                  const Spacer(),
+                  if (_pinState.isCorrect)
+                    const Text(
+                      'Enter your passcode',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 20,
+                        fontFamily: FontFamily.redHatMedium,
+                      ),
+                    )
+                  else
+                    const Text(
+                      'Incorrect passcode',
+                      style: TextStyle(
+                        color: AppColors.red,
+                        fontSize: 20,
+                        fontFamily: FontFamily.redHatMedium,
+                      ),
                     ),
-                  ) else const Text(
-                    'Incorrect passcode',
-                    style: TextStyle(
-                      color: AppColors.red,
-                      fontSize: 20,
-                      fontFamily: FontFamily.redHatMedium,
-                    ),
-                  ),
                   Expanded(
                     flex: 2,
                     child: ShakeAnimationWidget(
@@ -310,7 +313,5 @@ class _NumPad extends StatelessWidget {
         ],
       ),
     );
-
   }
-
 }

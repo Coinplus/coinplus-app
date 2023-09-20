@@ -9,8 +9,7 @@ part 'coins_repo.g.dart';
 
 class _Paths {
   static const balance = '/{coinName}/main/addrs/{address}/balance';
-  static const coins =
-      '/coins/markets?vs_currency=usd&ids=bitcoin&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=24h&locale=en&precision=18';
+  static const coins = '/coins?skip=0&limit=1&currency=USD';
 }
 
 @RestApi()
@@ -29,5 +28,5 @@ abstract class CoinsClient {
   });
 
   @GET(_Paths.coins)
-  Future<List<CoinDto>> getCoins();
+  Future<CoinDto> getCoins();
 }

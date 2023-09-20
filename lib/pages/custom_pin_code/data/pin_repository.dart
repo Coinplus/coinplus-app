@@ -41,7 +41,6 @@ class HivePINRepository extends PINRepository {
     }
   }
 
-
   @override
   Future<void> close() async {
     if (Hive.isBoxOpen(_boxName)) {

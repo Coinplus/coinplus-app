@@ -7,24 +7,30 @@ part of 'coin_dto.dart';
 // **************************************************************************
 
 _$_CoinDto _$$_CoinDtoFromJson(Map json) => _$_CoinDto(
-      id: json['id'] as String,
-      symbol: json['symbol'] as String,
-      name: json['name'] as String,
-      image: json['image'] as String,
-      currentPrice: json['current_price'] as num? ?? 0,
-      priceChangePercentage_24h: json['price_change_24h'] as num? ?? 0,
-      high24h: json['high_24h'] as num? ?? 0,
-      low24h: json['low_24h'] as num? ?? 0,
+      coins: (json['coins'] as List<dynamic>)
+          .map((e) => Coin.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_CoinDtoToJson(_$_CoinDto instance) =>
     <String, dynamic>{
+      'coins': instance.coins.map((e) => e.toJson()).toList(),
+    };
+
+_$_Coin _$$_CoinFromJson(Map json) => _$_Coin(
+      id: json['id'] as String,
+      icon: json['icon'] as String,
+      name: json['name'] as String,
+      symbol: json['symbol'] as String,
+      price: (json['price'] as num).toDouble(),
+      priceChange1d: (json['priceChange1d'] as num?)?.toDouble() ?? 0,
+    );
+
+Map<String, dynamic> _$$_CoinToJson(_$_Coin instance) => <String, dynamic>{
       'id': instance.id,
-      'symbol': instance.symbol,
+      'icon': instance.icon,
       'name': instance.name,
-      'image': instance.image,
-      'current_price': instance.currentPrice,
-      'price_change_24h': instance.priceChangePercentage_24h,
-      'high_24h': instance.high24h,
-      'low_24h': instance.low24h,
+      'symbol': instance.symbol,
+      'price': instance.price,
+      'priceChange1d': instance.priceChange1d,
     };

@@ -173,7 +173,120 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                                       AppColors.silver,
                                     ),
                                   ),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                await router.pop(const Dashboard());
+                                await showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (_) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Assets.icons.notch.image(
+                                            height: 4,
+                                          ),
+                                          Row(
+                                            children: [
+                                              IconButton(
+                                                onPressed: router.pop,
+                                                icon:
+                                                    Assets.icons.close.image(),
+                                              ),
+                                              const Expanded(
+                                                child: Text(
+                                                  'Receive BTC',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 50,
+                                              ),
+                                            ],
+                                          ),
+                                          const Gap(30),
+                                          Assets.icons.qr.image(
+                                            height: 208,
+                                          ),
+                                          const Gap(28),
+                                          ScaleTap(
+                                            enableFeedback: false,
+                                            onPressed: () {},
+                                            child: Container(
+                                              padding: const EdgeInsets.all(15),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                color: AppColors.silver,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Assets.icons.contentCopy
+                                                      .image(
+                                                    height: 32,
+                                                    color: AppColors
+                                                        .primaryButtonColor,
+                                                  ),
+                                                  const Gap(8),
+                                                  const Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Your address',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'PnP68faffhkss8fsffs6dadadadda',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 15,
+                                                          color: Color(
+                                                            0xFF4F6486,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ).paddingHorizontal(10),
+                                          ),
+                                          const Gap(28),
+                                          LoadingButton(
+                                            onPressed: () {},
+                                            child: const Text(
+                                              'Share',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                              ),
+                                            ),
+                                          ).paddingHorizontal(60),
+                                          const Gap(40),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                               child: Row(
                                 children: [
                                   Padding(

@@ -19,7 +19,7 @@ class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
   @readonly
-  ObservableList<CoinDto> _coins = <CoinDto>[].asObservable();
+  CoinDto? _coin;
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
@@ -38,7 +38,7 @@ abstract class _BalanceStore with Store {
   }
 
   Future<void> getCoins() async {
-    _coins = (await CoinsClient(dio).getCoins()).asObservable();
+    _coin = await CoinsClient(dio).getCoins();
   }
 
   Future<void> getCardsFromStorage() async {
