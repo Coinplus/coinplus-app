@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -379,16 +378,13 @@ class _CardFillPageState extends State<CardFillPage>
                                                           ),
                                                           Observer(
                                                             builder: (context) {
-                                                              final coin =
+                                                              final data =
                                                                   _balanceStore
-                                                                      .coins
-                                                                      .firstWhereOrNull(
-                                                                (element) =>
-                                                                    element
-                                                                        .id ==
-                                                                    'bitcoin',
-                                                              );
-                                                              if (coin ==
+                                                                      .coin
+                                                                      ?.coins
+                                                                      .first;
+
+                                                              if (data ==
                                                                   null) {
                                                                 return const SizedBox();
                                                               }
@@ -413,7 +409,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                               return Text(
                                                                 (_balanceStore.selectedCard !=
                                                                             null
-                                                                        ? '\$${(_balanceStore.selectedCard!.balance! / 100000000 * coin.currentPrice).toStringAsFixed(2)}'
+                                                                        ? '\$${(_balanceStore.selectedCard!.balance! / 100000000 * data.price).toStringAsFixed(2)}'
                                                                         : '')
                                                                     .toString(),
                                                                 style:
@@ -680,30 +676,29 @@ class _CardFillPageState extends State<CardFillPage>
                             builder: (context) {
                               return const Row(
                                 children: [
-                                    Text(
-                                      'Coinplus Virtual Card',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
+                                  Text(
+                                    'Coinplus Virtual Card',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: AppColors.textHintsColor,
                                     ),
-
+                                  ),
                                 ],
                               );
                             },
                           ),
                         ),
                         const Gap(4),
-                          const Text(
-                            'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 14,
-                              color: AppColors.textHintsColor,
-                            ),
+                        const Text(
+                          'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 14,
+                            color: AppColors.textHintsColor,
                           ),
+                        ),
                       ],
                     ),
                   ),
@@ -720,7 +715,9 @@ class _CardFillPageState extends State<CardFillPage>
                                 if (hasShown) {
                                   router.pop(const Dashboard());
                                 } else {
-                                  router.pushAndPopAll(const WalletProtectionRoute());
+                                  router.pushAndPopAll(
+                                    const WalletProtectionRoute(),
+                                  );
                                 }
                               });
                             } catch (e) {

@@ -12,6 +12,4 @@ abstract class _PinState with Store {
   void pinCheck() {
     isCorrect = !isCorrect;
   }
-
-
 }

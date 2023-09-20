@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -90,9 +89,6 @@ class _CardListState extends State<CardList> {
               );
             }
             final card = _balanceStore.cards[index];
-            final coin = _balanceStore.coins.firstWhereOrNull(
-              (element) => element.id == 'bitcoin',
-            );
             final visibleAddress = _getVisibleAddress(card.address);
 
             return Column(
@@ -322,6 +318,11 @@ class _CardListState extends State<CardList> {
                                           ),
                                           Observer(
                                             builder: (context) {
+                                              final data = _balanceStore
+                                                  .coin?.coins.first;
+                                              if (data == null) {
+                                                return const SizedBox();
+                                              }
                                               if (_balanceStore
                                                       .loadings[card.address] ??
                                                   false) {
@@ -344,7 +345,7 @@ class _CardListState extends State<CardList> {
                                                 );
                                               }
                                               return Text(
-                                                '\$${(card.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}',
+                                                '\$${(card.balance! / 100000000 * data.price).toStringAsFixed(2)}',
                                                 style: const TextStyle(
                                                   fontFamily:
                                                       FontFamily.redHatMedium,

@@ -136,6 +136,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/privacy.png
   AssetGenImage get privacy => const AssetGenImage('assets/icons/privacy.png');
 
+  /// File path: assets/icons/qr.png
+  AssetGenImage get qr => const AssetGenImage('assets/icons/qr.png');
+
   /// File path: assets/icons/receive.png
   AssetGenImage get receive => const AssetGenImage('assets/icons/receive.png');
 
@@ -212,6 +215,7 @@ class $AssetsIconsGen {
         pageInfo,
         password,
         privacy,
+        qr,
         receive,
         reddit,
         schedule,

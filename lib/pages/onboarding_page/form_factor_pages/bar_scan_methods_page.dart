@@ -180,7 +180,7 @@ class BarScanMethodsPage extends StatelessWidget {
                 },
           child: Row(
             children: [
-              Assets.icons.contactless.image(
+              Assets.icons.nfcIcon.image(
                 height: 24,
                 width: 24,
                 color: AppColors.primaryButtonColor,

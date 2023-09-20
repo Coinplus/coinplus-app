@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
@@ -203,15 +202,102 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                       const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                   child: Observer(
                     builder: (_) {
-                      final coin = _balanceStore.coins.firstWhereOrNull(
-                        (element) => element.id == 'bitcoin',
-                      );
+                      final data = _balanceStore.coin?.coins.first;
+                      if (data == null) {
+                        return Row(
+                          children: [
+                            Assets.icons.bTCIcon.image(height: 24),
+                            const Gap(8),
+                            const Text(
+                              'Bitcoin',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const Gap(8),
+                            Column(
+                              children: [
+                                const Gap(3),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
+                                    color: AppColors.silver,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 2,
+                                  ),
+                                  child: const Text(
+                                    'BTC',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 10,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Text(
+                                  r'$-',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                  ),
+                                ),
+                                const Gap(4),
+                                Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Row(
+                                    children: [
+                                      Assets.icons.schedule.image(
+                                        height: 18,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                      const Gap(4),
+                                      const Text(
+                                        '24h',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: AppColors.textHintsColor,
+                                          fontFamily: FontFamily.redHatBold,
+                                        ),
+                                      ),
+                                        const Icon(
+                                          Icons.minimize,
+                                          size: 25,
+                                          color: Colors.black,
+                                        ),
+
+                                      const Text(
+                                        ' - %',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
                       return Row(
                         children: [
                           Assets.icons.bTCIcon.image(height: 24),
                           const Gap(8),
                           Text(
-                            coin!.name,
+                            data.name,
                             style: const TextStyle(
                               fontFamily: FontFamily.redHatMedium,
                               color: Colors.black,
@@ -232,7 +318,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                   vertical: 2,
                                 ),
                                 child: Text(
-                                  coin.symbol.toUpperCase(),
+                                  data.symbol.toUpperCase(),
                                   style: const TextStyle(
                                     fontFamily: FontFamily.redHatMedium,
                                     fontSize: 10,
@@ -246,7 +332,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              buildCoinWidget(coin.currentPrice),
+                              buildCoinWidget(data.price),
                               const Gap(4),
                               Padding(
                                 padding: const EdgeInsets.all(3),
@@ -265,7 +351,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                         fontFamily: FontFamily.redHatBold,
                                       ),
                                     ),
-                                    if (coin.priceChangePercentage_24h > 0)
+                                    if (data.priceChange1d > 0)
                                       const Icon(
                                         Icons.arrow_drop_up,
                                         size: 25,
@@ -278,13 +364,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                         color: Colors.red,
                                       ),
                                     Text(
-                                      '${coin.priceChangePercentage_24h.toStringAsFixed(2)} %',
+                                      '${data.priceChange1d.toStringAsFixed(2)} %',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color:
-                                            coin.priceChangePercentage_24h > 0
-                                                ? Colors.green
-                                                : Colors.red,
+                                        color: data.priceChange1d > 0
+                                            ? Colors.green
+                                            : Colors.red,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

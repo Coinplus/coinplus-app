@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,9 +116,7 @@ class _BarFillPageState extends State<BarFillPage>
             flex: 2,
             child: Observer(
               builder: (context) {
-                final coin = _balanceStore.coins.firstWhereOrNull(
-                  (element) => element.id == 'bitcoin',
-                );
+                final data = _balanceStore.coin?.coins.first;
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
                   child: AnimatedSwitcher(
@@ -220,7 +217,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                       return Text(
                                                         (_balanceStore.selectedBar !=
                                                                     null
-                                                                ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * coin!.currentPrice).toStringAsFixed(2)}'
+                                                                ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * data!.price).toStringAsFixed(2)}'
                                                                 : '')
                                                             .toString(),
                                                         style: TextStyle(
@@ -491,7 +488,8 @@ class _BarFillPageState extends State<BarFillPage>
                                                                         .image(
                                                                       height:
                                                                           34,
-                                                                      color: AppColors.primaryTextColor,
+                                                                      color: AppColors
+                                                                          .primaryTextColor,
                                                                     ),
                                                                   )
                                                                 : Lottie.asset(
