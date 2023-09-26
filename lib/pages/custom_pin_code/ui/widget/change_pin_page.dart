@@ -1,26 +1,28 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../../../gen/colors.gen.dart';
-import '../../../gen/fonts.gen.dart';
-import '../../../providers/screen_service.dart';
-import '../../../router.dart';
-import '../../../store/pin_code_state/create_pin_bloc.dart';
-import '../data/pin_repository.dart';
-import 'widget/button_of_numpad.dart';
-import 'widget/pin_sphere.dart';
+import '../../../../gen/colors.gen.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../../providers/screen_service.dart';
+import '../../../../store/pin_code_state/change_pin_bloc.dart';
+import '../../data/pin_repository.dart';
+import 'button_of_numpad.dart';
+import 'pin_sphere.dart';
+
+
 
 @RoutePage()
-class CreatePinPage extends StatelessWidget {
-  static const String setupPIN = 'Setup pin code';
-  static const String pinCreated = 'Your PIN code is successfully created';
-  static const String pinNonCreated = 'Pin codes do not match';
+class ChangePinPage extends StatelessWidget {
+  static const String changePIN = 'Change PIN';
+  static const String currentPINLabel = 'Enter current PIN:';
+  static const String newPINLabel = 'Enter new PIN:';
+  static const String confirmNewPINLabel = 'Confirm new PIN:';
+  static const String pinChangedSuccessfully = 'PIN changed successfully';
   static const String ok = 'OK';
 
-  const CreatePinPage({Key? key}) : super(key: key);
+  const ChangePinPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CreatePinPage extends StatelessWidget {
           onPressed: router.pop,
         ),
         title: const Text(
-          setupPIN,
+          changePIN,
           style: TextStyle(
             color: Colors.black,
             fontFamily: FontFamily.redHatMedium,
@@ -43,24 +45,39 @@ class CreatePinPage extends StatelessWidget {
       ),
       body: BlocProvider(
         lazy: false,
-        create: (_) => CreatePINBloc(pinRepository: HivePINRepository()),
-        child: BlocListener<CreatePINBloc, CreatePINState>(
+        create: (_) => ChangePinBloc(pinRepository: HivePINRepository()),
+        child: BlocListener<ChangePinBloc, ChangePinState>(
           listener: (context, state) {
-            if (state.pinStatus == PINStatus.equals) {
-              router.pushAndPopAll(const Dashboard());
-            } else if (state.pinStatus == PINStatus.unequals) {
+            if (state.pinStatus == ChangePINStatus.equals) {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
-                  title: const Text(pinNonCreated),
+                  title: const Text(pinChangedSuccessfully),
                   actionsAlignment: MainAxisAlignment.center,
                   actions: [
                     TextButton(
-                      onPressed: () => BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreateNullPINEvent()),
+                      onPressed: router.pop, // Navigate back
+                      child: const Text(ok),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state.pinStatus == ChangePINStatus.unequals) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  title: const Text('Pin Change'),
+                  actionsAlignment: MainAxisAlignment.center,
+                  actions: [
+                    TextButton(
+                      onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                          .add(const ChangeNullPINEvent()),
                       child: const Text(ok),
                     ),
                   ],
@@ -95,33 +112,24 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '1',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 1));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 1)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '2',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 2));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 2)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '3',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 3));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 3)),
                   ),
                 ),
               ],
@@ -134,33 +142,24 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '4',
-                    onPressed: (){
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 4));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 4)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '5',
-                    onPressed: (){
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 5));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 5)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '6',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 6));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 6)),
                   ),
                 ),
               ],
@@ -173,33 +172,24 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '7',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 7));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 7)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '8',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 8));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 8)),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '9',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 9));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 9)),
                   ),
                 ),
               ],
@@ -216,11 +206,8 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '0',
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      BlocProvider.of<CreatePINBloc>(context)
-                          .add(const CreatePINAddEvent(pinNum: 0));
-                    },
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINAddEvent(pinNum: 0)),
                   ),
                 ),
                 const SizedBox(width: 30),
@@ -231,8 +218,8 @@ class _NumPad extends StatelessWidget {
                       size: 30,
                       color: AppColors.primary,
                     ),
-                    onPressed: () => BlocProvider.of<CreatePINBloc>(context)
-                        .add(const CreatePINEraseEvent()),
+                    onPressed: () => BlocProvider.of<ChangePinBloc>(context)
+                        .add(const ChangePINEraseEvent()),
                   ),
                 ),
               ],
@@ -245,36 +232,28 @@ class _NumPad extends StatelessWidget {
 }
 
 class _MainPart extends StatelessWidget {
-  static const String createPIN = 'Create a passcode';
-  static const String reEnterYourPIN = 'Repeat the passcode';
-  static const String passDescription = 'Passcode protects your wallet';
+  static const String enterCurrentPIN = 'Enter your current PIN';
+  static const String enterNewPIN = 'Enter your new PIN';
+  static const String confirmNewPIN = 'Confirm your new PIN';
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreatePINBloc, CreatePINState>(
+    return BlocBuilder<ChangePinBloc, ChangePinState>(
       buildWhen: (previous, current) =>
-          previous.firstPIN != current.firstPIN ||
-          previous.secondPIN != current.secondPIN,
+      previous.currentPIN != current.currentPIN ||
+          previous.newPIN != current.newPIN,
       builder: (context, state) {
         return Column(
           children: [
             Text(
-              state.pinStatus == PINStatus.enterFirst
-                  ? createPIN
-                  : reEnterYourPIN,
+              state.pinStatus == ChangePINStatus.enterCurrentPIN
+                  ? enterCurrentPIN
+                  : state.pinStatus == ChangePINStatus.enterNewPIN
+                  ? enterNewPIN
+                  : confirmNewPIN,
               style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 25,
-                fontFamily: FontFamily.redHatMedium,
-              ),
-            ),
-            const Gap(5),
-            const Text(
-              passDescription,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.primary,
-                fontSize: 14,
                 fontFamily: FontFamily.redHatMedium,
               ),
             ),
@@ -282,8 +261,9 @@ class _MainPart extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                6,
-                (index) => PinSphere(input: index < state.getCountsOfPIN()),
+                4,
+                    (index) =>
+                    PinSphere(input: index < state.getCountsOfPIN()),
               ),
             ),
           ],

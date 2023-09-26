@@ -51,6 +51,9 @@ class Router extends $Router {
     AdaptiveRoute(
       page: CreatePinRoute.page,
     ),
+    AdaptiveRoute(
+      page: ChangePinRoute.page,
+    ),
     AdaptiveRoute(page: PinRoute.page, fullscreenDialog: true),
   ];
 }

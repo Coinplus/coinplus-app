@@ -15,7 +15,7 @@ class CreatePINState {
   });
 
   int getCountsOfPIN() {
-    if (firstPIN.length < 4) {
+    if (firstPIN.length < 6) {
       return firstPIN.length;
     } else {
       return secondPIN.length;

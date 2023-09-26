@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -21,6 +23,7 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/form_factor_state/form_factor_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
+import '../../utils/btc_validation.dart';
 import '../../widgets/loading_button.dart';
 import 'form_factor_pages/card_and_bar_scan.dart';
 import 'form_factor_pages/form_factor_page.dart';
@@ -36,17 +39,39 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   final _nfcState = NfcStore();
   final _formFactorState = FormFactorState();
+  late StreamSubscription<Map> streamSubscription;
 
   @override
   void initState() {
     super.initState();
     _nfcState.checkNfcSupport();
+     streamSubscription =
+    FlutterBranchSdk.initSession().listen(
+          (data) {
+        if (data.containsKey('+non_branch_link') &&
+            data['+non_branch_link'] != null) {
+          final String url = data['+non_branch_link'];
+          final splitting = url.split('/');
+          final part = splitting[splitting.length - 1];
+          if (isValidBTCAddress(part)) {
+            router.push(CardFillRoute(receivedData: part));
+          }
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle.dark,

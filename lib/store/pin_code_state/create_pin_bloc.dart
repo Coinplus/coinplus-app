@@ -13,9 +13,9 @@ class CreatePINBloc extends Bloc<CreatePINEvent, CreatePINState> {
   CreatePINBloc({required this.pinRepository})
       : super(const CreatePINState(pinStatus: PINStatus.enterFirst)) {
     on<CreatePINAddEvent>((event, emit) {
-      if (state.firstPIN.length < 4) {
+      if (state.firstPIN.length < 6) {
         final firstPIN = '${state.firstPIN}${event.pinNum}';
-        if (firstPIN.length < 4) {
+        if (firstPIN.length < 6) {
           emit(
             CreatePINState(
               firstPIN: firstPIN,
@@ -32,7 +32,7 @@ class CreatePINBloc extends Bloc<CreatePINEvent, CreatePINState> {
         }
       } else {
         final secondPIN = '${state.secondPIN}${event.pinNum}';
-        if (secondPIN.length < 4) {
+        if (secondPIN.length < 6) {
           emit(
             state.copyWith(
               secondPIN: secondPIN,
@@ -57,7 +57,7 @@ class CreatePINBloc extends Bloc<CreatePINEvent, CreatePINState> {
     on<CreatePINEraseEvent>((event, emit) {
       if (state.firstPIN.isEmpty) {
         emit(const CreatePINState(pinStatus: PINStatus.enterFirst));
-      } else if (state.firstPIN.length < 4) {
+      } else if (state.firstPIN.length < 6) {
         final firstPIN = state.firstPIN.substring(0, state.firstPIN.length - 1);
         emit(
           CreatePINState(

@@ -1,5 +1,9 @@
 PODS:
+  - BranchSDK (2.2.1)
   - Flutter (1.0.0)
+  - flutter_branch_sdk (6.8.0):
+    - BranchSDK (~> 2.2.1)
+    - Flutter
   - flutter_secure_storage (6.0.0):
     - Flutter
   - GoogleDataTransport (9.2.3):
@@ -66,6 +70,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - pin_lock (0.0.1):
+    - Flutter
   - PromisesObjC (2.2.0)
   - qr_code_scanner (0.2.0):
     - Flutter
@@ -80,11 +86,13 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_branch_sdk (from `.symlinks/plugins/flutter_branch_sdk/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - nfc_manager (from `.symlinks/plugins/nfc_manager/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - pin_lock (from `.symlinks/plugins/pin_lock/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
@@ -92,6 +100,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - BranchSDK
     - GoogleDataTransport
     - GoogleMLKit
     - GoogleToolboxForMac
@@ -109,6 +118,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_branch_sdk:
+    :path: ".symlinks/plugins/flutter_branch_sdk/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   local_auth_ios:
@@ -119,6 +130,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/nfc_manager/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  pin_lock:
+    :path: ".symlinks/plugins/pin_lock/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
   shared_preferences_foundation:
@@ -129,7 +142,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  BranchSDK: cb046c2714b03e573484ce9e349e2ddbad7016e8
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_branch_sdk: 938f6f386a976356ee7e5f60969e53d4ae5704d9
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -147,6 +162,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  pin_lock: 16335a29b53f4899f294ab5d799af583053a0650
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126

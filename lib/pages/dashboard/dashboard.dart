@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
@@ -13,6 +14,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../widgets/loading_button.dart';
 import '../custom_pin_code/data/pin_repository.dart';
@@ -28,10 +30,11 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -56,7 +59,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
 
   Future<void> showPasscodePageIfNeeded() async {
     if (await HivePINRepository().isPINSet()) {
-      await router.push(const PinRoute());
+      await router.pushAndPopAll(const PinRoute());
     }
   }
 
@@ -253,11 +256,11 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                                                         ),
                                                       ),
                                                       Text(
-                                                        'PnP68faffhkss8fsffs6dadadadda',
+                                                        '1234567890123456789012345678901234',
                                                         style: TextStyle(
                                                           fontFamily: FontFamily
                                                               .redHatMedium,
-                                                          fontSize: 15,
+                                                          fontSize: 14,
                                                           color: Color(
                                                             0xFF4F6486,
                                                           ),
