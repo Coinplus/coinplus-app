@@ -20,7 +20,7 @@ class AuthenticationPinBloc
         ) {
     on<AuthenticationPinAddEvent>((event, emit) async {
       final pin = '${state.pin}${event.pinNum}';
-      if (pin.length < 4) {
+      if (pin.length < 6) {
         emit(
           AuthenticationPinState(
             pin: pin,

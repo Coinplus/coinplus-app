@@ -70,7 +70,7 @@ class _PinPageState extends State<PinPage> {
           listener: (context, state) {
             if (state.pinStatus == AuthenticationPINStatus.equals) {
               HapticFeedback.lightImpact();
-              router.popAndPush(const Dashboard());
+              router.pushAndPopAll(const Dashboard());
             } else if (state.pinStatus == AuthenticationPINStatus.unequals) {
               HapticFeedback.vibrate();
               _shakeAnimationController.start();
@@ -130,7 +130,7 @@ class _MainPart extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
-            4,
+            6,
             (index) => PinSphere(input: index < state.getCountsOfPIN()),
           ),
         );

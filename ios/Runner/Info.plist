@@ -25,11 +25,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.coinplus.app</string>
+			<string>coinplus</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.coinplus.app</string>
+				<string>mycoinplus+cardfillroute</string>
 			</array>
 		</dict>
 	</array>
@@ -71,6 +73,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_test_ek4ZVUTuU68xinjTWWyDPkmmvBoiQKOF</string>
+		<key>test</key>
+		<string>secret_test_TtDfyHWOrFWLk6eH6igAHoZNVPb6Hv9b</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>air.coinplus.com</string>
+		<string>coinplus-alternate.test-app.link</string>
+		<string>coinplus-alternate.test-app.link</string>
+	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:coinplus</string>

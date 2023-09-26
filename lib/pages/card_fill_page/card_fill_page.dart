@@ -27,6 +27,7 @@ import '../../router.gr.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../utils/btc_validation.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
@@ -798,11 +799,6 @@ class _CardFillPageState extends State<CardFillPage>
       );
       await _lottieController.forward(from: 0);
     } else {}
-  }
-
-  bool isValidBTCAddress(String address) {
-    final btcAddressRegex = RegExp(r'^(bc1|[13])[a-zA-HJ-NP-Z0-9]{33,39}$');
-    return btcAddressRegex.hasMatch(address);
   }
 
   Future<void> _toggleCard() async {
