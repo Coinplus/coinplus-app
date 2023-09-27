@@ -15,9 +15,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-import '../../constants/buttons/button_settings.dart';
 import '../../extensions/context_extension.dart';
-import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -33,7 +31,6 @@ import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 import 'edit_address_dialog/edit_address_dialog.dart';
-import 'skip_button_alert/skip_button_alert.dart';
 
 @RoutePage()
 class CardFillPage extends StatefulWidget {
@@ -666,12 +663,13 @@ class _CardFillPageState extends State<CardFillPage>
                     ),
                     color: Colors.white.withOpacity(0.7),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14),
+                  child: const Padding(
+                    padding: EdgeInsets.all(14),
                     child: Column(
                       children: [
                         AnimatedSwitcher(
                           switchInCurve: Curves.decelerate,
+<<<<<<< Updated upstream
                           duration: const Duration(milliseconds: 300),
                           child: Observer(
                             builder: (context) {
@@ -693,6 +691,25 @@ class _CardFillPageState extends State<CardFillPage>
                         ),
                         const Gap(4),
                         const Text(
+=======
+                          duration: Duration(milliseconds: 300),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Coinplus Virtual Card',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: AppColors.textHintsColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Gap(4),
+                        Text(
+>>>>>>> Stashed changes
                           'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
                           style: TextStyle(
                             fontFamily: FontFamily.redHatMedium,
@@ -743,34 +760,7 @@ class _CardFillPageState extends State<CardFillPage>
                   ).paddingHorizontal(49);
                 },
               ),
-              Observer(
-                builder: (_) {
-                  return LoadingButton(
-                    onPressed: _addressState.isAddressVisible
-                        ? () {
-                            showMyDialog(context);
-                          }
-                        : () {
-                            router.pop(const OnboardingRoute());
-                          },
-                    style: context.theme
-                        .buttonStyle(
-                          buttonType: ButtonTypes.TRANSPARENT,
-                          textStyle: const TextStyle(
-                            fontFamily: FontFamily.redHatSemiBold,
-                            color: AppColors.primaryTextColor,
-                            fontSize: 17,
-                          ),
-                        )
-                        .copyWith(
-                          padding:
-                              const MaterialStatePropertyAll(EdgeInsets.zero),
-                        ),
-                    child: const Text('Skip'),
-                  );
-                },
-              ),
-              const Gap(20),
+              const Gap(40),
             ],
           );
         },

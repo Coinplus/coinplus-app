@@ -219,7 +219,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                                             ],
                                           ),
                                           const Gap(30),
-                                          Assets.icons.qr.image(
+                                          Assets.images.qrCode.image(
                                             height: 208,
                                           ),
                                           const Gap(28),
