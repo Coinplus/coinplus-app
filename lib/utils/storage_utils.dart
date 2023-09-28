@@ -137,10 +137,10 @@ class StorageUtils {
     await prefs.setString(key, json.encode(value));
   }
 
-  static Future<void> _remove(String key) async {
-    final prefs = await sharedInstance;
-    await prefs.remove(key);
-  }
+  // static Future<void> _remove(String key) async {
+  //   final prefs = await sharedInstance;
+  //   await prefs.remove(key);
+  // }
 
   static Future<void> clear() async {
     final prefs = await sharedInstance;
@@ -148,26 +148,26 @@ class StorageUtils {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  static Future<void> _setBool(String key, bool value) async {
-    final prefs = await sharedInstance;
+  // static Future<void> _setBool(String key, bool value) async {
+  //   final prefs = await sharedInstance;
+  //
+  //   await prefs.setBool(key, value);
+  // }
 
-    await prefs.setBool(key, value);
-  }
+  // static Future<bool> _getBool(String key) async {
+  //   final prefs = await sharedInstance;
+  //   return prefs.getBool(key) ?? false;
+  // }
 
-  static Future<bool> _getBool(String key) async {
-    final prefs = await sharedInstance;
-    return prefs.getBool(key) ?? false;
-  }
+  // static Future<void> _setString(String key, String value) async {
+  //   final prefs = await sharedInstance;
+  //   await prefs.setString(key, value);
+  // }
 
-  static Future<void> _setString(String key, String value) async {
-    final prefs = await sharedInstance;
-    await prefs.setString(key, value);
-  }
+  // static Future<String?> _getString(String key) async {
+  //   final prefs = await sharedInstance;
+  //   return prefs.getString(key);
+  // }
 
-  static Future<String?> _getString(String key) async {
-    final prefs = await sharedInstance;
-    return prefs.getString(key);
-  }
-
-  static Future<void> _setInt() async {}
+  // static Future<void> _setInt() async {}
 }

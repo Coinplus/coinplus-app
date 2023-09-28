@@ -134,7 +134,7 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '4',
-                    onPressed: (){
+                    onPressed: () {
                       HapticFeedback.lightImpact();
                       BlocProvider.of<CreatePINBloc>(context)
                           .add(const CreatePINAddEvent(pinNum: 4));
@@ -145,7 +145,7 @@ class _NumPad extends StatelessWidget {
                 Expanded(
                   child: ButtonOfNumPad(
                     num: '5',
-                    onPressed: (){
+                    onPressed: () {
                       HapticFeedback.lightImpact();
                       BlocProvider.of<CreatePINBloc>(context)
                           .add(const CreatePINAddEvent(pinNum: 5));

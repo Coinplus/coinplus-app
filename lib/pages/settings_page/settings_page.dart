@@ -104,7 +104,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                             router.push(const ChangePinRoute());
+                            router.push(const ChangePinRoute());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

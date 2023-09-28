@@ -4,13 +4,16 @@ import 'package:meta/meta.dart';
 import '../../pages/custom_pin_code/data/pin_repository.dart';
 
 part 'change_pin_event.dart';
+
 part 'change_pin_state.dart';
 
 class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
   final PINRepository pinRepository;
 
   ChangePinBloc({required this.pinRepository})
-      : super( const ChangePinState(pinStatus: ChangePINStatus.enterCurrentPIN)) {
+      : super(
+          const ChangePinState(pinStatus: ChangePINStatus.enterCurrentPIN),
+        ) {
     on<ChangePINAddEvent>((event, emit) {
       if (state.currentPIN.length < 4) {
         final currentPIN = '${state.currentPIN}${event.pinNum}';
@@ -81,7 +84,7 @@ class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
         emit(const ChangePinState(pinStatus: ChangePINStatus.enterCurrentPIN));
       } else if (state.currentPIN.length < 4) {
         final currentPIN =
-        state.currentPIN.substring(0, state.currentPIN.length - 1);
+            state.currentPIN.substring(0, state.currentPIN.length - 1);
         emit(
           ChangePinState(
             currentPIN: currentPIN,
@@ -102,7 +105,7 @@ class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
         emit(state.copyWith(pinStatus: ChangePINStatus.confirmNewPIN));
       } else {
         final confirmNewPIN =
-        state.confirmNewPIN.substring(0, state.confirmNewPIN.length - 1);
+            state.confirmNewPIN.substring(0, state.confirmNewPIN.length - 1);
         emit(
           state.copyWith(
             confirmNewPIN: confirmNewPIN,

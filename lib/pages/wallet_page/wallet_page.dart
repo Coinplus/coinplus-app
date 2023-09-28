@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +85,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 ),
                 //Total Balance
                 Positioned(
-                  top: max(context.topPadding + 12, 15),
+                  top: context.width * 0.16,
                   left: 22,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +130,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 //Card and Bar Switch
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.15,
-                  right: max(context.topPadding - 35, 15),
+                  right: context.width * 0.05,
                   child: Container(
                     height: 40,
                     width: 128,
@@ -270,12 +269,11 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                           fontFamily: FontFamily.redHatBold,
                                         ),
                                       ),
-                                        const Icon(
-                                          Icons.minimize,
-                                          size: 25,
-                                          color: Colors.black,
-                                        ),
-
+                                      const Icon(
+                                        Icons.minimize,
+                                        size: 25,
+                                        color: Colors.black,
+                                      ),
                                       const Text(
                                         ' - %',
                                         style: TextStyle(

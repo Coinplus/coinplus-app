@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
-import '../../utils/btc_validation.dart';
 import '../../utils/storage_utils.dart';
 import '../custom_pin_code/data/pin_repository.dart';
 

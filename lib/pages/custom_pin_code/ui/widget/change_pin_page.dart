@@ -11,8 +11,6 @@ import '../../data/pin_repository.dart';
 import 'button_of_numpad.dart';
 import 'pin_sphere.dart';
 
-
-
 @RoutePage()
 class ChangePinPage extends StatelessWidget {
   static const String changePIN = 'Change PIN';
@@ -240,7 +238,7 @@ class _MainPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ChangePinBloc, ChangePinState>(
       buildWhen: (previous, current) =>
-      previous.currentPIN != current.currentPIN ||
+          previous.currentPIN != current.currentPIN ||
           previous.newPIN != current.newPIN,
       builder: (context, state) {
         return Column(
@@ -249,8 +247,8 @@ class _MainPart extends StatelessWidget {
               state.pinStatus == ChangePINStatus.enterCurrentPIN
                   ? enterCurrentPIN
                   : state.pinStatus == ChangePINStatus.enterNewPIN
-                  ? enterNewPIN
-                  : confirmNewPIN,
+                      ? enterNewPIN
+                      : confirmNewPIN,
               style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 25,
@@ -262,8 +260,7 @@ class _MainPart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 4,
-                    (index) =>
-                    PinSphere(input: index < state.getCountsOfPIN()),
+                (index) => PinSphere(input: index < state.getCountsOfPIN()),
               ),
             ),
           ],
