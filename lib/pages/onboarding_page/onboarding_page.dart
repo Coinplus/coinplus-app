@@ -24,7 +24,10 @@ import '../../router.gr.dart';
 import '../../store/form_factor_state/form_factor_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../utils/btc_validation.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
+import '../splash_screen/splash_screen.dart';
 import 'form_factor_pages/card_and_bar_scan.dart';
 import 'form_factor_pages/form_factor_page.dart';
 
@@ -45,17 +48,40 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void initState() {
     super.initState();
     _nfcState.checkNfcSupport();
-     streamSubscription =
-    FlutterBranchSdk.initSession().listen(
-          (data) {
+    streamSubscription = FlutterBranchSdk.initSession().listen(
+      (data) {
         if (data.containsKey('+non_branch_link') &&
             data['+non_branch_link'] != null) {
           final String url = data['+non_branch_link'];
           final splitting = url.split('/');
           final part = splitting[splitting.length - 1];
-          if (isValidBTCAddress(part)) {
-            router.push(CardFillRoute(receivedData: part));
-          }
+          isValidBTCAddress(part)
+              ? hasShownWallet().then((hasShown) {
+                  if (hasShown) {
+                    router.push(CardFillRoute(receivedData: part));
+                  } else {
+                    router
+                      ..push(const OnboardingRoute())
+                      ..push(
+                        CardFillRoute(receivedData: part),
+                      );
+                  }
+                })
+              : showTopSnackBar(
+                  displayDuration: const Duration(
+                    milliseconds: 400,
+                  ),
+                  Overlay.of(context),
+                  const CustomSnackBar.success(
+                    backgroundColor: Color(0xFF4A4A4A),
+                    message: 'This is not valid Coinplus Bitcoin address',
+                    textStyle: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
         }
       },
     );

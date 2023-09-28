@@ -1,6 +1,13 @@
 part of 'change_pin_bloc.dart';
 
-enum ChangePINStatus { enterCurrentPIN, enterNewPIN, confirmNewPIN, unequals, equals, pinChangedSuccessfully }
+enum ChangePINStatus {
+  enterCurrentPIN,
+  enterNewPIN,
+  confirmNewPIN,
+  unequals,
+  equals,
+  pinChangedSuccessfully
+}
 
 @immutable
 class ChangePinState {

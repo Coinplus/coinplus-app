@@ -669,29 +669,6 @@ class _CardFillPageState extends State<CardFillPage>
                       children: [
                         AnimatedSwitcher(
                           switchInCurve: Curves.decelerate,
-<<<<<<< Updated upstream
-                          duration: const Duration(milliseconds: 300),
-                          child: Observer(
-                            builder: (context) {
-                              return const Row(
-                                children: [
-                                  Text(
-                                    'Coinplus Virtual Card',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      color: AppColors.textHintsColor,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                        const Gap(4),
-                        const Text(
-=======
                           duration: Duration(milliseconds: 300),
                           child: Row(
                             children: [
@@ -709,7 +686,6 @@ class _CardFillPageState extends State<CardFillPage>
                         ),
                         Gap(4),
                         Text(
->>>>>>> Stashed changes
                           'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
                           style: TextStyle(
                             fontFamily: FontFamily.redHatMedium,

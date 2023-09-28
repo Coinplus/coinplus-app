@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:hive/hive.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart'
     show QrScannerOverlayShape;
@@ -28,6 +27,7 @@ class QrScannerPage extends StatefulWidget {
 class _QrScannerPageState extends State<QrScannerPage> {
   final _qrController = MobileScannerController(
     formats: [BarcodeFormat.qrCode],
+    detectionTimeoutMs: 1000,
   );
 
   @override
@@ -51,6 +51,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
         children: [
           Center(
             child: MobileScanner(
+              //scanWindow: Rect.fromCenter(center: const Offset(0, 0), width: 300, height: 300),
               controller: _qrController,
               placeholderBuilder: (_, widget) {
                 return const Center(
@@ -96,8 +97,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
                       borderRadius: 12,
                       borderLength: 20,
                       borderWidth: 5,
-                      cutOutSize: 260,
-                      cutOutBottomOffset: 10,
                     ),
                   ),
                 );

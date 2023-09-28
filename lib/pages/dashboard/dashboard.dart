@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
@@ -14,8 +16,10 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
-import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
+import '../../utils/btc_validation.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../custom_pin_code/data/pin_repository.dart';
 import '../settings_page/settings_page.dart';
@@ -30,11 +34,39 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  late StreamSubscription<Map> streamSubscription;
 
   @override
   void initState() {
     super.initState();
+    streamSubscription = FlutterBranchSdk.initSession().listen(
+      (data) {
+        if (data.containsKey('+non_branch_link') &&
+            data['+non_branch_link'] != null) {
+          final String url = data['+non_branch_link'];
+          final splitting = url.split('/');
+          final part = splitting[splitting.length - 1];
+          isValidBTCAddress(part)
+              ? router.push(CardFillRoute(receivedData: part))
+              : showTopSnackBar(
+            displayDuration: const Duration(
+              milliseconds: 400,
+            ),
+            Overlay.of(context),
+            const CustomSnackBar.success(
+              backgroundColor: Color(0xFF4A4A4A),
+              message: 'This is not valid Coinplus Bitcoin address',
+              textStyle: TextStyle(
+                fontFamily:
+                FontFamily.redHatMedium,
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
+          );
+        }
+      },
+    );
     WidgetsBinding.instance.addObserver(this);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,6 +80,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+    streamSubscription.cancel();
   }
 
   @override

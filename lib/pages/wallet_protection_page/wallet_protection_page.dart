@@ -15,10 +15,22 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../widgets/loading_button.dart';
+import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
-class WalletProtectionPage extends StatelessWidget {
+class WalletProtectionPage extends StatefulWidget {
   const WalletProtectionPage({super.key});
+
+  @override
+  State<WalletProtectionPage> createState() => _WalletProtectionPageState();
+}
+
+class _WalletProtectionPageState extends State<WalletProtectionPage> {
+  @override
+  void initState() {
+    super.initState();
+    setWalletShown();
+  }
 
   @override
   Widget build(BuildContext context) {
