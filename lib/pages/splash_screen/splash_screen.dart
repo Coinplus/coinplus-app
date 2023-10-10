@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../store/pin_code_state/authentication_pin_bloc.dart';
 import '../../utils/storage_utils.dart';
 import '../custom_pin_code/data/pin_repository.dart';
 
@@ -18,10 +19,10 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
+  AppBloc? appBloc;
   @override
   void initState() {
     super.initState();
-
     hasShownWallet().then(
       (hasShown) {
         if (hasShown) {
@@ -59,11 +60,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   Future<void> openWallet() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    if (await HivePINRepository().isPINSet()) {
-      await router.pushAndPopAll(const PinRoute());
-    } else {
-      await router.pushAndPopAll(const Dashboard());
-    }
+    // if (appBloc!.isPINSet) {
+    //   await router.pushAndPopAll(const PinRoute());
+    // } else {
+    await router.pushAndPopAll(const Dashboard());
+    //}
   }
 }
 

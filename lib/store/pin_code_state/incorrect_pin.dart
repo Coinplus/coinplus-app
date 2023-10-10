@@ -10,6 +10,6 @@ abstract class _PinState with Store {
 
   @action
   void pinCheck() {
-    isCorrect = !isCorrect;
+    isCorrect = false;
   }
 }

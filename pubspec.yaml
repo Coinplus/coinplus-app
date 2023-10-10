@@ -62,7 +62,7 @@ dependencies:
   shake_animation_widget: ^3.0.4
   pin_lock: ^0.1.0
   flutter_branch_sdk: ^6.8.0
-
+  email_validator: ^2.1.17
 
 
 

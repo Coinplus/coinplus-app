@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
@@ -26,6 +27,8 @@ class WalletProtectionPage extends StatefulWidget {
 }
 
 class _WalletProtectionPageState extends State<WalletProtectionPage> {
+  final _walletProtectState = WalletProtectState();
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +37,6 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _walletProtectState = WalletProtectState();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -115,7 +117,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
                             milliseconds: 300,
                           ),
                         );
-                        await router.push(const CreatePinRoute());
+                        await router.pushAndPopAll(const CreatePinRoute());
                       },
                       value: _walletProtectState.isToggleSwitched && true,
                     );
@@ -124,8 +126,6 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
               ],
             ).paddingOnly(top: 9, bottom: 9, left: 12, right: 12),
           ).paddingHorizontal(16),
-          // else
-          //   Container(),
           const Spacer(
             flex: 5,
           ),
