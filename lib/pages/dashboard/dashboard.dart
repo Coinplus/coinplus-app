@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
@@ -21,85 +20,55 @@ import '../../utils/btc_validation.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../custom_pin_code/data/pin_repository.dart';
 import '../settings_page/settings_page.dart';
 import '../wallet_page/wallet_page.dart';
 
 @RoutePage()
-class Dashboard extends StatefulWidget {
+class Dashboard extends HookWidget {
   const Dashboard({super.key});
 
-  @override
-  State<Dashboard> createState() => _DashboardState();
-}
+  void useBranchSDK(BuildContext context) {
+    useEffect(
+      () {
+        final streamSubscription = FlutterBranchSdk.initSession().listen(
+          (data) {
+            if (data.containsKey('+non_branch_link') &&
+                data['+non_branch_link'] != null) {
+              final String url = data['+non_branch_link'];
+              final splitting = url.split('/');
+              final part = splitting[splitting.length - 1];
+              if (isValidBTCAddress(part)) {
+                router.push(CardFillRoute(receivedData: part));
+              } else {
+                showTopSnackBar(
+                  displayDuration: const Duration(milliseconds: 400),
+                  Overlay.of(context),
+                  const CustomSnackBar.success(
+                    backgroundColor: Color(0xFF4A4A4A),
+                    message: 'This is not a valid Coinplus Bitcoin address',
+                    textStyle: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              }
+            }
+          },
+        );
 
-class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
-  late StreamSubscription<Map> streamSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-    streamSubscription = FlutterBranchSdk.initSession().listen(
-      (data) {
-        if (data.containsKey('+non_branch_link') &&
-            data['+non_branch_link'] != null) {
-          final String url = data['+non_branch_link'];
-          final splitting = url.split('/');
-          final part = splitting[splitting.length - 1];
-          isValidBTCAddress(part)
-              ? router.push(CardFillRoute(receivedData: part))
-              : showTopSnackBar(
-            displayDuration: const Duration(
-              milliseconds: 400,
-            ),
-            Overlay.of(context),
-            const CustomSnackBar.success(
-              backgroundColor: Color(0xFF4A4A4A),
-              message: 'This is not valid Coinplus Bitcoin address',
-              textStyle: TextStyle(
-                fontFamily:
-                FontFamily.redHatMedium,
-                fontSize: 14,
-                color: Colors.white,
-              ),
-            ),
-          );
-        }
+        return streamSubscription.cancel;
       },
+      [],
     );
-    WidgetsBinding.instance.addObserver(this);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (WidgetsBinding.instance.lifecycleState == AppLifecycleState.paused) {
-        showPasscodePageIfNeeded();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-    streamSubscription.cancel();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused) {
-      showPasscodePageIfNeeded();
-    }
-  }
-
-  Future<void> showPasscodePageIfNeeded() async {
-    if (await HivePINRepository().isPINSet()) {
-      await router.pushAndPopAll(const PinRoute());
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final _navBarState = NavBarState();
-    final _pageController = PageController();
+    useBranchSDK(context);
+    final _navBarState = useMemoized(NavBarState.new);
+    final _pageController = usePageController();
 
     return Scaffold(
       body: Stack(
@@ -116,15 +85,21 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Observer(
-                builder: (_) {
-                  return Theme(
-                    data: ThemeData(
-                      canvasColor: Colors.white,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
-                    child: BottomNavigationBar(
+              Divider(
+                thickness: 0.5,
+                endIndent: 1,
+                indent: 0,
+                color: Colors.grey.withOpacity(0.2),
+              ),
+              Theme(
+                data: ThemeData(
+                  canvasColor: Colors.white,
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
+                child: Observer(
+                  builder: (context) {
+                    return BottomNavigationBar(
                       selectedLabelStyle: const TextStyle(
                         fontSize: 11,
                         fontFamily: FontFamily.redHatMedium,
@@ -165,9 +140,9 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                           label: 'Settings',
                         ),
                       ],
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -541,6 +516,7 @@ class _DashboardState extends State<Dashboard> with WidgetsBindingObserver {
                 },
                 //splashFactory: NoSplash.splashFactory,
                 child: FloatingActionButton(
+                  shape: const CircleBorder(),
                   elevation: 3,
                   backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
                   onPressed: null,

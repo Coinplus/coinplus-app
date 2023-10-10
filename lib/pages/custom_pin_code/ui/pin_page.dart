@@ -70,6 +70,7 @@ class _PinPageState extends State<PinPage> {
           listener: (context, state) {
             if (state.pinStatus == AuthenticationPINStatus.equals) {
               HapticFeedback.lightImpact();
+
               router.pushAndPopAll(const Dashboard());
             } else if (state.pinStatus == AuthenticationPINStatus.unequals) {
               HapticFeedback.vibrate();

@@ -32,16 +32,12 @@ class HivePINRepository extends PINRepository {
     final box = Hive.isBoxOpen(_boxName)
         ? Hive.box(_boxName)
         : await Hive.openBox(_boxName);
-
     final storedPIN = box.get(_keyName, defaultValue: _keyName);
-
     if (storedPIN == currentPIN) {
       await box.put(_keyName, newPIN);
     } else {
-      // Handle incorrect current PIN here, you can throw an exception or return an error flag.
       throw Exception('Incorrect current PIN');
     }
-
     await box.close();
   }
 
@@ -50,7 +46,6 @@ class HivePINRepository extends PINRepository {
     final box = Hive.isBoxOpen(_boxName)
         ? Hive.box(_boxName)
         : await Hive.openBox(_boxName);
-
     return box.get(_keyName, defaultValue: _keyName) == pin;
   }
 

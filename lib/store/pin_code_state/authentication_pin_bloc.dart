@@ -11,8 +11,8 @@ part 'authentication_pin_state.dart';
 class AuthenticationPinBloc
     extends Bloc<AuthenticationPinEvent, AuthenticationPinState> {
   final PINRepository pinRepository;
-
-  AuthenticationPinBloc({required this.pinRepository})
+  final AppBloc? appBloc;
+  AuthenticationPinBloc({this.appBloc, required this.pinRepository})
       : super(
           const AuthenticationPinState(
             pinStatus: AuthenticationPINStatus.enterPIN,
@@ -61,6 +61,8 @@ class AuthenticationPinBloc
             pinStatus: AuthenticationPINStatus.enterPIN,
           ),
         );
+      } else {
+        appBloc?.isPINSet = false;
       }
     });
 
@@ -72,4 +74,8 @@ class AuthenticationPinBloc
       );
     });
   }
+}
+
+class AppBloc {
+  bool isPINSet = false;
 }

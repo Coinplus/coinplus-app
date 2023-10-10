@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -16,35 +17,30 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
+    return CupertinoPageScaffold(
+      child: CustomScrollView(
         slivers: [
-          const SliverAppBar(
-            pinned: true,
-            elevation: 0,
-            title: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 10,
-                  ),
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      fontSize: 28,
-                      color: AppColors.primaryTextColor,
-                    ),
-                  ),
-                ),
-              ],
+          const CupertinoSliverNavigationBar(
+            border: Border(),
+            stretch: true,
+            transitionBetweenRoutes: false,
+            backgroundColor: Colors.transparent,
+            brightness: Brightness.light,
+            largeTitle: Text(
+              'Settings',
+              style: TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+                fontFamily: FontFamily.redHatMedium,
+              ),
             ),
           ),
           SliverToBoxAdapter(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Gap(10),
+                const Gap(15),
                 const Padding(
                   padding: EdgeInsets.only(left: 35),
                   child: Text(
@@ -266,7 +262,9 @@ class SettingsPage extends StatelessWidget {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            router.push(const ContactUs());
+                          },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -395,7 +393,14 @@ class SettingsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            final url = Uri.parse(
+                              'https://coinplus.com/privacy-policy/',
+                            );
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -423,7 +428,13 @@ class SettingsPage extends StatelessWidget {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            final url =
+                                Uri.parse('https://coinplus.com/terms-of-use/');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            }
+                          },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(

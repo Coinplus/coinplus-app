@@ -68,6 +68,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/buy.png
   AssetGenImage get buy => const AssetGenImage('assets/icons/buy.png');
 
+  /// File path: assets/icons/card_back_link.png
+  AssetGenImage get cardBackLink =>
+      const AssetGenImage('assets/icons/card_back_link.png');
+
+  /// File path: assets/icons/card_back_text.png
+  AssetGenImage get cardBackText =>
+      const AssetGenImage('assets/icons/card_back_text.png');
+
   /// File path: assets/icons/charm_arrow-down-right.png
   AssetGenImage get charmArrowDownRight =>
       const AssetGenImage('assets/icons/charm_arrow-down-right.png');
@@ -82,6 +90,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/coinplusVector.png
   AssetGenImage get coinplusVector =>
       const AssetGenImage('assets/icons/coinplusVector.png');
+
+  /// File path: assets/icons/coinplus_logo.png
+  AssetGenImage get coinplusLogo =>
+      const AssetGenImage('assets/icons/coinplus_logo.png');
 
   /// File path: assets/icons/contact_us.png
   AssetGenImage get contactUs =>
@@ -178,6 +190,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/twitter.png
   AssetGenImage get twitter => const AssetGenImage('assets/icons/twitter.png');
 
+  /// File path: assets/icons/validation_indicator_green_bottom.png
+  AssetGenImage get validationIndicatorGreenBottom =>
+      const AssetGenImage('assets/icons/validation_indicator_green_bottom.png');
+
+  /// File path: assets/icons/validation_indicator_green_top.png
+  AssetGenImage get validationIndicatorGreenTop =>
+      const AssetGenImage('assets/icons/validation_indicator_green_top.png');
+
   /// File path: assets/icons/wallet_icon.png
   AssetGenImage get walletIcon =>
       const AssetGenImage('assets/icons/wallet_icon.png');
@@ -196,10 +216,13 @@ class $AssetsIconsGen {
         arrowForwardIos,
         barAddressField,
         buy,
+        cardBackLink,
+        cardBackText,
         charmArrowDownRight,
         charmArrowTopRight,
         close,
         coinplusVector,
+        coinplusLogo,
         contactUs,
         contactless,
         contentCopy,
@@ -228,6 +251,8 @@ class $AssetsIconsGen {
         terms,
         trash,
         twitter,
+        validationIndicatorGreenBottom,
+        validationIndicatorGreenTop,
         walletIcon,
         wrongPass
       ];

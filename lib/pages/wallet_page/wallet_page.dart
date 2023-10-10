@@ -130,7 +130,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 //Card and Bar Switch
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.15,
-                  right: context.width * 0.05,
+                  right: context.width * 0.04,
                   child: Container(
                     height: 40,
                     width: 128,

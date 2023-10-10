@@ -51,7 +51,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
         children: [
           Center(
             child: MobileScanner(
-              //scanWindow: Rect.fromCenter(center: const Offset(0, 0), width: 300, height: 300),
               controller: _qrController,
               placeholderBuilder: (_, widget) {
                 return const Center(

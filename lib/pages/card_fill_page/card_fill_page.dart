@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -79,7 +80,7 @@ class _CardFillPageState extends State<CardFillPage>
       vsync: this,
       duration: const Duration(milliseconds: 200),
       lowerBound: 1,
-      upperBound: 1.2,
+      upperBound: 1.09,
     );
     if (widget.receivedData != null) {
       onInitWithAddress();
@@ -135,505 +136,285 @@ class _CardFillPageState extends State<CardFillPage>
           ],
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Column(
-            children: [
-              const Gap(20),
-              Expanded(
-                flex: 4,
-                child: Stack(
-                  children: [
-                    FlipCard(
-                      flipOnTouch: false,
-                      controller: _flipCardController,
-                      front: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: Assets.images.front.image().image,
-                              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Gap(20),
+          Expanded(
+            child: Stack(
+              children: [
+                FlipCard(
+                  flipOnTouch: false,
+                  controller: _flipCardController,
+                  front: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 15,
                             ),
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Center(
-                                  child: Observer(
-                                    builder: (context) {
-                                      return Visibility(
-                                        visible: _addressState.isAddressVisible,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            SizedBox(
-                                              height: context.height * 0.22,
-                                            ),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 65,
-                                              ),
-                                              child: ScaleTap(
-                                                enableFeedback: false,
-                                                onPressed: () {
-                                                  if (Platform.isIOS) {
-                                                    Clipboard.setData(
-                                                      ClipboardData(
-                                                        text: _balanceStore
-                                                            .selectedCard!
-                                                            .address
-                                                            .toString(),
+                          ],
+                          image: DecorationImage(
+                            image: Assets.images.front.image().image,
+                          ),
+                        ),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Center(
+                              child: Observer(
+                                builder: (context) {
+                                  return Visibility(
+                                    visible: _addressState.isAddressVisible,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          height: context.height * 0.22,
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 65,
+                                          ),
+                                          child: ScaleTap(
+                                            enableFeedback: false,
+                                            onPressed: () {
+                                              if (Platform.isIOS) {
+                                                Clipboard.setData(
+                                                  ClipboardData(
+                                                    text: _balanceStore
+                                                        .selectedCard!.address
+                                                        .toString(),
+                                                  ),
+                                                ).then(
+                                                  (_) {
+                                                    HapticFeedback
+                                                        .mediumImpact();
+                                                    showTopSnackBar(
+                                                      displayDuration:
+                                                          const Duration(
+                                                        milliseconds: 400,
                                                       ),
-                                                    ).then(
-                                                      (_) {
-                                                        HapticFeedback
-                                                            .mediumImpact();
-                                                        showTopSnackBar(
-                                                          displayDuration:
-                                                              const Duration(
-                                                            milliseconds: 400,
-                                                          ),
-                                                          Overlay.of(
-                                                            context,
-                                                          ),
-                                                          const CustomSnackBar
-                                                              .success(
-                                                            backgroundColor:
-                                                                Color(
-                                                              0xFF4A4A4A,
-                                                            ),
-                                                            message:
-                                                                'Address was copied',
-                                                            textStyle:
-                                                                TextStyle(
+                                                      Overlay.of(
+                                                        context,
+                                                      ),
+                                                      const CustomSnackBar
+                                                          .success(
+                                                        backgroundColor: Color(
+                                                          0xFF4A4A4A,
+                                                        ),
+                                                        message:
+                                                            'Address was copied',
+                                                        textStyle: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              } else {
+                                                Clipboard.setData(
+                                                  ClipboardData(
+                                                    text: _balanceStore
+                                                        .selectedCard!.address
+                                                        .toString(),
+                                                  ),
+                                                ).then(
+                                                  (_) {
+                                                    HapticFeedback
+                                                        .mediumImpact();
+                                                  },
+                                                );
+                                              }
+                                            },
+                                            child: ClipRRect(
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                  sigmaX: 5,
+                                                  sigmaY: 5,
+                                                ),
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 8,
+                                                    right: 8,
+                                                    top: 12,
+                                                    bottom: 12,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      6,
+                                                    ),
+                                                    color: Colors.black
+                                                        .withOpacity(
+                                                      0.2,
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      const Row(
+                                                        children: [
+                                                          Text(
+                                                            'Address',
+                                                            style: TextStyle(
+                                                              fontSize: 11,
                                                               fontFamily: FontFamily
                                                                   .redHatMedium,
-                                                              fontSize: 14,
                                                               color:
                                                                   Colors.white,
                                                             ),
                                                           ),
-                                                        );
-                                                      },
-                                                    );
-                                                  } else {
-                                                    Clipboard.setData(
-                                                      ClipboardData(
-                                                        text: _balanceStore
-                                                            .selectedCard!
-                                                            .address
-                                                            .toString(),
-                                                      ),
-                                                    ).then(
-                                                      (_) {
-                                                        HapticFeedback
-                                                            .mediumImpact();
-                                                      },
-                                                    );
-                                                  }
-                                                },
-                                                child: ClipRRect(
-                                                  child: BackdropFilter(
-                                                    filter: ImageFilter.blur(
-                                                      sigmaX: 5,
-                                                      sigmaY: 5,
-                                                    ),
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        left: 8,
-                                                        right: 8,
-                                                        top: 12,
-                                                        bottom: 12,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          6,
-                                                        ),
-                                                        color: Colors.black
-                                                            .withOpacity(
-                                                          0.2,
-                                                        ),
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          const Row(
-                                                            children: [
-                                                              Text(
-                                                                'Address',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 11,
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Observer(
-                                                            builder: (context) {
-                                                              if (_balanceStore
-                                                                          .loadings[
-                                                                      _balanceStore
-                                                                          .selectedCard
-                                                                          ?.address] ??
-                                                                  false) {
-                                                                return const Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                    4,
-                                                                  ),
-                                                                  child:
-                                                                      CupertinoActivityIndicator(
-                                                                    radius: 5,
-                                                                  ),
-                                                                );
-                                                              }
-                                                              return Text(
-                                                                _balanceStore
-                                                                        .selectedCard
-                                                                        ?.address ??
-                                                                    '',
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 12,
-                                                                ),
-                                                              ).expandedHorizontally();
-                                                            },
-                                                          ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const Gap(4),
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 65,
-                                              ),
-                                              child: ScaleTap(
-                                                enableFeedback: false,
-                                                onPressed: () {},
-                                                child: ClipRRect(
-                                                  child: BackdropFilter(
-                                                    filter: ImageFilter.blur(
-                                                      sigmaX: 5,
-                                                      sigmaY: 5,
-                                                    ),
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                        8,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          6,
-                                                        ),
-                                                        color: Colors.black
-                                                            .withOpacity(
-                                                          0.2,
-                                                        ),
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          const Row(
-                                                            children: [
-                                                              Text(
-                                                                'Balance',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 11,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Observer(
-                                                            builder: (context) {
-                                                              final data =
+                                                      Observer(
+                                                        builder: (context) {
+                                                          if (_balanceStore
+                                                                      .loadings[
                                                                   _balanceStore
-                                                                      .coin
-                                                                      ?.coins
-                                                                      .first;
-
-                                                              if (data ==
-                                                                  null) {
-                                                                return const SizedBox();
-                                                              }
-                                                              if (_balanceStore
-                                                                          .loadings[
-                                                                      _balanceStore
-                                                                          .selectedCard
-                                                                          ?.address] ??
-                                                                  false) {
-                                                                return const Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                    4,
-                                                                  ),
-                                                                  child:
-                                                                      CupertinoActivityIndicator(
-                                                                    radius: 5,
-                                                                  ),
-                                                                );
-                                                              }
-                                                              return Text(
-                                                                (_balanceStore.selectedCard !=
-                                                                            null
-                                                                        ? '\$${(_balanceStore.selectedCard!.balance! / 100000000 * data.price).toStringAsFixed(2)}'
-                                                                        : '')
-                                                                    .toString(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20,
-                                                                ),
-                                                              ).expandedHorizontally();
-                                                            },
+                                                                      .selectedCard
+                                                                      ?.address] ??
+                                                              false) {
+                                                            return const Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                4,
+                                                              ),
+                                                              child:
+                                                                  CupertinoActivityIndicator(
+                                                                radius: 5,
+                                                              ),
+                                                            );
+                                                          }
+                                                          return Text(
+                                                            _balanceStore
+                                                                    .selectedCard
+                                                                    ?.address ??
+                                                                '',
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ).expandedHorizontally();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const Gap(4),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 65,
+                                          ),
+                                          child: ScaleTap(
+                                            enableFeedback: false,
+                                            onPressed: () {},
+                                            child: ClipRRect(
+                                              child: BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                  sigmaX: 5,
+                                                  sigmaY: 5,
+                                                ),
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      6,
+                                                    ),
+                                                    color: Colors.black
+                                                        .withOpacity(
+                                                      0.2,
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      const Row(
+                                                        children: [
+                                                          Text(
+                                                            'Balance',
+                                                            style: TextStyle(
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 11,
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      back: Center(
-                        child: Container(
-                          width: context.width - 74,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Assets.images.back.image().image,
-                            ),
-                          ),
-                          child: LayoutBuilder(
-                            builder: (_, constraints) {
-                              return Center(
-                                child: SizedBox(
-                                  height: constraints.maxHeight * 0.5,
-                                  width: constraints.maxWidth * 0.54,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: const Color(0xFFFBB270),
-                                                width: 2,
-                                              ),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                const Spacer(flex: 7),
-                                                Assets.images.secret1.image(),
-                                                const Spacer(flex: 5),
-                                                Assets.images.secret2.image(),
-                                                const Spacer(flex: 7),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(6),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: const Color(0xFFFBB270),
-                                              width: 2,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: ScaleTransition(
-                                            scale:
-                                                _textFieldAnimationController,
-                                            child: TextField(
-                                              onChanged: (_) {
-                                                _validateBTCAddress();
-                                              },
-                                              controller: _btcAddressController,
-                                              maxLines: 2,
-                                              minLines: 1,
-                                              focusNode: _focusNode,
-                                              cursorColor:
-                                                  AppColors.primaryButtonColor,
-                                              cursorWidth: 1,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontFamily:
-                                                    FontFamily.redHatLight,
-                                              ),
-                                              onTapOutside: (_) {
-                                                WidgetsBinding.instance
-                                                    .focusManager.primaryFocus
-                                                    ?.unfocus();
-                                              },
-                                              decoration: InputDecoration(
-                                                fillColor: Colors.white,
-                                                hintText:
-                                                    'Write here your card address ',
-                                                hintMaxLines: 2,
-                                                hintStyle: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatLight,
-                                                  fontSize: 12,
-                                                  color: AppColors
-                                                      .primaryTextColor
-                                                      .withOpacity(
-                                                    0.4,
-                                                  ),
-                                                ),
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 5,
-                                                  vertical: 16,
-                                                ),
-                                                prefixIconConstraints:
-                                                    const BoxConstraints(
-                                                  minWidth: 25,
-                                                  minHeight: 25,
-                                                ),
-                                                prefixIcon: Observer(
-                                                  builder: (context) {
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                        4,
-                                                      ),
-                                                      child: _validationStore
-                                                              .isValid
-                                                          ? ScaleTap(
-                                                              enableFeedback:
-                                                                  false,
-                                                              onPressed:
-                                                                  () async {
-                                                                _focusNode
-                                                                    .unfocus();
-                                                                await Future
-                                                                    .delayed(
-                                                                  const Duration(
-                                                                    milliseconds:
-                                                                        300,
-                                                                  ),
-                                                                );
-                                                                final res =
-                                                                    await context
-                                                                        .pushRoute<
-                                                                            String?>(
-                                                                  const QrScannerRoute(),
-                                                                );
-                                                                if (res ==
-                                                                    null) {
-                                                                  return;
-                                                                }
+                                                      Observer(
+                                                        builder: (context) {
+                                                          final data =
+                                                              _balanceStore.coin
+                                                                  ?.coins.first;
 
-                                                                _btcAddressController
-                                                                    .text = res;
-                                                                await _validateBTCAddress();
-                                                              },
-                                                              child: Assets
-                                                                  .images.qrCode
-                                                                  .image(
-                                                                height: 35,
-                                                                color: AppColors
-                                                                    .secondaryButtons,
+                                                          if (data == null) {
+                                                            return const SizedBox();
+                                                          }
+                                                          if (_balanceStore
+                                                                      .loadings[
+                                                                  _balanceStore
+                                                                      .selectedCard
+                                                                      ?.address] ??
+                                                              false) {
+                                                            return const Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                4,
                                                               ),
-                                                            )
-                                                          : Lottie.asset(
-                                                              'assets/animated_logo/address_validation_success.json',
-                                                              height: 24,
-                                                              controller:
-                                                                  _lottieController,
-                                                              onLoaded:
-                                                                  (composition) {
-                                                                Future.delayed(
-                                                                  const Duration(
-                                                                    milliseconds:
-                                                                        1000,
-                                                                  ),
-                                                                );
-                                                                _lottieController
-                                                                        .duration =
-                                                                    composition
-                                                                        .duration;
-                                                              },
+                                                              child:
+                                                                  CupertinoActivityIndicator(
+                                                                radius: 5,
+                                                              ),
+                                                            );
+                                                          }
+                                                          return Text(
+                                                            (_balanceStore.selectedCard !=
+                                                                        null
+                                                                    ? '\$${(_balanceStore.selectedCard!.balance! / 100000000 * data.price).toStringAsFixed(2)}'
+                                                                    : '')
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 20,
                                                             ),
-                                                    );
-                                                  },
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: AppColors
-                                                        .primaryButtonColor,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    5,
-                                                  ),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Colors.transparent,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    5,
+                                                          ).expandedHorizontally();
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -642,104 +423,358 @@ class _CardFillPageState extends State<CardFillPage>
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
+                      ),
+                    ],
+                  ),
+                  back: Center(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        log(constraints.maxHeight.toString());
+                        return Container(
+                          height: 455,
+                          width: context.width - 74,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 1,
+                                blurRadius: 15,
+                              ),
+                            ],
+                            image: DecorationImage(
+                              image: Assets.images.back.image().image,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              if (constraints.maxHeight < 551)
+                                SizedBox(width: constraints.maxWidth * 0.175)
+                              else
+                                SizedBox(width: constraints.maxWidth * 0.108),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Gap(35),
+                                  Row(
+                                    children: [
+                                      const Gap(15),
+                                      Assets.icons.coinplusLogo
+                                          .image(height: 32),
+                                    ],
+                                  ),
+                                  const Gap(22),
+                                  ScaleTransition(
+                                    scale: _textFieldAnimationController,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          height: 220,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: _focusNode.hasFocus
+                                                  ? Colors.blue
+                                                  : const Color(0xFFFBB270),
+                                              width:
+                                                  _focusNode.hasFocus ? 1 : 3,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(27),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              SizedBox(
+                                                width: 95,
+                                                height: 135,
+                                                child: TextField(
+                                                  textAlign: TextAlign.center,
+                                                  onChanged: (_) {
+                                                    _validateBTCAddress();
+                                                  },
+                                                  controller:
+                                                      _btcAddressController,
+                                                  maxLines: 15,
+                                                  focusNode: _focusNode,
+                                                  cursorColor:
+                                                      AppColors.primary,
+                                                  cursorWidth: 1,
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: AppColors
+                                                        .primaryTextColor,
+                                                    fontFamily:
+                                                        FontFamily.redHatLight,
+                                                  ),
+                                                  onTapOutside: (_) {
+                                                    WidgetsBinding
+                                                        .instance
+                                                        .focusManager
+                                                        .primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Write here your card address',
+                                                    fillColor: Colors.white,
+                                                    hintMaxLines: 10,
+                                                    hintStyle: TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatLight,
+                                                      fontSize: 13,
+                                                      color: AppColors
+                                                          .primaryTextColor
+                                                          .withOpacity(
+                                                        0.4,
+                                                      ),
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 16,
+                                                    ),
+                                                    prefixIconConstraints:
+                                                        const BoxConstraints(
+                                                      minWidth: 25,
+                                                      minHeight: 25,
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        24,
+                                                      ),
+                                                    ),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        24,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Positioned(
+                                              top: 25,
+                                              left: 0,
+                                              right: 0,
+                                              child: _validationStore.isValid
+                                                  ? ScaleTap(
+                                                      onPressed: () async {
+                                                        _focusNode.unfocus();
+                                                        await Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 300,
+                                                          ),
+                                                        );
+                                                        final res =
+                                                            await context
+                                                                .pushRoute<
+                                                                    String?>(
+                                                          const QrScannerRoute(),
+                                                        );
+                                                        if (res == null) {
+                                                          return;
+                                                        }
+
+                                                        _btcAddressController
+                                                            .text = res;
+                                                        await _validateBTCAddress();
+                                                      },
+                                                      child: SizedBox(
+                                                        height: 50,
+                                                        child: Image.asset(
+                                                          'assets/images/qr_code.png',
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Lottie.asset(
+                                                      'assets/animated_logo/address_validation_success.json',
+                                                      height: 40,
+                                                      controller:
+                                                          _lottieController,
+                                                      onLoaded: (composition) {
+                                                        Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 1000,
+                                                          ),
+                                                        );
+                                                        _lottieController
+                                                                .duration =
+                                                            composition
+                                                                .duration;
+                                                      },
+                                                    ),
+                                            );
+                                          },
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Visibility(
+                                              visible:
+                                                  !_validationStore.isValid,
+                                              child: Positioned(
+                                                left: 6,
+                                                right: 6,
+                                                top: 6,
+                                                child: Assets.icons
+                                                    .validationIndicatorGreenTop
+                                                    .image(),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Visibility(
+                                              visible:
+                                                  !_validationStore.isValid,
+                                              child: Positioned(
+                                                left: 6,
+                                                right: 6,
+                                                bottom: 6,
+                                                child: Assets.icons
+                                                    .validationIndicatorGreenBottom
+                                                    .image(),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Gap(29),
+                                  Assets.icons.cardBackText.image(height: 55),
+                                  const Gap(18),
+                                  SizedBox(
+                                    width: 115,
+                                    child: Assets.icons.cardBackLink.image(),
+                                  ),
+                                  const Gap(20),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Gap(20),
+          if (context.height > 667)
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.grey.withOpacity(0.3),
+                ),
+                color: Colors.white.withOpacity(0.7),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(14),
+                child: Column(
+                  children: [
+                    AnimatedSwitcher(
+                      switchInCurve: Curves.decelerate,
+                      duration: Duration(milliseconds: 300),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Coinplus Virtual Card',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: AppColors.textHintsColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Gap(4),
+                    Text(
+                      'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 14,
+                        color: AppColors.textHintsColor,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Gap(20),
-              if (context.height > 667)
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(14),
-                    child: Column(
-                      children: [
-                        AnimatedSwitcher(
-                          switchInCurve: Curves.decelerate,
-                          duration: Duration(milliseconds: 300),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Coinplus Virtual Card',
-                                style: TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.textHintsColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Gap(4),
-                        Text(
-                          'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 14,
-                            color: AppColors.textHintsColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ).paddingHorizontal(16),
-              const Gap(20),
-              Observer(
-                builder: (_) {
-                  return LoadingButton(
-                    onPressed: _addressState.isAddressVisible
-                        ? () {
-                            try {
-                              _balanceStore.saveSelectedCard();
-                              hasShownWallet().then((hasShown) {
-                                if (hasShown) {
-                                  router.pop(const Dashboard());
-                                } else {
-                                  router.pushAndPopAll(
-                                    const WalletProtectionRoute(),
-                                  );
-                                }
-                              });
-                            } catch (e) {
-                              if (!router.stackData
-                                  .indexWhere(
-                                    (element) => element.name == Dashboard.name,
-                                  )
-                                  .isNegative) {
-                                router.pop();
-                                editAddressDialog(context);
-                              }
+            ).paddingHorizontal(16),
+          const Gap(20),
+          Observer(
+            builder: (_) {
+              return LoadingButton(
+                onPressed: _addressState.isAddressVisible
+                    ? () {
+                        try {
+                          _balanceStore.saveSelectedCard();
+                          hasShownWallet().then((hasShown) {
+                            if (hasShown) {
+                              router.pop(const Dashboard());
+                            } else {
+                              router.pushAndPopAll(
+                                const WalletProtectionRoute(),
+                              );
                             }
+                          });
+                        } catch (e) {
+                          if (!router.stackData
+                              .indexWhere(
+                                (element) => element.name == Dashboard.name,
+                              )
+                              .isNegative) {
+                            router.pop();
+                            editAddressDialog(context);
                           }
-                        : null,
-                    child: const Text(
-                      'Save to wallet',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontFamily: FontFamily.redHatSemiBold,
-                      ),
-                    ),
-                  ).paddingHorizontal(49);
-                },
-              ),
-              const Gap(40),
-            ],
-          );
-        },
+                        }
+                      }
+                    : null,
+                child: const Text(
+                  'Save to wallet',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontFamily: FontFamily.redHatSemiBold,
+                  ),
+                ),
+              ).paddingHorizontal(49);
+            },
+          ),
+          const Gap(50),
+        ],
       ),
     );
   }
@@ -756,7 +791,7 @@ class _CardFillPageState extends State<CardFillPage>
       );
       _focusNode.unfocus();
       Future.delayed(
-        const Duration(milliseconds: 600),
+        const Duration(milliseconds: 700),
         _toggleCard,
       );
       Future.delayed(
