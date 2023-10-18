@@ -1,17 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../providers/screen_service.dart';
 import '../../../store/contact_us_state/contact_us_state.dart';
 import '../../../utils/curved_app_bar.dart';
-import '../../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../../widgets/custom_snack_bar/top_snack.dart';
 import '../../../widgets/loading_button.dart';
+import 'email_send_alert.dart';
 
 @RoutePage()
 class ContactUs extends StatefulWidget {
@@ -50,23 +55,24 @@ class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            floating: true,
+            elevation: 0,
             iconTheme: const IconThemeData(color: Colors.white, size: 25),
-            toolbarHeight: 80,
+            toolbarHeight: 110,
             title: const Text(
-              'Any feedback or suggestion \nwould be appreciated',
+              'Hi there 👋\nHow can we help?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 19,
                 color: Colors.white,
                 fontFamily: FontFamily.redHatMedium,
               ),
             ),
             flexibleSpace: CustomPaint(
-              size: const Size(390, 166),
+              size: const Size(50, 200),
               painter: RPSCustomPainter(),
             ),
           ),
@@ -93,6 +99,8 @@ class _ContactUsState extends State<ContactUs> {
                 ).paddingHorizontal(16),
                 const Gap(5),
                 TextField(
+                  autocorrect: false,
+                  enableSuggestions: false,
                   focusNode: _nameFocusNode,
                   style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
@@ -131,7 +139,7 @@ class _ContactUsState extends State<ContactUs> {
                       vertical: 15,
                       horizontal: 10,
                     ),
-                    hintText: 'Enter your name',
+                    hintText: 'Enter your full name',
                     hintStyle: TextStyle(
                       fontFamily: FontFamily.redHatLight,
                       color: AppColors.primaryTextColor.withOpacity(0.5),
@@ -159,6 +167,8 @@ class _ContactUsState extends State<ContactUs> {
                     ).paddingHorizontal(16),
                     const Gap(5),
                     TextFormField(
+                      autocorrect: false,
+                      enableSuggestions: false,
                       style: const TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontSize: 16,
@@ -257,6 +267,8 @@ class _ContactUsState extends State<ContactUs> {
                 ).paddingHorizontal(16),
                 const Gap(5),
                 TextField(
+                  autocorrect: false,
+                  enableSuggestions: false,
                   style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 16,
@@ -311,27 +323,11 @@ class _ContactUsState extends State<ContactUs> {
                 child: LoadingButton(
                   onPressed: store.isButtonEnabled && store.isEmailValid
                       ? () async {
-                          await store.sendEmail();
-
+                          await sendEmail();
                           store.mailController.text = '';
                           store.nameController.text = '';
                           store.messageController.text = '';
                           store.isButtonEnabled = false;
-                          showTopSnackBar(
-                            displayDuration: const Duration(
-                              milliseconds: 400,
-                            ),
-                            Overlay.of(context),
-                            const CustomSnackBar.success(
-                              backgroundColor: Color(0xFF4A4A4A),
-                              message: 'Your feedback has been sent',
-                              textStyle: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          );
                         }
                       : null,
                   child: const Text(
@@ -345,8 +341,69 @@ class _ContactUsState extends State<ContactUs> {
               );
             },
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: Gap(40),
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> sendEmail() async {
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    const serviceId = 'service_tfaf84u';
+    const templateId = 'template_in2otz2';
+    const userId = 'pcZtAC06-Rn1w2mgC';
+
+    unawaited(
+      showDialog(
+        context: context,
+        builder: (_) {
+          return Center(
+            child: SizedBox(
+              height: 80,
+              width: 80,
+              child: Lottie.asset(
+                'assets/animated_logo/loading_animation.json',
+              ),
+            ),
+          );
+        },
+      ),
+    );
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'origin': 'http://localhost',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': userId,
+          'template_params': {
+            'from_name': store.nameController.text,
+            'message': store.messageController.text,
+            'reply_to': store.mailController.text,
+          },
+        }),
+      );
+      if (response.statusCode == 200) {
+        await router.pop();
+        await emailSendAlert(context);
+      } else {
+        await router.pop();
+        await emailSendFailAlert(context);
+      }
+    } catch (error) {
+      await router.pop();
+      await emailSendFailAlert(context);
+    }
   }
 }

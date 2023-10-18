@@ -73,3 +73,99 @@
 //
 //   return b58Secret;
 // }
+// import 'dart:convert';
+// import 'dart:developer';
+//
+// import 'package:bs58check/bs58check.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:pointycastle/digests/sha256.dart';
+
+
+// final bitcoinExp = BigInt.from(100000000);
+//
+// class CryptoUtils {
+//   static Uint8List doubleSha256(Uint8List data) {
+//     final sha256 = SHA256Digest();
+//     final firstHash = sha256.process(data);
+//     final secondHash = sha256.process(firstHash);
+//     return Uint8List.fromList(secondHash);
+//   }
+// }
+//
+// Future<Map<String, String>> getWif(String secret1B58, String secret2B58) async {
+//
+//
+//   final outputs = <String, String>{};
+//
+//
+//   return outputs;
+// }
+//
+// Future<String?> getWifBTC(String secret1B58, String secret2B58) async {
+//   final wifData = await getWif(secret1B58, secret2B58);
+//   return wifData['bitcoin'];
+// }
+//
+// String getPublicKeyFromWif(String wif) {
+//   final decoded = base58.decode(wif);
+//   final pubkeyBytes = decoded.sublist(1, decoded.length - 5);
+//   return base58.encode(pubkeyBytes);
+// }
+//
+// bool isValidPublicAddress(String address) {
+//   if (address.isEmpty) {
+//     return false;
+//   }
+//
+//   try {
+//     final decoded = base58.decode(address);
+//     if (decoded.length != 25) {
+//       return false;
+//     }
+//
+//     final checksum = decoded.sublist(decoded.length - 4);
+//     final body = decoded.sublist(0, decoded.length - 4);
+//     final goodChecksum = CryptoUtils.doubleSha256(Uint8List.fromList(body))
+//         .sublist(0, 4);
+//     if (decoded[0] != 0x00 && decoded[0] != 0x05) {
+//       return false;
+//     }
+//     return listEquals(checksum, goodChecksum);
+//   } catch (e) {
+//     return false;
+//   }
+// }
+//
+// const historyURL = 'https://live.blockcypher.com/btc/address/';
+//
+// Future<Map<String, String>> getBalance(String address) async {
+//   final response = await fetchBalance('https://api.blockcypher.com/v1/btc/main/addrs/$address/balance');
+//   final result = json.decode(response) as Map<String, dynamic>;
+//   final finalBalance = (BigInt.parse(result['final_balance'] as String) / bitcoinExp).toString();
+//   final unconfirmedBalance = (BigInt.parse(result['unconfirmed_balance'] as String) / bitcoinExp).toString();
+//   return {'finalBalance': finalBalance, 'unconfirmedBalance': unconfirmedBalance};
+// }
+//
+// Future<String> fetchBalance(String url) async {
+//   // You can use your preferred method for fetching data from the given URL.
+//   // This example uses a hypothetical fetch function for demonstration purposes.
+//   final response = await fetch(url);
+//   return response;
+// }
+//
+// // The fetch function is a placeholder for an actual HTTP request function.
+// Future<String> fetch(String url) {
+//   // Implement your HTTP request here. This example returns a hypothetical response.
+//   const response = '''
+//     {
+//       "final_balance": "1000000000",
+//       "unconfirmed_balance": "50000000"
+//     }
+//   ''';
+//   return Future.value(response);
+// }
+
+
+
+
+

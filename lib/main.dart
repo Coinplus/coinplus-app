@@ -8,7 +8,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'app.dart';
 import 'constants/flavor_type.dart';
 import 'providers/get_it.dart';
-import 'utils/storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.PROD}) async {
   WidgetsFlutterBinding.ensureInitialized();

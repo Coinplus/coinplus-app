@@ -128,10 +128,10 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
                   milliseconds: 600,
                 ),
                 Overlay.of(context),
-                const CustomSnackBar.success(
-                  backgroundColor: Color(0xFF4A4A4A),
+                 CustomSnackBar.success(
+                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                   message: 'Your bar was removed',
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 14,
                     color: Colors.white,

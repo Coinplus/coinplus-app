@@ -12,7 +12,6 @@ import 'package:toast/toast.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
-import 'qr_toast_message/toast_widget.dart';
 
 @RoutePage<String?>()
 class QrScannerPage extends StatefulWidget {
@@ -61,26 +60,32 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 qrDetect.detectQr();
                 final _data = capture.barcodes.map((e) => e.displayValue).first;
                 await _qrController.stop();
-                if (_data?.length == 63) {
-                  await Future.delayed(const Duration(milliseconds: 400));
-                  final newAddress =
-                      _data?.split('https://air.coinplus.com/btc/');
-                  final splitAddress = newAddress?[1];
-                  await HapticFeedback.heavyImpact();
-                  await router.pop(splitAddress);
-                } else {
-                  qrDetect.validate();
-                  await Future.delayed(const Duration(milliseconds: 400));
-                  await HapticFeedback.vibrate();
-                  await _qrController.stop();
-                  await router.pop();
-                  showToast(
-                    'Please enter a valid address. It should be 32 characters long. Or you can  still scan the QR code from your physical wallet.',
-                    gravity: Toast.top,
-                    duration: 5,
-                  );
-                }
-              },
+                //if (_data?.length == 63) {
+                  await Future.delayed(const Duration(milliseconds: 300));
+                  if(_data?.length == 30) {
+                    await HapticFeedback.mediumImpact();
+                    await router.pop(_data);
+                  } else {
+                    final newAddress =
+                    _data?.split('https://air.coinplus.com/btc/');
+                    final splitAddress = newAddress?[1];
+                    await HapticFeedback.heavyImpact();
+                    await router.pop(splitAddress);
+                  }
+                },
+                // else {
+                //   qrDetect.validate();
+                //   await Future.delayed(const Duration(milliseconds: 400));
+                //   await HapticFeedback.vibrate();
+                //   await _qrController.stop();
+                //   await router.pop();
+                //   showToast(
+                //     'Please enter a valid address. It should be 32 characters long. Or you can  still scan the QR code from your physical wallet.',
+                //     gravity: Toast.top,
+                //     duration: 5,
+                //   );
+                // }
+              //},
             ),
           ),
           Positioned.fill(

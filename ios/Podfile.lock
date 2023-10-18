@@ -76,6 +76,8 @@ PODS:
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -94,6 +96,7 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pin_lock (from `.symlinks/plugins/pin_lock/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -134,6 +137,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/pin_lock/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   uni_links:
@@ -165,6 +170,7 @@ SPEC CHECKSUMS:
   pin_lock: 16335a29b53f4899f294ab5d799af583053a0650
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
+  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
@@ -62,6 +63,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final data = _balanceStore.coin?.coins.firstWhereOrNull(
+      (element) => element.id == 'bitcoin',
+    );
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
@@ -116,13 +120,27 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                         ),
                       ),
                       const Gap(5),
-                      const Text(
-                        r'$0',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatBold,
-                          color: Colors.white,
-                          fontSize: 28,
-                        ),
+                      Observer(
+                        builder: (context) {
+                          if (data == null) {
+                            return const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                          return Text(
+                            '\$${(_balanceStore.allCardsBalances / 100000000 * data.price).toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontFamily: FontFamily.redHatBold,
+                              color: Colors.white,
+                              fontSize: 28,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -199,9 +217,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                  child: Observer(
+                  child: Builder(
                     builder: (_) {
-                      final data = _balanceStore.coin?.coins.first;
                       if (data == null) {
                         return Row(
                           children: [
@@ -243,13 +260,28 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                const Text(
-                                  r'$-',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: AppColors.primaryTextColor,
-                                  ),
+                                const Row(
+                                  children: [
+                                    Text(
+                                      r'$',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 25,
+                                      width: 25,
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 const Gap(4),
                                 Padding(
@@ -269,13 +301,19 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                           fontFamily: FontFamily.redHatBold,
                                         ),
                                       ),
-                                      const Icon(
-                                        Icons.minimize,
-                                        size: 25,
-                                        color: Colors.black,
+                                      const SizedBox(
+                                        height: 25,
+                                        width: 25,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8),
+                                          child: CircularProgressIndicator(
+                                            color: Colors.black,
+                                            strokeWidth: 2,
+                                          ),
+                                        ),
                                       ),
                                       const Text(
-                                        ' - %',
+                                        ' %',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Colors.black,

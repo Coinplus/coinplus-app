@@ -41,14 +41,6 @@ mixin _$ContactUsStore on _ContactUsStore, Store {
     });
   }
 
-  late final _$sendEmailAsyncAction =
-      AsyncAction('_ContactUsStore.sendEmail', context: context);
-
-  @override
-  Future<void> sendEmail() {
-    return _$sendEmailAsyncAction.run(() => super.sendEmail());
-  }
-
   late final _$_ContactUsStoreActionController =
       ActionController(name: '_ContactUsStore', context: context);
 

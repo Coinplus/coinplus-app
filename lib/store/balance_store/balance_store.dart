@@ -57,6 +57,21 @@ abstract class _BalanceStore with Store {
         .asObservable();
   }
 
+  @computed
+  int get allCardsBalances {
+    var cardTotalBalance = 0;
+    var barTotalBalance = 0;
+
+    for (final card in _cards) {
+      cardTotalBalance += card.balance!.toInt();
+    }
+    for (final bar in _bars) {
+      barTotalBalance += bar.balance!.toInt();
+    }
+   final totalBalance = cardTotalBalance + barTotalBalance;
+    return totalBalance;
+  }
+
   @action
   Future<void> getCardsInfo() async {
     if (_cards.isEmpty) {
@@ -259,6 +274,23 @@ abstract class _BalanceStore with Store {
       _bars[barIndex] = updatedCard;
 
       StorageUtils.replaceBar(barAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
+  void changeCardNameAndSave({
+    required String cardAddress,
+    required String newName,
+  }) {
+    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
+
+    if (cardIndex != -1) {
+      final updatedCard = _cards[cardIndex].copyWith(cardName: newName);
+      _cards[cardIndex] = updatedCard;
+
+      StorageUtils.replaceCard(cardAddress, updatedCard);
     } else {
       throw Exception('Card not found');
     }

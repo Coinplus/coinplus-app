@@ -33,7 +33,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
   static const String createPIN = 'Create a passcode';
   static const String reEnterYourPIN = 'Repeat the passcode';
   static const String passDescription = 'Passcode protects your wallet';
-  static const String incorrectPass = 'Incorrect passcode';
 
   final ShakeAnimationController _shakeAnimationController =
       ShakeAnimationController();

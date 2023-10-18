@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +13,7 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 
 @RoutePage()
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends HookWidget {
   const SettingsPage({super.key});
 
   @override
