@@ -840,7 +840,7 @@ class _CardFillPageState extends State<CardFillPage>
               ),
             ),
           ),
-          const Gap(20),
+          const Gap(10),
           if (context.height > 667)
             Observer(
               builder: (context) {
@@ -959,13 +959,13 @@ class _CardFillPageState extends State<CardFillPage>
                                       ).expandedHorizontally(),
                                       const Gap(4),
                                       const Text(
-                                        'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                        'Make sure to keep your card safe! You will need your \nSecret 1 and Secret 2 in the future to manage your crypto.',
                                         style: TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
                                           fontSize: 14,
                                           color: AppColors.textHintsColor,
                                         ),
-                                      ),
+                                      ).expandedHorizontally(),
                                     ],
                                   ),
                                 ),
@@ -1022,7 +1022,17 @@ class _CardFillPageState extends State<CardFillPage>
                 );
               },
             ),
-          const Gap(20),
+          if (context.height > 844)
+            SizedBox(
+              height:
+              context.width * 0.15,
+            )
+          else
+            SizedBox(
+              height:
+              context.width * 0.06,
+            ),
+
           Observer(
             builder: (_) {
               return _lineStore.isLineVisible

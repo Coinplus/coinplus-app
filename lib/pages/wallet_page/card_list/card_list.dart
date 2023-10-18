@@ -275,76 +275,85 @@ class _CardListState extends State<CardList> {
                                   ),
                                 ),
                                 const Gap(4),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: context.width * 0.07,
-                                  ),
-                                  child: ClipRRect(
-                                    child: Container(
-                                      height: 57,
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        color: Colors.black.withOpacity(
-                                          0.3,
+                                ScaleTap(
+                                  onPressed: () {},
+                                  enableFeedback: false,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: context.width * 0.07,
+                                    ),
+                                    child: ClipRRect(
+                                      child: Container(
+                                        height: 57,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(6),
+                                          color: Colors.black.withOpacity(
+                                            0.3,
+                                          ),
                                         ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          const Row(
-                                            children: [
-                                              Text(
-                                                'Balance',
-                                                style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Observer(
-                                            builder: (context) {
-                                              final data = _balanceStore
-                                                  .coin?.coins.first;
-                                              if (data == null) {
-                                                return const SizedBox();
-                                              }
-                                              if (_balanceStore
-                                                      .loadings[card.address] ??
-                                                  false) {
-                                                return const Padding(
-                                                  padding: EdgeInsets.all(
-                                                    4,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    'Balance',
+                                                    style: TextStyle(
+                                                      fontFamily:
+                                                          FontFamily.redHatMedium,
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                    ),
                                                   ),
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 10,
-                                                        width: 10,
-                                                        child:
-                                                            CircularProgressIndicator(
+                                                  Observer(
+                                                    builder: (context) {
+                                                      final data = _balanceStore
+                                                          .coin?.coins.first;
+                                                      if (data == null) {
+                                                        return const SizedBox();
+                                                      }
+                                                      if (_balanceStore
+                                                              .loadings[card.address] ??
+                                                          false) {
+                                                        return const Padding(
+                                                          padding: EdgeInsets.all(
+                                                            4,
+                                                          ),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 10,
+                                                                width: 10,
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        );
+                                                      }
+                                                      return Text(
+                                                        '\$${(card.balance! / 100000000 * data.price).toStringAsFixed(2)}',
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              FontFamily.redHatMedium,
+                                                          fontWeight: FontWeight.w700,
                                                           color: Colors.white,
+                                                          fontSize: 20,
                                                         ),
-                                                      ),
-                                                    ],
+                                                      );
+                                                    },
                                                   ),
-                                                );
-                                              }
-                                              return Text(
-                                                '\$${(card.balance! / 100000000 * data.price).toStringAsFixed(2)}',
-                                                style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                ),
-                                              ).expandedHorizontally();
-                                            },
-                                          ),
-                                        ],
+                                                ],
+                                              ),
+                                            ),
+                                            Assets.icons.alternative.image(height: 50),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

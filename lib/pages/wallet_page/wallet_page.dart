@@ -148,7 +148,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 //Card and Bar Switch
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.15,
-                  right: context.width * 0.04,
+                  right: context.height > 844 ? context.width * 0.055 : context.width * 0.04,
                   child: Container(
                     height: 40,
                     width: 128,
@@ -210,6 +210,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ],
             ),
           ),
+          //Current price(btc)
           if (context.height > 667)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,7 +424,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             ).paddingHorizontal(16)
           else
             const SizedBox(),
-          if (context.height > 667) const Gap(0) else const Gap(0),
           const Spacer(),
         ],
       ),
