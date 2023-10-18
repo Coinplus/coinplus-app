@@ -43,6 +43,10 @@ class $AssetsColorsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Alternative.png
+  AssetGenImage get alternative =>
+      const AssetGenImage('assets/icons/Alternative.png');
+
   /// File path: assets/icons/BTCIcon.png
   AssetGenImage get bTCIcon => const AssetGenImage('assets/icons/BTCIcon.png');
 
@@ -115,6 +119,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/edit.png
   AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
+
+  /// File path: assets/icons/error.png
+  AssetGenImage get error => const AssetGenImage('assets/icons/error.png');
 
   /// File path: assets/icons/face_id_settings.png
   AssetGenImage get faceIdSettings =>
@@ -215,6 +222,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        alternative,
         bTCIcon,
         balance,
         faceIDSuccess,
@@ -235,6 +243,7 @@ class $AssetsIconsGen {
         contentCopy,
         discord,
         edit,
+        error,
         faceIdSettings,
         help,
         history,
