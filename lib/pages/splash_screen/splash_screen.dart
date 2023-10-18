@@ -8,7 +8,6 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/pin_code_state/authentication_pin_bloc.dart';
 import '../../utils/storage_utils.dart';
-import '../custom_pin_code/data/pin_repository.dart';
 
 @RoutePage()
 class SplashScreenPage extends StatefulWidget {
@@ -20,6 +19,7 @@ class SplashScreenPage extends StatefulWidget {
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
   AppBloc? appBloc;
+
   @override
   void initState() {
     super.initState();

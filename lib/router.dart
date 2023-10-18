@@ -62,5 +62,8 @@ class Router extends $Router {
       page: ContactUs.page,
       fullscreenDialog: true,
     ),
+    AdaptiveRoute(
+      page: CardSecretFillRoute.page,
+    ),
   ];
 }

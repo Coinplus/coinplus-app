@@ -72,8 +72,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     milliseconds: 400,
                   ),
                   Overlay.of(context),
-                  const CustomSnackBar.success(
-                    backgroundColor: Color(0xFF4A4A4A),
+                   CustomSnackBar.success(
+                    backgroundColor: Color(0xFF4A4A4A).withOpacity(0.9),
                     message: 'This is not valid Coinplus Bitcoin address',
                     textStyle: TextStyle(
                       fontFamily: FontFamily.redHatMedium,

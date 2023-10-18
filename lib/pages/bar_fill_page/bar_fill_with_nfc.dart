@@ -8,8 +8,6 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-import '../../constants/buttons/button_settings.dart';
-import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -21,14 +19,15 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../widgets/loading_button.dart';
-import '../card_fill_page/edit_address_dialog/edit_address_dialog.dart';
-import '../card_fill_page/skip_button_alert/skip_button_alert.dart';
+import '../card_fill_page/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class BarFillWithNfc extends StatefulWidget {
   const BarFillWithNfc({super.key, this.receivedData});
+
   final String? receivedData;
+
   @override
   State<BarFillWithNfc> createState() => _BarFillWithNfcState();
 }
@@ -420,7 +419,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                               )
                               .isNegative) {
                             router.pop();
-                            editAddressDialog(context);
+                            alreadySavedCard(context);
                           }
                         }
                       }
@@ -435,34 +434,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
               ).paddingHorizontal(49);
             },
           ),
-          const Gap(10),
-          Observer(
-            builder: (_) {
-              return LoadingButton(
-                onPressed: _addressState.isAddressVisible
-                    ? () {
-                        showMyDialog(context);
-                      }
-                    : () {
-                        router.pop(const OnboardingRoute());
-                      },
-                style: context.theme
-                    .buttonStyle(
-                      buttonType: ButtonTypes.TRANSPARENT,
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatSemiBold,
-                        color: AppColors.primaryTextColor,
-                        fontSize: 17,
-                      ),
-                    )
-                    .copyWith(
-                      padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-                    ),
-                child: const Text('Skip'),
-              );
-            },
-          ),
-          const Gap(20),
+          const Gap(50),
           //Gap(max(context.bottomPadding, 12)),
         ],
       ),

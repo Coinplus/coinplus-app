@@ -120,10 +120,10 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                           milliseconds: 400,
                         ),
                         Overlay.of(context),
-                        const CustomSnackBar.success(
-                          backgroundColor: Color(0xFF4A4A4A),
+                         CustomSnackBar.success(
+                          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                           message: 'Address was copied',
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
                             fontSize: 14,
                             color: Colors.white,
@@ -201,7 +201,9 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
             ),
             const Gap(16),
             Divider(
-              color: Colors.grey.withOpacity(0.7),
+              indent: 5,
+              endIndent: 5,
+              color: Colors.grey.withOpacity(0.2),
             ),
             const Gap(16),
             ListTile(
@@ -289,7 +291,9 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
             ),
             const Gap(30),
             Divider(
-              color: Colors.grey.withOpacity(0.7),
+              indent: 5,
+              endIndent: 5,
+              color: Colors.grey.withOpacity(0.2),
             ),
             const Gap(20),
             ListTile(
@@ -345,10 +349,10 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                     milliseconds: 600,
                   ),
                   Overlay.of(context),
-                  const CustomSnackBar.success(
-                    backgroundColor: Color(0xFF4A4A4A),
+                   CustomSnackBar.success(
+                    backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                     message: 'Your card color was changed',
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       fontFamily: FontFamily.redHatMedium,
                       fontSize: 14,
                       color: Colors.white,

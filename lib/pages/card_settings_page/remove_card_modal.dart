@@ -70,9 +70,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             children: [
               const Gap(8),
               IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                onPressed: router.pop,
                 icon: const Icon(
                   Icons.close_sharp,
                   size: 25,
@@ -128,10 +126,10 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   milliseconds: 600,
                 ),
                 Overlay.of(context),
-                const CustomSnackBar.success(
-                  backgroundColor: Color(0xFF4A4A4A),
+                 CustomSnackBar.success(
+                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                   message: 'Your card was removed',
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 14,
                     color: Colors.white,

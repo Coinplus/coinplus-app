@@ -9,6 +9,14 @@ part of 'balance_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BalanceStore on _BalanceStore, Store {
+  Computed<int>? _$allCardsBalancesComputed;
+
+  @override
+  int get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<int>(
+          () => super.allCardsBalances,
+          name: '_BalanceStore.allCardsBalances'))
+      .value;
+
   late final _$_coinAtom = Atom(name: '_BalanceStore._coin', context: context);
 
   CoinDto? get coin {
@@ -208,6 +216,19 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void changeCardNameAndSave(
+      {required String cardAddress, required String newName}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.changeCardNameAndSave');
+    try {
+      return super
+          .changeCardNameAndSave(cardAddress: cardAddress, newName: newName);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void resetSelectedCard() {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
         name: '_BalanceStore.resetSelectedCard');
@@ -232,7 +253,8 @@ mixin _$BalanceStore on _BalanceStore, Store {
   @override
   String toString() {
     return '''
-loadings: ${loadings}
+loadings: ${loadings},
+allCardsBalances: ${allCardsBalances}
     ''';
   }
 }

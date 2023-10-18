@@ -16,6 +16,9 @@ class $AssetsAnimatedLogoGen {
   String get addressValidationSuccess =>
       'assets/animated_logo/address_validation_success.json';
 
+  /// File path: assets/animated_logo/loading_animation.json
+  String get loadingAnimation => 'assets/animated_logo/loading_animation.json';
+
   /// File path: assets/animated_logo/nfcanimation.json
   String get nfcanimation => 'assets/animated_logo/nfcanimation.json';
 
@@ -24,7 +27,7 @@ class $AssetsAnimatedLogoGen {
 
   /// List of all assets
   List<String> get values =>
-      [addressValidationSuccess, nfcanimation, qrAnimation];
+      [addressValidationSuccess, loadingAnimation, nfcanimation, qrAnimation];
 }
 
 class $AssetsColorsGen {
@@ -178,6 +181,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/star.png
   AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
 
+  /// File path: assets/icons/success_email.png
+  AssetGenImage get successEmail =>
+      const AssetGenImage('assets/icons/success_email.png');
+
   /// File path: assets/icons/task_alt.png
   AssetGenImage get taskAlt => const AssetGenImage('assets/icons/task_alt.png');
 
@@ -247,6 +254,7 @@ class $AssetsIconsGen {
         settings,
         shop,
         star,
+        successEmail,
         taskAlt,
         terms,
         trash,
@@ -369,6 +377,10 @@ class $AssetsImagesGen {
   AssetGenImage get contactless =>
       const AssetGenImage('assets/images/contactless.png');
 
+  /// File path: assets/images/filled_back.png
+  AssetGenImage get filledBack =>
+      const AssetGenImage('assets/images/filled_back.png');
+
   /// File path: assets/images/form_bar_selected.png
   AssetGenImage get formBarSelected =>
       const AssetGenImage('assets/images/form_bar_selected.png');
@@ -453,6 +465,7 @@ class $AssetsImagesGen {
         cardForm,
         coinpluslogo,
         contactless,
+        filledBack,
         formBarSelected,
         formCardSelected,
         inactiveCard,

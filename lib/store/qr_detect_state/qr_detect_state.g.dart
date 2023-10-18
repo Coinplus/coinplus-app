@@ -45,6 +45,42 @@ mixin _$QrDetectState on _QrDetectState, Store {
     });
   }
 
+  late final _$_isSecret1ValidAtom =
+      Atom(name: '_QrDetectState._isSecret1Valid', context: context);
+
+  bool get isSecret1Valid {
+    _$_isSecret1ValidAtom.reportRead();
+    return super._isSecret1Valid;
+  }
+
+  @override
+  bool get _isSecret1Valid => isSecret1Valid;
+
+  @override
+  set _isSecret1Valid(bool value) {
+    _$_isSecret1ValidAtom.reportWrite(value, super._isSecret1Valid, () {
+      super._isSecret1Valid = value;
+    });
+  }
+
+  late final _$_isSecret2ValidAtom =
+      Atom(name: '_QrDetectState._isSecret2Valid', context: context);
+
+  bool get isSecret2Valid {
+    _$_isSecret2ValidAtom.reportRead();
+    return super._isSecret2Valid;
+  }
+
+  @override
+  bool get _isSecret2Valid => isSecret2Valid;
+
+  @override
+  set _isSecret2Valid(bool value) {
+    _$_isSecret2ValidAtom.reportWrite(value, super._isSecret2Valid, () {
+      super._isSecret2Valid = value;
+    });
+  }
+
   late final _$_QrDetectStateActionController =
       ActionController(name: '_QrDetectState', context: context);
 
@@ -54,6 +90,28 @@ mixin _$QrDetectState on _QrDetectState, Store {
         name: '_QrDetectState.validate');
     try {
       return super.validate();
+    } finally {
+      _$_QrDetectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validateSecretOne() {
+    final _$actionInfo = _$_QrDetectStateActionController.startAction(
+        name: '_QrDetectState.validateSecretOne');
+    try {
+      return super.validateSecretOne();
+    } finally {
+      _$_QrDetectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validateSecretTwo() {
+    final _$actionInfo = _$_QrDetectStateActionController.startAction(
+        name: '_QrDetectState.validateSecretTwo');
+    try {
+      return super.validateSecretTwo();
     } finally {
       _$_QrDetectStateActionController.endAction(_$actionInfo);
     }
