@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/bar_model/bar_model.dart';
@@ -137,6 +138,15 @@ class StorageUtils {
     await prefs.setString(key, json.encode(value));
   }
 
+  static Future<void> saveWifSecurely(String wif) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: 'wif_key', value: wif);
+  }
+
+  static Future<String?> getWifSecurely() async {
+    const storage = FlutterSecureStorage();
+    return  storage.read(key: 'wif_key');
+  }
   // static Future<void> _remove(String key) async {
   //   final prefs = await sharedInstance;
   //   await prefs.remove(key);
@@ -146,6 +156,8 @@ class StorageUtils {
     final prefs = await sharedInstance;
     await prefs.clear();
   }
+
+
 
   // ignore: avoid_positional_boolean_parameters
   // static Future<void> _setBool(String key, bool value) async {
@@ -171,3 +183,4 @@ class StorageUtils {
 
   // static Future<void> _setInt() async {}
 }
+

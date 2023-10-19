@@ -188,7 +188,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                     return Text(
                                                       (_balanceStore.selectedBar !=
                                                                   null
-                                                              ? '\$${(_balanceStore.selectedBar!.balance! / 100000000 * data!.price).toStringAsFixed(2)}'
+                                                              ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
                                                               : '')
                                                           .toString(),
                                                       style: const TextStyle(

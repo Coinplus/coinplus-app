@@ -63,10 +63,10 @@ abstract class _BalanceStore with Store {
     var barTotalBalance = 0;
 
     for (final card in _cards) {
-      cardTotalBalance += card.balance!.toInt();
+      cardTotalBalance += (card.data!.balance - card.data!.spentTxoSum).toInt();
     }
     for (final bar in _bars) {
-      barTotalBalance += bar.balance!.toInt();
+      barTotalBalance += (bar.data!.balance - bar.data!.spentTxoSum).toInt();
     }
    final totalBalance = cardTotalBalance + barTotalBalance;
     return totalBalance;
@@ -86,9 +86,7 @@ abstract class _BalanceStore with Store {
           index + 1,
           [
             element.copyWith(
-              balance: card.balance,
-              totalReceived: card.totalReceived,
-              totalSent: card.totalSent,
+              data: card.data,
             ),
           ],
         );
@@ -110,9 +108,7 @@ abstract class _BalanceStore with Store {
           index + 1,
           [
             element.copyWith(
-              balance: card.balance,
-              totalReceived: card.totalReceived,
-              totalSent: card.totalSent,
+              data: card.data,
             ),
           ],
         );
@@ -158,7 +154,6 @@ abstract class _BalanceStore with Store {
     try {
       loadings[address] = true;
       final card = await CoinsClient(dio).getCard(
-        coinName: 'btc',
         address: address,
       );
       return card;
@@ -175,7 +170,6 @@ abstract class _BalanceStore with Store {
     try {
       loadings[address] = true;
       final bar = await CoinsClient(dio).getBar(
-        coinName: 'btc',
         address: address,
       );
       return bar;

@@ -65,8 +65,8 @@ dependencies:
   email_validator: ^2.1.17
   share_plus: ^7.2.1
   qr_flutter: ^4.1.0
-
-
+  bs58: ^1.0.2
+  flutter_bitcoin: ^1.0.1
 
 
 

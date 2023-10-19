@@ -28,6 +28,10 @@ mixin _$CardModel {
   int? get totalSent => throw _privateConstructorUsedError;
   int? get balance => throw _privateConstructorUsedError;
   String get cardAddedDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'chain_stats')
+  ChainStats? get data => throw _privateConstructorUsedError;
+  @JsonKey(name: 'mempool_stats')
+  MempoolStats? get mempoolStats => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +52,9 @@ abstract class $CardModelCopyWith<$Res> {
       int? totalReceived,
       int? totalSent,
       int? balance,
-      String cardAddedDate});
+      String cardAddedDate,
+      @JsonKey(name: 'chain_stats') ChainStats? data,
+      @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
 }
 
 /// @nodoc
@@ -72,6 +78,8 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
     Object? totalSent = freezed,
     Object? balance = freezed,
     Object? cardAddedDate = null,
+    Object? data = freezed,
+    Object? mempoolStats = freezed,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -106,6 +114,14 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.cardAddedDate
           : cardAddedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as ChainStats?,
+      mempoolStats: freezed == mempoolStats
+          ? _value.mempoolStats
+          : mempoolStats // ignore: cast_nullable_to_non_nullable
+              as MempoolStats?,
     ) as $Val);
   }
 }
@@ -125,7 +141,9 @@ abstract class _$$_CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
       int? totalReceived,
       int? totalSent,
       int? balance,
-      String cardAddedDate});
+      String cardAddedDate,
+      @JsonKey(name: 'chain_stats') ChainStats? data,
+      @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
 }
 
 /// @nodoc
@@ -147,6 +165,8 @@ class __$$_CardModelCopyWithImpl<$Res>
     Object? totalSent = freezed,
     Object? balance = freezed,
     Object? cardAddedDate = null,
+    Object? data = freezed,
+    Object? mempoolStats = freezed,
   }) {
     return _then(_$_CardModel(
       address: null == address
@@ -181,6 +201,14 @@ class __$$_CardModelCopyWithImpl<$Res>
           ? _value.cardAddedDate
           : cardAddedDate // ignore: cast_nullable_to_non_nullable
               as String,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as ChainStats?,
+      mempoolStats: freezed == mempoolStats
+          ? _value.mempoolStats
+          : mempoolStats // ignore: cast_nullable_to_non_nullable
+              as MempoolStats?,
     ));
   }
 }
@@ -196,7 +224,9 @@ class _$_CardModel implements _CardModel {
       this.totalReceived,
       this.totalSent,
       this.balance,
-      this.cardAddedDate = '01/01/2023'});
+      this.cardAddedDate = '01/01/2023',
+      @JsonKey(name: 'chain_stats') this.data,
+      @JsonKey(name: 'mempool_stats') this.mempoolStats});
 
   factory _$_CardModel.fromJson(Map<String, dynamic> json) =>
       _$$_CardModelFromJson(json);
@@ -221,10 +251,16 @@ class _$_CardModel implements _CardModel {
   @override
   @JsonKey()
   final String cardAddedDate;
+  @override
+  @JsonKey(name: 'chain_stats')
+  final ChainStats? data;
+  @override
+  @JsonKey(name: 'mempool_stats')
+  final MempoolStats? mempoolStats;
 
   @override
   String toString() {
-    return 'CardModel(address: $address, cardColor: $cardColor, cardType: $cardType, cardName: $cardName, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, cardAddedDate: $cardAddedDate)';
+    return 'CardModel(address: $address, cardColor: $cardColor, cardType: $cardType, cardName: $cardName, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, cardAddedDate: $cardAddedDate, data: $data, mempoolStats: $mempoolStats)';
   }
 
   @override
@@ -245,13 +281,26 @@ class _$_CardModel implements _CardModel {
                 other.totalSent == totalSent) &&
             (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.cardAddedDate, cardAddedDate) ||
-                other.cardAddedDate == cardAddedDate));
+                other.cardAddedDate == cardAddedDate) &&
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.mempoolStats, mempoolStats) ||
+                other.mempoolStats == mempoolStats));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, cardColor, cardType,
-      cardName, totalReceived, totalSent, balance, cardAddedDate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      address,
+      cardColor,
+      cardType,
+      cardName,
+      totalReceived,
+      totalSent,
+      balance,
+      cardAddedDate,
+      data,
+      mempoolStats);
 
   @JsonKey(ignore: true)
   @override
@@ -269,14 +318,17 @@ class _$_CardModel implements _CardModel {
 
 abstract class _CardModel implements CardModel {
   const factory _CardModel(
-      {required final String address,
-      final CardColor cardColor,
-      final CardType cardType,
-      final String cardName,
-      final int? totalReceived,
-      final int? totalSent,
-      final int? balance,
-      final String cardAddedDate}) = _$_CardModel;
+          {required final String address,
+          final CardColor cardColor,
+          final CardType cardType,
+          final String cardName,
+          final int? totalReceived,
+          final int? totalSent,
+          final int? balance,
+          final String cardAddedDate,
+          @JsonKey(name: 'chain_stats') final ChainStats? data,
+          @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) =
+      _$_CardModel;
 
   factory _CardModel.fromJson(Map<String, dynamic> json) =
       _$_CardModel.fromJson;
@@ -297,6 +349,12 @@ abstract class _CardModel implements CardModel {
   int? get balance;
   @override
   String get cardAddedDate;
+  @override
+  @JsonKey(name: 'chain_stats')
+  ChainStats? get data;
+  @override
+  @JsonKey(name: 'mempool_stats')
+  MempoolStats? get mempoolStats;
   @override
   @JsonKey(ignore: true)
   _$$_CardModelCopyWith<_$_CardModel> get copyWith =>

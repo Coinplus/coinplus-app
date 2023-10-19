@@ -122,7 +122,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                       const Gap(5),
                       Observer(
                         builder: (context) {
-                          if (data == null) {
+                          final balance = _balanceStore.allCardsBalances;
+                          if (data == null ) {
                             return const SizedBox(
                               height: 40,
                               width: 40,
@@ -133,13 +134,14 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                             );
                           }
                           return Text(
-                            '\$${(_balanceStore.allCardsBalances / 100000000 * data.price).toStringAsFixed(2)}',
+                             '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontFamily: FontFamily.redHatBold,
                               color: Colors.white,
                               fontSize: 28,
                             ),
                           );
+
                         },
                       ),
                     ],

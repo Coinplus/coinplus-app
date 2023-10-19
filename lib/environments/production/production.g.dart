@@ -7,7 +7,7 @@ part of 'production.dart';
 // **************************************************************************
 
 const _$productionEnvJsonLiteral = {
-  'apiUrl': 'https://api.blockcypher.com/v1',
+  'apiUrl': 'https://blockstream.info',
   'coinsUrl': 'https://api.coinstats.app/public/v1',
   'env': 'PROD',
   'production': true

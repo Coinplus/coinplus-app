@@ -19,10 +19,7 @@ class _CoinsClient implements CoinsClient {
   String? baseUrl;
 
   @override
-  Future<CardModel> getCard({
-    required String coinName,
-    required String address,
-  }) async {
+  Future<CardModel> getCard({required String address}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -35,7 +32,7 @@ class _CoinsClient implements CoinsClient {
     )
             .compose(
               _dio.options,
-              '/${coinName}/main/addrs/${address}/balance',
+              '/api/address/${address}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -49,10 +46,7 @@ class _CoinsClient implements CoinsClient {
   }
 
   @override
-  Future<BarModel> getBar({
-    required String coinName,
-    required String address,
-  }) async {
+  Future<BarModel> getBar({required String address}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -65,7 +59,7 @@ class _CoinsClient implements CoinsClient {
     )
             .compose(
               _dio.options,
-              '/${coinName}/main/addrs/${address}/balance',
+              '/api/address/${address}',
               queryParameters: queryParameters,
               data: _data,
             )
