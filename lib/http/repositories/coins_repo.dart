@@ -8,7 +8,7 @@ import '../../models/coin_dto/coin_dto.dart';
 part 'coins_repo.g.dart';
 
 class _Paths {
-  static const balance = '/{coinName}/main/addrs/{address}/balance';
+  static const balance = '/api/address/{address}';
   static const coins = '/coins?skip=0&limit=1&currency=USD';
 }
 
@@ -18,12 +18,10 @@ abstract class CoinsClient {
 
   @GET(_Paths.balance)
   Future<CardModel> getCard({
-    @Path() required String coinName,
     @Path() required String address,
   });
   @GET(_Paths.balance)
   Future<BarModel> getBar({
-    @Path() required String coinName,
     @Path() required String address,
   });
 

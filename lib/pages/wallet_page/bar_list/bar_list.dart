@@ -227,8 +227,8 @@ class _BarListState extends State<BarList> {
                                               );
                                             }
                                             return Text(
-                                              (bar.balance != null
-                                                      ? '\$${(bar.balance! / 100000000 * data!.price).toStringAsFixed(2)}'
+                                              (bar.data?.balance != null
+                                                      ? '\$${(bar.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
                                                       : '')
                                                   .toString(),
                                               style: TextStyle(

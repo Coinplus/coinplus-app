@@ -337,7 +337,7 @@ class _CardListState extends State<CardList> {
                                                         );
                                                       }
                                                       return Text(
-                                                        '\$${(card.balance! / 100000000 * data.price).toStringAsFixed(2)}',
+                                                        '\$${((card.data!.balance - card.data!.spentTxoSum)/ 100000000 * data.price).toStringAsFixed(2)}',
                                                         style: const TextStyle(
                                                           fontFamily:
                                                               FontFamily.redHatMedium,

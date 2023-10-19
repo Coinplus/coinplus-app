@@ -386,7 +386,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         return Text(
                                                           (_balanceStore.selectedCard !=
                                                                       null
-                                                                  ? '\$${(_balanceStore.selectedCard!.balance! / 100000000 * data.price).toStringAsFixed(2)}'
+                                                                  ? '\$${(_balanceStore.selectedCard!.data!.balance / 100000000 * data.price).toStringAsFixed(2)}'
                                                                   : '')
                                                               .toString(),
                                                           style:

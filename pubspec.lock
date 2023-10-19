@@ -81,6 +81,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.3.1"
+  base_x:
+    dependency: transitive
+    description:
+      name: base_x
+      sha256: "519abcdafd637d4b6bd7e72fabd8f9264935f804b9b9f6c5d8411c7d52cbf8fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  bech32:
+    dependency: transitive
+    description:
+      name: bech32
+      sha256: "156cbace936f7720c79a79d16a03efad343b1ef17106716e04b8b8e39f99f7f7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
+  bip32:
+    dependency: transitive
+    description:
+      name: bip32
+      sha256: "54787cd7a111e9d37394aabbf53d1fc5e2e0e0af2cd01c459147a97c0e3f8a97"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  bip39:
+    dependency: transitive
+    description:
+      name: bip39
+      sha256: de1ee27ebe7d96b84bb3a04a4132a0a3007dcdd5ad27dd14aa87a29d97c45edc
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   bloc:
     dependency: transitive
     description:
@@ -97,6 +129,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bs58:
+    dependency: "direct main"
+    description:
+      name: bs58
+      sha256: "3ed24dadf386ca749ff50af678be1131ef569a3583a6f37b87b90c032270c767"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
+  bs58check:
+    dependency: transitive
+    description:
+      name: bs58check
+      sha256: c4a164d42b25c2f6bc88a8beccb9fc7d01440f3c60ba23663a20a70faf484ea9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   build:
     dependency: transitive
     description:
@@ -406,6 +454,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bitcoin:
+    dependency: "direct main"
+    description:
+      name: flutter_bitcoin
+      sha256: "1a783c4d80f83b1ba5dedb4f18ebf522c90dd99e6fa0224b5228f68aa29b3442"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -615,6 +671,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  hex:
+    dependency: transitive
+    description:
+      name: hex
+      sha256: "4e7cd54e4b59ba026432a6be2dd9d96e4c5205725194997193bf871703b82c4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   hive:
     dependency: "direct main"
     description:

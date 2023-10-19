@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../extensions/context_extension.dart';
@@ -17,9 +19,12 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../router.gr.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/btc_validation.dart';
+import '../../utils/coinplus_btc_redeem.dart';
 import '../../widgets/loading_button.dart';
 
 @RoutePage()
@@ -37,6 +42,11 @@ class CardSecretFillPage extends StatefulWidget {
 
 class _CardSecretFillPageState extends State<CardSecretFillPage>
     with TickerProviderStateMixin {
+  SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  late String secret1B58 = '';
+  late  String secret2B58 = '';
   late final TextEditingController _secretOneController =
       TextEditingController();
   late final TextEditingController _secretTwoController =
@@ -58,6 +68,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
     super.initState();
     _toggleCard();
     _secretOneTextField();
+    _secretOneController.text = secret1B58;
+    _secretTwoController.text = secret2B58;
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -131,6 +143,9 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
 
   @override
   Widget build(BuildContext context) {
+    final card = _balanceStore
+        .cards[_settingsState.cardCurrentIndex];
+
     return Scaffold(
       // extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
@@ -272,6 +287,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                   height: 100,
                                                                   child:
                                                                       TextField(
+
                                                                     textAlignVertical:
                                                                         TextAlignVertical
                                                                             .top,
@@ -286,11 +302,13 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                     onChanged: (
                                                                       value,
                                                                     ) {
+
                                                                       if (value
                                                                               .length >
                                                                           25) {
                                                                         _validateSecretOne();
                                                                       }
+                                                                      secret1B58 = value;
                                                                     },
                                                                     controller:
                                                                         _secretOneController,
@@ -525,11 +543,13 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                             .center,
                                                                     onChanged:
                                                                         (value) {
+
                                                                       if (value
                                                                               .length >
                                                                           25) {
                                                                         _validateSecretTwo();
                                                                       }
+                                                                      secret2B58 = value;
                                                                     },
                                                                     controller:
                                                                         _secretTwoController,
@@ -803,21 +823,18 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
           const Gap(40),
           Observer(
             builder: (context) {
-              return !_secretState.secretTwoVisibility
-                  ? LoadingButton(
-                      onPressed: _validationStore.isSecret1Valid
-                          ? null
-                          : _secretState.makeSecretTwoVisible,
-                      child: const Text(
-                        'Next',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
-                      ),
-                    ).paddingHorizontal(49)
-                  : LoadingButton(
-                      onPressed: _validationStore.isSecret2Valid ? null : () {},
+              return LoadingButton(
+                      onPressed: _validationStore.isSecret2Valid ? null : () async {
+                        final wif = await getWif(secret1B58, secret2B58);
+                        final publicKey = wifToPublicKey(wif);
+                        log(card.address);
+                        if(card.address.hashCode == publicKey.hashCode) {
+                          log('Public key: $publicKey');
+                          log('This is your private key: $wif');
+                        } else {
+                          log('Please write correct secret 1 or secret 2 ');
+                        }
+                      },
                       child: const Text(
                         'Continue',
                         style: TextStyle(
@@ -842,6 +859,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
         const Duration(milliseconds: 600),
       );
       _secretOneFocusNode.unfocus();
+      await Future.delayed(const Duration(milliseconds: 500), _secretState.makeSecretTwoVisible,);
+
       await _secretOneLottieController.forward(from: 0);
     } else {}
   }
