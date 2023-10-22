@@ -86,7 +86,7 @@ class _CoinsClient implements CoinsClient {
     )
             .compose(
               _dio.options,
-              '/coins?skip=0&limit=1&currency=USD',
+              '/coins/bitcoin',
               queryParameters: queryParameters,
               data: _data,
             )

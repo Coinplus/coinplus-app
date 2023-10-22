@@ -49,14 +49,7 @@ class Router extends $Router {
       page: BarSettingsRoute.page,
     ),
     AdaptiveRoute(
-      page: CreatePinRoute.page,
-    ),
-    AdaptiveRoute(
-      page: ChangePinRoute.page,
-    ),
-    AdaptiveRoute(
-      page: PinRoute.page,
-      fullscreenDialog: true,
+      page: CustomPinCodeRoute.page,
     ),
     AdaptiveRoute(
       page: ContactUs.page,

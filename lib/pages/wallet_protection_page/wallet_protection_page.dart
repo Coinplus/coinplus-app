@@ -116,7 +116,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
                             milliseconds: 300,
                           ),
                         );
-                        await router.pushAndPopAll(const CreatePinRoute());
+                        // await router.pushAndPopAll(const CreatePinRoute());
                       },
                       value: _walletProtectState.isToggleSwitched && true,
                     );

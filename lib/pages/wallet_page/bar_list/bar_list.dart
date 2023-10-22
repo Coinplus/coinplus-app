@@ -213,8 +213,7 @@ class _BarListState extends State<BarList> {
                                         ),
                                         Observer(
                                           builder: (context) {
-                                            final data =
-                                                _balanceStore.coin?.coins.first;
+                                            final data = _balanceStore.coins;
                                             if (_balanceStore
                                                     .loadings[bar.address] ??
                                                 false) {

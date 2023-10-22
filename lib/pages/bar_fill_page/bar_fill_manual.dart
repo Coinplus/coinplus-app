@@ -113,7 +113,7 @@ class _BarFillPageState extends State<BarFillPage>
             flex: 2,
             child: Observer(
               builder: (context) {
-                final data = _balanceStore.coin?.coins.first;
+                final data = _balanceStore.coins;
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 600),
                   child: AnimatedSwitcher(

@@ -17,20 +17,21 @@ mixin _$BalanceStore on _BalanceStore, Store {
           name: '_BalanceStore.allCardsBalances'))
       .value;
 
-  late final _$_coinAtom = Atom(name: '_BalanceStore._coin', context: context);
+  late final _$_coinsAtom =
+      Atom(name: '_BalanceStore._coins', context: context);
 
-  CoinDto? get coin {
-    _$_coinAtom.reportRead();
-    return super._coin;
+  CoinDto? get coins {
+    _$_coinsAtom.reportRead();
+    return super._coins;
   }
 
   @override
-  CoinDto? get _coin => coin;
+  CoinDto? get _coins => coins;
 
   @override
-  set _coin(CoinDto? value) {
-    _$_coinAtom.reportWrite(value, super._coin, () {
-      super._coin = value;
+  set _coins(CoinDto? value) {
+    _$_coinsAtom.reportWrite(value, super._coins, () {
+      super._coins = value;
     });
   }
 

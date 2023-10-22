@@ -101,7 +101,7 @@ class SettingsPage extends HookWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            router.push(const ChangePinRoute());
+                            router.push(const CustomPinCodeRoute());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

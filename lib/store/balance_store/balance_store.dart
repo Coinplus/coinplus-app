@@ -19,7 +19,7 @@ class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
   @readonly
-  CoinDto? _coin;
+  CoinDto? _coins;
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
@@ -38,7 +38,7 @@ abstract class _BalanceStore with Store {
   }
 
   Future<void> getCoins() async {
-    _coin = await CoinsClient(dio).getCoins();
+    _coins = await CoinsClient(dio).getCoins();
   }
 
   Future<void> getCardsFromStorage() async {
@@ -68,7 +68,7 @@ abstract class _BalanceStore with Store {
     for (final bar in _bars) {
       barTotalBalance += (bar.data!.balance - bar.data!.spentTxoSum).toInt();
     }
-   final totalBalance = cardTotalBalance + barTotalBalance;
+    final totalBalance = cardTotalBalance + barTotalBalance;
     return totalBalance;
   }
 
@@ -278,7 +278,8 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required String newName,
   }) {
-    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex =
+        _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _cards[cardIndex].copyWith(cardName: newName);

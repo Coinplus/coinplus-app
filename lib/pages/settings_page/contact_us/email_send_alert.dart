@@ -61,6 +61,7 @@ Future<void> emailSendAlert(BuildContext context) {
   ).paddingHorizontal(40);
 
   return showDialog<void>(
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return EmergeAlertDialog(

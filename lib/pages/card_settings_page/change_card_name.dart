@@ -162,17 +162,20 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                               newName: _nameState.nameController.text,
                             );
                             await router.pop();
-                            await Future.delayed(const Duration(milliseconds: 100));
+                            await Future.delayed(
+                              const Duration(milliseconds: 100),
+                            );
                             await router.pop(const Dashboard());
                             showTopSnackBar(
                               displayDuration: const Duration(
                                 milliseconds: 600,
                               ),
                               Overlay.of(context),
-                               CustomSnackBar.success(
-                                backgroundColor: Color(0xFF4A4A4A).withOpacity(0.9),
+                              CustomSnackBar.success(
+                                backgroundColor:
+                                    const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Your card name was changed',
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
                                   fontSize: 14,
                                   color: Colors.white,

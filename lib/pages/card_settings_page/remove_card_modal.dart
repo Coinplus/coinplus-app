@@ -126,7 +126,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   milliseconds: 600,
                 ),
                 Overlay.of(context),
-                 CustomSnackBar.success(
+                CustomSnackBar.success(
                   backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                   message: 'Your card was removed',
                   textStyle: const TextStyle(

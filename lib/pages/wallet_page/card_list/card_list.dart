@@ -286,40 +286,40 @@ class _CardListState extends State<CardList> {
                                       child: Container(
                                         height: 57,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(6),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
                                           color: Colors.black.withOpacity(
                                             0.3,
                                           ),
                                         ),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.all(8),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   const Text(
                                                     'Balance',
                                                     style: TextStyle(
-                                                      fontFamily:
-                                                          FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                     ),
                                                   ),
                                                   Observer(
                                                     builder: (context) {
-                                                      final data = _balanceStore
-                                                          .coin?.coins.first;
+                                                      final data =
+                                                          _balanceStore.coins;
+
                                                       if (data == null) {
-                                                        return const SizedBox();
-                                                      }
-                                                      if (_balanceStore
-                                                              .loadings[card.address] ??
-                                                          false) {
                                                         return const Padding(
-                                                          padding: EdgeInsets.all(
+                                                          padding:
+                                                              EdgeInsets.all(
                                                             4,
                                                           ),
                                                           child: Row(
@@ -329,19 +329,22 @@ class _CardListState extends State<CardList> {
                                                                 width: 10,
                                                                 child:
                                                                     CircularProgressIndicator(
-                                                                  color: Colors.white,
+                                                                  color: Colors
+                                                                      .white,
                                                                 ),
                                                               ),
                                                             ],
                                                           ),
                                                         );
                                                       }
+
                                                       return Text(
-                                                        '\$${((card.data!.balance - card.data!.spentTxoSum)/ 100000000 * data.price).toStringAsFixed(2)}',
+                                                        '\$${((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price).toStringAsFixed(2)}',
                                                         style: const TextStyle(
-                                                          fontFamily:
-                                                              FontFamily.redHatMedium,
-                                                          fontWeight: FontWeight.w700,
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontWeight:
+                                                              FontWeight.w700,
                                                           color: Colors.white,
                                                           fontSize: 20,
                                                         ),
@@ -351,7 +354,8 @@ class _CardListState extends State<CardList> {
                                                 ],
                                               ),
                                             ),
-                                            Assets.icons.alternative.image(height: 50),
+                                            Assets.icons.alternative
+                                                .image(height: 50),
                                           ],
                                         ),
                                       ),

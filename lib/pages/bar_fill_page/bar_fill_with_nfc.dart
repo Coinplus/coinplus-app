@@ -91,7 +91,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
             flex: 2,
             child: Observer(
               builder: (context) {
-                final data = _balanceStore.coin?.coins.first;
+                final data = _balanceStore.coins;
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 800),
                   child: _addressState.isAddressVisible

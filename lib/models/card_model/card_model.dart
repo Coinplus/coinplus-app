@@ -53,7 +53,8 @@ class ChainStats {
   factory ChainStats.fromJson(Map<String, dynamic> json) =>
       _$ChainStatsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ChainStatsToJson(this); // Define toJson method
+  Map<String, dynamic> toJson() =>
+      _$ChainStatsToJson(this); // Define toJson method
 }
 
 @JsonSerializable()

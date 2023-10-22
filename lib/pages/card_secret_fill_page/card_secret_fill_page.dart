@@ -13,19 +13,22 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../constants/card_color.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/btc_validation.dart';
-import '../../utils/coinplus_btc_redeem.dart';
+import '../../utils/compute_private_key.dart';
 import '../../widgets/loading_button.dart';
+import 'secrets_success/secrets_success.dart';
 
 @RoutePage()
 class CardSecretFillPage extends StatefulWidget {
@@ -43,14 +46,16 @@ class CardSecretFillPage extends StatefulWidget {
 class _CardSecretFillPageState extends State<CardSecretFillPage>
     with TickerProviderStateMixin {
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   late String secret1B58 = '';
-  late  String secret2B58 = '';
+  late String secret2B58 = '';
   late final TextEditingController _secretOneController =
       TextEditingController();
   late final TextEditingController _secretTwoController =
       TextEditingController();
+  late AnimationController _lottieController;
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   late AnimationController _secretOneAnimationController;
@@ -70,6 +75,10 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
     _secretOneTextField();
     _secretOneController.text = secret1B58;
     _secretTwoController.text = secret2B58;
+    _lottieController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -143,11 +152,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
 
   @override
   Widget build(BuildContext context) {
-    final card = _balanceStore
-        .cards[_settingsState.cardCurrentIndex];
-
+    final card = _balanceStore.cards[_settingsState.cardCurrentIndex];
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -188,7 +194,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                           ),
                         ],
                         image: DecorationImage(
-                          image: Assets.images.front.image().image,
+                          image:
+                              getFrontImageForCardColor(card.cardColor).image,
                         ),
                       ),
                     ),
@@ -214,7 +221,9 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: Assets.images.filledBack.image().image,
+                                  image:
+                                      getBackImageForCardColor(card.cardColor)
+                                          .image,
                                 ),
                               ),
                               child: Row(
@@ -287,7 +296,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                   height: 100,
                                                                   child:
                                                                       TextField(
-
                                                                     textAlignVertical:
                                                                         TextAlignVertical
                                                                             .top,
@@ -302,13 +310,14 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                     onChanged: (
                                                                       value,
                                                                     ) {
-
                                                                       if (value
                                                                               .length >
                                                                           25) {
                                                                         _validateSecretOne();
                                                                       }
-                                                                      secret1B58 = value;
+
+                                                                      secret1B58 =
+                                                                          value;
                                                                     },
                                                                     controller:
                                                                         _secretOneController,
@@ -543,13 +552,14 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                             .center,
                                                                     onChanged:
                                                                         (value) {
-
                                                                       if (value
                                                                               .length >
                                                                           25) {
                                                                         _validateSecretTwo();
                                                                       }
-                                                                      secret2B58 = value;
+
+                                                                      secret2B58 =
+                                                                          value;
                                                                     },
                                                                     controller:
                                                                         _secretTwoController,
@@ -824,31 +834,113 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
           Observer(
             builder: (context) {
               return LoadingButton(
-                      onPressed: _validationStore.isSecret2Valid ? null : () async {
-                        final wif = await getWif(secret1B58, secret2B58);
-                        final publicKey = wifToPublicKey(wif);
-                        log(card.address);
-                        if(card.address.hashCode == publicKey.hashCode) {
-                          log('Public key: $publicKey');
-                          log('This is your private key: $wif');
-                        } else {
-                          log('Please write correct secret 1 or secret 2 ');
+                onPressed: _validationStore.isSecret2Valid
+                    ? null
+                    : () async {
+                        unawaited(
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (_) {
+                              return Center(
+                                child: SizedBox(
+                                  height: 60,
+                                  width: 60,
+                                  child: Lottie.asset(
+                                    'assets/animated_logo/loading_animation.json',
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                        try {
+                          final wif = await getWif(secret1B58, secret2B58);
+                          final publicKey = wifToPublicKey(wif);
+                          log(card.address);
+                          if (card.address.hashCode == publicKey.hashCode) {
+                            log('Public key: $publicKey');
+                            log('This is your private key: $wif');
+                            await router.pop();
+                            await secretsSuccessAlert(context);
+                          } else {
+                            log('Please write correct secret 1 or secret 2 ');
+                          }
+                        } catch (e) {
+                          log(e.toString());
                         }
                       },
-                      child: const Text(
-                        'Continue',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
-                      ),
-                    ).paddingHorizontal(49);
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontFamily: FontFamily.redHatSemiBold,
+                  ),
+                ),
+              ).paddingHorizontal(49);
             },
           ),
           const Gap(50),
         ],
       ),
     );
+  }
+
+  Future<void> showLoadingDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return Center(
+          child: SizedBox(
+            height: 80,
+            width: 80,
+            child: Lottie.asset(
+              'assets/animated_logo/loading_animation.json',
+              controller: _lottieController,
+              onLoaded: (composition) {
+                Future.delayed(
+                  const Duration(
+                    milliseconds: 1000,
+                  ),
+                );
+                _lottieController.duration = composition.duration;
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  DecorationImage getBackImageForCardColor(CardColor color) {
+    switch (color) {
+      case CardColor.ORANGE:
+        return DecorationImage(image: Assets.images.filledBack.image().image);
+      case CardColor.WHITE:
+        return DecorationImage(
+          image: Assets.images.filledBackWhite.image().image,
+        );
+      case CardColor.BROWN:
+        return DecorationImage(
+          image: Assets.images.filledBackBrown.image().image,
+        );
+      default:
+        return DecorationImage(image: Assets.images.filledBack.image().image);
+    }
+  }
+
+  DecorationImage getFrontImageForCardColor(CardColor color) {
+    switch (color) {
+      case CardColor.ORANGE:
+        return DecorationImage(image: Assets.images.orangeCard.image().image);
+      case CardColor.WHITE:
+        return DecorationImage(image: Assets.images.whiteCard.image().image);
+      case CardColor.BROWN:
+        return DecorationImage(image: Assets.images.brownCard.image().image);
+      default:
+        return DecorationImage(image: Assets.images.filledBack.image().image);
+    }
   }
 
   Future<void> _validateSecretOne() async {
@@ -859,7 +951,10 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
         const Duration(milliseconds: 600),
       );
       _secretOneFocusNode.unfocus();
-      await Future.delayed(const Duration(milliseconds: 500), _secretState.makeSecretTwoVisible,);
+      await Future.delayed(
+        const Duration(milliseconds: 500),
+        _secretState.makeSecretTwoVisible,
+      );
 
       await _secretOneLottieController.forward(from: 0);
     } else {}

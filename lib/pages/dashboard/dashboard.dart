@@ -26,6 +26,7 @@ import '../../utils/btc_validation.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
+import '../settings_page/contact_us/send_wait_alert/send_wait_alert.dart';
 import '../settings_page/settings_page.dart';
 import '../wallet_page/wallet_page.dart';
 
@@ -82,6 +83,7 @@ class Dashboard extends HookWidget {
     final _pageController = usePageController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -272,7 +274,7 @@ class Dashboard extends HookWidget {
                                                           ),
                                                         ],
                                                       ),
-                                                      const Gap(20),
+                                                      const Gap(60),
                                                       Container(
                                                         decoration:
                                                             BoxDecoration(
@@ -317,18 +319,28 @@ class Dashboard extends HookWidget {
                                                                   (_) {
                                                                     HapticFeedback
                                                                         .mediumImpact();
-                                                                    Overlay.of(context);
-                                                                    CustomSnackBar.success(
-                                                                    backgroundColor:
-                                                                    const Color(0xFF4A4A4A)
-                                                                        .withOpacity(0.9),
-                                                                    message: 'Address was copied',
-                                                                    textStyle: const TextStyle(
-                                                                    fontFamily:
-                                                                    FontFamily.redHatMedium,
-                                                                    fontSize: 14,
-                                                                    color: Colors.white,
-                                                                    ),
+                                                                    Overlay.of(
+                                                                      context,
+                                                                    );
+                                                                    CustomSnackBar
+                                                                        .success(
+                                                                      backgroundColor:
+                                                                          const Color(
+                                                                        0xFF4A4A4A,
+                                                                      ).withOpacity(
+                                                                        0.9,
+                                                                      ),
+                                                                      message:
+                                                                          'Address was copied',
+                                                                      textStyle:
+                                                                          const TextStyle(
+                                                                        fontFamily:
+                                                                            FontFamily.redHatMedium,
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
                                                                     );
                                                                   },
                                                                 );
@@ -488,7 +500,7 @@ class Dashboard extends HookWidget {
                                                           ),
                                                         ),
                                                       ),
-                                                      const Gap(140),
+                                                      const Gap(120),
                                                       LoadingButton(
                                                         onPressed: () {
                                                           Share.share(
@@ -580,8 +592,7 @@ class Dashboard extends HookWidget {
                                             ),
                                         onPressed: () async {
                                           await router.pop();
-                                          await router
-                                              .push(CardSecretFillRoute());
+                                          await sendWaitAlert(context);
                                         },
                                         child: Row(
                                           children: [

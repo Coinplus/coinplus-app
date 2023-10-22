@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
@@ -44,12 +41,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     setWalletShown();
-    Timer.periodic(
-      const Duration(minutes: 1),
-      (timer) {
-        _balanceStore.getCoins();
-      },
-    );
+    // Timer.periodic(
+    //   const Duration(minutes: 1),
+    //   (timer) {
+    //     _balanceStore.getCoins();
+    //   },
+    // );
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
@@ -63,10 +60,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final data = _balanceStore.coin?.coins.firstWhereOrNull(
-      (element) => element.id == 'bitcoin',
-    );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
         children: [
@@ -122,26 +117,26 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                       const Gap(5),
                       Observer(
                         builder: (context) {
+                          final data = _balanceStore.coins;
                           final balance = _balanceStore.allCardsBalances;
-                          if (data == null ) {
-                            return const SizedBox(
-                              height: 40,
-                              width: 40,
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
+                          if (data == null) {
+                            return const Padding(
+                              padding: EdgeInsets.all(8),
+                              child: SizedBox(
+                                height: 15,
+                                width: 15,
                                 child: CircularProgressIndicator(),
                               ),
                             );
                           }
                           return Text(
-                             '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
+                            '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontFamily: FontFamily.redHatBold,
                               color: Colors.white,
                               fontSize: 28,
                             ),
                           );
-
                         },
                       ),
                     ],
@@ -150,7 +145,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 //Card and Bar Switch
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.15,
-                  right: context.height > 844 ? context.width * 0.055 : context.width * 0.04,
+                  right: context.height > 844
+                      ? context.width * 0.055
+                      : context.width * 0.04,
                   child: Container(
                     height: 40,
                     width: 128,
@@ -220,8 +217,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                  child: Builder(
+                  child: Observer(
                     builder: (_) {
+                      final data = _balanceStore.coins;
                       if (data == null) {
                         return Row(
                           children: [
@@ -274,8 +272,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 25,
-                                      width: 25,
+                                      height: 22,
+                                      width: 22,
                                       child: Padding(
                                         padding: EdgeInsets.all(8),
                                         child: CircularProgressIndicator(
@@ -305,8 +303,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                         ),
                                       ),
                                       const SizedBox(
-                                        height: 25,
-                                        width: 25,
+                                        height: 22,
+                                        width: 22,
                                         child: Padding(
                                           padding: EdgeInsets.all(8),
                                           child: CircularProgressIndicator(
@@ -330,95 +328,96 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                             ),
                           ],
                         );
-                      }
-                      return Row(
-                        children: [
-                          Assets.icons.bTCIcon.image(height: 24),
-                          const Gap(8),
-                          Text(
-                            data.name,
-                            style: const TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const Gap(8),
-                          Column(
-                            children: [
-                              const Gap(3),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(2),
-                                  color: AppColors.silver,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4,
-                                  vertical: 2,
-                                ),
-                                child: Text(
-                                  data.symbol.toUpperCase(),
-                                  style: const TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 10,
-                                    color: AppColors.textHintsColor,
-                                  ),
-                                ),
+                      } else {
+                        return Row(
+                          children: [
+                            Assets.icons.bTCIcon.image(height: 24),
+                            const Gap(8),
+                            Text(
+                              data.name,
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                color: Colors.black,
+                                fontSize: 16,
                               ),
-                            ],
-                          ),
-                          const Spacer(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              buildCoinWidget(data.price),
-                              const Gap(4),
-                              Padding(
-                                padding: const EdgeInsets.all(3),
-                                child: Row(
-                                  children: [
-                                    Assets.icons.schedule.image(
-                                      height: 18,
+                            ),
+                            const Gap(8),
+                            Column(
+                              children: [
+                                const Gap(3),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
+                                    color: AppColors.silver,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 2,
+                                  ),
+                                  child: Text(
+                                    data.symbol.toUpperCase(),
+                                    style: const TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 10,
                                       color: AppColors.textHintsColor,
                                     ),
-                                    const Gap(4),
-                                    const Text(
-                                      '24h',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: AppColors.textHintsColor,
-                                        fontFamily: FontFamily.redHatBold,
-                                      ),
-                                    ),
-                                    if (data.priceChange1d > 0)
-                                      const Icon(
-                                        Icons.arrow_drop_up,
-                                        size: 25,
-                                        color: Colors.green,
-                                      )
-                                    else
-                                      const Icon(
-                                        Icons.arrow_drop_down,
-                                        size: 25,
-                                        color: Colors.red,
-                                      ),
-                                    Text(
-                                      '${data.priceChange1d.toStringAsFixed(2)} %',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: data.priceChange1d > 0
-                                            ? Colors.green
-                                            : Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
+                              ],
+                            ),
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                buildCoinWidget(data.price),
+                                const Gap(4),
+                                Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Row(
+                                    children: [
+                                      Assets.icons.schedule.image(
+                                        height: 18,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                      const Gap(4),
+                                      const Text(
+                                        '24h',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: AppColors.textHintsColor,
+                                          fontFamily: FontFamily.redHatBold,
+                                        ),
+                                      ),
+                                      if (data.priceChange1d > 0)
+                                        const Icon(
+                                          Icons.arrow_drop_up,
+                                          size: 25,
+                                          color: Colors.green,
+                                        )
+                                      else
+                                        const Icon(
+                                          Icons.arrow_drop_down,
+                                          size: 25,
+                                          color: Colors.red,
+                                        ),
+                                      Text(
+                                        '${data.priceChange1d.toStringAsFixed(2)} %',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: data.priceChange1d > 0
+                                              ? Colors.green
+                                              : Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
                     },
                   ),
                 ),
