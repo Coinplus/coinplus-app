@@ -17,6 +17,14 @@ abstract class _CardSettingState with Store {
   @observable
   CardColor selectedColor = CardColor.ORANGE;
 
+  @observable
+  bool isColorChanged = false;
+
+  @action
+  void colorState() {
+    isColorChanged = true;
+  }
+
   @action
   Future<void> changeColor(CardColor color) async {
     selectedColor = color;

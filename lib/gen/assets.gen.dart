@@ -57,6 +57,10 @@ class $AssetsIconsGen {
   AssetGenImage get faceIDSuccess =>
       const AssetGenImage('assets/icons/Face ID Success.png');
 
+  /// File path: assets/icons/Megaphone.png
+  AssetGenImage get megaphone =>
+      const AssetGenImage('assets/icons/Megaphone.png');
+
   /// File path: assets/icons/Notch.png
   AssetGenImage get notch => const AssetGenImage('assets/icons/Notch.png');
 
@@ -226,6 +230,7 @@ class $AssetsIconsGen {
         bTCIcon,
         balance,
         faceIDSuccess,
+        megaphone,
         notch,
         arrowBack,
         arrowForwardIos,
@@ -285,9 +290,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/Back.png
   AssetGenImage get back => const AssetGenImage('assets/images/Back.png');
 
-  /// File path: assets/images/Brown_Card.png
+  /// File path: assets/images/Brown_card.png
   AssetGenImage get brownCard =>
-      const AssetGenImage('assets/images/Brown_Card.png');
+      const AssetGenImage('assets/images/Brown_card.png');
 
   /// File path: assets/images/Form bar.png
   AssetGenImage get formBar =>
@@ -318,9 +323,9 @@ class $AssetsImagesGen {
   AssetGenImage get topCircle =>
       const AssetGenImage('assets/images/Top circle.png');
 
-  /// File path: assets/images/White_Card.png
+  /// File path: assets/images/White_card.png
   AssetGenImage get whiteCard =>
-      const AssetGenImage('assets/images/White_Card.png');
+      const AssetGenImage('assets/images/White_card.png');
 
   /// File path: assets/images/bar_empty.png
   AssetGenImage get barEmpty =>
@@ -389,6 +394,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/filled_back.png
   AssetGenImage get filledBack =>
       const AssetGenImage('assets/images/filled_back.png');
+
+  /// File path: assets/images/filled_back_brown.png
+  AssetGenImage get filledBackBrown =>
+      const AssetGenImage('assets/images/filled_back_brown.png');
+
+  /// File path: assets/images/filled_back_white.png
+  AssetGenImage get filledBackWhite =>
+      const AssetGenImage('assets/images/filled_back_white.png');
 
   /// File path: assets/images/form_bar_selected.png
   AssetGenImage get formBarSelected =>
@@ -475,6 +488,8 @@ class $AssetsImagesGen {
         coinpluslogo,
         contactless,
         filledBack,
+        filledBackBrown,
+        filledBackWhite,
         formBarSelected,
         formCardSelected,
         inactiveCard,

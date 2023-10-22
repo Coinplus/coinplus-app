@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager/platform_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/buttons/button_settings.dart';
@@ -72,10 +74,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     milliseconds: 400,
                   ),
                   Overlay.of(context),
-                   CustomSnackBar.success(
-                    backgroundColor: Color(0xFF4A4A4A).withOpacity(0.9),
+                  CustomSnackBar.success(
+                    backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                     message: 'This is not valid Coinplus Bitcoin address',
-                    textStyle: TextStyle(
+                    textStyle: const TextStyle(
                       fontFamily: FontFamily.redHatMedium,
                       fontSize: 14,
                       color: Colors.white,
@@ -144,10 +146,31 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             alertMessage:
                                 'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
                             onDiscovered: (tag) async {
+                              final nfcA = MiFare.from(tag);
+                              final ident = nfcA?.identifier
+                                  .map(
+                                    (byte) =>
+                                        byte.toRadixString(16).padLeft(2, '0'),
+                                  )
+                                  .join();
+                              log(ident.toString());
+                              final signature = await nfcA?.sendMiFareCommand(
+                                Uint8List.fromList([60, 0]),
+                              );
+                              log(
+                                signature!
+                                    .map(
+                                      (byte) => byte
+                                          .toRadixString(16)
+                                          .padLeft(2, '0'),
+                                    )
+                                    .join()
+                                    .toString(),
+                              );
+
                               final ndef = Ndef.from(tag);
                               final records = ndef!.cachedMessage!.records;
                               dynamic walletAddress;
-
                               if (records.length >= 2) {
                                 final hasJson = records[1].payload;
                                 final payloadString =

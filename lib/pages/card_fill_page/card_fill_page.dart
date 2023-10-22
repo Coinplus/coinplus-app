@@ -30,12 +30,12 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/btc_validation.dart';
+import '../../utils/custom_paint_lines.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 import 'already_saved_card_dialog/already_saved_card_dialog.dart';
-import 'secret1_and_secret2_lines/custom_paint_lines.dart';
 
 @RoutePage()
 class CardFillPage extends StatefulWidget {
@@ -360,12 +360,8 @@ class _CardFillPageState extends State<CardFillPage>
                                                     Observer(
                                                       builder: (context) {
                                                         final data =
-                                                            _balanceStore.coin
-                                                                ?.coins.first;
+                                                            _balanceStore.coins;
 
-                                                        if (data == null) {
-                                                          return const SizedBox();
-                                                        }
                                                         if (_balanceStore
                                                                     .loadings[
                                                                 _balanceStore
@@ -386,7 +382,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         return Text(
                                                           (_balanceStore.selectedCard !=
                                                                       null
-                                                                  ? '\$${(_balanceStore.selectedCard!.data!.balance / 100000000 * data.price).toStringAsFixed(2)}'
+                                                                  ? '\$${((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price).toStringAsFixed(2)}'
                                                                   : '')
                                                               .toString(),
                                                           style:
@@ -1024,15 +1020,12 @@ class _CardFillPageState extends State<CardFillPage>
             ),
           if (context.height > 844)
             SizedBox(
-              height:
-              context.width * 0.15,
+              height: context.width * 0.15,
             )
           else
             SizedBox(
-              height:
-              context.width * 0.06,
+              height: context.width * 0.06,
             ),
-
           Observer(
             builder: (_) {
               return _lineStore.isLineVisible

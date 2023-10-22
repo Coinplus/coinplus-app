@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../constants/bar_color.dart';
-import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 
 part 'bar_model.freezed.dart';

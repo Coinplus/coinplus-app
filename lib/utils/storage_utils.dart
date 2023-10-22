@@ -145,7 +145,7 @@ class StorageUtils {
 
   static Future<String?> getWifSecurely() async {
     const storage = FlutterSecureStorage();
-    return  storage.read(key: 'wif_key');
+    return storage.read(key: 'wif_key');
   }
   // static Future<void> _remove(String key) async {
   //   final prefs = await sharedInstance;
@@ -156,8 +156,6 @@ class StorageUtils {
     final prefs = await sharedInstance;
     await prefs.clear();
   }
-
-
 
   // ignore: avoid_positional_boolean_parameters
   // static Future<void> _setBool(String key, bool value) async {
@@ -183,4 +181,3 @@ class StorageUtils {
 
   // static Future<void> _setInt() async {}
 }
-

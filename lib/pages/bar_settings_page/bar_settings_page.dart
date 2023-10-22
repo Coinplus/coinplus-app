@@ -119,8 +119,9 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                           milliseconds: 400,
                         ),
                         Overlay.of(context),
-                         CustomSnackBar.success(
-                          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                        CustomSnackBar.success(
+                          backgroundColor:
+                              const Color(0xFF4A4A4A).withOpacity(0.9),
                           message: 'Address was copied',
                           textStyle: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
@@ -336,7 +337,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                     milliseconds: 600,
                   ),
                   Overlay.of(context),
-                   CustomSnackBar.success(
+                  CustomSnackBar.success(
                     backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                     message: 'Your bar color was changed',
                     textStyle: const TextStyle(

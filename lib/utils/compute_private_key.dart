@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:bs58/bs58.dart';
@@ -12,11 +13,13 @@ final N = BigInt.parse(
   radix: 16,
 );
 
-Uint8List scryptHash(String data) {
-  const coinplus = ScryptSecurity('coinplus', N: 16384, r: 8, p: 8);
-  final result = scrypt(data.codeUnits, [], security: coinplus, dklen: 32);
+Future<Uint8List> scryptHash(String data) async {
+  return Isolate.run(() {
+    const coinplus = ScryptSecurity('coinplus', N: 16384, r: 8, p: 8);
+    final result = scrypt(data.codeUnits, [], security: coinplus, dklen: 32);
 
-  return result.bytes;
+    return result.bytes;
+  });
 }
 
 Future<BigInt> computePrivateKeySec256k1(
@@ -30,8 +33,8 @@ Future<BigInt> computePrivateKeySec256k1(
       ? secret2B58arg.substring(0, 29)
       : secret2B58arg;
 
-  final hashedSecret1 = scryptHash(secret1B58);
-  final hashedSecret2 = scryptHash(secret2B58);
+  final hashedSecret1 = await scryptHash(secret1B58);
+  final hashedSecret2 = await scryptHash(secret2B58);
 
   final n1 = BigInt.parse(bytesToHex(hashedSecret1), radix: 16);
   final n2 = BigInt.parse(bytesToHex(hashedSecret2), radix: 16);

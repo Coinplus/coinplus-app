@@ -12,5 +12,4 @@ abstract class _CheckboxState with Store {
   void makeActive() {
     isActive = !isActive;
   }
-
 }

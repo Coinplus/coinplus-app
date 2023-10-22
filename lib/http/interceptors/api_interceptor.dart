@@ -8,7 +8,10 @@ import '../../providers/flavor_service.dart';
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.baseUrl = GetIt.I<FlavorService>().config.apiUrl;
+    options
+      ..baseUrl = GetIt.I<FlavorService>().config.apiUrl
+      ..headers = {'X-API-KEY': '7MupJP2wamYKNOhwk4niDhs2AppPTesddVGRHxpEKLU='};
+
     if (options.path.contains('/coins')) {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }

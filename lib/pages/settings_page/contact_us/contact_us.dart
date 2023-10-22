@@ -363,11 +363,12 @@ class _ContactUsState extends State<ContactUs> {
     unawaited(
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (_) {
           return Center(
             child: SizedBox(
-              height: 80,
-              width: 80,
+              height: 60,
+              width: 60,
               child: Lottie.asset(
                 'assets/animated_logo/loading_animation.json',
               ),

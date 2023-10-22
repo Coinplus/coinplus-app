@@ -9,7 +9,7 @@ part 'coins_repo.g.dart';
 
 class _Paths {
   static const balance = '/api/address/{address}';
-  static const coins = '/coins?skip=0&limit=1&currency=USD';
+  static const coins = '/coins/bitcoin';
 }
 
 @RestApi()

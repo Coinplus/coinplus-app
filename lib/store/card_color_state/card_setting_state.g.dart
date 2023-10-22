@@ -25,6 +25,22 @@ mixin _$CardSettingState on _CardSettingState, Store {
     });
   }
 
+  late final _$isColorChangedAtom =
+      Atom(name: '_CardSettingState.isColorChanged', context: context);
+
+  @override
+  bool get isColorChanged {
+    _$isColorChangedAtom.reportRead();
+    return super.isColorChanged;
+  }
+
+  @override
+  set isColorChanged(bool value) {
+    _$isColorChangedAtom.reportWrite(value, super.isColorChanged, () {
+      super.isColorChanged = value;
+    });
+  }
+
   late final _$changeColorAsyncAction =
       AsyncAction('_CardSettingState.changeColor', context: context);
 
@@ -33,10 +49,25 @@ mixin _$CardSettingState on _CardSettingState, Store {
     return _$changeColorAsyncAction.run(() => super.changeColor(color));
   }
 
+  late final _$_CardSettingStateActionController =
+      ActionController(name: '_CardSettingState', context: context);
+
+  @override
+  void colorState() {
+    final _$actionInfo = _$_CardSettingStateActionController.startAction(
+        name: '_CardSettingState.colorState');
+    try {
+      return super.colorState();
+    } finally {
+      _$_CardSettingStateActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-selectedColor: ${selectedColor}
+selectedColor: ${selectedColor},
+isColorChanged: ${isColorChanged}
     ''';
   }
 }
