@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager/platform_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../extensions/context_extension.dart';
@@ -16,6 +18,7 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../utils/nxp_originality_check.dart';
 import '../../../widgets/loading_button.dart';
 
 class CardScanMethodsPage extends StatelessWidget {
@@ -45,6 +48,14 @@ class CardScanMethodsPage extends StatelessWidget {
                     alertMessage:
                         'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
                     onDiscovered: (tag) async {
+                      final mifare = MiFare.from(tag);
+                      final uid = mifare!.identifier;
+                      final signature = await mifare
+                          .sendMiFareCommand(Uint8List.fromList([0x3C, 0x00]));
+
+                      // TODO: Needs if else statement for iOS
+                      verifyOriginality(uid, signature);
+
                       final ndef = Ndef.from(tag);
                       final records = ndef!.cachedMessage!.records;
                       dynamic walletAddress;
@@ -76,6 +87,15 @@ class CardScanMethodsPage extends StatelessWidget {
               : () async {
                   await NfcManager.instance.startSession(
                     onDiscovered: (tag) async {
+                      final nfcA = NfcA.from(tag);
+                      final uid = nfcA!.identifier;
+                      final signature = await nfcA.transceive(
+                        data: Uint8List.fromList([0x3C, 0x00]),
+                      );
+
+                      // TODO: Needs if else statement for Android
+                      verifyOriginality(uid, signature);
+
                       final ndef = Ndef.from(tag);
                       final records = ndef!.cachedMessage!.records;
                       dynamic walletAddress;

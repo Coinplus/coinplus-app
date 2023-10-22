@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.2+2
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 
 # Regular dependencies are listed under dependencies:—these are packages that
 # anyone using your package will also need.
@@ -67,8 +67,9 @@ dependencies:
   qr_flutter: ^4.1.0
   bs58: ^1.0.2
   flutter_bitcoin: ^1.0.1
-
-
+  elliptic: ^0.3.10
+  ecdsa: ^0.1.0
+  hashlib: ^1.12.0
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
@@ -103,7 +104,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/icons/app_icon.png"
+  image_path: 'assets/icons/app_icon.png'
 
 flutter_gen:
   # Optional
@@ -132,7 +133,7 @@ flutter_gen:
       # - dot-delimiter
       style: dot-delimiter
       class_name: Assets
-    exclude: [ 'assets/flags/*.png', 'assets/translations/*.json',]
+    exclude: ['assets/flags/*.png', 'assets/translations/*.json']
   fonts:
     # Optional
     enabled: true
@@ -154,7 +155,6 @@ flutter_gen:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -198,9 +198,6 @@ flutter:
       fonts:
         - asset: assets/fonts/Lexend-Light.ttf
           weight: 300
-
-
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

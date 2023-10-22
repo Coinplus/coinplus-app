@@ -2,51 +2,36 @@ import 'dart:typed_data';
 
 import 'package:bs58/bs58.dart';
 import 'package:collection/collection.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter_bitcoin/flutter_bitcoin.dart';
-import 'package:pointycastle/key_derivators/api.dart';
-import 'package:pointycastle/key_derivators/scrypt.dart';
+import 'package:hashlib/hashlib.dart';
 
-final scrypt = Scrypt();
+import 'data_utils.dart';
+
 final N = BigInt.parse(
-    'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141',
-    radix: 16,);
-
-Uint8List bigIntToBytes(BigInt number) {
-  var hex = number.toRadixString(16);
-  if (hex.length % 2 != 0) {
-    hex = '0$hex';
-  }
-
-  final result = Uint8List(hex.length ~/ 2);
-  for (var i = 0; i < hex.length; i += 2) {
-    final byte = int.parse(hex.substring(i, i + 2), radix: 16);
-    result[i ~/ 2] = byte;
-  }
-  return result;
-}
-
-String bytesToHex(Uint8List bytes) {
-  return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
-}
+  'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141',
+  radix: 16,
+);
 
 Uint8List scryptHash(String data) {
-  scrypt.init(ScryptParameters(16384, 8, 8, 32, Uint8List.fromList([])));
+  const coinplus = ScryptSecurity('coinplus', N: 16384, r: 8, p: 8);
+  final result = scrypt(data.codeUnits, [], security: coinplus, dklen: 32);
 
-  final result = scrypt.process(Uint8List.fromList(data.codeUnits));
-  return result;
+  return result.bytes;
 }
 
 Future<BigInt> computePrivateKeySec256k1(
-    String secret1B58arg, String secret2B58arg,) async {
-  if (secret1B58arg.length == 30) {
-    secret1B58arg = secret1B58arg.substring(0, 29);
-  }
-  if (secret2B58arg.length == 30) {
-    secret2B58arg = secret2B58arg.substring(0, 29);
-  }
-  final hashedSecret1 = scryptHash(secret1B58arg);
-  final hashedSecret2 = scryptHash(secret2B58arg);
+  String secret1B58arg,
+  String secret2B58arg,
+) async {
+  final secret1B58 = secret1B58arg.length == 30
+      ? secret1B58arg.substring(0, 29)
+      : secret1B58arg;
+  final secret2B58 = secret2B58arg.length == 30
+      ? secret2B58arg.substring(0, 29)
+      : secret2B58arg;
+
+  final hashedSecret1 = scryptHash(secret1B58);
+  final hashedSecret2 = scryptHash(secret2B58);
 
   final n1 = BigInt.parse(bytesToHex(hashedSecret1), radix: 16);
   final n2 = BigInt.parse(bytesToHex(hashedSecret2), radix: 16);
