@@ -1356,6 +1356,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  styled_text:
+    dependency: "direct main"
+    description:
+      name: styled_text
+      sha256: f72928d1ebe8cb149e3b34a689cb1ddca696b808187cf40ac3a0bd183dff379c
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   sync_http:
     dependency: transitive
     description:
@@ -1644,6 +1652,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.3.0"
+  xmlstream:
+    dependency: transitive
+    description:
+      name: xmlstream
+      sha256: cfc14e3f256997897df9481ae630d94c2d85ada5187ebeb868bb1aabc2c977b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   yaml:
     dependency: transitive
     description:

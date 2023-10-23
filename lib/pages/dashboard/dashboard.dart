@@ -78,7 +78,6 @@ class Dashboard extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useBranchSDK(context);
-
     final _navBarState = useMemoized(NavBarState.new);
     final _pageController = usePageController();
 
@@ -319,29 +318,8 @@ class Dashboard extends HookWidget {
                                                                   (_) {
                                                                     HapticFeedback
                                                                         .mediumImpact();
-                                                                    Overlay.of(
-                                                                      context,
-                                                                    );
-                                                                    CustomSnackBar
-                                                                        .success(
-                                                                      backgroundColor:
-                                                                          const Color(
-                                                                        0xFF4A4A4A,
-                                                                      ).withOpacity(
-                                                                        0.9,
-                                                                      ),
-                                                                      message:
-                                                                          'Address was copied',
-                                                                      textStyle:
-                                                                          const TextStyle(
-                                                                        fontFamily:
-                                                                            FontFamily.redHatMedium,
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    );
+                                                                    _settingsState
+                                                                        .copyAddress();
                                                                   },
                                                                 );
                                                               },
@@ -388,28 +366,45 @@ class Dashboard extends HookWidget {
                                                                         const Gap(
                                                                           8,
                                                                         ),
-                                                                        Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            const Text(
-                                                                              'Your address',
-                                                                              style: TextStyle(
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontSize: 16,
-                                                                              ),
-                                                                            ),
-                                                                            Text(
-                                                                              card.address,
-                                                                              style: const TextStyle(
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontSize: 14,
-                                                                                color: Color(
-                                                                                  0xFF4F6486,
+                                                                        Observer(
+                                                                          builder:
+                                                                              (context) {
+                                                                            return Column(
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                const Text(
+                                                                                  'Your address',
+                                                                                  style: TextStyle(
+                                                                                    fontFamily: FontFamily.redHatMedium,
+                                                                                    fontSize: 16,
+                                                                                  ),
                                                                                 ),
-                                                                              ),
-                                                                            ),
-                                                                          ],
+                                                                                AnimatedCrossFade(
+                                                                                  firstChild: const Row(
+                                                                                    children: [
+                                                                                      Text(
+                                                                                        'Copied',
+                                                                                        style: TextStyle(fontFamily: FontFamily.redHatMedium, color: Colors.green),
+                                                                                      ),
+                                                                                      Icon(Icons.check, color: Colors.green,size: 18,),
+                                                                                    ],
+                                                                                  ),
+                                                                                  secondChild: Text(
+                                                                                    card.address,
+                                                                                    style: const TextStyle(
+                                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                                      fontSize: 14,
+                                                                                      color: Color(
+                                                                                        0xFF4F6486,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  crossFadeState: _settingsState.isAddressCopied ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                                                                  duration: const Duration(milliseconds: 200),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
                                                                         ),
                                                                       ],
                                                                     ),

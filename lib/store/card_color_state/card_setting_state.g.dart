@@ -41,6 +41,22 @@ mixin _$CardSettingState on _CardSettingState, Store {
     });
   }
 
+  late final _$isPrivateKeyVisibleAtom =
+      Atom(name: '_CardSettingState.isPrivateKeyVisible', context: context);
+
+  @override
+  bool get isPrivateKeyVisible {
+    _$isPrivateKeyVisibleAtom.reportRead();
+    return super.isPrivateKeyVisible;
+  }
+
+  @override
+  set isPrivateKeyVisible(bool value) {
+    _$isPrivateKeyVisibleAtom.reportWrite(value, super.isPrivateKeyVisible, () {
+      super.isPrivateKeyVisible = value;
+    });
+  }
+
   late final _$changeColorAsyncAction =
       AsyncAction('_CardSettingState.changeColor', context: context);
 
@@ -51,6 +67,17 @@ mixin _$CardSettingState on _CardSettingState, Store {
 
   late final _$_CardSettingStateActionController =
       ActionController(name: '_CardSettingState', context: context);
+
+  @override
+  void makePrivateVisible() {
+    final _$actionInfo = _$_CardSettingStateActionController.startAction(
+        name: '_CardSettingState.makePrivateVisible');
+    try {
+      return super.makePrivateVisible();
+    } finally {
+      _$_CardSettingStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void colorState() {
@@ -67,7 +94,8 @@ mixin _$CardSettingState on _CardSettingState, Store {
   String toString() {
     return '''
 selectedColor: ${selectedColor},
-isColorChanged: ${isColorChanged}
+isColorChanged: ${isColorChanged},
+isPrivateKeyVisible: ${isPrivateKeyVisible}
     ''';
   }
 }

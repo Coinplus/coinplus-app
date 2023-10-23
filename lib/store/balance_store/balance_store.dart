@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/bar_color.dart';
@@ -129,25 +130,29 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  void removeSelectedCard() {
+  Future<void> removeSelectedCard() async {
     if (_selectedCard == null) {
       return;
     }
     final index = _cards
         .indexWhere((element) => element.address == _selectedCard!.address);
     _cards.removeAt(index);
-    StorageUtils.removeCard(_selectedCard!.address);
+    await StorageUtils.removeCard(_selectedCard!.address);
+    const secureStorage = FlutterSecureStorage();
+    await secureStorage.delete(key: _selectedCard!.address);
   }
 
   @action
-  void removeSelectedBar() {
+  Future<void> removeSelectedBar() async {
     if (_selectedBar == null) {
       return;
     }
     final index =
         _bars.indexWhere((element) => element.address == _selectedBar!.address);
     _bars.removeAt(index);
-    StorageUtils.removeBar(_selectedBar!.address);
+    await StorageUtils.removeBar(_selectedBar!.address);
+    const secureStorage = FlutterSecureStorage();
+    await secureStorage.delete(key: _selectedCard!.address);
   }
 
   Future<CardModel?> _getSingleCardInfo(String address) async {

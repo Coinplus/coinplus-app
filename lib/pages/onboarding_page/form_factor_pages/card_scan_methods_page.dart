@@ -48,13 +48,13 @@ class CardScanMethodsPage extends StatelessWidget {
                     alertMessage:
                         'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
                     onDiscovered: (tag) async {
-                      final mifare = MiFare.from(tag);
-                      final uid = mifare!.identifier;
-                      final signature = await mifare
-                          .sendMiFareCommand(Uint8List.fromList([0x3C, 0x00]));
-
-                      // TODO: Needs if else statement for iOS
-                      verifyOriginality(uid, signature);
+                      // final mifare = MiFare.from(tag);
+                      // final uid = mifare!.identifier;
+                      // final signature = await mifare
+                      //     .sendMiFareCommand(Uint8List.fromList([0x3C, 0x00]));
+                      //
+                      // // TODO: Needs if else statement for iOS
+                      // verifyOriginality(uid, signature);
 
                       final ndef = Ndef.from(tag);
                       final records = ndef!.cachedMessage!.records;

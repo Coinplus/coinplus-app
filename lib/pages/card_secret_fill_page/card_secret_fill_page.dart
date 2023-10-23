@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -28,6 +29,7 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/btc_validation.dart';
 import '../../utils/compute_private_key.dart';
 import '../../widgets/loading_button.dart';
+import 'secrets_fail/secrets_fail.dart';
 import 'secrets_success/secrets_success.dart';
 
 @RoutePage()
@@ -296,6 +298,11 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                   height: 100,
                                                                   child:
                                                                       TextField(
+                                                                    inputFormatters: [
+                                                                      LengthLimitingTextInputFormatter(
+                                                                        30,
+                                                                      ),
+                                                                    ],
                                                                     textAlignVertical:
                                                                         TextAlignVertical
                                                                             .top,
@@ -311,9 +318,16 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                       value,
                                                                     ) {
                                                                       if (value
-                                                                              .length >
-                                                                          25) {
+                                                                              .length ==
+                                                                          30) {
                                                                         _validateSecretOne();
+                                                                      } else if (value
+                                                                              .length <
+                                                                          30) {
+                                                                        _validationStore
+                                                                            .invalidSecretOne();
+                                                                        _secretOneLottieController
+                                                                            .reset();
                                                                       }
 
                                                                       secret1B58 =
@@ -422,7 +436,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                 top: 25,
                                                                 left: 0,
                                                                 right: 0,
-                                                                child: _validationStore
+                                                                child: !_validationStore
                                                                         .isSecret1Valid
                                                                     ? ScaleTap(
                                                                         onPressed:
@@ -444,8 +458,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                             return;
                                                                           }
 
-                                                                          _secretOneController.text =
-                                                                              res;
+                                                                          secret1B58 =
+                                                                              _secretOneController.text = res;
                                                                           await _validateSecretOne();
                                                                         },
                                                                         child:
@@ -539,6 +553,11 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                   height: 100,
                                                                   child:
                                                                       TextField(
+                                                                    inputFormatters: [
+                                                                      LengthLimitingTextInputFormatter(
+                                                                        30,
+                                                                      ),
+                                                                    ],
                                                                     textAlignVertical:
                                                                         TextAlignVertical
                                                                             .top,
@@ -553,9 +572,16 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                     onChanged:
                                                                         (value) {
                                                                       if (value
-                                                                              .length >
-                                                                          25) {
+                                                                              .length ==
+                                                                          30) {
                                                                         _validateSecretTwo();
+                                                                      } else if (value
+                                                                              .length <
+                                                                          30) {
+                                                                        _validationStore
+                                                                            .invalidSecretTwo();
+                                                                        _secretTwoLottieController
+                                                                            .reset();
                                                                       }
 
                                                                       secret2B58 =
@@ -662,7 +688,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                 top: 25,
                                                                 left: 0,
                                                                 right: 0,
-                                                                child: _validationStore
+                                                                child: !_validationStore
                                                                         .isSecret2Valid
                                                                     ? ScaleTap(
                                                                         onPressed:
@@ -684,8 +710,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                             return;
                                                                           }
 
-                                                                          _secretTwoController.text =
-                                                                              res;
+                                                                          secret2B58 =
+                                                                              _secretTwoController.text = res;
                                                                           await _validateSecretTwo();
                                                                         },
                                                                         child:
@@ -834,7 +860,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
           Observer(
             builder: (context) {
               return LoadingButton(
-                onPressed: _validationStore.isSecret2Valid
+                onPressed: !_validationStore.isSecret2Valid
                     ? null
                     : () async {
                         unawaited(
@@ -857,14 +883,17 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
-                          log(card.address);
                           if (card.address.hashCode == publicKey.hashCode) {
-                            log('Public key: $publicKey');
-                            log('This is your private key: $wif');
+                            const secureStorage = FlutterSecureStorage();
+                            await secureStorage.write(
+                              key: card.address,
+                              value: wif,
+                            );
                             await router.pop();
                             await secretsSuccessAlert(context);
                           } else {
-                            log('Please write correct secret 1 or secret 2 ');
+                            await router.pop();
+                            await secretsFailDialog(context);
                           }
                         } catch (e) {
                           log(e.toString());
@@ -933,26 +962,26 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
   DecorationImage getFrontImageForCardColor(CardColor color) {
     switch (color) {
       case CardColor.ORANGE:
-        return DecorationImage(image: Assets.images.orangeCard.image().image);
+        return DecorationImage(image: Assets.images.orangeCardFront.image().image);
       case CardColor.WHITE:
-        return DecorationImage(image: Assets.images.whiteCard.image().image);
+        return DecorationImage(image: Assets.images.whiteCardFront.image().image);
       case CardColor.BROWN:
-        return DecorationImage(image: Assets.images.brownCard.image().image);
+        return DecorationImage(image: Assets.images.brownCardFront.image().image);
       default:
-        return DecorationImage(image: Assets.images.filledBack.image().image);
+        return DecorationImage(image: Assets.images.orangeCardFront.image().image);
     }
   }
 
   Future<void> _validateSecretOne() async {
-    final btcAddress = _secretOneController.text.trim();
-    if (isValidSecret(btcAddress)) {
+    final secretOne = _secretOneController.text.trim();
+    if (isValidSecret(secretOne)) {
       _validationStore.validateSecretOne();
       await Future.delayed(
-        const Duration(milliseconds: 600),
+        const Duration(milliseconds: 400),
       );
       _secretOneFocusNode.unfocus();
       await Future.delayed(
-        const Duration(milliseconds: 500),
+        const Duration(milliseconds: 200),
         _secretState.makeSecretTwoVisible,
       );
 
@@ -961,11 +990,11 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
   }
 
   Future<void> _validateSecretTwo() async {
-    final secret2 = _secretTwoController.text.trim();
-    if (isValidSecret(secret2)) {
+    final secretTwo = _secretTwoController.text.trim();
+    if (isValidSecret(secretTwo)) {
       _validationStore.validateSecretTwo();
       await Future.delayed(
-        const Duration(milliseconds: 600),
+        const Duration(milliseconds: 400),
       );
       _secretTwoFocusNode.unfocus();
       await _secretTwoLottieController.forward(from: 0);

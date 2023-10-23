@@ -11,6 +11,8 @@ abstract class _SettingsState with Store {
   int cardCurrentIndex = 0;
   @observable
   int barCurrentIndex = 0;
+  @observable
+  bool isAddressCopied = false;
 
   @action
   Future<void> setCardCurrentIndex(int index) async {
@@ -21,5 +23,12 @@ abstract class _SettingsState with Store {
   @action
   Future<void> setBarCurrentIndex(int index) async {
     barCurrentIndex = index;
+  }
+
+  @action
+  Future<void> copyAddress() async {
+    isAddressCopied = true;
+    await Future.delayed(const Duration(milliseconds: 1000));
+    isAddressCopied = false;
   }
 }
