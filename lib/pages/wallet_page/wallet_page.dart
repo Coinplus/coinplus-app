@@ -41,12 +41,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     setWalletShown();
-    // Timer.periodic(
-    //   const Duration(minutes: 1),
-    //   (timer) {
-    //     _balanceStore.getCoins();
-    //   },
-    // );
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();

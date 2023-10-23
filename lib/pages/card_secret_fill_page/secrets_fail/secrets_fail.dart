@@ -2,32 +2,41 @@ import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
-import '../../../router.gr.dart';
 import '../../../widgets/loading_button.dart';
-import '../../splash_screen/splash_screen.dart';
 
-Future<void> alreadySavedCard(BuildContext context) {
-  final okButton = LoadingButton(
+Future<void> secretsFailDialog(BuildContext context) {
+  final closeButton = LoadingButton(
+    style: context.theme
+        .buttonStyle(
+          textStyle: const TextStyle(
+            fontFamily: FontFamily.redHatMedium,
+            color: AppColors.primaryTextColor,
+            fontSize: 15,
+          ),
+        )
+        .copyWith(
+          backgroundColor: MaterialStateProperty.all(AppColors.silver),
+        ),
+    onPressed: () async {
+      await router.pop();
+    },
     child: const Text(
-      'Got it',
+      'Edit',
       style: TextStyle(
-        fontFamily: FontFamily.redHatMedium,
         fontSize: 15,
-        fontWeight: FontWeight.w600,
+        fontFamily: FontFamily.redHatMedium,
+        fontWeight: FontWeight.normal,
+        color: AppColors.primaryTextColor,
       ),
     ),
-    onPressed: () {
-      hasShownWallet().then((hasShown) {
-        if (hasShown) {
-          router.pushAndPopAll(const Dashboard());
-        }
-      });
-    },
   ).paddingHorizontal(40);
+
   return showDialog<void>(
     barrierDismissible: false,
     context: context,
@@ -41,7 +50,7 @@ Future<void> alreadySavedCard(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'You have already \nsaved this card!',
+                'Oops…',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: FontFamily.redHatBold,
@@ -49,20 +58,13 @@ Future<void> alreadySavedCard(BuildContext context) {
                 ),
               ),
               const Gap(23),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Gap(40),
-                    Assets.images.cardForm.image(height: 63),
-                    const Gap(16),
-                    Assets.icons.taskAlt.image(height: 24),
-                  ],
-                ),
-              ).expandedHorizontally(),
-              const Gap(31),
+              Assets.icons.secretsFail.image(
+                height: 70,
+                color: AppColors.textHintsColor,
+              ),
+              const Gap(25),
               const Text(
-                'It looks like you have already saved this card to your wallet. To connect another one please change the wallet address.',
+                "It appears the secrets you've entered don't match your wallet. Please double-check both Secret 1 and Secret 2 to ensure they are entered correctly.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: FontFamily.redHatLight,
@@ -70,8 +72,8 @@ Future<void> alreadySavedCard(BuildContext context) {
                   fontSize: 14,
                 ),
               ),
-              const Gap(18),
-              Center(child: okButton),
+              const Gap(28),
+              Center(child: closeButton),
             ],
           ),
           elevation: 0,

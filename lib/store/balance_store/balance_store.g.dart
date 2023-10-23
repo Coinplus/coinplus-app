@@ -155,30 +155,25 @@ mixin _$BalanceStore on _BalanceStore, Store {
     return _$getSelectedBarAsyncAction.run(() => super.getSelectedBar(address));
   }
 
+  late final _$removeSelectedCardAsyncAction =
+      AsyncAction('_BalanceStore.removeSelectedCard', context: context);
+
+  @override
+  Future<void> removeSelectedCard() {
+    return _$removeSelectedCardAsyncAction
+        .run(() => super.removeSelectedCard());
+  }
+
+  late final _$removeSelectedBarAsyncAction =
+      AsyncAction('_BalanceStore.removeSelectedBar', context: context);
+
+  @override
+  Future<void> removeSelectedBar() {
+    return _$removeSelectedBarAsyncAction.run(() => super.removeSelectedBar());
+  }
+
   late final _$_BalanceStoreActionController =
       ActionController(name: '_BalanceStore', context: context);
-
-  @override
-  void removeSelectedCard() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.removeSelectedCard');
-    try {
-      return super.removeSelectedCard();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void removeSelectedBar() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.removeSelectedBar');
-    try {
-      return super.removeSelectedBar();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void saveReplacedCard() {

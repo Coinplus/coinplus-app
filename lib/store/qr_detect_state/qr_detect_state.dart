@@ -10,9 +10,9 @@ abstract class _QrDetectState with Store {
   @readonly
   bool _isValid = true;
   @readonly
-  bool _isSecret1Valid = true;
+  bool _isSecret1Valid = false;
   @readonly
-  bool _isSecret2Valid = true;
+  bool _isSecret2Valid = false;
 
   @action
   void validate() {
@@ -21,12 +21,21 @@ abstract class _QrDetectState with Store {
 
   @action
   void validateSecretOne() {
-    _isSecret1Valid = !_isSecret1Valid;
+    _isSecret1Valid = true;
+  }
+  @action
+  void invalidSecretOne() {
+    _isSecret1Valid = false;
+  }
+
+  @action
+  void invalidSecretTwo() {
+    _isSecret2Valid = false;
   }
 
   @action
   void validateSecretTwo() {
-    _isSecret2Valid = !_isSecret2Valid;
+    _isSecret2Valid = true;
   }
 
   @action

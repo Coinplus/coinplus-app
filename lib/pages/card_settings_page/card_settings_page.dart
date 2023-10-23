@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -40,6 +42,7 @@ BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 class _CardSettingsPageState extends State<CardSettingsPage> {
   late CardSettingState _cardSettingsState =
       CardSettingState(card: widget.card);
+
   @override
   void initState() {
     _cardSettingsState = CardSettingState(card: widget.card);
@@ -48,6 +51,12 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    Future<String?> getPrivateKeyFromStorage() async {
+      const secureStorage = FlutterSecureStorage();
+      final privateKey = await secureStorage.read(key: widget.card.address);
+      return privateKey;
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -172,7 +181,169 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 height: 24,
               ),
             ),
-            const Gap(16),
+            FutureBuilder(
+              future: getPrivateKeyFromStorage(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  return Observer(
+                    builder: (context) {
+                      return Column(
+                        children: [
+                          const Gap(16),
+                          ListTile(
+                            trailing: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Gap(13),
+                                if (_cardSettingsState.isPrivateKeyVisible)
+                                  Assets.icons.contentCopy.image(
+                                    height: 24,
+                                  )
+                                else
+                                  Assets.icons.show.image(
+                                    height: 24,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                              ],
+                            ),
+                            onLongPress: () {
+                              HapticFeedback.selectionClick();
+                              _cardSettingsState.makePrivateVisible();
+                            },
+                            onTap: () {
+                              _cardSettingsState.isPrivateKeyVisible
+                                  ? Clipboard.setData(
+                                      ClipboardData(
+                                        text: snapshot.data.toString(),
+                                      ),
+                                    ).then(
+                                      (_) {
+                                        HapticFeedback.mediumImpact();
+                                        showTopSnackBar(
+                                          displayDuration: const Duration(
+                                            milliseconds: 400,
+                                          ),
+                                          Overlay.of(context),
+                                          CustomSnackBar.success(
+                                            backgroundColor:
+                                                const Color(0xFF4A4A4A)
+                                                    .withOpacity(0.9),
+                                            message: 'Private key was copied',
+                                            textStyle: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 400,
+                                      ),
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
+                                        message:
+                                            'Hold to reveal your Private key',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                              // _cardSettingsState.makePrivateVisible();
+                            },
+                            title: Observer(
+                              builder: (context) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Private key',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    const Gap(6),
+                                    if (_cardSettingsState.isPrivateKeyVisible)
+                                      Container(
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: Colors.grey.withOpacity(0.1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          snapshot.data.toString(),
+                                          style: const TextStyle(
+                                            fontFamily: FontFamily.redHatLight,
+                                            fontSize: 14,
+                                            color: AppColors.primaryTextColor,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      )
+                                    else
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: ImageFiltered(
+                                          imageFilter: ImageFilter.blur(
+                                            sigmaX: 5,
+                                            sigmaY: 5,
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              'L24hTctc4WlPBJwyP8EzBogNhm2y7EUjkHpVBFD9rhYT5PLoTuY6',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatLight,
+                                                fontSize: 14,
+                                                color: AppColors.textHintsColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+            const Gap(8),
             ListTile(
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,13 +462,13 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 ],
               ),
             ),
-            const Gap(30),
+            const Gap(10),
             Divider(
               indent: 5,
               endIndent: 5,
               color: Colors.grey.withOpacity(0.2),
             ),
-            const Gap(20),
+            const Gap(10),
             ListTile(
               onTap: () {
                 showModalBottomSheet(
@@ -323,7 +494,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 ),
               ),
             ),
-            const Gap(20),
+            const Gap(10),
             Observer(
               builder: (context) {
                 return LoadingButton(

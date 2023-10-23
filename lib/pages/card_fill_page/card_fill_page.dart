@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -283,8 +282,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                               4,
                                                             ),
                                                             child:
-                                                                CupertinoActivityIndicator(
-                                                              radius: 5,
+                                                            SizedBox(
+                                                              height: 15,
+                                                              width: 15,
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }
@@ -374,8 +375,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                               4,
                                                             ),
                                                             child:
-                                                                CupertinoActivityIndicator(
-                                                              radius: 5,
+                                                            SizedBox(
+                                                              height: 15,
+                                                              width: 15,
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }

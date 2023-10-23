@@ -1,6 +1,8 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
@@ -154,6 +156,7 @@ Future<void> emailSendFailAlert(BuildContext context) {
   ).paddingHorizontal(40);
 
   return showDialog<void>(
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return EmergeAlertDialog(
@@ -178,13 +181,37 @@ Future<void> emailSendFailAlert(BuildContext context) {
                 style: TextStyle(fontSize: 100),
               ),
               const Gap(25),
-              const Text(
-                'Please get in touch with us at support@coinplus.com, or try again later. Before that you can check out our Help Center.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatLight,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
+              ScaleTap(
+                enableFeedback: false,
+                onPressed: () async {
+                  final email = Uri.encodeComponent('support@coinplus.com');
+                  final mail = Uri.parse('mailto:$email');
+                  if (await launchUrl(mail)) {
+                    //email app opened
+                  } else {
+                    //email app is not opened
+                  }
+                },
+                child: StyledText(
+                  textAlign: TextAlign.center,
+                  text:
+                      'Please get in touch with us at <p>support@coinplus.com</p>, or try again later. Before that you can check out \nour Help Center.',
+                  tags: {
+                    'p': StyledTextTag(
+                      style: const TextStyle(
+                        fontFamily: FontFamily.redHatLight,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  },
+                  style: const TextStyle(
+                    fontFamily: FontFamily.redHatLight,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
                 ),
               ),
               const Gap(28),

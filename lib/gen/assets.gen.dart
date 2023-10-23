@@ -175,6 +175,10 @@ class $AssetsIconsGen {
   AssetGenImage get schedule =>
       const AssetGenImage('assets/icons/schedule.png');
 
+  /// File path: assets/icons/secrets_fail.png
+  AssetGenImage get secretsFail =>
+      const AssetGenImage('assets/icons/secrets_fail.png');
+
   /// File path: assets/icons/send.png
   AssetGenImage get send => const AssetGenImage('assets/icons/send.png');
 
@@ -188,6 +192,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/shop.png
   AssetGenImage get shop => const AssetGenImage('assets/icons/shop.png');
+
+  /// File path: assets/icons/show.png
+  AssetGenImage get show => const AssetGenImage('assets/icons/show.png');
 
   /// File path: assets/icons/star.png
   AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
@@ -263,10 +270,12 @@ class $AssetsIconsGen {
         receive,
         reddit,
         schedule,
+        secretsFail,
         send,
         sendReceive,
         settings,
         shop,
+        show,
         star,
         successEmail,
         taskAlt,
@@ -290,10 +299,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Back.png
   AssetGenImage get back => const AssetGenImage('assets/images/Back.png');
 
-  /// File path: assets/images/Brown_card.png
-  AssetGenImage get brownCard =>
-      const AssetGenImage('assets/images/Brown_card.png');
-
   /// File path: assets/images/Form bar.png
   AssetGenImage get formBar =>
       const AssetGenImage('assets/images/Form bar.png');
@@ -309,10 +314,6 @@ class $AssetsImagesGen {
   AssetGenImage get hologram =>
       const AssetGenImage('assets/images/Hologram.png');
 
-  /// File path: assets/images/Orange_card.png
-  AssetGenImage get orangeCard =>
-      const AssetGenImage('assets/images/Orange_card.png');
-
   /// File path: assets/images/Secret1.png
   AssetGenImage get secret1 => const AssetGenImage('assets/images/Secret1.png');
 
@@ -322,10 +323,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/Top circle.png
   AssetGenImage get topCircle =>
       const AssetGenImage('assets/images/Top circle.png');
-
-  /// File path: assets/images/White_card.png
-  AssetGenImage get whiteCard =>
-      const AssetGenImage('assets/images/White_card.png');
 
   /// File path: assets/images/bar_empty.png
   AssetGenImage get barEmpty =>
@@ -358,6 +355,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/bar_with_address.png
   AssetGenImage get barWithAddress =>
       const AssetGenImage('assets/images/bar_with_address.png');
+
+  /// File path: assets/images/brown_card_front.png
+  AssetGenImage get brownCardFront =>
+      const AssetGenImage('assets/images/brown_card_front.png');
 
   /// File path: assets/images/brown_without_shadow.png
   AssetGenImage get brownWithoutShadow =>
@@ -415,6 +416,10 @@ class $AssetsImagesGen {
   AssetGenImage get inactiveCard =>
       const AssetGenImage('assets/images/inactive_card.png');
 
+  /// File path: assets/images/orange_card_front.png
+  AssetGenImage get orangeCardFront =>
+      const AssetGenImage('assets/images/orange_card_front.png');
+
   /// File path: assets/images/orange_without_shadow.png
   AssetGenImage get orangeWithoutShadow =>
       const AssetGenImage('assets/images/orange_without_shadow.png');
@@ -453,6 +458,10 @@ class $AssetsImagesGen {
   AssetGenImage get walletProtectImage =>
       const AssetGenImage('assets/images/wallet_protect_image.png');
 
+  /// File path: assets/images/white_card_front.png
+  AssetGenImage get whiteCardFront =>
+      const AssetGenImage('assets/images/white_card_front.png');
+
   /// File path: assets/images/white_without_shadow.png
   AssetGenImage get whiteWithoutShadow =>
       const AssetGenImage('assets/images/white_without_shadow.png');
@@ -461,16 +470,13 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         addCard,
         back,
-        brownCard,
         formBar,
         formCard,
         front,
         hologram,
-        orangeCard,
         secret1,
         secret2,
         topCircle,
-        whiteCard,
         barEmpty,
         barForm,
         barFront,
@@ -479,6 +485,7 @@ class $AssetsImagesGen {
         barSecret2,
         barSkeleton,
         barWithAddress,
+        brownCardFront,
         brownWithoutShadow,
         cardAndBarForms,
         cardColorBrown,
@@ -493,6 +500,7 @@ class $AssetsImagesGen {
         formBarSelected,
         formCardSelected,
         inactiveCard,
+        orangeCardFront,
         orangeWithoutShadow,
         qrCode,
         skeletonAddressField,
@@ -503,6 +511,7 @@ class $AssetsImagesGen {
         skeletonSecret2,
         stylus,
         walletProtectImage,
+        whiteCardFront,
         whiteWithoutShadow
       ];
 }

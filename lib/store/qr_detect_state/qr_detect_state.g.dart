@@ -107,6 +107,28 @@ mixin _$QrDetectState on _QrDetectState, Store {
   }
 
   @override
+  void invalidSecretOne() {
+    final _$actionInfo = _$_QrDetectStateActionController.startAction(
+        name: '_QrDetectState.invalidSecretOne');
+    try {
+      return super.invalidSecretOne();
+    } finally {
+      _$_QrDetectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void invalidSecretTwo() {
+    final _$actionInfo = _$_QrDetectStateActionController.startAction(
+        name: '_QrDetectState.invalidSecretTwo');
+    try {
+      return super.invalidSecretTwo();
+    } finally {
+      _$_QrDetectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void validateSecretTwo() {
     final _$actionInfo = _$_QrDetectStateActionController.startAction(
         name: '_QrDetectState.validateSecretTwo');

@@ -20,6 +20,14 @@ abstract class _CardSettingState with Store {
   @observable
   bool isColorChanged = false;
 
+  @observable
+  bool isPrivateKeyVisible = false;
+
+  @action
+  void makePrivateVisible() {
+    isPrivateKeyVisible = !isPrivateKeyVisible;
+  }
+
   @action
   void colorState() {
     isColorChanged = true;
