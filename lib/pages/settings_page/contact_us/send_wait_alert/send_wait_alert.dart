@@ -1,10 +1,10 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../extensions/elevated_button_extensions.dart';
 import '../../../../extensions/extensions.dart';
-import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../providers/screen_service.dart';
@@ -76,9 +76,10 @@ Future<void> sendWaitAlert(BuildContext context) {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Assets.icons.megaphone.image(
-                      height: 93,
-                      color: AppColors.primary.withOpacity(0.7),
+                    Lottie.asset(
+                      height: 140,
+                      repeat: false,
+                      'assets/animated_logo/please_wait.json',
                     ),
                   ],
                 ),

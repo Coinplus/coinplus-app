@@ -122,7 +122,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
             onPressed: () async {
               await _balanceStore.getSelectedBar(widget.bar.address);
               await router.pop();
-              _balanceStore.removeSelectedBar();
+              await _balanceStore.removeSelectedBar();
               showTopSnackBar(
                 displayDuration: const Duration(
                   milliseconds: 600,

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 
 import '../../../extensions/context_extension.dart';
@@ -12,17 +13,11 @@ import '../../../router.gr.dart';
 import '../../../store/form_factor_state/form_factor_state.dart';
 import '../../../widgets/loading_button.dart';
 
-class CardAndBarScanMethodsPage extends StatefulWidget {
+class CardAndBarScanMethodsPage extends HookWidget {
   const CardAndBarScanMethodsPage({super.key, required this.formFactorState});
 
   final FormFactorState formFactorState;
 
-  @override
-  State<CardAndBarScanMethodsPage> createState() =>
-      _CardAndBarScanMethodsPageState();
-}
-
-class _CardAndBarScanMethodsPageState extends State<CardAndBarScanMethodsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -86,9 +81,7 @@ class _CardAndBarScanMethodsPageState extends State<CardAndBarScanMethodsPage> {
                 .copyWith(
                   backgroundColor: MaterialStateProperty.all(AppColors.silver),
                 ),
-            onPressed: () {
-              widget.formFactorState.toggleWidget();
-            },
+            onPressed: formFactorState.toggleWidget,
             child: Row(
               children: [
                 Assets.images.stylus.image(

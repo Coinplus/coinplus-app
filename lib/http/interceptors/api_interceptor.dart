@@ -16,7 +16,6 @@ class ApiInterceptor extends Interceptor {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }
     if (options.data is Map) {
-      /// remove nulls from request body [options.data]
       (options.data as Map<dynamic, dynamic>).removeWhere((k, v) => v == null);
     }
     return handler.next(options);
@@ -27,7 +26,7 @@ class ApiInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) {
-    log('::: Api error : $err');
+    log('Api error : $err');
     return handler.next(err);
   }
 }

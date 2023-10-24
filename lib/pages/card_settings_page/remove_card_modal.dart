@@ -120,7 +120,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             onPressed: () async {
               await _balanceStore.getSelectedCard(widget.card.address);
               await router.pop();
-              _balanceStore.removeSelectedCard();
+              await _balanceStore.removeSelectedCard();
               showTopSnackBar(
                 displayDuration: const Duration(
                   milliseconds: 600,

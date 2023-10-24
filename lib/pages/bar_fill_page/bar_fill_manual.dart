@@ -41,7 +41,7 @@ class _BarFillPageState extends State<BarFillPage>
   final _cardAnimationState = CardAnimationState();
   final _flipCardController = FlipCardController();
   late AnimationController _lottieController;
-  final _validationStore = QrDetectState();
+  final _validationStore = ValidationState();
   final _addressState = AddressState();
   final _focusNode = FocusNode();
 

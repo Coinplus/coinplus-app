@@ -63,7 +63,7 @@ class _CardFillPageState extends State<CardFillPage>
       ShakeAnimationController();
 
   late AnimationController _lottieController;
-  final _validationStore = QrDetectState();
+  final _validationStore = ValidationState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 

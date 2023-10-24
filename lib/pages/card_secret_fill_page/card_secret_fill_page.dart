@@ -65,7 +65,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
   final _flipCardController = FlipCardController();
   late AnimationController _secretOneLottieController;
   late AnimationController _secretTwoLottieController;
-  final _validationStore = QrDetectState();
+  final _validationStore = ValidationState();
   final _secretState = SecretState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
@@ -890,6 +890,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                               value: wif,
                             );
                             await router.pop();
+                            await HapticFeedback.heavyImpact();
                             await secretsSuccessAlert(context);
                           } else {
                             await router.pop();

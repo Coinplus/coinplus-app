@@ -22,12 +22,28 @@ class $AssetsAnimatedLogoGen {
   /// File path: assets/animated_logo/nfcanimation.json
   String get nfcanimation => 'assets/animated_logo/nfcanimation.json';
 
+  /// File path: assets/animated_logo/please_wait.json
+  String get pleaseWait => 'assets/animated_logo/please_wait.json';
+
   /// File path: assets/animated_logo/qr_animation.json
   String get qrAnimation => 'assets/animated_logo/qr_animation.json';
 
+  /// File path: assets/animated_logo/secrets_fail.json
+  String get secretsFail => 'assets/animated_logo/secrets_fail.json';
+
+  /// File path: assets/animated_logo/secrets_success.json
+  String get secretsSuccess => 'assets/animated_logo/secrets_success.json';
+
   /// List of all assets
-  List<String> get values =>
-      [addressValidationSuccess, loadingAnimation, nfcanimation, qrAnimation];
+  List<String> get values => [
+        addressValidationSuccess,
+        loadingAnimation,
+        nfcanimation,
+        pleaseWait,
+        qrAnimation,
+        secretsFail,
+        secretsSuccess
+      ];
 }
 
 class $AssetsColorsGen {
@@ -56,10 +72,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Face ID Success.png
   AssetGenImage get faceIDSuccess =>
       const AssetGenImage('assets/icons/Face ID Success.png');
-
-  /// File path: assets/icons/Megaphone.png
-  AssetGenImage get megaphone =>
-      const AssetGenImage('assets/icons/Megaphone.png');
 
   /// File path: assets/icons/Notch.png
   AssetGenImage get notch => const AssetGenImage('assets/icons/Notch.png');
@@ -237,7 +249,6 @@ class $AssetsIconsGen {
         bTCIcon,
         balance,
         faceIDSuccess,
-        megaphone,
         notch,
         arrowBack,
         arrowForwardIos,
@@ -360,10 +371,6 @@ class $AssetsImagesGen {
   AssetGenImage get brownCardFront =>
       const AssetGenImage('assets/images/brown_card_front.png');
 
-  /// File path: assets/images/brown_without_shadow.png
-  AssetGenImage get brownWithoutShadow =>
-      const AssetGenImage('assets/images/brown_without_shadow.png');
-
   /// File path: assets/images/card_and_bar_forms.png
   AssetGenImage get cardAndBarForms =>
       const AssetGenImage('assets/images/card_and_bar_forms.png');
@@ -412,17 +419,9 @@ class $AssetsImagesGen {
   AssetGenImage get formCardSelected =>
       const AssetGenImage('assets/images/form_card_selected.png');
 
-  /// File path: assets/images/inactive_card.png
-  AssetGenImage get inactiveCard =>
-      const AssetGenImage('assets/images/inactive_card.png');
-
   /// File path: assets/images/orange_card_front.png
   AssetGenImage get orangeCardFront =>
       const AssetGenImage('assets/images/orange_card_front.png');
-
-  /// File path: assets/images/orange_without_shadow.png
-  AssetGenImage get orangeWithoutShadow =>
-      const AssetGenImage('assets/images/orange_without_shadow.png');
 
   /// File path: assets/images/qr_code.png
   AssetGenImage get qrCode => const AssetGenImage('assets/images/qr_code.png');
@@ -462,10 +461,6 @@ class $AssetsImagesGen {
   AssetGenImage get whiteCardFront =>
       const AssetGenImage('assets/images/white_card_front.png');
 
-  /// File path: assets/images/white_without_shadow.png
-  AssetGenImage get whiteWithoutShadow =>
-      const AssetGenImage('assets/images/white_without_shadow.png');
-
   /// List of all assets
   List<AssetGenImage> get values => [
         addCard,
@@ -486,7 +481,6 @@ class $AssetsImagesGen {
         barSkeleton,
         barWithAddress,
         brownCardFront,
-        brownWithoutShadow,
         cardAndBarForms,
         cardColorBrown,
         cardColorOrange,
@@ -499,9 +493,7 @@ class $AssetsImagesGen {
         filledBackWhite,
         formBarSelected,
         formCardSelected,
-        inactiveCard,
         orangeCardFront,
-        orangeWithoutShadow,
         qrCode,
         skeletonAddressField,
         skeletonCircle,
@@ -511,8 +503,7 @@ class $AssetsImagesGen {
         skeletonSecret2,
         stylus,
         walletProtectImage,
-        whiteCardFront,
-        whiteWithoutShadow
+        whiteCardFront
       ];
 }
 

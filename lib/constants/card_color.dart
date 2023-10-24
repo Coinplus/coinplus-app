@@ -8,8 +8,8 @@ enum CardColor {
 
 extension CardColorHelper on CardColor {
   AssetGenImage get image => switch (this) {
-        CardColor.ORANGE => Assets.images.orangeWithoutShadow,
-        CardColor.WHITE => Assets.images.whiteWithoutShadow,
-        CardColor.BROWN => Assets.images.brownWithoutShadow,
+        CardColor.ORANGE => Assets.images.orangeCardFront,
+        CardColor.WHITE => Assets.images.whiteCardFront,
+        CardColor.BROWN => Assets.images.brownCardFront,
       };
 }
