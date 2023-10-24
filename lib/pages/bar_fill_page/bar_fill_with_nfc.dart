@@ -36,7 +36,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
     with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
   final _cardAnimationState = CardAnimationState();
-  final _validationStore = QrDetectState();
+  final _validationStore = ValidationState();
   final _addressState = AddressState();
   final _focusNode = FocusNode();
 

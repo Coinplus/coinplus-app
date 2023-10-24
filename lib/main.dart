@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app.dart';
 import 'constants/flavor_type.dart';
@@ -20,6 +21,13 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
   await EasyLocalization.ensureInitialized();
   registerGetIt(env);
   //await StorageUtils.clear();
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.getBool('first_run') ?? true) {
+    const storage = FlutterSecureStorage();
+    await storage.deleteAll();
+    await prefs.setBool('first_run', false);
+  }
+
   runApp(
     EasyLocalization(
       supportedLocales: const [
@@ -34,6 +42,5 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
 }
 
 Future<void> main() async {
-  await Hive.initFlutter();
   await run();
 }

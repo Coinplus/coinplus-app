@@ -37,8 +37,8 @@ dependencies:
   auto_route: ^7.3.2
   easy_localization: ^3.0.2
   url_launcher: ^6.1.11
-  flutter_hooks: ^0.19.0
-  styled_text: ^7.0.0
+  flutter_hooks: ^0.20.3
+  styled_text: ^8.1.0
   gap: ^3.0.0
   flutter_scale_tap: ^1.0.5
   lottie: ^2.4.0
@@ -52,18 +52,12 @@ dependencies:
   carousel_slider: ^4.2.1
   shared_preferences: ^2.2.0
   animated_segmented_tab_control: ^1.1.0
-  toast: ^0.3.0
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.0.0
   retrofit: ^4.0.1
   text_link: ^1.0.0
-  flutter_lints: ^1.0.0
-  flutter_bloc: ^8.0.1
-  hive: ^2.0.5
-  hive_flutter: ^1.1.0
+  flutter_lints: ^3.0.0
   shake_animation_widget: ^3.0.4
-  pin_lock: ^0.1.0
   flutter_branch_sdk: ^6.8.0
-  email_validator: ^2.1.17
   share_plus: ^7.2.1
   qr_flutter: ^4.1.0
   bs58: ^1.0.2
@@ -98,7 +92,7 @@ dev_dependencies:
   freezed: ^2.3.2
   dart_code_metrics: ^5.7.2
   theme_tailor: ^2.0.0
-  retrofit_generator: ^7.0.8
+  retrofit_generator: ^8.0.2
   flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:
@@ -174,6 +168,9 @@ flutter:
     - assets/animated_logo/qr_animation.json
     - assets/animated_logo/address_validation_success.json
     - assets/animated_logo/loading_animation.json
+    - assets/animated_logo/secrets_success.json
+    - assets/animated_logo/secrets_fail.json
+    - assets/animated_logo/please_wait.json
     - assets/translations/en-US.json
 
   fonts:

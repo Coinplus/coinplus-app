@@ -43,7 +43,7 @@ class BarScanMethodsPage extends StatelessWidget {
                   await router.pop();
                   await NfcManager.instance.startSession(
                     alertMessage:
-                        'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
+                        'It’s easy! Just hold your phone on the top of your Coinplus Bar’s box',
                     onDiscovered: (tag) async {
                       final ndef = Ndef.from(tag);
                       final records = ndef!.cachedMessage!.records;
@@ -164,7 +164,7 @@ class BarScanMethodsPage extends StatelessWidget {
                               ),
                               const Gap(20),
                               const Text(
-                                'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+                                'It’s easy! Just hold your phone on the top of your Coinplus Bar’s box',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 14,

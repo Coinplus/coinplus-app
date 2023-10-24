@@ -2,12 +2,12 @@ import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
-import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
@@ -83,7 +83,11 @@ Future<void> emailSendAlert(BuildContext context) {
                 ),
               ),
               const Gap(23),
-              Assets.icons.successEmail.image(height: 90),
+              Lottie.asset(
+                height: 100,
+                'assets/animated_logo/secrets_success.json',
+                repeat: false,
+              ),
               const Gap(25),
               const Text(
                 'You’ll get the reply shortly, before that you can check out our Help Center.',

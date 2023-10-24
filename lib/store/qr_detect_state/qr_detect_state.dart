@@ -2,9 +2,9 @@ import 'package:mobx/mobx.dart';
 
 part 'qr_detect_state.g.dart';
 
-class QrDetectState = _QrDetectState with _$QrDetectState;
+class ValidationState = _ValidationState with _$ValidationState;
 
-abstract class _QrDetectState with Store {
+abstract class _ValidationState with Store {
   @readonly
   bool _isDetected = false;
   @readonly

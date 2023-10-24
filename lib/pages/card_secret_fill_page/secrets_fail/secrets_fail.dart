@@ -1,10 +1,10 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
-import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
@@ -58,9 +58,10 @@ Future<void> secretsFailDialog(BuildContext context) {
                 ),
               ),
               const Gap(23),
-              Assets.icons.secretsFail.image(
-                height: 70,
-                color: AppColors.textHintsColor,
+              Lottie.asset(
+                height: 100,
+                'assets/animated_logo/secrets_fail.json',
+                repeat: false,
               ),
               const Gap(25),
               const Text(

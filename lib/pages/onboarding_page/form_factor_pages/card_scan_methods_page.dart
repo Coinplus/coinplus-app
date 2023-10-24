@@ -46,7 +46,7 @@ class CardScanMethodsPage extends StatelessWidget {
                   await router.pop();
                   await NfcManager.instance.startSession(
                     alertMessage:
-                        'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
+                        'It’s easy! Just hold your phone near the Coinplus Card.',
                     onDiscovered: (tag) async {
                       // final mifare = MiFare.from(tag);
                       // final uid = mifare!.identifier;
@@ -184,7 +184,7 @@ class CardScanMethodsPage extends StatelessWidget {
                               ),
                               const Gap(20),
                               const Text(
-                                'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+                                'It’s easy! Just hold your phone near the Coinplus Card.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 14,
