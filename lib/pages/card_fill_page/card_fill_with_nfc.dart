@@ -37,8 +37,8 @@ import '../splash_screen/splash_screen.dart';
 import 'already_saved_card_dialog/already_saved_card_dialog.dart';
 
 @RoutePage()
-class CardFillPage extends StatefulWidget {
-  const CardFillPage({
+class CardFillWithNfc extends StatefulWidget {
+  const CardFillWithNfc({
     super.key,
     this.receivedData,
   });
@@ -46,10 +46,10 @@ class CardFillPage extends StatefulWidget {
   final String? receivedData;
 
   @override
-  State<CardFillPage> createState() => _CardFillPageState();
+  State<CardFillWithNfc> createState() => _CardFillWithNfcState();
 }
 
-class _CardFillPageState extends State<CardFillPage>
+class _CardFillWithNfcState extends State<CardFillWithNfc>
     with TickerProviderStateMixin {
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
@@ -135,7 +135,10 @@ class _CardFillPageState extends State<CardFillPage>
               ),
               child: IconButton(
                 onPressed: () {
-                  _flipCardController.controller!.value == 1 && _lineStore.isLineVisible ? makeLineInvisible() : router.pop();
+                  _flipCardController.controller!.value == 1 &&
+                          _lineStore.isLineVisible
+                      ? makeLineInvisible()
+                      : router.pop();
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -888,55 +891,24 @@ class _CardFillPageState extends State<CardFillPage>
                               padding: const EdgeInsets.all(14),
                               child: Column(
                                 children: [
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Fill in the address of your physical card wallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'Coinplus Virtual Card',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState:
-                                        _addressState.isAddressVisible
-                                            ? CrossFadeState.showSecond
-                                            : CrossFadeState.showFirst,
-                                    duration: const Duration(milliseconds: 400),
-                                  ),
+                                  const Text(
+                                    'Coinplus virtual card',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  ).expandedHorizontally(),
                                   const Gap(4),
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState:
-                                        _addressState.isAddressVisible
-                                            ? CrossFadeState.showSecond
-                                            : CrossFadeState.showFirst,
-                                    duration: const Duration(milliseconds: 400),
-                                  ),
+                                  const Text(
+                                    'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 14,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  ).expandedHorizontally(),
                                 ],
                               ),
                             ),
@@ -1148,6 +1120,7 @@ class _CardFillPageState extends State<CardFillPage>
     await Future.delayed(const Duration(milliseconds: 400));
     await _flipCardController.toggleCard();
   }
+
   Future<void> makeLineInvisible() async {
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));

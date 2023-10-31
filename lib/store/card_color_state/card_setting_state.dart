@@ -11,7 +11,7 @@ abstract class _CardSettingState with Store {
   late CardModel card;
 
   _CardSettingState({required this.card}) {
-    selectedColor = card.cardColor;
+    selectedColor = card.color;
   }
 
   @observable

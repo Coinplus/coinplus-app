@@ -37,6 +37,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -110,15 +111,15 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
                   builder: (context) {
                     return CupertinoSwitch(
                       onChanged: (_) async {
-                        await _walletProtectState.onToggleSwitch();
+                        _walletProtectState.enablePasscode();
                         await Future.delayed(
                           const Duration(
                             milliseconds: 300,
                           ),
                         );
-                        // await router.pushAndPopAll(const CreatePinRoute());
+                        await router.pushAndPopAll(const CustomPinCode());
                       },
-                      value: _walletProtectState.isToggleSwitched && true,
+                      value: _walletProtectState.isEnablePasscode,
                     );
                   },
                 ),

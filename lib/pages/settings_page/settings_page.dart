@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,10 +11,22 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
 
 @RoutePage()
-class SettingsPage extends HookWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const SettingsPage());
+  }
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final _walletProtectionState = WalletProtectState();
 
   @override
   Widget build(BuildContext context) {
@@ -100,9 +112,7 @@ class SettingsPage extends HookWidget {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: () {
-                            router.push(const CustomPinCodeRoute());
-                          },
+                          onTap: () {},
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -132,28 +142,35 @@ class SettingsPage extends HookWidget {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: _walletProtectionState.onToggleSwitch,
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
-                          child: ListTile(
-                            splashColor: Colors.transparent,
-                            minLeadingWidth: 10,
-                            trailing: CupertinoSwitch(
-                              value: true,
-                              onChanged: (value) {},
-                            ),
-                            leading: Assets.icons.faceIdSettings.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Face ID',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                          child: Observer(
+                            builder: (context) {
+                              return ListTile(
+                                splashColor: Colors.transparent,
+                                minLeadingWidth: 10,
+                                trailing: CupertinoSwitch(
+                                  value:
+                                      _walletProtectionState.isToggleSwitched,
+                                  onChanged: (value) {
+                                    _walletProtectionState.onToggleSwitch();
+                                  },
+                                ),
+                                leading: Assets.icons.faceIdSettings.image(
+                                  height: 22,
+                                ),
+                                title: const Text(
+                                  'Face ID',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -467,9 +484,5 @@ class SettingsPage extends HookWidget {
         ],
       ),
     );
-  }
-
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const SettingsPage());
   }
 }

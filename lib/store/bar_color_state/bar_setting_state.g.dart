@@ -13,13 +13,13 @@ mixin _$BarSettingState on _BarSettingState, Store {
       Atom(name: '_BarSettingState.selectedColor', context: context);
 
   @override
-  BarColor get selectedColor {
+  CardColor get selectedColor {
     _$selectedColorAtom.reportRead();
     return super.selectedColor;
   }
 
   @override
-  set selectedColor(BarColor value) {
+  set selectedColor(CardColor value) {
     _$selectedColorAtom.reportWrite(value, super.selectedColor, () {
       super.selectedColor = value;
     });
@@ -29,7 +29,7 @@ mixin _$BarSettingState on _BarSettingState, Store {
       AsyncAction('_BarSettingState.changeColor', context: context);
 
   @override
-  Future<void> changeColor(BarColor color) {
+  Future<void> changeColor(CardColor color) {
     return _$changeColorAsyncAction.run(() => super.changeColor(color));
   }
 

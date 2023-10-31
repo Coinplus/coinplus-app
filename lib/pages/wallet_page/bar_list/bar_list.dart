@@ -6,11 +6,12 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../constants/bar_color.dart';
+import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../store/balance_store/balance_store.dart';
@@ -18,19 +19,28 @@ import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../onboarding_page/form_factor_pages/bar_scan_methods_page.dart';
 
 class BarList extends StatefulWidget {
-  const BarList({super.key});
+  const BarList({
+    super.key,
+    required this.onCardSelected,
+    required this.onCarouselScroll,
+  });
+
+  final ValueChanged<AbstractCard?> onCardSelected;
+  final ValueChanged<int> onCarouselScroll;
 
   @override
   State<BarList> createState() => _BarListState();
 }
 
-class _BarListState extends State<BarList> {
-  final _settingsState = SettingsState();
-
+class _BarListState extends State<BarList>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  SettingsState get _settingsState => GetIt.instance<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Observer(
       builder: (_) {
         return CarouselSlider.builder(
@@ -105,7 +115,7 @@ class _BarListState extends State<BarList> {
                                         padding:
                                             const EdgeInsets.only(left: 25),
                                         child: Text(
-                                          bar.barName,
+                                          bar.name,
                                           style: const TextStyle(
                                             fontFamily: FontFamily.redHatMedium,
                                             fontSize: 15,
@@ -148,7 +158,7 @@ class _BarListState extends State<BarList> {
                             ),
                           ],
                           image: DecorationImage(
-                            image: bar.barColor.image.image().image,
+                            image: bar.color.image.image().image,
                           ),
                         ),
                         child: Center(
@@ -343,6 +353,10 @@ class _BarListState extends State<BarList> {
           },
           options: CarouselOptions(
             onPageChanged: (index, reason) {
+              widget.onCarouselScroll(index);
+              widget.onCardSelected(
+                _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
+              );
               _settingsState.setBarCurrentIndex(index);
             },
             enlargeFactor: 0.35,
@@ -363,4 +377,7 @@ class _BarListState extends State<BarList> {
     final end = fullAddress.substring(fullAddress.length - 5);
     return '$start ... ... $end';
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

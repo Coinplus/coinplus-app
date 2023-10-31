@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 
-import '../../constants/bar_color.dart';
+import '../../constants/card_color.dart';
 import '../../models/bar_model/bar_model.dart';
 
 part 'bar_setting_state.g.dart';
@@ -11,14 +11,14 @@ abstract class _BarSettingState with Store {
   late BarModel bar;
 
   _BarSettingState({required this.bar}) {
-    selectedColor = bar.barColor;
+    selectedColor = bar.color;
   }
 
   @observable
-  BarColor selectedColor = BarColor.SILVER;
+  CardColor selectedColor = CardColor.SILVER;
 
   @action
-  Future<void> changeColor(BarColor color) async {
+  Future<void> changeColor(CardColor color) async {
     selectedColor = color;
   }
 }

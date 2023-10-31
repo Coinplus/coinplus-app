@@ -10,6 +10,6 @@ abstract class _LinesStore with Store {
 
   @action
   void makeVisible() {
-    isLineVisible = true;
+    isLineVisible = !isLineVisible;
   }
 }

@@ -10,18 +10,25 @@ abstract class _WalletProtectState with Store {
   @observable
   bool isToggleSwitched = false;
 
+  @observable
+  bool isEnablePasscode = false;
+
+  @action
+  void enablePasscode() {
+    isEnablePasscode = !isEnablePasscode;
+  }
+
   @action
   Future<void> onToggleSwitch() async {
-    isToggleSwitched = !isToggleSwitched;
-    // try {
-    //   final didAuthenticate = await _auth.authenticate(
-    //     localizedReason: 'Please authenticate',
-    //   );
-    //   isToggleSwitched = didAuthenticate;
-    //   if (!didAuthenticate) {
-    //     return;
-    //   }
-    // } catch (_) {}
+    try {
+      final didAuthenticate = await _auth.authenticate(
+        localizedReason: 'Please authenticate',
+      );
+      isToggleSwitched = !isToggleSwitched;
+      if (!didAuthenticate) {
+        return;
+      }
+    } catch (_) {}
   }
 
   @action

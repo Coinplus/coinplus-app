@@ -25,6 +25,22 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
+  late final _$isEnablePasscodeAtom =
+      Atom(name: '_WalletProtectState.isEnablePasscode', context: context);
+
+  @override
+  bool get isEnablePasscode {
+    _$isEnablePasscodeAtom.reportRead();
+    return super.isEnablePasscode;
+  }
+
+  @override
+  set isEnablePasscode(bool value) {
+    _$isEnablePasscodeAtom.reportWrite(value, super.isEnablePasscode, () {
+      super.isEnablePasscode = value;
+    });
+  }
+
   late final _$onToggleSwitchAsyncAction =
       AsyncAction('_WalletProtectState.onToggleSwitch', context: context);
 
@@ -52,10 +68,25 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
         .run(() => super.authenticateWithBiometrics());
   }
 
+  late final _$_WalletProtectStateActionController =
+      ActionController(name: '_WalletProtectState', context: context);
+
+  @override
+  void enablePasscode() {
+    final _$actionInfo = _$_WalletProtectStateActionController.startAction(
+        name: '_WalletProtectState.enablePasscode');
+    try {
+      return super.enablePasscode();
+    } finally {
+      _$_WalletProtectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-isToggleSwitched: ${isToggleSwitched}
+isToggleSwitched: ${isToggleSwitched},
+isEnablePasscode: ${isEnablePasscode}
     ''';
   }
 }

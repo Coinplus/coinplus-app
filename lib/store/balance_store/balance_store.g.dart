@@ -176,17 +176,6 @@ mixin _$BalanceStore on _BalanceStore, Store {
       ActionController(name: '_BalanceStore', context: context);
 
   @override
-  void saveReplacedCard() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.saveReplacedCard');
-    try {
-      return super.saveReplacedCard();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void changeCardColorAndSave(
       {required String cardAddress, required CardColor color}) {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
@@ -201,7 +190,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void changeBarColorAndSave(
-      {required String barAddress, required BarColor color}) {
+      {required String barAddress, required CardColor color}) {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
         name: '_BalanceStore.changeBarColorAndSave');
     try {
@@ -225,22 +214,13 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
-  void resetSelectedCard() {
+  void changeBarNameAndSave(
+      {required String barAddress, required String newName}) {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.resetSelectedCard');
+        name: '_BalanceStore.changeBarNameAndSave');
     try {
-      return super.resetSelectedCard();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void resetSelectedBar() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.resetSelectedBar');
-    try {
-      return super.resetSelectedBar();
+      return super
+          .changeBarNameAndSave(barAddress: barAddress, newName: newName);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }

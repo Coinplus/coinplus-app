@@ -42,6 +42,7 @@ class CardSettingsPage extends StatefulWidget {
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
 class _CardSettingsPageState extends State<CardSettingsPage> {
+  String date = '';
   late CardSettingState _cardSettingsState =
       CardSettingState(card: widget.card);
 
@@ -49,6 +50,14 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
   void initState() {
     _cardSettingsState = CardSettingState(card: widget.card);
     super.initState();
+    date = widget.card.createdAt;
+  }
+
+
+  @override
+  void didUpdateWidget(CardSettingsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    date = widget.card.createdAt;
   }
 
   @override
@@ -66,7 +75,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
         backgroundColor: Colors.white,
         title: const Text(
           'Card settings',
-          style: TextStyle(fontSize: 17),
+          style: TextStyle(fontSize: 17, fontFamily: FontFamily.redHatMedium),
         ),
       ),
       body: Scrollbar(
@@ -95,18 +104,18 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                       style: TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.primary,
                       ),
                     ),
                     const Gap(6),
                     Text(
-                      widget.card.cardName.toString(),
+                      widget.card.name,
                       style: const TextStyle(
-                        fontFamily: FontFamily.redHatLight,
+                        fontFamily: FontFamily.redHatMedium,
                         fontSize: 14,
                         color: AppColors.primaryTextColor,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
@@ -164,7 +173,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                       style: TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.primaryTextColor,
                       ),
                     ),
@@ -172,10 +181,10 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                     Text(
                       widget.card.address.toString(),
                       style: const TextStyle(
-                        fontFamily: FontFamily.redHatLight,
+                        fontFamily: FontFamily.redHatMedium,
                         fontSize: 14,
                         color: AppColors.primaryTextColor,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
@@ -188,7 +197,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                 future: getPrivateKeyFromStorage(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const SizedBox();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
@@ -253,8 +262,9 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                         ),
                                         Overlay.of(context),
                                         CustomSnackBar.success(
-                                          backgroundColor: const Color(0xFF4A4A4A)
-                                              .withOpacity(0.9),
+                                          backgroundColor:
+                                              const Color(0xFF4A4A4A)
+                                                  .withOpacity(0.9),
                                           message:
                                               'Hold to reveal your Private key',
                                           textStyle: const TextStyle(
@@ -268,24 +278,27 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                               title: Observer(
                                 builder: (context) {
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Private key',
                                         style: TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
                                           fontSize: 16,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w700,
                                           color: AppColors.primaryTextColor,
                                         ),
                                       ),
                                       const Gap(6),
-                                      if (_cardSettingsState.isPrivateKeyVisible)
+                                      if (_cardSettingsState
+                                          .isPrivateKeyVisible)
                                         Container(
                                           padding: const EdgeInsets.all(5),
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                              color: Colors.grey.withOpacity(0.1),
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -293,16 +306,18 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                           child: Text(
                                             snapshot.data.toString(),
                                             style: const TextStyle(
-                                              fontFamily: FontFamily.redHatLight,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 14,
                                               color: AppColors.primaryTextColor,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w300,
                                             ),
                                           ),
                                         )
                                       else
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           child: ImageFiltered(
                                             imageFilter: ImageFilter.blur(
                                               sigmaX: 5,
@@ -322,10 +337,11 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                                 'L24hTctc4WlPBJwyP8EzBogNhm2y7EUjkHpVBFD9rhYT5PLoTuY6',
                                                 style: TextStyle(
                                                   fontFamily:
-                                                      FontFamily.redHatLight,
+                                                      FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color: AppColors.textHintsColor,
-                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      AppColors.textHintsColor,
+                                                  fontWeight: FontWeight.w300,
                                                 ),
                                               ),
                                             ),
@@ -349,7 +365,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                 },
                                 child: StyledText(
                                   text:
-                                  'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
+                                      'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
                                   tags: {
                                     'p': StyledTextTag(
                                       style: const TextStyle(
@@ -361,8 +377,8 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                     ),
                                   },
                                   style: const TextStyle(
-                                    fontFamily: FontFamily.redHatLight,
-                                    fontWeight: FontWeight.w700,
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontWeight: FontWeight.w300,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -377,8 +393,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                   }
                 },
               ),
-
-              const Gap(8),
+              const Gap(16),
               ListTile(
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,18 +403,18 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                       style: TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.primaryTextColor,
                       ),
                     ),
                     const Gap(6),
                     Text(
-                      widget.card.cardAddedDate.toString(),
+                      date,
                       style: const TextStyle(
-                        fontFamily: FontFamily.redHatLight,
+                        fontFamily: FontFamily.redHatMedium,
                         fontSize: 14,
                         color: AppColors.primaryTextColor,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ],
@@ -421,7 +436,7 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                       style: TextStyle(
                         fontFamily: FontFamily.redHatMedium,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.primaryTextColor,
                       ),
                     ),
@@ -429,10 +444,10 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                     const Text(
                       'Choose a color theme for your card',
                       style: TextStyle(
-                        fontFamily: FontFamily.redHatLight,
+                        fontFamily: FontFamily.redHatMedium,
                         fontSize: 14,
                         color: AppColors.primaryTextColor,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                     const Gap(25),
@@ -463,10 +478,11 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         width: 2,
-                                        color: _cardSettingsState.selectedColor ==
-                                                colors[index]
-                                            ? Colors.blue
-                                            : Colors.transparent,
+                                        color:
+                                            _cardSettingsState.selectedColor ==
+                                                    colors[index]
+                                                ? Colors.blue
+                                                : Colors.transparent,
                                       ),
                                     ),
                                     child: getColorImage(colors[index]),
@@ -625,11 +641,11 @@ class _CardSettingsPageState extends State<CardSettingsPage> {
 Widget getColorImage(CardColor color) {
   switch (color) {
     case CardColor.ORANGE:
-      return Assets.images.cardColorOrange.image(height: 130);
+      return Assets.images.orangeCardFront.image(height: 130);
     case CardColor.WHITE:
-      return Assets.images.cardColorWhite.image(height: 130);
+      return Assets.images.whiteCardFront.image(height: 130);
     case CardColor.BROWN:
-      return Assets.images.cardColorBrown.image(height: 130);
+      return Assets.images.brownCardFront.image(height: 130);
     default:
       return const SizedBox.shrink();
   }
