@@ -36,7 +36,7 @@ final lightTheme = base.copyWith(
       vertical: 5,
     ),
   ),
-  primaryColor: Colors.yellow,
+  primaryColor: Colors.grey,
   // shadowColor: Colors.black[300],
   scaffoldBackgroundColor: Colors.white,
   dividerColor: Colors.black,

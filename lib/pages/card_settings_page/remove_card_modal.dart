@@ -38,13 +38,13 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
     startAnimation();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 500),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(-0.5, 0),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+      begin: const Offset(0.2, 0),
+      end: const Offset(-0.1, 0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -66,32 +66,19 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
       child: Column(
         children: [
           const Gap(10),
-          Row(
-            children: [
-              const Gap(8),
-              IconButton(
-                onPressed: router.pop,
-                icon: const Icon(
-                  Icons.close_sharp,
-                  size: 25,
-                  color: Colors.black,
-                ),
+          Assets.icons.notch.image(height: 4),
+          const Gap(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Text(
+              'Remove the card',
+              style: TextStyle(
+                fontFamily: FontFamily.redHatMedium,
+                fontWeight: FontWeight.w700,
+                fontSize: 17,
+                color: AppColors.primaryTextColor,
               ),
-              const Expanded(
-                child: Text(
-                  'Remove the card',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatSemiBold,
-                    fontSize: 17,
-                    color: AppColors.primaryTextColor,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 60,
-              ),
-            ],
+            ).expandedHorizontally(),
           ),
           const Gap(30),
           AnimatedBuilder(
@@ -99,8 +86,18 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             builder: (ctx, child) {
               return SlideTransition(
                 position: _slideAnimation,
-                child: Assets.images.cardForm.image(
-                  height: 84,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Assets.images.cardForm.image(
+                      height: 84,
+                    ),
+                    const Gap(50),
+                    AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                        opacity: _slideAnimation.isCompleted ? 1 : 0,
+                        child: Assets.icons.binIcon.image(height: 50),),
+                  ],
                 ),
               );
             },

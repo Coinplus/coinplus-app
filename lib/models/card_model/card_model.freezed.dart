@@ -21,13 +21,14 @@ CardModel _$CardModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CardModel {
   String get address => throw _privateConstructorUsedError;
-  CardColor get cardColor => throw _privateConstructorUsedError;
-  CardType get cardType => throw _privateConstructorUsedError;
-  String get cardName => throw _privateConstructorUsedError;
+  CardColor get color => throw _privateConstructorUsedError;
+  CardType get type => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   int? get totalReceived => throw _privateConstructorUsedError;
   int? get totalSent => throw _privateConstructorUsedError;
   int? get balance => throw _privateConstructorUsedError;
-  String get cardAddedDate => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: timeFromJson)
+  String get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'chain_stats')
   ChainStats? get data => throw _privateConstructorUsedError;
   @JsonKey(name: 'mempool_stats')
@@ -46,13 +47,13 @@ abstract class $CardModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String address,
-      CardColor cardColor,
-      CardType cardType,
-      String cardName,
+      CardColor color,
+      CardType type,
+      String name,
       int? totalReceived,
       int? totalSent,
       int? balance,
-      String cardAddedDate,
+      @JsonKey(fromJson: timeFromJson) String createdAt,
       @JsonKey(name: 'chain_stats') ChainStats? data,
       @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
 }
@@ -71,13 +72,13 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
   @override
   $Res call({
     Object? address = null,
-    Object? cardColor = null,
-    Object? cardType = null,
-    Object? cardName = null,
+    Object? color = null,
+    Object? type = null,
+    Object? name = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
     Object? balance = freezed,
-    Object? cardAddedDate = null,
+    Object? createdAt = null,
     Object? data = freezed,
     Object? mempoolStats = freezed,
   }) {
@@ -86,17 +87,17 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      cardColor: null == cardColor
-          ? _value.cardColor
-          : cardColor // ignore: cast_nullable_to_non_nullable
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
               as CardColor,
-      cardType: null == cardType
-          ? _value.cardType
-          : cardType // ignore: cast_nullable_to_non_nullable
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as CardType,
-      cardName: null == cardName
-          ? _value.cardName
-          : cardName // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
@@ -110,9 +111,9 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
-      cardAddedDate: null == cardAddedDate
-          ? _value.cardAddedDate
-          : cardAddedDate // ignore: cast_nullable_to_non_nullable
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
       data: freezed == data
           ? _value.data
@@ -127,63 +128,64 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
 }
 
 /// @nodoc
-abstract class _$$_CardModelCopyWith<$Res> implements $CardModelCopyWith<$Res> {
-  factory _$$_CardModelCopyWith(
-          _$_CardModel value, $Res Function(_$_CardModel) then) =
-      __$$_CardModelCopyWithImpl<$Res>;
+abstract class _$$CardModelImplCopyWith<$Res>
+    implements $CardModelCopyWith<$Res> {
+  factory _$$CardModelImplCopyWith(
+          _$CardModelImpl value, $Res Function(_$CardModelImpl) then) =
+      __$$CardModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String address,
-      CardColor cardColor,
-      CardType cardType,
-      String cardName,
+      CardColor color,
+      CardType type,
+      String name,
       int? totalReceived,
       int? totalSent,
       int? balance,
-      String cardAddedDate,
+      @JsonKey(fromJson: timeFromJson) String createdAt,
       @JsonKey(name: 'chain_stats') ChainStats? data,
       @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
 }
 
 /// @nodoc
-class __$$_CardModelCopyWithImpl<$Res>
-    extends _$CardModelCopyWithImpl<$Res, _$_CardModel>
-    implements _$$_CardModelCopyWith<$Res> {
-  __$$_CardModelCopyWithImpl(
-      _$_CardModel _value, $Res Function(_$_CardModel) _then)
+class __$$CardModelImplCopyWithImpl<$Res>
+    extends _$CardModelCopyWithImpl<$Res, _$CardModelImpl>
+    implements _$$CardModelImplCopyWith<$Res> {
+  __$$CardModelImplCopyWithImpl(
+      _$CardModelImpl _value, $Res Function(_$CardModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? address = null,
-    Object? cardColor = null,
-    Object? cardType = null,
-    Object? cardName = null,
+    Object? color = null,
+    Object? type = null,
+    Object? name = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
     Object? balance = freezed,
-    Object? cardAddedDate = null,
+    Object? createdAt = null,
     Object? data = freezed,
     Object? mempoolStats = freezed,
   }) {
-    return _then(_$_CardModel(
+    return _then(_$CardModelImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      cardColor: null == cardColor
-          ? _value.cardColor
-          : cardColor // ignore: cast_nullable_to_non_nullable
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
               as CardColor,
-      cardType: null == cardType
-          ? _value.cardType
-          : cardType // ignore: cast_nullable_to_non_nullable
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
               as CardType,
-      cardName: null == cardName
-          ? _value.cardName
-          : cardName // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
@@ -197,9 +199,9 @@ class __$$_CardModelCopyWithImpl<$Res>
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as int?,
-      cardAddedDate: null == cardAddedDate
-          ? _value.cardAddedDate
-          : cardAddedDate // ignore: cast_nullable_to_non_nullable
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
       data: freezed == data
           ? _value.data
@@ -215,33 +217,33 @@ class __$$_CardModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CardModel implements _CardModel {
-  const _$_CardModel(
+class _$CardModelImpl implements _CardModel {
+  const _$CardModelImpl(
       {required this.address,
-      this.cardColor = CardColor.ORANGE,
-      this.cardType = CardType.CARD,
-      this.cardName = 'Coinplus Bitcoin Card',
+      this.color = CardColor.ORANGE,
+      this.type = CardType.CARD,
+      this.name = 'Coinplus Bitcoin Card',
       this.totalReceived,
       this.totalSent,
       this.balance,
-      this.cardAddedDate = '01/01/2023',
+      @JsonKey(fromJson: timeFromJson) this.createdAt = '',
       @JsonKey(name: 'chain_stats') this.data,
       @JsonKey(name: 'mempool_stats') this.mempoolStats});
 
-  factory _$_CardModel.fromJson(Map<String, dynamic> json) =>
-      _$$_CardModelFromJson(json);
+  factory _$CardModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardModelImplFromJson(json);
 
   @override
   final String address;
   @override
   @JsonKey()
-  final CardColor cardColor;
+  final CardColor color;
   @override
   @JsonKey()
-  final CardType cardType;
+  final CardType type;
   @override
   @JsonKey()
-  final String cardName;
+  final String name;
   @override
   final int? totalReceived;
   @override
@@ -249,8 +251,8 @@ class _$_CardModel implements _CardModel {
   @override
   final int? balance;
   @override
-  @JsonKey()
-  final String cardAddedDate;
+  @JsonKey(fromJson: timeFromJson)
+  final String createdAt;
   @override
   @JsonKey(name: 'chain_stats')
   final ChainStats? data;
@@ -260,28 +262,25 @@ class _$_CardModel implements _CardModel {
 
   @override
   String toString() {
-    return 'CardModel(address: $address, cardColor: $cardColor, cardType: $cardType, cardName: $cardName, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, cardAddedDate: $cardAddedDate, data: $data, mempoolStats: $mempoolStats)';
+    return 'CardModel(address: $address, color: $color, type: $type, name: $name, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, createdAt: $createdAt, data: $data, mempoolStats: $mempoolStats)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CardModel &&
+            other is _$CardModelImpl &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.cardColor, cardColor) ||
-                other.cardColor == cardColor) &&
-            (identical(other.cardType, cardType) ||
-                other.cardType == cardType) &&
-            (identical(other.cardName, cardName) ||
-                other.cardName == cardName) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.totalReceived, totalReceived) ||
                 other.totalReceived == totalReceived) &&
             (identical(other.totalSent, totalSent) ||
                 other.totalSent == totalSent) &&
             (identical(other.balance, balance) || other.balance == balance) &&
-            (identical(other.cardAddedDate, cardAddedDate) ||
-                other.cardAddedDate == cardAddedDate) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.data, data) || other.data == data) &&
             (identical(other.mempoolStats, mempoolStats) ||
                 other.mempoolStats == mempoolStats));
@@ -289,58 +288,48 @@ class _$_CardModel implements _CardModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      address,
-      cardColor,
-      cardType,
-      cardName,
-      totalReceived,
-      totalSent,
-      balance,
-      cardAddedDate,
-      data,
-      mempoolStats);
+  int get hashCode => Object.hash(runtimeType, address, color, type, name,
+      totalReceived, totalSent, balance, createdAt, data, mempoolStats);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CardModelCopyWith<_$_CardModel> get copyWith =>
-      __$$_CardModelCopyWithImpl<_$_CardModel>(this, _$identity);
+  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith =>
+      __$$CardModelImplCopyWithImpl<_$CardModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CardModelToJson(
+    return _$$CardModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CardModel implements CardModel {
+abstract class _CardModel implements CardModel, AbstractCard {
   const factory _CardModel(
           {required final String address,
-          final CardColor cardColor,
-          final CardType cardType,
-          final String cardName,
+          final CardColor color,
+          final CardType type,
+          final String name,
           final int? totalReceived,
           final int? totalSent,
           final int? balance,
-          final String cardAddedDate,
+          @JsonKey(fromJson: timeFromJson) final String createdAt,
           @JsonKey(name: 'chain_stats') final ChainStats? data,
           @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) =
-      _$_CardModel;
+      _$CardModelImpl;
 
   factory _CardModel.fromJson(Map<String, dynamic> json) =
-      _$_CardModel.fromJson;
+      _$CardModelImpl.fromJson;
 
   @override
   String get address;
   @override
-  CardColor get cardColor;
+  CardColor get color;
   @override
-  CardType get cardType;
+  CardType get type;
   @override
-  String get cardName;
+  String get name;
   @override
   int? get totalReceived;
   @override
@@ -348,7 +337,8 @@ abstract class _CardModel implements CardModel {
   @override
   int? get balance;
   @override
-  String get cardAddedDate;
+  @JsonKey(fromJson: timeFromJson)
+  String get createdAt;
   @override
   @JsonKey(name: 'chain_stats')
   ChainStats? get data;
@@ -357,6 +347,6 @@ abstract class _CardModel implements CardModel {
   MempoolStats? get mempoolStats;
   @override
   @JsonKey(ignore: true)
-  _$$_CardModelCopyWith<_$_CardModel> get copyWith =>
+  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

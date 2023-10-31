@@ -99,7 +99,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                 ),
               ),
               contentPadding: const EdgeInsets.all(10),
-              hintText: widget.bar.barName,
+              hintText: widget.bar.name,
               hintStyle: TextStyle(
                 fontFamily: FontFamily.redHatLight,
                 color: AppColors.primaryTextColor.withOpacity(0.5),

@@ -6,7 +6,7 @@ part of 'coin_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CoinDto _$$_CoinDtoFromJson(Map json) => _$_CoinDto(
+_$CoinDtoImpl _$$CoinDtoImplFromJson(Map json) => _$CoinDtoImpl(
       id: json['id'] as String,
       symbol: json['symbol'] as String,
       name: json['name'] as String,
@@ -15,7 +15,7 @@ _$_CoinDto _$$_CoinDtoFromJson(Map json) => _$_CoinDto(
       priceChange1d: json['priceChange1d'] as num? ?? 0,
     );
 
-Map<String, dynamic> _$$_CoinDtoToJson(_$_CoinDto instance) =>
+Map<String, dynamic> _$$CoinDtoImplToJson(_$CoinDtoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'symbol': instance.symbol,

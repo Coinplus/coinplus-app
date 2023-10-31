@@ -80,6 +80,10 @@ class $AssetsIconsGen {
   AssetGenImage get arrowBack =>
       const AssetGenImage('assets/icons/arrow_back.png');
 
+  /// File path: assets/icons/arrow_back_ios.png
+  AssetGenImage get arrowBackIos =>
+      const AssetGenImage('assets/icons/arrow_back_ios.png');
+
   /// File path: assets/icons/arrow_forward_ios.png
   AssetGenImage get arrowForwardIos =>
       const AssetGenImage('assets/icons/arrow_forward_ios.png');
@@ -87,6 +91,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/bar_address_field.png
   AssetGenImage get barAddressField =>
       const AssetGenImage('assets/icons/bar_address_field.png');
+
+  /// File path: assets/icons/bin_icon.png
+  AssetGenImage get binIcon => const AssetGenImage('assets/icons/bin_icon.png');
 
   /// File path: assets/icons/buy.png
   AssetGenImage get buy => const AssetGenImage('assets/icons/buy.png');
@@ -251,8 +258,10 @@ class $AssetsIconsGen {
         faceIDSuccess,
         notch,
         arrowBack,
+        arrowBackIos,
         arrowForwardIos,
         barAddressField,
+        binIcon,
         buy,
         cardBackLink,
         cardBackText,

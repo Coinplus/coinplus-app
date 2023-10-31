@@ -37,6 +37,9 @@ class Router extends $Router {
       page: CardFillRoute.page,
     ),
     AdaptiveRoute(
+      page: CardFillWithNfc.page,
+    ),
+    AdaptiveRoute(
       page: WalletProtectionRoute.page,
     ),
     AdaptiveRoute(
@@ -49,7 +52,7 @@ class Router extends $Router {
       page: BarSettingsRoute.page,
     ),
     AdaptiveRoute(
-      page: CustomPinCodeRoute.page,
+      page: CustomPinCode.page,
     ),
     AdaptiveRoute(
       page: ContactUs.page,

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "97432028068",
+    "project_id": "coinplus-wallet",
+    "storage_bucket": "coinplus-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97432028068:android:8ad0babb604668e309f731",
+        "android_client_info": {
+          "package_name": "com.coinplus.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97432028068-j5t5n7gvlq4es3ffcb85ilh6bofu10ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfNwgbjgJdyuLSkUk8CZy6CCQq2vGnhFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97432028068-j5t5n7gvlq4es3ffcb85ilh6bofu10ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97432028068:android:8b2a8404bd4ba2dc09f731",
+        "android_client_info": {
+          "package_name": "com.example.coinplus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97432028068-j5t5n7gvlq4es3ffcb85ilh6bofu10ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfNwgbjgJdyuLSkUk8CZy6CCQq2vGnhFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97432028068-j5t5n7gvlq4es3ffcb85ilh6bofu10ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

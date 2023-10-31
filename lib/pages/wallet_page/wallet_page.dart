@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
@@ -8,23 +12,33 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
+import '../dashboard/dashboard.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
 import 'btc_price/btc_price.dart';
 import 'card_list/card_list.dart';
 
 class WalletPage extends StatefulWidget {
-  const WalletPage({super.key});
+  const WalletPage({
+    super.key,
+    required this.onChangeCard,
+  });
+
+  final CardChangeCallBack onChangeCard;
 
   @override
   State<WalletPage> createState() => _WalletPageState();
 }
 
-class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
+class _WalletPageState extends State<WalletPage>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<WalletPage> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  int cardCarouselIndex = 0;
+  int barCarouselIndex = 0;
   late final _tabController = TabController(
     length: 2,
     vsync: this,
@@ -44,6 +58,24 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
+    Timer.periodic(
+      const Duration(minutes: 2),
+      (timer) {
+        _balanceStore.getCoins();
+      },
+    );
+    _tabController.addListener(() {
+      final card = _tabController.index == 0
+          ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
+          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
+
+      widget.onChangeCard(
+        (
+          card: card as AbstractCard?,
+          index: _tabController.index,
+        ),
+      );
+    });
   }
 
   @override
@@ -54,152 +86,161 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white.withOpacity(0.95),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Stack(
-              children: [
-                //Curved AppBar
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: CustomPaint(
-                    size: Size(
-                      context.height,
-                      (context.height * 0.205).toDouble(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 130,
+        flexibleSpace: Stack(
+          children: [
+            CustomPaint(
+              size: Size(
+                context.height,
+                (context.height * 0.205).toDouble(),
+              ),
+              painter: HeaderCustomPainter(),
+            ),
+            Positioned(
+              bottom: 6,
+              right: context.height > 844
+                  ? context.width * 0.055
+                  : context.width * 0.04,
+              child: Container(
+                height: 40,
+                width: 128,
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                      color: Colors.grey.withOpacity(0.4),
                     ),
-                    painter: HeaderCustomPainter(),
-                  ),
+                  ],
                 ),
-                //Total Balance
-                Positioned(
-                  top: context.width * 0.16,
-                  left: 22,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Text(
-                            'Wallet',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatBold,
-                              fontSize: 28,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const Gap(14),
-                          Assets.icons.coinplusVector.image(
-                            height: 26,
-                          ),
-                        ],
+                child: DefaultTabController(
+                  length: 2,
+                  child: SegmentedTabControl(
+                    textStyle: const TextStyle(
+                      fontFamily: FontFamily.redHatSemiBold,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    splashColor: Colors.transparent,
+                    controller: _tabController,
+                    indicatorColor: AppColors.silver,
+                    tabs: const [
+                      SegmentTab(
+                        backgroundColor: Colors.white,
+                        label: 'Card',
+                        textColor: Colors.grey,
+                        splashColor: Colors.transparent,
+                        selectedTextColor: AppColors.primaryTextColor,
                       ),
-                      const Text(
-                        'Total balance',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatLight,
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const Gap(5),
-                      Observer(
-                        builder: (context) {
-                          final data = _balanceStore.coins;
-                          final balance = _balanceStore.allCardsBalances;
-                          if (data == null) {
-                            return const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: SizedBox(
-                                height: 15,
-                                width: 15,
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-                          return Text(
-                            '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              fontFamily: FontFamily.redHatBold,
-                              color: Colors.white,
-                              fontSize: 28,
-                            ),
-                          );
-                        },
+                      SegmentTab(
+                        backgroundColor: Colors.white,
+                        label: 'Bar',
+                        textColor: Colors.grey,
+                        splashColor: Colors.transparent,
+                        selectedTextColor: AppColors.primaryTextColor,
                       ),
                     ],
                   ),
                 ),
-                //Card and Bar Switch
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.15,
-                  right: context.height > 844
-                      ? context.width * 0.055
-                      : context.width * 0.04,
-                  child: Container(
-                    height: 40,
-                    width: 128,
-                    padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                          color: Colors.grey.withOpacity(0.4),
+              ),
+            ),
+            Positioned(
+              top: context.width * 0.16,
+              left: 22,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Wallet',
+                        style: TextStyle(
+                          fontFamily: FontFamily.redHatBold,
+                          fontSize: 28,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
-                    child: DefaultTabController(
-                      length: 2,
-                      child: SegmentedTabControl(
-                        textStyle: const TextStyle(
-                          fontFamily: FontFamily.redHatSemiBold,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        splashColor: Colors.transparent,
-                        controller: _tabController,
-                        indicatorColor: AppColors.silver,
-                        tabs: const [
-                          SegmentTab(
-                            backgroundColor: Colors.white,
-                            label: 'Card',
-                            textColor: Colors.grey,
-                            splashColor: Colors.transparent,
-                            selectedTextColor: AppColors.primaryTextColor,
-                          ),
-                          SegmentTab(
-                            backgroundColor: Colors.white,
-                            label: 'Bar',
-                            textColor: Colors.grey,
-                            splashColor: Colors.transparent,
-                            selectedTextColor: AppColors.primaryTextColor,
-                          ),
-                        ],
                       ),
+                      const Gap(14),
+                      Assets.icons.coinplusVector.image(
+                        height: 26,
+                      ),
+                    ],
+                  ),
+                  const Text(
+                    'Total balance',
+                    style: TextStyle(
+                      fontFamily: FontFamily.redHatLight,
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-              ],
+                  const Gap(5),
+                  Observer(
+                    builder: (context) {
+                      final data = _balanceStore.coins;
+                      final balance = _balanceStore.allCardsBalances;
+                      if (data == null) {
+                        return const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: SizedBox(
+                            height: 15,
+                            width: 15,
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                      return Text(
+                        '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontFamily: FontFamily.redHatBold,
+                          color: Colors.white,
+                          fontSize: 28,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
+        ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white.withOpacity(0.95),
+      body: Column(
+        children: [
+          const Gap(15),
           //Cards Slider
           Expanded(
-            flex: 5,
+            flex: 6,
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
-              children: const [
-                CardList(),
-                BarList(),
+              children: [
+                CardList(
+                  onCardSelected: (card) => widget.onChangeCard(
+                    (card: card, index: 0),
+                  ),
+                  onCarouselScroll: (val) => cardCarouselIndex = val,
+                ),
+                BarList(
+                  onCardSelected: (card) => widget.onChangeCard(
+                    (card: card, index: 1),
+                  ),
+                  onCarouselScroll: (val) => barCarouselIndex = val,
+                ),
               ],
             ),
           ),
@@ -419,9 +460,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             ).paddingHorizontal(16)
           else
             const SizedBox(),
-          const Spacer(),
+            const Spacer(),
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -18,6 +18,7 @@ import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../utils/compute_private_key.dart';
 import '../../widgets/loading_button.dart';
 import '../card_fill_page/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
@@ -446,7 +447,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
     unawaited(
       _balanceStore.getSelectedBar(btcAddress),
     );
-    if (isValidBTCAddress(btcAddress)) {
+    if (isValidPublicAddress(btcAddress)) {
       _validationStore.validate();
       _focusNode.unfocus();
       Future.delayed(
@@ -454,10 +455,5 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
         () => _addressState.isAddressVisible = true,
       );
     } else {}
-  }
-
-  bool isValidBTCAddress(String address) {
-    final btcAddressRegex = RegExp(r'^(bc1|[13])[a-zA-HJ-NP-Z0-9]{33,39}$');
-    return btcAddressRegex.hasMatch(address);
   }
 }

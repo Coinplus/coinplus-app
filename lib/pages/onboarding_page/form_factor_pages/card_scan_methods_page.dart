@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:amplitude_flutter/amplitude.dart';
+import 'package:amplitude_flutter/identify.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -48,38 +51,50 @@ class CardScanMethodsPage extends StatelessWidget {
                     alertMessage:
                         'It’s easy! Just hold your phone near the Coinplus Card.',
                     onDiscovered: (tag) async {
-                      // final mifare = MiFare.from(tag);
-                      // final uid = mifare!.identifier;
-                      // final signature = await mifare
-                      //     .sendMiFareCommand(Uint8List.fromList([0x3C, 0x00]));
-                      //
-                      // // TODO: Needs if else statement for iOS
-                      // verifyOriginality(uid, signature);
+                      final mifare = MiFare.from(tag);
+                      final uid = mifare!.identifier;
+                      final signature = await mifare
+                          .sendMiFareCommand(Uint8List.fromList([0x3C, 0x00]));
 
-                      final ndef = Ndef.from(tag);
-                      final records = ndef!.cachedMessage!.records;
-                      dynamic walletAddress;
+                      if (verifyOriginality(uid, signature)) {
+                        final ndef = Ndef.from(tag);
+                        final records = ndef!.cachedMessage!.records;
+                        dynamic walletAddress;
 
-                      if (records.length >= 2) {
-                        final hasJson = records[1].payload;
-                        final payloadString = String.fromCharCodes(hasJson);
-                        final Map payloadData =
-                            await json.decode(payloadString);
-                        walletAddress = payloadData['a'];
+                        if (records.length >= 2) {
+                          final hasJson = records[1].payload;
+                          final payloadString = String.fromCharCodes(hasJson);
+                          final Map payloadData =
+                              await json.decode(payloadString);
+                          walletAddress = payloadData['a'];
+                        } else {
+                          final hasUrl = records[0].payload;
+                          final payloadString = String.fromCharCodes(hasUrl);
+                          final parts =
+                              payloadString.split('air.coinplus.com/btc/');
+                          walletAddress = parts[1];
+                        }
+
+                        await NfcManager.instance
+                            .stopSession(alertMessage: 'Complete');
+                        await Future.delayed(
+                          const Duration(milliseconds: 2500),
+                        );
+
+                        await router.push(
+                          CardFillWithNfc(
+                            receivedData: walletAddress.toString(),
+                          ),
+                        );
+                        final identify = Identify()..set('has_card', 'true');
+                        await Amplitude.getInstance().identify(identify);
                       } else {
-                        final hasUrl = records[0].payload;
-                        final payloadString = String.fromCharCodes(hasUrl);
-                        final parts =
-                            payloadString.split('air.coinplus.com/btc/');
-                        walletAddress = parts[1];
+                        log("The NTAG isn't original");
                       }
-
-                      await NfcManager.instance
-                          .stopSession(alertMessage: 'Complete');
-                      await Future.delayed(const Duration(milliseconds: 2500));
-
-                      await router.push(
-                        CardFillRoute(receivedData: walletAddress.toString()),
+                    },
+                    onError: (_) {
+                      return Future(
+                        () => log('Message'),
                       );
                     },
                   );
@@ -116,7 +131,12 @@ class CardScanMethodsPage extends StatelessWidget {
 
                       await router.pop();
                       await router.push(
-                        CardFillRoute(receivedData: walletAddress.toString()),
+                        CardFillWithNfc(receivedData: walletAddress.toString()),
+                      );
+                    },
+                    onError: (_) {
+                      return Future(
+                        () => log('Message'),
                       );
                     },
                   );

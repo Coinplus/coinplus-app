@@ -96,7 +96,7 @@ class BarScanMethodsPage extends StatelessWidget {
 
                       await router.pop();
                       await router.push(
-                        BarFillRoute(receivedData: walletAddress.toString()),
+                        BarFillWithNfc(receivedData: walletAddress.toString()),
                       );
                     },
                   );

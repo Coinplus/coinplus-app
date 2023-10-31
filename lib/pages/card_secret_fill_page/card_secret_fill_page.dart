@@ -26,8 +26,8 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
-import '../../utils/btc_validation.dart';
 import '../../utils/compute_private_key.dart';
+import '../../utils/secrets_validation.dart';
 import '../../widgets/loading_button.dart';
 import 'secrets_fail/secrets_fail.dart';
 import 'secrets_success/secrets_success.dart';
@@ -197,7 +197,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                         ],
                         image: DecorationImage(
                           image:
-                              getFrontImageForCardColor(card.cardColor).image,
+                              getFrontImageForCardColor(card.color).image,
                         ),
                       ),
                     ),
@@ -224,7 +224,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                 ],
                                 image: DecorationImage(
                                   image:
-                                      getBackImageForCardColor(card.cardColor)
+                                      getBackImageForCardColor(card.color)
                                           .image,
                                 ),
                               ),
@@ -892,6 +892,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                             await router.pop();
                             await HapticFeedback.heavyImpact();
                             await secretsSuccessAlert(context);
+
                           } else {
                             await router.pop();
                             await secretsFailDialog(context);

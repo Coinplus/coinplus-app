@@ -147,6 +147,7 @@ class StorageUtils {
     const storage = FlutterSecureStorage();
     return storage.read(key: 'wif_key');
   }
+
   // static Future<void> _remove(String key) async {
   //   final prefs = await sharedInstance;
   //   await prefs.remove(key);
@@ -157,27 +158,27 @@ class StorageUtils {
     await prefs.clear();
   }
 
-  // ignore: avoid_positional_boolean_parameters
-  // static Future<void> _setBool(String key, bool value) async {
-  //   final prefs = await sharedInstance;
-  //
-  //   await prefs.setBool(key, value);
-  // }
+// ignore: avoid_positional_boolean_parameters
+// static Future<void> _setBool(String key, bool value) async {
+//   final prefs = await sharedInstance;
+//
+//   await prefs.setBool(key, value);
+// }
 
-  // static Future<bool> _getBool(String key) async {
-  //   final prefs = await sharedInstance;
-  //   return prefs.getBool(key) ?? false;
-  // }
+// static Future<bool> _getBool(String key) async {
+//   final prefs = await sharedInstance;
+//   return prefs.getBool(key) ?? false;
+// }
 
-  // static Future<void> _setString(String key, String value) async {
-  //   final prefs = await sharedInstance;
-  //   await prefs.setString(key, value);
-  // }
+// static Future<void> _setString(String key, String value) async {
+//   final prefs = await sharedInstance;
+//   await prefs.setString(key, value);
+// }
 
-  // static Future<String?> _getString(String key) async {
-  //   final prefs = await sharedInstance;
-  //   return prefs.getString(key);
-  // }
+// static Future<String?> _getString(String key) async {
+//   final prefs = await sharedInstance;
+//   return prefs.getString(key);
+// }
 
-  // static Future<void> _setInt() async {}
+// static Future<void> _setInt() async {}
 }

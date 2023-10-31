@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../constants/bar_color.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
+import '../../extensions/extensions.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/bar_model/bar_model.dart';
@@ -45,7 +45,7 @@ abstract class _BalanceStore with Store {
   Future<void> getCardsFromStorage() async {
     final allCards = await StorageUtils.getCards();
     _cards = allCards
-        .where((element) => element.cardType == CardType.CARD)
+        .where((element) => element.type == CardType.CARD)
         .toList()
         .asObservable();
   }
@@ -53,7 +53,7 @@ abstract class _BalanceStore with Store {
   Future<void> getBarsFromStorage() async {
     final allCards = await StorageUtils.getBars();
     _bars = allCards
-        .where((element) => element.cardType == CardType.BAR)
+        .where((element) => element.type == CardType.BAR)
         .toList()
         .asObservable();
   }
@@ -119,7 +119,10 @@ abstract class _BalanceStore with Store {
 
   @action
   Future<void> getSelectedCard(String address) async {
-    _selectedCard = CardModel(address: address);
+    _selectedCard = CardModel(
+      address: address,
+      createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+    );
     _selectedCard = await _getSingleCardInfo(address);
   }
 
@@ -223,26 +226,6 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  void saveReplacedCard() {
-    if (_selectedCard == null) {
-      return;
-    }
-
-    final cardIndex = _cards.indexWhere(
-      (element) => element.address == _selectedCard?.address,
-    );
-
-    if (cardIndex != -1) {
-      final replacedCard = _selectedCard!.copyWith(cardColor: CardColor.WHITE);
-      _cards[cardIndex] = replacedCard;
-
-      StorageUtils.replaceCard(_selectedCard!.address, replacedCard);
-    } else {
-      throw Exception('Card not found');
-    }
-  }
-
-  @action
   void changeCardColorAndSave({
     required String cardAddress,
     required CardColor color,
@@ -251,7 +234,7 @@ abstract class _BalanceStore with Store {
         _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
-      final updatedCard = _cards[cardIndex].copyWith(cardColor: color);
+      final updatedCard = _cards[cardIndex].copyWith(color: color);
       _cards[cardIndex] = updatedCard;
 
       StorageUtils.replaceCard(cardAddress, updatedCard);
@@ -263,13 +246,13 @@ abstract class _BalanceStore with Store {
   @action
   void changeBarColorAndSave({
     required String barAddress,
-    required BarColor color,
+    required CardColor color,
   }) {
     final barIndex =
         _bars.indexWhere((element) => element.address == barAddress);
 
     if (barIndex != -1) {
-      final updatedCard = _bars[barIndex].copyWith(barColor: color);
+      final updatedCard = _bars[barIndex].copyWith(color: color);
       _bars[barIndex] = updatedCard;
 
       StorageUtils.replaceBar(barAddress, updatedCard);
@@ -287,7 +270,7 @@ abstract class _BalanceStore with Store {
         _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
-      final updatedCard = _cards[cardIndex].copyWith(cardName: newName);
+      final updatedCard = _cards[cardIndex].copyWith(name: newName);
       _cards[cardIndex] = updatedCard;
 
       StorageUtils.replaceCard(cardAddress, updatedCard);
@@ -297,12 +280,20 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  void resetSelectedCard() {
-    _selectedCard = null;
-  }
+  void changeBarNameAndSave({
+    required String barAddress,
+    required String newName,
+  }) {
+    final cardIndex =
+        _bars.indexWhere((element) => element.address == barAddress);
 
-  @action
-  void resetSelectedBar() {
-    _selectedBar = null;
+    if (cardIndex != -1) {
+      final updatedCard = _bars[cardIndex].copyWith(name: newName);
+      _bars[cardIndex] = updatedCard;
+
+      StorageUtils.replaceBar(barAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
   }
 }

@@ -41,6 +41,23 @@ mixin _$SettingsState on _SettingsState, Store {
     });
   }
 
+  late final _$cardAndBarTabBarIndexAtom =
+      Atom(name: '_SettingsState.cardAndBarTabBarIndex', context: context);
+
+  @override
+  int get cardAndBarTabBarIndex {
+    _$cardAndBarTabBarIndexAtom.reportRead();
+    return super.cardAndBarTabBarIndex;
+  }
+
+  @override
+  set cardAndBarTabBarIndex(int value) {
+    _$cardAndBarTabBarIndexAtom.reportWrite(value, super.cardAndBarTabBarIndex,
+        () {
+      super.cardAndBarTabBarIndex = value;
+    });
+  }
+
   late final _$isAddressCopiedAtom =
       Atom(name: '_SettingsState.isAddressCopied', context: context);
 
@@ -83,11 +100,21 @@ mixin _$SettingsState on _SettingsState, Store {
     return _$copyAddressAsyncAction.run(() => super.copyAddress());
   }
 
+  late final _$changeTabBarIndexAsyncAction =
+      AsyncAction('_SettingsState.changeTabBarIndex', context: context);
+
+  @override
+  Future<void> changeTabBarIndex(int index) {
+    return _$changeTabBarIndexAsyncAction
+        .run(() => super.changeTabBarIndex(index));
+  }
+
   @override
   String toString() {
     return '''
 cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
+cardAndBarTabBarIndex: ${cardAndBarTabBarIndex},
 isAddressCopied: ${isAddressCopied}
     ''';
   }

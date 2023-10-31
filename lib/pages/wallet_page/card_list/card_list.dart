@@ -11,6 +11,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/balance_store/balance_store.dart';
@@ -22,18 +23,28 @@ import '../../onboarding_page/form_factor_pages/card_scan_methods_page.dart';
 typedef CardSelectedCallback = void Function(int index);
 
 class CardList extends StatefulWidget {
-  const CardList({super.key});
+  const CardList({
+    super.key,
+    required this.onCardSelected,
+    required this.onCarouselScroll,
+  });
+
+  final ValueChanged<AbstractCard?> onCardSelected;
+  final ValueChanged<int> onCarouselScroll;
 
   @override
   State<CardList> createState() => _CardListState();
 }
 
-class _CardListState extends State<CardList> {
+class _CardListState extends State<CardList>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<CardList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Observer(
       builder: (_) {
         return CarouselSlider.builder(
@@ -60,7 +71,10 @@ class _CardListState extends State<CardList> {
                           const Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 20, top: 10),
+                                padding: EdgeInsets.only(
+                                  left: 20,
+                                  top: 10,
+                                ),
                                 child: Text(
                                   'Add new wallet',
                                   textAlign: TextAlign.center,
@@ -74,7 +88,9 @@ class _CardListState extends State<CardList> {
                             ],
                           ),
                           const Gap(18),
-                          const CardScanMethodsPage().paddingHorizontal(20),
+                          const CardScanMethodsPage().paddingHorizontal(
+                            20,
+                          ),
                           const Gap(40),
                         ],
                       );
@@ -100,7 +116,7 @@ class _CardListState extends State<CardList> {
                       child: Observer(
                         builder: (context) {
                           return AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 400),
+                            duration: const Duration(milliseconds: 600),
                             child: _settingsState.cardCurrentIndex == index
                                 ? Row(
                                     mainAxisAlignment:
@@ -110,7 +126,7 @@ class _CardListState extends State<CardList> {
                                         padding:
                                             const EdgeInsets.only(left: 25),
                                         child: Text(
-                                          card.cardName,
+                                          card.name,
                                           style: const TextStyle(
                                             fontFamily: FontFamily.redHatMedium,
                                             fontSize: 15,
@@ -155,7 +171,7 @@ class _CardListState extends State<CardList> {
                             ),
                           ],
                           image: DecorationImage(
-                            image: card.cardColor.image.image().image,
+                            image: card.color.image.image().image,
                           ),
                         ),
                         child: SizedBox(
@@ -200,10 +216,9 @@ class _CardListState extends State<CardList> {
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: context.width * 0.07,
+                                      horizontal: context.height * 0.035,
                                     ),
                                     child: Container(
-                                      height: 57,
                                       alignment: Alignment.center,
                                       padding: const EdgeInsets.only(
                                         left: 8,
@@ -214,7 +229,7 @@ class _CardListState extends State<CardList> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
                                         color: Colors.black.withOpacity(
-                                          0.3,
+                                          0.4,
                                         ),
                                       ),
                                       child: Column(
@@ -280,15 +295,13 @@ class _CardListState extends State<CardList> {
                                   enableFeedback: false,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: context.width * 0.07,
+                                      horizontal: context.height * 0.035,
                                     ),
                                     child: Container(
-                                      height: 57,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(6),
+                                        borderRadius: BorderRadius.circular(6),
                                         color: Colors.black.withOpacity(
-                                          0.3,
+                                          0.4,
                                         ),
                                       ),
                                       child: Row(
@@ -296,7 +309,9 @@ class _CardListState extends State<CardList> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(8),
+                                            padding: const EdgeInsets.all(
+                                              8,
+                                            ),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -304,8 +319,8 @@ class _CardListState extends State<CardList> {
                                                 const Text(
                                                   'Balance',
                                                   style: TextStyle(
-                                                    fontFamily: FontFamily
-                                                        .redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     color: Colors.white,
                                                     fontSize: 12,
                                                   ),
@@ -317,8 +332,7 @@ class _CardListState extends State<CardList> {
 
                                                     if (data == null) {
                                                       return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(
+                                                        padding: EdgeInsets.all(
                                                           4,
                                                         ),
                                                         child: Row(
@@ -338,7 +352,9 @@ class _CardListState extends State<CardList> {
                                                     }
 
                                                     return Text(
-                                                      '\$${((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price).toStringAsFixed(2)}',
+                                                      '\$${((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price).toStringAsFixed(
+                                                        2,
+                                                      )}',
                                                       style: const TextStyle(
                                                         fontFamily: FontFamily
                                                             .redHatMedium,
@@ -372,8 +388,12 @@ class _CardListState extends State<CardList> {
             );
           },
           options: CarouselOptions(
-            onPageChanged: (index, reason) {
-              _settingsState.setCardCurrentIndex(index);
+            onPageChanged: (index, reason) async {
+              widget.onCarouselScroll(index);
+              widget.onCardSelected(
+                _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
+              );
+              await _settingsState.setCardCurrentIndex(index);
             },
             enlargeFactor: 0.35,
             enableInfiniteScroll: false,
@@ -392,4 +412,7 @@ class _CardListState extends State<CardList> {
     final end = fullAddress.substring(fullAddress.length - 5);
     return '$start ... $end';
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

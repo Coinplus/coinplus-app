@@ -9,7 +9,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../constants/bar_color.dart';
+import '../../constants/card_color.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
@@ -89,7 +89,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                   ),
                   const Gap(6),
                   Text(
-                    widget.bar.barName.toString(),
+                    widget.bar.name.toString(),
                     style: const TextStyle(
                       fontFamily: FontFamily.redHatLight,
                       fontSize: 14,
@@ -188,7 +188,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                   ),
                   const Gap(6),
                   Text(
-                    widget.bar.cardAddedDate.toString(),
+                    widget.bar.createdAt,
                     style: const TextStyle(
                       fontFamily: FontFamily.redHatLight,
                       fontSize: 14,
@@ -232,9 +232,9 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                     builder: (_) {
                       final colorWidgets = <Widget>[];
 
-                      final colors = <BarColor>[
-                        BarColor.SILVER,
-                        BarColor.GOLD,
+                      final colors = <CardColor>[
+                        CardColor.SILVER,
+                        CardColor.GOLD,
                       ];
 
                       for (var index = 0; index < colors.length; index++) {
@@ -319,15 +319,15 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
             const Gap(20),
             LoadingButton(
               onPressed: () async {
-                if (_barSettingsState.selectedColor == BarColor.SILVER) {
+                if (_barSettingsState.selectedColor == CardColor.SILVER) {
                   _balanceStore.changeBarColorAndSave(
                     barAddress: widget.bar.address,
-                    color: BarColor.SILVER,
+                    color: CardColor.SILVER,
                   );
-                } else if (_barSettingsState.selectedColor == BarColor.GOLD) {
+                } else if (_barSettingsState.selectedColor == CardColor.GOLD) {
                   _balanceStore.changeBarColorAndSave(
                     barAddress: widget.bar.address,
-                    color: BarColor.GOLD,
+                    color: CardColor.GOLD,
                   );
                 }
                 await router.pop();
@@ -361,11 +361,13 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
   }
 }
 
-Widget getColorImage(BarColor color) {
+Widget getColorImage(CardColor color) {
   switch (color) {
-    case BarColor.SILVER:
+    case CardColor.SILVER:
       return Assets.images.barFront.image(height: 130);
-    case BarColor.GOLD:
+    case CardColor.GOLD:
       return Assets.images.barFront.image(height: 130);
+    default:
+      throw Exception('color can be used only for card');
   }
 }

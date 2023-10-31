@@ -17,18 +17,23 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
-import '../../utils/btc_validation.dart';
+import '../../utils/compute_private_key.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../settings_page/contact_us/send_wait_alert/send_wait_alert.dart';
 import '../settings_page/settings_page.dart';
+import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
+
+typedef CardRecord = ({AbstractCard? card, int index});
+typedef CardChangeCallBack = ValueChanged<CardRecord>;
 
 @RoutePage()
 class Dashboard extends HookWidget {
@@ -44,7 +49,7 @@ class Dashboard extends HookWidget {
               final String url = data['+non_branch_link'];
               final splitting = url.split('/');
               final part = splitting[splitting.length - 1];
-              if (isValidBTCAddress(part)) {
+              if (isValidPublicAddress(part)) {
                 router.push(CardFillRoute(receivedData: part));
               } else {
                 showTopSnackBar(
@@ -73,25 +78,41 @@ class Dashboard extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
     useBranchSDK(context);
     final _navBarState = useMemoized(NavBarState.new);
     final _pageController = usePageController();
+    final currentCard = useRef<CardRecord>(
+      (
+        card: _balanceStore.cards.firstOrNull as AbstractCard?,
+        index: 0,
+      ),
+    );
+
+    final isAppPaused = useState(false);
+
+    useOnAppLifecycleStateChange((previous, current) {
+      isAppPaused.value = [AppLifecycleState.inactive]
+          .contains(current);
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
+
           PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              WalletPage(),
-              SettingsPage(),
+            children: [
+              WalletPage(
+                onChangeCard: (val) => currentCard.value = val,
+              ),
+              const SettingsPage(),
             ],
           ),
           Column(
@@ -158,654 +179,646 @@ class Dashboard extends HookWidget {
               ),
             ],
           ),
-          Observer(
-            builder: (_) {
-              return Positioned(
-                bottom: context.height > 667 ? 50 : 20,
-                child: SizedBox(
-                  height: 50,
-                  child: ScaleTap(
-                    onPressed: _settingsState.cardCurrentIndex !=
-                            _balanceStore.cards.length
-                        ? () {
-                            showModalBottomSheet(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              backgroundColor: Colors.white,
-                              context: context,
-                              builder: (_) {
-                                final card = _balanceStore
-                                    .cards[_settingsState.cardCurrentIndex];
-                                return Container(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Assets.icons.notch.image(width: 42),
-                                      const Gap(18),
-                                      LoadingButton(
-                                        style: context.theme
-                                            .buttonStyle(
-                                              textStyle: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontSize: 15,
+          Visibility(
+            visible: isAppPaused.value,
+            child: const Background(),
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: isAppPaused.value
+          ? const SizedBox()
+          : ScaleTap(
+              enableFeedback: false,
+              onPressed: () async {
+                final selectedCard = currentCard.value.card;
+                final isBarList = currentCard.value.index == 1;
+
+                if (selectedCard == null || _pageController.page != 0) {
+                  if (isBarList) {
+                    await HapticFeedback.mediumImpact();
+                    showTopSnackBar(
+                      displayDuration: const Duration(
+                        milliseconds: 400,
+                      ),
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        backgroundColor:
+                            const Color(0xFF4A4A4A).withOpacity(0.9),
+                        message: 'Please select a bar',
+                        textStyle: const TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                  else {
+                    await HapticFeedback.mediumImpact();
+                    showTopSnackBar(
+                      displayDuration: const Duration(
+                        milliseconds: 400,
+                      ),
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        backgroundColor:
+                            const Color(0xFF4A4A4A).withOpacity(0.9),
+                        message: 'Please select a card',
+                        textStyle: const TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                  return;
+                }
+
+                await showModalBottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.white,
+                  context: context,
+                  builder: (_) {
+                    final card = [..._balanceStore.cards, ..._balanceStore.bars]
+                        .firstWhere(
+                      (element) =>
+                          (element as AbstractCard).address ==
+                          selectedCard.address,
+                    ) as AbstractCard;
+                    // Amplitude.getInstance().logEvent(
+                    //   'transactions_button_clicked',
+                    //   eventProperties: {
+                    //     'wallet_address': card.address.toString(),
+                    //   },
+                    // );
+                    //Amplitude.getInstance().uploadEvents();
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Assets.icons.notch.image(width: 42),
+                          const Gap(18),
+                          LoadingButton(
+                            style: context.theme
+                                .buttonStyle(
+                                  textStyle: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                    fontSize: 15,
+                                  ),
+                                )
+                                .copyWith(
+                                  padding: const MaterialStatePropertyAll(
+                                    EdgeInsets.all(10),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    AppColors.silver,
+                                  ),
+                                ),
+                            onPressed: () async {
+                              await router.pop(const Dashboard());
+                              await showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                backgroundColor: Colors.white,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (_) {
+                                  return SizedBox(
+                                    height: 780,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Column(
+                                        children: [
+                                          Assets.icons.notch.image(
+                                            height: 4,
+                                          ),
+                                          Row(
+                                            children: [
+                                              IconButton(
+                                                onPressed: router.pop,
+                                                icon:
+                                                    Assets.icons.close.image(),
                                               ),
-                                            )
-                                            .copyWith(
-                                              padding:
-                                                  const MaterialStatePropertyAll(
-                                                EdgeInsets.all(10),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text(
+                                                      'Receive BTC',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                    const Gap(6),
+                                                    Assets.icons.bTCIcon.image(
+                                                      height: 24,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                AppColors.silver,
+                                              const SizedBox(
+                                                width: 40,
                                               ),
-                                            ),
-                                        onPressed: () async {
-                                          await router.pop(const Dashboard());
-                                          await showModalBottomSheet(
-                                            shape: RoundedRectangleBorder(
+                                            ],
+                                          ),
+                                          const Gap(60),
+                                          Container(
+                                            decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(20),
+                                                  BorderRadius.circular(14),
+                                              color: const Color(
+                                                0xFFF7F7FA,
+                                              ),
                                             ),
-                                            backgroundColor: Colors.white,
-                                            isScrollControlled: true,
-                                            context: context,
-                                            builder: (_) {
-                                              return SizedBox(
-                                                height: 780,
-                                                child: Padding(
+                                            child: Column(
+                                              children: [
+                                                Padding(
                                                   padding:
-                                                      const EdgeInsets.all(15),
-                                                  child: Column(
-                                                    children: [
-                                                      Assets.icons.notch.image(
-                                                        height: 4,
+                                                      const EdgeInsets.only(
+                                                    top: 12,
+                                                    left: 62,
+                                                    right: 62,
+                                                    bottom: 17,
+                                                  ),
+                                                  child: QrImageView(
+                                                    data: card.address,
+                                                    size: 220,
+                                                    gapless: false,
+                                                  ),
+                                                ),
+                                                ScaleTap(
+                                                  enableFeedback: false,
+                                                  onPressed: () {
+                                                    Clipboard.setData(
+                                                      ClipboardData(
+                                                        text: card.address
+                                                            .toString(),
                                                       ),
-                                                      Row(
-                                                        children: [
-                                                          IconButton(
-                                                            onPressed:
-                                                                router.pop,
-                                                            icon: Assets
-                                                                .icons.close
-                                                                .image(),
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                const Text(
-                                                                  'Receive BTC',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatMedium,
-                                                                    fontSize:
-                                                                        17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                  ),
-                                                                ),
-                                                                const Gap(6),
-                                                                Assets.icons
-                                                                    .bTCIcon
-                                                                    .image(
-                                                                  height: 24,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 40,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Gap(60),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(14),
-                                                          color: const Color(
-                                                            0xFFF7F7FA,
-                                                          ),
+                                                    ).then(
+                                                      (_) {
+                                                        HapticFeedback
+                                                            .mediumImpact();
+                                                        _settingsState
+                                                            .copyAddress();
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      left: 12,
+                                                      right: 12,
+                                                      bottom: 12,
+                                                    ),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          8,
                                                         ),
-                                                        child: Column(
+                                                        color: Colors.white,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 10,
+                                                          bottom: 10,
+                                                        ),
+                                                        child: Row(
                                                           children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                top: 12,
-                                                                left: 62,
-                                                                right: 62,
-                                                                bottom: 17,
-                                                              ),
-                                                              child:
-                                                                  QrImageView(
-                                                                data: card
-                                                                    .address,
-                                                                size: 220,
-                                                                gapless: false,
-                                                              ),
+                                                            Assets.icons
+                                                                .contentCopy
+                                                                .image(
+                                                              height: 32,
+                                                              color: AppColors
+                                                                  .primaryButtonColor,
                                                             ),
-                                                            ScaleTap(
-                                                              enableFeedback:
-                                                                  false,
-                                                              onPressed: () {
-                                                                Clipboard
-                                                                    .setData(
-                                                                  ClipboardData(
-                                                                    text: card
-                                                                        .address
-                                                                        .toString(),
-                                                                  ),
-                                                                ).then(
-                                                                  (_) {
-                                                                    HapticFeedback
-                                                                        .mediumImpact();
-                                                                    _settingsState
-                                                                        .copyAddress();
-                                                                  },
+                                                            const Gap(
+                                                              8,
+                                                            ),
+                                                            Observer(
+                                                              builder:
+                                                                  (context) {
+                                                                return Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    const Text(
+                                                                      'Your address',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            FontFamily.redHatMedium,
+                                                                        fontSize:
+                                                                            16,
+                                                                      ),
+                                                                    ),
+                                                                    AnimatedCrossFade(
+                                                                      firstChild:
+                                                                          const Row(
+                                                                        children: [
+                                                                          Text(
+                                                                            'Copied',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              color: Colors.green,
+                                                                            ),
+                                                                          ),
+                                                                          Icon(
+                                                                            Icons.check,
+                                                                            color:
+                                                                                Colors.green,
+                                                                            size:
+                                                                                18,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      secondChild:
+                                                                          Text(
+                                                                        card.address,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontFamily:
+                                                                              FontFamily.redHatMedium,
+                                                                          fontSize:
+                                                                              14,
+                                                                          color:
+                                                                              Color(
+                                                                            0xFF4F6486,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      crossFadeState: _settingsState.isAddressCopied
+                                                                          ? CrossFadeState
+                                                                              .showFirst
+                                                                          : CrossFadeState
+                                                                              .showSecond,
+                                                                      duration:
+                                                                          const Duration(
+                                                                        milliseconds:
+                                                                            200,
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 );
                                                               },
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                  left: 12,
-                                                                  right: 12,
-                                                                  bottom: 12,
-                                                                ),
-                                                                child:
-                                                                    Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                      8,
-                                                                    ),
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                            .only(
-                                                                      top: 10,
-                                                                      bottom:
-                                                                          10,
-                                                                    ),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Assets
-                                                                            .icons
-                                                                            .contentCopy
-                                                                            .image(
-                                                                          height:
-                                                                              32,
-                                                                          color:
-                                                                              AppColors.primaryButtonColor,
-                                                                        ),
-                                                                        const Gap(
-                                                                          8,
-                                                                        ),
-                                                                        Observer(
-                                                                          builder:
-                                                                              (context) {
-                                                                            return Column(
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                const Text(
-                                                                                  'Your address',
-                                                                                  style: TextStyle(
-                                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                ),
-                                                                                AnimatedCrossFade(
-                                                                                  firstChild: const Row(
-                                                                                    children: [
-                                                                                      Text(
-                                                                                        'Copied',
-                                                                                        style: TextStyle(fontFamily: FontFamily.redHatMedium, color: Colors.green),
-                                                                                      ),
-                                                                                      Icon(Icons.check, color: Colors.green,size: 18,),
-                                                                                    ],
-                                                                                  ),
-                                                                                  secondChild: Text(
-                                                                                    card.address,
-                                                                                    style: const TextStyle(
-                                                                                      fontFamily: FontFamily.redHatMedium,
-                                                                                      fontSize: 14,
-                                                                                      color: Color(
-                                                                                        0xFF4F6486,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  crossFadeState: _settingsState.isAddressCopied ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                                                                                  duration: const Duration(milliseconds: 200),
-                                                                                ),
-                                                                              ],
-                                                                            );
-                                                                          },
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      const Gap(16),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                            color: const Color(
-                                                              0xFF4A83E0,
-                                                            ).withOpacity(
-                                                              0.1,
-                                                            ),
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(14),
-                                                          color: const Color(
-                                                            0xFF4A83E0,
-                                                          ).withOpacity(0.05),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(14),
-                                                          child: Row(
-                                                            children: [
-                                                              Assets.icons.error
-                                                                  .image(
-                                                                height: 24,
-                                                              ),
-                                                              const Gap(10),
-                                                              const Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    'Please note',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatMedium,
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      color:
-                                                                          Color(
-                                                                        0xFF4F6486,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Gap(4),
-                                                                  Text(
-                                                                    'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatMedium,
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                      color:
-                                                                          Color(
-                                                                        0xFF4F6486,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Gap(16),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: const Color(
+                                                  0xFF4A83E0,
+                                                ).withOpacity(
+                                                  0.1,
+                                                ),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              color: const Color(
+                                                0xFF4A83E0,
+                                              ).withOpacity(0.05),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(14),
+                                              child: Row(
+                                                children: [
+                                                  Assets.icons.error.image(
+                                                    height: 24,
+                                                  ),
+                                                  const Gap(10),
+                                                  const Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        'Please note',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: Color(
+                                                            0xFF4F6486,
                                                           ),
                                                         ),
                                                       ),
-                                                      const Gap(120),
-                                                      LoadingButton(
-                                                        onPressed: () {
-                                                          Share.share(
-                                                            card.address,
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                          'Share',
-                                                          style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                      Gap(4),
+                                                      Text(
+                                                        'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: Color(
+                                                            0xFF4F6486,
                                                           ),
                                                         ),
-                                                      ).paddingHorizontal(60),
+                                                      ),
                                                     ],
                                                   ),
-                                                ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          const Gap(120),
+                                          LoadingButton(
+                                            onPressed: () {
+                                              Share.share(
+                                                card.address,
                                               );
                                             },
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 8,
-                                              ),
-                                              child: Assets.icons.receive.image(
-                                                height: 24,
-                                                width: 24,
-                                                color: AppColors
-                                                    .primaryButtonColor,
-                                              ),
-                                            ),
-                                            const Gap(8),
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Receive',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .primaryTextColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Receive crypto on this address',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Gap(8),
-                                      LoadingButton(
-                                        style: context.theme
-                                            .buttonStyle(
-                                              textStyle: const TextStyle(
+                                            child: const Text(
+                                              'Share',
+                                              style: TextStyle(
                                                 fontFamily:
                                                     FontFamily.redHatMedium,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontSize: 15,
-                                              ),
-                                            )
-                                            .copyWith(
-                                              padding:
-                                                  const MaterialStatePropertyAll(
-                                                EdgeInsets.all(10),
-                                              ),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                AppColors.silver,
                                               ),
                                             ),
-                                        onPressed: () async {
-                                          await router.pop();
-                                          await sendWaitAlert(context);
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 8,
-                                              ),
-                                              child: Assets.icons.send.image(
-                                                height: 24,
-                                                width: 24,
-                                                color: AppColors
-                                                    .primaryButtonColor,
-                                              ),
-                                            ),
-                                            const Gap(8),
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Send',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .primaryTextColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Transfer crypto to another wallet',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                          ).paddingHorizontal(60),
+                                        ],
                                       ),
-                                      const Gap(8),
-                                      LoadingButton(
-                                        style: context.theme
-                                            .buttonStyle(
-                                              textStyle: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontSize: 15,
-                                              ),
-                                            )
-                                            .copyWith(
-                                              padding:
-                                                  const MaterialStatePropertyAll(
-                                                EdgeInsets.all(10),
-                                              ),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                AppColors.silver,
-                                              ),
-                                            ),
-                                        onPressed: () async {},
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 8,
-                                              ),
-                                              child: Assets.icons.buy.image(
-                                                height: 24,
-                                                width: 24,
-                                                color: AppColors
-                                                    .primaryButtonColor,
-                                              ),
-                                            ),
-                                            const Gap(8),
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Buy with card',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .primaryTextColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Purchase crypto with cash',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Gap(8),
-                                      LoadingButton(
-                                        style: context.theme
-                                            .buttonStyle(
-                                              textStyle: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontSize: 15,
-                                              ),
-                                            )
-                                            .copyWith(
-                                              padding:
-                                                  const MaterialStatePropertyAll(
-                                                EdgeInsets.all(10),
-                                              ),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                AppColors.silver,
-                                              ),
-                                            ),
-                                        onPressed: () async {
-                                          await router.pop();
-                                          final url = Uri.parse(
-                                            'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
-                                          );
-                                          if (await canLaunchUrl(url)) {
-                                            await launchUrl(url);
-                                          }
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 8,
-                                              ),
-                                              child: Assets.icons.history.image(
-                                                height: 24,
-                                                width: 24,
-                                                color: AppColors
-                                                    .primaryButtonColor,
-                                              ),
-                                            ),
-                                            const Gap(8),
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'History',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColors
-                                                        .primaryTextColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Check the list of your transactions',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Gap(30),
-                                    ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 8,
                                   ),
-                                );
-                              },
-                            );
-                          }
-                        : () {},
-                    child: FloatingActionButton(
-                      shape: const CircleBorder(),
-                      elevation: 3,
-                      backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
-                      onPressed: null,
-                      child: Assets.icons.sendReceive.image(
-                        color: Colors.white,
-                        height: 32,
+                                  child: Assets.icons.receive.image(
+                                    height: 24,
+                                    width: 24,
+                                    color: AppColors.primaryButtonColor,
+                                  ),
+                                ),
+                                const Gap(8),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Receive',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Receive crypto on this address',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Gap(8),
+                          LoadingButton(
+                            style: context.theme
+                                .buttonStyle(
+                                  textStyle: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                    fontSize: 15,
+                                  ),
+                                )
+                                .copyWith(
+                                  padding: const MaterialStatePropertyAll(
+                                    EdgeInsets.all(10),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    AppColors.silver,
+                                  ),
+                                ),
+                            onPressed: () async {
+                              await router.pop();
+                              await sendWaitAlert(context);
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 8,
+                                  ),
+                                  child: Assets.icons.send.image(
+                                    height: 24,
+                                    width: 24,
+                                    color: AppColors.primaryButtonColor,
+                                  ),
+                                ),
+                                const Gap(8),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Send',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Transfer crypto to another wallet',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Gap(8),
+                          LoadingButton(
+                            style: context.theme
+                                .buttonStyle(
+                                  textStyle: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                    fontSize: 15,
+                                  ),
+                                )
+                                .copyWith(
+                                  padding: const MaterialStatePropertyAll(
+                                    EdgeInsets.all(10),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    AppColors.silver,
+                                  ),
+                                ),
+                            onPressed: () async {},
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 8,
+                                  ),
+                                  child: Assets.icons.buy.image(
+                                    height: 24,
+                                    width: 24,
+                                    color: AppColors.primaryButtonColor,
+                                  ),
+                                ),
+                                const Gap(8),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Buy with card',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Purchase crypto with cash',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Gap(8),
+                          LoadingButton(
+                            style: context.theme
+                                .buttonStyle(
+                                  textStyle: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                    fontSize: 15,
+                                  ),
+                                )
+                                .copyWith(
+                                  padding: const MaterialStatePropertyAll(
+                                    EdgeInsets.all(10),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    AppColors.silver,
+                                  ),
+                                ),
+                            onPressed: () async {
+                              await router.pop();
+                              final url = Uri.parse(
+                                'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
+                              );
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 8,
+                                  ),
+                                  child: Assets.icons.history.image(
+                                    height: 24,
+                                    width: 24,
+                                    color: AppColors.primaryButtonColor,
+                                  ),
+                                ),
+                                const Gap(8),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'History',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primaryTextColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Check the list of your transactions',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.normal,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Gap(30),
+                        ],
                       ),
-                    ),
-                  ),
+                    );
+                  },
+                );
+              },
+              child: FloatingActionButton(
+                shape: const CircleBorder(),
+                elevation: 3,
+                backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
+                onPressed: null,
+                child: Assets.icons.sendReceive.image(
+                  color: Colors.white,
+                  height: 32,
                 ),
-              );
-            },
-          ),
-        ],
-      ),
+              ),
+            ),
     );
   }
 }

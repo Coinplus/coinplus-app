@@ -25,7 +25,7 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../store/form_factor_state/form_factor_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
-import '../../utils/btc_validation.dart';
+import '../../utils/compute_private_key.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
@@ -57,7 +57,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           final String url = data['+non_branch_link'];
           final splitting = url.split('/');
           final part = splitting[splitting.length - 1];
-          isValidBTCAddress(part)
+          isValidPublicAddress(part)
               ? hasShownWallet().then((hasShown) {
                   if (hasShown) {
                     router.push(CardFillRoute(receivedData: part));
@@ -194,10 +194,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               );
 
                               await router.push(
-                                CardFillRoute(
+                                CardFillWithNfc(
                                   receivedData: walletAddress.toString(),
                                 ),
                               );
+                            },
+                            onError: (_) {
+                              return Future(() => log('Message'),);
                             },
                           );
                         }
@@ -225,10 +228,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                 walletAddress = parts[1];
                               }
                               await router.push(
-                                CardFillRoute(
+                                CardFillWithNfc(
                                   receivedData: walletAddress.toString(),
                                 ),
                               );
+                            },
+                            onError: (_) {
+                              return Future(() => log('Message'),);
                             },
                           );
                           await showModalBottomSheet(

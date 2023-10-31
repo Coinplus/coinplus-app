@@ -98,10 +98,10 @@ class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto>
 }
 
 /// @nodoc
-abstract class _$$_CoinDtoCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
-  factory _$$_CoinDtoCopyWith(
-          _$_CoinDto value, $Res Function(_$_CoinDto) then) =
-      __$$_CoinDtoCopyWithImpl<$Res>;
+abstract class _$$CoinDtoImplCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
+  factory _$$CoinDtoImplCopyWith(
+          _$CoinDtoImpl value, $Res Function(_$CoinDtoImpl) then) =
+      __$$CoinDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -114,10 +114,11 @@ abstract class _$$_CoinDtoCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CoinDtoCopyWithImpl<$Res>
-    extends _$CoinDtoCopyWithImpl<$Res, _$_CoinDto>
-    implements _$$_CoinDtoCopyWith<$Res> {
-  __$$_CoinDtoCopyWithImpl(_$_CoinDto _value, $Res Function(_$_CoinDto) _then)
+class __$$CoinDtoImplCopyWithImpl<$Res>
+    extends _$CoinDtoCopyWithImpl<$Res, _$CoinDtoImpl>
+    implements _$$CoinDtoImplCopyWith<$Res> {
+  __$$CoinDtoImplCopyWithImpl(
+      _$CoinDtoImpl _value, $Res Function(_$CoinDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +131,7 @@ class __$$_CoinDtoCopyWithImpl<$Res>
     Object? price = null,
     Object? priceChange1d = null,
   }) {
-    return _then(_$_CoinDto(
+    return _then(_$CoinDtoImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -161,8 +162,8 @@ class __$$_CoinDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
-  const _$_CoinDto(
+class _$CoinDtoImpl with DiagnosticableTreeMixin implements _CoinDto {
+  const _$CoinDtoImpl(
       {required this.id,
       required this.symbol,
       required this.name,
@@ -171,8 +172,8 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
       @JsonKey(name: 'priceChange1d', defaultValue: 0)
       required this.priceChange1d});
 
-  factory _$_CoinDto.fromJson(Map<String, dynamic> json) =>
-      _$$_CoinDtoFromJson(json);
+  factory _$CoinDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinDtoImplFromJson(json);
 
   @override
   final String id;
@@ -211,7 +212,7 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CoinDto &&
+            other is _$CoinDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.name, name) || other.name == name) &&
@@ -229,12 +230,12 @@ class _$_CoinDto with DiagnosticableTreeMixin implements _CoinDto {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CoinDtoCopyWith<_$_CoinDto> get copyWith =>
-      __$$_CoinDtoCopyWithImpl<_$_CoinDto>(this, _$identity);
+  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith =>
+      __$$CoinDtoImplCopyWithImpl<_$CoinDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CoinDtoToJson(
+    return _$$CoinDtoImplToJson(
       this,
     );
   }
@@ -248,9 +249,9 @@ abstract class _CoinDto implements CoinDto {
       required final String icon,
       @JsonKey(name: 'price', defaultValue: 0) required final num price,
       @JsonKey(name: 'priceChange1d', defaultValue: 0)
-      required final num priceChange1d}) = _$_CoinDto;
+      required final num priceChange1d}) = _$CoinDtoImpl;
 
-  factory _CoinDto.fromJson(Map<String, dynamic> json) = _$_CoinDto.fromJson;
+  factory _CoinDto.fromJson(Map<String, dynamic> json) = _$CoinDtoImpl.fromJson;
 
   @override
   String get id;
@@ -268,6 +269,6 @@ abstract class _CoinDto implements CoinDto {
   num get priceChange1d;
   @override
   @JsonKey(ignore: true)
-  _$$_CoinDtoCopyWith<_$_CoinDto> get copyWith =>
+  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
