@@ -1,4 +1,4 @@
-package com.example.coinplus
+package com.coinplus.app
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

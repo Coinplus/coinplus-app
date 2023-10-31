@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.coinplus">
+    package="com.coinplus.app">
     <uses-permission android:name="android.permission.NFC" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -43,7 +43,8 @@
             </intent-filter>
             <!-- Branch URI Scheme -->
             <intent-filter>
-                <!-- If utilizing $deeplink_path please explicitly declare your hosts, or utilize a wildcard(*) -->
+                <!-- If utilizing $deeplink_path please explicitly declare your hosts, or utilize a
+                wildcard(*) -->
                 <data android:scheme="mycoinplus+cardfillroute" android:host="open" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -57,7 +58,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="air.coinplus.com" />
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK
+                and Deepviews are used inside your website.  -->
                 <data android:scheme="https" android:host="coinplus-alternate.test-app.link" />
             </intent-filter>
             <!-- Branch App Links - Test App -->
@@ -66,14 +68,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="example.test-app.link" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
+                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK
+                and Deepviews are used inside your website.  -->
                 <data android:scheme="https" android:host="example-alternate.test-app.link" />
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_test_ek4ZVUTuU68xinjTWWyDPkmmvBoiQKOF" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="secret_test_TtDfyHWOrFWLk6eH6igAHoZNVPb6Hv9b" />
+        <meta-data android:name="io.branch.sdk.BranchKey"
+            android:value="key_test_ek4ZVUTuU68xinjTWWyDPkmmvBoiQKOF" />
+        <meta-data android:name="io.branch.sdk.BranchKey.test"
+            android:value="secret_test_TtDfyHWOrFWLk6eH6igAHoZNVPb6Hv9b" />
         <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
