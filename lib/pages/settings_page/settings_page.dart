@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../gen/assets.gen.dart';
@@ -12,6 +13,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/secure_storage_utils.dart';
 
 @RoutePage()
 class SettingsPage extends StatefulWidget {
@@ -19,17 +21,21 @@ class SettingsPage extends StatefulWidget {
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
-
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const SettingsPage());
-  }
 }
 
-class _SettingsPageState extends State<SettingsPage> {
-  final _walletProtectionState = WalletProtectState();
+WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+class _SettingsPageState extends State<SettingsPage>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<SettingsPage> {
+  @override
+  void initState() {
+    super.initState();
+    _walletProtectState.checkPinCodeStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CupertinoPageScaffold(
       child: CustomScrollView(
         slivers: [
@@ -79,23 +85,39 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {},
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
                             minLeadingWidth: 10,
-                            trailing: CupertinoSwitch(
-                              value: true,
-                              onChanged: (value) {},
+                            leading: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Gap(3),
+                                Assets.icons.lock.image(
+                                  height: 22,
+                                ),
+                              ],
                             ),
-                            leading: Padding(
-                              padding: const EdgeInsets.only(right: 3, left: 3),
-                              child: Assets.icons.lock.image(
-                                height: 22,
-                              ),
+                            trailing: Observer(
+                              builder: (context) {
+                                return CupertinoSwitch(
+                                  value: _walletProtectState.isSetPinCode,
+                                  onChanged: (value) async {
+                                    if (value) {
+                                      _walletProtectState.isSetPinCode = value;
+                                      await router.push(const CreatePinCode());
+                                    } else {
+                                      await router.push(const PinRemove());
+                                      _walletProtectState.isSetPinCode = false;
+                                    }
+                                    await isPinCodeSet(isSet: value);
+                                  },
+                                );
+                              },
                             ),
                             title: const Text(
-                              'App Lock',
+                              'App lock',
                               style: TextStyle(
                                 fontFamily: FontFamily.redHatMedium,
                                 fontSize: 15,
@@ -105,35 +127,41 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                         ),
-                        const Divider(
-                          indent: 5,
-                          endIndent: 5,
-                          thickness: 1,
-                          color: AppColors.silver,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(
-                              height: 20,
+                        Column(
+                          children: [
+                            const Divider(
+                              indent: 5,
+                              endIndent: 5,
+                              thickness: 1,
+                              color: AppColors.silver,
                             ),
-                            splashColor: Colors.transparent,
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.password.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Change passcode',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
+                            InkWell(
+                              onTap: () {
+                                router.push(const ChangePinCode());
+                              },
+                              splashFactory: InkSparkle.splashFactory,
+                              highlightColor: Colors.transparent,
+                              child: ListTile(
+                                trailing: Assets.icons.arrowForwardIos.image(
+                                  height: 20,
+                                ),
+                                splashColor: Colors.transparent,
+                                minLeadingWidth: 10,
+                                leading: Assets.icons.password.image(
+                                  height: 22,
+                                ),
+                                title: const Text(
+                                  'Change passcode',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                         const Divider(
                           indent: 0,
@@ -142,35 +170,28 @@ class _SettingsPageState extends State<SettingsPage> {
                           color: AppColors.silver,
                         ),
                         InkWell(
-                          onTap: _walletProtectionState.onToggleSwitch,
+                          onTap: () {},
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
-                          child: Observer(
-                            builder: (context) {
-                              return ListTile(
-                                splashColor: Colors.transparent,
-                                minLeadingWidth: 10,
-                                trailing: CupertinoSwitch(
-                                  value:
-                                      _walletProtectionState.isToggleSwitched,
-                                  onChanged: (value) {
-                                    _walletProtectionState.onToggleSwitch();
-                                  },
-                                ),
-                                leading: Assets.icons.faceIdSettings.image(
-                                  height: 22,
-                                ),
-                                title: const Text(
-                                  'Face ID',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              );
-                            },
+                          child: ListTile(
+                            splashColor: Colors.transparent,
+                            minLeadingWidth: 10,
+                            trailing: CupertinoSwitch(
+                              value: true,
+                              onChanged: (value) {},
+                            ),
+                            leading: Assets.icons.faceIdSettings.image(
+                              height: 22,
+                            ),
+                            title: const Text(
+                              'Face ID',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 15,
+                                color: AppColors.primaryTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -447,8 +468,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         InkWell(
                           onTap: () async {
-                            final url =
-                                Uri.parse('https://coinplus.com/terms-of-use/');
+                            final url = Uri.parse(
+                              'https://coinplus.com/terms-of-use/',
+                            );
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
                             }
@@ -485,4 +507,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -408,7 +408,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                           _balanceStore.saveSelectedBar();
                           hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(const Dashboard());
+                              router.pop(Dashboard());
                             } else {
                               router.push(const WalletProtectionRoute());
                             }

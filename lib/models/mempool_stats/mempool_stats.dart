@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'mempool_stats.g.dart';
 
-
 @JsonSerializable()
 class MempoolStats {
   @JsonKey(name: 'funded_txo_count')

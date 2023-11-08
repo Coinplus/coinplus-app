@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -28,6 +27,7 @@ import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../widgets/loading_button.dart';
 import 'secrets_fail/secrets_fail.dart';
 import 'secrets_success/secrets_success.dart';
@@ -196,8 +196,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                           ),
                         ],
                         image: DecorationImage(
-                          image:
-                              getFrontImageForCardColor(card.color).image,
+                          image: getFrontImageForCardColor(card.color).image,
                         ),
                       ),
                     ),
@@ -223,9 +222,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image:
-                                      getBackImageForCardColor(card.color)
-                                          .image,
+                                  image: getBackImageForCardColor(card.color)
+                                      .image,
                                 ),
                               ),
                               child: Row(
@@ -884,15 +882,13 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
                           if (card.address.hashCode == publicKey.hashCode) {
-                            const secureStorage = FlutterSecureStorage();
-                            await secureStorage.write(
+                            await savePrivateKeyInSecureStorage(
                               key: card.address,
                               value: wif,
                             );
                             await router.pop();
                             await HapticFeedback.heavyImpact();
                             await secretsSuccessAlert(context);
-
                           } else {
                             await router.pop();
                             await secretsFailDialog(context);
@@ -964,13 +960,21 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
   DecorationImage getFrontImageForCardColor(CardColor color) {
     switch (color) {
       case CardColor.ORANGE:
-        return DecorationImage(image: Assets.images.orangeCardFront.image().image);
+        return DecorationImage(
+          image: Assets.images.orangeCardFront.image().image,
+        );
       case CardColor.WHITE:
-        return DecorationImage(image: Assets.images.whiteCardFront.image().image);
+        return DecorationImage(
+          image: Assets.images.whiteCardFront.image().image,
+        );
       case CardColor.BROWN:
-        return DecorationImage(image: Assets.images.brownCardFront.image().image);
+        return DecorationImage(
+          image: Assets.images.brownCardFront.image().image,
+        );
       default:
-        return DecorationImage(image: Assets.images.orangeCardFront.image().image);
+        return DecorationImage(
+          image: Assets.images.orangeCardFront.image().image,
+        );
     }
   }
 

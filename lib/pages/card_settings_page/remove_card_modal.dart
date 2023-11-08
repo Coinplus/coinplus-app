@@ -95,8 +95,9 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                     const Gap(50),
                     AnimatedOpacity(
                       duration: const Duration(milliseconds: 200),
-                        opacity: _slideAnimation.isCompleted ? 1 : 0,
-                        child: Assets.icons.binIcon.image(height: 50),),
+                      opacity: _slideAnimation.isCompleted ? 1 : 0,
+                      child: Assets.icons.binIcon.image(height: 50),
+                    ),
                   ],
                 ),
               );

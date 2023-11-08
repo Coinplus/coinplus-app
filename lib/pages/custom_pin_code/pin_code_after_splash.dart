@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -13,54 +12,27 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
+import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
 
 @RoutePage()
-class PinCodePage extends StatefulWidget {
-  const PinCodePage({super.key});
+class PinAfterSplash extends StatefulWidget {
+  const PinAfterSplash({super.key});
 
   @override
-  State<PinCodePage> createState() => _PinCodePageState();
+  State<PinAfterSplash> createState() => _PinAfterSplashState();
 }
 
-class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
+class _PinAfterSplashState extends State<PinAfterSplash> {
   final _walletProtectState = WalletProtectState();
-  final _isPinCodeSet = getIsPinCodeSet();
   late final _shakeAnimationController = ShakeAnimationController();
   final _pinController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        if (await _isPinCodeSet) {
-          if (!_walletProtectState.hasAuthenticated) {
-            await _walletProtectState.authenticateWithBiometrics();
-            await _walletProtectState.enableBiometrics();
-          }
-        }
-        break;
-      case AppLifecycleState.inactive:
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.detached:
-        break;
-      case AppLifecycleState.hidden:
-    }
+    _walletProtectState.authenticateWithBiometricsInSplash();
   }
 
   @override
@@ -76,31 +48,13 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
             height: 50,
           ),
           const Gap(50),
-          Observer(
-            builder: (context) {
-              return AnimatedCrossFade(
-                firstChild: const Text(
-                  'Enter your passcode',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    fontSize: 20,
-                    color: AppColors.primary,
-                  ),
-                ),
-                secondChild: const Text(
-                  'Incorrect passcode',
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    fontSize: 20,
-                    color: AppColors.red,
-                  ),
-                ),
-                crossFadeState: _walletProtectState.isCreatedPinMatch
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 1),
-              );
-            },
+          const Text(
+            'Enter your passcode',
+            style: TextStyle(
+              fontFamily: FontFamily.redHatMedium,
+              fontSize: 20,
+              color: AppColors.primary,
+            ),
           ),
           const Gap(30),
           Padding(
@@ -120,19 +74,18 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
                 onCompleted: (value) async {
                   final savedPinCode = await getSavedPinCode();
                   if (value == savedPinCode) {
-                    await router.pop();
+                    await router.pushAndPopAll(Dashboard());
                   } else {
                     await HapticFeedback.vibrate();
                     _pinController.text = '';
-                    _walletProtectState.pinFocusNode.requestFocus();
                     _shakeAnimationController.start();
-                    await _walletProtectState.dontMatch();
                     await Future.delayed(
                       const Duration(
                         milliseconds: 600,
                       ),
                     );
                     _shakeAnimationController.stop();
+                    _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },
                 textCapitalization: TextCapitalization.characters,
@@ -216,7 +169,7 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
           ScaleTap(
             enableFeedback: false,
             onPressed: () {
-              _walletProtectState.authenticateWithBiometrics();
+              _walletProtectState.authenticateWithBiometricsInSplash();
             },
             child: Assets.icons.faceIDSuccess.image(
               height: 30,

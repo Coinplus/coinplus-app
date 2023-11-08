@@ -662,7 +662,7 @@ class _BarFillPageState extends State<BarFillPage>
                           _balanceStore.saveSelectedBar();
                           hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(const Dashboard());
+                              router.pop(Dashboard());
                             } else {
                               router.push(const WalletProtectionRoute());
                             }

@@ -8,9 +8,10 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i16;
-import 'package:coinplus/models/bar_model/bar_model.dart' as _i19;
-import 'package:coinplus/models/card_model/card_model.dart' as _i20;
+import 'package:auto_route/auto_route.dart' as _i20;
+import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i24;
+import 'package:coinplus/models/bar_model/bar_model.dart' as _i23;
+import 'package:coinplus/models/card_model/card_model.dart' as _i25;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i1;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i2;
 import 'package:coinplus/pages/bar_settings_page/bar_settings_page.dart' as _i3;
@@ -20,27 +21,34 @@ import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart'
     as _i6;
 import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
     as _i7;
-import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i9;
-import 'package:coinplus/pages/dashboard/dashboard.dart' as _i10;
-import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i11;
-import 'package:coinplus/pages/qr_page/qr_page.dart' as _i12;
-import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i8;
-import 'package:coinplus/pages/settings_page/settings_page.dart' as _i13;
-import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i14;
+import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart'
+    as _i8;
+import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart'
+    as _i10;
+import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart'
+    as _i13;
+import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i14;
+import 'package:coinplus/pages/custom_pin_code/remove_pin_code.dart' as _i15;
+import 'package:coinplus/pages/dashboard/dashboard.dart' as _i11;
+import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i12;
+import 'package:coinplus/pages/qr_page/qr_page.dart' as _i16;
+import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i9;
+import 'package:coinplus/pages/settings_page/settings_page.dart' as _i17;
+import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i18;
 import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
-    as _i15;
-import 'package:flutter/cupertino.dart' as _i17;
-import 'package:flutter/material.dart' as _i18;
+    as _i19;
+import 'package:flutter/cupertino.dart' as _i21;
+import 'package:flutter/material.dart' as _i22;
 
-abstract class $Router extends _i16.RootStackRouter {
+abstract class $Router extends _i20.RootStackRouter {
   $Router({super.navigatorKey});
 
   @override
-  final Map<String, _i16.PageFactory> pagesMap = {
+  final Map<String, _i20.PageFactory> pagesMap = {
     BarFillRoute.name: (routeData) {
       final args = routeData.argsAs<BarFillRouteArgs>(
           orElse: () => const BarFillRouteArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.BarFillPage(
           key: args.key,
@@ -51,7 +59,7 @@ abstract class $Router extends _i16.RootStackRouter {
     BarFillWithNfc.name: (routeData) {
       final args = routeData.argsAs<BarFillWithNfcArgs>(
           orElse: () => const BarFillWithNfcArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BarFillWithNfc(
           key: args.key,
@@ -61,7 +69,7 @@ abstract class $Router extends _i16.RootStackRouter {
     },
     BarSettingsRoute.name: (routeData) {
       final args = routeData.argsAs<BarSettingsRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.BarSettingsPage(
           key: args.key,
@@ -72,18 +80,19 @@ abstract class $Router extends _i16.RootStackRouter {
     CardFillRoute.name: (routeData) {
       final args = routeData.argsAs<CardFillRouteArgs>(
           orElse: () => const CardFillRouteArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.CardFillPage(
           key: args.key,
           receivedData: args.receivedData,
+          onChangeCard: args.onChangeCard,
         ),
       );
     },
     CardFillWithNfc.name: (routeData) {
       final args = routeData.argsAs<CardFillWithNfcArgs>(
           orElse: () => const CardFillWithNfcArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i5.CardFillWithNfc(
           key: args.key,
@@ -94,7 +103,7 @@ abstract class $Router extends _i16.RootStackRouter {
     CardSecretFillRoute.name: (routeData) {
       final args = routeData.argsAs<CardSecretFillRouteArgs>(
           orElse: () => const CardSecretFillRouteArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.CardSecretFillPage(
           key: args.key,
@@ -104,7 +113,7 @@ abstract class $Router extends _i16.RootStackRouter {
     },
     CardSettingsRoute.name: (routeData) {
       final args = routeData.argsAs<CardSettingsRouteArgs>();
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.CardSettingsPage(
           key: args.key,
@@ -112,52 +121,83 @@ abstract class $Router extends _i16.RootStackRouter {
         ),
       );
     },
-    ContactUs.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+    ChangePinCode.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ContactUs(),
+        child: const _i8.ChangePinCode(),
       );
     },
-    CustomPinCode.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+    ContactUs.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.CustomPinCode(),
+        child: const _i9.ContactUs(),
+      );
+    },
+    CreatePinCode.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i10.CreatePinCode(),
       );
     },
     Dashboard.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      final args =
+          routeData.argsAs<DashboardArgs>(orElse: () => const DashboardArgs());
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.Dashboard(),
+        child: _i11.Dashboard(
+          onCarouselScroll: args.onCarouselScroll,
+          onChangeCard: args.onChangeCard,
+          onCardSelected: args.onCardSelected,
+          key: args.key,
+        ),
       );
     },
     OnboardingRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.OnboardingPage(),
+        child: const _i12.OnboardingPage(),
+      );
+    },
+    PinAfterSplash.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i13.PinAfterSplash(),
+      );
+    },
+    PinCodeRoute.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i14.PinCodePage(),
+      );
+    },
+    PinRemove.name: (routeData) {
+      return _i20.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i15.PinRemove(),
       );
     },
     QrScannerRoute.name: (routeData) {
-      return _i16.AutoRoutePage<String?>(
+      return _i20.AutoRoutePage<String?>(
         routeData: routeData,
-        child: const _i12.QrScannerPage(),
+        child: const _i16.QrScannerPage(),
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.SettingsPage(),
+        child: const _i17.SettingsPage(),
       );
     },
     SplashScreenRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.SplashScreenPage(),
+        child: const _i18.SplashScreenPage(),
       );
     },
     WalletProtectionRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i15.WalletProtectionPage(),
+        child: const _i19.WalletProtectionPage(),
       );
     },
   };
@@ -165,11 +205,11 @@ abstract class $Router extends _i16.RootStackRouter {
 
 /// generated route for
 /// [_i1.BarFillPage]
-class BarFillRoute extends _i16.PageRouteInfo<BarFillRouteArgs> {
+class BarFillRoute extends _i20.PageRouteInfo<BarFillRouteArgs> {
   BarFillRoute({
-    _i17.Key? key,
+    _i21.Key? key,
     String? receivedData,
-    List<_i16.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           BarFillRoute.name,
           args: BarFillRouteArgs(
@@ -181,8 +221,8 @@ class BarFillRoute extends _i16.PageRouteInfo<BarFillRouteArgs> {
 
   static const String name = 'BarFillRoute';
 
-  static const _i16.PageInfo<BarFillRouteArgs> page =
-      _i16.PageInfo<BarFillRouteArgs>(name);
+  static const _i20.PageInfo<BarFillRouteArgs> page =
+      _i20.PageInfo<BarFillRouteArgs>(name);
 }
 
 class BarFillRouteArgs {
@@ -191,7 +231,7 @@ class BarFillRouteArgs {
     this.receivedData,
   });
 
-  final _i17.Key? key;
+  final _i21.Key? key;
 
   final String? receivedData;
 
@@ -203,11 +243,11 @@ class BarFillRouteArgs {
 
 /// generated route for
 /// [_i2.BarFillWithNfc]
-class BarFillWithNfc extends _i16.PageRouteInfo<BarFillWithNfcArgs> {
+class BarFillWithNfc extends _i20.PageRouteInfo<BarFillWithNfcArgs> {
   BarFillWithNfc({
-    _i17.Key? key,
+    _i21.Key? key,
     String? receivedData,
-    List<_i16.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           BarFillWithNfc.name,
           args: BarFillWithNfcArgs(
@@ -219,8 +259,8 @@ class BarFillWithNfc extends _i16.PageRouteInfo<BarFillWithNfcArgs> {
 
   static const String name = 'BarFillWithNfc';
 
-  static const _i16.PageInfo<BarFillWithNfcArgs> page =
-      _i16.PageInfo<BarFillWithNfcArgs>(name);
+  static const _i20.PageInfo<BarFillWithNfcArgs> page =
+      _i20.PageInfo<BarFillWithNfcArgs>(name);
 }
 
 class BarFillWithNfcArgs {
@@ -229,7 +269,7 @@ class BarFillWithNfcArgs {
     this.receivedData,
   });
 
-  final _i17.Key? key;
+  final _i21.Key? key;
 
   final String? receivedData;
 
@@ -241,11 +281,11 @@ class BarFillWithNfcArgs {
 
 /// generated route for
 /// [_i3.BarSettingsPage]
-class BarSettingsRoute extends _i16.PageRouteInfo<BarSettingsRouteArgs> {
+class BarSettingsRoute extends _i20.PageRouteInfo<BarSettingsRouteArgs> {
   BarSettingsRoute({
-    _i18.Key? key,
-    required _i19.BarModel bar,
-    List<_i16.PageRouteInfo>? children,
+    _i22.Key? key,
+    required _i23.BarModel bar,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           BarSettingsRoute.name,
           args: BarSettingsRouteArgs(
@@ -257,8 +297,8 @@ class BarSettingsRoute extends _i16.PageRouteInfo<BarSettingsRouteArgs> {
 
   static const String name = 'BarSettingsRoute';
 
-  static const _i16.PageInfo<BarSettingsRouteArgs> page =
-      _i16.PageInfo<BarSettingsRouteArgs>(name);
+  static const _i20.PageInfo<BarSettingsRouteArgs> page =
+      _i20.PageInfo<BarSettingsRouteArgs>(name);
 }
 
 class BarSettingsRouteArgs {
@@ -267,9 +307,9 @@ class BarSettingsRouteArgs {
     required this.bar,
   });
 
-  final _i18.Key? key;
+  final _i22.Key? key;
 
-  final _i19.BarModel bar;
+  final _i23.BarModel bar;
 
   @override
   String toString() {
@@ -279,49 +319,54 @@ class BarSettingsRouteArgs {
 
 /// generated route for
 /// [_i4.CardFillPage]
-class CardFillRoute extends _i16.PageRouteInfo<CardFillRouteArgs> {
+class CardFillRoute extends _i20.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
-    _i18.Key? key,
+    _i22.Key? key,
     String? receivedData,
-    List<_i16.PageRouteInfo>? children,
+    void Function(({_i24.AbstractCard? card, int index}))? onChangeCard,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           CardFillRoute.name,
           args: CardFillRouteArgs(
             key: key,
             receivedData: receivedData,
+            onChangeCard: onChangeCard,
           ),
           initialChildren: children,
         );
 
   static const String name = 'CardFillRoute';
 
-  static const _i16.PageInfo<CardFillRouteArgs> page =
-      _i16.PageInfo<CardFillRouteArgs>(name);
+  static const _i20.PageInfo<CardFillRouteArgs> page =
+      _i20.PageInfo<CardFillRouteArgs>(name);
 }
 
 class CardFillRouteArgs {
   const CardFillRouteArgs({
     this.key,
     this.receivedData,
+    this.onChangeCard,
   });
 
-  final _i18.Key? key;
+  final _i22.Key? key;
 
   final String? receivedData;
 
+  final void Function(({_i24.AbstractCard? card, int index}))? onChangeCard;
+
   @override
   String toString() {
-    return 'CardFillRouteArgs{key: $key, receivedData: $receivedData}';
+    return 'CardFillRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard}';
   }
 }
 
 /// generated route for
 /// [_i5.CardFillWithNfc]
-class CardFillWithNfc extends _i16.PageRouteInfo<CardFillWithNfcArgs> {
+class CardFillWithNfc extends _i20.PageRouteInfo<CardFillWithNfcArgs> {
   CardFillWithNfc({
-    _i18.Key? key,
+    _i22.Key? key,
     String? receivedData,
-    List<_i16.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           CardFillWithNfc.name,
           args: CardFillWithNfcArgs(
@@ -333,8 +378,8 @@ class CardFillWithNfc extends _i16.PageRouteInfo<CardFillWithNfcArgs> {
 
   static const String name = 'CardFillWithNfc';
 
-  static const _i16.PageInfo<CardFillWithNfcArgs> page =
-      _i16.PageInfo<CardFillWithNfcArgs>(name);
+  static const _i20.PageInfo<CardFillWithNfcArgs> page =
+      _i20.PageInfo<CardFillWithNfcArgs>(name);
 }
 
 class CardFillWithNfcArgs {
@@ -343,7 +388,7 @@ class CardFillWithNfcArgs {
     this.receivedData,
   });
 
-  final _i18.Key? key;
+  final _i22.Key? key;
 
   final String? receivedData;
 
@@ -355,11 +400,11 @@ class CardFillWithNfcArgs {
 
 /// generated route for
 /// [_i6.CardSecretFillPage]
-class CardSecretFillRoute extends _i16.PageRouteInfo<CardSecretFillRouteArgs> {
+class CardSecretFillRoute extends _i20.PageRouteInfo<CardSecretFillRouteArgs> {
   CardSecretFillRoute({
-    _i18.Key? key,
+    _i22.Key? key,
     String? receivedData,
-    List<_i16.PageRouteInfo>? children,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           CardSecretFillRoute.name,
           args: CardSecretFillRouteArgs(
@@ -371,8 +416,8 @@ class CardSecretFillRoute extends _i16.PageRouteInfo<CardSecretFillRouteArgs> {
 
   static const String name = 'CardSecretFillRoute';
 
-  static const _i16.PageInfo<CardSecretFillRouteArgs> page =
-      _i16.PageInfo<CardSecretFillRouteArgs>(name);
+  static const _i20.PageInfo<CardSecretFillRouteArgs> page =
+      _i20.PageInfo<CardSecretFillRouteArgs>(name);
 }
 
 class CardSecretFillRouteArgs {
@@ -381,7 +426,7 @@ class CardSecretFillRouteArgs {
     this.receivedData,
   });
 
-  final _i18.Key? key;
+  final _i22.Key? key;
 
   final String? receivedData;
 
@@ -393,11 +438,11 @@ class CardSecretFillRouteArgs {
 
 /// generated route for
 /// [_i7.CardSettingsPage]
-class CardSettingsRoute extends _i16.PageRouteInfo<CardSettingsRouteArgs> {
+class CardSettingsRoute extends _i20.PageRouteInfo<CardSettingsRouteArgs> {
   CardSettingsRoute({
-    _i18.Key? key,
-    required _i20.CardModel card,
-    List<_i16.PageRouteInfo>? children,
+    _i22.Key? key,
+    required _i25.CardModel card,
+    List<_i20.PageRouteInfo>? children,
   }) : super(
           CardSettingsRoute.name,
           args: CardSettingsRouteArgs(
@@ -409,8 +454,8 @@ class CardSettingsRoute extends _i16.PageRouteInfo<CardSettingsRouteArgs> {
 
   static const String name = 'CardSettingsRoute';
 
-  static const _i16.PageInfo<CardSettingsRouteArgs> page =
-      _i16.PageInfo<CardSettingsRouteArgs>(name);
+  static const _i20.PageInfo<CardSettingsRouteArgs> page =
+      _i20.PageInfo<CardSettingsRouteArgs>(name);
 }
 
 class CardSettingsRouteArgs {
@@ -419,9 +464,9 @@ class CardSettingsRouteArgs {
     required this.card,
   });
 
-  final _i18.Key? key;
+  final _i22.Key? key;
 
-  final _i20.CardModel card;
+  final _i25.CardModel card;
 
   @override
   String toString() {
@@ -430,9 +475,23 @@ class CardSettingsRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ContactUs]
-class ContactUs extends _i16.PageRouteInfo<void> {
-  const ContactUs({List<_i16.PageRouteInfo>? children})
+/// [_i8.ChangePinCode]
+class ChangePinCode extends _i20.PageRouteInfo<void> {
+  const ChangePinCode({List<_i20.PageRouteInfo>? children})
+      : super(
+          ChangePinCode.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePinCode';
+
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i9.ContactUs]
+class ContactUs extends _i20.PageRouteInfo<void> {
+  const ContactUs({List<_i20.PageRouteInfo>? children})
       : super(
           ContactUs.name,
           initialChildren: children,
@@ -440,41 +499,75 @@ class ContactUs extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ContactUs';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.CustomPinCode]
-class CustomPinCode extends _i16.PageRouteInfo<void> {
-  const CustomPinCode({List<_i16.PageRouteInfo>? children})
+/// [_i10.CreatePinCode]
+class CreatePinCode extends _i20.PageRouteInfo<void> {
+  const CreatePinCode({List<_i20.PageRouteInfo>? children})
       : super(
-          CustomPinCode.name,
+          CreatePinCode.name,
           initialChildren: children,
         );
 
-  static const String name = 'CustomPinCode';
+  static const String name = 'CreatePinCode';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.Dashboard]
-class Dashboard extends _i16.PageRouteInfo<void> {
-  const Dashboard({List<_i16.PageRouteInfo>? children})
-      : super(
+/// [_i11.Dashboard]
+class Dashboard extends _i20.PageRouteInfo<DashboardArgs> {
+  Dashboard({
+    void Function(int)? onCarouselScroll,
+    void Function(({_i24.AbstractCard? card, int index}))? onChangeCard,
+    void Function(_i24.AbstractCard?)? onCardSelected,
+    _i22.Key? key,
+    List<_i20.PageRouteInfo>? children,
+  }) : super(
           Dashboard.name,
+          args: DashboardArgs(
+            onCarouselScroll: onCarouselScroll,
+            onChangeCard: onChangeCard,
+            onCardSelected: onCardSelected,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'Dashboard';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<DashboardArgs> page =
+      _i20.PageInfo<DashboardArgs>(name);
+}
+
+class DashboardArgs {
+  const DashboardArgs({
+    this.onCarouselScroll,
+    this.onChangeCard,
+    this.onCardSelected,
+    this.key,
+  });
+
+  final void Function(int)? onCarouselScroll;
+
+  final void Function(({_i24.AbstractCard? card, int index}))? onChangeCard;
+
+  final void Function(_i24.AbstractCard?)? onCardSelected;
+
+  final _i22.Key? key;
+
+  @override
+  String toString() {
+    return 'DashboardArgs{onCarouselScroll: $onCarouselScroll, onChangeCard: $onChangeCard, onCardSelected: $onCardSelected, key: $key}';
+  }
 }
 
 /// generated route for
-/// [_i11.OnboardingPage]
-class OnboardingRoute extends _i16.PageRouteInfo<void> {
-  const OnboardingRoute({List<_i16.PageRouteInfo>? children})
+/// [_i12.OnboardingPage]
+class OnboardingRoute extends _i20.PageRouteInfo<void> {
+  const OnboardingRoute({List<_i20.PageRouteInfo>? children})
       : super(
           OnboardingRoute.name,
           initialChildren: children,
@@ -482,13 +575,55 @@ class OnboardingRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'OnboardingRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i12.QrScannerPage]
-class QrScannerRoute extends _i16.PageRouteInfo<void> {
-  const QrScannerRoute({List<_i16.PageRouteInfo>? children})
+/// [_i13.PinAfterSplash]
+class PinAfterSplash extends _i20.PageRouteInfo<void> {
+  const PinAfterSplash({List<_i20.PageRouteInfo>? children})
+      : super(
+          PinAfterSplash.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PinAfterSplash';
+
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i14.PinCodePage]
+class PinCodeRoute extends _i20.PageRouteInfo<void> {
+  const PinCodeRoute({List<_i20.PageRouteInfo>? children})
+      : super(
+          PinCodeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PinCodeRoute';
+
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i15.PinRemove]
+class PinRemove extends _i20.PageRouteInfo<void> {
+  const PinRemove({List<_i20.PageRouteInfo>? children})
+      : super(
+          PinRemove.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PinRemove';
+
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i16.QrScannerPage]
+class QrScannerRoute extends _i20.PageRouteInfo<void> {
+  const QrScannerRoute({List<_i20.PageRouteInfo>? children})
       : super(
           QrScannerRoute.name,
           initialChildren: children,
@@ -496,13 +631,13 @@ class QrScannerRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'QrScannerRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.SettingsPage]
-class SettingsRoute extends _i16.PageRouteInfo<void> {
-  const SettingsRoute({List<_i16.PageRouteInfo>? children})
+/// [_i17.SettingsPage]
+class SettingsRoute extends _i20.PageRouteInfo<void> {
+  const SettingsRoute({List<_i20.PageRouteInfo>? children})
       : super(
           SettingsRoute.name,
           initialChildren: children,
@@ -510,13 +645,13 @@ class SettingsRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.SplashScreenPage]
-class SplashScreenRoute extends _i16.PageRouteInfo<void> {
-  const SplashScreenRoute({List<_i16.PageRouteInfo>? children})
+/// [_i18.SplashScreenPage]
+class SplashScreenRoute extends _i20.PageRouteInfo<void> {
+  const SplashScreenRoute({List<_i20.PageRouteInfo>? children})
       : super(
           SplashScreenRoute.name,
           initialChildren: children,
@@ -524,13 +659,13 @@ class SplashScreenRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'SplashScreenRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i15.WalletProtectionPage]
-class WalletProtectionRoute extends _i16.PageRouteInfo<void> {
-  const WalletProtectionRoute({List<_i16.PageRouteInfo>? children})
+/// [_i19.WalletProtectionPage]
+class WalletProtectionRoute extends _i20.PageRouteInfo<void> {
+  const WalletProtectionRoute({List<_i20.PageRouteInfo>? children})
       : super(
           WalletProtectionRoute.name,
           initialChildren: children,
@@ -538,5 +673,5 @@ class WalletProtectionRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'WalletProtectionRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i20.PageInfo<void> page = _i20.PageInfo<void>(name);
 }

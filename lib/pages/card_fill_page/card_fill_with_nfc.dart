@@ -15,8 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
-import '../../extensions/context_extension.dart';
-import '../../extensions/widget_extension.dart';
+import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -66,6 +65,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
   final _validationStore = ValidationState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+
 
   @override
   void initState() {
@@ -381,6 +382,12 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                     ),
                                                     Observer(
                                                       builder: (context) {
+                                                        final myFormat =
+                                                            NumberFormat
+                                                                .decimalPatternDigits(
+                                                          locale: 'en_us',
+                                                          decimalDigits: 2,
+                                                        );
                                                         final data =
                                                             _balanceStore.coins;
 
@@ -406,7 +413,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                         return Text(
                                                           (_balanceStore.selectedCard !=
                                                                       null
-                                                                  ? '\$${((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price).toStringAsFixed(2)}'
+                                                                  ? '\$${myFormat.format((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price)}'
                                                                   : '')
                                                               .toString(),
                                                           style:
@@ -1031,7 +1038,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                           _balanceStore.saveSelectedCard();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(const Dashboard());
+                              router.pop(Dashboard());
                             } else {
                               router.pushAndPopAll(
                                 const WalletProtectionRoute(),
@@ -1125,7 +1132,5 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
     _lineStore.makeVisible();
-
-
   }
 }

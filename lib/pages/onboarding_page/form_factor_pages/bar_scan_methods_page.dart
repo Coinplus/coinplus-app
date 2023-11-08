@@ -103,6 +103,12 @@ class BarScanMethodsPage extends StatelessWidget {
                   await router.pop();
                   await showModalBottomSheet(
                     context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
                     backgroundColor: Colors.transparent,
                     builder: (context) {
                       return AnimatedOpacity(

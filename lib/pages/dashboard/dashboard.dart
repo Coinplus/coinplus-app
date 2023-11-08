@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
@@ -8,10 +13,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lottie/lottie.dart';
+import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager/platform_tags.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../constants/card_record.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -23,21 +32,29 @@ import '../../router.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/compute_private_key.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../settings_page/contact_us/send_wait_alert/send_wait_alert.dart';
+import '../onboarding_page/form_factor_pages/bar_scan_methods_page.dart';
+import '../onboarding_page/form_factor_pages/card_scan_methods_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
 
-typedef CardRecord = ({AbstractCard? card, int index});
-typedef CardChangeCallBack = ValueChanged<CardRecord>;
-
 @RoutePage()
 class Dashboard extends HookWidget {
-  const Dashboard({super.key});
+  const Dashboard(
+      {this.onCarouselScroll,
+      this.onChangeCard,
+      this.onCardSelected,
+      super.key,});
+
+  final CardChangeCallBack? onChangeCard;
+  final ValueChanged<AbstractCard?>? onCardSelected;
+  final ValueChanged<int>? onCarouselScroll;
 
   void useBranchSDK(BuildContext context) {
     useEffect(
@@ -80,10 +97,13 @@ class Dashboard extends HookWidget {
 
   SettingsState get _settingsState => GetIt.I<SettingsState>();
 
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+  NavBarState get _navBarState => GetIt.I<NavBarState>();
+
   @override
   Widget build(BuildContext context) {
     useBranchSDK(context);
-    final _navBarState = useMemoized(NavBarState.new);
     final _pageController = usePageController();
     final currentCard = useRef<CardRecord>(
       (
@@ -92,11 +112,26 @@ class Dashboard extends HookWidget {
       ),
     );
 
-    final isAppPaused = useState(false);
+    final isPaused = useState(false);
+    final isInactive = useState(false);
+    final appLocked = useState(false);
 
-    useOnAppLifecycleStateChange((previous, current) {
-      isAppPaused.value = [AppLifecycleState.inactive]
-          .contains(current);
+    useOnAppLifecycleStateChange((previous, current) async {
+      appLocked.value = await getIsPinCodeSet();
+      isPaused.value = [AppLifecycleState.paused].contains(current);
+      isInactive.value = [AppLifecycleState.inactive].contains(current);
+      if (isPaused.value) {
+        final isPinCodeSet = await getIsPinCodeSet();
+        if (isPinCodeSet) {
+          if (router.stackData
+              .indexWhere(
+                (element) => element.name == PinCodeRoute.name,
+              )
+              .isNegative) {
+            await router.push(const PinCodeRoute());
+          }
+        }
+      }
     });
 
     return Scaffold(
@@ -104,7 +139,6 @@ class Dashboard extends HookWidget {
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-
           PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
@@ -179,15 +213,36 @@ class Dashboard extends HookWidget {
               ),
             ],
           ),
-          Visibility(
-            visible: isAppPaused.value,
-            child: const Background(),
+          Observer(
+            builder: (context) {
+              return Visibility(
+                visible: isInactive.value && appLocked.value,
+                child: _walletProtectState.isBiometricsRunning
+                    ? const SizedBox()
+                    : Visibility(
+                        child: !_walletProtectState.isNfcSessionStarted
+                            ? const Background()
+                            : const SizedBox(),
+                      ),
+              );
+            },
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: isAppPaused.value
-          ? const SizedBox()
+      floatingActionButton: isInactive.value && appLocked.value
+          ? !_walletProtectState.isNfcSessionStarted
+              ? const SizedBox()
+              : FloatingActionButton(
+                  shape: const CircleBorder(),
+                  elevation: 3,
+                  backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
+                  onPressed: null,
+                  child: Assets.icons.plus.image(
+                    color: Colors.white,
+                    height: 32,
+                  ),
+                )
           : ScaleTap(
               enableFeedback: false,
               onPressed: () async {
@@ -196,55 +251,111 @@ class Dashboard extends HookWidget {
 
                 if (selectedCard == null || _pageController.page != 0) {
                   if (isBarList) {
-                    await HapticFeedback.mediumImpact();
-                    showTopSnackBar(
-                      displayDuration: const Duration(
-                        milliseconds: 400,
-                      ),
-                      Overlay.of(context),
-                      CustomSnackBar.success(
-                        backgroundColor:
-                            const Color(0xFF4A4A4A).withOpacity(0.9),
-                        message: 'Please select a bar',
-                        textStyle: const TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontSize: 14,
-                          color: Colors.white,
+                    await showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
                         ),
                       ),
+                      context: context,
+                      builder: (context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Assets.icons.notch.image(
+                                height: 4,
+                              ),
+                            ),
+                            const Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20, top: 10),
+                                  child: Text(
+                                    'Add new wallet',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatBold,
+                                      fontSize: 17,
+                                      color: AppColors.primaryTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(18),
+                            const BarScanMethodsPage().paddingHorizontal(20),
+                            const Gap(40),
+                          ],
+                        );
+                      },
                     );
-                  }
-                  else {
-                    await HapticFeedback.mediumImpact();
-                    showTopSnackBar(
-                      displayDuration: const Duration(
-                        milliseconds: 400,
-                      ),
-                      Overlay.of(context),
-                      CustomSnackBar.success(
-                        backgroundColor:
-                            const Color(0xFF4A4A4A).withOpacity(0.9),
-                        message: 'Please select a card',
-                        textStyle: const TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontSize: 14,
-                          color: Colors.white,
+                  } else {
+                    await showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
                         ),
                       ),
+                      context: context,
+                      builder: (context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Assets.icons.notch.image(
+                                height: 4,
+                              ),
+                            ),
+                            const Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 20,
+                                    top: 10,
+                                  ),
+                                  child: Text(
+                                    'Add new wallet',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatBold,
+                                      fontSize: 17,
+                                      color: AppColors.primaryTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap(18),
+                            const CardScanMethodsPage().paddingHorizontal(
+                              20,
+                            ),
+                            const Gap(40),
+                          ],
+                        );
+                      },
                     );
                   }
                   return;
                 }
-
                 await showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                   ),
                   backgroundColor: Colors.white,
                   context: context,
                   builder: (_) {
-                    final card = [..._balanceStore.cards, ..._balanceStore.bars]
-                        .firstWhere(
+                    final card = [
+                      ..._balanceStore.cards,
+                      ..._balanceStore.bars,
+                    ].firstWhere(
                       (element) =>
                           (element as AbstractCard).address ==
                           selectedCard.address,
@@ -284,8 +395,11 @@ class Dashboard extends HookWidget {
                             onPressed: () async {
                               await router.pop(const Dashboard());
                               await showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
                                 ),
                                 backgroundColor: Colors.white,
                                 isScrollControlled: true,
@@ -555,7 +669,7 @@ class Dashboard extends HookWidget {
                                               ),
                                             ),
                                           ),
-                                          const Gap(120),
+                                          const Spacer(),
                                           LoadingButton(
                                             onPressed: () {
                                               Share.share(
@@ -570,6 +684,7 @@ class Dashboard extends HookWidget {
                                               ),
                                             ),
                                           ).paddingHorizontal(60),
+                                          const Gap(20),
                                         ],
                                       ),
                                     ),
@@ -636,7 +751,346 @@ class Dashboard extends HookWidget {
                                 ),
                             onPressed: () async {
                               await router.pop();
-                              await sendWaitAlert(context);
+                              final okButton = LoadingButton(
+                                onPressed: router.pop,
+                                child: const Text(
+                                  'Got it',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ).paddingHorizontal(40);
+                              final sendButton = SizedBox(
+                                height: 48,
+                                child: LoadingButton(
+                                  style: context.theme
+                                      .buttonStyle(
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: AppColors.primaryTextColor,
+                                          fontSize: 15,
+                                        ),
+                                      )
+                                      .copyWith(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          AppColors.silver,
+                                        ),
+                                      ),
+                                  onPressed: Platform.isIOS
+                                      ? () async {
+                                          _walletProtectState
+                                              .isNfcSessionStart();
+                                          await router.pop();
+                                          await NfcManager.instance
+                                              .startSession(
+                                            alertMessage: isBarList
+                                                ? 'It’s easy! Hold your phone near the top of your Bar’s box'
+                                                : "Please tap your card on the phone to verify it's legitimacy",
+                                            onDiscovered: (tag) async {
+                                              _walletProtectState
+                                                  .isNfcSessionStarted = false;
+                                              final nfcA = MiFare.from(tag);
+                                              final ident = nfcA?.identifier
+                                                  .map(
+                                                    (byte) => byte
+                                                        .toRadixString(16)
+                                                        .padLeft(2, '0'),
+                                                  )
+                                                  .join();
+                                              log(ident.toString());
+                                              final signature =
+                                                  await nfcA?.sendMiFareCommand(
+                                                Uint8List.fromList([60, 0]),
+                                              );
+                                              log(
+                                                signature!
+                                                    .map(
+                                                      (byte) => byte
+                                                          .toRadixString(16)
+                                                          .padLeft(2, '0'),
+                                                    )
+                                                    .join()
+                                                    .toString(),
+                                              );
+
+                                              final ndef = Ndef.from(tag);
+                                              final records =
+                                                  ndef!.cachedMessage!.records;
+                                              dynamic walletAddress;
+                                              if (records.length >= 2) {
+                                                final hasJson =
+                                                    records[1].payload;
+                                                final payloadString =
+                                                    String.fromCharCodes(
+                                                  hasJson,
+                                                );
+                                                final Map payloadData =
+                                                    await json.decode(
+                                                  payloadString,
+                                                );
+                                                walletAddress =
+                                                    payloadData['a'];
+                                              } else {
+                                                final hasUrl =
+                                                    records[0].payload;
+                                                final payloadString =
+                                                    String.fromCharCodes(
+                                                  hasUrl,
+                                                );
+                                                final parts =
+                                                    payloadString.split(
+                                                  'air.coinplus.com/btc/',
+                                                );
+                                                walletAddress = parts[1];
+                                              }
+
+                                              await NfcManager.instance
+                                                  .stopSession(
+                                                alertMessage: 'Complete',
+                                              );
+                                              await Future.delayed(
+                                                const Duration(
+                                                  milliseconds: 2500,
+                                                ),
+                                              );
+                                              if (card.address ==
+                                                  walletAddress) {
+                                                await router.push(
+                                                  CardSecretFillRoute(
+                                                    receivedData: walletAddress
+                                                        .toString(),
+                                                  ),
+                                                );
+                                              } else {}
+                                            },
+                                            onError: (_) {
+                                              return Future(
+                                                () => _walletProtectState
+                                                        .isNfcSessionStarted =
+                                                    false,
+                                              );
+                                            },
+                                          );
+                                        }
+                                      : () async {
+                                          await router.pop();
+                                          await NfcManager.instance
+                                              .startSession(
+                                            onDiscovered: (tag) async {
+                                              final ndef = Ndef.from(tag);
+                                              final records =
+                                                  ndef!.cachedMessage!.records;
+                                              dynamic walletAddress;
+
+                                              if (records.length >= 2) {
+                                                final hasJson =
+                                                    records[1].payload;
+                                                final payloadString =
+                                                    String.fromCharCodes(
+                                                  hasJson,
+                                                );
+                                                final Map payloadData =
+                                                    await json.decode(
+                                                  payloadString,
+                                                );
+                                                walletAddress =
+                                                    payloadData['a'];
+                                              } else {
+                                                final hasUrl =
+                                                    records[0].payload;
+                                                final payloadString =
+                                                    String.fromCharCodes(
+                                                  hasUrl,
+                                                );
+                                                final parts =
+                                                    payloadString.split(
+                                                  'air.coinplus.com/btc/',
+                                                );
+                                                walletAddress = parts[1];
+                                              }
+                                              await router.push(
+                                                CardSecretFillRoute(
+                                                  receivedData:
+                                                      walletAddress.toString(),
+                                                ),
+                                              );
+                                            },
+                                            onError: (_) {
+                                              return Future(
+                                                () => log('Message'),
+                                              );
+                                            },
+                                          );
+                                          await showModalBottomSheet(
+                                            context: context,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            backgroundColor: Colors.transparent,
+                                            builder: (context) {
+                                              return AnimatedOpacity(
+                                                duration: const Duration(
+                                                  milliseconds: 300,
+                                                ),
+                                                opacity: 1,
+                                                child: Container(
+                                                  height: 400,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                        20,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      const Gap(10),
+                                                      Row(
+                                                        children: [
+                                                          const Gap(16),
+                                                          IconButton(
+                                                            onPressed:
+                                                                router.pop,
+                                                            icon: const Icon(
+                                                              Icons.close_sharp,
+                                                              size: 25,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                          const Expanded(
+                                                            child: Text(
+                                                              'Start with your wallet',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .redHatSemiBold,
+                                                                fontSize: 17,
+                                                                color: AppColors
+                                                                    .primaryTextColor,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 60,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const Gap(10),
+                                                      const Divider(
+                                                        thickness: 2,
+                                                        height: 2,
+                                                        indent: 15,
+                                                        endIndent: 15,
+                                                        color: Color(
+                                                          0xFFF1F1F1,
+                                                        ),
+                                                      ),
+                                                      const Gap(42),
+                                                      SizedBox(
+                                                        height: 120,
+                                                        width: 120,
+                                                        child: Lottie.asset(
+                                                          'assets/animated_logo/nfcanimation.json',
+                                                        ).expandedHorizontally(),
+                                                      ),
+                                                      const Gap(20),
+                                                      const Text(
+                                                        'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                  child: const Text(
+                                    'Send anyway',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppColors.primaryTextColor,
+                                    ),
+                                  ),
+                                ).paddingHorizontal(40),
+                              );
+                              return showDialog<void>(
+                                context: context,
+                                builder: (context) {
+                                  return EmergeAlertDialog(
+                                    emergeAlertDialogOptions:
+                                        EmergeAlertDialogOptions(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(22),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Text(
+                                            'Recommended to Wait!',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatBold,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                          const Gap(23),
+                                          Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Lottie.asset(
+                                                  height: 140,
+                                                  repeat: false,
+                                                  'assets/animated_logo/please_wait.json',
+                                                ),
+                                              ],
+                                            ),
+                                          ).expandedHorizontally(),
+                                          const Gap(31),
+                                          const Text(
+                                            'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatLight,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          const Gap(18),
+                                          Center(child: okButton),
+                                          const Gap(8),
+                                          Center(child: sendButton),
+                                        ],
+                                      ),
+                                      elevation: 0,
+                                    ),
+                                  );
+                                },
+                              );
                             },
                             child: Row(
                               children: [
@@ -808,15 +1262,79 @@ class Dashboard extends HookWidget {
                   },
                 );
               },
-              child: FloatingActionButton(
-                shape: const CircleBorder(),
-                elevation: 3,
-                backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
-                onPressed: null,
-                child: Assets.icons.sendReceive.image(
-                  color: Colors.white,
-                  height: 32,
-                ),
+              child: Observer(
+                builder: (context) {
+                  return FloatingActionButton(
+                    shape: const CircleBorder(),
+                    elevation: 3,
+                    backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
+                    onPressed: null,
+                    child: AnimatedCrossFade(
+                      duration: const Duration(milliseconds: 1),
+                      crossFadeState: _navBarState.tabCurrentIndex == 0
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      firstChild: AnimatedCrossFade(
+                        duration: const Duration(milliseconds: 1),
+                        crossFadeState: _navBarState.currentIndex == 1
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        firstChild: AnimatedCrossFade(
+                          duration: const Duration(milliseconds: 1),
+                          crossFadeState: _navBarState.isInAddCard
+                              ? CrossFadeState.showSecond
+                              : CrossFadeState.showFirst,
+                          firstChild: _balanceStore.cards.isEmpty
+                              ? Assets.icons.plus.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                )
+                              : Assets.icons.sendReceive.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                ),
+                          secondChild: Assets.icons.plus.image(
+                            color: Colors.white,
+                            height: 32,
+                          ),
+                        ),
+                        secondChild: Assets.icons.plus.image(
+                          color: Colors.white,
+                          height: 32,
+                        ),
+                      ),
+                      secondChild: AnimatedCrossFade(
+                        duration: const Duration(milliseconds: 1),
+                        crossFadeState: _navBarState.currentIndex == 1
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        firstChild: AnimatedCrossFade(
+                          duration: const Duration(milliseconds: 1),
+                          crossFadeState: _navBarState.isInAddBar
+                              ? CrossFadeState.showSecond
+                              : CrossFadeState.showFirst,
+                          firstChild: _balanceStore.bars.isEmpty
+                              ? Assets.icons.plus.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                )
+                              : Assets.icons.sendReceive.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                ),
+                          secondChild: Assets.icons.plus.image(
+                            color: Colors.white,
+                            height: 32,
+                          ),
+                        ),
+                        secondChild: Assets.icons.plus.image(
+                          color: Colors.white,
+                          height: 32,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
     );

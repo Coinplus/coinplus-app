@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +6,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/nav_bar_state/nav_bar_state.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
-import '../dashboard/dashboard.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
-import 'btc_price/btc_price.dart';
 import 'card_list/card_list.dart';
 
 class WalletPage extends StatefulWidget {
@@ -37,6 +36,10 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<WalletPage> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
+
+  NavBarState get _navBarState => GetIt.I<NavBarState>();
+
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
   late final _tabController = TabController(
@@ -58,12 +61,6 @@ class _WalletPageState extends State<WalletPage>
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
-    Timer.periodic(
-      const Duration(minutes: 2),
-      (timer) {
-        _balanceStore.getCoins();
-      },
-    );
     _tabController.addListener(() {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
@@ -75,6 +72,7 @@ class _WalletPageState extends State<WalletPage>
           index: _tabController.index,
         ),
       );
+      _navBarState.updateTabIndex(_tabController.index);
     });
   }
 
@@ -96,12 +94,15 @@ class _WalletPageState extends State<WalletPage>
             CustomPaint(
               size: Size(
                 context.height,
-                (context.height * 0.205).toDouble(),
+                (context.height > 667
+                        ? context.height * 0.205
+                        : context.height * 0.2)
+                    .toDouble(),
               ),
               painter: HeaderCustomPainter(),
             ),
             Positioned(
-              bottom: 6,
+              bottom: context.height > 667 ? 6 : 0,
               right: context.height > 844
                   ? context.width * 0.055
                   : context.width * 0.04,
@@ -152,7 +153,7 @@ class _WalletPageState extends State<WalletPage>
               ),
             ),
             Positioned(
-              top: context.width * 0.16,
+              top: context.height > 667 ? context.width * 0.16 : 30,
               left: 22,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,6 +187,10 @@ class _WalletPageState extends State<WalletPage>
                   Observer(
                     builder: (context) {
                       final data = _balanceStore.coins;
+                      final myFormat = NumberFormat.decimalPatternDigits(
+                        locale: 'en_us',
+                        decimalDigits: 2,
+                      );
                       final balance = _balanceStore.allCardsBalances;
                       if (data == null) {
                         return const Padding(
@@ -198,7 +203,7 @@ class _WalletPageState extends State<WalletPage>
                         );
                       }
                       return Text(
-                        '\$${(balance / 100000000 * data.price).toStringAsFixed(2)}',
+                        '\$${myFormat.format(balance / 100000000 * data.price)}',
                         style: const TextStyle(
                           fontFamily: FontFamily.redHatBold,
                           color: Colors.white,
@@ -221,10 +226,10 @@ class _WalletPageState extends State<WalletPage>
       backgroundColor: Colors.white.withOpacity(0.95),
       body: Column(
         children: [
-          const Gap(15),
+          if (context.height > 667) const Gap(15) else const SizedBox(),
           //Cards Slider
           Expanded(
-            flex: 6,
+            flex: context.height > 667 ? 6 : 10,
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
@@ -244,7 +249,7 @@ class _WalletPageState extends State<WalletPage>
               ],
             ),
           ),
-          //Current price(btc)
+          // Current price(btc)
           if (context.height > 667)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,6 +369,9 @@ class _WalletPageState extends State<WalletPage>
                           ],
                         );
                       } else {
+                        final myFormat = NumberFormat.decimalPattern('en_us');
+                        final formattedPrice =
+                            myFormat.format(data.price).toString();
                         return Row(
                           children: [
                             Assets.icons.bTCIcon.image(height: 24),
@@ -404,7 +412,14 @@ class _WalletPageState extends State<WalletPage>
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                buildCoinWidget(data.price),
+                                Text(
+                                  '\$${formattedPrice.substring(0, 9)}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: FontFamily.redHatMedium,
+                                    color: AppColors.primaryTextColor,
+                                  ),
+                                ),
                                 const Gap(4),
                                 Padding(
                                   padding: const EdgeInsets.all(3),
@@ -460,7 +475,8 @@ class _WalletPageState extends State<WalletPage>
             ).paddingHorizontal(16)
           else
             const SizedBox(),
-            const Spacer(),
+          const Spacer(),
+          const Gap(20),
         ],
       ),
     );
