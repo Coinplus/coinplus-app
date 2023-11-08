@@ -30,6 +30,5 @@ class ChainStats {
   factory ChainStats.fromJson(Map<String, dynamic> json) =>
       _$ChainStatsFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      _$ChainStatsToJson(this);
+  Map<String, dynamic> toJson() => _$ChainStatsToJson(this);
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
 @RoutePage()
@@ -17,15 +18,19 @@ class SplashScreenPage extends StatefulWidget {
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage> {
+  final isPinCodeSet = getIsPinCodeSet();
+
   @override
   void initState() {
     super.initState();
     hasShownWallet().then(
-      (hasShown) {
+      (hasShown) async {
         if (hasShown) {
-          openWallet();
+          unawaited(
+            await isPinCodeSet ? showPinCode() : openWallet(),
+          );
         } else {
-          openOnboardingPage();
+          await openOnboardingPage();
         }
       },
     );
@@ -55,9 +60,14 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     await router.pushAndPopAll(const OnboardingRoute());
   }
 
+  Future<void> showPinCode() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    await router.push(const PinAfterSplash());
+  }
+
   Future<void> openWallet() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    await router.pushAndPopAll(const Dashboard());
+    await router.pushAndPopAll(Dashboard());
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/elevated_button_extensions.dart';
@@ -26,8 +27,7 @@ class WalletProtectionPage extends StatefulWidget {
 }
 
 class _WalletProtectionPageState extends State<WalletProtectionPage> {
-  final _walletProtectState = WalletProtectState();
-
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
   @override
   void initState() {
     super.initState();
@@ -111,15 +111,15 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
                   builder: (context) {
                     return CupertinoSwitch(
                       onChanged: (_) async {
-                        _walletProtectState.enablePasscode();
+                        await _walletProtectState.enableDisableAppLockToggle();
                         await Future.delayed(
                           const Duration(
                             milliseconds: 300,
                           ),
                         );
-                        await router.pushAndPopAll(const CustomPinCode());
+                        await router.pushAndPopAll(const CreatePinCode());
                       },
-                      value: _walletProtectState.isEnablePasscode,
+                      value: _walletProtectState.appLockToggle,
                     );
                   },
                 ),
@@ -134,7 +134,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
               buttonType: ButtonTypes.TRANSPARENT,
             ),
             onPressed: () {
-              router.pushAndPopAll(const Dashboard());
+              router.pushAndPopAll(Dashboard());
             },
             child: const Text(
               'Not now',

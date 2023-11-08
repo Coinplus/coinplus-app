@@ -15,6 +15,8 @@ class Preferences {
   static const bools = 'bools';
   static const strings = 'strings';
   static const ints = 'ints';
+  static const appLockBool = 'app_lock_bool';
+  static const switchKey = 'switchKey';
 }
 
 class StorageUtils {
@@ -101,6 +103,16 @@ class StorageUtils {
   static Future<void> setBool({required bool value}) async {
     final prefs = await sharedInstance;
     await prefs.setBool(Preferences.bools, value);
+  }
+
+  Future<void> saveSwitchValue({required bool value}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(Preferences.switchKey, value);
+  }
+
+  Future<bool?> readSwitchValue() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(Preferences.switchKey);
   }
 
   static Future<void> setString({

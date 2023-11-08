@@ -23,6 +23,7 @@ abstract class _ValidationState with Store {
   void validateSecretOne() {
     _isSecret1Valid = true;
   }
+
   @action
   void invalidSecretOne() {
     _isSecret1Valid = false;

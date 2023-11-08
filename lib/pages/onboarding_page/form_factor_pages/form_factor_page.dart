@@ -43,7 +43,7 @@ class _FormFactorPageState extends State<FormFactorPage>
         Padding(
           padding: const EdgeInsets.only(left: 50),
           child: const Text(
-            'Please select a wallet form',
+            'Please select a wallet type',
             style: TextStyle(
               fontFamily: FontFamily.redHatLight,
               color: AppColors.primaryTextColor,

@@ -15,6 +15,7 @@ import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../store/balance_store/balance_store.dart';
+import '../../../store/nav_bar_state/nav_bar_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../onboarding_page/form_factor_pages/bar_scan_methods_page.dart';
 
@@ -38,6 +39,8 @@ class _BarListState extends State<BarList>
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
 
+  NavBarState get _navBarState => GetIt.I<NavBarState>();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -50,8 +53,11 @@ class _BarListState extends State<BarList>
                 enableFeedback: false,
                 onPressed: () {
                   showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
                     ),
                     context: context,
                     builder: (context) {
@@ -147,13 +153,13 @@ class _BarListState extends State<BarList>
                 Expanded(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
+                      padding: const EdgeInsets.only(bottom: 40),
                       child: Container(
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 20,
+                              color: Colors.grey.withOpacity(0.1),
+                              blurRadius: 15,
                               spreadRadius: 0.5,
                             ),
                           ],
@@ -164,182 +170,82 @@ class _BarListState extends State<BarList>
                         child: Center(
                           child: Column(
                             children: [
-                              const Gap(20),
-                              Expanded(
-                                flex: 3,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      right: 0,
-                                      child: Assets.images.topCircle.image(
-                                        height: 165,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 1,
-                                      left: 0,
-                                      right: 0,
-                                      child: Assets.images.hologram
-                                          .image(height: 163),
-                                    ),
-                                    Positioned(
-                                      top: 60,
-                                      left: 0,
-                                      right: 0,
-                                      child: Assets.images.barSecret1.image(
-                                        height: 40,
-                                      ),
-                                    ),
-                                    const Positioned(
-                                      top: 70,
-                                      left: 0,
-                                      right: 0,
-                                      child: Text(
-                                        'Secret 1',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: FontFamily.redHatMedium,
-                                          color: Colors.black26,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Assets.icons.balance.image(
-                                          height: 12,
-                                        ),
-                                        Observer(
-                                          builder: (context) {
-                                            final data = _balanceStore.coins;
-                                            if (_balanceStore
-                                                    .loadings[bar.address] ??
-                                                false) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(4),
-                                                child:
-                                                    CupertinoActivityIndicator(
-                                                  radius: 5,
-                                                ),
-                                              );
-                                            }
-                                            return Text(
-                                              (bar.data?.balance != null
-                                                      ? '\$${(bar.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
-                                                      : '')
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black
-                                                    .withOpacity(0.7),
-                                                fontSize: 25,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ).paddingHorizontal(40),
-                              ),
-                              Expanded(
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      right: 0,
-                                      child: Assets.icons.barAddressField
-                                          .image()
-                                          .paddingHorizontal(
-                                            context.width * .09,
-                                          ),
-                                    ),
-                                    Positioned(
-                                      top: 10,
-                                      left: 0,
-                                      right: 0,
-                                      child: Center(
-                                        child: Observer(
-                                          builder: (context) {
-                                            if (_balanceStore
-                                                    .loadings[bar.address] ??
-                                                false) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(4),
-                                                child:
-                                                    CupertinoActivityIndicator(
-                                                  radius: 5,
-                                                ),
-                                              );
-                                            }
-                                            return Text(
-                                              visibleAddress,
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              const Gap(183),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  const Gap(15),
-                                  Assets.images.barLogo.image(
-                                    height: 38,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.end,
+                                    children: [
+                                      const Text('Balance', style: TextStyle(fontSize: 15, fontFamily: FontFamily.redHatMedium),),
+                                      Observer(
+                                        builder: (context) {
+                                          final data = _balanceStore.coins;
+                                          final myFormat = NumberFormat
+                                              .decimalPatternDigits(
+                                            locale: 'en_us',
+                                            decimalDigits: 2,
+                                          );
+                                          if (_balanceStore
+                                                  .loadings[bar.address] ??
+                                              false) {
+                                            return const Padding(
+                                              padding: EdgeInsets.all(4),
+                                              child:
+                                                  CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                          return Text(
+                                            (bar.data?.balance != null
+                                                    ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data!.price)}'
+                                                    : '')
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black
+                                                  .withOpacity(0.7),
+                                              fontSize: 20,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: Assets.images.barSecret2
-                                          .image()
-                                          .image,
-                                    ),
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 60,
-                                      vertical: 19,
-                                    ),
-                                    child: Text(
-                                      'Secret 2',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: FontFamily.redHatMedium,
-                                        color: Colors.black26,
-                                        fontWeight: FontWeight.w700,
+                              ).paddingHorizontal(40),
+                              const Gap(22),
+                              Center(
+                                child: Observer(
+                                  builder: (context) {
+                                    if (_balanceStore
+                                            .loadings[bar.address] ??
+                                        false) {
+                                      return const Padding(
+                                        padding: EdgeInsets.all(4),
+                                        child:
+                                            CupertinoActivityIndicator(
+                                          radius: 5,
+                                        ),
+                                      );
+                                    }
+                                    return Text(
+                                      visibleAddress,
+                                      style: const TextStyle(
+                                        fontFamily:
+                                            FontFamily.redHatMedium,
+                                        color: Colors.black,
+                                        fontSize: 13,
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
                                 ),
                               ),
+
                               const Gap(15),
                             ],
                           ),
@@ -358,6 +264,11 @@ class _BarListState extends State<BarList>
                 _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
               );
               _settingsState.setBarCurrentIndex(index);
+              if (index == _balanceStore.bars.length) {
+                _navBarState.inAddBar();
+              } else {
+                _navBarState.isInAddBar = false;
+              }
             },
             enlargeFactor: 0.35,
             disableCenter: true,
@@ -375,7 +286,7 @@ class _BarListState extends State<BarList>
   String _getVisibleAddress(String fullAddress) {
     final start = fullAddress.substring(0, 5);
     final end = fullAddress.substring(fullAddress.length - 5);
-    return '$start ... ... $end';
+    return '$start ... $end';
   }
 
   @override

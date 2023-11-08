@@ -52,7 +52,22 @@ class Router extends $Router {
       page: BarSettingsRoute.page,
     ),
     AdaptiveRoute(
-      page: CustomPinCode.page,
+      page: CreatePinCode.page,
+    ),
+    AdaptiveRoute(
+      page: ChangePinCode.page,
+    ),
+    AdaptiveRoute(
+      page: PinCodeRoute.page,
+      fullscreenDialog: true,
+    ),
+    AdaptiveRoute(
+      page: PinRemove.page,
+      fullscreenDialog: true,
+    ),
+    AdaptiveRoute(
+      page: PinAfterSplash.page,
+      fullscreenDialog: true,
     ),
     AdaptiveRoute(
       page: ContactUs.page,

@@ -65,6 +65,12 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
             ListTile(
               onTap: () {
                 showModalBottomSheet(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
                   isScrollControlled: true,
                   context: context,
                   backgroundColor: Colors.transparent,
@@ -295,6 +301,12 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
               onTap: () {
                 showModalBottomSheet(
                   context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
                   backgroundColor: Colors.transparent,
                   builder: (context) {
                     return RemoveBar(
@@ -364,9 +376,9 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
 Widget getColorImage(CardColor color) {
   switch (color) {
     case CardColor.SILVER:
-      return Assets.images.barFront.image(height: 130);
+      return Assets.images.barEmpty.image(height: 130);
     case CardColor.GOLD:
-      return Assets.images.barFront.image(height: 130);
+      return Assets.images.barEmpty.image(height: 130);
     default:
       throw Exception('color can be used only for card');
   }

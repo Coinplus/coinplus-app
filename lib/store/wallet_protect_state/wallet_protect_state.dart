@@ -1,34 +1,111 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../providers/screen_service.dart';
+import '../../router.dart';
+import '../../utils/secure_storage_utils.dart';
 
 part 'wallet_protect_state.g.dart';
 
 class WalletProtectState = _WalletProtectState with _$WalletProtectState;
 
 abstract class _WalletProtectState with Store {
+  final isPinCodeSet = getIsPinCodeSet();
   final _auth = LocalAuthentication();
-  @observable
-  bool isToggleSwitched = false;
+  late FocusNode pinFocusNode = FocusNode();
 
   @observable
-  bool isEnablePasscode = false;
+  bool hasAuthenticated = false;
+
+  @observable
+  bool isCreatedPinMatch = false;
+
+  @observable
+  bool appLockToggle = false;
+
+  @observable
+  bool isBiometricsRunning = false;
+
+  @observable
+  bool isNfcSessionStarted = false;
+
+  @observable
+  bool isSetPinCode = true;
 
   @action
-  void enablePasscode() {
-    isEnablePasscode = !isEnablePasscode;
+  Future<void> checkPinCodeStatus() async {
+    final result = await isPinCodeEnabled();
+    isSetPinCode = result;
   }
 
   @action
-  Future<void> onToggleSwitch() async {
-    try {
-      final didAuthenticate = await _auth.authenticate(
-        localizedReason: 'Please authenticate',
-      );
-      isToggleSwitched = !isToggleSwitched;
-      if (!didAuthenticate) {
-        return;
+  Future<void> enableBiometrics() async {
+    isBiometricsRunning = true;
+  }
+
+  @action
+  void isNfcSessionStart() {
+    isNfcSessionStarted = !isNfcSessionStarted;
+  }
+
+  @action
+  Future<void> enableDisableAppLockToggle() async {
+    appLockToggle = !appLockToggle;
+  }
+
+  @action
+  Future<void> authenticateWithBiometrics() async {
+    if (await isBiometricAvailable()) {
+      try {
+        final isAuthorized = await _auth.authenticate(
+          localizedReason: 'Authenticate using Face ID',
+        );
+        if (isAuthorized) {
+          isBiometricsRunning = true;
+          await router.pop();
+        }
+      } catch (e) {
+        if (e is PlatformException && e.code == 'NotAvailable') {
+          hasAuthenticated = true;
+          pinFocusNode.requestFocus();
+        } else if (e is PlatformException && e.code == 'NotEnrolled') {
+          log('Biometrics not enrolled');
+        } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
+          log('Biometrics authentication failed or canceled');
+        } else {
+          log('Unhandled exception: $e');
+        }
       }
-    } catch (_) {}
+    }
+  }
+
+  @action
+  Future<void> authenticateWithBiometricsInSplash() async {
+    if (await isBiometricAvailable()) {
+      try {
+        final isAuthorized = await _auth.authenticate(
+          localizedReason: 'Authenticate using Face ID',
+        );
+        if (isAuthorized) {
+          isBiometricsRunning = true;
+          await router.pushAndPopAll(Dashboard());
+        }
+      } catch (e) {
+        if (e is PlatformException && e.code == 'NotAvailable') {
+          pinFocusNode.requestFocus();
+        } else if (e is PlatformException && e.code == 'NotEnrolled') {
+          log('Biometrics not enrolled');
+        } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
+          log('Biometrics authentication failed or canceled');
+        } else {
+          log('Unhandled exception: $e');
+        }
+      }
+    }
   }
 
   @action
@@ -41,19 +118,10 @@ abstract class _WalletProtectState with Store {
   }
 
   @action
-  Future<void> authenticateWithBiometrics() async {
-    try {
-      if (await isBiometricAvailable()) {
-        final isAuthorized = await _auth.authenticate(
-          localizedReason: 'Authenticate using Face ID',
-        );
-
-        if (isAuthorized) {
-        } else {}
-      } else {}
-    } catch (_) {
-      return;
-    }
+  Future<void> dontMatch() async {
+    isCreatedPinMatch = true;
+    await Future.delayed(const Duration(milliseconds: 1500));
+    isCreatedPinMatch = false;
   }
 
   void initState() {

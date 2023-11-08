@@ -25,6 +25,54 @@ mixin _$NavBarState on NavBarStore, Store {
     });
   }
 
+  late final _$tabCurrentIndexAtom =
+      Atom(name: 'NavBarStore.tabCurrentIndex', context: context);
+
+  @override
+  int get tabCurrentIndex {
+    _$tabCurrentIndexAtom.reportRead();
+    return super.tabCurrentIndex;
+  }
+
+  @override
+  set tabCurrentIndex(int value) {
+    _$tabCurrentIndexAtom.reportWrite(value, super.tabCurrentIndex, () {
+      super.tabCurrentIndex = value;
+    });
+  }
+
+  late final _$isInAddCardAtom =
+      Atom(name: 'NavBarStore.isInAddCard', context: context);
+
+  @override
+  bool get isInAddCard {
+    _$isInAddCardAtom.reportRead();
+    return super.isInAddCard;
+  }
+
+  @override
+  set isInAddCard(bool value) {
+    _$isInAddCardAtom.reportWrite(value, super.isInAddCard, () {
+      super.isInAddCard = value;
+    });
+  }
+
+  late final _$isInAddBarAtom =
+      Atom(name: 'NavBarStore.isInAddBar', context: context);
+
+  @override
+  bool get isInAddBar {
+    _$isInAddBarAtom.reportRead();
+    return super.isInAddBar;
+  }
+
+  @override
+  set isInAddBar(bool value) {
+    _$isInAddBarAtom.reportWrite(value, super.isInAddBar, () {
+      super.isInAddBar = value;
+    });
+  }
+
   late final _$updateIndexAsyncAction =
       AsyncAction('NavBarStore.updateIndex', context: context);
 
@@ -33,10 +81,46 @@ mixin _$NavBarState on NavBarStore, Store {
     return _$updateIndexAsyncAction.run(() => super.updateIndex(index));
   }
 
+  late final _$updateTabIndexAsyncAction =
+      AsyncAction('NavBarStore.updateTabIndex', context: context);
+
+  @override
+  Future<void> updateTabIndex(int index) {
+    return _$updateTabIndexAsyncAction.run(() => super.updateTabIndex(index));
+  }
+
+  late final _$NavBarStoreActionController =
+      ActionController(name: 'NavBarStore', context: context);
+
+  @override
+  void inAddBar() {
+    final _$actionInfo =
+        _$NavBarStoreActionController.startAction(name: 'NavBarStore.inAddBar');
+    try {
+      return super.inAddBar();
+    } finally {
+      _$NavBarStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void inAddCard() {
+    final _$actionInfo = _$NavBarStoreActionController.startAction(
+        name: 'NavBarStore.inAddCard');
+    try {
+      return super.inAddCard();
+    } finally {
+      _$NavBarStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-currentIndex: ${currentIndex}
+currentIndex: ${currentIndex},
+tabCurrentIndex: ${tabCurrentIndex},
+isInAddCard: ${isInAddCard},
+isInAddBar: ${isInAddBar}
     ''';
   }
 }

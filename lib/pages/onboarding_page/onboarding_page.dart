@@ -200,7 +200,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               );
                             },
                             onError: (_) {
-                              return Future(() => log('Message'),);
+                              return Future(
+                                () => log('Message'),
+                              );
                             },
                           );
                         }
@@ -234,11 +236,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               );
                             },
                             onError: (_) {
-                              return Future(() => log('Message'),);
+                              return Future(
+                                () => log('Message'),
+                              );
                             },
                           );
                           await showModalBottomSheet(
                             context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                            ),
                             backgroundColor: Colors.transparent,
                             builder: (context) {
                               return AnimatedOpacity(
@@ -359,8 +369,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     : null,
                 onPressed: () {
                   showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
                     ),
                     backgroundColor: Colors.white,
                     context: context,

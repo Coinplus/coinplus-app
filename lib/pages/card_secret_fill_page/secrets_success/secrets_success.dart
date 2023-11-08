@@ -14,9 +14,7 @@ Future<void> secretsSuccessAlert(BuildContext context) {
   final okButton = LoadingButton(
     onPressed: () async {
       await router.pop();
-      await router.pop(const Dashboard());
-      await router.pop();
-      await router.pop(const SettingsRoute());
+      await router.pop(Dashboard());
       final url = Uri.parse(
         'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
       );
@@ -59,9 +57,9 @@ Future<void> secretsSuccessAlert(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Lottie.asset(
-                        height: 100,
-                        'assets/animated_logo/secrets_success.json',
-                    repeat: false,
+                      height: 100,
+                      'assets/animated_logo/secrets_success.json',
+                      repeat: false,
                     ),
                   ],
                 ),

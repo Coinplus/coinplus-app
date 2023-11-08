@@ -23,7 +23,7 @@ Future<void> alreadySavedCard(BuildContext context) {
     onPressed: () {
       hasShownWallet().then((hasShown) {
         if (hasShown) {
-          router.pushAndPopAll(const Dashboard());
+          router.pushAndPopAll(Dashboard());
         }
       });
     },

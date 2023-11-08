@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
@@ -17,54 +14,15 @@ import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
 
 @RoutePage()
-class PinCodePage extends StatefulWidget {
-  const PinCodePage({super.key});
-
-  @override
-  State<PinCodePage> createState() => _PinCodePageState();
-}
-
-class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
-  final _walletProtectState = WalletProtectState();
-  final _isPinCodeSet = getIsPinCodeSet();
-  late final _shakeAnimationController = ShakeAnimationController();
-  final _pinController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        if (await _isPinCodeSet) {
-          if (!_walletProtectState.hasAuthenticated) {
-            await _walletProtectState.authenticateWithBiometrics();
-            await _walletProtectState.enableBiometrics();
-          }
-        }
-        break;
-      case AppLifecycleState.inactive:
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.detached:
-        break;
-      case AppLifecycleState.hidden:
-    }
-  }
+class PinRemove extends StatelessWidget {
+  const PinRemove({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final _walletProtectState = WalletProtectState();
+    late final _shakeAnimationController = ShakeAnimationController();
+    final _pinController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -112,6 +70,7 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
               child: PinCodeTextField(
                 focusNode: _walletProtectState.pinFocusNode,
                 controller: _pinController,
+                autoFocus: true,
                 blinkDuration: const Duration(milliseconds: 1),
                 obscuringWidget: const Text(
                   '●',
@@ -121,6 +80,7 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
                   final savedPinCode = await getSavedPinCode();
                   if (value == savedPinCode) {
                     await router.pop();
+                    await secureStorage.delete(key: 'pin_code');
                   } else {
                     await HapticFeedback.vibrate();
                     _pinController.text = '';
@@ -182,44 +142,6 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
               fontSize: 14,
               color: AppColors.primary,
               fontWeight: FontWeight.w700,
-            ),
-          ),
-          const Gap(20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
-                height: 1,
-                width: 155,
-              ),
-              const Text(
-                'Or',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatLight,
-                  color: AppColors.primary,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 1,
-                width: 155,
-              ),
-            ],
-          ),
-          const Gap(20),
-          ScaleTap(
-            enableFeedback: false,
-            onPressed: () {
-              _walletProtectState.authenticateWithBiometrics();
-            },
-            child: Assets.icons.faceIDSuccess.image(
-              height: 30,
             ),
           ),
         ],

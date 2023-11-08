@@ -15,8 +15,8 @@ import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
-import '../../extensions/context_extension.dart';
-import '../../extensions/widget_extension.dart';
+import '../../constants/card_record.dart';
+import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -41,9 +41,11 @@ class CardFillPage extends StatefulWidget {
   const CardFillPage({
     super.key,
     this.receivedData,
+    this.onChangeCard,
   });
 
   final String? receivedData;
+  final CardChangeCallBack? onChangeCard;
 
   @override
   State<CardFillPage> createState() => _CardFillPageState();
@@ -51,6 +53,7 @@ class CardFillPage extends StatefulWidget {
 
 class _CardFillPageState extends State<CardFillPage>
     with TickerProviderStateMixin {
+  late int cardCarouselIndex = _balanceStore.cards.length - 1;
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
   final _focusNode = FocusNode();
@@ -135,7 +138,10 @@ class _CardFillPageState extends State<CardFillPage>
               ),
               child: IconButton(
                 onPressed: () {
-                  _flipCardController.controller!.value == 1 && _lineStore.isLineVisible ? makeLineInvisible() : router.pop();
+                  _flipCardController.controller!.value == 1 &&
+                          _lineStore.isLineVisible
+                      ? makeLineInvisible()
+                      : router.pop();
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -164,7 +170,7 @@ class _CardFillPageState extends State<CardFillPage>
                 children: [
                   Center(
                     child: Container(
-                      height: context.height == 667 ? 400 : 455,
+                      height: context.height > 667 ? 455 : 400,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
@@ -192,8 +198,9 @@ class _CardFillPageState extends State<CardFillPage>
                                         height: context.height * 0.22,
                                       ),
                                       Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 65,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              context.height > 667 ? 65 : 75,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -335,8 +342,9 @@ class _CardFillPageState extends State<CardFillPage>
                                       ),
                                       const Gap(4),
                                       Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 65,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              context.height > 667 ? 65 : 75,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -378,6 +386,12 @@ class _CardFillPageState extends State<CardFillPage>
                                                     ),
                                                     Observer(
                                                       builder: (context) {
+                                                        final myFormat =
+                                                            NumberFormat
+                                                                .decimalPatternDigits(
+                                                          locale: 'en_us',
+                                                          decimalDigits: 2,
+                                                        );
                                                         final data =
                                                             _balanceStore.coins;
 
@@ -403,7 +417,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         return Text(
                                                           (_balanceStore.selectedCard !=
                                                                       null
-                                                                  ? '\$${((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price).toStringAsFixed(2)}'
+                                                                  ? '\$${myFormat.format((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price)}'
                                                                   : '')
                                                               .toString(),
                                                           style:
@@ -447,7 +461,7 @@ class _CardFillPageState extends State<CardFillPage>
                       return AnimatedContainer(
                         curve: Curves.decelerate,
                         duration: const Duration(milliseconds: 300),
-                        height: 455,
+                        height: context.height > 667 ? 455 : 400,
                         width: context.width - 54,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -474,15 +488,21 @@ class _CardFillPageState extends State<CardFillPage>
                                   child: !_addressState.isAddressVisible
                                       ? Row(
                                           children: [
-                                            if (constraints.maxHeight < 551)
-                                              SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.091,
-                                              )
+                                            if (context.height > 667)
+                                              if (constraints.maxHeight < 551)
+                                                SizedBox(
+                                                  width: constraints.maxWidth *
+                                                      0.091,
+                                                )
+                                              else
+                                                SizedBox(
+                                                  width: constraints.maxWidth *
+                                                      0.125,
+                                                )
                                             else
                                               SizedBox(
                                                 width: constraints.maxWidth *
-                                                    0.125,
+                                                    0.135,
                                               ),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -518,10 +538,13 @@ class _CardFillPageState extends State<CardFillPage>
                                                             : 0,
                                                     child: CustomPaint(
                                                       size: Size(
-                                                        constraints.maxHeight <
-                                                                551
-                                                            ? 33
-                                                            : 50,
+                                                        context.height > 667
+                                                            ? constraints
+                                                                        .maxHeight <
+                                                                    551
+                                                                ? 33
+                                                                : 50
+                                                            : 43,
                                                         255,
                                                       ),
                                                       painter:
@@ -586,17 +609,27 @@ class _CardFillPageState extends State<CardFillPage>
                                           ),
                                         ),
                                 ),
-                                if (constraints.maxHeight < 551)
-                                  SizedBox(width: constraints.maxWidth * 0.114)
+                                if (context.height > 667)
+                                  if (constraints.maxHeight < 551)
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.114,
+                                    )
+                                  else
+                                    SizedBox(
+                                      width: constraints.maxWidth * 0.107,
+                                    )
                                 else
-                                  SizedBox(width: constraints.maxWidth * 0.107),
+                                  SizedBox(width: constraints.maxWidth * 0.08),
                                 Opacity(
                                   opacity: _lineStore.isLineVisible ? 0 : 1,
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Gap(34),
+                                      if (context.height > 667)
+                                        const Gap(34)
+                                      else
+                                        const Gap(22),
                                       Row(
                                         children: [
                                           const Gap(15),
@@ -610,7 +643,9 @@ class _CardFillPageState extends State<CardFillPage>
                                         child: Stack(
                                           children: [
                                             Container(
-                                              height: context.height * 0.26,
+                                              height: context.height > 667
+                                                  ? context.height * 0.26
+                                                  : context.height * 0.28,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border.all(
@@ -629,8 +664,9 @@ class _CardFillPageState extends State<CardFillPage>
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   SizedBox(
-                                                    width:
-                                                        context.height * 0.114,
+                                                    width: context.height > 667
+                                                        ? context.height * 0.114
+                                                        : context.height * 0.12,
                                                     height:
                                                         context.height * 0.14,
                                                     child: Observer(
@@ -839,7 +875,10 @@ class _CardFillPageState extends State<CardFillPage>
                                           ],
                                         ),
                                       ),
-                                      const Gap(29),
+                                      if (context.height > 667)
+                                        const Gap(29)
+                                      else
+                                        const Gap(10),
                                       Assets.icons.cardBackText
                                           .image(height: 55),
                                       const Gap(18),
@@ -863,7 +902,7 @@ class _CardFillPageState extends State<CardFillPage>
               ),
             ),
           ),
-          const Gap(10),
+          if (context.height > 667) const Gap(10) else const SizedBox(),
           Observer(
             builder: (context) {
               return ShakeAnimationWidget(
@@ -979,7 +1018,7 @@ class _CardFillPageState extends State<CardFillPage>
                                     ).expandedHorizontally(),
                                     const Gap(4),
                                     const Text(
-                                      'Make sure to keep your card safe! You will need your \nSecret 1 and Secret 2 in the future to manage your crypto.',
+                                      'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
                                       style: TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
                                         fontSize: 14,
@@ -1059,7 +1098,12 @@ class _CardFillPageState extends State<CardFillPage>
                           _balanceStore.saveSelectedCard();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(const Dashboard());
+                              router.pop(
+                                Dashboard(
+                                  onCarouselScroll: (val) =>
+                                      cardCarouselIndex = val,
+                                ),
+                              );
                             } else {
                               router.pushAndPopAll(
                                 const WalletProtectionRoute(),
@@ -1115,7 +1159,7 @@ class _CardFillPageState extends State<CardFillPage>
                     ).paddingHorizontal(49);
             },
           ),
-          if (context.height > 667) const Gap(50) else const Gap(20),
+          if (context.height > 667) const Gap(50) else const Gap(12),
         ],
       ),
     );
@@ -1148,11 +1192,10 @@ class _CardFillPageState extends State<CardFillPage>
     await Future.delayed(const Duration(milliseconds: 400));
     await _flipCardController.toggleCard();
   }
+
   Future<void> makeLineInvisible() async {
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
     _lineStore.makeVisible();
-
-
   }
 }
