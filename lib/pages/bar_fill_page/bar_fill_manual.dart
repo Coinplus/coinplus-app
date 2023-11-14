@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,7 +39,6 @@ class _BarFillPageState extends State<BarFillPage>
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
-  final _flipCardController = FlipCardController();
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
   final _addressState = AddressState();
@@ -53,7 +51,6 @@ class _BarFillPageState extends State<BarFillPage>
     super.initState();
     _nfcStop();
     _toggleWidgets();
-    _flipCardController.toggleCard();
     _btcAddressController.addListener(_validateBTCAddress);
     _btcAddressController = TextEditingController();
     _btcAddressController.text = widget.receivedData ?? '';
@@ -70,11 +67,17 @@ class _BarFillPageState extends State<BarFillPage>
       vsync: this,
       duration: const Duration(milliseconds: 200),
       lowerBound: 1,
-      upperBound: 1.3,
+      upperBound: 1.09,
     );
     if (widget.receivedData != null) {
       onInitWithAddress();
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _textFieldAnimationController.dispose();
   }
 
   Future<void> onInitWithAddress() async {
@@ -121,462 +124,290 @@ class _BarFillPageState extends State<BarFillPage>
                     switchInCurve: Curves.bounceIn,
                     duration: const Duration(milliseconds: 600),
                     child: _addressState.isAddressVisible
-                        ? Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: Assets.images.barEmpty.image().image,
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: Assets.images.barEmpty.image().image,
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: LayoutBuilder(
-                                builder: (context, constraints) {
-                                  return SizedBox(
-                                    width: constraints.maxWidth * 0.6,
-                                    child: Column(
-                                      children: [
-                                        const Gap(23),
-                                        Flexible(
-                                          flex: 4,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                top: 0,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.topCircle
-                                                    .image(
-                                                  height: 165,
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 1,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.hologram
-                                                    .image(height: 163),
-                                              ),
-                                              Positioned(
-                                                top: 60,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.barSecret1
-                                                    .image(
-                                                  height: 40,
-                                                ),
-                                              ),
-                                              const Positioned(
-                                                top: 70,
-                                                left: 0,
-                                                right: 0,
-                                                child: Text(
-                                                  'Secret 1',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: Colors.black26,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Assets.icons.balance.image(
-                                                    height: 12,
-                                                  ),
-                                                  Observer(
-                                                    builder: (context) {
-                                                      if (_balanceStore
-                                                                  .loadings[
-                                                              _balanceStore
-                                                                  .selectedBar
-                                                                  ?.address] ??
-                                                          false) {
-                                                        return const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(4),
-                                                          child:
-                                                              CupertinoActivityIndicator(
-                                                            radius: 5,
+                              child: Center(
+                                child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    return SizedBox(
+                                      width: constraints.maxWidth * 0.6,
+                                      child: Column(
+                                        children: [
+                                          const Gap(203),
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Assets.icons.balance.image(
+                                                      height: 12,
+                                                    ),
+                                                    Observer(
+                                                      builder: (context) {
+                                                        if (_balanceStore
+                                                                    .loadings[
+                                                                _balanceStore
+                                                                    .selectedBar
+                                                                    ?.address] ??
+                                                            false) {
+                                                          return const Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    4,),
+                                                            child:
+                                                                CupertinoActivityIndicator(
+                                                              radius: 5,
+                                                            ),
+                                                          );
+                                                        }
+                                                        return Text(
+                                                          (_balanceStore.selectedBar !=
+                                                                      null
+                                                                  ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
+                                                                  : '')
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.7,),
+                                                            fontSize: 25,
                                                           ),
                                                         );
-                                                      }
-                                                      return Text(
-                                                        (_balanceStore.selectedBar !=
-                                                                    null
-                                                                ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
-                                                                : '')
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.white
-                                                              .withOpacity(0.7),
-                                                          fontSize: 25,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Gap(11),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: Assets
+                                                    .icons.barAddressField
+                                                    .image()
+                                                    .image,
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        const Gap(11),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: Assets
-                                                  .icons.barAddressField
-                                                  .image()
-                                                  .image,
                                             ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 10,
-                                              horizontal: 16,
-                                            ),
-                                            child: Observer(
-                                              builder: (context) {
-                                                if (_balanceStore.loadings[
-                                                        _balanceStore
-                                                            .selectedBar
-                                                            ?.address] ??
-                                                    false) {
-                                                  return const Padding(
-                                                    padding: EdgeInsets.all(4),
-                                                    child:
-                                                        CupertinoActivityIndicator(
-                                                      radius: 5,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 10,
+                                                horizontal: 16,
+                                              ),
+                                              child: Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[
+                                                          _balanceStore
+                                                              .selectedBar
+                                                              ?.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child:
+                                                          CupertinoActivityIndicator(
+                                                        radius: 5,
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    _balanceStore.selectedBar
+                                                            ?.address ??
+                                                        '',
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatLight,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.black,
+                                                      fontSize: 10,
                                                     ),
                                                   );
-                                                }
-                                                return Text(
-                                                  _balanceStore.selectedBar
-                                                          ?.address ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatLight,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black,
-                                                    fontSize: 10,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(20),
-                                        Assets.images.barLogo.image(
-                                          height: 38,
-                                        ),
-                                        const Gap(12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: Assets.images.barSecret2
-                                                  .image()
-                                                  .image,
-                                            ),
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 60,
-                                              vertical: 16,
-                                            ),
-                                            child: Text(
-                                              'Secret 2',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color: Colors.black26,
-                                                fontWeight: FontWeight.w700,
+                                                },
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        const Gap(20),
-                                      ],
-                                    ),
-                                  );
-                                },
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           )
-                        : Container(
-                            width: context.width - 34,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: Assets.images.barEmpty.image().image,
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Container(
+                              width: context.width - 34,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: Assets.images.barEmpty.image().image,
+                                ),
                               ),
-                            ),
-                            child: LayoutBuilder(
-                              builder: (_, constraints) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: constraints.maxWidth * 0.5,
-                                    child: Column(
-                                      //mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Gap(23),
-                                        Flexible(
-                                          flex: 3,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                top: 0,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.topCircle
-                                                    .image(
-                                                  height: 165,
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 1,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.hologram
-                                                    .image(height: 163),
-                                              ),
-                                              Positioned(
-                                                top: 60,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.barSecret1
-                                                    .image(
-                                                  height: 40,
-                                                ),
-                                              ),
-                                              const Positioned(
-                                                top: 70,
-                                                left: 0,
-                                                right: 0,
-                                                child: Text(
-                                                  'Secret 1',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: Colors.black26,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const Gap(30),
-                                        if (_addressState.isAddressVisible)
-                                          const SizedBox()
-                                        else
-                                          Expanded(
-                                            child: ScaleTransition(
-                                              scale:
-                                                  _textFieldAnimationController,
-                                              child: TextField(
-                                                onChanged: (_) {
-                                                  _validateBTCAddress();
-                                                },
-                                                controller:
-                                                    _btcAddressController,
-                                                maxLines: 2,
-                                                minLines: 1,
-                                                focusNode: _focusNode,
-                                                cursorColor: AppColors
-                                                    .primaryButtonColor,
-                                                cursorWidth: 1,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: AppColors
-                                                      .primaryTextColor,
-                                                  fontFamily:
-                                                      FontFamily.redHatLight,
-                                                ),
-                                                onTapOutside: (_) {
-                                                  WidgetsBinding.instance
-                                                      .focusManager.primaryFocus
-                                                      ?.unfocus();
-                                                },
-                                                decoration: InputDecoration(
-                                                  fillColor: Colors.white,
-                                                  hintText:
-                                                      'Write here your \nbar address ',
-                                                  hintMaxLines: 2,
-                                                  hintStyle: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatLight,
-                                                    fontSize: 12,
-                                                    color: AppColors
-                                                        .primaryTextColor
-                                                        .withOpacity(
-                                                      0.4,
-                                                    ),
-                                                  ),
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 16,
-                                                  ),
-                                                  prefixIconConstraints:
-                                                      const BoxConstraints(
-                                                    minWidth: 27,
-                                                    minHeight: 27,
-                                                  ),
-                                                  prefixIcon: Observer(
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(
-                                                          4,
-                                                        ),
-                                                        child:
-                                                            _validationStore
-                                                                    .isValid
-                                                                ? IconButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      _focusNode
-                                                                          .unfocus();
-                                                                      await Future
-                                                                          .delayed(
-                                                                        const Duration(
-                                                                          milliseconds:
-                                                                              300,
-                                                                        ),
-                                                                      );
-                                                                      final res =
-                                                                          await context
-                                                                              .pushRoute<String?>(
-                                                                        const QrScannerRoute(),
-                                                                      );
-                                                                      if (res ==
-                                                                          null) {
-                                                                        return;
-                                                                      }
-
-                                                                      _btcAddressController
-                                                                              .text =
-                                                                          res;
-                                                                      await _validateBTCAddress();
-                                                                    },
-                                                                    icon: Assets
-                                                                        .images
-                                                                        .qrCode
-                                                                        .image(
-                                                                      height:
-                                                                          34,
-                                                                      color: AppColors
-                                                                          .primaryTextColor,
-                                                                    ),
-                                                                  )
-                                                                : Lottie.asset(
-                                                                    'assets/animated_logo/address_validation_success.json',
-                                                                    height: 24,
-                                                                    controller:
-                                                                        _lottieController,
-                                                                    onLoaded:
-                                                                        (composition) {
-                                                                      Future
-                                                                          .delayed(
-                                                                        const Duration(
-                                                                          milliseconds:
-                                                                              1000,
-                                                                        ),
-                                                                      );
-                                                                      _lottieController
-                                                                              .duration =
-                                                                          composition
-                                                                              .duration;
-                                                                    },
-                                                                  ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: AppColors
-                                                          .primaryButtonColor,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      5,
-                                                    ),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Colors.transparent,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      5,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    const Gap(230),
+                                    if (_addressState.isAddressVisible)
+                                      const SizedBox()
+                                    else
+                                      Expanded(
+                                        child: ScaleTransition(
+                                          scale: _textFieldAnimationController,
+                                          child: TextField(
+                                            onChanged: (_) {
+                                              _validateBTCAddress();
+                                            },
+                                            controller: _btcAddressController,
+                                            maxLines: 2,
+                                            minLines: 1,
+                                            focusNode: _focusNode,
+                                            cursorColor:
+                                                AppColors.primaryButtonColor,
+                                            cursorWidth: 1,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: AppColors.primaryTextColor,
+                                              fontFamily:
+                                                  FontFamily.redHatLight,
                                             ),
-                                          ),
-                                        const Gap(20),
-                                        Assets.images.barLogo.image(
-                                          height: 38,
-                                        ),
-                                        const Gap(12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: Assets.images.barSecret2
-                                                  .image()
-                                                  .image,
-                                            ),
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 60,
-                                              vertical: 16,
-                                            ),
-                                            child: Text(
-                                              'Secret 2',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 15,
+                                            onTapOutside: (_) {
+                                              WidgetsBinding.instance
+                                                  .focusManager.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            decoration: InputDecoration(
+                                              fillColor: Colors.white,
+                                              hintText:
+                                                  'Write here your \nbar address ',
+                                              hintMaxLines: 2,
+                                              hintStyle: TextStyle(
                                                 fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color: Colors.black26,
-                                                fontWeight: FontWeight.w700,
+                                                    FontFamily.redHatLight,
+                                                fontSize: 12,
+                                                color: AppColors
+                                                    .primaryTextColor
+                                                    .withOpacity(
+                                                  0.4,
+                                                ),
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 16,
+                                              ),
+                                              prefixIconConstraints:
+                                                  const BoxConstraints(
+                                                minWidth: 27,
+                                                minHeight: 27,
+                                              ),
+                                              prefixIcon: Observer(
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                      4,
+                                                    ),
+                                                    child: _validationStore
+                                                            .isValid
+                                                        ? IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              _focusNode
+                                                                  .unfocus();
+                                                              await Future
+                                                                  .delayed(
+                                                                const Duration(
+                                                                  milliseconds:
+                                                                      300,
+                                                                ),
+                                                              );
+                                                              final res =
+                                                                  await context
+                                                                      .pushRoute<
+                                                                          String?>(
+                                                                const QrScannerRoute(),
+                                                              );
+                                                              if (res == null) {
+                                                                return;
+                                                              }
+
+                                                              _btcAddressController
+                                                                  .text = res;
+                                                              await _validateBTCAddress();
+                                                            },
+                                                            icon: Assets
+                                                                .images.qrCode
+                                                                .image(
+                                                              height: 34,
+                                                              color: AppColors
+                                                                  .primaryTextColor,
+                                                            ),
+                                                          )
+                                                        : Lottie.asset(
+                                                            'assets/animated_logo/address_validation_success.json',
+                                                            height: 24,
+                                                            controller:
+                                                                _lottieController,
+                                                            onLoaded:
+                                                                (composition) {
+                                                              Future.delayed(
+                                                                const Duration(
+                                                                  milliseconds:
+                                                                      1000,
+                                                                ),
+                                                              );
+                                                              _lottieController
+                                                                      .duration =
+                                                                  composition
+                                                                      .duration;
+                                                            },
+                                                          ),
+                                                  );
+                                                },
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                  color: AppColors
+                                                      .primaryButtonColor,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  5,
+                                                ),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                  color: Colors.transparent,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  5,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        const Gap(30),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
+                                        ).paddingHorizontal(60),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                   ),

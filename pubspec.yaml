@@ -72,7 +72,7 @@ dependencies:
   firebase_core: ^2.19.0
   dart_jsonwebtoken: ^2.12.0
   cloud_functions: ^4.5.1
-  dropdown_button2: ^2.3.9
+  flutter_windowmanager: ^0.2.0
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
@@ -180,6 +180,9 @@ flutter:
     - assets/animated_logo/secrets_fail.json
     - assets/animated_logo/please_wait.json
     - assets/translations/en-US.json
+    - assets/animated_logo/warning.json
+    - assets/animated_logo/fake_card.json
+    - assets/animated_logo/info.json
 
   fonts:
     - family: RedHatLight

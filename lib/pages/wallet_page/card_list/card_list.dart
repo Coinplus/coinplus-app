@@ -21,7 +21,7 @@ import '../../../store/nav_bar_state/nav_bar_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
-import '../../onboarding_page/form_factor_pages/card_scan_methods_page.dart';
+import '../../onboarding_page/form_factor_page/card_scan_methods_page.dart';
 
 typedef CardSelectedCallback = void Function(int index);
 
@@ -49,8 +49,6 @@ class _CardListState extends State<CardList>
 
   late ReactionDisposer cardsLengthReaction;
 
-
-
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
   @override
   void initState() {
@@ -60,15 +58,16 @@ class _CardListState extends State<CardList>
           (newLength) {
         if (newLength > _settingsState.cardCurrentIndex) {
           widget.onCarouselScroll(newLength - 1);
-          _settingsState.setCardCurrentIndex(newLength -1);
+          _settingsState.setCardCurrentIndex(newLength - 1);
           _navBarState.isInAddCard = false;
-        } else if(newLength == _settingsState.cardCurrentIndex) {
+        } else if (newLength == _settingsState.cardCurrentIndex) {
           _settingsState.setCardCurrentIndex(newLength);
           _navBarState.inAddCard();
         }
       },
     );
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -163,36 +162,37 @@ class _CardListState extends State<CardList>
                               duration: const Duration(milliseconds: 600),
                               child: _settingsState.cardCurrentIndex == index
                                   ? Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 25),
-                                    child: Text(
-                                      card.name,
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ),
-                                  ScaleTap(
-                                    enableFeedback: false,
-                                    onPressed: () async {
-                                      await router.push(
-                                        CardSettingsRoute(card: card),
-                                      );
-                                    },
-                                    child: Assets.icons.settings.image(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 25),
+                                          child: Text(
+                                            card.name,
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        ScaleTap(
+                                          enableFeedback: false,
+                                          onPressed: () async {
+                                            await router.push(
+                                              CardSettingsRoute(card: card),
+                                            );
+                                          },
+                                          child: Assets.icons.settings.image(
+                                            height: 30,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(
                                       height: 30,
                                     ),
-                                  ),
-                                ],
-                              )
-                                  : const SizedBox(
-                                height: 30,
-                              ),
                             );
                           },
                         ),
@@ -237,7 +237,7 @@ class _CardListState extends State<CardList>
                                           text: card.address.toString(),
                                         ),
                                       ).then(
-                                            (_) {
+                                        (_) {
                                           HapticFeedback.mediumImpact();
                                           showTopSnackBar(
                                             displayDuration: const Duration(
@@ -246,12 +246,12 @@ class _CardListState extends State<CardList>
                                             Overlay.of(context),
                                             CustomSnackBar.success(
                                               backgroundColor:
-                                              const Color(0xFF4A4A4A)
-                                                  .withOpacity(0.9),
+                                                  const Color(0xFF4A4A4A)
+                                                      .withOpacity(0.9),
                                               message: 'Address was copied',
                                               textStyle: const TextStyle(
                                                 fontFamily:
-                                                FontFamily.redHatMedium,
+                                                    FontFamily.redHatMedium,
                                                 fontSize: 14,
                                                 color: Colors.white,
                                               ),
@@ -275,7 +275,8 @@ class _CardListState extends State<CardList>
                                           bottom: 12,
                                         ),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(6),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
                                           color: Colors.black.withOpacity(
                                             0.4,
                                           ),
@@ -289,7 +290,7 @@ class _CardListState extends State<CardList>
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                        FontFamily.redHatMedium,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -297,8 +298,8 @@ class _CardListState extends State<CardList>
                                             ),
                                             Observer(
                                               builder: (context) {
-                                                if (_balanceStore
-                                                    .loadings[card.address] ??
+                                                if (_balanceStore.loadings[
+                                                        card.address] ??
                                                     false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(
@@ -310,7 +311,7 @@ class _CardListState extends State<CardList>
                                                           height: 10,
                                                           width: 10,
                                                           child:
-                                                          CircularProgressIndicator(
+                                                              CircularProgressIndicator(
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -320,11 +321,12 @@ class _CardListState extends State<CardList>
                                                 }
                                                 return Text(
                                                   visibleAddress,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   softWrap: true,
                                                   style: const TextStyle(
                                                     fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                        FontFamily.redHatMedium,
                                                     fontWeight: FontWeight.w700,
                                                     color: Colors.white,
                                                     fontSize: 12,
@@ -349,14 +351,15 @@ class _CardListState extends State<CardList>
                                       ),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(6),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
                                           color: Colors.black.withOpacity(
                                             0.4,
                                           ),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.all(
@@ -364,13 +367,13 @@ class _CardListState extends State<CardList>
                                               ),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   const Text(
                                                     'Balance',
                                                     style: TextStyle(
-                                                      fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                     ),
@@ -386,7 +389,8 @@ class _CardListState extends State<CardList>
                                                       );
                                                       if (data == null) {
                                                         return const Padding(
-                                                          padding: EdgeInsets.all(
+                                                          padding:
+                                                              EdgeInsets.all(
                                                             4,
                                                           ),
                                                           child: Row(
@@ -395,7 +399,7 @@ class _CardListState extends State<CardList>
                                                                 height: 10,
                                                                 width: 10,
                                                                 child:
-                                                                CircularProgressIndicator(
+                                                                    CircularProgressIndicator(
                                                                   color: Colors
                                                                       .white,
                                                                 ),
@@ -411,7 +415,7 @@ class _CardListState extends State<CardList>
                                                           fontFamily: FontFamily
                                                               .redHatMedium,
                                                           fontWeight:
-                                                          FontWeight.w700,
+                                                              FontWeight.w700,
                                                           color: Colors.white,
                                                           fontSize: 20,
                                                         ),

@@ -17,7 +17,7 @@ import '../../../router.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nav_bar_state/nav_bar_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
-import '../../onboarding_page/form_factor_pages/bar_scan_methods_page.dart';
+import '../../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
 
 class BarList extends StatefulWidget {
   const BarList({
@@ -175,15 +175,20 @@ class _BarListState extends State<BarList>
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      const Text('Balance', style: TextStyle(fontSize: 15, fontFamily: FontFamily.redHatMedium),),
+                                      const Text(
+                                        'Balance',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: FontFamily.redHatMedium,
+                                        ),
+                                      ),
                                       Observer(
                                         builder: (context) {
                                           final data = _balanceStore.coins;
-                                          final myFormat = NumberFormat
-                                              .decimalPatternDigits(
+                                          final myFormat =
+                                              NumberFormat.decimalPatternDigits(
                                             locale: 'en_us',
                                             decimalDigits: 2,
                                           );
@@ -192,8 +197,7 @@ class _BarListState extends State<BarList>
                                               false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
-                                              child:
-                                                  CupertinoActivityIndicator(
+                                              child: CupertinoActivityIndicator(
                                                 radius: 5,
                                               ),
                                             );
@@ -207,8 +211,8 @@ class _BarListState extends State<BarList>
                                               fontFamily:
                                                   FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
-                                              color: Colors.black
-                                                  .withOpacity(0.7),
+                                              color:
+                                                  Colors.black.withOpacity(0.7),
                                               fontSize: 20,
                                             ),
                                           );
@@ -222,13 +226,11 @@ class _BarListState extends State<BarList>
                               Center(
                                 child: Observer(
                                   builder: (context) {
-                                    if (_balanceStore
-                                            .loadings[bar.address] ??
+                                    if (_balanceStore.loadings[bar.address] ??
                                         false) {
                                       return const Padding(
                                         padding: EdgeInsets.all(4),
-                                        child:
-                                            CupertinoActivityIndicator(
+                                        child: CupertinoActivityIndicator(
                                           radius: 5,
                                         ),
                                       );
@@ -236,8 +238,7 @@ class _BarListState extends State<BarList>
                                     return Text(
                                       visibleAddress,
                                       style: const TextStyle(
-                                        fontFamily:
-                                            FontFamily.redHatMedium,
+                                        fontFamily: FontFamily.redHatMedium,
                                         color: Colors.black,
                                         fontSize: 13,
                                       ),
@@ -245,7 +246,6 @@ class _BarListState extends State<BarList>
                                   },
                                 ),
                               ),
-
                               const Gap(15),
                             ],
                           ),

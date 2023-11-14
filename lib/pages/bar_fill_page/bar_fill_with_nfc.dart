@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
+import '../../constants/card_color.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -92,263 +93,179 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
             flex: 2,
             child: Observer(
               builder: (context) {
-                final data = _balanceStore.coins;
+                final bar = _balanceStore.selectedBar;
+                final visibleAddress = _getVisibleAddress(bar!.address);
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 800),
                   child: _addressState.isAddressVisible
-                      ? Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Assets.images.barEmpty.image().image,
-                            ),
-                          ),
-                          child: Center(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                return SizedBox(
-                                  width: constraints.maxWidth * 0.6,
-                                  child: Column(
-                                    children: [
-                                      const Gap(23),
-                                      Flexible(
-                                        flex: 4,
-                                        child: Stack(
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    blurRadius: 15,
+                                    spreadRadius: 0.5,
+                                  ),
+                                ],
+                                image: DecorationImage(
+                                  image: bar.color.image.image().image,
+                                ),
+                              ),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    const Gap(190),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Column(
                                           children: [
-                                            Positioned(
-                                              top: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child:
-                                                  Assets.images.topCircle.image(
-                                                height: 165,
-                                              ),
-                                            ),
-                                            Positioned(
-                                              top: 1,
-                                              left: 0,
-                                              right: 0,
-                                              child: Assets.images.hologram
-                                                  .image(height: 163),
-                                            ),
-                                            Positioned(
-                                              top: 60,
-                                              left: 0,
-                                              right: 0,
-                                              child: Assets.images.barSecret1
-                                                  .image(
-                                                height: 40,
-                                              ),
-                                            ),
-                                            const Positioned(
-                                              top: 70,
-                                              left: 0,
-                                              right: 0,
-                                              child: Text(
-                                                'Secret 1',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                            const Text(
+                                              'Balance',
+                                              style: TextStyle(
                                                   fontSize: 15,
                                                   fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  color: Colors.black26,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
+                                                      FontFamily.redHatMedium,),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Assets.icons.balance.image(
-                                                  height: 12,
-                                                ),
-                                                Observer(
-                                                  builder: (context) {
-                                                    if (_balanceStore.loadings[
-                                                            _balanceStore
-                                                                .selectedBar
-                                                                ?.address] ??
-                                                        false) {
-                                                      return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(4),
-                                                        child:
-                                                            CupertinoActivityIndicator(
-                                                          radius: 5,
-                                                        ),
-                                                      );
-                                                    }
-                                                    return Text(
-                                                      (_balanceStore.selectedBar !=
-                                                                  null
-                                                              ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
-                                                              : '')
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: Colors.black,
-                                                        fontSize: 25,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Gap(11),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: Assets.icons.barAddressField
-                                                .image()
-                                                .image,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 10,
-                                            horizontal: 16,
-                                          ),
-                                          child: Observer(
-                                            builder: (context) {
-                                              if (_balanceStore.loadings[
-                                                      _balanceStore.selectedBar
-                                                          ?.address] ??
-                                                  false) {
-                                                return const Padding(
-                                                  padding: EdgeInsets.all(4),
-                                                  child:
-                                                      CupertinoActivityIndicator(
-                                                    radius: 5,
+                                            Observer(
+                                              builder: (context) {
+                                                final data =
+                                                    _balanceStore.coins;
+                                                final myFormat = NumberFormat
+                                                    .decimalPatternDigits(
+                                                  locale: 'en_us',
+                                                  decimalDigits: 2,
+                                                );
+                                                if (_balanceStore.loadings[
+                                                        bar.address] ??
+                                                    false) {
+                                                  return const Padding(
+                                                    padding: EdgeInsets.all(4),
+                                                    child:
+                                                        CupertinoActivityIndicator(
+                                                      radius: 5,
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  (bar.data?.balance != null
+                                                          ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data!.price)}'
+                                                          : '')
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.black
+                                                        .withOpacity(0.7),
+                                                    fontSize: 20,
                                                   ),
                                                 );
-                                              }
-                                              return Text(
-                                                _balanceStore
-                                                        .selectedBar?.address ??
-                                                    '',
-                                                style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatLight,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.black,
-                                                  fontSize: 10,
-                                                ),
-                                              );
-                                            },
-                                          ),
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      const Gap(20),
-                                      Assets.images.barLogo.image(
-                                        height: 38,
-                                      ),
-                                      const Gap(12),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: Assets.images.barSecret2
-                                                .image()
-                                                .image,
-                                          ),
-                                        ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 60,
-                                            vertical: 16,
-                                          ),
-                                          child: Text(
-                                            'Secret 2',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 15,
+                                      ],
+                                    ).paddingHorizontal(40),
+                                    const Gap(16),
+                                    Center(
+                                      child: Observer(
+                                        builder: (context) {
+                                          if (_balanceStore
+                                                  .loadings[bar.address] ??
+                                              false) {
+                                            return const Padding(
+                                              padding: EdgeInsets.all(4),
+                                              child: CupertinoActivityIndicator(
+                                                radius: 5,
+                                              ),
+                                            );
+                                          }
+                                          return Text(
+                                            visibleAddress,
+                                            style: const TextStyle(
                                               fontFamily:
                                                   FontFamily.redHatMedium,
-                                              color: Colors.black26,
-                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                              fontSize: 13,
                                             ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    const Gap(15),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: context.width - 34,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    Assets.images.skeletonEmpty.image().image,
+                              ),
+                            ),
+                            child: LayoutBuilder(
+                              builder: (_, constraints) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: constraints.maxWidth * 0.5,
+                                    child: Column(
+                                      //mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Gap(23),
+                                        Flexible(
+                                          flex: 3,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                child: Assets
+                                                    .images.skeletonCircle
+                                                    .image(
+                                                  height: 165,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                top: 60,
+                                                left: 0,
+                                                right: 0,
+                                                child: Assets
+                                                    .images.skeletonSecret1
+                                                    .image(
+                                                  height: 40,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                      const Gap(20),
-                                    ],
+                                        Assets.images.skeletonAddressField
+                                            .image(),
+                                        const Gap(20),
+                                        Assets.images.skeletonLogo.image(
+                                          height: 38,
+                                        ),
+                                        const Gap(12),
+                                        Assets.images.skeletonSecret2.image(),
+                                        const Gap(30),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
                             ),
-                          ),
-                        )
-                      : AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          width: context.width - 34,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: Assets.images.skeletonEmpty.image().image,
-                            ),
-                          ),
-                          child: LayoutBuilder(
-                            builder: (_, constraints) {
-                              return Center(
-                                child: SizedBox(
-                                  width: constraints.maxWidth * 0.5,
-                                  child: Column(
-                                    //mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Gap(23),
-                                      Flexible(
-                                        flex: 3,
-                                        child: Stack(
-                                          children: [
-                                            Positioned(
-                                              top: 0,
-                                              left: 0,
-                                              right: 0,
-                                              child: Assets
-                                                  .images.skeletonCircle
-                                                  .image(
-                                                height: 165,
-                                              ),
-                                            ),
-                                            Positioned(
-                                              top: 60,
-                                              left: 0,
-                                              right: 0,
-                                              child: Assets
-                                                  .images.skeletonSecret1
-                                                  .image(
-                                                height: 40,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Assets.images.skeletonAddressField
-                                          .image(),
-                                      const Gap(20),
-                                      Assets.images.skeletonLogo.image(
-                                        height: 38,
-                                      ),
-                                      const Gap(12),
-                                      Assets.images.skeletonSecret2.image(),
-                                      const Gap(30),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
                           ),
                         ),
                 );
@@ -440,6 +357,12 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
         ],
       ),
     );
+  }
+
+  String _getVisibleAddress(String fullAddress) {
+    final start = fullAddress.substring(0, 5);
+    final end = fullAddress.substring(fullAddress.length - 5);
+    return '$start ... $end';
   }
 
   Future<void> _validateBTCAddress() async {

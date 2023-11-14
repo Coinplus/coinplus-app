@@ -15,7 +15,7 @@ class Preferences {
   static const bools = 'bools';
   static const strings = 'strings';
   static const ints = 'ints';
-  static const appLockBool = 'app_lock_bool';
+  static const isActivatedBool = 'isActivatedBool';
   static const switchKey = 'switchKey';
 }
 

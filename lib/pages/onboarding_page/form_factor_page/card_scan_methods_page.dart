@@ -1,18 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:amplitude_flutter/amplitude.dart';
-import 'package:amplitude_flutter/identify.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:nfc_manager/platform_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../constants/card_record.dart';
@@ -26,11 +21,15 @@ import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../../utils/nxp_originality_check.dart';
 import '../../../widgets/loading_button.dart';
 
 class CardScanMethodsPage extends StatefulWidget {
-  const CardScanMethodsPage({this.onChangeCard,this.onCardSelected, this.onCarouselScroll, super.key});
+  const CardScanMethodsPage({
+    this.onChangeCard,
+    this.onCardSelected,
+    this.onCarouselScroll,
+    super.key,
+  });
 
   final CardChangeCallBack? onChangeCard;
   final ValueChanged<AbstractCard?>? onCardSelected;
@@ -68,48 +67,36 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                     alertMessage:
                         'It’s easy! Just hold your phone near the Coinplus Card.',
                     onDiscovered: (tag) async {
-                      final mifare = MiFare.from(tag);
-                      final uid = mifare!.identifier;
-                      final signature = await mifare.sendMiFareCommand(
-                        Uint8List.fromList([0x3C, 0x00]),
-                      );
-
-                      if (verifyOriginality(uid, signature)) {
-                        final ndef = Ndef.from(tag);
-                        final records = ndef!.cachedMessage!.records;
-                        dynamic walletAddress;
-
-                        if (records.length >= 2) {
-                          final hasJson = records[1].payload;
-                          final payloadString = String.fromCharCodes(hasJson);
-                          final Map payloadData =
-                              await json.decode(payloadString);
-                          walletAddress = payloadData['a'];
-                        } else {
-                          final hasUrl = records[0].payload;
-                          final payloadString = String.fromCharCodes(hasUrl);
-                          final parts =
-                              payloadString.split('air.coinplus.com/btc/');
-                          walletAddress = parts[1];
-                        }
-
-                        await NfcManager.instance
-                            .stopSession(alertMessage: 'Complete');
-                        await Future.delayed(
-                          const Duration(milliseconds: 2500),
-                        );
-
-                        await router.push(
-                          CardFillWithNfc(
-                            receivedData: walletAddress.toString(),
-                          ),
-                        );
-                        _walletProtectState.isNfcSessionStarted = false;
-                        final identify = Identify()..set('has_card', 'true');
-                        await Amplitude.getInstance().identify(identify);
+                      _walletProtectState.isNfcSessionStarted = false;
+                      final ndef = Ndef.from(tag);
+                      final records = ndef!.cachedMessage!.records;
+                      dynamic walletAddress;
+                      if (records.length >= 2) {
+                        final hasJson = records[1].payload;
+                        final payloadString = String.fromCharCodes(hasJson);
+                        final Map payloadData =
+                            await json.decode(payloadString);
+                        walletAddress = payloadData['a'];
                       } else {
-                        log("The NTAG isn't original");
+                        final hasUrl = records[0].payload;
+                        final payloadString = String.fromCharCodes(hasUrl);
+                        final parts =
+                            payloadString.split('air.coinplus.com/btc/');
+                        walletAddress = parts[1];
                       }
+                      await NfcManager.instance.stopSession(
+                        alertMessage: 'Complete',
+                      );
+                      await Future.delayed(
+                        const Duration(
+                          milliseconds: 2500,
+                        ),
+                      );
+                      await router.push(
+                        CardFillWithNfc(
+                          receivedData: walletAddress,
+                        ),
+                      );
                     },
                     onError: (_) {
                       return Future(() {
@@ -122,15 +109,6 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                   _walletProtectState.isNfcSessionStart();
                   await NfcManager.instance.startSession(
                     onDiscovered: (tag) async {
-                      final nfcA = NfcA.from(tag);
-                      final uid = nfcA!.identifier;
-                      final signature = await nfcA.transceive(
-                        data: Uint8List.fromList([0x3C, 0x00]),
-                      );
-
-                      // TODO: Needs if else statement for Android
-                      verifyOriginality(uid, signature);
-
                       final ndef = Ndef.from(tag);
                       final records = ndef!.cachedMessage!.records;
                       dynamic walletAddress;

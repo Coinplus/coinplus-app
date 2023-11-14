@@ -41,3 +41,15 @@ Future<bool> getIsPinCodeSet() async {
   final value = await secureStorage.read(key: 'pin_code_is_set');
   return value == 'true';
 }
+
+Future<void> isWalletActivated({
+  required bool isSet,
+  required String address,
+}) async {
+  await secureStorage.write(key: 'card$address', value: isSet.toString());
+}
+
+Future<bool> getIsWalletActivated(String address) async {
+  final value = await secureStorage.read(key: 'card$address');
+  return value == 'true';
+}

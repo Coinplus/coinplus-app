@@ -490,19 +490,16 @@ class _CardFillPageState extends State<CardFillPage>
                                           children: [
                                             if (context.height > 667)
                                               if (constraints.maxHeight < 551)
-                                                SizedBox(
-                                                  width: constraints.maxWidth *
-                                                      0.091,
+                                                Gap(
+                                                  context.width * 0.1,
                                                 )
                                               else
-                                                SizedBox(
-                                                  width: constraints.maxWidth *
-                                                      0.125,
+                                                Gap(
+                                                  context.width * 0.125,
                                                 )
                                             else
-                                              SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.135,
+                                              Gap(
+                                                context.width * 0.135,
                                               ),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -510,13 +507,11 @@ class _CardFillPageState extends State<CardFillPage>
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Assets.images.secret1.image(
-                                                  height:
-                                                      context.height * 0.212,
+                                                  height: context.width * 0.45,
                                                 ),
                                                 const Gap(70),
                                                 Assets.images.secret2.image(
-                                                  height:
-                                                      context.height * 0.212,
+                                                  height: context.width * 0.45,
                                                 ),
                                               ],
                                             ),
