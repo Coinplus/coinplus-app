@@ -16,6 +16,12 @@ class $AssetsAnimatedLogoGen {
   String get addressValidationSuccess =>
       'assets/animated_logo/address_validation_success.json';
 
+  /// File path: assets/animated_logo/fake_card.json
+  String get fakeCard => 'assets/animated_logo/fake_card.json';
+
+  /// File path: assets/animated_logo/info.json
+  String get info => 'assets/animated_logo/info.json';
+
   /// File path: assets/animated_logo/loading_animation.json
   String get loadingAnimation => 'assets/animated_logo/loading_animation.json';
 
@@ -34,15 +40,21 @@ class $AssetsAnimatedLogoGen {
   /// File path: assets/animated_logo/secrets_success.json
   String get secretsSuccess => 'assets/animated_logo/secrets_success.json';
 
+  /// File path: assets/animated_logo/warning.json
+  String get warning => 'assets/animated_logo/warning.json';
+
   /// List of all assets
   List<String> get values => [
         addressValidationSuccess,
+        fakeCard,
+        info,
         loadingAnimation,
         nfcanimation,
         pleaseWait,
         qrAnimation,
         secretsFail,
-        secretsSuccess
+        secretsSuccess,
+        warning
       ];
 }
 
@@ -133,12 +145,28 @@ class $AssetsIconsGen {
   AssetGenImage get contactless =>
       const AssetGenImage('assets/icons/contactless.png');
 
+  /// File path: assets/icons/contactless_off.png
+  AssetGenImage get contactlessOff =>
+      const AssetGenImage('assets/icons/contactless_off.png');
+
   /// File path: assets/icons/content_copy.png
   AssetGenImage get contentCopy =>
       const AssetGenImage('assets/icons/content_copy.png');
 
+  /// File path: assets/icons/credit_card_off.png
+  AssetGenImage get creditCardOff =>
+      const AssetGenImage('assets/icons/credit_card_off.png');
+
+  /// File path: assets/icons/damaged_card.png
+  AssetGenImage get damagedCard =>
+      const AssetGenImage('assets/icons/damaged_card.png');
+
   /// File path: assets/icons/discord.png
   AssetGenImage get discord => const AssetGenImage('assets/icons/discord.png');
+
+  /// File path: assets/icons/dont_have_card_with_me_now.png
+  AssetGenImage get dontHaveCardWithMeNow =>
+      const AssetGenImage('assets/icons/dont_have_card_with_me_now.png');
 
   /// File path: assets/icons/edit.png
   AssetGenImage get edit => const AssetGenImage('assets/icons/edit.png');
@@ -275,8 +303,12 @@ class $AssetsIconsGen {
         coinplusLogo,
         contactUs,
         contactless,
+        contactlessOff,
         contentCopy,
+        creditCardOff,
+        damagedCard,
         discord,
+        dontHaveCardWithMeNow,
         edit,
         error,
         faceIdSettings,

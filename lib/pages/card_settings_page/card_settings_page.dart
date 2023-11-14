@@ -41,6 +41,7 @@ class CardSettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+
     final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _isPinSet = getIsPinCodeSet();
@@ -222,16 +223,23 @@ class CardSettingsPage extends HookWidget {
                                   ),
                                   onLongPress: () async {
                                     await HapticFeedback.selectionClick();
-                                    if (await _isPinSet) {
-                                      isBiometricsRunning.value = true;
-                                      final isAuthorized =
-                                          await _auth.authenticate(
-                                        localizedReason:
-                                            'Authenticate using Face ID',
-                                      );
-                                      if (isAuthorized) {
+                                    if(!_cardSettingsState.isPrivateKeyVisible) {
+                                      if (await _isPinSet) {
+                                        isBiometricsRunning.value = true;
+                                        final isAuthorized =
+                                        await _auth.authenticate(
+                                          localizedReason:
+                                          'Authenticate using Face ID',
+                                        );
+                                        if (isAuthorized) {
+                                          _cardSettingsState
+                                              .makePrivateVisible();
+                                        }
+                                      } else {
                                         _cardSettingsState.makePrivateVisible();
                                       }
+                                    } else {
+                                      _cardSettingsState.isPrivateKeyVisible = false;
                                     }
                                   },
                                   onTap: () {

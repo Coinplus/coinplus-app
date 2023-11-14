@@ -12,6 +12,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../constants/card_color.dart';
 import '../../extensions/context_extension.dart';
@@ -28,6 +29,7 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/storage_utils.dart';
 import '../../widgets/loading_button.dart';
 import 'secrets_fail/secrets_fail.dart';
 import 'secrets_success/secrets_success.dart';
@@ -139,6 +141,14 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
   Future<void> onInitWithSecretTwo() async {
     _secretTwoLottieController.reset();
     await _validateSecretTwo();
+  }
+
+  Future<void> stopNfc() async {
+    await Future.delayed(const Duration(milliseconds: 10000));
+    await NfcManager.instance
+        .stopSession(
+      alertMessage: 'Complete',
+    );
   }
 
   @override
@@ -887,6 +897,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                               value: wif,
                             );
                             await router.pop();
+                            await isWalletActivated(isSet: true, address: card.address);
                             await HapticFeedback.heavyImpact();
                             await secretsSuccessAlert(context);
                           } else {

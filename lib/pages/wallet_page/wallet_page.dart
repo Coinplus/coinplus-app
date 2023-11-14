@@ -14,7 +14,6 @@ import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
 import '../splash_screen/splash_screen.dart';
@@ -34,11 +33,12 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<WalletPage> {
+    with TickerProviderStateMixin{
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   NavBarState get _navBarState => GetIt.I<NavBarState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
@@ -84,8 +84,8 @@ class _WalletPageState extends State<WalletPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 130,
@@ -153,7 +153,7 @@ class _WalletPageState extends State<WalletPage>
               ),
             ),
             Positioned(
-              top: context.height > 667 ? context.width * 0.16 : 30,
+              bottom: 12,
               left: 22,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,7 +481,4 @@ class _WalletPageState extends State<WalletPage>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

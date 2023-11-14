@@ -103,7 +103,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
   }
 
   Future<void> _nfcStop() async {
-    await Future.delayed(const Duration(milliseconds: 10000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     await NfcManager.instance.stopSession();
   }
 
