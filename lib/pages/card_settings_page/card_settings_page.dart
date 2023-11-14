@@ -41,11 +41,20 @@ class CardSettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+<<<<<<< Updated upstream
     final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _isPinSet = getIsPinCodeSet();
     final _auth = LocalAuthentication();
 
+=======
+
+    final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
+    final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
+    final _isPinSet = getIsPinCodeSet();
+    final _auth = LocalAuthentication();
+
+>>>>>>> Stashed changes
     final isInactive = useState(false);
     final appLocked = useState(false);
     final isBiometricsRunning = useState(false);
@@ -222,6 +231,7 @@ class CardSettingsPage extends HookWidget {
                                   ),
                                   onLongPress: () async {
                                     await HapticFeedback.selectionClick();
+<<<<<<< Updated upstream
                                     if (await _isPinSet) {
                                       isBiometricsRunning.value = true;
                                       final isAuthorized =
@@ -232,6 +242,25 @@ class CardSettingsPage extends HookWidget {
                                       if (isAuthorized) {
                                         _cardSettingsState.makePrivateVisible();
                                       }
+=======
+                                    if(!_cardSettingsState.isPrivateKeyVisible) {
+                                      if (await _isPinSet) {
+                                        isBiometricsRunning.value = true;
+                                        final isAuthorized =
+                                        await _auth.authenticate(
+                                          localizedReason:
+                                          'Authenticate using Face ID',
+                                        );
+                                        if (isAuthorized) {
+                                          _cardSettingsState
+                                              .makePrivateVisible();
+                                        }
+                                      } else {
+                                        _cardSettingsState.makePrivateVisible();
+                                      }
+                                    } else {
+                                      _cardSettingsState.isPrivateKeyVisible = false;
+>>>>>>> Stashed changes
                                     }
                                   },
                                   onTap: () {

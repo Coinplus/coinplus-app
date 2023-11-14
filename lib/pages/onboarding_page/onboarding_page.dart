@@ -30,8 +30,9 @@ import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
-import 'form_factor_pages/card_and_bar_scan.dart';
-import 'form_factor_pages/form_factor_page.dart';
+import 'form_factor_page/card_and_bar_scan.dart';
+import 'form_factor_page/form_factor_page.dart';
+
 
 @RoutePage()
 class OnboardingPage extends StatefulWidget {

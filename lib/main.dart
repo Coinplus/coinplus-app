@@ -50,6 +50,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final amplitude = Amplitude.getInstance();
   await amplitude.init('28670e3f0d1eee7f8f7188ef81e670a4');
+<<<<<<< Updated upstream
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
@@ -86,6 +87,44 @@ Future<void> main() async {
   //       log('Unknown error: $e.code');
   //   }
   // }
+=======
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  final auth = FirebaseAuth.instanceFor(app: Firebase.app());
+  await auth.signInAnonymously();
+
+  try {
+    dynamic token;
+    try {
+      final result = await FirebaseFunctions.instance
+          .httpsCallable('getCustomToken')
+          .call({
+        'uid': '14DeGgtQ5BFAzXjvb2UpGrdqygAysLyE5x',
+        // "additionalClaims": {"premiumAccount": true}
+      });
+      token = result.data as String;
+    } on FirebaseFunctionsException catch (error) {
+      log(error.code);
+      log(error.details);
+      log(error.message.toString());
+    }
+    await auth.signInWithCustomToken(token);
+    log('Sign-in successful.');
+  } on FirebaseAuthException catch (e) {
+    switch (e.code) {
+      case 'invalid-custom-token':
+        log('Custom token expired or invalid.');
+
+        break;
+      case 'custom-token-mismatch':
+        log('The supplied token is for a different Firebase project.');
+        break;
+      default:
+        log('Unknown error: $e.code');
+    }
+  }
+>>>>>>> Stashed changes
   await run();
 }
 
@@ -93,10 +132,11 @@ Future<void> localStorage() async {
   final prefs = await SharedPreferences.getInstance();
   const secureStorage = FlutterSecureStorage();
   if (prefs.getBool('first_run') ?? true) {
-    const storage = FlutterSecureStorage();
-    await storage.deleteAll();
     await prefs.setBool('first_run', false);
+<<<<<<< Updated upstream
     await secureStorage.write(key: 'pin_code_is_set', value: 'false');
+=======
+    await secureStorage.deleteAll();
+>>>>>>> Stashed changes
   }
-  await prefs.setInt('card_carousel_index', 0);
 }

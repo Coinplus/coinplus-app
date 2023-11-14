@@ -21,7 +21,7 @@ import '../../../store/nav_bar_state/nav_bar_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
-import '../../onboarding_page/form_factor_pages/card_scan_methods_page.dart';
+import '../../onboarding_page/form_factor_page/card_scan_methods_page.dart';
 
 typedef CardSelectedCallback = void Function(int index);
 
@@ -49,8 +49,11 @@ class _CardListState extends State<CardList>
 
   late ReactionDisposer cardsLengthReaction;
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
   @override
   void initState() {
@@ -60,15 +63,25 @@ class _CardListState extends State<CardList>
           (newLength) {
         if (newLength > _settingsState.cardCurrentIndex) {
           widget.onCarouselScroll(newLength - 1);
+<<<<<<< Updated upstream
           _settingsState.setCardCurrentIndex(newLength -1);
           _navBarState.isInAddCard = false;
         } else if(newLength == _settingsState.cardCurrentIndex) {
+=======
+          _settingsState.setCardCurrentIndex(newLength - 1);
+          _navBarState.isInAddCard = false;
+        } else if (newLength == _settingsState.cardCurrentIndex) {
+>>>>>>> Stashed changes
           _settingsState.setCardCurrentIndex(newLength);
           _navBarState.inAddCard();
         }
       },
     );
   }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   @override
   void dispose() {
     super.dispose();
@@ -163,6 +176,7 @@ class _CardListState extends State<CardList>
                               duration: const Duration(milliseconds: 600),
                               child: _settingsState.cardCurrentIndex == index
                                   ? Row(
+<<<<<<< Updated upstream
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
@@ -193,6 +207,39 @@ class _CardListState extends State<CardList>
                                   : const SizedBox(
                                 height: 30,
                               ),
+=======
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 25),
+                                          child: Text(
+                                            card.name,
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        ScaleTap(
+                                          enableFeedback: false,
+                                          onPressed: () async {
+                                            await router.push(
+                                              CardSettingsRoute(card: card),
+                                            );
+                                          },
+                                          child: Assets.icons.settings.image(
+                                            height: 30,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(
+                                      height: 30,
+                                    ),
+>>>>>>> Stashed changes
                             );
                           },
                         ),
@@ -237,7 +284,11 @@ class _CardListState extends State<CardList>
                                           text: card.address.toString(),
                                         ),
                                       ).then(
+<<<<<<< Updated upstream
                                             (_) {
+=======
+                                        (_) {
+>>>>>>> Stashed changes
                                           HapticFeedback.mediumImpact();
                                           showTopSnackBar(
                                             displayDuration: const Duration(
@@ -246,12 +297,21 @@ class _CardListState extends State<CardList>
                                             Overlay.of(context),
                                             CustomSnackBar.success(
                                               backgroundColor:
+<<<<<<< Updated upstream
                                               const Color(0xFF4A4A4A)
                                                   .withOpacity(0.9),
                                               message: 'Address was copied',
                                               textStyle: const TextStyle(
                                                 fontFamily:
                                                 FontFamily.redHatMedium,
+=======
+                                                  const Color(0xFF4A4A4A)
+                                                      .withOpacity(0.9),
+                                              message: 'Address was copied',
+                                              textStyle: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+>>>>>>> Stashed changes
                                                 fontSize: 14,
                                                 color: Colors.white,
                                               ),
@@ -275,7 +335,12 @@ class _CardListState extends State<CardList>
                                           bottom: 12,
                                         ),
                                         decoration: BoxDecoration(
+<<<<<<< Updated upstream
                                           borderRadius: BorderRadius.circular(6),
+=======
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+>>>>>>> Stashed changes
                                           color: Colors.black.withOpacity(
                                             0.4,
                                           ),
@@ -289,7 +354,11 @@ class _CardListState extends State<CardList>
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     fontFamily:
+<<<<<<< Updated upstream
                                                     FontFamily.redHatMedium,
+=======
+                                                        FontFamily.redHatMedium,
+>>>>>>> Stashed changes
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -297,8 +366,13 @@ class _CardListState extends State<CardList>
                                             ),
                                             Observer(
                                               builder: (context) {
+<<<<<<< Updated upstream
                                                 if (_balanceStore
                                                     .loadings[card.address] ??
+=======
+                                                if (_balanceStore.loadings[
+                                                        card.address] ??
+>>>>>>> Stashed changes
                                                     false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(
@@ -310,7 +384,11 @@ class _CardListState extends State<CardList>
                                                           height: 10,
                                                           width: 10,
                                                           child:
+<<<<<<< Updated upstream
                                                           CircularProgressIndicator(
+=======
+                                                              CircularProgressIndicator(
+>>>>>>> Stashed changes
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -320,11 +398,20 @@ class _CardListState extends State<CardList>
                                                 }
                                                 return Text(
                                                   visibleAddress,
+<<<<<<< Updated upstream
                                                   overflow: TextOverflow.ellipsis,
                                                   softWrap: true,
                                                   style: const TextStyle(
                                                     fontFamily:
                                                     FontFamily.redHatMedium,
+=======
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  softWrap: true,
+                                                  style: const TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+>>>>>>> Stashed changes
                                                     fontWeight: FontWeight.w700,
                                                     color: Colors.white,
                                                     fontSize: 12,
@@ -349,14 +436,23 @@ class _CardListState extends State<CardList>
                                       ),
                                       child: Container(
                                         decoration: BoxDecoration(
+<<<<<<< Updated upstream
                                           borderRadius: BorderRadius.circular(6),
+=======
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+>>>>>>> Stashed changes
                                           color: Colors.black.withOpacity(
                                             0.4,
                                           ),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
+<<<<<<< Updated upstream
                                           MainAxisAlignment.spaceBetween,
+=======
+                                              MainAxisAlignment.spaceBetween,
+>>>>>>> Stashed changes
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.all(
@@ -364,13 +460,22 @@ class _CardListState extends State<CardList>
                                               ),
                                               child: Column(
                                                 crossAxisAlignment:
+<<<<<<< Updated upstream
                                                 CrossAxisAlignment.start,
+=======
+                                                    CrossAxisAlignment.start,
+>>>>>>> Stashed changes
                                                 children: [
                                                   const Text(
                                                     'Balance',
                                                     style: TextStyle(
+<<<<<<< Updated upstream
                                                       fontFamily:
                                                       FontFamily.redHatMedium,
+=======
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+>>>>>>> Stashed changes
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                     ),
@@ -386,7 +491,12 @@ class _CardListState extends State<CardList>
                                                       );
                                                       if (data == null) {
                                                         return const Padding(
+<<<<<<< Updated upstream
                                                           padding: EdgeInsets.all(
+=======
+                                                          padding:
+                                                              EdgeInsets.all(
+>>>>>>> Stashed changes
                                                             4,
                                                           ),
                                                           child: Row(
@@ -395,7 +505,11 @@ class _CardListState extends State<CardList>
                                                                 height: 10,
                                                                 width: 10,
                                                                 child:
+<<<<<<< Updated upstream
                                                                 CircularProgressIndicator(
+=======
+                                                                    CircularProgressIndicator(
+>>>>>>> Stashed changes
                                                                   color: Colors
                                                                       .white,
                                                                 ),
@@ -411,7 +525,11 @@ class _CardListState extends State<CardList>
                                                           fontFamily: FontFamily
                                                               .redHatMedium,
                                                           fontWeight:
+<<<<<<< Updated upstream
                                                           FontWeight.w700,
+=======
+                                                              FontWeight.w700,
+>>>>>>> Stashed changes
                                                           color: Colors.white,
                                                           fontSize: 20,
                                                         ),

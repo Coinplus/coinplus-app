@@ -15,7 +15,11 @@ class Preferences {
   static const bools = 'bools';
   static const strings = 'strings';
   static const ints = 'ints';
+<<<<<<< Updated upstream
   static const appLockBool = 'app_lock_bool';
+=======
+  static const isActivatedBool = 'isActivatedBool';
+>>>>>>> Stashed changes
   static const switchKey = 'switchKey';
 }
 
