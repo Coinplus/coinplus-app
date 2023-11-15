@@ -64,8 +64,7 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                   _walletProtectState.isNfcSessionStart();
                   await router.pop();
                   await NfcManager.instance.startSession(
-                    alertMessage:
-                        'It’s easy! Just hold your phone near the Coinplus Card.',
+                    alertMessage: 'It’s easy! Just hold your phone near the Coinplus Card.',
                     onDiscovered: (tag) async {
                       _walletProtectState.isNfcSessionStarted = false;
                       final ndef = Ndef.from(tag);
@@ -74,14 +73,12 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                       if (records.length >= 2) {
                         final hasJson = records[1].payload;
                         final payloadString = String.fromCharCodes(hasJson);
-                        final Map payloadData =
-                            await json.decode(payloadString);
+                        final Map payloadData = await json.decode(payloadString);
                         walletAddress = payloadData['a'];
                       } else {
                         final hasUrl = records[0].payload;
                         final payloadString = String.fromCharCodes(hasUrl);
-                        final parts =
-                            payloadString.split('air.coinplus.com/btc/');
+                        final parts = payloadString.split('air.coinplus.com/btc/');
                         walletAddress = parts[1];
                       }
                       await NfcManager.instance.stopSession(
@@ -116,14 +113,12 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                       if (records.length >= 2) {
                         final hasJson = records[1].payload;
                         final payloadString = String.fromCharCodes(hasJson);
-                        final Map payloadData =
-                            await json.decode(payloadString);
+                        final Map payloadData = await json.decode(payloadString);
                         walletAddress = payloadData['a'];
                       } else {
                         final hasUrl = records[0].payload;
                         final payloadString = String.fromCharCodes(hasUrl);
-                        final parts =
-                            payloadString.split('air.coinplus.com/btc/');
+                        final parts = payloadString.split('air.coinplus.com/btc/');
                         walletAddress = parts[1];
                       }
 

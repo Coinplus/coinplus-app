@@ -65,8 +65,7 @@ class Dashboard extends HookWidget {
       () {
         final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) {
-            if (data.containsKey('+non_branch_link') &&
-                data['+non_branch_link'] != null) {
+            if (data.containsKey('+non_branch_link') && data['+non_branch_link'] != null) {
               final String url = data['+non_branch_link'];
               final splitting = url.split('/');
               final part = splitting[splitting.length - 1];
@@ -129,7 +128,7 @@ class Dashboard extends HookWidget {
 
     Future<void> notCoinplusCard() async {
       await notCoinplusCardAlert(
-      context,
+        context,
       );
     }
 
@@ -221,18 +220,14 @@ class Dashboard extends HookWidget {
                         BottomNavigationBarItem(
                           icon: Assets.icons.walletIcon.image(
                             height: 32,
-                            color: _navBarState.currentIndex == 0
-                                ? Colors.black
-                                : const Color(0xFfB8BEC5),
+                            color: _navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
                           ),
                           label: 'Wallet',
                         ),
                         BottomNavigationBarItem(
                           icon: Assets.icons.pageInfo.image(
                             height: 32,
-                            color: _navBarState.currentIndex == 1
-                                ? Colors.black
-                                : const Color(0xFfB8BEC5),
+                            color: _navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
                           ),
                           label: 'Settings',
                         ),
@@ -249,9 +244,7 @@ class Dashboard extends HookWidget {
                 ? _walletProtectState.isBiometricsRunning
                     ? const SizedBox()
                     : Visibility(
-                        child: !_walletProtectState.isNfcSessionStarted
-                            ? const Background()
-                            : const SizedBox(),
+                        child: !_walletProtectState.isNfcSessionStarted ? const Background() : const SizedBox(),
                       )
                 : null,
           ),
@@ -268,8 +261,7 @@ class Dashboard extends HookWidget {
                       FloatingActionButton(
                         shape: const CircleBorder(),
                         elevation: 3,
-                        backgroundColor:
-                            Colors.deepOrangeAccent.withOpacity(0.9),
+                        backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
                         onPressed: null,
                         child: Assets.icons.plus.image(
                           color: Colors.white,
@@ -280,8 +272,7 @@ class Dashboard extends HookWidget {
                       FloatingActionButton(
                         shape: const CircleBorder(),
                         elevation: 3,
-                        backgroundColor:
-                            Colors.deepOrangeAccent.withOpacity(0.9),
+                        backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
                         onPressed: null,
                         child: Assets.icons.sendReceive.image(
                           color: Colors.white,
@@ -332,8 +323,7 @@ class Dashboard extends HookWidget {
                                 const Row(
                                   children: [
                                     Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 20, top: 10),
+                                      padding: EdgeInsets.only(left: 20, top: 10),
                                       child: Text(
                                         'Add new wallet',
                                         textAlign: TextAlign.center,
@@ -347,8 +337,7 @@ class Dashboard extends HookWidget {
                                   ],
                                 ),
                                 const Gap(18),
-                                const BarScanMethodsPage()
-                                    .paddingHorizontal(20),
+                                const BarScanMethodsPage().paddingHorizontal(20),
                                 const Gap(40),
                               ],
                             );
@@ -418,9 +407,7 @@ class Dashboard extends HookWidget {
                           ..._balanceStore.cards,
                           ..._balanceStore.bars,
                         ].firstWhere(
-                          (element) =>
-                              (element as AbstractCard).address ==
-                              selectedCard.address,
+                          (element) => (element as AbstractCard).address == selectedCard.address,
                         ) as AbstractCard;
                         return Container(
                           padding: const EdgeInsets.all(16),
@@ -443,8 +430,7 @@ class Dashboard extends HookWidget {
                                       padding: const MaterialStatePropertyAll(
                                         EdgeInsets.all(10),
                                       ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
+                                      backgroundColor: MaterialStateProperty.all(
                                         AppColors.silver,
                                       ),
                                     ),
@@ -474,30 +460,23 @@ class Dashboard extends HookWidget {
                                                 children: [
                                                   IconButton(
                                                     onPressed: router.pop,
-                                                    icon: Assets.icons.close
-                                                        .image(),
+                                                    icon: Assets.icons.close.image(),
                                                   ),
                                                   Expanded(
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         const Text(
                                                           'Receive BTC',
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                          textAlign: TextAlign.center,
                                                           style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily: FontFamily.redHatMedium,
                                                             fontSize: 17,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
                                                         ),
                                                         const Gap(6),
-                                                        Assets.icons.bTCIcon
-                                                            .image(
+                                                        Assets.icons.bTCIcon.image(
                                                           height: 24,
                                                         ),
                                                       ],
@@ -511,8 +490,7 @@ class Dashboard extends HookWidget {
                                               const Gap(60),
                                               Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
+                                                  borderRadius: BorderRadius.circular(14),
                                                   color: const Color(
                                                     0xFFF7F7FA,
                                                   ),
@@ -520,8 +498,7 @@ class Dashboard extends HookWidget {
                                                 child: Column(
                                                   children: [
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
+                                                      padding: const EdgeInsets.only(
                                                         top: 12,
                                                         left: 62,
                                                         right: 62,
@@ -538,76 +515,56 @@ class Dashboard extends HookWidget {
                                                       onPressed: () {
                                                         Clipboard.setData(
                                                           ClipboardData(
-                                                            text: card.address
-                                                                .toString(),
+                                                            text: card.address.toString(),
                                                           ),
                                                         ).then(
                                                           (_) {
-                                                            HapticFeedback
-                                                                .mediumImpact();
-                                                            _settingsState
-                                                                .copyAddress();
+                                                            HapticFeedback.mediumImpact();
+                                                            _settingsState.copyAddress();
                                                           },
                                                         );
                                                       },
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
+                                                        padding: const EdgeInsets.only(
                                                           left: 12,
                                                           right: 12,
                                                           bottom: 12,
                                                         ),
                                                         child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(
                                                               8,
                                                             ),
                                                             color: Colors.white,
                                                           ),
                                                           child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
+                                                            padding: const EdgeInsets.only(
                                                               top: 10,
                                                               bottom: 10,
                                                             ),
                                                             child: Row(
                                                               children: [
-                                                                Assets.icons
-                                                                    .contentCopy
-                                                                    .image(
+                                                                Assets.icons.contentCopy.image(
                                                                   height: 32,
-                                                                  color: AppColors
-                                                                      .primaryButtonColor,
+                                                                  color: AppColors.primaryButtonColor,
                                                                 ),
                                                                 const Gap(
                                                                   8,
                                                                 ),
                                                                 Observer(
-                                                                  builder:
-                                                                      (context) {
+                                                                  builder: (context) {
                                                                     return Column(
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                                       children: [
                                                                         const Text(
                                                                           'Your address',
-                                                                          style:
-                                                                              TextStyle(
-                                                                            fontFamily:
-                                                                                FontFamily.redHatMedium,
-                                                                            fontSize:
-                                                                                16,
+                                                                          style: TextStyle(
+                                                                            fontFamily: FontFamily.redHatMedium,
+                                                                            fontSize: 16,
                                                                           ),
                                                                         ),
                                                                         AnimatedCrossFade(
-                                                                          firstChild:
-                                                                              const Row(
+                                                                          firstChild: const Row(
                                                                             children: [
                                                                               Text(
                                                                                 'Copied',
@@ -623,11 +580,9 @@ class Dashboard extends HookWidget {
                                                                               ),
                                                                             ],
                                                                           ),
-                                                                          secondChild:
-                                                                              Text(
+                                                                          secondChild: Text(
                                                                             card.address,
-                                                                            style:
-                                                                                const TextStyle(
+                                                                            style: const TextStyle(
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontSize: 14,
                                                                               color: Color(
@@ -638,10 +593,8 @@ class Dashboard extends HookWidget {
                                                                           crossFadeState: _settingsState.isAddressCopied
                                                                               ? CrossFadeState.showFirst
                                                                               : CrossFadeState.showSecond,
-                                                                          duration:
-                                                                              const Duration(
-                                                                            milliseconds:
-                                                                                200,
+                                                                          duration: const Duration(
+                                                                            milliseconds: 200,
                                                                           ),
                                                                         ),
                                                                       ],
@@ -667,15 +620,13 @@ class Dashboard extends HookWidget {
                                                       0.1,
                                                     ),
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(14),
+                                                  borderRadius: BorderRadius.circular(14),
                                                   color: const Color(
                                                     0xFF4A83E0,
                                                   ).withOpacity(0.05),
                                                 ),
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(14),
+                                                  padding: const EdgeInsets.all(14),
                                                   child: Row(
                                                     children: [
                                                       Assets.icons.error.image(
@@ -683,19 +634,14 @@ class Dashboard extends HookWidget {
                                                       ),
                                                       const Gap(10),
                                                       const Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
                                                             'Please note',
                                                             style: TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
+                                                              fontFamily: FontFamily.redHatMedium,
                                                               fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
+                                                              fontWeight: FontWeight.w600,
                                                               color: Color(
                                                                 0xFF4F6486,
                                                               ),
@@ -704,15 +650,11 @@ class Dashboard extends HookWidget {
                                                           Gap(4),
                                                           Text(
                                                             'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
-                                                            textAlign:
-                                                                TextAlign.left,
+                                                            textAlign: TextAlign.left,
                                                             style: TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
+                                                              fontFamily: FontFamily.redHatMedium,
                                                               fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
+                                                              fontWeight: FontWeight.normal,
                                                               color: Color(
                                                                 0xFF4F6486,
                                                               ),
@@ -734,8 +676,7 @@ class Dashboard extends HookWidget {
                                                 child: const Text(
                                                   'Share',
                                                   style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                   ),
                                                 ),
                                               ).paddingHorizontal(60),
@@ -761,8 +702,7 @@ class Dashboard extends HookWidget {
                                     ),
                                     const Gap(8),
                                     const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Receive',
@@ -792,10 +732,7 @@ class Dashboard extends HookWidget {
                                 builder: (context) {
                                   Future<bool> isWalletActivated() async {
                                     return getIsWalletActivated(
-                                      _balanceStore
-                                          .cards[
-                                              _settingsState.cardCurrentIndex]
-                                          .address,
+                                      _balanceStore.cards[_settingsState.cardCurrentIndex].address,
                                     );
                                   }
 
@@ -810,12 +747,10 @@ class Dashboard extends HookWidget {
                                           ),
                                         )
                                         .copyWith(
-                                          padding:
-                                              const MaterialStatePropertyAll(
+                                          padding: const MaterialStatePropertyAll(
                                             EdgeInsets.all(10),
                                           ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
+                                          backgroundColor: MaterialStateProperty.all(
                                             AppColors.silver,
                                           ),
                                         ),
@@ -830,8 +765,7 @@ class Dashboard extends HookWidget {
                                           child: const Text(
                                             'Got it',
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -843,135 +777,88 @@ class Dashboard extends HookWidget {
                                             style: context.theme
                                                 .buttonStyle(
                                                   textStyle: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: AppColors
-                                                        .primaryTextColor,
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    color: AppColors.primaryTextColor,
                                                     fontSize: 15,
                                                   ),
                                                 )
                                                 .copyWith(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
+                                                  backgroundColor: MaterialStateProperty.all(
                                                     AppColors.silver,
                                                   ),
                                                 ),
                                             onPressed: Platform.isIOS
                                                 ? () async {
-                                                    _walletProtectState
-                                                        .isNfcSessionStart();
+                                                    _walletProtectState.isNfcSessionStart();
                                                     await router.pop();
-                                                    await NfcManager.instance
-                                                        .startSession(
+                                                    await NfcManager.instance.startSession(
                                                       alertMessage: isBarList
                                                           ? 'It’s easy! Hold your phone near the top of your Bar’s box'
                                                           : "Please tap your card on the phone to verify it's legitimacy",
-                                                      onDiscovered:
-                                                          (tag) async {
-                                                        _walletProtectState
-                                                                .isNfcSessionStarted =
-                                                            false;
-                                                        final ndef =
-                                                            Ndef.from(tag);
-                                                        final records = ndef!
-                                                            .cachedMessage!
-                                                            .records;
+                                                      onDiscovered: (tag) async {
+                                                        _walletProtectState.isNfcSessionStarted = false;
+                                                        final ndef = Ndef.from(tag);
+                                                        final records = ndef!.cachedMessage!.records;
                                                         dynamic walletAddress;
-                                                        if (records.length >=
-                                                            2) {
-                                                          final hasJson =
-                                                              records[1]
-                                                                  .payload;
-                                                          final payloadString =
-                                                              String
-                                                                  .fromCharCodes(
+                                                        if (records.length >= 2) {
+                                                          final hasJson = records[1].payload;
+                                                          final payloadString = String.fromCharCodes(
                                                             hasJson,
                                                           );
-                                                          final Map
-                                                              payloadData =
-                                                              await json.decode(
+                                                          final Map payloadData = await json.decode(
                                                             payloadString,
                                                           );
-                                                          walletAddress =
-                                                              payloadData['a'];
+                                                          walletAddress = payloadData['a'];
                                                         } else {
-                                                          final hasUrl =
-                                                              records[0]
-                                                                  .payload;
-                                                          final payloadString =
-                                                              String
-                                                                  .fromCharCodes(
+                                                          final hasUrl = records[0].payload;
+                                                          final payloadString = String.fromCharCodes(
                                                             hasUrl,
                                                           );
-                                                          final parts =
-                                                              payloadString
-                                                                  .split(
+                                                          final parts = payloadString.split(
                                                             'air.coinplus.com/btc/',
                                                           );
-                                                          walletAddress =
-                                                              parts[1];
+                                                          walletAddress = parts[1];
                                                         }
-                                                        if (card.address ==
-                                                            walletAddress) {
-                                                          final mifare =
-                                                              MiFare.from(tag);
-                                                          final tagId = mifare!
-                                                              .identifier;
-                                                          final signature =
-                                                              await mifare
-                                                                  .sendMiFareCommand(
+                                                        if (card.address == walletAddress) {
+                                                          final mifare = MiFare.from(tag);
+                                                          final tagId = mifare!.identifier;
+                                                          final signature = await mifare.sendMiFareCommand(
                                                             Uint8List.fromList(
                                                               [0x3C, 0x00],
                                                             ),
                                                           );
-                                                          var isOriginalTag =
-                                                              false;
-                                                          if (signature.length >
-                                                              2) {
-                                                            isOriginalTag =
-                                                                verifyOriginality(
+                                                          var isOriginalTag = false;
+                                                          if (signature.length > 2) {
+                                                            isOriginalTag = verifyOriginality(
                                                               tagId,
                                                               signature,
                                                             );
                                                           }
                                                           if (isOriginalTag) {
-                                                            await NfcManager
-                                                                .instance
-                                                                .stopSession(
-                                                              alertMessage:
-                                                                  'Complete',
+                                                            await NfcManager.instance.stopSession(
+                                                              alertMessage: 'Complete',
                                                             );
-                                                            await Future
-                                                                .delayed(
+                                                            await Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    2500,
+                                                                milliseconds: 2500,
                                                               ),
                                                             );
                                                             await router.push(
                                                               CardSecretFillRoute(
-                                                                receivedData:
-                                                                    walletAddress
-                                                                        .toString(),
+                                                                receivedData: walletAddress.toString(),
                                                               ),
                                                             );
                                                           } else {
-                                                            await NfcManager
-                                                                .instance
-                                                                .stopSession();
-                                                            await Future
-                                                                .delayed(
+                                                            await NfcManager.instance.stopSession();
+                                                            await Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    2900,
+                                                                milliseconds: 2900,
                                                               ),
                                                             );
                                                             await notCoinplusCard();
                                                           }
                                                         } else {
-                                                          await NfcManager
-                                                              .instance
-                                                              .stopSession(
+                                                          await NfcManager.instance.stopSession(
                                                             errorMessage:
                                                                 'You tapped the wrong card. Please check the wallet address of the card.',
                                                           );
@@ -979,88 +866,54 @@ class Dashboard extends HookWidget {
                                                       },
                                                       onError: (_) {
                                                         return Future(() {
-                                                          _walletProtectState
-                                                                  .isNfcSessionStarted =
-                                                              false;
+                                                          _walletProtectState.isNfcSessionStarted = false;
                                                           showBottomSheet();
                                                         });
                                                       },
                                                     );
                                                   }
                                                 : () async {
-                                                    _walletProtectState
-                                                        .isNfcSessionStart();
+                                                    _walletProtectState.isNfcSessionStart();
                                                     await router.pop();
-                                                    await NfcManager.instance
-                                                        .startSession(
+                                                    await NfcManager.instance.startSession(
                                                       alertMessage: isBarList
                                                           ? 'It’s easy! Hold your phone near the top of your Bar’s box'
                                                           : "Please tap your card on the phone to verify it's legitimacy",
-                                                      onDiscovered:
-                                                          (tag) async {
-                                                        _walletProtectState
-                                                                .isNfcSessionStarted =
-                                                            false;
-                                                        final ndef =
-                                                            Ndef.from(tag);
-                                                        final records = ndef!
-                                                            .cachedMessage!
-                                                            .records;
+                                                      onDiscovered: (tag) async {
+                                                        _walletProtectState.isNfcSessionStarted = false;
+                                                        final ndef = Ndef.from(tag);
+                                                        final records = ndef!.cachedMessage!.records;
                                                         dynamic walletAddress;
-                                                        if (records.length >=
-                                                            2) {
-                                                          final hasJson =
-                                                              records[1]
-                                                                  .payload;
-                                                          final payloadString =
-                                                              String
-                                                                  .fromCharCodes(
+                                                        if (records.length >= 2) {
+                                                          final hasJson = records[1].payload;
+                                                          final payloadString = String.fromCharCodes(
                                                             hasJson,
                                                           );
-                                                          final Map
-                                                              payloadData =
-                                                              await json.decode(
+                                                          final Map payloadData = await json.decode(
                                                             payloadString,
                                                           );
-                                                          walletAddress =
-                                                              payloadData['a'];
+                                                          walletAddress = payloadData['a'];
                                                         } else {
-                                                          final hasUrl =
-                                                              records[0]
-                                                                  .payload;
-                                                          final payloadString =
-                                                              String
-                                                                  .fromCharCodes(
+                                                          final hasUrl = records[0].payload;
+                                                          final payloadString = String.fromCharCodes(
                                                             hasUrl,
                                                           );
-                                                          final parts =
-                                                              payloadString
-                                                                  .split(
+                                                          final parts = payloadString.split(
                                                             'air.coinplus.com/btc/',
                                                           );
-                                                          walletAddress =
-                                                              parts[1];
+                                                          walletAddress = parts[1];
                                                         }
-                                                        if (card.address ==
-                                                            walletAddress) {
-                                                          final nfcA =
-                                                              NfcA.from(tag);
-                                                          final uid =
-                                                              nfcA!.identifier;
-                                                          final signature =
-                                                              await nfcA
-                                                                  .transceive(
-                                                            data: Uint8List
-                                                                .fromList(
+                                                        if (card.address == walletAddress) {
+                                                          final nfcA = NfcA.from(tag);
+                                                          final uid = nfcA!.identifier;
+                                                          final signature = await nfcA.transceive(
+                                                            data: Uint8List.fromList(
                                                               [0x3C, 0x00],
                                                             ),
                                                           );
-                                                          var isOriginalTag =
-                                                              false;
-                                                          if (signature.length >
-                                                              2) {
-                                                            isOriginalTag =
-                                                                verifyOriginality(
+                                                          var isOriginalTag = false;
+                                                          if (signature.length > 2) {
+                                                            isOriginalTag = verifyOriginality(
                                                               uid,
                                                               signature,
                                                             );
@@ -1069,9 +922,7 @@ class Dashboard extends HookWidget {
                                                             await router.pop();
                                                             await router.push(
                                                               CardSecretFillRoute(
-                                                                receivedData:
-                                                                    walletAddress
-                                                                        .toString(),
+                                                                receivedData: walletAddress.toString(),
                                                               ),
                                                             );
                                                           } else {
@@ -1083,65 +934,45 @@ class Dashboard extends HookWidget {
                                                           await router.pop();
                                                           await showModalBottomSheet(
                                                             context: context,
-                                                            shape:
-                                                                const RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(
                                                                   20,
                                                                 ),
-                                                                topRight: Radius
-                                                                    .circular(
+                                                                topRight: Radius.circular(
                                                                   20,
                                                                 ),
                                                               ),
                                                             ),
-                                                            backgroundColor:
-                                                                Colors.white,
+                                                            backgroundColor: Colors.white,
                                                             builder: (context) {
                                                               return Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(
+                                                                padding: const EdgeInsets.all(
                                                                   8,
                                                                 ),
                                                                 child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
+                                                                  mainAxisSize: MainAxisSize.min,
                                                                   children: [
-                                                                    Assets.icons
-                                                                        .notch
-                                                                        .image(
+                                                                    Assets.icons.notch.image(
                                                                       height: 4,
                                                                     ),
                                                                     const Gap(
                                                                       30,
                                                                     ),
-                                                                    Lottie
-                                                                        .asset(
+                                                                    Lottie.asset(
                                                                       'assets/animated_logo/warning.json',
-                                                                      repeat:
-                                                                          false,
-                                                                      height:
-                                                                          120,
+                                                                      repeat: false,
+                                                                      height: 120,
                                                                     ),
                                                                     const Gap(
                                                                       30,
                                                                     ),
                                                                     const Text(
                                                                       'You tapped the wrong card. Please check the wallet address of the card',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontFamily:
-                                                                            FontFamily.redHatMedium,
+                                                                      textAlign: TextAlign.center,
+                                                                      style: TextStyle(
+                                                                        fontSize: 14,
+                                                                        fontFamily: FontFamily.redHatMedium,
                                                                       ),
                                                                     ),
                                                                     const Gap(
@@ -1152,9 +983,7 @@ class Dashboard extends HookWidget {
                                                               );
                                                             },
                                                           );
-                                                          await NfcManager
-                                                              .instance
-                                                              .stopSession(
+                                                          await NfcManager.instance.stopSession(
                                                             errorMessage:
                                                                 'You tapped the wrong card. Please check the wallet address of the card.',
                                                           );
@@ -1162,29 +991,21 @@ class Dashboard extends HookWidget {
                                                       },
                                                       onError: (_) {
                                                         return Future(() {
-                                                          _walletProtectState
-                                                                  .isNfcSessionStarted =
-                                                              false;
+                                                          _walletProtectState.isNfcSessionStarted = false;
 
                                                           showModalBottomSheet(
                                                             context: context,
-                                                            shape:
-                                                                const RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(
                                                                   20,
                                                                 ),
-                                                                topRight: Radius
-                                                                    .circular(
+                                                                topRight: Radius.circular(
                                                                   20,
                                                                 ),
                                                               ),
                                                             ),
-                                                            backgroundColor:
-                                                                Colors.white,
+                                                            backgroundColor: Colors.white,
                                                             builder: (context) {
                                                               return const CardIssueOptionsSheet();
                                                             },
@@ -1194,40 +1015,29 @@ class Dashboard extends HookWidget {
                                                     );
                                                     await showModalBottomSheet(
                                                       context: context,
-                                                      shape:
-                                                          const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
+                                                      shape: const RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(
                                                             20,
                                                           ),
-                                                          topRight:
-                                                              Radius.circular(
+                                                          topRight: Radius.circular(
                                                             20,
                                                           ),
                                                         ),
                                                       ),
-                                                      backgroundColor:
-                                                          Colors.transparent,
+                                                      backgroundColor: Colors.transparent,
                                                       builder: (context) {
                                                         return AnimatedOpacity(
-                                                          duration:
-                                                              const Duration(
+                                                          duration: const Duration(
                                                             milliseconds: 300,
                                                           ),
                                                           opacity: 1,
                                                           child: Container(
                                                             height: 400,
-                                                            decoration:
-                                                                const BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .vertical(
-                                                                top: Radius
-                                                                    .circular(
+                                                            decoration: const BoxDecoration(
+                                                              color: Colors.white,
+                                                              borderRadius: BorderRadius.vertical(
+                                                                top: Radius.circular(
                                                                   20,
                                                                 ),
                                                               ),
@@ -1241,17 +1051,12 @@ class Dashboard extends HookWidget {
                                                                       16,
                                                                     ),
                                                                     IconButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        await router
-                                                                            .pop();
+                                                                      onPressed: () async {
+                                                                        await router.pop();
                                                                         await showModalBottomSheet(
-                                                                          context:
-                                                                              context,
-                                                                          shape:
-                                                                              const RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.only(
+                                                                          context: context,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(
                                                                               topLeft: Radius.circular(
                                                                                 20,
                                                                               ),
@@ -1260,38 +1065,26 @@ class Dashboard extends HookWidget {
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                          backgroundColor:
-                                                                              Colors.white,
-                                                                          builder:
-                                                                              (context) {
+                                                                          backgroundColor: Colors.white,
+                                                                          builder: (context) {
                                                                             return const CardIssueOptionsSheet();
                                                                           },
                                                                         );
                                                                       },
-                                                                      icon:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .close_sharp,
-                                                                        size:
-                                                                            25,
-                                                                        color: Colors
-                                                                            .black,
+                                                                      icon: const Icon(
+                                                                        Icons.close_sharp,
+                                                                        size: 25,
+                                                                        color: Colors.black,
                                                                       ),
                                                                     ),
                                                                     const Expanded(
-                                                                      child:
-                                                                          Text(
+                                                                      child: Text(
                                                                         'Start with your wallet',
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontFamily:
-                                                                              FontFamily.redHatSemiBold,
-                                                                          fontSize:
-                                                                              17,
-                                                                          color:
-                                                                              AppColors.primaryTextColor,
+                                                                        textAlign: TextAlign.center,
+                                                                        style: TextStyle(
+                                                                          fontFamily: FontFamily.redHatSemiBold,
+                                                                          fontSize: 17,
+                                                                          color: AppColors.primaryTextColor,
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1314,24 +1107,17 @@ class Dashboard extends HookWidget {
                                                                 SizedBox(
                                                                   height: 120,
                                                                   width: 120,
-                                                                  child: Lottie
-                                                                      .asset(
+                                                                  child: Lottie.asset(
                                                                     'assets/animated_logo/nfcanimation.json',
                                                                   ).expandedHorizontally(),
                                                                 ),
                                                                 const Gap(20),
                                                                 const Text(
                                                                   'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatMedium,
+                                                                  textAlign: TextAlign.center,
+                                                                  style: TextStyle(
+                                                                    fontSize: 14,
+                                                                    fontFamily: FontFamily.redHatMedium,
                                                                   ),
                                                                 ),
                                                               ],
@@ -1345,11 +1131,9 @@ class Dashboard extends HookWidget {
                                               'Send anyway',
                                               style: TextStyle(
                                                 fontSize: 15,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.normal,
-                                                color:
-                                                    AppColors.primaryTextColor,
+                                                color: AppColors.primaryTextColor,
                                               ),
                                             ),
                                           ).paddingHorizontal(40),
@@ -1358,32 +1142,25 @@ class Dashboard extends HookWidget {
                                           context: context,
                                           builder: (context) {
                                             return EmergeAlertDialog(
-                                              emergeAlertDialogOptions:
-                                                  EmergeAlertDialogOptions(
+                                              emergeAlertDialogOptions: EmergeAlertDialogOptions(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(22),
+                                                  borderRadius: BorderRadius.circular(22),
                                                 ),
                                                 content: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
+                                                  mainAxisSize: MainAxisSize.min,
                                                   children: [
                                                     const Text(
                                                       'Recommended to Wait!',
-                                                      textAlign:
-                                                          TextAlign.center,
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatBold,
+                                                        fontFamily: FontFamily.redHatBold,
                                                         fontSize: 17,
                                                       ),
                                                     ),
                                                     const Gap(23),
                                                     Center(
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
                                                           Lottie.asset(
                                                             height: 140,
@@ -1396,13 +1173,10 @@ class Dashboard extends HookWidget {
                                                     const Gap(31),
                                                     const Text(
                                                       'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
-                                                      textAlign:
-                                                          TextAlign.center,
+                                                      textAlign: TextAlign.center,
                                                       style: TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatLight,
-                                                        fontWeight:
-                                                            FontWeight.w700,
+                                                        fontFamily: FontFamily.redHatLight,
+                                                        fontWeight: FontWeight.w700,
                                                         fontSize: 14,
                                                       ),
                                                     ),
@@ -1433,26 +1207,22 @@ class Dashboard extends HookWidget {
                                         ),
                                         const Gap(8),
                                         const Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Send',
                                               style: TextStyle(
                                                 fontSize: 15,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.w600,
-                                                color:
-                                                    AppColors.primaryTextColor,
+                                                color: AppColors.primaryTextColor,
                                               ),
                                             ),
                                             Text(
                                               'Transfer crypto to another wallet',
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.normal,
                                                 color: AppColors.textHintsColor,
                                               ),
@@ -1478,8 +1248,7 @@ class Dashboard extends HookWidget {
                                       padding: const MaterialStatePropertyAll(
                                         EdgeInsets.all(10),
                                       ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
+                                      backgroundColor: MaterialStateProperty.all(
                                         AppColors.silver,
                                       ),
                                     ),
@@ -1498,8 +1267,7 @@ class Dashboard extends HookWidget {
                                     ),
                                     const Gap(8),
                                     const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Buy with card',
@@ -1538,8 +1306,7 @@ class Dashboard extends HookWidget {
                                       padding: const MaterialStatePropertyAll(
                                         EdgeInsets.all(10),
                                       ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
+                                      backgroundColor: MaterialStateProperty.all(
                                         AppColors.silver,
                                       ),
                                     ),
@@ -1566,8 +1333,7 @@ class Dashboard extends HookWidget {
                                     ),
                                     const Gap(8),
                                     const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'History',
@@ -1604,24 +1370,20 @@ class Dashboard extends HookWidget {
                       return FloatingActionButton(
                         shape: const CircleBorder(),
                         elevation: 3,
-                        backgroundColor:
-                            Colors.deepOrangeAccent.withOpacity(0.9),
+                        backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
                         onPressed: null,
                         child: AnimatedCrossFade(
                           duration: const Duration(milliseconds: 1),
-                          crossFadeState: _navBarState.tabCurrentIndex == 0
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              _navBarState.tabCurrentIndex == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           firstChild: AnimatedCrossFade(
                             duration: const Duration(milliseconds: 1),
-                            crossFadeState: _navBarState.currentIndex == 1
-                                ? CrossFadeState.showSecond
-                                : CrossFadeState.showFirst,
+                            crossFadeState:
+                                _navBarState.currentIndex == 1 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                             firstChild: AnimatedCrossFade(
                               duration: const Duration(milliseconds: 1),
-                              crossFadeState: _navBarState.isInAddCard
-                                  ? CrossFadeState.showSecond
-                                  : CrossFadeState.showFirst,
+                              crossFadeState:
+                                  _navBarState.isInAddCard ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                               firstChild: _balanceStore.cards.isEmpty
                                   ? Assets.icons.plus.image(
                                       color: Colors.white,
@@ -1643,14 +1405,12 @@ class Dashboard extends HookWidget {
                           ),
                           secondChild: AnimatedCrossFade(
                             duration: const Duration(milliseconds: 1),
-                            crossFadeState: _navBarState.currentIndex == 1
-                                ? CrossFadeState.showSecond
-                                : CrossFadeState.showFirst,
+                            crossFadeState:
+                                _navBarState.currentIndex == 1 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                             firstChild: AnimatedCrossFade(
                               duration: const Duration(milliseconds: 1),
-                              crossFadeState: _navBarState.isInAddBar
-                                  ? CrossFadeState.showSecond
-                                  : CrossFadeState.showFirst,
+                              crossFadeState:
+                                  _navBarState.isInAddBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                               firstChild: _balanceStore.bars.isEmpty
                                   ? Assets.icons.plus.image(
                                       color: Colors.white,

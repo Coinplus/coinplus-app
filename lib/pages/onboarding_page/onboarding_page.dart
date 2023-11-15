@@ -33,7 +33,6 @@ import '../splash_screen/splash_screen.dart';
 import 'form_factor_page/card_and_bar_scan.dart';
 import 'form_factor_page/form_factor_page.dart';
 
-
 @RoutePage()
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -53,8 +52,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     _nfcState.checkNfcSupport();
     streamSubscription = FlutterBranchSdk.initSession().listen(
       (data) {
-        if (data.containsKey('+non_branch_link') &&
-            data['+non_branch_link'] != null) {
+        if (data.containsKey('+non_branch_link') && data['+non_branch_link'] != null) {
           final String url = data['+non_branch_link'];
           final splitting = url.split('/');
           final part = splitting[splitting.length - 1];
@@ -150,8 +148,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               final nfcA = MiFare.from(tag);
                               final ident = nfcA?.identifier
                                   .map(
-                                    (byte) =>
-                                        byte.toRadixString(16).padLeft(2, '0'),
+                                    (byte) => byte.toRadixString(16).padLeft(2, '0'),
                                   )
                                   .join();
                               log(ident.toString());
@@ -161,9 +158,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               log(
                                 signature!
                                     .map(
-                                      (byte) => byte
-                                          .toRadixString(16)
-                                          .padLeft(2, '0'),
+                                      (byte) => byte.toRadixString(16).padLeft(2, '0'),
                                     )
                                     .join()
                                     .toString(),
@@ -174,22 +169,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               dynamic walletAddress;
                               if (records.length >= 2) {
                                 final hasJson = records[1].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasJson);
-                                final Map payloadData =
-                                    await json.decode(payloadString);
+                                final payloadString = String.fromCharCodes(hasJson);
+                                final Map payloadData = await json.decode(payloadString);
                                 walletAddress = payloadData['a'];
                               } else {
                                 final hasUrl = records[0].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasUrl);
-                                final parts = payloadString
-                                    .split('air.coinplus.com/btc/');
+                                final payloadString = String.fromCharCodes(hasUrl);
+                                final parts = payloadString.split('air.coinplus.com/btc/');
                                 walletAddress = parts[1];
                               }
 
-                              await NfcManager.instance
-                                  .stopSession(alertMessage: 'Complete');
+                              await NfcManager.instance.stopSession(alertMessage: 'Complete');
                               await Future.delayed(
                                 const Duration(milliseconds: 2500),
                               );
@@ -217,17 +207,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                               if (records.length >= 2) {
                                 final hasJson = records[1].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasJson);
-                                final Map payloadData =
-                                    await json.decode(payloadString);
+                                final payloadString = String.fromCharCodes(hasJson);
+                                final Map payloadData = await json.decode(payloadString);
                                 walletAddress = payloadData['a'];
                               } else {
                                 final hasUrl = records[0].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasUrl);
-                                final parts = payloadString
-                                    .split('air.coinplus.com/btc/');
+                                final payloadString = String.fromCharCodes(hasUrl);
+                                final parts = payloadString.split('air.coinplus.com/btc/');
                                 walletAddress = parts[1];
                               }
                               await router.push(
@@ -282,11 +268,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                               'Start with your wallet',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatSemiBold,
+                                                fontFamily: FontFamily.redHatSemiBold,
                                                 fontSize: 17,
-                                                color:
-                                                    AppColors.primaryTextColor,
+                                                color: AppColors.primaryTextColor,
                                               ),
                                             ),
                                           ),
@@ -409,8 +393,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                         icon: Assets.icons.arrowBack.image(
                                           height: 24,
                                         ),
-                                        onPressed:
-                                            _formFactorState.toggleWidget,
+                                        onPressed: _formFactorState.toggleWidget,
                                       ),
                                     const Text(
                                       'Start with your wallet',
@@ -448,34 +431,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                                               if (child.key ==
                                                   ValueKey<bool>(
-                                                    _formFactorState
-                                                        .isFirstWidget,
+                                                    _formFactorState.isFirstWidget,
                                                   )) {
                                                 return SlideTransition(
-                                                  position: _formFactorState
-                                                          .isFirstWidget
-                                                      ? slideOut
-                                                      : slideIn,
+                                                  position: _formFactorState.isFirstWidget ? slideOut : slideIn,
                                                   child: child,
                                                 );
                                               } else {
                                                 return SlideTransition(
-                                                  position: _formFactorState
-                                                          .isFirstWidget
-                                                      ? slideIn
-                                                      : slideOut,
+                                                  position: _formFactorState.isFirstWidget ? slideIn : slideOut,
                                                   child: child,
                                                 );
                                               }
                                             },
-                                            child: _formFactorState
-                                                    .isFirstWidget
+                                            child: _formFactorState.isFirstWidget
                                                 ? CardAndBarScanMethodsPage(
                                                     key: const ValueKey<bool>(
                                                       true,
                                                     ),
-                                                    formFactorState:
-                                                        _formFactorState,
+                                                    formFactorState: _formFactorState,
                                                   )
                                                 : const FormFactorPage(
                                                     key: ValueKey<bool>(
@@ -497,9 +471,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ).then((value) => _formFactorState.isFirstWidget = true);
                 },
                 child: Text(
-                  _nfcState.isNfcSupported
-                      ? 'Connect manually'
-                      : 'Connect wallet',
+                  _nfcState.isNfcSupported ? 'Connect manually' : 'Connect wallet',
                   style: _nfcState.isNfcSupported
                       ? const TextStyle(
                           fontSize: 15,

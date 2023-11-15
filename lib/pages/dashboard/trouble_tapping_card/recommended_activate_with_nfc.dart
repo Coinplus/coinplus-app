@@ -22,24 +22,24 @@ Future<void> recommendedActivateByTap(BuildContext context) {
       ),
     ),
     onPressed: () async {
-    await router.pop();
-    await router.push(CardSecretFillRoute());
+      await router.pop();
+      await router.push(CardSecretFillRoute());
     },
   ).paddingHorizontal(40);
   final closeButton = LoadingButton(
     style: context.theme
         .buttonStyle(
-      textStyle: const TextStyle(
-        fontFamily: FontFamily.redHatMedium,
-        color: AppColors.primaryTextColor,
-        fontSize: 15,
-      ),
-    )
+          textStyle: const TextStyle(
+            fontFamily: FontFamily.redHatMedium,
+            color: AppColors.primaryTextColor,
+            fontSize: 15,
+          ),
+        )
         .copyWith(
-      backgroundColor: MaterialStateProperty.all(AppColors.silver),
-    ),
+          backgroundColor: MaterialStateProperty.all(AppColors.silver),
+        ),
     onPressed: () async {
-       await router.pop();
+      await router.pop();
     },
     child: const Text(
       'Close',

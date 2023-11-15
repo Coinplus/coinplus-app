@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart'
-    show QrScannerOverlayShape;
+import 'package:qr_code_scanner/qr_code_scanner.dart' show QrScannerOverlayShape;
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
@@ -62,8 +61,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   await HapticFeedback.mediumImpact();
                   await router.pop(_data);
                 } else if (_data!.startsWith('https')) {
-                  final newAddress =
-                      _data.split('https://air.coinplus.com/btc/');
+                  final newAddress = _data.split('https://air.coinplus.com/btc/');
                   final splitAddress = newAddress[1];
                   await HapticFeedback.heavyImpact();
                   await router.pop(splitAddress);
@@ -81,9 +79,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   decoration: ShapeDecoration(
                     shape: QrScannerOverlayShape(
                       overlayColor: AppColors.primary.withOpacity(0.9),
-                      borderColor: qrDetect.isDetected
-                          ? (qrDetect.isValid ? Colors.green : Colors.red)
-                          : Colors.blue,
+                      borderColor: qrDetect.isDetected ? (qrDetect.isValid ? Colors.green : Colors.red) : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
                       borderWidth: 5,

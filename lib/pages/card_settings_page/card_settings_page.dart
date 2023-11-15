@@ -140,8 +140,7 @@ class CardSettingsPage extends HookWidget {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor:
-                                    const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Address was copied',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
@@ -209,8 +208,7 @@ class CardSettingsPage extends HookWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Gap(13),
-                                      if (_cardSettingsState
-                                          .isPrivateKeyVisible)
+                                      if (_cardSettingsState.isPrivateKeyVisible)
                                         Assets.icons.contentCopy.image(
                                           height: 24,
                                         )
@@ -223,17 +221,14 @@ class CardSettingsPage extends HookWidget {
                                   ),
                                   onLongPress: () async {
                                     await HapticFeedback.selectionClick();
-                                    if(!_cardSettingsState.isPrivateKeyVisible) {
+                                    if (!_cardSettingsState.isPrivateKeyVisible) {
                                       if (await _isPinSet) {
                                         isBiometricsRunning.value = true;
-                                        final isAuthorized =
-                                        await _auth.authenticate(
-                                          localizedReason:
-                                          'Authenticate using Face ID',
+                                        final isAuthorized = await _auth.authenticate(
+                                          localizedReason: 'Authenticate using Face ID',
                                         );
                                         if (isAuthorized) {
-                                          _cardSettingsState
-                                              .makePrivateVisible();
+                                          _cardSettingsState.makePrivateVisible();
                                         }
                                       } else {
                                         _cardSettingsState.makePrivateVisible();
@@ -257,14 +252,10 @@ class CardSettingsPage extends HookWidget {
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor:
-                                                      const Color(0xFF4A4A4A)
-                                                          .withOpacity(0.9),
-                                                  message:
-                                                      'Private key was copied',
+                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                  message: 'Private key was copied',
                                                   textStyle: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Colors.white,
                                                   ),
@@ -278,14 +269,10 @@ class CardSettingsPage extends HookWidget {
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor:
-                                                  const Color(0xFF4A4A4A)
-                                                      .withOpacity(0.9),
-                                              message:
-                                                  'Hold to reveal your Private key',
+                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                              message: 'Hold to reveal your Private key',
                                               textStyle: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontSize: 14,
                                                 color: Colors.white,
                                               ),
@@ -295,76 +282,62 @@ class CardSettingsPage extends HookWidget {
                                   title: Observer(
                                     builder: (context) {
                                       return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           const Text(
                                             'Private key',
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.primaryTextColor,
                                             ),
                                           ),
                                           const Gap(6),
-                                          if (_cardSettingsState
-                                              .isPrivateKeyVisible)
+                                          if (_cardSettingsState.isPrivateKeyVisible)
                                             Container(
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.1),
+                                                  color: Colors.grey.withOpacity(0.1),
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                                borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: Text(
                                                 snapshot.data.toString(),
                                                 style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color: AppColors
-                                                      .primaryTextColor,
+                                                  color: AppColors.primaryTextColor,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                               ),
                                             )
                                           else
                                             ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                              borderRadius: BorderRadius.circular(10),
                                               child: ImageFiltered(
                                                 imageFilter: ImageFilter.blur(
                                                   sigmaX: 5,
                                                   sigmaY: 5,
                                                 ),
                                                 child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(5),
+                                                  padding: const EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
+                                                    borderRadius: BorderRadius.circular(
                                                       10,
                                                     ),
                                                     border: Border.all(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.1),
+                                                      color: Colors.grey.withOpacity(0.1),
                                                     ),
                                                   ),
                                                   child: const Text(
                                                     'L24hTctc4WlPBJwyP8EzBogNhm2y7EUjkHpVBFD9rhYT5PLoTuY6',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
-                                                      fontWeight:
-                                                          FontWeight.w300,
+                                                      color: AppColors.textHintsColor,
+                                                      fontWeight: FontWeight.w300,
                                                     ),
                                                   ),
                                                 ),
@@ -393,8 +366,7 @@ class CardSettingsPage extends HookWidget {
                                         'p': StyledTextTag(
                                           style: const TextStyle(
                                             fontFamily: FontFamily.redHatMedium,
-                                            decoration:
-                                                TextDecoration.underline,
+                                            decoration: TextDecoration.underline,
                                             fontSize: 14,
                                             color: Colors.blue,
                                           ),
@@ -485,9 +457,7 @@ class CardSettingsPage extends HookWidget {
                               CardColor.BROWN,
                             ];
 
-                            for (var index = 0;
-                                index < colors.length;
-                                index++) {
+                            for (var index = 0; index < colors.length; index++) {
                               colorWidgets.add(
                                 ScaleTap(
                                   enableFeedback: false,
@@ -501,13 +471,10 @@ class CardSettingsPage extends HookWidget {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                           border: Border.all(
                                             width: 2,
-                                            color: _cardSettingsState
-                                                        .selectedColor ==
-                                                    colors[index]
+                                            color: _cardSettingsState.selectedColor == colors[index]
                                                 ? Colors.blue
                                                 : Colors.transparent,
                                           ),
@@ -585,8 +552,7 @@ class CardSettingsPage extends HookWidget {
                       return LoadingButton(
                         onPressed: _cardSettingsState.isColorChanged
                             ? () async {
-                                if (_cardSettingsState.selectedColor ==
-                                    CardColor.ORANGE) {
+                                if (_cardSettingsState.selectedColor == CardColor.ORANGE) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: card.address,
                                     color: CardColor.ORANGE,
@@ -597,8 +563,7 @@ class CardSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A)
-                                          .withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -607,8 +572,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     ),
                                   );
-                                } else if (_cardSettingsState.selectedColor ==
-                                    CardColor.WHITE) {
+                                } else if (_cardSettingsState.selectedColor == CardColor.WHITE) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: card.address,
                                     color: CardColor.WHITE,
@@ -619,8 +583,7 @@ class CardSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A)
-                                          .withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -629,8 +592,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     ),
                                   );
-                                } else if (_cardSettingsState.selectedColor ==
-                                    CardColor.BROWN) {
+                                } else if (_cardSettingsState.selectedColor == CardColor.BROWN) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: card.address,
                                     color: CardColor.BROWN,
@@ -641,8 +603,7 @@ class CardSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A)
-                                          .withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -671,9 +632,7 @@ class CardSettingsPage extends HookWidget {
         ),
         Visibility(
           visible: isInactive.value && appLocked.value,
-          child: !isBiometricsRunning.value
-              ? const Background()
-              : const SizedBox(),
+          child: !isBiometricsRunning.value ? const Background() : const SizedBox(),
         ),
       ],
     );

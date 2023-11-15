@@ -17,16 +17,11 @@ import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i2;
 import 'package:coinplus/pages/bar_settings_page/bar_settings_page.dart' as _i3;
 import 'package:coinplus/pages/card_fill_page/card_fill_page.dart' as _i4;
 import 'package:coinplus/pages/card_fill_page/card_fill_with_nfc.dart' as _i5;
-import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart'
-    as _i6;
-import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
-    as _i7;
-import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart'
-    as _i8;
-import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart'
-    as _i10;
-import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart'
-    as _i13;
+import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart' as _i6;
+import 'package:coinplus/pages/card_settings_page/card_settings_page.dart' as _i7;
+import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart' as _i8;
+import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart' as _i10;
+import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart' as _i13;
 import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i14;
 import 'package:coinplus/pages/custom_pin_code/remove_pin_code.dart' as _i15;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i11;
@@ -35,8 +30,7 @@ import 'package:coinplus/pages/qr_page/qr_page.dart' as _i16;
 import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i9;
 import 'package:coinplus/pages/settings_page/settings_page.dart' as _i17;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i18;
-import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
-    as _i19;
+import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart' as _i19;
 import 'package:flutter/cupertino.dart' as _i21;
 import 'package:flutter/material.dart' as _i22;
 
@@ -46,8 +40,7 @@ abstract class $Router extends _i20.RootStackRouter {
   @override
   final Map<String, _i20.PageFactory> pagesMap = {
     BarFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarFillRouteArgs>(
-          orElse: () => const BarFillRouteArgs());
+      final args = routeData.argsAs<BarFillRouteArgs>(orElse: () => const BarFillRouteArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.BarFillPage(
@@ -57,8 +50,7 @@ abstract class $Router extends _i20.RootStackRouter {
       );
     },
     BarFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<BarFillWithNfcArgs>(
-          orElse: () => const BarFillWithNfcArgs());
+      final args = routeData.argsAs<BarFillWithNfcArgs>(orElse: () => const BarFillWithNfcArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BarFillWithNfc(
@@ -78,8 +70,7 @@ abstract class $Router extends _i20.RootStackRouter {
       );
     },
     CardFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardFillRouteArgs>(
-          orElse: () => const CardFillRouteArgs());
+      final args = routeData.argsAs<CardFillRouteArgs>(orElse: () => const CardFillRouteArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.CardFillPage(
@@ -90,8 +81,7 @@ abstract class $Router extends _i20.RootStackRouter {
       );
     },
     CardFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<CardFillWithNfcArgs>(
-          orElse: () => const CardFillWithNfcArgs());
+      final args = routeData.argsAs<CardFillWithNfcArgs>(orElse: () => const CardFillWithNfcArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i5.CardFillWithNfc(
@@ -101,8 +91,7 @@ abstract class $Router extends _i20.RootStackRouter {
       );
     },
     CardSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardSecretFillRouteArgs>(
-          orElse: () => const CardSecretFillRouteArgs());
+      final args = routeData.argsAs<CardSecretFillRouteArgs>(orElse: () => const CardSecretFillRouteArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.CardSecretFillPage(
@@ -140,8 +129,7 @@ abstract class $Router extends _i20.RootStackRouter {
       );
     },
     Dashboard.name: (routeData) {
-      final args =
-          routeData.argsAs<DashboardArgs>(orElse: () => const DashboardArgs());
+      final args = routeData.argsAs<DashboardArgs>(orElse: () => const DashboardArgs());
       return _i20.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i11.Dashboard(
@@ -221,8 +209,7 @@ class BarFillRoute extends _i20.PageRouteInfo<BarFillRouteArgs> {
 
   static const String name = 'BarFillRoute';
 
-  static const _i20.PageInfo<BarFillRouteArgs> page =
-      _i20.PageInfo<BarFillRouteArgs>(name);
+  static const _i20.PageInfo<BarFillRouteArgs> page = _i20.PageInfo<BarFillRouteArgs>(name);
 }
 
 class BarFillRouteArgs {
@@ -259,8 +246,7 @@ class BarFillWithNfc extends _i20.PageRouteInfo<BarFillWithNfcArgs> {
 
   static const String name = 'BarFillWithNfc';
 
-  static const _i20.PageInfo<BarFillWithNfcArgs> page =
-      _i20.PageInfo<BarFillWithNfcArgs>(name);
+  static const _i20.PageInfo<BarFillWithNfcArgs> page = _i20.PageInfo<BarFillWithNfcArgs>(name);
 }
 
 class BarFillWithNfcArgs {
@@ -297,8 +283,7 @@ class BarSettingsRoute extends _i20.PageRouteInfo<BarSettingsRouteArgs> {
 
   static const String name = 'BarSettingsRoute';
 
-  static const _i20.PageInfo<BarSettingsRouteArgs> page =
-      _i20.PageInfo<BarSettingsRouteArgs>(name);
+  static const _i20.PageInfo<BarSettingsRouteArgs> page = _i20.PageInfo<BarSettingsRouteArgs>(name);
 }
 
 class BarSettingsRouteArgs {
@@ -337,8 +322,7 @@ class CardFillRoute extends _i20.PageRouteInfo<CardFillRouteArgs> {
 
   static const String name = 'CardFillRoute';
 
-  static const _i20.PageInfo<CardFillRouteArgs> page =
-      _i20.PageInfo<CardFillRouteArgs>(name);
+  static const _i20.PageInfo<CardFillRouteArgs> page = _i20.PageInfo<CardFillRouteArgs>(name);
 }
 
 class CardFillRouteArgs {
@@ -378,8 +362,7 @@ class CardFillWithNfc extends _i20.PageRouteInfo<CardFillWithNfcArgs> {
 
   static const String name = 'CardFillWithNfc';
 
-  static const _i20.PageInfo<CardFillWithNfcArgs> page =
-      _i20.PageInfo<CardFillWithNfcArgs>(name);
+  static const _i20.PageInfo<CardFillWithNfcArgs> page = _i20.PageInfo<CardFillWithNfcArgs>(name);
 }
 
 class CardFillWithNfcArgs {
@@ -416,8 +399,7 @@ class CardSecretFillRoute extends _i20.PageRouteInfo<CardSecretFillRouteArgs> {
 
   static const String name = 'CardSecretFillRoute';
 
-  static const _i20.PageInfo<CardSecretFillRouteArgs> page =
-      _i20.PageInfo<CardSecretFillRouteArgs>(name);
+  static const _i20.PageInfo<CardSecretFillRouteArgs> page = _i20.PageInfo<CardSecretFillRouteArgs>(name);
 }
 
 class CardSecretFillRouteArgs {
@@ -454,8 +436,7 @@ class CardSettingsRoute extends _i20.PageRouteInfo<CardSettingsRouteArgs> {
 
   static const String name = 'CardSettingsRoute';
 
-  static const _i20.PageInfo<CardSettingsRouteArgs> page =
-      _i20.PageInfo<CardSettingsRouteArgs>(name);
+  static const _i20.PageInfo<CardSettingsRouteArgs> page = _i20.PageInfo<CardSettingsRouteArgs>(name);
 }
 
 class CardSettingsRouteArgs {
@@ -538,8 +519,7 @@ class Dashboard extends _i20.PageRouteInfo<DashboardArgs> {
 
   static const String name = 'Dashboard';
 
-  static const _i20.PageInfo<DashboardArgs> page =
-      _i20.PageInfo<DashboardArgs>(name);
+  static const _i20.PageInfo<DashboardArgs> page = _i20.PageInfo<DashboardArgs>(name);
 }
 
 class DashboardArgs {

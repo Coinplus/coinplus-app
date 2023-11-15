@@ -15,8 +15,7 @@ _$CoinDtoImpl _$$CoinDtoImplFromJson(Map json) => _$CoinDtoImpl(
       priceChange1d: json['priceChange1d'] as num? ?? 0,
     );
 
-Map<String, dynamic> _$$CoinDtoImplToJson(_$CoinDtoImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CoinDtoImplToJson(_$CoinDtoImpl instance) => <String, dynamic>{
       'id': instance.id,
       'symbol': instance.symbol,
       'name': instance.name,

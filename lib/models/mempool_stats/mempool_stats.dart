@@ -27,8 +27,7 @@ class MempoolStats {
     required this.txCount,
   });
 
-  factory MempoolStats.fromJson(Map<String, dynamic> json) =>
-      _$MempoolStatsFromJson(json);
+  factory MempoolStats.fromJson(Map<String, dynamic> json) => _$MempoolStatsFromJson(json);
 
   Map<String, dynamic> toJson() => _$MempoolStatsToJson(this);
 }

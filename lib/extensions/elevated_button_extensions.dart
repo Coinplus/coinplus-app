@@ -39,9 +39,7 @@ extension ElevatedButtonExtensions on ThemeData {
       foregroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return textStyle?.color ??
-              (states.contains(MaterialState.disabled)
-                  ? foregroundColor.withOpacity(0.5)
-                  : foregroundColor);
+              (states.contains(MaterialState.disabled) ? foregroundColor.withOpacity(0.5) : foregroundColor);
         },
       ),
       shadowColor: const MaterialStatePropertyAll(Colors.transparent),
@@ -53,9 +51,7 @@ extension ElevatedButtonExtensions on ThemeData {
               Radius.circular(8),
             ),
             side: BorderSide(
-              color: states.contains(MaterialState.disabled)
-                  ? Colors.transparent
-                  : borderColor,
+              color: states.contains(MaterialState.disabled) ? Colors.transparent : borderColor,
             ),
           );
         },
@@ -72,9 +68,7 @@ extension ElevatedButtonExtensions on ThemeData {
       overlayColor: MaterialStateProperty.all(overlayColor),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
-              ? backgroundColor.withOpacity(0.5)
-              : backgroundColor;
+          return states.contains(MaterialState.disabled) ? backgroundColor.withOpacity(0.5) : backgroundColor;
         },
       ),
     );

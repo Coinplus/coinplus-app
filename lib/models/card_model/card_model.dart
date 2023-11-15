@@ -27,8 +27,7 @@ class CardModel with _$CardModel {
     @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats,
   }) = _CardModel;
 
-  factory CardModel.fromJson(Map<String, dynamic> json) =>
-      _$CardModelFromJson(json);
+  factory CardModel.fromJson(Map<String, dynamic> json) => _$CardModelFromJson(json);
 }
 
 String timeFromJson(String a) {

@@ -34,8 +34,7 @@ class BarFillWithNfc extends StatefulWidget {
   State<BarFillWithNfc> createState() => _BarFillWithNfcState();
 }
 
-class _BarFillWithNfcState extends State<BarFillWithNfc>
-    with TickerProviderStateMixin {
+class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
   final _cardAnimationState = CardAnimationState();
   final _validationStore = ValidationState();
@@ -119,34 +118,28 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                   children: [
                                     const Gap(190),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Column(
                                           children: [
                                             const Text(
                                               'Balance',
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,),
+                                                fontSize: 15,
+                                                fontFamily: FontFamily.redHatMedium,
+                                              ),
                                             ),
                                             Observer(
                                               builder: (context) {
-                                                final data =
-                                                    _balanceStore.coins;
-                                                final myFormat = NumberFormat
-                                                    .decimalPatternDigits(
+                                                final data = _balanceStore.coins;
+                                                final myFormat = NumberFormat.decimalPatternDigits(
                                                   locale: 'en_us',
                                                   decimalDigits: 2,
                                                 );
-                                                if (_balanceStore.loadings[
-                                                        bar.address] ??
-                                                    false) {
+                                                if (_balanceStore.loadings[bar.address] ?? false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(4),
-                                                    child:
-                                                        CupertinoActivityIndicator(
+                                                    child: CupertinoActivityIndicator(
                                                       radius: 5,
                                                     ),
                                                   );
@@ -157,11 +150,9 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                           : '')
                                                       .toString(),
                                                   style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontWeight: FontWeight.w700,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
+                                                    color: Colors.black.withOpacity(0.7),
                                                     fontSize: 20,
                                                   ),
                                                 );
@@ -175,9 +166,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                     Center(
                                       child: Observer(
                                         builder: (context) {
-                                          if (_balanceStore
-                                                  .loadings[bar.address] ??
-                                              false) {
+                                          if (_balanceStore.loadings[bar.address] ?? false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
                                               child: CupertinoActivityIndicator(
@@ -188,8 +177,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                           return Text(
                                             visibleAddress,
                                             style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               color: Colors.black,
                                               fontSize: 13,
                                             ),
@@ -211,8 +199,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                             width: context.width - 34,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image:
-                                    Assets.images.skeletonEmpty.image().image,
+                                image: Assets.images.skeletonEmpty.image().image,
                               ),
                             ),
                             child: LayoutBuilder(
@@ -232,9 +219,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                 top: 0,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.skeletonCircle
-                                                    .image(
+                                                child: Assets.images.skeletonCircle.image(
                                                   height: 165,
                                                 ),
                                               ),
@@ -242,17 +227,14 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                 top: 60,
                                                 left: 0,
                                                 right: 0,
-                                                child: Assets
-                                                    .images.skeletonSecret1
-                                                    .image(
+                                                child: Assets.images.skeletonSecret1.image(
                                                   height: 40,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Assets.images.skeletonAddressField
-                                            .image(),
+                                        Assets.images.skeletonAddressField.image(),
                                         const Gap(20),
                                         Assets.images.skeletonLogo.image(
                                           height: 38,

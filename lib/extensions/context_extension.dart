@@ -24,9 +24,7 @@ extension ElevatedButtonHelper on ButtonStyle {
         foregroundColor: MaterialStateProperty.all(Colors.white),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
-            return states.contains(MaterialState.disabled)
-                ? color.withOpacity(0.5)
-                : color;
+            return states.contains(MaterialState.disabled) ? color.withOpacity(0.5) : color;
           },
         ),
       );

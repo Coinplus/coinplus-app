@@ -34,8 +34,7 @@ class BarFillPage extends StatefulWidget {
   State<BarFillPage> createState() => _BarFillPageState();
 }
 
-class _BarFillPageState extends State<BarFillPage>
-    with TickerProviderStateMixin {
+class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
@@ -59,9 +58,7 @@ class _BarFillPageState extends State<BarFillPage>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
@@ -142,12 +139,10 @@ class _BarFillPageState extends State<BarFillPage>
                                           const Gap(203),
                                           Expanded(
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
                                                     Assets.icons.balance.image(
                                                       height: 12,
@@ -155,35 +150,28 @@ class _BarFillPageState extends State<BarFillPage>
                                                     Observer(
                                                       builder: (context) {
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedBar
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedBar?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    4,),
-                                                            child:
-                                                                CupertinoActivityIndicator(
+                                                            padding: EdgeInsets.all(
+                                                              4,
+                                                            ),
+                                                            child: CupertinoActivityIndicator(
                                                               radius: 5,
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          (_balanceStore.selectedBar !=
-                                                                      null
+                                                          (_balanceStore.selectedBar != null
                                                                   ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
                                                                   : '')
                                                               .toString(),
                                                           style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.7,),
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
+                                                            color: Colors.white.withOpacity(
+                                                              0.7,
+                                                            ),
                                                             fontSize: 25,
                                                           ),
                                                         );
@@ -198,43 +186,30 @@ class _BarFillPageState extends State<BarFillPage>
                                           Container(
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                image: Assets
-                                                    .icons.barAddressField
-                                                    .image()
-                                                    .image,
+                                                image: Assets.icons.barAddressField.image().image,
                                               ),
                                             ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                              padding: const EdgeInsets.symmetric(
                                                 vertical: 10,
                                                 horizontal: 16,
                                               ),
                                               child: Observer(
                                                 builder: (context) {
-                                                  if (_balanceStore.loadings[
-                                                          _balanceStore
-                                                              .selectedBar
-                                                              ?.address] ??
+                                                  if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
                                                       false) {
                                                     return const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(4),
-                                                      child:
-                                                          CupertinoActivityIndicator(
+                                                      padding: EdgeInsets.all(4),
+                                                      child: CupertinoActivityIndicator(
                                                         radius: 5,
                                                       ),
                                                     );
                                                   }
                                                   return Text(
-                                                    _balanceStore.selectedBar
-                                                            ?.address ??
-                                                        '',
+                                                    _balanceStore.selectedBar?.address ?? '',
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatLight,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontFamily: FontFamily.redHatLight,
+                                                      fontWeight: FontWeight.w700,
                                                       color: Colors.black,
                                                       fontSize: 10,
                                                     ),
@@ -278,105 +253,76 @@ class _BarFillPageState extends State<BarFillPage>
                                             maxLines: 2,
                                             minLines: 1,
                                             focusNode: _focusNode,
-                                            cursorColor:
-                                                AppColors.primaryButtonColor,
+                                            cursorColor: AppColors.primaryButtonColor,
                                             cursorWidth: 1,
                                             style: const TextStyle(
                                               fontSize: 12,
                                               color: AppColors.primaryTextColor,
-                                              fontFamily:
-                                                  FontFamily.redHatLight,
+                                              fontFamily: FontFamily.redHatLight,
                                             ),
                                             onTapOutside: (_) {
-                                              WidgetsBinding.instance
-                                                  .focusManager.primaryFocus
-                                                  ?.unfocus();
+                                              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                                             },
                                             decoration: InputDecoration(
                                               fillColor: Colors.white,
-                                              hintText:
-                                                  'Write here your \nbar address ',
+                                              hintText: 'Write here your \nbar address ',
                                               hintMaxLines: 2,
                                               hintStyle: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatLight,
+                                                fontFamily: FontFamily.redHatLight,
                                                 fontSize: 12,
-                                                color: AppColors
-                                                    .primaryTextColor
-                                                    .withOpacity(
+                                                color: AppColors.primaryTextColor.withOpacity(
                                                   0.4,
                                                 ),
                                               ),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
+                                              contentPadding: const EdgeInsets.symmetric(
                                                 horizontal: 8,
                                                 vertical: 16,
                                               ),
-                                              prefixIconConstraints:
-                                                  const BoxConstraints(
+                                              prefixIconConstraints: const BoxConstraints(
                                                 minWidth: 27,
                                                 minHeight: 27,
                                               ),
                                               prefixIcon: Observer(
                                                 builder: (context) {
                                                   return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
+                                                    padding: const EdgeInsets.all(
                                                       4,
                                                     ),
-                                                    child: _validationStore
-                                                            .isValid
+                                                    child: _validationStore.isValid
                                                         ? IconButton(
-                                                            onPressed:
-                                                                () async {
-                                                              _focusNode
-                                                                  .unfocus();
-                                                              await Future
-                                                                  .delayed(
+                                                            onPressed: () async {
+                                                              _focusNode.unfocus();
+                                                              await Future.delayed(
                                                                 const Duration(
-                                                                  milliseconds:
-                                                                      300,
+                                                                  milliseconds: 300,
                                                                 ),
                                                               );
-                                                              final res =
-                                                                  await context
-                                                                      .pushRoute<
-                                                                          String?>(
+                                                              final res = await context.pushRoute<String?>(
                                                                 const QrScannerRoute(),
                                                               );
                                                               if (res == null) {
                                                                 return;
                                                               }
 
-                                                              _btcAddressController
-                                                                  .text = res;
+                                                              _btcAddressController.text = res;
                                                               await _validateBTCAddress();
                                                             },
-                                                            icon: Assets
-                                                                .images.qrCode
-                                                                .image(
+                                                            icon: Assets.images.qrCode.image(
                                                               height: 34,
-                                                              color: AppColors
-                                                                  .primaryTextColor,
+                                                              color: AppColors.primaryTextColor,
                                                             ),
                                                           )
                                                         : Lottie.asset(
                                                             'assets/animated_logo/address_validation_success.json',
                                                             height: 24,
-                                                            controller:
-                                                                _lottieController,
-                                                            onLoaded:
-                                                                (composition) {
+                                                            controller: _lottieController,
+                                                            onLoaded: (composition) {
                                                               Future.delayed(
                                                                 const Duration(
-                                                                  milliseconds:
-                                                                      1000,
+                                                                  milliseconds: 1000,
                                                                 ),
                                                               );
-                                                              _lottieController
-                                                                      .duration =
-                                                                  composition
-                                                                      .duration;
+                                                              _lottieController.duration = composition.duration;
                                                             },
                                                           ),
                                                   );
@@ -384,11 +330,9 @@ class _BarFillPageState extends State<BarFillPage>
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: const BorderSide(
-                                                  color: AppColors
-                                                      .primaryButtonColor,
+                                                  color: AppColors.primaryButtonColor,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
+                                                borderRadius: BorderRadius.circular(
                                                   5,
                                                 ),
                                               ),
@@ -396,8 +340,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                 borderSide: const BorderSide(
                                                   color: Colors.transparent,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
+                                                borderRadius: BorderRadius.circular(
                                                   5,
                                                 ),
                                               ),

@@ -32,8 +32,7 @@ class WalletPage extends StatefulWidget {
   State<WalletPage> createState() => _WalletPageState();
 }
 
-class _WalletPageState extends State<WalletPage>
-    with TickerProviderStateMixin{
+class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   NavBarState get _navBarState => GetIt.I<NavBarState>();
@@ -94,18 +93,13 @@ class _WalletPageState extends State<WalletPage>
             CustomPaint(
               size: Size(
                 context.height,
-                (context.height > 667
-                        ? context.height * 0.205
-                        : context.height * 0.2)
-                    .toDouble(),
+                (context.height > 667 ? context.height * 0.205 : context.height * 0.2).toDouble(),
               ),
               painter: HeaderCustomPainter(),
             ),
             Positioned(
               bottom: context.height > 667 ? 6 : 0,
-              right: context.height > 844
-                  ? context.width * 0.055
-                  : context.width * 0.04,
+              right: context.height > 844 ? context.width * 0.055 : context.width * 0.04,
               child: Container(
                 height: 40,
                 width: 128,
@@ -255,8 +249,7 @@ class _WalletPageState extends State<WalletPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                  padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                   child: Observer(
                     builder: (_) {
                       final data = _balanceStore.coins;
@@ -370,8 +363,7 @@ class _WalletPageState extends State<WalletPage>
                         );
                       } else {
                         final myFormat = NumberFormat.decimalPattern('en_us');
-                        final formattedPrice =
-                            myFormat.format(data.price).toString();
+                        final formattedPrice = myFormat.format(data.price).toString();
                         return Row(
                           children: [
                             Assets.icons.bTCIcon.image(height: 24),
@@ -454,9 +446,7 @@ class _WalletPageState extends State<WalletPage>
                                         '${data.priceChange1d.toStringAsFixed(2)} %',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: data.priceChange1d > 0
-                                              ? Colors.green
-                                              : Colors.red,
+                                          color: data.priceChange1d > 0 ? Colors.green : Colors.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

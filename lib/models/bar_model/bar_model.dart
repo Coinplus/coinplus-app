@@ -26,8 +26,7 @@ class BarModel with _$BarModel {
     @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats,
   }) = _BarModel;
 
-  factory BarModel.fromJson(Map<String, dynamic> json) =>
-      _$BarModelFromJson(json);
+  factory BarModel.fromJson(Map<String, dynamic> json) => _$BarModelFromJson(json);
 }
 
 String timeFromJson(String a) {

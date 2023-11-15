@@ -34,15 +34,15 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
   final closeButton = LoadingButton(
     style: context.theme
         .buttonStyle(
-      textStyle: const TextStyle(
-        fontFamily: FontFamily.redHatMedium,
-        color: AppColors.primaryTextColor,
-        fontSize: 15,
-      ),
-    )
+          textStyle: const TextStyle(
+            fontFamily: FontFamily.redHatMedium,
+            color: AppColors.primaryTextColor,
+            fontSize: 15,
+          ),
+        )
         .copyWith(
-      backgroundColor: MaterialStateProperty.all(AppColors.silver),
-    ),
+          backgroundColor: MaterialStateProperty.all(AppColors.silver),
+        ),
     onPressed: () async {
       await router.pop();
     },

@@ -53,9 +53,8 @@ class PinRemove extends StatelessWidget {
                     color: AppColors.red,
                   ),
                 ),
-                crossFadeState: _walletProtectState.isCreatedPinMatch
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
+                crossFadeState:
+                    _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                 duration: const Duration(milliseconds: 1),
               );
             },
