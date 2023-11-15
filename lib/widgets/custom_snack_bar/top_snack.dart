@@ -148,8 +148,7 @@ class _TopSnackBar extends StatefulWidget {
   _TopSnackBarState createState() => _TopSnackBarState();
 }
 
-class _TopSnackBarState extends State<_TopSnackBar>
-    with SingleTickerProviderStateMixin {
+class _TopSnackBarState extends State<_TopSnackBar> with SingleTickerProviderStateMixin {
   late final Animation<Offset> _offsetAnimation;
   late final AnimationController _animationController;
 
@@ -184,12 +183,10 @@ class _TopSnackBarState extends State<_TopSnackBar>
 
     switch (widget.snackBarPosition) {
       case SnackBarPosition.top:
-        _offsetTween =
-            Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
+        _offsetTween = Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
         break;
       case SnackBarPosition.bottom:
-        _offsetTween =
-            Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
+        _offsetTween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
         break;
     }
 
@@ -216,12 +213,8 @@ class _TopSnackBarState extends State<_TopSnackBar>
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: widget.snackBarPosition == SnackBarPosition.top
-          ? widget.padding.top
-          : null,
-      bottom: widget.snackBarPosition == SnackBarPosition.bottom
-          ? widget.padding.bottom
-          : null,
+      top: widget.snackBarPosition == SnackBarPosition.top ? widget.padding.top : null,
+      bottom: widget.snackBarPosition == SnackBarPosition.bottom ? widget.padding.bottom : null,
       left: widget.padding.left,
       right: widget.padding.right,
       child: SlideTransition(
@@ -232,8 +225,7 @@ class _TopSnackBarState extends State<_TopSnackBar>
           left: widget.safeAreaValues.left,
           right: widget.safeAreaValues.right,
           minimum: widget.safeAreaValues.minimum,
-          maintainBottomViewPadding:
-              widget.safeAreaValues.maintainBottomViewPadding,
+          maintainBottomViewPadding: widget.safeAreaValues.maintainBottomViewPadding,
           child: _buildDismissibleChild(),
         ),
       ),

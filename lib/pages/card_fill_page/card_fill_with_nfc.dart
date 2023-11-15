@@ -48,8 +48,7 @@ class CardFillWithNfc extends StatefulWidget {
   State<CardFillWithNfc> createState() => _CardFillWithNfcState();
 }
 
-class _CardFillWithNfcState extends State<CardFillWithNfc>
-    with TickerProviderStateMixin {
+class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderStateMixin {
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
   final _focusNode = FocusNode();
@@ -58,15 +57,12 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
   final _checkboxState = CheckboxState();
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  late final ShakeAnimationController _shakeAnimationController =
-      ShakeAnimationController();
+  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-
 
   @override
   void initState() {
@@ -82,9 +78,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
@@ -136,8 +130,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
               ),
               child: IconButton(
                 onPressed: () {
-                  _flipCardController.controller!.value == 1 &&
-                          _lineStore.isLineVisible
+                  _flipCardController.controller!.value == 1 && _lineStore.isLineVisible
                       ? makeLineInvisible()
                       : router.pop();
                 },
@@ -205,32 +198,25 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                             if (Platform.isIOS) {
                                               Clipboard.setData(
                                                 ClipboardData(
-                                                  text: _balanceStore
-                                                      .selectedCard!.address
-                                                      .toString(),
+                                                  text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
                                               ).then(
                                                 (_) {
                                                   HapticFeedback.mediumImpact();
                                                   showTopSnackBar(
-                                                    displayDuration:
-                                                        const Duration(
+                                                    displayDuration: const Duration(
                                                       milliseconds: 400,
                                                     ),
                                                     Overlay.of(
                                                       context,
                                                     ),
                                                     CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          const Color(
+                                                      backgroundColor: const Color(
                                                         0xFF4A4A4A,
                                                       ).withOpacity(0.9),
-                                                      message:
-                                                          'Address was copied',
-                                                      textStyle:
-                                                          const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                      message: 'Address was copied',
+                                                      textStyle: const TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
                                                         color: Colors.white,
                                                       ),
@@ -241,9 +227,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                             } else {
                                               Clipboard.setData(
                                                 ClipboardData(
-                                                  text: _balanceStore
-                                                      .selectedCard!.address
-                                                      .toString(),
+                                                  text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
                                               ).then(
                                                 (_) {
@@ -266,12 +250,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                   bottom: 12,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
+                                                  borderRadius: BorderRadius.circular(
                                                     6,
                                                   ),
-                                                  color:
-                                                      Colors.black.withOpacity(
+                                                  color: Colors.black.withOpacity(
                                                     0.2,
                                                   ),
                                                 ),
@@ -283,8 +265,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                           'Address',
                                                           style: TextStyle(
                                                             fontSize: 11,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily: FontFamily.redHatMedium,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -293,37 +274,25 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                     Observer(
                                                       builder: (context) {
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedCard
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedCard?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
+                                                            padding: EdgeInsets.all(
                                                               4,
                                                             ),
                                                             child: SizedBox(
                                                               height: 15,
                                                               width: 15,
-                                                              child:
-                                                                  CircularProgressIndicator(),
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          _balanceStore
-                                                                  .selectedCard
-                                                                  ?.address ??
-                                                              '',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                          _balanceStore.selectedCard?.address ?? '',
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
                                                             color: Colors.white,
                                                             fontSize: 12,
                                                           ),
@@ -356,12 +325,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                   8,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
+                                                  borderRadius: BorderRadius.circular(
                                                     6,
                                                   ),
-                                                  color:
-                                                      Colors.black.withOpacity(
+                                                  color: Colors.black.withOpacity(
                                                     0.2,
                                                   ),
                                                 ),
@@ -372,8 +339,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                         Text(
                                                           'Balance',
                                                           style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily: FontFamily.redHatMedium,
                                                             color: Colors.white,
                                                             fontSize: 11,
                                                           ),
@@ -382,46 +348,34 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                     ),
                                                     Observer(
                                                       builder: (context) {
-                                                        final myFormat =
-                                                            NumberFormat
-                                                                .decimalPatternDigits(
+                                                        final myFormat = NumberFormat.decimalPatternDigits(
                                                           locale: 'en_us',
                                                           decimalDigits: 2,
                                                         );
-                                                        final data =
-                                                            _balanceStore.coins;
+                                                        final data = _balanceStore.coins;
 
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedCard
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedCard?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
+                                                            padding: EdgeInsets.all(
                                                               4,
                                                             ),
                                                             child: SizedBox(
                                                               height: 15,
                                                               width: 15,
-                                                              child:
-                                                                  CircularProgressIndicator(),
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          (_balanceStore.selectedCard !=
-                                                                      null
+                                                          (_balanceStore.selectedCard != null
                                                                   ? '\$${myFormat.format((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price)}'
                                                                   : '')
                                                               .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
                                                             color: Colors.white,
                                                             fontSize: 20,
                                                           ),
@@ -486,27 +440,22 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                           children: [
                                             if (constraints.maxHeight < 551)
                                               SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.091,
+                                                width: constraints.maxWidth * 0.091,
                                               )
                                             else
                                               SizedBox(
-                                                width: constraints.maxWidth *
-                                                    0.125,
+                                                width: constraints.maxWidth * 0.125,
                                               ),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 Assets.images.secret1.image(
-                                                  height:
-                                                      context.height * 0.212,
+                                                  height: context.height * 0.212,
                                                 ),
                                                 const Gap(70),
                                                 Assets.images.secret2.image(
-                                                  height:
-                                                      context.height * 0.212,
+                                                  height: context.height * 0.212,
                                                 ),
                                               ],
                                             ),
@@ -522,71 +471,46 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                               Observer(
                                                 builder: (context) {
                                                   return Opacity(
-                                                    opacity:
-                                                        _lineStore.isLineVisible
-                                                            ? 1
-                                                            : 0,
+                                                    opacity: _lineStore.isLineVisible ? 1 : 0,
                                                     child: CustomPaint(
                                                       size: Size(
-                                                        constraints.maxHeight <
-                                                                551
-                                                            ? 33
-                                                            : 50,
+                                                        constraints.maxHeight < 551 ? 33 : 50,
                                                         255,
                                                       ),
-                                                      painter:
-                                                          LineCustomPaint(),
+                                                      painter: LineCustomPaint(),
                                                     ),
                                                   );
                                                 },
                                               ),
                                               Opacity(
-                                                opacity:
-                                                    _validationStore.isValid
-                                                        ? 0
-                                                        : 1,
+                                                opacity: _validationStore.isValid ? 0 : 1,
                                                 child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: [
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                        borderRadius: BorderRadius.circular(15),
                                                         border: Border.all(
-                                                          color: AppColors
-                                                              .primaryTextColor,
+                                                          color: AppColors.primaryTextColor,
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets
-                                                          .images.secret1
-                                                          .image(
-                                                        height: context.height *
-                                                            0.212,
+                                                      child: Assets.images.secret1.image(
+                                                        height: context.height * 0.212,
                                                       ),
                                                     ),
                                                     const Gap(70),
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                        borderRadius: BorderRadius.circular(15),
                                                         border: Border.all(
-                                                          color: AppColors
-                                                              .primaryTextColor,
+                                                          color: AppColors.primaryTextColor,
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets
-                                                          .images.secret2
-                                                          .image(
-                                                        height: context.height *
-                                                            0.212,
+                                                      child: Assets.images.secret2.image(
+                                                        height: context.height * 0.212,
                                                       ),
                                                     ),
                                                   ],
@@ -603,15 +527,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                 Opacity(
                                   opacity: _lineStore.isLineVisible ? 0 : 1,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Gap(34),
                                       Row(
                                         children: [
                                           const Gap(15),
-                                          Assets.icons.coinplusLogo
-                                              .image(height: 32),
+                                          Assets.icons.coinplusLogo.image(height: 32),
                                         ],
                                       ),
                                       const Gap(22),
@@ -624,123 +546,76 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border.all(
-                                                  color: _focusNode.hasFocus
-                                                      ? Colors.blue
-                                                      : const Color(0xFFFBB270),
-                                                  width: _focusNode.hasFocus
-                                                      ? 1
-                                                      : 3,
+                                                  color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
+                                                  width: _focusNode.hasFocus ? 1 : 3,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(27),
+                                                borderRadius: BorderRadius.circular(27),
                                               ),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
                                                   SizedBox(
-                                                    width:
-                                                        context.height * 0.114,
-                                                    height:
-                                                        context.height * 0.14,
+                                                    width: context.height * 0.114,
+                                                    height: context.height * 0.14,
                                                     child: Observer(
                                                       builder: (context) {
                                                         return TextField(
-                                                          readOnly:
-                                                              !_validationStore
-                                                                      .isValid &&
-                                                                  true,
-                                                          textAlignVertical:
-                                                              TextAlignVertical
-                                                                  .top,
+                                                          readOnly: !_validationStore.isValid && true,
+                                                          textAlignVertical: TextAlignVertical.top,
                                                           autocorrect: false,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .text,
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                          keyboardType: TextInputType.text,
+                                                          textAlign: TextAlign.center,
                                                           onChanged: (value) {
-                                                            if (value.length >
-                                                                25) {
+                                                            if (value.length > 25) {
                                                               _validateBTCAddress();
                                                             }
                                                           },
-                                                          controller:
-                                                              _btcAddressController,
+                                                          controller: _btcAddressController,
                                                           maxLines: 15,
                                                           focusNode: _focusNode,
-                                                          cursorColor:
-                                                              AppColors.primary,
+                                                          cursorColor: AppColors.primary,
                                                           cursorWidth: 1,
-                                                          style:
-                                                              const TextStyle(
+                                                          style: const TextStyle(
                                                             fontSize: 12,
-                                                            color: AppColors
-                                                                .primaryTextColor,
-                                                            fontFamily:
-                                                                FontFamily
-                                                                    .redHatLight,
+                                                            color: AppColors.primaryTextColor,
+                                                            fontFamily: FontFamily.redHatLight,
                                                           ),
                                                           onTapOutside: (_) {
-                                                            WidgetsBinding
-                                                                .instance
-                                                                .focusManager
-                                                                .primaryFocus
+                                                            WidgetsBinding.instance.focusManager.primaryFocus
                                                                 ?.unfocus();
                                                           },
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'Write here your card address',
-                                                            fillColor:
-                                                                Colors.white,
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Write here your card address',
+                                                            fillColor: Colors.white,
                                                             hintMaxLines: 10,
-                                                            hintStyle:
-                                                                TextStyle(
-                                                              fontFamily:
-                                                                  FontFamily
-                                                                      .redHatLight,
+                                                            hintStyle: TextStyle(
+                                                              fontFamily: FontFamily.redHatLight,
                                                               fontSize: 13,
-                                                              color: AppColors
-                                                                  .primaryTextColor
-                                                                  .withOpacity(
+                                                              color: AppColors.primaryTextColor.withOpacity(
                                                                 0.4,
                                                               ),
                                                             ),
-                                                            contentPadding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
+                                                            contentPadding: const EdgeInsets.symmetric(
                                                               horizontal: 10,
                                                               vertical: 16,
                                                             ),
-                                                            prefixIconConstraints:
-                                                                const BoxConstraints(
+                                                            prefixIconConstraints: const BoxConstraints(
                                                               minWidth: 25,
                                                               minHeight: 25,
                                                             ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
+                                                            focusedBorder: OutlineInputBorder(
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.transparent,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
+                                                              borderRadius: BorderRadius.circular(
                                                                 24,
                                                               ),
                                                             ),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
+                                                            enabledBorder: OutlineInputBorder(
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.transparent,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
+                                                              borderRadius: BorderRadius.circular(
                                                                 24,
                                                               ),
                                                             ),
@@ -758,31 +633,23 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                   top: 25,
                                                   left: 0,
                                                   right: 0,
-                                                  child: _validationStore
-                                                          .isValid
+                                                  child: _validationStore.isValid
                                                       ? ScaleTap(
                                                           onPressed: () async {
-                                                            _focusNode
-                                                                .unfocus();
-                                                            await Future
-                                                                .delayed(
+                                                            _focusNode.unfocus();
+                                                            await Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    300,
+                                                                milliseconds: 300,
                                                               ),
                                                             );
-                                                            final res =
-                                                                await context
-                                                                    .pushRoute<
-                                                                        String?>(
+                                                            final res = await context.pushRoute<String?>(
                                                               const QrScannerRoute(),
                                                             );
                                                             if (res == null) {
                                                               return;
                                                             }
 
-                                                            _btcAddressController
-                                                                .text = res;
+                                                            _btcAddressController.text = res;
                                                             await _validateBTCAddress();
                                                           },
                                                           child: SizedBox(
@@ -795,20 +662,14 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                       : Lottie.asset(
                                                           'assets/animated_logo/address_validation_success.json',
                                                           height: 40,
-                                                          controller:
-                                                              _lottieController,
-                                                          onLoaded:
-                                                              (composition) {
+                                                          controller: _lottieController,
+                                                          onLoaded: (composition) {
                                                             Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    1000,
+                                                                milliseconds: 1000,
                                                               ),
                                                             );
-                                                            _lottieController
-                                                                    .duration =
-                                                                composition
-                                                                    .duration;
+                                                            _lottieController.duration = composition.duration;
                                                           },
                                                         ),
                                                 );
@@ -817,15 +678,12 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                             Observer(
                                               builder: (context) {
                                                 return Visibility(
-                                                  visible:
-                                                      !_validationStore.isValid,
+                                                  visible: !_validationStore.isValid,
                                                   child: Positioned(
                                                     left: 6,
                                                     right: 6,
                                                     top: 6,
-                                                    child: Assets.icons
-                                                        .validationIndicatorGreenTop
-                                                        .image(),
+                                                    child: Assets.icons.validationIndicatorGreenTop.image(),
                                                   ),
                                                 );
                                               },
@@ -833,15 +691,12 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                             Observer(
                                               builder: (context) {
                                                 return Visibility(
-                                                  visible:
-                                                      !_validationStore.isValid,
+                                                  visible: !_validationStore.isValid,
                                                   child: Positioned(
                                                     left: 6,
                                                     right: 6,
                                                     bottom: 6,
-                                                    child: Assets.icons
-                                                        .validationIndicatorGreenBottom
-                                                        .image(),
+                                                    child: Assets.icons.validationIndicatorGreenBottom.image(),
                                                   ),
                                                 );
                                               },
@@ -850,13 +705,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                         ),
                                       ),
                                       const Gap(29),
-                                      Assets.icons.cardBackText
-                                          .image(height: 55),
+                                      Assets.icons.cardBackText.image(height: 55),
                                       const Gap(18),
                                       SizedBox(
                                         width: 115,
-                                        child:
-                                            Assets.icons.cardBackLink.image(),
+                                        child: Assets.icons.cardBackLink.image(),
                                       ),
                                       const Gap(20),
                                     ],
@@ -933,15 +786,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                       ? const Color(0xFF73C3A6)
                                       : _acceptState.isAccepted
                                           ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00)
-                                              .withOpacity(0.6),
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
                                 ),
                                 color: _checkboxState.isActive
                                     ? const Color(0xFF73C3A6).withOpacity(0.1)
                                     : _acceptState.isAccepted
                                         ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.05),
+                                        : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -970,9 +821,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                               ),
                             ),
                           ),
-                          crossFadeState: !_lineStore.isLineVisible
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ),
                       ],
@@ -991,8 +841,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                               builder: (context) {
                                 return Checkbox(
                                   checkColor: const Color(0xFF73C3A6),
-                                  activeColor:
-                                      const Color(0xFF73C3A6).withOpacity(0.5),
+                                  activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(4),
@@ -1001,8 +850,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                   side: BorderSide(
                                     color: _acceptState.isAccepted
                                         ? Colors.grey.withOpacity(0.5)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.6),
+                                        : const Color(0xFFFF2E00).withOpacity(0.6),
                                   ),
                                   value: _checkboxState.isActive,
                                   onChanged: (_) {
@@ -1069,9 +917,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                       onPressed: _addressState.isAddressVisible
                           ? () async {
                               final cardIndex = _balanceStore.cards.indexWhere(
-                                (element) =>
-                                    element.address ==
-                                    _balanceStore.selectedCard?.address,
+                                (element) => element.address == _balanceStore.selectedCard?.address,
                               );
                               if (cardIndex != -1) {
                                 await alreadySavedCard(context);

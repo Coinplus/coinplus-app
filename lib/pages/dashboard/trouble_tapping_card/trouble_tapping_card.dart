@@ -74,7 +74,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
               await recommendedActivateByTap(context);
             },
           ),
-
           const Gap(8),
           buildOptionButton(
             context,
@@ -90,7 +89,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
             context,
             'Lost the card',
             Assets.icons.creditCardOff.image(height: 24),
-            onPressed: () async{
+            onPressed: () async {
               await router.pop();
               await recommendedActivateByTap(context);
             },

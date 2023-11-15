@@ -277,8 +277,7 @@ class _SettingsPageState extends State<SettingsPage>
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.help.image(
                               height: 22,
@@ -307,8 +306,7 @@ class _SettingsPageState extends State<SettingsPage>
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.contactUs.image(
                               height: 22,
@@ -443,8 +441,7 @@ class _SettingsPageState extends State<SettingsPage>
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.privacy.image(
                               height: 22,
@@ -478,8 +475,7 @@ class _SettingsPageState extends State<SettingsPage>
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.terms.image(
                               height: 22,

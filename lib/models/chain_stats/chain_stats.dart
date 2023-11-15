@@ -27,8 +27,7 @@ class ChainStats {
     required this.txCount,
   });
 
-  factory ChainStats.fromJson(Map<String, dynamic> json) =>
-      _$ChainStatsFromJson(json);
+  factory ChainStats.fromJson(Map<String, dynamic> json) => _$ChainStatsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChainStatsToJson(this);
 }

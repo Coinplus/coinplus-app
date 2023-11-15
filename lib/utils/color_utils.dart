@@ -21,17 +21,11 @@ Color blackOrWhiteContrastColor(
   ContrastPreference prefer = ContrastPreference.none,
 }) {
   // Will return a value between 0.0 (black) and 1.0 (white)
-  final value = (((sourceColor.red * 299.0) +
-              (sourceColor.green * 587.0) +
-              (sourceColor.blue * 114.0)) /
-          1000.0) /
-      255.0;
+  final value =
+      (((sourceColor.red * 299.0) + (sourceColor.green * 587.0) + (sourceColor.blue * 114.0)) / 1000.0) / 255.0;
   if (prefer != ContrastPreference.none) {
-    if (value >= _kMinContrastModifierRange &&
-        value <= _kMaxContrastModifierRange) {
-      return prefer == ContrastPreference.light
-          ? const Color(0xFFFFFFFF)
-          : const Color(0xFF000000);
+    if (value >= _kMinContrastModifierRange && value <= _kMaxContrastModifierRange) {
+      return prefer == ContrastPreference.light ? const Color(0xFFFFFFFF) : const Color(0xFF000000);
     }
   }
   return value > 0.6 ? const Color(0xFF000000) : const Color(0xFFFFFFFF);

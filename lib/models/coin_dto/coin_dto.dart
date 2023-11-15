@@ -24,6 +24,5 @@ class CoinDto with _$CoinDto {
     required num priceChange1d,
   }) = _CoinDto;
 
-  factory CoinDto.fromJson(Map<String, dynamic> json) =>
-      _$CoinDtoFromJson(json);
+  factory CoinDto.fromJson(Map<String, dynamic> json) => _$CoinDtoFromJson(json);
 }

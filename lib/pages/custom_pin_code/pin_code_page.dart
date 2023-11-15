@@ -95,9 +95,8 @@ class _PinCodePageState extends State<PinCodePage> with WidgetsBindingObserver {
                     color: AppColors.red,
                   ),
                 ),
-                crossFadeState: _walletProtectState.isCreatedPinMatch
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
+                crossFadeState:
+                    _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                 duration: const Duration(milliseconds: 1),
               );
             },

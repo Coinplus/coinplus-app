@@ -64,9 +64,7 @@ Future<void> main() async {
   try {
     dynamic token;
     try {
-      final result = await FirebaseFunctions.instance
-          .httpsCallable('getCustomToken')
-          .call({
+      final result = await FirebaseFunctions.instance.httpsCallable('getCustomToken').call({
         'uid': '14DeGgtQ5BFAzXjvb2UpGrdqygAysLyE5x',
         // "additionalClaims": {"premiumAccount": true}
       });

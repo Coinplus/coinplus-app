@@ -33,8 +33,7 @@ class BarList extends StatefulWidget {
   State<BarList> createState() => _BarListState();
 }
 
-class _BarListState extends State<BarList>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
+class _BarListState extends State<BarList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
@@ -114,12 +113,10 @@ class _BarListState extends State<BarList>
                             duration: const Duration(milliseconds: 400),
                             child: _settingsState.barCurrentIndex == index
                                 ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 25),
+                                        padding: const EdgeInsets.only(left: 25),
                                         child: Text(
                                           bar.name,
                                           style: const TextStyle(
@@ -187,14 +184,11 @@ class _BarListState extends State<BarList>
                                       Observer(
                                         builder: (context) {
                                           final data = _balanceStore.coins;
-                                          final myFormat =
-                                              NumberFormat.decimalPatternDigits(
+                                          final myFormat = NumberFormat.decimalPatternDigits(
                                             locale: 'en_us',
                                             decimalDigits: 2,
                                           );
-                                          if (_balanceStore
-                                                  .loadings[bar.address] ??
-                                              false) {
+                                          if (_balanceStore.loadings[bar.address] ?? false) {
                                             return const Padding(
                                               padding: EdgeInsets.all(4),
                                               child: CupertinoActivityIndicator(
@@ -208,11 +202,9 @@ class _BarListState extends State<BarList>
                                                     : '')
                                                 .toString(),
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
-                                              color:
-                                                  Colors.black.withOpacity(0.7),
+                                              color: Colors.black.withOpacity(0.7),
                                               fontSize: 20,
                                             ),
                                           );
@@ -226,8 +218,7 @@ class _BarListState extends State<BarList>
                               Center(
                                 child: Observer(
                                   builder: (context) {
-                                    if (_balanceStore.loadings[bar.address] ??
-                                        false) {
+                                    if (_balanceStore.loadings[bar.address] ?? false) {
                                       return const Padding(
                                         padding: EdgeInsets.all(4),
                                         child: CupertinoActivityIndicator(

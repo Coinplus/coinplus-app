@@ -51,8 +51,7 @@ class CardFillPage extends StatefulWidget {
   State<CardFillPage> createState() => _CardFillPageState();
 }
 
-class _CardFillPageState extends State<CardFillPage>
-    with TickerProviderStateMixin {
+class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMixin {
   late int cardCarouselIndex = _balanceStore.cards.length - 1;
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
@@ -62,8 +61,7 @@ class _CardFillPageState extends State<CardFillPage>
   final _checkboxState = CheckboxState();
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  late final ShakeAnimationController _shakeAnimationController =
-      ShakeAnimationController();
+  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -84,9 +82,7 @@ class _CardFillPageState extends State<CardFillPage>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
@@ -138,8 +134,7 @@ class _CardFillPageState extends State<CardFillPage>
               ),
               child: IconButton(
                 onPressed: () {
-                  _flipCardController.controller!.value == 1 &&
-                          _lineStore.isLineVisible
+                  _flipCardController.controller!.value == 1 && _lineStore.isLineVisible
                       ? makeLineInvisible()
                       : router.pop();
                 },
@@ -199,8 +194,7 @@ class _CardFillPageState extends State<CardFillPage>
                                       ),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.height > 667 ? 65 : 75,
+                                          horizontal: context.height > 667 ? 65 : 75,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -208,32 +202,25 @@ class _CardFillPageState extends State<CardFillPage>
                                             if (Platform.isIOS) {
                                               Clipboard.setData(
                                                 ClipboardData(
-                                                  text: _balanceStore
-                                                      .selectedCard!.address
-                                                      .toString(),
+                                                  text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
                                               ).then(
                                                 (_) {
                                                   HapticFeedback.mediumImpact();
                                                   showTopSnackBar(
-                                                    displayDuration:
-                                                        const Duration(
+                                                    displayDuration: const Duration(
                                                       milliseconds: 400,
                                                     ),
                                                     Overlay.of(
                                                       context,
                                                     ),
                                                     CustomSnackBar.success(
-                                                      backgroundColor:
-                                                          const Color(
+                                                      backgroundColor: const Color(
                                                         0xFF4A4A4A,
                                                       ).withOpacity(0.9),
-                                                      message:
-                                                          'Address was copied',
-                                                      textStyle:
-                                                          const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                      message: 'Address was copied',
+                                                      textStyle: const TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
                                                         color: Colors.white,
                                                       ),
@@ -244,9 +231,7 @@ class _CardFillPageState extends State<CardFillPage>
                                             } else {
                                               Clipboard.setData(
                                                 ClipboardData(
-                                                  text: _balanceStore
-                                                      .selectedCard!.address
-                                                      .toString(),
+                                                  text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
                                               ).then(
                                                 (_) {
@@ -269,12 +254,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                   bottom: 12,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
+                                                  borderRadius: BorderRadius.circular(
                                                     6,
                                                   ),
-                                                  color:
-                                                      Colors.black.withOpacity(
+                                                  color: Colors.black.withOpacity(
                                                     0.2,
                                                   ),
                                                 ),
@@ -286,8 +269,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                           'Address',
                                                           style: TextStyle(
                                                             fontSize: 11,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily: FontFamily.redHatMedium,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -296,37 +278,25 @@ class _CardFillPageState extends State<CardFillPage>
                                                     Observer(
                                                       builder: (context) {
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedCard
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedCard?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
+                                                            padding: EdgeInsets.all(
                                                               4,
                                                             ),
                                                             child: SizedBox(
                                                               height: 15,
                                                               width: 15,
-                                                              child:
-                                                                  CircularProgressIndicator(),
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          _balanceStore
-                                                                  .selectedCard
-                                                                  ?.address ??
-                                                              '',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                          _balanceStore.selectedCard?.address ?? '',
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
                                                             color: Colors.white,
                                                             fontSize: 12,
                                                           ),
@@ -343,8 +313,7 @@ class _CardFillPageState extends State<CardFillPage>
                                       const Gap(4),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.height > 667 ? 65 : 75,
+                                          horizontal: context.height > 667 ? 65 : 75,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -360,12 +329,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                   8,
                                                 ),
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
+                                                  borderRadius: BorderRadius.circular(
                                                     6,
                                                   ),
-                                                  color:
-                                                      Colors.black.withOpacity(
+                                                  color: Colors.black.withOpacity(
                                                     0.2,
                                                   ),
                                                 ),
@@ -376,8 +343,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                         Text(
                                                           'Balance',
                                                           style: TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
+                                                            fontFamily: FontFamily.redHatMedium,
                                                             color: Colors.white,
                                                             fontSize: 11,
                                                           ),
@@ -386,46 +352,34 @@ class _CardFillPageState extends State<CardFillPage>
                                                     ),
                                                     Observer(
                                                       builder: (context) {
-                                                        final myFormat =
-                                                            NumberFormat
-                                                                .decimalPatternDigits(
+                                                        final myFormat = NumberFormat.decimalPatternDigits(
                                                           locale: 'en_us',
                                                           decimalDigits: 2,
                                                         );
-                                                        final data =
-                                                            _balanceStore.coins;
+                                                        final data = _balanceStore.coins;
 
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedCard
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedCard?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
+                                                            padding: EdgeInsets.all(
                                                               4,
                                                             ),
                                                             child: SizedBox(
                                                               height: 15,
                                                               width: 15,
-                                                              child:
-                                                                  CircularProgressIndicator(),
+                                                              child: CircularProgressIndicator(),
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          (_balanceStore.selectedCard !=
-                                                                      null
+                                                          (_balanceStore.selectedCard != null
                                                                   ? '\$${myFormat.format((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price)}'
                                                                   : '')
                                                               .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
                                                             color: Colors.white,
                                                             fontSize: 20,
                                                           ),
@@ -503,8 +457,7 @@ class _CardFillPageState extends State<CardFillPage>
                                               ),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 Assets.images.secret1.image(
                                                   height: context.width * 0.45,
@@ -527,74 +480,50 @@ class _CardFillPageState extends State<CardFillPage>
                                               Observer(
                                                 builder: (context) {
                                                   return Opacity(
-                                                    opacity:
-                                                        _lineStore.isLineVisible
-                                                            ? 1
-                                                            : 0,
+                                                    opacity: _lineStore.isLineVisible ? 1 : 0,
                                                     child: CustomPaint(
                                                       size: Size(
                                                         context.height > 667
-                                                            ? constraints
-                                                                        .maxHeight <
-                                                                    551
+                                                            ? constraints.maxHeight < 551
                                                                 ? 33
                                                                 : 50
                                                             : 43,
                                                         255,
                                                       ),
-                                                      painter:
-                                                          LineCustomPaint(),
+                                                      painter: LineCustomPaint(),
                                                     ),
                                                   );
                                                 },
                                               ),
                                               Opacity(
-                                                opacity:
-                                                    _validationStore.isValid
-                                                        ? 0
-                                                        : 1,
+                                                opacity: _validationStore.isValid ? 0 : 1,
                                                 child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: [
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                        borderRadius: BorderRadius.circular(15),
                                                         border: Border.all(
-                                                          color: AppColors
-                                                              .primaryTextColor,
+                                                          color: AppColors.primaryTextColor,
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets
-                                                          .images.secret1
-                                                          .image(
-                                                        height: context.height *
-                                                            0.212,
+                                                      child: Assets.images.secret1.image(
+                                                        height: context.height * 0.212,
                                                       ),
                                                     ),
                                                     const Gap(70),
                                                     Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
+                                                        borderRadius: BorderRadius.circular(15),
                                                         border: Border.all(
-                                                          color: AppColors
-                                                              .primaryTextColor,
+                                                          color: AppColors.primaryTextColor,
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets
-                                                          .images.secret2
-                                                          .image(
-                                                        height: context.height *
-                                                            0.212,
+                                                      child: Assets.images.secret2.image(
+                                                        height: context.height * 0.212,
                                                       ),
                                                     ),
                                                   ],
@@ -618,18 +547,13 @@ class _CardFillPageState extends State<CardFillPage>
                                 Opacity(
                                   opacity: _lineStore.isLineVisible ? 0 : 1,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      if (context.height > 667)
-                                        const Gap(34)
-                                      else
-                                        const Gap(22),
+                                      if (context.height > 667) const Gap(34) else const Gap(22),
                                       Row(
                                         children: [
                                           const Gap(15),
-                                          Assets.icons.coinplusLogo
-                                              .image(height: 32),
+                                          Assets.icons.coinplusLogo.image(height: 32),
                                         ],
                                       ),
                                       const Gap(22),
@@ -638,130 +562,83 @@ class _CardFillPageState extends State<CardFillPage>
                                         child: Stack(
                                           children: [
                                             Container(
-                                              height: context.height > 667
-                                                  ? context.height * 0.26
-                                                  : context.height * 0.28,
+                                              height:
+                                                  context.height > 667 ? context.height * 0.26 : context.height * 0.28,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border.all(
-                                                  color: _focusNode.hasFocus
-                                                      ? Colors.blue
-                                                      : const Color(0xFFFBB270),
-                                                  width: _focusNode.hasFocus
-                                                      ? 1
-                                                      : 3,
+                                                  color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
+                                                  width: _focusNode.hasFocus ? 1 : 3,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(27),
+                                                borderRadius: BorderRadius.circular(27),
                                               ),
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
                                                   SizedBox(
                                                     width: context.height > 667
                                                         ? context.height * 0.114
                                                         : context.height * 0.12,
-                                                    height:
-                                                        context.height * 0.14,
+                                                    height: context.height * 0.14,
                                                     child: Observer(
                                                       builder: (context) {
                                                         return TextField(
-                                                          readOnly:
-                                                              !_validationStore
-                                                                      .isValid &&
-                                                                  true,
-                                                          textAlignVertical:
-                                                              TextAlignVertical
-                                                                  .top,
+                                                          readOnly: !_validationStore.isValid && true,
+                                                          textAlignVertical: TextAlignVertical.top,
                                                           autocorrect: false,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .text,
-                                                          textAlign:
-                                                              TextAlign.center,
+                                                          keyboardType: TextInputType.text,
+                                                          textAlign: TextAlign.center,
                                                           onChanged: (value) {
-                                                            if (value.length >
-                                                                25) {
+                                                            if (value.length > 25) {
                                                               _validateBTCAddress();
                                                             }
                                                           },
-                                                          controller:
-                                                              _btcAddressController,
+                                                          controller: _btcAddressController,
                                                           maxLines: 15,
                                                           focusNode: _focusNode,
-                                                          cursorColor:
-                                                              AppColors.primary,
+                                                          cursorColor: AppColors.primary,
                                                           cursorWidth: 1,
-                                                          style:
-                                                              const TextStyle(
+                                                          style: const TextStyle(
                                                             fontSize: 12,
-                                                            color: AppColors
-                                                                .primaryTextColor,
-                                                            fontFamily:
-                                                                FontFamily
-                                                                    .redHatLight,
+                                                            color: AppColors.primaryTextColor,
+                                                            fontFamily: FontFamily.redHatLight,
                                                           ),
                                                           onTapOutside: (_) {
-                                                            WidgetsBinding
-                                                                .instance
-                                                                .focusManager
-                                                                .primaryFocus
+                                                            WidgetsBinding.instance.focusManager.primaryFocus
                                                                 ?.unfocus();
                                                           },
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'Write here your card address',
-                                                            fillColor:
-                                                                Colors.white,
+                                                          decoration: InputDecoration(
+                                                            hintText: 'Write here your card address',
+                                                            fillColor: Colors.white,
                                                             hintMaxLines: 10,
-                                                            hintStyle:
-                                                                TextStyle(
-                                                              fontFamily:
-                                                                  FontFamily
-                                                                      .redHatLight,
+                                                            hintStyle: TextStyle(
+                                                              fontFamily: FontFamily.redHatLight,
                                                               fontSize: 13,
-                                                              color: AppColors
-                                                                  .primaryTextColor
-                                                                  .withOpacity(
+                                                              color: AppColors.primaryTextColor.withOpacity(
                                                                 0.4,
                                                               ),
                                                             ),
-                                                            contentPadding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
+                                                            contentPadding: const EdgeInsets.symmetric(
                                                               horizontal: 10,
                                                               vertical: 16,
                                                             ),
-                                                            prefixIconConstraints:
-                                                                const BoxConstraints(
+                                                            prefixIconConstraints: const BoxConstraints(
                                                               minWidth: 25,
                                                               minHeight: 25,
                                                             ),
-                                                            focusedBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
+                                                            focusedBorder: OutlineInputBorder(
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.transparent,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
+                                                              borderRadius: BorderRadius.circular(
                                                                 24,
                                                               ),
                                                             ),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                color: Colors
-                                                                    .transparent,
+                                                            enabledBorder: OutlineInputBorder(
+                                                              borderSide: const BorderSide(
+                                                                color: Colors.transparent,
                                                               ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
+                                                              borderRadius: BorderRadius.circular(
                                                                 24,
                                                               ),
                                                             ),
@@ -779,31 +656,23 @@ class _CardFillPageState extends State<CardFillPage>
                                                   top: 25,
                                                   left: 0,
                                                   right: 0,
-                                                  child: _validationStore
-                                                          .isValid
+                                                  child: _validationStore.isValid
                                                       ? ScaleTap(
                                                           onPressed: () async {
-                                                            _focusNode
-                                                                .unfocus();
-                                                            await Future
-                                                                .delayed(
+                                                            _focusNode.unfocus();
+                                                            await Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    300,
+                                                                milliseconds: 300,
                                                               ),
                                                             );
-                                                            final res =
-                                                                await context
-                                                                    .pushRoute<
-                                                                        String?>(
+                                                            final res = await context.pushRoute<String?>(
                                                               const QrScannerRoute(),
                                                             );
                                                             if (res == null) {
                                                               return;
                                                             }
 
-                                                            _btcAddressController
-                                                                .text = res;
+                                                            _btcAddressController.text = res;
                                                             await _validateBTCAddress();
                                                           },
                                                           child: SizedBox(
@@ -816,20 +685,14 @@ class _CardFillPageState extends State<CardFillPage>
                                                       : Lottie.asset(
                                                           'assets/animated_logo/address_validation_success.json',
                                                           height: 40,
-                                                          controller:
-                                                              _lottieController,
-                                                          onLoaded:
-                                                              (composition) {
+                                                          controller: _lottieController,
+                                                          onLoaded: (composition) {
                                                             Future.delayed(
                                                               const Duration(
-                                                                milliseconds:
-                                                                    1000,
+                                                                milliseconds: 1000,
                                                               ),
                                                             );
-                                                            _lottieController
-                                                                    .duration =
-                                                                composition
-                                                                    .duration;
+                                                            _lottieController.duration = composition.duration;
                                                           },
                                                         ),
                                                 );
@@ -838,15 +701,12 @@ class _CardFillPageState extends State<CardFillPage>
                                             Observer(
                                               builder: (context) {
                                                 return Visibility(
-                                                  visible:
-                                                      !_validationStore.isValid,
+                                                  visible: !_validationStore.isValid,
                                                   child: Positioned(
                                                     left: 6,
                                                     right: 6,
                                                     top: 6,
-                                                    child: Assets.icons
-                                                        .validationIndicatorGreenTop
-                                                        .image(),
+                                                    child: Assets.icons.validationIndicatorGreenTop.image(),
                                                   ),
                                                 );
                                               },
@@ -854,15 +714,12 @@ class _CardFillPageState extends State<CardFillPage>
                                             Observer(
                                               builder: (context) {
                                                 return Visibility(
-                                                  visible:
-                                                      !_validationStore.isValid,
+                                                  visible: !_validationStore.isValid,
                                                   child: Positioned(
                                                     left: 6,
                                                     right: 6,
                                                     bottom: 6,
-                                                    child: Assets.icons
-                                                        .validationIndicatorGreenBottom
-                                                        .image(),
+                                                    child: Assets.icons.validationIndicatorGreenBottom.image(),
                                                   ),
                                                 );
                                               },
@@ -870,17 +727,12 @@ class _CardFillPageState extends State<CardFillPage>
                                           ],
                                         ),
                                       ),
-                                      if (context.height > 667)
-                                        const Gap(29)
-                                      else
-                                        const Gap(10),
-                                      Assets.icons.cardBackText
-                                          .image(height: 55),
+                                      if (context.height > 667) const Gap(29) else const Gap(10),
+                                      Assets.icons.cardBackText.image(height: 55),
                                       const Gap(18),
                                       SizedBox(
                                         width: 115,
-                                        child:
-                                            Assets.icons.cardBackLink.image(),
+                                        child: Assets.icons.cardBackLink.image(),
                                       ),
                                       const Gap(20),
                                     ],
@@ -941,10 +793,9 @@ class _CardFillPageState extends State<CardFillPage>
                                         color: AppColors.textHintsColor,
                                       ),
                                     ).expandedHorizontally(),
-                                    crossFadeState:
-                                        _addressState.isAddressVisible
-                                            ? CrossFadeState.showSecond
-                                            : CrossFadeState.showFirst,
+                                    crossFadeState: _addressState.isAddressVisible
+                                        ? CrossFadeState.showSecond
+                                        : CrossFadeState.showFirst,
                                     duration: const Duration(milliseconds: 400),
                                   ),
                                   const Gap(4),
@@ -965,10 +816,9 @@ class _CardFillPageState extends State<CardFillPage>
                                         color: AppColors.textHintsColor,
                                       ),
                                     ).expandedHorizontally(),
-                                    crossFadeState:
-                                        _addressState.isAddressVisible
-                                            ? CrossFadeState.showSecond
-                                            : CrossFadeState.showFirst,
+                                    crossFadeState: _addressState.isAddressVisible
+                                        ? CrossFadeState.showSecond
+                                        : CrossFadeState.showFirst,
                                     duration: const Duration(milliseconds: 400),
                                   ),
                                 ],
@@ -988,15 +838,13 @@ class _CardFillPageState extends State<CardFillPage>
                                       ? const Color(0xFF73C3A6)
                                       : _acceptState.isAccepted
                                           ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00)
-                                              .withOpacity(0.6),
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
                                 ),
                                 color: _checkboxState.isActive
                                     ? const Color(0xFF73C3A6).withOpacity(0.1)
                                     : _acceptState.isAccepted
                                         ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.05),
+                                        : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -1025,9 +873,8 @@ class _CardFillPageState extends State<CardFillPage>
                               ),
                             ),
                           ),
-                          crossFadeState: !_lineStore.isLineVisible
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ),
                       ],
@@ -1046,8 +893,7 @@ class _CardFillPageState extends State<CardFillPage>
                               builder: (context) {
                                 return Checkbox(
                                   checkColor: const Color(0xFF73C3A6),
-                                  activeColor:
-                                      const Color(0xFF73C3A6).withOpacity(0.5),
+                                  activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(4),
@@ -1056,8 +902,7 @@ class _CardFillPageState extends State<CardFillPage>
                                   side: BorderSide(
                                     color: _acceptState.isAccepted
                                         ? Colors.grey.withOpacity(0.5)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.6),
+                                        : const Color(0xFFFF2E00).withOpacity(0.6),
                                   ),
                                   value: _checkboxState.isActive,
                                   onChanged: (_) {
@@ -1095,8 +940,7 @@ class _CardFillPageState extends State<CardFillPage>
                             if (hasShown) {
                               router.pop(
                                 Dashboard(
-                                  onCarouselScroll: (val) =>
-                                      cardCarouselIndex = val,
+                                  onCarouselScroll: (val) => cardCarouselIndex = val,
                                 ),
                               );
                             } else {
@@ -1129,9 +973,7 @@ class _CardFillPageState extends State<CardFillPage>
                       onPressed: _addressState.isAddressVisible
                           ? () async {
                               final cardIndex = _balanceStore.cards.indexWhere(
-                                (element) =>
-                                    element.address ==
-                                    _balanceStore.selectedCard?.address,
+                                (element) => element.address == _balanceStore.selectedCard?.address,
                               );
                               if (cardIndex != -1) {
                                 await alreadySavedCard(context);

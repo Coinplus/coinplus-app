@@ -72,9 +72,8 @@ class ChangePinCode extends StatelessWidget {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _changePinCodeState.isNewPinMatched
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _changePinCodeState.isNewPinMatched ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },
@@ -258,9 +257,8 @@ class ChangePinCode extends StatelessWidget {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _changePinCodeState.isNewPinMatched
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _changePinCodeState.isNewPinMatched ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },

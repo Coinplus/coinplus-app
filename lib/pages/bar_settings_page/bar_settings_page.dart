@@ -126,8 +126,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                         ),
                         Overlay.of(context),
                         CustomSnackBar.success(
-                          backgroundColor:
-                              const Color(0xFF4A4A4A).withOpacity(0.9),
+                          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                           message: 'Address was copied',
                           textStyle: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
@@ -258,8 +257,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
                                       width: 2,
-                                      color: _barSettingsState.selectedColor ==
-                                              colors[index]
+                                      color: _barSettingsState.selectedColor == colors[index]
                                           ? Colors.blue
                                           : Colors.transparent,
                                     ),
@@ -273,8 +271,7 @@ class _BarSettingsPageState extends State<BarSettingsPage> {
                                     _barSettingsState.selectedColor,
                                   ),
                                   onChanged: (selectedIndex) {
-                                    _barSettingsState
-                                        .changeColor(colors[selectedIndex!]);
+                                    _barSettingsState.changeColor(colors[selectedIndex!]);
                                   },
                                 ),
                               ],

@@ -18,20 +18,17 @@ class FormFactorPage extends StatefulWidget {
   State<FormFactorPage> createState() => _FormFactorPageState();
 }
 
-class _FormFactorPageState extends State<FormFactorPage>
-    with TickerProviderStateMixin {
+class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 400),
   );
   late final Animation<Offset> _cardAnimation =
-      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.44, 0))
-          .animate(
+      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.44, 0)).animate(
     CurvedAnimation(parent: _controller, curve: Curves.decelerate),
   );
   late final Animation<Offset> _barAnimation =
-      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-0.73, 0))
-          .animate(
+      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-0.73, 0)).animate(
     CurvedAnimation(parent: _controller, curve: Curves.decelerate),
   );
   final _formFactorState = FormFactorState();

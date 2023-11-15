@@ -211,15 +211,11 @@ final darkTheme = base.copyWith(
         );
       }),
       foregroundColor: MaterialStateProperty.resolveWith((states) {
-        return states.contains(MaterialState.disabled)
-            ? Colors.redAccent.withOpacity(0.4)
-            : Colors.redAccent;
+        return states.contains(MaterialState.disabled) ? Colors.redAccent.withOpacity(0.4) : Colors.redAccent;
       }),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
-              ? Colors.grey.withOpacity(0.4)
-              : Colors.grey;
+          return states.contains(MaterialState.disabled) ? Colors.grey.withOpacity(0.4) : Colors.grey;
         },
       ),
       overlayColor: MaterialStateProperty.all(
@@ -263,9 +259,7 @@ final darkTheme = base.copyWith(
       foregroundColor: MaterialStateProperty.all(Colors.white),
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
-              ? Colors.grey.withOpacity(0.5)
-              : Colors.grey;
+          return states.contains(MaterialState.disabled) ? Colors.grey.withOpacity(0.5) : Colors.grey;
         },
       ),
       overlayColor: MaterialStateProperty.all(

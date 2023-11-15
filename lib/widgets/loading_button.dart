@@ -29,8 +29,7 @@ class LoadingButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     Widget child;
-    child =
-        isLoading ? const CupertinoActivityIndicator(radius: 8) : this.child;
+    child = isLoading ? const CupertinoActivityIndicator(radius: 8) : this.child;
 
     return RepaintBoundary(
       child: SizedBox(
