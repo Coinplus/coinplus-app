@@ -19,6 +19,7 @@ import 'constants/flavor_type.dart';
 import 'firebase_options.dart';
 import 'providers/get_it.dart';
 import 'store/wallet_protect_state/wallet_protect_state.dart';
+import 'utils/storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.PROD}) async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -29,7 +30,7 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
   await EasyLocalization.ensureInitialized();
   registerGetIt(env);
 
-  //await StorageUtils.clear();
+  await StorageUtils.clear();
   await localStorage();
 
   runApp(
@@ -52,7 +53,6 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   final initialValue = prefs.getBool('toggleValue') ?? false;
   _walletProtectionState.appLockToggle = initialValue;
-  WidgetsFlutterBinding.ensureInitialized();
   final amplitude = Amplitude.getInstance();
   await amplitude.init('28670e3f0d1eee7f8f7188ef81e670a4');
   await Firebase.initializeApp(

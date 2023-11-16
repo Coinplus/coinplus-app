@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager/platform_tags.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../constants/card_record.dart';
@@ -21,6 +23,7 @@ import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../../utils/nxp_originality_check.dart';
 import '../../../widgets/loading_button.dart';
 
 class CardScanMethodsPage extends StatefulWidget {
@@ -81,19 +84,44 @@ class _CardScanMethodsPageState extends State<CardScanMethodsPage> {
                         final parts = payloadString.split('air.coinplus.com/btc/');
                         walletAddress = parts[1];
                       }
-                      await NfcManager.instance.stopSession(
-                        alertMessage: 'Complete',
-                      );
-                      await Future.delayed(
-                        const Duration(
-                          milliseconds: 2500,
+
+                      final mifare = MiFare.from(tag);
+                      final tagId = mifare!.identifier;
+                      final signature = await mifare.sendMiFareCommand(
+                        Uint8List.fromList(
+                          [0x3C, 0x00],
                         ),
                       );
-                      await router.push(
-                        CardFillWithNfc(
-                          receivedData: walletAddress,
-                        ),
-                      );
+                      var isOriginalTag = false;
+                      if (signature.length > 2) {
+                        isOriginalTag = verifyOriginality(
+                          tagId,
+                          signature,
+                        );
+                      }
+                      if (isOriginalTag) {
+                        await NfcManager.instance.stopSession(
+                          alertMessage: 'Complete',
+                        );
+                        await Future.delayed(
+                          const Duration(
+                            milliseconds: 2500,
+                          ),
+                        );
+                        await router.push(
+                          CardFillWithNfc(
+                            receivedData: walletAddress,
+                          ),
+                        );
+                      } else {
+                        await NfcManager.instance.stopSession();
+                        await router.pop();
+                        await Future.delayed(
+                          const Duration(
+                            milliseconds: 2900,
+                          ),
+                        );
+                      }
                     },
                     onError: (_) {
                       return Future(() {

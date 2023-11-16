@@ -416,7 +416,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                         curve: Curves.decelerate,
                         duration: const Duration(milliseconds: 300),
                         height: context.height > 667 ? 455 : 400,
-                        width: context.width - 54,
+                        width: context.width - 64,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
@@ -443,28 +443,36 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                       ? Row(
                                           children: [
                                             if (context.height > 667)
-                                              if (constraints.maxHeight < 551)
-                                                Gap(
-                                                  context.width * 0.1,
-                                                )
+                                              if (context.height > 844)
+                                                SizedBox(
+                                                  width: constraints.maxWidth * 0.11,
+                                                ) // iPhone 12/13/14/15 Pro Screen Size
                                               else
-                                                Gap(
-                                                  context.width * 0.125,
-                                                )
+                                                SizedBox(
+                                                  width: constraints.maxWidth * 0.075,
+                                                ) // iPhone 12/13/14/15 Pro Max Screen Size
                                             else
                                               Gap(
                                                 context.width * 0.135,
-                                              ),
+                                              ), // iPhone 7/8/SE Screen Size
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 Assets.images.secret1.image(
-                                                  height: context.width * 0.45,
+                                                  height: context.height > 667
+                                                      ? constraints.maxHeight < 551
+                                                          ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
+                                                          : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                                      : 180, // iPhone 7/8/SE Screen Size
                                                 ),
                                                 const Gap(70),
                                                 Assets.images.secret2.image(
-                                                  height: context.width * 0.45,
+                                                  height: context.height > 667
+                                                      ? constraints.maxHeight < 551
+                                                          ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
+                                                          : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                                      : 180, // iPhone 7/8/SE Screen Size
                                                 ),
                                               ],
                                             ),
@@ -485,9 +493,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       size: Size(
                                                         context.height > 667
                                                             ? constraints.maxHeight < 551
-                                                                ? 33
-                                                                : 50
-                                                            : 43,
+                                                                ? 28 // iPhone 11/12/13/14/15 Pro Screen Size
+                                                                : 40 // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                                            : 43, // iPhone 7/8/SE Screen Size
                                                         255,
                                                       ),
                                                       painter: LineCustomPaint(),
@@ -510,7 +518,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         ),
                                                       ),
                                                       child: Assets.images.secret1.image(
-                                                        height: context.height * 0.212,
+                                                        height: context.height > 667
+                                                            ? constraints.maxHeight < 551
+                                                                ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
+                                                                : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                                            : 180, // iPhone 7/8/SE Screen Size
                                                       ),
                                                     ),
                                                     const Gap(70),
@@ -523,7 +535,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         ),
                                                       ),
                                                       child: Assets.images.secret2.image(
-                                                        height: context.height * 0.212,
+                                                        height: context.height > 667
+                                                            ? constraints.maxHeight < 551
+                                                                ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
+                                                                : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                                            : 180, // iPhone 7/8/SE Screen Size
                                                       ),
                                                     ),
                                                   ],
@@ -536,14 +552,14 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 if (context.height > 667)
                                   if (constraints.maxHeight < 551)
                                     SizedBox(
-                                      width: constraints.maxWidth * 0.114,
-                                    )
+                                      width: constraints.maxWidth * 0.117,
+                                    ) // iPhone 11/12/13/14/15 Pro Screen Size
                                   else
                                     SizedBox(
-                                      width: constraints.maxWidth * 0.107,
-                                    )
+                                      width: constraints.maxWidth * 0.109,
+                                    ) // iPhone 11/12/13/14/15 Pro Max Screen Size
                                 else
-                                  SizedBox(width: constraints.maxWidth * 0.08),
+                                  SizedBox(width: constraints.maxWidth * 0.08), // iPhone 7/8/SE Screen Size
                                 Opacity(
                                   opacity: _lineStore.isLineVisible ? 0 : 1,
                                   child: Column(
@@ -562,8 +578,14 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                         child: Stack(
                                           children: [
                                             Container(
-                                              height:
-                                                  context.height > 667 ? context.height * 0.26 : context.height * 0.28,
+                                              height: context.height > 667
+                                                  ? constraints.maxHeight < 551
+                                                      ? context.height * 0.265 // iPhone 11/12/13/14/15 Pro Screen Size
+
+                                                      : context.height *
+                                                          0.241 // iPhone 11/12/13/14/15 Pro Max Screen Size
+
+                                                  : context.height * 0.265, // iPhone 7/8/SE Screen Size
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 border: Border.all(
@@ -577,8 +599,14 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 children: [
                                                   SizedBox(
                                                     width: context.height > 667
-                                                        ? context.height * 0.114
-                                                        : context.height * 0.12,
+                                                        ? constraints.maxHeight < 551
+                                                            ? context.height *
+                                                                0.114 // iPhone 11/12/13/14/15 Pro Screen Size
+
+                                                            : context.height *
+                                                                0.105 // iPhone 11/12/13/14/15 Pro Max Screen Size
+
+                                                        : context.height * 0.265, // iPhone 7/8/SE Screen Size
                                                     height: context.height * 0.14,
                                                     child: Observer(
                                                       builder: (context) {
@@ -979,9 +1007,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 await alreadySavedCard(context);
                               } else {
                                 await _toggleCard();
-                                await Future.delayed(
-                                  const Duration(milliseconds: 300),
-                                );
                                 _lineStore.makeVisible();
                               }
                             }
