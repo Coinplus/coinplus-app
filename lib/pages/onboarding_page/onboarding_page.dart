@@ -23,15 +23,13 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
-import '../../store/form_factor_state/form_factor_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
-import 'form_factor_page/card_and_bar_scan.dart';
-import 'form_factor_page/form_factor_page.dart';
+import 'connect_manually_button/connect_manually_button.dart';
 
 @RoutePage()
 class OnboardingPage extends StatefulWidget {
@@ -43,7 +41,6 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final _nfcState = NfcStore();
-  final _formFactorState = FormFactorState();
   late StreamSubscription<Map> streamSubscription;
 
   @override
@@ -333,158 +330,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               else
                 const SizedBox(),
               const Gap(10),
-              LoadingButton(
-                style: _nfcState.isNfcSupported
-                    ? context.theme
-                        .buttonStyle(
-                          textStyle: const TextStyle(
-                            fontFamily: FontFamily.redHatSemiBold,
-                            color: AppColors.primaryButtonColor,
-                            fontSize: 17,
-                          ),
-                        )
-                        .copyWith(
-                          backgroundColor: MaterialStateProperty.all(
-                            AppColors.silver,
-                          ),
-                          padding: const MaterialStatePropertyAll(
-                            EdgeInsets.all(13),
-                          ),
-                        )
-                    : null,
-                onPressed: () {
-                  showModalBottomSheet(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    backgroundColor: Colors.white,
-                    context: context,
-                    builder: (context) {
-                      return Observer(
-                        builder: (context) {
-                          return AnimatedContainer(
-                            height: _formFactorState.isFirstWidget ? 250 : 320,
-                            padding: const EdgeInsets.all(12),
-                            duration: const Duration(milliseconds: 300),
-                            // Animation duration
-                            child: Wrap(
-                              children: [
-                                Center(
-                                  child: Assets.icons.notch.image(
-                                    width: 42,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    if (_formFactorState.isFirstWidget)
-                                      IconButton(
-                                        splashRadius: 20,
-                                        icon: Assets.icons.close.image(
-                                          height: 24,
-                                        ),
-                                        onPressed: router.pop,
-                                      )
-                                    else
-                                      IconButton(
-                                        splashRadius: 20,
-                                        icon: Assets.icons.arrowBack.image(
-                                          height: 24,
-                                        ),
-                                        onPressed: _formFactorState.toggleWidget,
-                                      ),
-                                    const Text(
-                                      'Start with your wallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatBold,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 17,
-                                        color: AppColors.primaryTextColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Observer(
-                                        builder: (context) {
-                                          return AnimatedSwitcher(
-                                            duration: const Duration(
-                                              milliseconds: 300,
-                                            ),
-                                            transitionBuilder: (
-                                              child,
-                                              animation,
-                                            ) {
-                                              final slideIn = Tween<Offset>(
-                                                begin: const Offset(1, 0),
-                                                end: const Offset(0, 0),
-                                              ).animate(animation);
-
-                                              final slideOut = Tween<Offset>(
-                                                begin: const Offset(-1, 0),
-                                                end: const Offset(0, 0),
-                                              ).animate(animation);
-
-                                              if (child.key ==
-                                                  ValueKey<bool>(
-                                                    _formFactorState.isFirstWidget,
-                                                  )) {
-                                                return SlideTransition(
-                                                  position: _formFactorState.isFirstWidget ? slideOut : slideIn,
-                                                  child: child,
-                                                );
-                                              } else {
-                                                return SlideTransition(
-                                                  position: _formFactorState.isFirstWidget ? slideIn : slideOut,
-                                                  child: child,
-                                                );
-                                              }
-                                            },
-                                            child: _formFactorState.isFirstWidget
-                                                ? CardAndBarScanMethodsPage(
-                                                    key: const ValueKey<bool>(
-                                                      true,
-                                                    ),
-                                                    formFactorState: _formFactorState,
-                                                  )
-                                                : const FormFactorPage(
-                                                    key: ValueKey<bool>(
-                                                      false,
-                                                    ),
-                                                  ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ).then((value) => _formFactorState.isFirstWidget = true);
-                },
-                child: Text(
-                  _nfcState.isNfcSupported ? 'Connect manually' : 'Connect wallet',
-                  style: _nfcState.isNfcSupported
-                      ? const TextStyle(
-                          fontSize: 15,
-                          fontFamily: FontFamily.redHatSemiBold,
-                          color: Colors.black,
-                        )
-                      : const TextStyle(
-                          fontSize: 15,
-                          fontFamily: FontFamily.redHatSemiBold,
-                          color: Colors.white,
-                        ),
-                ),
-              ).paddingHorizontal(63),
+              const ConnectManuallyButton(),
               const Spacer(
                 flex: 3,
               ),

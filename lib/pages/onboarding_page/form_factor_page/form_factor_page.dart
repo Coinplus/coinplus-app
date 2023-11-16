@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
-import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
@@ -12,7 +11,9 @@ import '../../../router.dart';
 import '../../../store/form_factor_state/form_factor_state.dart';
 
 class FormFactorPage extends StatefulWidget {
-  const FormFactorPage({super.key});
+  const FormFactorPage({super.key, required this.pageIndexNotifier});
+
+  final ValueNotifier pageIndexNotifier;
 
   @override
   State<FormFactorPage> createState() => _FormFactorPageState();
@@ -37,18 +38,6 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 50),
-          child: const Text(
-            'Please select a wallet type',
-            style: TextStyle(
-              fontFamily: FontFamily.redHatLight,
-              color: AppColors.primaryTextColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-          ).expandedHorizontally(),
-        ),
         const Gap(30),
         SizedBox(
           child: Observer(
@@ -67,6 +56,7 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                             const Duration(milliseconds: 100),
                           );
                           await router.pop(context);
+                          widget.pageIndexNotifier.value = 0;
                           await router.push(CardFillRoute());
                         },
                         child: Visibility(
@@ -111,6 +101,7 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                             const Duration(milliseconds: 100),
                           );
                           await router.pop(context);
+                          widget.pageIndexNotifier.value = 0;
                           await router.push(BarFillRoute());
                         },
                         child: Visibility(
