@@ -2,6 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
@@ -19,29 +21,37 @@ import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
-class WalletProtectionPage extends StatefulWidget {
+class WalletProtectionPage extends HookWidget {
   const WalletProtectionPage({super.key});
 
-  @override
-  State<WalletProtectionPage> createState() => _WalletProtectionPageState();
-}
-
-class _WalletProtectionPageState extends State<WalletProtectionPage> {
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
-  @override
-  void initState() {
-    super.initState();
-    setWalletShown();
-  }
 
   @override
   Widget build(BuildContext context) {
+    useEffect(() {
+      setWalletShown();
+      return;
+    });
+    final onToggleAppLock = useCallback(
+      (isEnable) async {
+        if (isEnable) {
+          await router.push(const CreatePinCode());
+        }
+        await _walletProtectState.checkPinCodeStatus();
+        await _walletProtectState.checkBiometricStatus();
+      },
+      [_walletProtectState.isSetPinCode],
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
       ),
       body: Column(
         children: [
@@ -73,7 +83,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
             height: 66,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: AppColors.silver,
+              color: Colors.grey.withOpacity(0.1),
             ),
             child: Row(
               children: [
@@ -110,16 +120,8 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
                 Observer(
                   builder: (context) {
                     return CupertinoSwitch(
-                      onChanged: (_) async {
-                        await _walletProtectState.enableDisableAppLockToggle();
-                        await Future.delayed(
-                          const Duration(
-                            milliseconds: 300,
-                          ),
-                        );
-                        await router.pushAndPopAll(const CreatePinCode());
-                      },
-                      value: _walletProtectState.appLockToggle,
+                      value: _walletProtectState.isSetPinCode,
+                      onChanged: onToggleAppLock,
                     );
                   },
                 ),
@@ -134,7 +136,7 @@ class _WalletProtectionPageState extends State<WalletProtectionPage> {
               buttonType: ButtonTypes.TRANSPARENT,
             ),
             onPressed: () {
-              router.pushAndPopAll(Dashboard());
+              router.pushAndPopAll(const DashboardRoute());
             },
             child: const Text(
               'Not now',

@@ -190,6 +190,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/qr.png
   AssetGenImage get qr => const AssetGenImage('assets/icons/qr.png');
 
+  /// File path: assets/icons/qr_code.png
+  AssetGenImage get qrCode => const AssetGenImage('assets/icons/qr_code.png');
+
   /// File path: assets/icons/receive.png
   AssetGenImage get receive => const AssetGenImage('assets/icons/receive.png');
 
@@ -219,6 +222,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/star.png
   AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
+
+  /// File path: assets/icons/stylus.png
+  AssetGenImage get stylus => const AssetGenImage('assets/icons/stylus.png');
 
   /// File path: assets/icons/success_email.png
   AssetGenImage get successEmail => const AssetGenImage('assets/icons/success_email.png');
@@ -291,6 +297,7 @@ class $AssetsIconsGen {
         plus,
         privacy,
         qr,
+        qrCode,
         receive,
         reddit,
         schedule,
@@ -301,6 +308,7 @@ class $AssetsIconsGen {
         shop,
         show,
         star,
+        stylus,
         successEmail,
         taskAlt,
         terms,
@@ -319,71 +327,11 @@ class $AssetsImagesGen {
   /// File path: assets/images/Add_Card.png
   AssetGenImage get addCard => const AssetGenImage('assets/images/Add_Card.png');
 
-  /// File path: assets/images/Back.png
-  AssetGenImage get back => const AssetGenImage('assets/images/Back.png');
-
-  /// File path: assets/images/Form bar.png
-  AssetGenImage get formBar => const AssetGenImage('assets/images/Form bar.png');
-
-  /// File path: assets/images/Form card.png
-  AssetGenImage get formCard => const AssetGenImage('assets/images/Form card.png');
-
-  /// File path: assets/images/Front.png
-  AssetGenImage get front => const AssetGenImage('assets/images/Front.png');
-
-  /// File path: assets/images/Hologram.png
-  AssetGenImage get hologram => const AssetGenImage('assets/images/Hologram.png');
-
-  /// File path: assets/images/Secret1.png
-  AssetGenImage get secret1 => const AssetGenImage('assets/images/Secret1.png');
-
-  /// File path: assets/images/Secret2.png
-  AssetGenImage get secret2 => const AssetGenImage('assets/images/Secret2.png');
-
-  /// File path: assets/images/Top circle.png
-  AssetGenImage get topCircle => const AssetGenImage('assets/images/Top circle.png');
-
-  /// File path: assets/images/bar_empty.png
-  AssetGenImage get barEmpty => const AssetGenImage('assets/images/bar_empty.png');
-
-  /// File path: assets/images/bar_form.png
-  AssetGenImage get barForm => const AssetGenImage('assets/images/bar_form.png');
-
-  /// File path: assets/images/bar_front.png
-  AssetGenImage get barFront => const AssetGenImage('assets/images/bar_front.png');
-
-  /// File path: assets/images/bar_logo.png
-  AssetGenImage get barLogo => const AssetGenImage('assets/images/bar_logo.png');
-
-  /// File path: assets/images/bar_secret_1.png
-  AssetGenImage get barSecret1 => const AssetGenImage('assets/images/bar_secret_1.png');
-
-  /// File path: assets/images/bar_secret_2.png
-  AssetGenImage get barSecret2 => const AssetGenImage('assets/images/bar_secret_2.png');
-
-  /// File path: assets/images/bar_skeleton.png
-  AssetGenImage get barSkeleton => const AssetGenImage('assets/images/bar_skeleton.png');
-
-  /// File path: assets/images/bar_with_address.png
-  AssetGenImage get barWithAddress => const AssetGenImage('assets/images/bar_with_address.png');
-
-  /// File path: assets/images/brown_card_front.png
-  AssetGenImage get brownCardFront => const AssetGenImage('assets/images/brown_card_front.png');
+  $AssetsImagesBarGen get bar => const $AssetsImagesBarGen();
+  $AssetsImagesCardGen get card => const $AssetsImagesCardGen();
 
   /// File path: assets/images/card_and_bar_forms.png
   AssetGenImage get cardAndBarForms => const AssetGenImage('assets/images/card_and_bar_forms.png');
-
-  /// File path: assets/images/card_color_brown.png
-  AssetGenImage get cardColorBrown => const AssetGenImage('assets/images/card_color_brown.png');
-
-  /// File path: assets/images/card_color_orange.png
-  AssetGenImage get cardColorOrange => const AssetGenImage('assets/images/card_color_orange.png');
-
-  /// File path: assets/images/card_color_white.png
-  AssetGenImage get cardColorWhite => const AssetGenImage('assets/images/card_color_white.png');
-
-  /// File path: assets/images/card_form.png
-  AssetGenImage get cardForm => const AssetGenImage('assets/images/card_form.png');
 
   /// File path: assets/images/coinpluslogo.png
   AssetGenImage get coinpluslogo => const AssetGenImage('assets/images/coinpluslogo.png');
@@ -391,96 +339,125 @@ class $AssetsImagesGen {
   /// File path: assets/images/contactless.png
   AssetGenImage get contactless => const AssetGenImage('assets/images/contactless.png');
 
-  /// File path: assets/images/filled_back.png
-  AssetGenImage get filledBack => const AssetGenImage('assets/images/filled_back.png');
-
-  /// File path: assets/images/filled_back_brown.png
-  AssetGenImage get filledBackBrown => const AssetGenImage('assets/images/filled_back_brown.png');
-
-  /// File path: assets/images/filled_back_white.png
-  AssetGenImage get filledBackWhite => const AssetGenImage('assets/images/filled_back_white.png');
-
-  /// File path: assets/images/form_bar_selected.png
-  AssetGenImage get formBarSelected => const AssetGenImage('assets/images/form_bar_selected.png');
-
-  /// File path: assets/images/form_card_selected.png
-  AssetGenImage get formCardSelected => const AssetGenImage('assets/images/form_card_selected.png');
-
-  /// File path: assets/images/orange_card_front.png
-  AssetGenImage get orangeCardFront => const AssetGenImage('assets/images/orange_card_front.png');
-
-  /// File path: assets/images/qr_code.png
-  AssetGenImage get qrCode => const AssetGenImage('assets/images/qr_code.png');
-
-  /// File path: assets/images/skeleton_address_field.png
-  AssetGenImage get skeletonAddressField => const AssetGenImage('assets/images/skeleton_address_field.png');
-
-  /// File path: assets/images/skeleton_circle.png
-  AssetGenImage get skeletonCircle => const AssetGenImage('assets/images/skeleton_circle.png');
-
-  /// File path: assets/images/skeleton_empty.png
-  AssetGenImage get skeletonEmpty => const AssetGenImage('assets/images/skeleton_empty.png');
-
-  /// File path: assets/images/skeleton_logo.png
-  AssetGenImage get skeletonLogo => const AssetGenImage('assets/images/skeleton_logo.png');
-
-  /// File path: assets/images/skeleton_secret_1.png
-  AssetGenImage get skeletonSecret1 => const AssetGenImage('assets/images/skeleton_secret_1.png');
-
-  /// File path: assets/images/skeleton_secret_2.png
-  AssetGenImage get skeletonSecret2 => const AssetGenImage('assets/images/skeleton_secret_2.png');
-
-  /// File path: assets/images/stylus.png
-  AssetGenImage get stylus => const AssetGenImage('assets/images/stylus.png');
-
   /// File path: assets/images/wallet_protect_image.png
   AssetGenImage get walletProtectImage => const AssetGenImage('assets/images/wallet_protect_image.png');
 
-  /// File path: assets/images/white_card_front.png
-  AssetGenImage get whiteCardFront => const AssetGenImage('assets/images/white_card_front.png');
+  /// List of all assets
+  List<AssetGenImage> get values => [addCard, cardAndBarForms, coinpluslogo, contactless, walletProtectImage];
+}
+
+class $AssetsImagesBarGen {
+  const $AssetsImagesBarGen();
+
+  /// File path: assets/images/bar/bar_address.png
+  AssetGenImage get barAddress => const AssetGenImage('assets/images/bar/bar_address.png');
+
+  /// File path: assets/images/bar/bar_coinplus_logo.png
+  AssetGenImage get barCoinplusLogo => const AssetGenImage('assets/images/bar/bar_coinplus_logo.png');
+
+  /// File path: assets/images/bar/bar_empty.png
+  AssetGenImage get barEmpty => const AssetGenImage('assets/images/bar/bar_empty.png');
+
+  /// File path: assets/images/bar/bar_form.png
+  AssetGenImage get barForm => const AssetGenImage('assets/images/bar/bar_form.png');
+
+  /// File path: assets/images/bar/bar_secret_1.png
+  AssetGenImage get barSecret1 => const AssetGenImage('assets/images/bar/bar_secret_1.png');
+
+  /// File path: assets/images/bar/bar_secret_2.png
+  AssetGenImage get barSecret2 => const AssetGenImage('assets/images/bar/bar_secret_2.png');
+
+  /// File path: assets/images/bar/bar_top_circle.png
+  AssetGenImage get barTopCircle => const AssetGenImage('assets/images/bar/bar_top_circle.png');
+
+  /// File path: assets/images/bar/filled_bar.png
+  AssetGenImage get filledBar => const AssetGenImage('assets/images/bar/filled_bar.png');
+
+  /// File path: assets/images/bar/form_bar_selected.png
+  AssetGenImage get formBarSelected => const AssetGenImage('assets/images/bar/form_bar_selected.png');
+
+  /// File path: assets/images/bar/hologram.png
+  AssetGenImage get hologram => const AssetGenImage('assets/images/bar/hologram.png');
+
+  /// File path: assets/images/bar/hologram_with_frame.png
+  AssetGenImage get hologramWithFrame => const AssetGenImage('assets/images/bar/hologram_with_frame.png');
+
+  /// File path: assets/images/bar/shine_around.png
+  AssetGenImage get shineAround => const AssetGenImage('assets/images/bar/shine_around.png');
+
+  /// File path: assets/images/bar/silver_bar.png
+  AssetGenImage get silverBar => const AssetGenImage('assets/images/bar/silver_bar.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        addCard,
-        back,
-        formBar,
-        formCard,
-        front,
-        hologram,
-        secret1,
-        secret2,
-        topCircle,
+        barAddress,
+        barCoinplusLogo,
         barEmpty,
         barForm,
-        barFront,
-        barLogo,
         barSecret1,
         barSecret2,
-        barSkeleton,
-        barWithAddress,
+        barTopCircle,
+        filledBar,
+        formBarSelected,
+        hologram,
+        hologramWithFrame,
+        shineAround,
+        silverBar
+      ];
+}
+
+class $AssetsImagesCardGen {
+  const $AssetsImagesCardGen();
+
+  /// File path: assets/images/card/Back.png
+  AssetGenImage get back => const AssetGenImage('assets/images/card/Back.png');
+
+  /// File path: assets/images/card/Front.png
+  AssetGenImage get front => const AssetGenImage('assets/images/card/Front.png');
+
+  /// File path: assets/images/card/Secret1.png
+  AssetGenImage get secret1 => const AssetGenImage('assets/images/card/Secret1.png');
+
+  /// File path: assets/images/card/Secret2.png
+  AssetGenImage get secret2 => const AssetGenImage('assets/images/card/Secret2.png');
+
+  /// File path: assets/images/card/brown_card_front.png
+  AssetGenImage get brownCardFront => const AssetGenImage('assets/images/card/brown_card_front.png');
+
+  /// File path: assets/images/card/card_form.png
+  AssetGenImage get cardForm => const AssetGenImage('assets/images/card/card_form.png');
+
+  /// File path: assets/images/card/filled_back.png
+  AssetGenImage get filledBack => const AssetGenImage('assets/images/card/filled_back.png');
+
+  /// File path: assets/images/card/filled_back_brown.png
+  AssetGenImage get filledBackBrown => const AssetGenImage('assets/images/card/filled_back_brown.png');
+
+  /// File path: assets/images/card/filled_back_white.png
+  AssetGenImage get filledBackWhite => const AssetGenImage('assets/images/card/filled_back_white.png');
+
+  /// File path: assets/images/card/form_card_selected.png
+  AssetGenImage get formCardSelected => const AssetGenImage('assets/images/card/form_card_selected.png');
+
+  /// File path: assets/images/card/orange_card_front.png
+  AssetGenImage get orangeCardFront => const AssetGenImage('assets/images/card/orange_card_front.png');
+
+  /// File path: assets/images/card/white_card_front.png
+  AssetGenImage get whiteCardFront => const AssetGenImage('assets/images/card/white_card_front.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        back,
+        front,
+        secret1,
+        secret2,
         brownCardFront,
-        cardAndBarForms,
-        cardColorBrown,
-        cardColorOrange,
-        cardColorWhite,
         cardForm,
-        coinpluslogo,
-        contactless,
         filledBack,
         filledBackBrown,
         filledBackWhite,
-        formBarSelected,
         formCardSelected,
         orangeCardFront,
-        qrCode,
-        skeletonAddressField,
-        skeletonCircle,
-        skeletonEmpty,
-        skeletonLogo,
-        skeletonSecret1,
-        skeletonSecret2,
-        stylus,
-        walletProtectImage,
         whiteCardFront
       ];
 }

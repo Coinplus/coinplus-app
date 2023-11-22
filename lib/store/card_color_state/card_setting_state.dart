@@ -11,11 +11,11 @@ abstract class _CardSettingState with Store {
   late CardModel card;
 
   _CardSettingState({required this.card}) {
-    selectedColor = card.color;
+    selectedCardColor = card.color;
   }
 
   @observable
-  CardColor selectedColor = CardColor.ORANGE;
+  CardColor selectedCardColor = CardColor.ORANGE;
 
   @observable
   bool isColorChanged = false;
@@ -34,7 +34,7 @@ abstract class _CardSettingState with Store {
   }
 
   @action
-  Future<void> changeColor(CardColor color) async {
-    selectedColor = color;
+  Future<void> changeCardColor(CardColor color) async {
+    selectedCardColor = color;
   }
 }

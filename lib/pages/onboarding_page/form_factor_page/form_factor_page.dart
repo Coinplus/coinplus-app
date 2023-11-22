@@ -69,11 +69,11 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                             child: Column(
                               children: [
                                 if (_formFactorState.isFirstWidgetZoomed)
-                                  Assets.images.formCardSelected.image(
+                                  Assets.images.card.formCardSelected.image(
                                     height: 100,
                                   )
                                 else
-                                  Assets.images.cardForm.image(height: 80),
+                                  Assets.images.card.cardForm.image(height: 80),
                                 const Gap(35),
                                 const Text(
                                   'Card',
@@ -114,11 +114,11 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                             child: Column(
                               children: [
                                 if (_formFactorState.isSecondWidgetZoomed)
-                                  Assets.images.formBarSelected.image(
+                                  Assets.images.bar.formBarSelected.image(
                                     height: 150,
                                   )
                                 else
-                                  Assets.images.barForm.image(height: 120),
+                                  Assets.images.bar.barForm.image(height: 120),
                                 const Gap(20),
                                 const Text(
                                   'Bar',

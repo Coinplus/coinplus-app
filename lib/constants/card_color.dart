@@ -13,10 +13,10 @@ const CardColors = [CardColor.SILVER, CardColor.GOLD];
 
 extension CardColorHelper on CardColor {
   AssetGenImage get image => switch (this) {
-        CardColor.ORANGE => Assets.images.orangeCardFront,
-        CardColor.WHITE => Assets.images.whiteCardFront,
-        CardColor.BROWN => Assets.images.brownCardFront,
-        CardColor.SILVER => Assets.images.barEmpty,
-        CardColor.GOLD => Assets.images.barEmpty,
+        CardColor.ORANGE => Assets.images.card.orangeCardFront,
+        CardColor.WHITE => Assets.images.card.whiteCardFront,
+        CardColor.BROWN => Assets.images.card.brownCardFront,
+        CardColor.SILVER => Assets.images.bar.barEmpty,
+        CardColor.GOLD => Assets.images.bar.barEmpty,
       };
 }

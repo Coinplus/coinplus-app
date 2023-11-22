@@ -1,25 +1,34 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 
-import '../../constants/card_color.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
+import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/compute_private_key.dart';
+import '../../utils/custom_paint_lines_bar.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../card_fill_page/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
@@ -36,10 +45,15 @@ class BarFillWithNfc extends StatefulWidget {
 
 class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
+  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
   final _validationStore = ValidationState();
   final _addressState = AddressState();
   final _focusNode = FocusNode();
+  final _lineStore = LinesStore();
+  final _acceptState = AcceptState();
+  final _checkboxState = CheckboxState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -50,6 +64,15 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
     _toggleWidgets();
     _btcAddressController.addListener(_validateBTCAddress);
     _btcAddressController = TextEditingController();
+    _focusNode.addListener(() {
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
+    });
+    _textFieldAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 1,
+      upperBound: 1.09,
+    );
     _btcAddressController.text = widget.receivedData ?? '';
     if (widget.receivedData != null) {
       onInitWithAddress();
@@ -75,276 +98,633 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          'Virtual bar',
-          style: TextStyle(
-            fontSize: 32,
-            fontFamily: FontFamily.redHatBold,
-          ),
-        ).expandedHorizontally(),
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  _lineStore.isLineVisible ? makeLineInvisible() : router.pop();
+                },
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Gap(10),
+            const Text(
+              'Virtual bar',
+              style: TextStyle(
+                fontSize: 32,
+                fontFamily: FontFamily.redHatBold,
+              ),
+            ),
+          ],
+        ),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
         backgroundColor: AppColors.scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: Column(
         children: [
-          const Gap(20),
+          const Gap(3),
           Expanded(
-            flex: 2,
+            flex: 4,
             child: Observer(
               builder: (context) {
-                final bar = _balanceStore.selectedBar;
-                final visibleAddress = _getVisibleAddress(bar!.address);
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 800),
-                  child: _addressState.isAddressVisible
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.1),
-                                    blurRadius: 15,
-                                    spreadRadius: 0.5,
-                                  ),
-                                ],
-                                image: DecorationImage(
-                                  image: bar.color.image.image().image,
+                final data = _balanceStore.coins;
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Center(
+                    child: AnimatedCrossFade(
+                      firstChild: Container(
+                        height: 475,
+                        width: context.width - 34,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: _lineStore.isLineVisible
+                                ? Assets.images.bar.filledBar.image().image
+                                : Assets.images.bar.barEmpty.image().image,
+                          ),
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                          child: Row(
+                            children: [
+                              Opacity(
+                                opacity: _lineStore.isLineVisible ? 1 : 0,
+                                child: CustomPaint(
+                                  size: const Size(61, 255),
+                                  painter: BarLinesCustomPaint(),
                                 ),
                               ),
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    const Gap(190),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            const Text(
-                                              'Balance',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: FontFamily.redHatMedium,
+                              Center(
+                                child: SizedBox(
+                                  width: context.width * 0.6,
+                                  child: Column(
+                                    children: [
+                                      const Gap(35),
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            height: 160,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: Assets.images.bar.hologramWithFrame.image().image,
                                               ),
                                             ),
-                                            Observer(
-                                              builder: (context) {
-                                                final data = _balanceStore.coins;
-                                                final myFormat = NumberFormat.decimalPatternDigits(
-                                                  locale: 'en_us',
-                                                  decimalDigits: 2,
-                                                );
-                                                if (_balanceStore.loadings[bar.address] ?? false) {
-                                                  return const Padding(
-                                                    padding: EdgeInsets.all(4),
-                                                    child: CupertinoActivityIndicator(
-                                                      radius: 5,
-                                                    ),
-                                                  );
-                                                }
-                                                return Text(
-                                                  (bar.data?.balance != null
-                                                          ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data!.price)}'
-                                                          : '')
-                                                      .toString(),
+                                            child: Center(
+                                              child: Assets.images.bar.barSecret1.image(
+                                                height: 44,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(10),
+                                      Opacity(
+                                        opacity: _lineStore.isLineVisible ? 0 : 1,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                const Text(
+                                                  'Balance',
                                                   style: TextStyle(
+                                                    fontSize: 15,
                                                     fontFamily: FontFamily.redHatMedium,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black.withOpacity(0.7),
-                                                    fontSize: 20,
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                                Observer(
+                                                  builder: (context) {
+                                                    final myFormat = NumberFormat.decimalPatternDigits(
+                                                      locale: 'en_us',
+                                                      decimalDigits: 2,
+                                                    );
+                                                    if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
+                                                        false) {
+                                                      return const Padding(
+                                                        padding: EdgeInsets.all(
+                                                          4,
+                                                        ),
+                                                        child: CupertinoActivityIndicator(
+                                                          radius: 5,
+                                                        ),
+                                                      );
+                                                    }
+                                                    return Text(
+                                                      (_balanceStore.selectedBar != null
+                                                              ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data!.price)}'
+                                                              : '')
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        color: Colors.black.withOpacity(0.7),
+                                                        fontSize: 20,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
+                                      ),
+                                      const Gap(15),
+                                      Opacity(
+                                        opacity: _lineStore.isLineVisible ? 0 : 1,
+                                        child: ScaleTap(
+                                          enableFeedback: false,
+                                          onPressed: _lineStore.isLineVisible
+                                              ? null
+                                              : () {
+                                                  Clipboard.setData(
+                                                    ClipboardData(
+                                                      text: _balanceStore.selectedBar!.address.toString(),
+                                                    ),
+                                                  ).then(
+                                                    (_) {
+                                                      HapticFeedback.mediumImpact();
+                                                      showTopSnackBar(
+                                                        displayDuration: const Duration(
+                                                          milliseconds: 400,
+                                                        ),
+                                                        Overlay.of(context),
+                                                        CustomSnackBar.success(
+                                                          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                          message: 'Address was copied',
+                                                          textStyle: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                          child: Container(
+                                            height: 33,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: Assets.images.bar.barAddress.image().image,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(4),
+                                                      child: CupertinoActivityIndicator(
+                                                        radius: 5,
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    _balanceStore.selectedBar?.address ?? '',
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: Colors.black,
+                                                      fontSize: 10,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const Gap(15),
+                                      Opacity(
+                                        opacity: _lineStore.isLineVisible ? 0 : 1,
+                                        child: Assets.images.bar.barCoinplusLogo.image(
+                                          height: 40,
+                                        ),
+                                      ),
+                                      const Gap(15),
+                                      Assets.images.bar.barSecret2.image(
+                                        height: 41,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      secondChild: Container(
+                        height: 475,
+                        width: context.width - 34,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: Assets.images.bar.barEmpty.image().image,
+                          ),
+                        ),
+                        child: Center(
+                          child: SizedBox(
+                            width: context.width * 0.6,
+                            child: Column(
+                              children: [
+                                const Gap(35),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      height: 160,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: Assets.images.bar.hologramWithFrame.image().image,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Assets.images.bar.barSecret1.image(
+                                          height: 44,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Gap(10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        const Text(
+                                          'Balance',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: FontFamily.redHatMedium,
+                                          ),
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            final myFormat = NumberFormat.decimalPatternDigits(
+                                              locale: 'en_us',
+                                              decimalDigits: 2,
+                                            );
+                                            if ((_balanceStore.loadings[_balanceStore.selectedBar?.address] ?? false) ||
+                                                data == null) {
+                                              return const Padding(
+                                                padding: EdgeInsets.all(
+                                                  4,
+                                                ),
+                                                child: SizedBox(
+                                                  height: 15,
+                                                  width: 15,
+                                                  child: CircularProgressIndicator(
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Text(
+                                              (_balanceStore.selectedBar != null
+                                                      ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                      : '')
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.black.withOpacity(0.7),
+                                                fontSize: 20,
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ],
-                                    ).paddingHorizontal(40),
-                                    const Gap(16),
-                                    Center(
+                                    ),
+                                  ],
+                                ),
+                                const Gap(15),
+                                ScaleTap(
+                                  enableFeedback: false,
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: _balanceStore.selectedBar!.address.toString(),
+                                      ),
+                                    ).then(
+                                      (_) {
+                                        HapticFeedback.mediumImpact();
+                                        showTopSnackBar(
+                                          displayDuration: const Duration(
+                                            milliseconds: 400,
+                                          ),
+                                          Overlay.of(context),
+                                          CustomSnackBar.success(
+                                            backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                            message: 'Address was copied',
+                                            textStyle: const TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 33,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: Assets.images.bar.barAddress.image().image,
+                                      ),
+                                    ),
+                                    child: Center(
                                       child: Observer(
                                         builder: (context) {
-                                          if (_balanceStore.loadings[bar.address] ?? false) {
+                                          if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ?? false) {
                                             return const Padding(
-                                              padding: EdgeInsets.all(4),
-                                              child: CupertinoActivityIndicator(
-                                                radius: 5,
+                                              padding: EdgeInsets.all(
+                                                4,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 10,
+                                                    width: 10,
+                                                    child: CircularProgressIndicator(
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             );
                                           }
                                           return Text(
-                                            visibleAddress,
+                                            _balanceStore.selectedBar?.address ?? '',
                                             style: const TextStyle(
                                               fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w600,
                                               color: Colors.black,
-                                              fontSize: 13,
+                                              fontSize: 10,
                                             ),
                                           );
                                         },
                                       ),
                                     ),
-                                    const Gap(15),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: context.width - 34,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: Assets.images.skeletonEmpty.image().image,
-                              ),
-                            ),
-                            child: LayoutBuilder(
-                              builder: (_, constraints) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: constraints.maxWidth * 0.5,
-                                    child: Column(
-                                      //mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Gap(23),
-                                        Flexible(
-                                          flex: 3,
-                                          child: Stack(
-                                            children: [
-                                              Positioned(
-                                                top: 0,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.skeletonCircle.image(
-                                                  height: 165,
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 60,
-                                                left: 0,
-                                                right: 0,
-                                                child: Assets.images.skeletonSecret1.image(
-                                                  height: 40,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Assets.images.skeletonAddressField.image(),
-                                        const Gap(20),
-                                        Assets.images.skeletonLogo.image(
-                                          height: 38,
-                                        ),
-                                        const Gap(12),
-                                        Assets.images.skeletonSecret2.image(),
-                                        const Gap(30),
-                                      ],
-                                    ),
                                   ),
-                                );
-                              },
+                                ),
+                                const Gap(15),
+                                Assets.images.bar.barCoinplusLogo.image(
+                                  height: 40,
+                                ),
+                                const Gap(15),
+                                Assets.images.bar.barSecret2.image(
+                                  height: 41,
+                                ),
+                              ],
                             ),
                           ),
                         ),
+                      ),
+                      crossFadeState: _lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                      duration: const Duration(milliseconds: 400),
+                    ),
+                  ),
                 );
               },
             ),
           ),
-          const Gap(20),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
-              ),
-              color: Colors.white.withOpacity(0.7),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(14),
-              child: Column(
-                children: [
-                  AnimatedSwitcher(
-                    switchInCurve: Curves.decelerate,
-                    duration: Duration(milliseconds: 300),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Coinplus Virtual Bar',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: AppColors.textHintsColor,
+          Flexible(
+            child: Observer(
+              builder: (context) {
+                return ShakeAnimationWidget(
+                  shakeRange: 0.3,
+                  isForward: false,
+                  shakeAnimationController: _shakeAnimationController,
+                  shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                  child: Stack(
+                    children: [
+                      Column(
+                        children: [
+                          AnimatedCrossFade(
+                            firstChild: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.3),
+                                ),
+                                color: Colors.white.withOpacity(0.7),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(14),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'Coinplus virtual bar',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                    const Gap(4),
+                                    const Text(
+                                      'This is the virtual copy of your physical Coinplus bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 14,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            secondChild: GestureDetector(
+                              onTap: () {
+                                _checkboxState.makeActive();
+                                HapticFeedback.heavyImpact();
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: _checkboxState.isActive
+                                            ? const Color(0xFF73C3A6)
+                                            : _acceptState.isAccepted
+                                                ? Colors.grey.withOpacity(0.3)
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      color: _checkboxState.isActive
+                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                          : _acceptState.isAccepted
+                                              ? Colors.white.withOpacity(0.7)
+                                              : const Color(0xFFFF2E00).withOpacity(0.05),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(14),
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                            'Keep your bar safe!',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          const Gap(4),
+                                          const Text(
+                                            'Make sure to keep your bar safe! You will need your \nSecret 1 and Secret 2 in the future to manage your crypto.',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            crossFadeState:
+                                !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 400),
+                          ),
+                        ],
+                      ).paddingHorizontal(16),
+                      Visibility(
+                        visible: _lineStore.isLineVisible,
+                        child: Positioned(
+                          right: 16,
+                          child: Transform.scale(
+                            scale: 1.2,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Observer(
+                                builder: (context) {
+                                  return Checkbox(
+                                    checkColor: const Color(0xFF73C3A6),
+                                    activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(4),
+                                      ),
+                                    ),
+                                    side: BorderSide(
+                                      color: _acceptState.isAccepted
+                                          ? Colors.grey.withOpacity(0.5)
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
+                                    ),
+                                    value: _checkboxState.isActive,
+                                    onChanged: (_) {
+                                      _checkboxState.makeActive();
+                                    },
+                                    splashRadius: 15,
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Gap(4),
-                  Text(
-                    'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatMedium,
-                      fontSize: 14,
-                      color: AppColors.textHintsColor,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          ).paddingHorizontal(16),
-          const Gap(20),
+          ),
+          if (context.height > 844)
+            SizedBox(
+              height: context.width * 0.15,
+            )
+          else
+            SizedBox(
+              height: context.width * 0.04,
+            ),
           Observer(
             builder: (_) {
-              return LoadingButton(
-                onPressed: _addressState.isAddressVisible
-                    ? () {
-                        try {
+              return _lineStore.isLineVisible
+                  ? LoadingButton(
+                      onPressed: () async {
+                        if (_checkboxState.isActive) {
                           _balanceStore.saveSelectedBar();
-                          hasShownWallet().then((hasShown) {
+                          await hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(Dashboard());
+                              router.pop();
                             } else {
-                              router.push(const WalletProtectionRoute());
+                              router.pushAndPopAll(
+                                const WalletProtectionRoute(),
+                              );
                             }
                           });
-                        } catch (e) {
-                          if (!router.stackData
-                              .indexWhere(
-                                (element) => element.name == Dashboard.name,
-                              )
-                              .isNegative) {
-                            router.pop();
-                            alreadySavedCard(context);
-                          }
+                        } else {
+                          await HapticFeedback.vibrate();
+                          _acceptState.accept();
+                          _shakeAnimationController.start();
+                          await Future.delayed(
+                            const Duration(
+                              milliseconds: 600,
+                            ),
+                          );
+                          _shakeAnimationController.stop();
                         }
-                      }
-                    : null,
-                child: const Text(
-                  'Save to wallet',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: FontFamily.redHatSemiBold,
-                  ),
-                ),
-              ).paddingHorizontal(49);
+                      },
+                      child: const Text(
+                        'Got it',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: FontFamily.redHatSemiBold,
+                        ),
+                      ),
+                    ).paddingHorizontal(49)
+                  : LoadingButton(
+                      onPressed: _addressState.isAddressVisible
+                          ? () async {
+                              final cardIndex = _balanceStore.bars.indexWhere(
+                                (element) => element.address == _balanceStore.selectedBar?.address,
+                              );
+                              if (cardIndex != -1) {
+                                await alreadySavedBar(context);
+                              } else {
+                                await Future.delayed(
+                                  const Duration(milliseconds: 300),
+                                );
+                                _lineStore.makeVisible();
+                              }
+                            }
+                          : null,
+                      child: const Text(
+                        'Save to wallet',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: FontFamily.redHatSemiBold,
+                        ),
+                      ),
+                    ).paddingHorizontal(49);
             },
           ),
-          const Gap(50),
-          //Gap(max(context.bottomPadding, 12)),
+          if (context.height > 667) const Gap(40) else const Gap(12),
         ],
       ),
     );
-  }
-
-  String _getVisibleAddress(String fullAddress) {
-    final start = fullAddress.substring(0, 5);
-    final end = fullAddress.substring(fullAddress.length - 5);
-    return '$start ... $end';
   }
 
   Future<void> _validateBTCAddress() async {
@@ -360,5 +740,10 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
         () => _addressState.isAddressVisible = true,
       );
     } else {}
+  }
+
+  Future<void> makeLineInvisible() async {
+    await Future.delayed(const Duration(milliseconds: 350));
+    _lineStore.makeVisible();
   }
 }

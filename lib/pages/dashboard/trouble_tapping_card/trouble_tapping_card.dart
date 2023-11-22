@@ -121,7 +121,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
               EdgeInsets.all(10),
             ),
             backgroundColor: MaterialStateProperty.all(
-              AppColors.silver,
+              Colors.grey.withOpacity(0.1),
             ),
           ),
       child: Row(

@@ -1,8 +1,8 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../extensions/extensions.dart';
 import '../../../gen/fonts.gen.dart';
@@ -13,14 +13,22 @@ import '../../../widgets/loading_button.dart';
 Future<void> secretsSuccessAlert(BuildContext context) {
   final okButton = LoadingButton(
     onPressed: () async {
-      await router.pop();
-      await router.pop(Dashboard());
-      final url = Uri.parse(
-        'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+      router.popUntilRouteWithName(DashboardRoute.name);
+      await FlutterWebBrowser.openWebPage(
+        url: 'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+        customTabsOptions: const CustomTabsOptions(
+          shareState: CustomTabsShareState.on,
+          instantAppsEnabled: true,
+          showTitle: true,
+          urlBarHidingEnabled: true,
+        ),
+        safariVCOptions: const SafariViewControllerOptions(
+          barCollapsingEnabled: true,
+          modalPresentationStyle: UIModalPresentationStyle.formSheet,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+          modalPresentationCapturesStatusBarAppearance: true,
+        ),
       );
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
-      }
     },
     child: const Text(
       'Guide Me',

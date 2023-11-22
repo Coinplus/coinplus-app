@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
@@ -60,6 +61,10 @@ class _ContactUsState extends State<ContactUs> {
         slivers: [
           SliverAppBar(
             elevation: 0,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              systemNavigationBarColor: Colors.white,
+              statusBarColor: Colors.transparent,
+            ),
             iconTheme: const IconThemeData(color: Colors.white, size: 25),
             toolbarHeight: 110,
             title: const Text(
@@ -144,7 +149,7 @@ class _ContactUsState extends State<ContactUs> {
                       color: AppColors.primaryTextColor.withOpacity(0.5),
                       fontSize: 14,
                     ),
-                    fillColor: AppColors.silver,
+                    fillColor: Colors.grey.withOpacity(0.1),
                   ),
                 ).paddingHorizontal(16),
                 const Gap(20),
@@ -241,7 +246,7 @@ class _ContactUsState extends State<ContactUs> {
                           color: AppColors.primaryTextColor.withOpacity(0.5),
                           fontSize: 14,
                         ),
-                        fillColor: AppColors.silver,
+                        fillColor: Colors.grey.withOpacity(0.1),
                       ),
                     ).paddingHorizontal(16),
                     const Gap(20),
@@ -305,7 +310,7 @@ class _ContactUsState extends State<ContactUs> {
                       color: AppColors.primaryTextColor.withOpacity(0.5),
                       fontSize: 14,
                     ),
-                    fillColor: AppColors.silver,
+                    fillColor: Colors.grey.withOpacity(0.1),
                   ),
                 ).paddingHorizontal(16),
                 const Gap(20),

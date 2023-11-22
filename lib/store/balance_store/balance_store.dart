@@ -9,9 +9,11 @@ import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
+import '../../services/amplitude_service.dart';
 import '../../utils/storage_utils.dart';
 
 part 'balance_store.g.dart';
@@ -122,7 +124,10 @@ abstract class _BalanceStore with Store {
 
   @action
   Future<void> getSelectedBar(String address) async {
-    _selectedBar = BarModel(address: address);
+    _selectedBar = BarModel(
+      address: address,
+      createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+    );
     _selectedBar = await _getSingleBarInfo(address);
   }
 
@@ -147,7 +152,7 @@ abstract class _BalanceStore with Store {
     _bars.removeAt(index);
     await StorageUtils.removeBar(_selectedBar!.address);
     const secureStorage = FlutterSecureStorage();
-    await secureStorage.delete(key: _selectedCard!.address);
+    await secureStorage.delete(key: _selectedBar!.address);
   }
 
   Future<CardModel?> _getSingleCardInfo(String address) async {
@@ -190,9 +195,13 @@ abstract class _BalanceStore with Store {
     final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
 
     if (isCardNotExist) {
+      _selectedCard = _selectedCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+      );
       _cards.add(_selectedCard!);
 
       StorageUtils.addCard(_selectedCard!);
+      recordAmplitudeEvent(CardAddedEvent(card: _selectedCard!));
     } else {
       throw Exception('Card is already added');
     }
@@ -206,8 +215,15 @@ abstract class _BalanceStore with Store {
     final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedBar?.address).isNegative;
 
     if (isBarNotExist) {
+      _selectedBar = _selectedBar!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+      );
       _bars.add(_selectedBar!);
-      StorageUtils.addBar(_selectedBar!);
+      StorageUtils.addBar(
+        _selectedBar!.copyWith(
+          createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        ),
+      );
     } else {
       throw Exception('Bar is already added');
     }

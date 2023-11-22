@@ -30,6 +30,9 @@ class _CreatePinCodeState extends State<CreatePinCode> {
   final _enterPinCodeController = TextEditingController();
   final _repeatPinCodeController = TextEditingController();
   late final _shakeAnimationController = ShakeAnimationController();
+  final _enterFocusNode = FocusNode();
+  final _reEnterFocusNode = FocusNode();
+
   String enteredPin = '';
   String repeatPin = '';
 
@@ -39,6 +42,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
     enteredPin = _enterPinCodeController.text;
     repeatPin = _repeatPinCodeController.text;
     _pageController = PageController();
+    _walletProtectState.checkBiometrics();
   }
 
   @override
@@ -51,7 +55,12 @@ class _CreatePinCodeState extends State<CreatePinCode> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
         title: const Text(
           'Create passcode',
           style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 18),
@@ -69,7 +78,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
               ),
               const Gap(50),
               const Text(
-                'Create passcode',
+                'Enter passcode',
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontSize: 20,
@@ -80,17 +89,21 @@ class _CreatePinCodeState extends State<CreatePinCode> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: PinCodeTextField(
+                  autoDismissKeyboard: false,
+                  focusNode: _enterFocusNode,
                   obscuringWidget: const Text(
                     '●',
                     style: TextStyle(fontSize: 15),
                   ),
+                  autoDisposeControllers: false,
                   onCompleted: (value) {
                     enteredPin = value;
                     _pageController.jumpToPage(1);
+                    _enterFocusNode.unfocus();
+                    _reEnterFocusNode.requestFocus();
                   },
                   textCapitalization: TextCapitalization.characters,
                   autoFocus: true,
-                  enableActiveFill: true,
                   backgroundColor: Colors.white,
                   pinTheme: PinTheme(
                     disabledBorderWidth: 2,
@@ -180,29 +193,34 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                   shakeAnimationController: _shakeAnimationController,
                   shakeAnimationType: ShakeAnimationType.LeftRightShake,
                   child: PinCodeTextField(
+                    autoDismissKeyboard: false,
+                    focusNode: _reEnterFocusNode,
                     obscuringWidget: const Text(
                       '●',
                       style: TextStyle(fontSize: 15),
                     ),
+                    autoDisposeControllers: false,
                     onCompleted: (value) async {
                       repeatPin = value;
                       if (enteredPin == repeatPin) {
+                        if (_walletProtectState.canCheckBiometrics) {
+                          await _walletProtectState.authenticateWithBiometrics();
+                        }
                         await savePinCode(pinCode: value);
-                        await isPinCodeSet(isSet: true);
-                        await _walletProtectState.isBiometricAvailable();
-                        await router.pushAndPopAll(Dashboard());
+                        await Future.delayed(const Duration(milliseconds: 100));
+                        await router.pushAndPopAll(const DashboardRoute());
                       } else {
                         await HapticFeedback.vibrate();
                         _shakeAnimationController.start();
                         await _walletProtectState.dontMatch();
                         _pageController.jumpToPage(0);
+                        _reEnterFocusNode.unfocus();
+                        _enterFocusNode.requestFocus();
                         await Future.delayed(const Duration(milliseconds: 600));
                         _shakeAnimationController.stop();
                       }
                     },
                     textCapitalization: TextCapitalization.characters,
-                    autoFocus: true,
-                    enableActiveFill: true,
                     backgroundColor: Colors.white,
                     pinTheme: PinTheme(
                       disabledBorderWidth: 2,

@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../constants/card_color.dart';
-import '../../../constants/card_record.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -17,7 +16,7 @@ import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/balance_store/balance_store.dart';
-import '../../../store/nav_bar_state/nav_bar_state.dart';
+import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
@@ -30,12 +29,10 @@ class CardList extends StatefulWidget {
     super.key,
     required this.onCardSelected,
     required this.onCarouselScroll,
-    this.onChangeCard,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
-  final CardChangeCallBack? onChangeCard;
 
   @override
   State<CardList> createState() => _CardListState();
@@ -44,33 +41,13 @@ class CardList extends StatefulWidget {
 class _CardListState extends State<CardList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<CardList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  NavBarState get _navBarState => GetIt.I<NavBarState>();
-
-  late ReactionDisposer cardsLengthReaction;
-
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  final _nfcState = NfcStore();
+
   @override
   void initState() {
     super.initState();
-    cardsLengthReaction = reaction(
-      (_) => _balanceStore.cards.length,
-      (newLength) {
-        if (newLength > _settingsState.cardCurrentIndex) {
-          widget.onCarouselScroll(newLength - 1);
-          _settingsState.setCardCurrentIndex(newLength - 1);
-          _navBarState.isInAddCard = false;
-        } else if (newLength == _settingsState.cardCurrentIndex) {
-          _settingsState.setCardCurrentIndex(newLength);
-          _navBarState.inAddCard();
-        }
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    cardsLengthReaction();
+    _nfcState.checkNfcSupport();
   }
 
   @override
@@ -80,7 +57,22 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
       builder: (_) {
         return ReactionBuilder(
           builder: (context) {
-            return cardsLengthReaction;
+            return reaction(
+              (_) => _balanceStore.cards.length,
+              (length) {
+                if (length > _settingsState.cardCurrentIndex) {
+                  widget.onCarouselScroll(length - 1);
+                  _settingsState.setCardCurrentIndex(length - 1);
+                  final card = _balanceStore.cards.lastOrNull;
+                  if (card != null) {
+                    widget.onCardSelected(card as AbstractCard);
+                  }
+                } else {
+                  _settingsState.setCardCurrentIndex(length);
+                  widget.onCardSelected(null);
+                }
+              },
+            );
           },
           child: CarouselSlider.builder(
             itemBuilder: (context, index, constrains) {
@@ -126,13 +118,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                               ],
                             ),
                             const Gap(18),
-                            CardScanMethodsPage(
-                              onChangeCard: widget.onChangeCard,
-                              onCardSelected: widget.onCardSelected,
-                              onCarouselScroll: widget.onCarouselScroll,
-                            ).paddingHorizontal(
-                              20,
-                            ),
+                            CardScanMethodsPage(isAvailable: _nfcState).paddingHorizontal(20),
                             const Gap(40),
                           ],
                         );
@@ -420,11 +406,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                   _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
                 );
                 await _settingsState.setCardCurrentIndex(index);
-                if (index == _balanceStore.cards.length) {
-                  _navBarState.inAddCard();
-                } else {
-                  _navBarState.isInAddCard = false;
-                }
               },
               enlargeFactor: 0.35,
               enableInfiniteScroll: false,

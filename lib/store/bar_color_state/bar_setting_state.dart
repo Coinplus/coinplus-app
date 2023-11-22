@@ -11,14 +11,30 @@ abstract class _BarSettingState with Store {
   late BarModel bar;
 
   _BarSettingState({required this.bar}) {
-    selectedColor = bar.color;
+    selectedBarColor = bar.color;
   }
 
   @observable
-  CardColor selectedColor = CardColor.SILVER;
+  CardColor selectedBarColor = CardColor.SILVER;
+
+  @observable
+  bool isPrivateKeyVisible = false;
+
+  @observable
+  bool isColorChanged = false;
 
   @action
-  Future<void> changeColor(CardColor color) async {
-    selectedColor = color;
+  void makePrivateVisible() {
+    isPrivateKeyVisible = !isPrivateKeyVisible;
+  }
+
+  @action
+  void colorState() {
+    isColorChanged = true;
+  }
+
+  @action
+  Future<void> changeBarColor(CardColor color) async {
+    selectedBarColor = color;
   }
 }

@@ -13,10 +13,10 @@ import '../../gen/fonts.gen.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../dashboard/dashboard.dart';
 
 class RemoveCard extends StatefulWidget {
   const RemoveCard({super.key, required this.card});
@@ -89,7 +89,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Assets.images.cardForm.image(
+                    Assets.images.card.cardForm.image(
                       height: 84,
                     ),
                     const Gap(50),
@@ -117,6 +117,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           LoadingButton(
             onPressed: () async {
               await _balanceStore.getSelectedCard(widget.card.address);
+              await secureStorage.delete(key: 'card${widget.card.address}');
               await router.pop();
               await _balanceStore.removeSelectedCard();
               showTopSnackBar(
@@ -134,7 +135,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   ),
                 ),
               );
-              await router.pop(const Dashboard());
+              await router.pop();
             },
             child: const Text(
               'Delete',

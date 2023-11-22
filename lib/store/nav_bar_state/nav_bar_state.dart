@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
 
+import '../../models/abstract_card/abstract_card.dart';
+
 part 'nav_bar_state.g.dart';
 
 class NavBarState = NavBarStore with _$NavBarState;
@@ -18,13 +20,9 @@ abstract class NavBarStore with Store {
   bool isInAddBar = false;
 
   @action
-  void inAddBar() {
-    isInAddBar = !isInAddBar;
-  }
-
-  @action
-  void inAddCard() {
-    isInAddCard = !isInAddCard;
+  void updateAddCardPosition({AbstractCard? card, required int tabIndex}) {
+    isInAddCard = card == null && tabIndex == 0;
+    isInAddBar = card == null && tabIndex == 1;
   }
 
   @action

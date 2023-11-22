@@ -25,7 +25,9 @@ class PinRemove extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Column(
         children: [
@@ -69,6 +71,7 @@ class PinRemove extends StatelessWidget {
               child: PinCodeTextField(
                 focusNode: _walletProtectState.pinFocusNode,
                 controller: _pinController,
+                autoDisposeControllers: false,
                 autoFocus: true,
                 blinkDuration: const Duration(milliseconds: 1),
                 obscuringWidget: const Text(
@@ -78,8 +81,8 @@ class PinRemove extends StatelessWidget {
                 onCompleted: (value) async {
                   final savedPinCode = await getSavedPinCode();
                   if (value == savedPinCode) {
-                    await router.pop();
                     await secureStorage.delete(key: 'pin_code');
+                    await router.pop();
                   } else {
                     await HapticFeedback.vibrate();
                     _pinController.text = '';
@@ -95,7 +98,6 @@ class PinRemove extends StatelessWidget {
                   }
                 },
                 textCapitalization: TextCapitalization.characters,
-                enableActiveFill: true,
                 backgroundColor: Colors.white,
                 pinTheme: PinTheme(
                   disabledBorderWidth: 2,

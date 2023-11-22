@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -13,29 +16,49 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../utils/secure_storage_utils.dart';
+import 'please_enable_biometrics.dart';
 
 @RoutePage()
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends HookWidget {
   const SettingsPage({super.key});
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
-
-class _SettingsPageState extends State<SettingsPage>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<SettingsPage> {
-  @override
-  void initState() {
-    super.initState();
-    _walletProtectState.checkPinCodeStatus();
-  }
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    useAutomaticKeepAlive();
+    useEffect(() {
+      _walletProtectState.checkBiometrics();
+      return null;
+    });
+    final onToggleAppLock = useCallback(
+      (isEnable) async {
+        if (isEnable) {
+          await router.push(const CreatePinCode());
+        } else {
+          await router.push(const PinRemove());
+        }
+        await _walletProtectState.checkPinCodeStatus();
+        await _walletProtectState.checkBiometricStatus();
+      },
+      [_walletProtectState.isSetPinCode],
+    );
+    final onToggleFaceId = useCallback<Future<void> Function(bool p1)>(
+      (isEnable) async {
+        if (!isEnable) {
+          await _walletProtectState.disableBiometric();
+        } else {
+          if (_walletProtectState.canCheckBiometrics) {
+            await _walletProtectState.authenticateWithBiometrics();
+          } else {
+            await pleaseEnableBiometrics(context);
+          }
+        }
+        await _walletProtectState.checkBiometricStatus();
+      },
+      [_walletProtectState.isBiometricsEnabled],
+    );
+
     return CupertinoPageScaffold(
       child: CustomScrollView(
         slivers: [
@@ -85,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage>
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () async {},
+                          onTap: () => onToggleAppLock(!_walletProtectState.isSetPinCode),
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -103,16 +126,7 @@ class _SettingsPageState extends State<SettingsPage>
                               builder: (context) {
                                 return CupertinoSwitch(
                                   value: _walletProtectState.isSetPinCode,
-                                  onChanged: (value) async {
-                                    if (value) {
-                                      _walletProtectState.isSetPinCode = value;
-                                      await router.push(const CreatePinCode());
-                                    } else {
-                                      await router.push(const PinRemove());
-                                      _walletProtectState.isSetPinCode = false;
-                                    }
-                                    await isPinCodeSet(isSet: value);
-                                  },
+                                  onChanged: onToggleAppLock,
                                 );
                               },
                             ),
@@ -127,72 +141,83 @@ class _SettingsPageState extends State<SettingsPage>
                             ),
                           ),
                         ),
-                        Column(
-                          children: [
-                            const Divider(
-                              indent: 5,
-                              endIndent: 5,
-                              thickness: 1,
-                              color: AppColors.silver,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                router.push(const ChangePinCode());
-                              },
-                              splashFactory: InkSparkle.splashFactory,
-                              highlightColor: Colors.transparent,
-                              child: ListTile(
-                                trailing: Assets.icons.arrowForwardIos.image(
-                                  height: 20,
+                        Observer(
+                          builder: (_) {
+                            if (!_walletProtectState.isSetPinCode) {
+                              return const SizedBox();
+                            }
+                            return Column(
+                              children: [
+                                Divider(
+                                  indent: 5,
+                                  endIndent: 5,
+                                  thickness: 1,
+                                  color: Colors.grey.withOpacity(0.1),
                                 ),
-                                splashColor: Colors.transparent,
-                                minLeadingWidth: 10,
-                                leading: Assets.icons.password.image(
-                                  height: 22,
-                                ),
-                                title: const Text(
-                                  'Change passcode',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
+                                InkWell(
+                                  onTap: () {
+                                    router.push(const ChangePinCode());
+                                  },
+                                  splashFactory: InkSparkle.splashFactory,
+                                  highlightColor: Colors.transparent,
+                                  child: ListTile(
+                                    trailing: Assets.icons.arrowForwardIos.image(
+                                      height: 20,
+                                    ),
+                                    splashColor: Colors.transparent,
+                                    minLeadingWidth: 10,
+                                    leading: Assets.icons.password.image(
+                                      height: 22,
+                                    ),
+                                    title: const Text(
+                                      'Change passcode',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 15,
+                                        color: AppColors.primaryTextColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Divider(
-                          indent: 0,
-                          endIndent: 0,
-                          thickness: 1,
-                          color: AppColors.silver,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            splashColor: Colors.transparent,
-                            minLeadingWidth: 10,
-                            trailing: CupertinoSwitch(
-                              value: true,
-                              onChanged: (value) {},
-                            ),
-                            leading: Assets.icons.faceIdSettings.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Face ID',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                                Divider(
+                                  indent: 0,
+                                  endIndent: 0,
+                                  thickness: 1,
+                                  color: Colors.grey.withOpacity(0.1),
+                                ),
+                                InkWell(
+                                  onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
+                                  splashFactory: InkSparkle.splashFactory,
+                                  highlightColor: Colors.transparent,
+                                  child: ListTile(
+                                    splashColor: Colors.transparent,
+                                    minLeadingWidth: 10,
+                                    trailing: Observer(
+                                      builder: (_) {
+                                        return CupertinoSwitch(
+                                          value: _walletProtectState.isBiometricsEnabled,
+                                          onChanged: onToggleFaceId,
+                                        );
+                                      },
+                                    ),
+                                    leading: Assets.icons.faceIdSettings.image(
+                                      height: 22,
+                                    ),
+                                    title: Text(
+                                      Platform.isAndroid ? 'Biometrics' : 'Face ID',
+                                      style: const TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 15,
+                                        color: AppColors.primaryTextColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -293,11 +318,11 @@ class _SettingsPageState extends State<SettingsPage>
                             ),
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           indent: 0,
                           endIndent: 0,
                           thickness: 1,
-                          color: AppColors.silver,
+                          color: Colors.grey.withOpacity(0.1),
                         ),
                         InkWell(
                           onTap: () {
@@ -431,12 +456,21 @@ class _SettingsPageState extends State<SettingsPage>
                       children: [
                         InkWell(
                           onTap: () async {
-                            final url = Uri.parse(
-                              'https://coinplus.com/privacy-policy/',
+                            await FlutterWebBrowser.openWebPage(
+                              url: 'https://coinplus.com/privacy-policy/',
+                              customTabsOptions: const CustomTabsOptions(
+                                shareState: CustomTabsShareState.on,
+                                instantAppsEnabled: true,
+                                showTitle: true,
+                                urlBarHidingEnabled: true,
+                              ),
+                              safariVCOptions: const SafariViewControllerOptions(
+                                barCollapsingEnabled: true,
+                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance: true,
+                              ),
                             );
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            }
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
@@ -457,20 +491,29 @@ class _SettingsPageState extends State<SettingsPage>
                             ),
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           indent: 0,
                           endIndent: 0,
                           thickness: 1,
-                          color: AppColors.silver,
+                          color: Colors.grey.withOpacity(0.1),
                         ),
                         InkWell(
                           onTap: () async {
-                            final url = Uri.parse(
-                              'https://coinplus.com/terms-of-use/',
+                            await FlutterWebBrowser.openWebPage(
+                              url: 'https://coinplus.com/terms-of-use/',
+                              customTabsOptions: const CustomTabsOptions(
+                                shareState: CustomTabsShareState.on,
+                                instantAppsEnabled: true,
+                                showTitle: true,
+                                urlBarHidingEnabled: true,
+                              ),
+                              safariVCOptions: const SafariViewControllerOptions(
+                                barCollapsingEnabled: true,
+                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance: true,
+                              ),
                             );
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            }
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
@@ -503,7 +546,4 @@ class _SettingsPageState extends State<SettingsPage>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

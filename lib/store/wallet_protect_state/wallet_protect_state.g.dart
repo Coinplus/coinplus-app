@@ -9,21 +9,6 @@ part of 'wallet_protect_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$WalletProtectState on _WalletProtectState, Store {
-  late final _$hasAuthenticatedAtom = Atom(name: '_WalletProtectState.hasAuthenticated', context: context);
-
-  @override
-  bool get hasAuthenticated {
-    _$hasAuthenticatedAtom.reportRead();
-    return super.hasAuthenticated;
-  }
-
-  @override
-  set hasAuthenticated(bool value) {
-    _$hasAuthenticatedAtom.reportWrite(value, super.hasAuthenticated, () {
-      super.hasAuthenticated = value;
-    });
-  }
-
   late final _$isCreatedPinMatchAtom = Atom(name: '_WalletProtectState.isCreatedPinMatch', context: context);
 
   @override
@@ -36,21 +21,6 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   set isCreatedPinMatch(bool value) {
     _$isCreatedPinMatchAtom.reportWrite(value, super.isCreatedPinMatch, () {
       super.isCreatedPinMatch = value;
-    });
-  }
-
-  late final _$appLockToggleAtom = Atom(name: '_WalletProtectState.appLockToggle', context: context);
-
-  @override
-  bool get appLockToggle {
-    _$appLockToggleAtom.reportRead();
-    return super.appLockToggle;
-  }
-
-  @override
-  set appLockToggle(bool value) {
-    _$appLockToggleAtom.reportWrite(value, super.appLockToggle, () {
-      super.appLockToggle = value;
     });
   }
 
@@ -69,18 +39,35 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$isNfcSessionStartedAtom = Atom(name: '_WalletProtectState.isNfcSessionStarted', context: context);
+  late final _$isBiometricsEnabledAtom = Atom(name: '_WalletProtectState.isBiometricsEnabled', context: context);
 
   @override
-  bool get isNfcSessionStarted {
-    _$isNfcSessionStartedAtom.reportRead();
-    return super.isNfcSessionStarted;
+  bool get isBiometricsEnabled {
+    _$isBiometricsEnabledAtom.reportRead();
+    return super.isBiometricsEnabled;
   }
 
   @override
-  set isNfcSessionStarted(bool value) {
-    _$isNfcSessionStartedAtom.reportWrite(value, super.isNfcSessionStarted, () {
-      super.isNfcSessionStarted = value;
+  set isBiometricsEnabled(bool value) {
+    _$isBiometricsEnabledAtom.reportWrite(value, super.isBiometricsEnabled, () {
+      super.isBiometricsEnabled = value;
+    });
+  }
+
+  late final _$_isNfcSessionStartedAtom = Atom(name: '_WalletProtectState._isNfcSessionStarted', context: context);
+
+  bool get isNfcSessionStarted {
+    _$_isNfcSessionStartedAtom.reportRead();
+    return super._isNfcSessionStarted;
+  }
+
+  @override
+  bool get _isNfcSessionStarted => isNfcSessionStarted;
+
+  @override
+  set _isNfcSessionStarted(bool value) {
+    _$_isNfcSessionStartedAtom.reportWrite(value, super._isNfcSessionStarted, () {
+      super._isNfcSessionStarted = value;
     });
   }
 
@@ -99,6 +86,43 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
+  late final _$isLinkOpenedAtom = Atom(name: '_WalletProtectState.isLinkOpened', context: context);
+
+  @override
+  bool get isLinkOpened {
+    _$isLinkOpenedAtom.reportRead();
+    return super.isLinkOpened;
+  }
+
+  @override
+  set isLinkOpened(bool value) {
+    _$isLinkOpenedAtom.reportWrite(value, super.isLinkOpened, () {
+      super.isLinkOpened = value;
+    });
+  }
+
+  late final _$canCheckBiometricsAtom = Atom(name: '_WalletProtectState.canCheckBiometrics', context: context);
+
+  @override
+  bool get canCheckBiometrics {
+    _$canCheckBiometricsAtom.reportRead();
+    return super.canCheckBiometrics;
+  }
+
+  @override
+  set canCheckBiometrics(bool value) {
+    _$canCheckBiometricsAtom.reportWrite(value, super.canCheckBiometrics, () {
+      super.canCheckBiometrics = value;
+    });
+  }
+
+  late final _$checkBiometricsAsyncAction = AsyncAction('_WalletProtectState.checkBiometrics', context: context);
+
+  @override
+  Future<void> checkBiometrics() {
+    return _$checkBiometricsAsyncAction.run(() => super.checkBiometrics());
+  }
+
   late final _$checkPinCodeStatusAsyncAction = AsyncAction('_WalletProtectState.checkPinCodeStatus', context: context);
 
   @override
@@ -106,35 +130,35 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     return _$checkPinCodeStatusAsyncAction.run(() => super.checkPinCodeStatus());
   }
 
-  late final _$enableBiometricsAsyncAction = AsyncAction('_WalletProtectState.enableBiometrics', context: context);
+  late final _$checkBiometricStatusAsyncAction =
+      AsyncAction('_WalletProtectState.checkBiometricStatus', context: context);
 
   @override
-  Future<void> enableBiometrics() {
-    return _$enableBiometricsAsyncAction.run(() => super.enableBiometrics());
+  Future<void> checkBiometricStatus() {
+    return _$checkBiometricStatusAsyncAction.run(() => super.checkBiometricStatus());
   }
 
-  late final _$enableDisableAppLockToggleAsyncAction =
-      AsyncAction('_WalletProtectState.enableDisableAppLockToggle', context: context);
+  late final _$updateNfcSessionStatusAsyncAction =
+      AsyncAction('_WalletProtectState.updateNfcSessionStatus', context: context);
 
   @override
-  Future<void> enableDisableAppLockToggle() {
-    return _$enableDisableAppLockToggleAsyncAction.run(() => super.enableDisableAppLockToggle());
+  Future<void> updateNfcSessionStatus({required bool isStarted}) {
+    return _$updateNfcSessionStatusAsyncAction.run(() => super.updateNfcSessionStatus(isStarted: isStarted));
+  }
+
+  late final _$disableBiometricAsyncAction = AsyncAction('_WalletProtectState.disableBiometric', context: context);
+
+  @override
+  Future<void> disableBiometric() {
+    return _$disableBiometricAsyncAction.run(() => super.disableBiometric());
   }
 
   late final _$authenticateWithBiometricsAsyncAction =
       AsyncAction('_WalletProtectState.authenticateWithBiometrics', context: context);
 
   @override
-  Future<void> authenticateWithBiometrics() {
+  Future<bool> authenticateWithBiometrics() {
     return _$authenticateWithBiometricsAsyncAction.run(() => super.authenticateWithBiometrics());
-  }
-
-  late final _$authenticateWithBiometricsInSplashAsyncAction =
-      AsyncAction('_WalletProtectState.authenticateWithBiometricsInSplash', context: context);
-
-  @override
-  Future<void> authenticateWithBiometricsInSplash() {
-    return _$authenticateWithBiometricsInSplashAsyncAction.run(() => super.authenticateWithBiometricsInSplash());
   }
 
   late final _$isBiometricAvailableAsyncAction =
@@ -155,11 +179,10 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   late final _$_WalletProtectStateActionController = ActionController(name: '_WalletProtectState', context: context);
 
   @override
-  void isNfcSessionStart() {
-    final _$actionInfo =
-        _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.isNfcSessionStart');
+  void openLink() {
+    final _$actionInfo = _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.openLink');
     try {
-      return super.isNfcSessionStart();
+      return super.openLink();
     } finally {
       _$_WalletProtectStateActionController.endAction(_$actionInfo);
     }
@@ -168,12 +191,12 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   @override
   String toString() {
     return '''
-hasAuthenticated: ${hasAuthenticated},
 isCreatedPinMatch: ${isCreatedPinMatch},
-appLockToggle: ${appLockToggle},
 isBiometricsRunning: ${isBiometricsRunning},
-isNfcSessionStarted: ${isNfcSessionStarted},
-isSetPinCode: ${isSetPinCode}
+isBiometricsEnabled: ${isBiometricsEnabled},
+isSetPinCode: ${isSetPinCode},
+isLinkOpened: ${isLinkOpened},
+canCheckBiometrics: ${canCheckBiometrics}
     ''';
   }
 }

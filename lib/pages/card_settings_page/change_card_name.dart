@@ -15,7 +15,6 @@ import '../../store/card_name_sate/card_name_sate.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../dashboard/dashboard.dart';
 
 class CardNameChangeModal extends StatefulWidget {
   const CardNameChangeModal({super.key, required this.card});
@@ -139,7 +138,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                     color: AppColors.primaryTextColor.withOpacity(0.5),
                     fontSize: 14,
                   ),
-                  fillColor: AppColors.silver,
+                  fillColor: Colors.grey.withOpacity(0.1),
                 ),
               ).paddingHorizontal(12),
               const Gap(8),
@@ -165,7 +164,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                             await Future.delayed(
                               const Duration(milliseconds: 100),
                             );
-                            await router.pop(const Dashboard());
+                            await router.pop();
                             showTopSnackBar(
                               displayDuration: const Duration(
                                 milliseconds: 600,
