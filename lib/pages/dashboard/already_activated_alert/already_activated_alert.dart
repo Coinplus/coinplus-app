@@ -1,8 +1,8 @@
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
@@ -23,12 +23,21 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
     ),
     onPressed: () async {
       await router.pop();
-      final url = Uri.parse(
-        'https://coinplus.com/',
+      await FlutterWebBrowser.openWebPage(
+        url: 'https://coinplus.com/',
+        customTabsOptions: const CustomTabsOptions(
+          shareState: CustomTabsShareState.on,
+          instantAppsEnabled: true,
+          showTitle: true,
+          urlBarHidingEnabled: true,
+        ),
+        safariVCOptions: const SafariViewControllerOptions(
+          barCollapsingEnabled: true,
+          modalPresentationStyle: UIModalPresentationStyle.formSheet,
+          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+          modalPresentationCapturesStatusBarAppearance: true,
+        ),
       );
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
-      }
     },
   ).paddingHorizontal(40);
   final closeButton = LoadingButton(
@@ -41,7 +50,7 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
           ),
         )
         .copyWith(
-          backgroundColor: MaterialStateProperty.all(AppColors.silver),
+          backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
         ),
     onPressed: () async {
       await router.pop();

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
@@ -24,22 +26,39 @@ class PinAfterSplash extends StatefulWidget {
   State<PinAfterSplash> createState() => _PinAfterSplashState();
 }
 
+WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
 class _PinAfterSplashState extends State<PinAfterSplash> {
-  final _walletProtectState = WalletProtectState();
   late final _shakeAnimationController = ShakeAnimationController();
   final _pinController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _walletProtectState.authenticateWithBiometricsInSplash();
+    _walletProtectState.checkBiometrics();
+    Future.delayed(Duration.zero, () async {
+      await _walletProtectState.checkBiometricStatus();
+      if (_walletProtectState.isBiometricsEnabled) {
+        if (_walletProtectState.canCheckBiometrics) {
+          await _walletProtectState.authenticateWithBiometrics();
+        }
+      } else {
+        _walletProtectState.pinFocusNode.requestFocus();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -48,13 +67,17 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
             height: 50,
           ),
           const Gap(50),
-          const Text(
-            'Enter your passcode',
-            style: TextStyle(
-              fontFamily: FontFamily.redHatMedium,
-              fontSize: 20,
-              color: AppColors.primary,
-            ),
+          Observer(
+            builder: (context) {
+              return Text(
+                !_walletProtectState.isCreatedPinMatch ? 'Enter your passcode' : 'Incorrect passcode',
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  fontSize: 20,
+                  color: !_walletProtectState.isCreatedPinMatch ? AppColors.primary : Colors.red,
+                ),
+              );
+            },
           ),
           const Gap(30),
           Padding(
@@ -66,6 +89,7 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
               child: PinCodeTextField(
                 focusNode: _walletProtectState.pinFocusNode,
                 controller: _pinController,
+                autoDisposeControllers: false,
                 blinkDuration: const Duration(milliseconds: 1),
                 obscuringWidget: const Text(
                   '●',
@@ -74,22 +98,22 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
                 onCompleted: (value) async {
                   final savedPinCode = await getSavedPinCode();
                   if (value == savedPinCode) {
-                    await router.pushAndPopAll(Dashboard());
+                    await router.pushAndPopAll(const DashboardRoute());
                   } else {
                     await HapticFeedback.vibrate();
                     _pinController.text = '';
                     _shakeAnimationController.start();
+                    _walletProtectState.pinFocusNode.requestFocus();
+                    await _walletProtectState.dontMatch();
                     await Future.delayed(
                       const Duration(
                         milliseconds: 600,
                       ),
                     );
                     _shakeAnimationController.stop();
-                    _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },
                 textCapitalization: TextCapitalization.characters,
-                enableActiveFill: true,
                 backgroundColor: Colors.white,
                 pinTheme: PinTheme(
                   disabledBorderWidth: 2,
@@ -127,53 +151,54 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
             ),
           ),
           const Gap(20),
-          const Text(
-            'Enter your passcode',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: FontFamily.redHatLight,
-              fontSize: 14,
-              color: AppColors.primary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const Gap(20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
-                height: 1,
-                width: 155,
-              ),
-              const Text(
-                'Or',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatLight,
-                  color: AppColors.primary,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 1,
-                width: 155,
-              ),
-            ],
-          ),
-          const Gap(20),
-          ScaleTap(
-            enableFeedback: false,
-            onPressed: () {
-              _walletProtectState.authenticateWithBiometricsInSplash();
+          Observer(
+            builder: (_) {
+              if (!_walletProtectState.isBiometricsEnabled) {
+                return const SizedBox();
+              }
+
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
+                        height: 1,
+                        width: 155,
+                      ),
+                      const Text(
+                        'Or',
+                        style: TextStyle(
+                          fontFamily: FontFamily.redHatLight,
+                          color: AppColors.primary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: 1,
+                        width: 155,
+                      ),
+                    ],
+                  ),
+                  const Gap(20),
+                  ScaleTap(
+                    enableFeedback: false,
+                    onPressed: () {
+                      _walletProtectState.authenticateWithBiometrics();
+                    },
+                    child: Assets.icons.faceIDSuccess.image(
+                      height: 30,
+                    ),
+                  ),
+                ],
+              );
             },
-            child: Assets.icons.faceIDSuccess.image(
-              height: 30,
-            ),
           ),
         ],
       ),

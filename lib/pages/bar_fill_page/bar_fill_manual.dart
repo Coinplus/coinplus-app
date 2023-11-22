@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -15,11 +19,17 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_animation_state/card_animation_state.dart';
+import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/compute_private_key.dart';
+import '../../utils/custom_paint_lines_bar.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../card_fill_page/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
@@ -36,12 +46,16 @@ class BarFillPage extends StatefulWidget {
 
 class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin {
   late TextEditingController _btcAddressController = TextEditingController();
+  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
   final _addressState = AddressState();
   final _focusNode = FocusNode();
+  final _lineStore = LinesStore();
+  final _acceptState = AcceptState();
+  final _checkboxState = CheckboxState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -88,7 +102,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   }
 
   Future<void> _nfcStop() async {
-    await Future.delayed(const Duration(milliseconds: 10000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     await NfcManager.instance.stopSession();
   }
 
@@ -97,375 +111,813 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          'Virtual bar',
-          style: TextStyle(
-            fontSize: 32,
-            fontFamily: FontFamily.redHatBold,
-          ),
-        ).expandedHorizontally(),
-        backgroundColor: AppColors.scaffoldBackgroundColor,
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
+        ),
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  _lineStore.isLineVisible ? makeLineInvisible() : router.pop();
+                },
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Gap(10),
+            const Text(
+              'Virtual bar',
+              style: TextStyle(
+                fontSize: 32,
+                fontFamily: FontFamily.redHatBold,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          const Gap(20),
-          Expanded(
-            flex: 2,
-            child: Observer(
-              builder: (context) {
-                final data = _balanceStore.coins;
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 600),
-                  child: AnimatedSwitcher(
-                    switchInCurve: Curves.bounceIn,
-                    duration: const Duration(milliseconds: 600),
-                    child: _addressState.isAddressVisible
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Container(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Gap(3),
+              Expanded(
+                flex: 4,
+                child: Observer(
+                  builder: (context) {
+                    final data = _balanceStore.coins;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Center(
+                        child: AnimatedCrossFade(
+                          firstChild: AnimatedCrossFade(
+                            firstChild: Container(
+                              height: 475,
+                              width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: Assets.images.barEmpty.image().image,
+                                  image: _lineStore.isLineVisible
+                                      ? Assets.images.bar.filledBar.image().image
+                                      : Assets.images.bar.barEmpty.image().image,
                                 ),
                               ),
-                              child: Center(
-                                child: LayoutBuilder(
-                                  builder: (context, constraints) {
-                                    return SizedBox(
-                                      width: constraints.maxWidth * 0.6,
-                                      child: Column(
-                                        children: [
-                                          const Gap(203),
-                                          Expanded(
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                                child: Row(
+                                  children: [
+                                    Opacity(
+                                      opacity: _lineStore.isLineVisible ? 1 : 0,
+                                      child: CustomPaint(
+                                        size: const Size(61, 255),
+                                        painter: BarLinesCustomPaint(),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: SizedBox(
+                                        width: context.width * 0.6,
+                                        child: Column(
+                                          children: [
+                                            const Gap(35),
+                                            Stack(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                  children: [
-                                                    Assets.icons.balance.image(
-                                                      height: 12,
+                                                Container(
+                                                  height: 160,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: Assets.images.bar.hologramWithFrame.image().image,
                                                     ),
-                                                    Observer(
+                                                  ),
+                                                  child: Center(
+                                                    child: Assets.images.bar.barSecret1.image(
+                                                      height: 44,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Gap(10),
+                                            Opacity(
+                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      const Text(
+                                                        'Balance',
+                                                        style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                        ),
+                                                      ),
+                                                      Observer(
+                                                        builder: (context) {
+                                                          final myFormat = NumberFormat.decimalPatternDigits(
+                                                            locale: 'en_us',
+                                                            decimalDigits: 2,
+                                                          );
+                                                          if (_balanceStore
+                                                                  .loadings[_balanceStore.selectedBar?.address] ??
+                                                              false) {
+                                                            return const Padding(
+                                                              padding: EdgeInsets.all(
+                                                                4,
+                                                              ),
+                                                              child: CupertinoActivityIndicator(
+                                                                radius: 5,
+                                                              ),
+                                                            );
+                                                          }
+                                                          return Text(
+                                                            (_balanceStore.selectedBar != null
+                                                                    ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data!.price)}'
+                                                                    : '')
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              fontWeight: FontWeight.w700,
+                                                              color: Colors.black.withOpacity(0.7),
+                                                              fontSize: 20,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const Gap(15),
+                                            Opacity(
+                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              child: ScaleTap(
+                                                enableFeedback: false,
+                                                onPressed: _lineStore.isLineVisible
+                                                    ? null
+                                                    : () {
+                                                        Clipboard.setData(
+                                                          ClipboardData(
+                                                            text: _balanceStore.selectedBar!.address.toString(),
+                                                          ),
+                                                        ).then(
+                                                          (_) {
+                                                            HapticFeedback.mediumImpact();
+                                                            showTopSnackBar(
+                                                              displayDuration: const Duration(
+                                                                milliseconds: 400,
+                                                              ),
+                                                              Overlay.of(context),
+                                                              CustomSnackBar.success(
+                                                                backgroundColor:
+                                                                    const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                                message: 'Address was copied',
+                                                                textStyle: const TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  fontSize: 14,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                child: Container(
+                                                  height: 33,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: Assets.images.bar.barAddress.image().image,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Observer(
                                                       builder: (context) {
                                                         if (_balanceStore
                                                                 .loadings[_balanceStore.selectedBar?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding: EdgeInsets.all(
-                                                              4,
-                                                            ),
+                                                            padding: EdgeInsets.all(4),
                                                             child: CupertinoActivityIndicator(
                                                               radius: 5,
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          (_balanceStore.selectedBar != null
-                                                                  ? '\$${(_balanceStore.selectedBar!.data!.balance / 100000000 * data!.price).toStringAsFixed(2)}'
-                                                                  : '')
-                                                              .toString(),
-                                                          style: TextStyle(
+                                                          _balanceStore.selectedBar?.address ?? '',
+                                                          style: const TextStyle(
                                                             fontFamily: FontFamily.redHatMedium,
-                                                            fontWeight: FontWeight.w700,
-                                                            color: Colors.white.withOpacity(
-                                                              0.7,
-                                                            ),
-                                                            fontSize: 25,
+                                                            fontWeight: FontWeight.w600,
+                                                            color: Colors.black,
+                                                            fontSize: 10,
                                                           ),
                                                         );
                                                       },
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                          const Gap(11),
+                                            const Gap(15),
+                                            Opacity(
+                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              child: Assets.images.bar.barCoinplusLogo.image(
+                                                height: 40,
+                                              ),
+                                            ),
+                                            const Gap(15),
+                                            Assets.images.bar.barSecret2.image(
+                                              height: 41,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            secondChild: Container(
+                              height: 475,
+                              width: context.width - 34,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: Assets.images.bar.barEmpty.image().image,
+                                ),
+                              ),
+                              child: Center(
+                                child: SizedBox(
+                                  width: context.width * 0.6,
+                                  child: Column(
+                                    children: [
+                                      const Gap(35),
+                                      Stack(
+                                        children: [
                                           Container(
+                                            height: 160,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                image: Assets.icons.barAddressField.image().image,
+                                                image: Assets.images.bar.hologramWithFrame.image().image,
                                               ),
                                             ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                vertical: 10,
-                                                horizontal: 16,
-                                              ),
-                                              child: Observer(
-                                                builder: (context) {
-                                                  if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
-                                                      false) {
-                                                    return const Padding(
-                                                      padding: EdgeInsets.all(4),
-                                                      child: CupertinoActivityIndicator(
-                                                        radius: 5,
-                                                      ),
-                                                    );
-                                                  }
-                                                  return Text(
-                                                    _balanceStore.selectedBar?.address ?? '',
-                                                    style: const TextStyle(
-                                                      fontFamily: FontFamily.redHatLight,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: Colors.black,
-                                                      fontSize: 10,
-                                                    ),
-                                                  );
-                                                },
+                                            child: Center(
+                                              child: Assets.images.bar.barSecret1.image(
+                                                height: 44,
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 40),
-                            child: Container(
-                              width: context.width - 34,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: Assets.images.barEmpty.image().image,
-                                ),
-                              ),
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    const Gap(230),
-                                    if (_addressState.isAddressVisible)
-                                      const SizedBox()
-                                    else
-                                      Expanded(
-                                        child: ScaleTransition(
-                                          scale: _textFieldAnimationController,
-                                          child: TextField(
-                                            onChanged: (_) {
-                                              _validateBTCAddress();
-                                            },
-                                            controller: _btcAddressController,
-                                            maxLines: 2,
-                                            minLines: 1,
-                                            focusNode: _focusNode,
-                                            cursorColor: AppColors.primaryButtonColor,
-                                            cursorWidth: 1,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              color: AppColors.primaryTextColor,
-                                              fontFamily: FontFamily.redHatLight,
-                                            ),
-                                            onTapOutside: (_) {
-                                              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-                                            },
-                                            decoration: InputDecoration(
-                                              fillColor: Colors.white,
-                                              hintText: 'Write here your \nbar address ',
-                                              hintMaxLines: 2,
-                                              hintStyle: TextStyle(
-                                                fontFamily: FontFamily.redHatLight,
-                                                fontSize: 12,
-                                                color: AppColors.primaryTextColor.withOpacity(
-                                                  0.4,
+                                      const Gap(10),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              const Text(
+                                                'Balance',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                 ),
                                               ),
-                                              contentPadding: const EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                                vertical: 16,
-                                              ),
-                                              prefixIconConstraints: const BoxConstraints(
-                                                minWidth: 27,
-                                                minHeight: 27,
-                                              ),
-                                              prefixIcon: Observer(
+                                              Observer(
                                                 builder: (context) {
-                                                  return Padding(
-                                                    padding: const EdgeInsets.all(
-                                                      4,
+                                                  final myFormat = NumberFormat.decimalPatternDigits(
+                                                    locale: 'en_us',
+                                                    decimalDigits: 2,
+                                                  );
+                                                  if ((_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
+                                                          false) ||
+                                                      data == null) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(
+                                                        4,
+                                                      ),
+                                                      child: SizedBox(
+                                                        height: 15,
+                                                        width: 15,
+                                                        child: CircularProgressIndicator(
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    (_balanceStore.selectedBar != null
+                                                            ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                            : '')
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.black.withOpacity(0.7),
+                                                      fontSize: 20,
                                                     ),
-                                                    child: _validationStore.isValid
-                                                        ? IconButton(
-                                                            onPressed: () async {
-                                                              _focusNode.unfocus();
-                                                              await Future.delayed(
-                                                                const Duration(
-                                                                  milliseconds: 300,
-                                                                ),
-                                                              );
-                                                              final res = await context.pushRoute<String?>(
-                                                                const QrScannerRoute(),
-                                                              );
-                                                              if (res == null) {
-                                                                return;
-                                                              }
-
-                                                              _btcAddressController.text = res;
-                                                              await _validateBTCAddress();
-                                                            },
-                                                            icon: Assets.images.qrCode.image(
-                                                              height: 34,
-                                                              color: AppColors.primaryTextColor,
-                                                            ),
-                                                          )
-                                                        : Lottie.asset(
-                                                            'assets/animated_logo/address_validation_success.json',
-                                                            height: 24,
-                                                            controller: _lottieController,
-                                                            onLoaded: (composition) {
-                                                              Future.delayed(
-                                                                const Duration(
-                                                                  milliseconds: 1000,
-                                                                ),
-                                                              );
-                                                              _lottieController.duration = composition.duration;
-                                                            },
-                                                          ),
                                                   );
                                                 },
                                               ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: AppColors.primaryButtonColor,
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(15),
+                                      ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: () {
+                                          Clipboard.setData(
+                                            ClipboardData(
+                                              text: _balanceStore.selectedBar!.address.toString(),
+                                            ),
+                                          ).then(
+                                            (_) {
+                                              HapticFeedback.mediumImpact();
+                                              showTopSnackBar(
+                                                displayDuration: const Duration(
+                                                  milliseconds: 400,
                                                 ),
-                                                borderRadius: BorderRadius.circular(
-                                                  5,
+                                                Overlay.of(context),
+                                                CustomSnackBar.success(
+                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                  message: 'Address was copied',
+                                                  textStyle: const TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                  color: Colors.transparent,
-                                                ),
-                                                borderRadius: BorderRadius.circular(
-                                                  5,
-                                                ),
-                                              ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 33,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: Assets.images.bar.barAddress.image().image,
                                             ),
                                           ),
-                                        ).paddingHorizontal(60),
+                                          child: Center(
+                                            child: Observer(
+                                              builder: (context) {
+                                                if (_balanceStore.loadings[_balanceStore.selectedBar!.address] ??
+                                                    false) {
+                                                  return const Padding(
+                                                    padding: EdgeInsets.all(
+                                                      4,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 10,
+                                                          width: 10,
+                                                          child: CircularProgressIndicator(
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  _balanceStore.selectedBar?.address ?? '',
+                                                  style: const TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black,
+                                                    fontSize: 10,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
                                       ),
+                                      const Gap(15),
+                                      Assets.images.bar.barCoinplusLogo.image(
+                                        height: 40,
+                                      ),
+                                      const Gap(15),
+                                      Assets.images.bar.barSecret2.image(
+                                        height: 41,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            crossFadeState:
+                                _lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 400),
+                          ),
+                          secondChild: Container(
+                            height: 475,
+                            width: context.width - 64,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: Assets.images.bar.barEmpty.image().image,
+                              ),
+                            ),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  const Gap(35),
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 160,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: Assets.images.bar.hologramWithFrame.image().image,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Assets.images.bar.barSecret1.image(
+                                            height: 44,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Gap(40),
+                                  if (_addressState.isAddressVisible)
+                                    const SizedBox()
+                                  else
+                                    ScaleTransition(
+                                      scale: _textFieldAnimationController,
+                                      child: TextField(
+                                        autocorrect: false,
+                                        keyboardType: TextInputType.text,
+                                        onChanged: (_) {
+                                          _validateBTCAddress();
+                                        },
+                                        controller: _btcAddressController,
+                                        maxLines: 2,
+                                        minLines: 1,
+                                        focusNode: _focusNode,
+                                        cursorColor: Colors.blue,
+                                        cursorWidth: 1,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.primaryTextColor,
+                                          fontFamily: FontFamily.redHatLight,
+                                        ),
+                                        onTapOutside: (_) {
+                                          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                        },
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          hintText: 'Write here your bar address ',
+                                          hintStyle: TextStyle(
+                                            fontFamily: FontFamily.redHatLight,
+                                            fontSize: 12,
+                                            color: AppColors.primaryTextColor.withOpacity(
+                                              0.4,
+                                            ),
+                                          ),
+                                          contentPadding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                            vertical: 10,
+                                          ),
+                                          prefixIconConstraints: const BoxConstraints(
+                                            minWidth: 27,
+                                            minHeight: 27,
+                                          ),
+                                          prefixIcon: Observer(
+                                            builder: (context) {
+                                              return _validationStore.isValid
+                                                  ? IconButton(
+                                                      onPressed: () async {
+                                                        _focusNode.unfocus();
+                                                        await Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 300,
+                                                          ),
+                                                        );
+                                                        final res = await context.pushRoute<String?>(
+                                                          const QrScannerRoute(),
+                                                        );
+                                                        if (res == null) {
+                                                          return;
+                                                        }
+
+                                                        _btcAddressController.text = res;
+                                                        await _validateBTCAddress();
+                                                      },
+                                                      icon: Assets.icons.qrCode.image(
+                                                        height: 34,
+                                                      ),
+                                                    )
+                                                  : Lottie.asset(
+                                                      'assets/animated_logo/address_validation_success.json',
+                                                      height: 24,
+                                                      controller: _lottieController,
+                                                      onLoaded: (composition) {
+                                                        Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 1000,
+                                                          ),
+                                                        );
+                                                        _lottieController.duration = composition.duration;
+                                                      },
+                                                    );
+                                            },
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Colors.blue,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ).paddingHorizontal(60),
+                                  const Gap(30),
+                                  Assets.images.bar.barCoinplusLogo.image(
+                                    height: 40,
+                                  ),
+                                  const Gap(15),
+                                  Assets.images.bar.barSecret2.image(
+                                    height: 41,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          crossFadeState:
+                              _addressState.isAddressVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          duration: const Duration(milliseconds: 400),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Flexible(
+                child: Observer(
+                  builder: (context) {
+                    return ShakeAnimationWidget(
+                      shakeRange: 0.3,
+                      isForward: false,
+                      shakeAnimationController: _shakeAnimationController,
+                      shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                      child: Stack(
+                        children: [
+                          AnimatedCrossFade(
+                            firstChild: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.3),
+                                ),
+                                color: Colors.white.withOpacity(0.7),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(14),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AnimatedCrossFade(
+                                      firstChild: const Text(
+                                        'Fill in the address of your physical bar wallet',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                      secondChild: const Text(
+                                        'Coinplus Virtual Bar',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                      crossFadeState: _addressState.isAddressVisible
+                                          ? CrossFadeState.showSecond
+                                          : CrossFadeState.showFirst,
+                                      duration: const Duration(milliseconds: 400),
+                                    ),
+                                    const Gap(4),
+                                    AnimatedCrossFade(
+                                      firstChild: const Text(
+                                        'Please fill the address from your physical bar into the address input field, or scan the QR code.',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                      secondChild: const Text(
+                                        'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                      crossFadeState: _addressState.isAddressVisible
+                                          ? CrossFadeState.showSecond
+                                          : CrossFadeState.showFirst,
+                                      duration: const Duration(milliseconds: 400),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const Gap(20),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
-              ),
-              color: Colors.white.withOpacity(0.7),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Observer(
-                builder: (_) {
-                  return Column(
-                    children: [
-                      AnimatedSwitcher(
-                        switchInCurve: Curves.decelerate,
-                        duration: const Duration(milliseconds: 300),
-                        child: Row(
-                          children: [
-                            if (_addressState.isAddressVisible)
-                              const Text(
-                                'Coinplus Virtual Bar',
-                                style: TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.textHintsColor,
-                                ),
-                              )
-                            else
-                              const Text(
-                                'Fill in the address of your physical bar \nwallet',
-                                style: TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: AppColors.textHintsColor,
+                            secondChild: GestureDetector(
+                              onTap: () {
+                                _checkboxState.makeActive();
+                                HapticFeedback.heavyImpact();
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: _checkboxState.isActive
+                                            ? const Color(0xFF73C3A6)
+                                            : _acceptState.isAccepted
+                                                ? Colors.grey.withOpacity(0.3)
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      color: _checkboxState.isActive
+                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                          : _acceptState.isAccepted
+                                              ? Colors.white.withOpacity(0.7)
+                                              : const Color(0xFFFF2E00).withOpacity(0.05),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(14),
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                            'Keep your bar safe!',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          const Gap(4),
+                                          const Text(
+                                            'Make sure to keep your bar safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            crossFadeState:
+                                !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 400),
+                          ).paddingHorizontal(16),
+                          Visibility(
+                            visible: _lineStore.isLineVisible,
+                            child: Positioned(
+                              right: 16,
+                              child: Transform.scale(
+                                scale: 1.2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Observer(
+                                    builder: (context) {
+                                      return Checkbox(
+                                        checkColor: const Color(0xFF73C3A6),
+                                        activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(4),
+                                          ),
+                                        ),
+                                        side: BorderSide(
+                                          color: _acceptState.isAccepted
+                                              ? Colors.grey.withOpacity(0.5)
+                                              : const Color(0xFFFF2E00).withOpacity(0.6),
+                                        ),
+                                        value: _checkboxState.isActive,
+                                        onChanged: (_) {
+                                          _checkboxState.makeActive();
+                                        },
+                                        splashRadius: 15,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
-                          ],
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const Gap(4),
-                      if (_addressState.isAddressVisible)
-                        const Text(
-                          'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 14,
-                            color: AppColors.textHintsColor,
+                    );
+                  },
+                ),
+              ),
+              if (context.height > 844)
+                SizedBox(
+                  height: context.width * 0.15,
+                )
+              else
+                SizedBox(
+                  height: context.width * 0.04,
+                ),
+              Observer(
+                builder: (_) {
+                  return _lineStore.isLineVisible
+                      ? LoadingButton(
+                          onPressed: () async {
+                            if (_checkboxState.isActive) {
+                              _balanceStore.saveSelectedBar();
+                              await hasShownWallet().then((hasShown) {
+                                if (hasShown) {
+                                  router.pop();
+                                } else {
+                                  router.pushAndPopAll(
+                                    const WalletProtectionRoute(),
+                                  );
+                                }
+                              });
+                            } else {
+                              await HapticFeedback.vibrate();
+                              _acceptState.accept();
+                              _shakeAnimationController.start();
+                              await Future.delayed(
+                                const Duration(
+                                  milliseconds: 600,
+                                ),
+                              );
+                              _shakeAnimationController.stop();
+                            }
+                          },
+                          child: const Text(
+                            'Got it',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: FontFamily.redHatSemiBold,
+                            ),
                           ),
-                        )
-                      else
-                        const Text(
-                          'Please fill the address from your physical bar into the address input field, or scan the QR code.',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 14,
-                            color: AppColors.textHintsColor,
+                        ).paddingHorizontal(49)
+                      : LoadingButton(
+                          onPressed: _addressState.isAddressVisible
+                              ? () async {
+                                  final cardIndex = _balanceStore.bars.indexWhere(
+                                    (element) => element.address == _balanceStore.selectedBar?.address,
+                                  );
+                                  if (cardIndex != -1) {
+                                    await alreadySavedBar(context);
+                                  } else {
+                                    _lineStore.makeVisible();
+                                  }
+                                }
+                              : null,
+                          child: const Text(
+                            'Save to wallet',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: FontFamily.redHatSemiBold,
+                            ),
                           ),
-                        ),
-                    ],
-                  );
+                        ).paddingHorizontal(49);
                 },
               ),
-            ),
-          ).paddingHorizontal(16),
-          const Gap(20),
-          Observer(
-            builder: (_) {
-              return LoadingButton(
-                onPressed: _addressState.isAddressVisible
-                    ? () {
-                        try {
-                          _balanceStore.saveSelectedBar();
-                          hasShownWallet().then((hasShown) {
-                            if (hasShown) {
-                              router.pop(Dashboard());
-                            } else {
-                              router.push(const WalletProtectionRoute());
-                            }
-                          });
-                        } catch (e) {
-                          if (!router.stackData
-                              .indexWhere(
-                                (element) => element.name == Dashboard.name,
-                              )
-                              .isNegative) {
-                            router.pop();
-                            alreadySavedCard(context);
-                          }
-                        }
-                      }
-                    : null,
-                child: const Text(
-                  'Save to wallet',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: FontFamily.redHatSemiBold,
-                  ),
-                ),
-              ).paddingHorizontal(49);
-            },
-          ),
-          const Gap(50),
-          //Gap(max(context.bottomPadding, 12)),
-        ],
+              if (context.height > 667) const Gap(40) else const Gap(12),
+            ],
+          );
+        },
       ),
     );
   }
@@ -487,5 +939,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
       );
       await _lottieController.forward(from: 0);
     } else {}
+  }
+
+  Future<void> makeLineInvisible() async {
+    await Future.delayed(const Duration(milliseconds: 350));
+    _lineStore.makeVisible();
   }
 }

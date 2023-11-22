@@ -69,7 +69,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       ),
                     )
                     .copyWith(
-                      backgroundColor: MaterialStateProperty.all(AppColors.silver),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                     ),
                 onPressed: () async {
                   await router.pop(context);
@@ -84,7 +84,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                 },
                 child: Row(
                   children: [
-                    Assets.images.qrCode.image(
+                    Assets.icons.qrCode.image(
                       height: 24,
                       width: 24,
                       color: AppColors.primaryButtonColor,
@@ -113,12 +113,12 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       ),
                     )
                     .copyWith(
-                      backgroundColor: MaterialStateProperty.all(AppColors.silver),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                     ),
                 onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
                 child: Row(
                   children: [
-                    Assets.images.stylus.image(
+                    Assets.icons.stylus.image(
                       height: 24,
                       width: 24,
                       color: AppColors.primaryButtonColor,
@@ -207,7 +207,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                   )
                   .copyWith(
                     backgroundColor: MaterialStateProperty.all(
-                      AppColors.silver,
+                      Colors.grey.withOpacity(0.1),
                     ),
                     padding: const MaterialStatePropertyAll(
                       EdgeInsets.all(13),

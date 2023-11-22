@@ -9,18 +9,18 @@ part of 'card_setting_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CardSettingState on _CardSettingState, Store {
-  late final _$selectedColorAtom = Atom(name: '_CardSettingState.selectedColor', context: context);
+  late final _$selectedCardColorAtom = Atom(name: '_CardSettingState.selectedCardColor', context: context);
 
   @override
-  CardColor get selectedColor {
-    _$selectedColorAtom.reportRead();
-    return super.selectedColor;
+  CardColor get selectedCardColor {
+    _$selectedCardColorAtom.reportRead();
+    return super.selectedCardColor;
   }
 
   @override
-  set selectedColor(CardColor value) {
-    _$selectedColorAtom.reportWrite(value, super.selectedColor, () {
-      super.selectedColor = value;
+  set selectedCardColor(CardColor value) {
+    _$selectedCardColorAtom.reportWrite(value, super.selectedCardColor, () {
+      super.selectedCardColor = value;
     });
   }
 
@@ -54,11 +54,11 @@ mixin _$CardSettingState on _CardSettingState, Store {
     });
   }
 
-  late final _$changeColorAsyncAction = AsyncAction('_CardSettingState.changeColor', context: context);
+  late final _$changeCardColorAsyncAction = AsyncAction('_CardSettingState.changeCardColor', context: context);
 
   @override
-  Future<void> changeColor(CardColor color) {
-    return _$changeColorAsyncAction.run(() => super.changeColor(color));
+  Future<void> changeCardColor(CardColor color) {
+    return _$changeCardColorAsyncAction.run(() => super.changeCardColor(color));
   }
 
   late final _$_CardSettingStateActionController = ActionController(name: '_CardSettingState', context: context);
@@ -86,7 +86,7 @@ mixin _$CardSettingState on _CardSettingState, Store {
   @override
   String toString() {
     return '''
-selectedColor: ${selectedColor},
+selectedCardColor: ${selectedCardColor},
 isColorChanged: ${isColorChanged},
 isPrivateKeyVisible: ${isPrivateKeyVisible}
     ''';

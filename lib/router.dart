@@ -5,7 +5,7 @@ import 'router.gr.dart';
 export 'router.gr.dart';
 
 @AutoRouterConfig(
-  replaceInRouteName: 'Page,Route',
+  replaceInRouteName: 'Page|Screen,Route',
 )
 class Router extends $Router {
   @override
@@ -13,7 +13,7 @@ class Router extends $Router {
   @override
   final List<AutoRoute> routes = [
     AdaptiveRoute(
-      page: SplashScreenRoute.page,
+      page: SplashRoute.page,
       fullscreenDialog: true,
       initial: true,
     ),
@@ -31,7 +31,7 @@ class Router extends $Router {
       page: BarFillWithNfc.page,
     ),
     AdaptiveRoute(
-      page: Dashboard.page,
+      page: DashboardRoute.page,
     ),
     AdaptiveRoute(
       page: CardFillRoute.page,
@@ -70,11 +70,18 @@ class Router extends $Router {
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
+      page: PinCodeForPrivateKey.page,
+      fullscreenDialog: true,
+    ),
+    AdaptiveRoute(
       page: ContactUs.page,
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
       page: CardSecretFillRoute.page,
+    ),
+    AdaptiveRoute(
+      page: BarSecretFillRoute.page,
     ),
   ];
 }

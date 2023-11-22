@@ -23,7 +23,7 @@ Future<void> alreadySavedCard(BuildContext context) {
     onPressed: () {
       hasShownWallet().then((hasShown) {
         if (hasShown) {
-          router.pushAndPopAll(Dashboard());
+          router.pushAndPopAll(const DashboardRoute());
         }
       });
     },
@@ -54,7 +54,7 @@ Future<void> alreadySavedCard(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Gap(40),
-                    Assets.images.cardForm.image(height: 63),
+                    Assets.images.card.cardForm.image(height: 63),
                     const Gap(16),
                     Assets.icons.taskAlt.image(height: 24),
                   ],
@@ -63,6 +63,77 @@ Future<void> alreadySavedCard(BuildContext context) {
               const Gap(31),
               const Text(
                 'It looks like you have already saved this card to your wallet. To connect another one please change the wallet address.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatLight,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
+              ),
+              const Gap(18),
+              Center(child: okButton),
+            ],
+          ),
+          elevation: 0,
+        ),
+      );
+    },
+  );
+}
+
+Future<void> alreadySavedBar(BuildContext context) {
+  final okButton = LoadingButton(
+    child: const Text(
+      'Got it',
+      style: TextStyle(
+        fontFamily: FontFamily.redHatMedium,
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    onPressed: () {
+      hasShownWallet().then((hasShown) {
+        if (hasShown) {
+          router.pushAndPopAll(const DashboardRoute());
+        }
+      });
+    },
+  ).paddingHorizontal(40);
+  return showDialog<void>(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return EmergeAlertDialog(
+        emergeAlertDialogOptions: EmergeAlertDialogOptions(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'You have already \nsaved this bar!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatBold,
+                  fontSize: 17,
+                ),
+              ),
+              const Gap(23),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Gap(40),
+                    Assets.images.bar.barForm.image(height: 90),
+                    const Gap(16),
+                    Assets.icons.taskAlt.image(height: 24),
+                  ],
+                ),
+              ).expandedHorizontally(),
+              const Gap(31),
+              const Text(
+                'It looks like you have already saved this bar to your wallet. To connect another one please change the wallet address.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: FontFamily.redHatLight,

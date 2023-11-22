@@ -176,7 +176,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           ),
                         ],
                         image: DecorationImage(
-                          image: Assets.images.front.image().image,
+                          image: Assets.images.card.front.image().image,
                         ),
                       ),
                       child: LayoutBuilder(
@@ -284,10 +284,16 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                             padding: EdgeInsets.all(
                                                               4,
                                                             ),
-                                                            child: SizedBox(
-                                                              height: 15,
-                                                              width: 15,
-                                                              child: CircularProgressIndicator(),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           );
                                                         }
@@ -358,17 +364,24 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         );
                                                         final data = _balanceStore.coins;
 
-                                                        if (_balanceStore
-                                                                .loadings[_balanceStore.selectedCard?.address] ??
-                                                            false) {
+                                                        if ((_balanceStore
+                                                                    .loadings[_balanceStore.selectedCard?.address] ??
+                                                                false) &&
+                                                            data == null) {
                                                           return const Padding(
                                                             padding: EdgeInsets.all(
                                                               4,
                                                             ),
-                                                            child: SizedBox(
-                                                              height: 15,
-                                                              width: 15,
-                                                              child: CircularProgressIndicator(),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           );
                                                         }
@@ -428,8 +441,8 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           ],
                           image: DecorationImage(
                             image: !_addressState.isAddressVisible
-                                ? Assets.images.back.image().image
-                                : Assets.images.filledBack.image().image,
+                                ? Assets.images.card.back.image().image
+                                : Assets.images.card.filledBack.image().image,
                           ),
                         ),
                         child: Observer(
@@ -459,7 +472,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
-                                                Assets.images.secret1.image(
+                                                Assets.images.card.secret1.image(
                                                   height: context.height > 667
                                                       ? constraints.maxHeight < 551
                                                           ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
@@ -467,7 +480,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       : 180, // iPhone 7/8/SE Screen Size
                                                 ),
                                                 const Gap(70),
-                                                Assets.images.secret2.image(
+                                                Assets.images.card.secret2.image(
                                                   height: context.height > 667
                                                       ? constraints.maxHeight < 551
                                                           ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
@@ -517,7 +530,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets.images.secret1.image(
+                                                      child: Assets.images.card.secret1.image(
                                                         height: context.height > 667
                                                             ? constraints.maxHeight < 551
                                                                 ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
@@ -534,7 +547,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets.images.secret2.image(
+                                                      child: Assets.images.card.secret2.image(
                                                         height: context.height > 667
                                                             ? constraints.maxHeight < 551
                                                                 ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
@@ -706,7 +719,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                           child: SizedBox(
                                                             height: 50,
                                                             child: Image.asset(
-                                                              'assets/images/qr_code.png',
+                                                              'assets/icons/qr_code.png',
                                                             ),
                                                           ),
                                                         )
@@ -966,11 +979,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           _balanceStore.saveSelectedCard();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(
-                                Dashboard(
-                                  onCarouselScroll: (val) => cardCarouselIndex = val,
-                                ),
-                              );
+                              router.pop();
                             } else {
                               router.pushAndPopAll(
                                 const WalletProtectionRoute(),

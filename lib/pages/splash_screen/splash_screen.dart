@@ -6,23 +6,25 @@ import 'package:flutter/material.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/firebase_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
 @RoutePage()
-class SplashScreenPage extends StatefulWidget {
-  const SplashScreenPage({super.key});
+class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
 
   @override
-  State<SplashScreenPage> createState() => _SplashScreenPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashScreenPageState extends State<SplashScreenPage> {
+class _SplashPageState extends State<SplashPage> {
   final isPinCodeSet = getIsPinCodeSet();
 
   @override
   void initState() {
     super.initState();
+    signInAnonymously();
     hasShownWallet().then(
       (hasShown) async {
         if (hasShown) {
@@ -67,7 +69,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   Future<void> openWallet() async {
     await Future.delayed(const Duration(milliseconds: 1000));
-    await router.pushAndPopAll(Dashboard());
+    await router.pushAndPopAll(const DashboardRoute());
   }
 }
 

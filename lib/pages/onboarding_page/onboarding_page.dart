@@ -8,11 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:nfc_manager/platform_tags.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/buttons/button_settings.dart';
 import '../../extensions/context_extension.dart';
@@ -98,7 +97,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
       ),
       backgroundColor: AppColors.scaffoldBackgroundColor,
       body: Observer(
@@ -142,25 +144,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             alertMessage:
                                 'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
                             onDiscovered: (tag) async {
-                              final nfcA = MiFare.from(tag);
-                              final ident = nfcA?.identifier
-                                  .map(
-                                    (byte) => byte.toRadixString(16).padLeft(2, '0'),
-                                  )
-                                  .join();
-                              log(ident.toString());
-                              final signature = await nfcA?.sendMiFareCommand(
-                                Uint8List.fromList([60, 0]),
-                              );
-                              log(
-                                signature!
-                                    .map(
-                                      (byte) => byte.toRadixString(16).padLeft(2, '0'),
-                                    )
-                                    .join()
-                                    .toString(),
-                              );
-
                               final ndef = Ndef.from(tag);
                               final records = ndef!.cachedMessage!.records;
                               dynamic walletAddress;
@@ -236,63 +219,45 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             backgroundColor: Colors.transparent,
                             builder: (context) {
                               return AnimatedOpacity(
-                                duration: const Duration(milliseconds: 300),
+                                duration: const Duration(
+                                  milliseconds: 300,
+                                ),
                                 opacity: 1,
                                 child: Container(
                                   height: 400,
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
+                                      top: Radius.circular(
+                                        40,
+                                      ),
                                     ),
                                   ),
                                   child: Column(
                                     children: [
                                       const Gap(10),
-                                      Row(
-                                        children: [
-                                          const Gap(16),
-                                          IconButton(
-                                            onPressed: router.pop,
-                                            icon: const Icon(
-                                              Icons.close_sharp,
-                                              size: 25,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          const Expanded(
-                                            child: Text(
-                                              'Start with your wallet',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontFamily: FontFamily.redHatSemiBold,
-                                                fontSize: 17,
-                                                color: AppColors.primaryTextColor,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 60,
-                                          ),
-                                        ],
+                                      Assets.icons.notch.image(
+                                        height: 4,
                                       ),
-                                      const Gap(10),
-                                      const Divider(
-                                        thickness: 2,
-                                        height: 2,
-                                        indent: 15,
-                                        endIndent: 15,
-                                        color: Color(0xFFF1F1F1),
+                                      const Gap(15),
+                                      const Text(
+                                        'Ready to Scan',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatSemiBold,
+                                          fontSize: 22,
+                                          color: AppColors.primaryTextColor,
+                                        ),
                                       ),
-                                      const Gap(42),
+                                      const Gap(40),
                                       SizedBox(
-                                        height: 120,
-                                        width: 120,
+                                        height: 150,
+                                        width: 150,
                                         child: Lottie.asset(
                                           'assets/animated_logo/nfcanimation.json',
                                         ).expandedHorizontally(),
                                       ),
-                                      const Gap(20),
+                                      const Gap(25),
                                       const Text(
                                         'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
                                         textAlign: TextAlign.center,
@@ -300,7 +265,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                           fontSize: 14,
                                           fontFamily: FontFamily.redHatMedium,
                                         ),
-                                      ),
+                                      ).paddingHorizontal(50),
+                                      const Gap(20),
+                                      LoadingButton(
+                                        onPressed: () async {
+                                          await router.pop();
+                                        },
+                                        style: context.theme
+                                            .buttonStyle(
+                                              textStyle: const TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                color: AppColors.primaryTextColor,
+                                                fontSize: 15,
+                                              ),
+                                            )
+                                            .copyWith(
+                                              backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                                            ),
+                                        child: const Text('Cancel'),
+                                      ).paddingHorizontal(60),
                                     ],
                                   ),
                                 ),
@@ -336,10 +319,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               LoadingButton(
                 onPressed: () async {
-                  final url = Uri.parse('https://coinplus.com/shop/');
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(url);
-                  }
+                  await FlutterWebBrowser.openWebPage(
+                    url: 'https://coinplus.com/shop/',
+                    customTabsOptions: const CustomTabsOptions(
+                      shareState: CustomTabsShareState.on,
+                      instantAppsEnabled: true,
+                      showTitle: true,
+                      urlBarHidingEnabled: true,
+                    ),
+                    safariVCOptions: const SafariViewControllerOptions(
+                      barCollapsingEnabled: true,
+                      modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                      modalPresentationCapturesStatusBarAppearance: true,
+                    ),
+                  );
                 },
                 style: context.theme
                     .buttonStyle(
@@ -351,7 +345,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     )
                     .copyWith(
-                      overlayColor: MaterialStateProperty.all(AppColors.silver),
+                      overlayColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                     ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

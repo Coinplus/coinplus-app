@@ -58,8 +58,8 @@ class AppColors {
   /// Color: #29569F
   static const Color secondaryTextColor = Color(0xFF29569F);
 
-  /// Color: #EEEFF4
-  static const Color silver = Color(0xFFEEEFF4);
+  /// Color: #F7F7FA
+  static const Color silver = Color(0xFFF7F7FA);
 
   /// Color: #4F6486
   static const Color textHintsColor = Color(0xFF4F6486);

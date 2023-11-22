@@ -86,20 +86,10 @@ mixin _$NavBarState on NavBarStore, Store {
   late final _$NavBarStoreActionController = ActionController(name: 'NavBarStore', context: context);
 
   @override
-  void inAddBar() {
-    final _$actionInfo = _$NavBarStoreActionController.startAction(name: 'NavBarStore.inAddBar');
+  void updateAddCardPosition({AbstractCard? card, required int tabIndex}) {
+    final _$actionInfo = _$NavBarStoreActionController.startAction(name: 'NavBarStore.updateAddCardPosition');
     try {
-      return super.inAddBar();
-    } finally {
-      _$NavBarStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void inAddCard() {
-    final _$actionInfo = _$NavBarStoreActionController.startAction(name: 'NavBarStore.inAddCard');
-    try {
-      return super.inAddCard();
+      return super.updateAddCardPosition(card: card, tabIndex: tabIndex);
     } finally {
       _$NavBarStoreActionController.endAction(_$actionInfo);
     }

@@ -37,8 +37,14 @@ class ChangePinCode extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          statusBarColor: Colors.transparent,
+        ),
         title: const Text(
-          'Passcode',
+          'Change passcode',
           style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 18),
         ),
       ),
@@ -88,6 +94,7 @@ class ChangePinCode extends StatelessWidget {
                   child: PinCodeTextField(
                     controller: _enterPinCodeController,
                     focusNode: _enteredPinFocusNode,
+                    autoDisposeControllers: false,
                     obscuringWidget: const Text(
                       '●',
                       style: TextStyle(fontSize: 15),
@@ -99,6 +106,7 @@ class ChangePinCode extends StatelessWidget {
                         _pageController.jumpToPage(1);
                       } else {
                         await HapticFeedback.vibrate();
+                        _enteredPinFocusNode.requestFocus();
                         _enteredPinShakeController.start();
                         _enterPinCodeController.text = '';
                         await _changePinCodeState.newPinMatch();
@@ -108,12 +116,10 @@ class ChangePinCode extends StatelessWidget {
                           ),
                         );
                         _enteredPinShakeController.stop();
-                        _enteredPinFocusNode.requestFocus();
                       }
                     },
                     textCapitalization: TextCapitalization.characters,
                     autoFocus: true,
-                    enableActiveFill: true,
                     backgroundColor: Colors.white,
                     pinTheme: PinTheme(
                       disabledBorderWidth: 2,
@@ -176,13 +182,13 @@ class ChangePinCode extends StatelessWidget {
                     '●',
                     style: TextStyle(fontSize: 15),
                   ),
+                  autoDisposeControllers: false,
                   onCompleted: (value) async {
                     newPin = value;
                     _pageController.jumpToPage(2);
                   },
                   textCapitalization: TextCapitalization.characters,
                   autoFocus: true,
-                  enableActiveFill: true,
                   backgroundColor: Colors.white,
                   pinTheme: PinTheme(
                     disabledBorderWidth: 2,
@@ -275,14 +281,13 @@ class ChangePinCode extends StatelessWidget {
                       '●',
                       style: TextStyle(fontSize: 15),
                     ),
+                    autoDisposeControllers: false,
                     onCompleted: (value) async {
                       repeatPin = value;
                       if (repeatPin == newPin) {
                         await savePinCode(pinCode: value);
-                        await isPinCodeSet(isSet: true);
                         await _walletProtectState.isBiometricAvailable();
-
-                        await router.pushAndPopAll(Dashboard());
+                        await router.pushAndPopAll(const DashboardRoute());
                       } else {
                         await HapticFeedback.vibrate();
                         _reEnteredPinShakeController.start();

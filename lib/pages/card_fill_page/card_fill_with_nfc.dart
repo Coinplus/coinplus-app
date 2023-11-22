@@ -172,7 +172,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           ),
                         ],
                         image: DecorationImage(
-                          image: Assets.images.front.image().image,
+                          image: Assets.images.card.front.image().image,
                         ),
                       ),
                       child: LayoutBuilder(
@@ -280,10 +280,16 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                             padding: EdgeInsets.all(
                                                               4,
                                                             ),
-                                                            child: SizedBox(
-                                                              height: 15,
-                                                              width: 15,
-                                                              child: CircularProgressIndicator(),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           );
                                                         }
@@ -354,17 +360,24 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                         );
                                                         final data = _balanceStore.coins;
 
-                                                        if (_balanceStore
-                                                                .loadings[_balanceStore.selectedCard?.address] ??
-                                                            false) {
+                                                        if ((_balanceStore
+                                                                    .loadings[_balanceStore.selectedCard?.address] ??
+                                                                false) &&
+                                                            data == null) {
                                                           return const Padding(
                                                             padding: EdgeInsets.all(
                                                               4,
                                                             ),
-                                                            child: SizedBox(
-                                                              height: 15,
-                                                              width: 15,
-                                                              child: CircularProgressIndicator(),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.grey,
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           );
                                                         }
@@ -424,8 +437,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           ],
                           image: DecorationImage(
                             image: !_addressState.isAddressVisible
-                                ? Assets.images.back.image().image
-                                : Assets.images.filledBack.image().image,
+                                ? Assets.images.card.back.image().image
+                                : Assets.images.card.filledBack.image().image,
                           ),
                         ),
                         child: Observer(
@@ -450,11 +463,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                               mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
-                                                Assets.images.secret1.image(
+                                                Assets.images.card.secret1.image(
                                                   height: context.height * 0.212,
                                                 ),
                                                 const Gap(70),
-                                                Assets.images.secret2.image(
+                                                Assets.images.card.secret2.image(
                                                   height: context.height * 0.212,
                                                 ),
                                               ],
@@ -496,7 +509,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets.images.secret1.image(
+                                                      child: Assets.images.card.secret1.image(
                                                         height: context.height * 0.212,
                                                       ),
                                                     ),
@@ -509,7 +522,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                           width: 1.5,
                                                         ),
                                                       ),
-                                                      child: Assets.images.secret2.image(
+                                                      child: Assets.images.card.secret2.image(
                                                         height: context.height * 0.212,
                                                       ),
                                                     ),
@@ -655,7 +668,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                           child: SizedBox(
                                                             height: 50,
                                                             child: Image.asset(
-                                                              'assets/images/qr_code.png',
+                                                              'assets/icons/qr_code.png',
                                                             ),
                                                           ),
                                                         )
@@ -886,7 +899,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           _balanceStore.saveSelectedCard();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
-                              router.pop(Dashboard());
+                              router.pop();
                             } else {
                               router.pushAndPopAll(
                                 const WalletProtectionRoute(),

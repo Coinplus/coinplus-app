@@ -21,7 +21,7 @@ Future<void> secretsFailDialog(BuildContext context) {
           ),
         )
         .copyWith(
-          backgroundColor: MaterialStateProperty.all(AppColors.silver),
+          backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
         ),
     onPressed: () async {
       await router.pop();

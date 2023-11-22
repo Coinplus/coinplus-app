@@ -140,7 +140,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   }
 
   Future<void> stopNfc() async {
-    await Future.delayed(const Duration(milliseconds: 10000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     await NfcManager.instance.stopSession(
       alertMessage: 'Complete',
     );
@@ -391,7 +391,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         child: SizedBox(
                                                                           height: 50,
                                                                           child: Image.asset(
-                                                                            'assets/images/qr_code.png',
+                                                                            'assets/icons/qr_code.png',
                                                                           ),
                                                                         ),
                                                                       )
@@ -414,7 +414,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                           ),
                                                         ],
                                                       ),
-                                                      firstChild: Assets.images.secret1.image(
+                                                      firstChild: Assets.images.card.secret1.image(
                                                         height: 180,
                                                       ),
                                                       duration: const Duration(
@@ -557,7 +557,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         child: SizedBox(
                                                                           height: 50,
                                                                           child: Image.asset(
-                                                                            'assets/images/qr_code.png',
+                                                                            'assets/icons/qr_code.png',
                                                                           ),
                                                                         ),
                                                                       )
@@ -580,7 +580,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                           ),
                                                         ],
                                                       ),
-                                                      firstChild: Assets.images.secret2.image(
+                                                      firstChild: Assets.images.card.secret2.image(
                                                         height: 180,
                                                       ),
                                                       duration: const Duration(
@@ -776,17 +776,17 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   DecorationImage getBackImageForCardColor(CardColor color) {
     switch (color) {
       case CardColor.ORANGE:
-        return DecorationImage(image: Assets.images.filledBack.image().image);
+        return DecorationImage(image: Assets.images.card.filledBack.image().image);
       case CardColor.WHITE:
         return DecorationImage(
-          image: Assets.images.filledBackWhite.image().image,
+          image: Assets.images.card.filledBackWhite.image().image,
         );
       case CardColor.BROWN:
         return DecorationImage(
-          image: Assets.images.filledBackBrown.image().image,
+          image: Assets.images.card.filledBackBrown.image().image,
         );
       default:
-        return DecorationImage(image: Assets.images.filledBack.image().image);
+        return DecorationImage(image: Assets.images.card.filledBack.image().image);
     }
   }
 
@@ -794,19 +794,19 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
     switch (color) {
       case CardColor.ORANGE:
         return DecorationImage(
-          image: Assets.images.orangeCardFront.image().image,
+          image: Assets.images.card.orangeCardFront.image().image,
         );
       case CardColor.WHITE:
         return DecorationImage(
-          image: Assets.images.whiteCardFront.image().image,
+          image: Assets.images.card.whiteCardFront.image().image,
         );
       case CardColor.BROWN:
         return DecorationImage(
-          image: Assets.images.brownCardFront.image().image,
+          image: Assets.images.card.brownCardFront.image().image,
         );
       default:
         return DecorationImage(
-          image: Assets.images.orangeCardFront.image().image,
+          image: Assets.images.card.orangeCardFront.image().image,
         );
     }
   }

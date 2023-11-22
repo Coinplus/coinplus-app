@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const secureStorage = FlutterSecureStorage();
 
@@ -16,9 +17,7 @@ Future<String?> getPrivateKeyFromStorage({
   return privateKey;
 }
 
-Future<void> savePinCode({
-  required String pinCode,
-}) async {
+Future<void> savePinCode({required String pinCode}) async {
   await secureStorage.write(key: 'pin_code', value: pinCode);
 }
 
@@ -26,20 +25,22 @@ Future<String?> getSavedPinCode() {
   return secureStorage.read(key: 'pin_code');
 }
 
-Future<void> isPinCodeSet({
-  required bool isSet,
-}) async {
-  await secureStorage.write(key: 'pin_code_is_set', value: isSet.toString());
-}
-
-Future<bool> isPinCodeEnabled() async {
-  final isSet = await getIsPinCodeSet();
-  return isSet == true;
-}
-
 Future<bool> getIsPinCodeSet() async {
-  final value = await secureStorage.read(key: 'pin_code_is_set');
-  return value == 'true';
+  final value = await getSavedPinCode();
+  return value != null;
+}
+
+Future<bool> getBiometricStatus() async {
+  final value = await secureStorage.read(key: 'biometricAuth');
+  return value != null;
+}
+
+Future<void> enableBiometricAuth() async {
+  await secureStorage.write(key: 'biometricAuth', value: 'ENABLED');
+}
+
+Future<void> disableBiometricAuth() async {
+  await secureStorage.delete(key: 'biometricAuth');
 }
 
 Future<void> isWalletActivated({
@@ -49,7 +50,16 @@ Future<void> isWalletActivated({
   await secureStorage.write(key: 'card$address', value: isSet.toString());
 }
 
-Future<bool> getIsWalletActivated(String address) async {
+Future<bool> checkWalletStatus(String address) async {
   final value = await secureStorage.read(key: 'card$address');
   return value == 'true';
+}
+
+Future<void> localStorage() async {
+  final prefs = await SharedPreferences.getInstance();
+  const secureStorage = FlutterSecureStorage();
+  if (prefs.getBool('first_run') ?? true) {
+    await secureStorage.deleteAll();
+    await prefs.setBool('first_run', false);
+  }
 }

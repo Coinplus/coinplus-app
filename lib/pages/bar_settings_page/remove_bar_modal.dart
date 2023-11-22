@@ -13,10 +13,10 @@ import '../../gen/fonts.gen.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../dashboard/dashboard.dart';
 
 class RemoveBar extends StatefulWidget {
   const RemoveBar({super.key, required this.bar});
@@ -38,13 +38,13 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
     startAnimation();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 500),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0),
-      end: const Offset(-0.5, 0),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+      begin: const Offset(0.2, 0),
+      end: const Offset(-0.1, 0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -56,7 +56,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 409,
+      height: 430,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(
@@ -66,34 +66,19 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
       child: Column(
         children: [
           const Gap(10),
-          Row(
-            children: [
-              const Gap(8),
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.close_sharp,
-                  size: 25,
-                  color: Colors.black,
-                ),
+          Assets.icons.notch.image(height: 4),
+          const Gap(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Text(
+              'Remove the bar',
+              style: TextStyle(
+                fontFamily: FontFamily.redHatMedium,
+                fontWeight: FontWeight.w700,
+                fontSize: 17,
+                color: AppColors.primaryTextColor,
               ),
-              const Expanded(
-                child: Text(
-                  'Remove the bar',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: FontFamily.redHatSemiBold,
-                    fontSize: 17,
-                    color: AppColors.primaryTextColor,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 60,
-              ),
-            ],
+            ).expandedHorizontally(),
           ),
           const Gap(30),
           AnimatedBuilder(
@@ -101,8 +86,19 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
             builder: (ctx, child) {
               return SlideTransition(
                 position: _slideAnimation,
-                child: Assets.images.cardForm.image(
-                  height: 84,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Assets.images.bar.barForm.image(
+                      height: 120,
+                    ),
+                    const Gap(50),
+                    AnimatedOpacity(
+                      duration: const Duration(milliseconds: 200),
+                      opacity: _slideAnimation.isCompleted ? 1 : 0,
+                      child: Assets.icons.binIcon.image(height: 50),
+                    ),
+                  ],
                 ),
               );
             },
@@ -121,6 +117,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
           LoadingButton(
             onPressed: () async {
               await _balanceStore.getSelectedBar(widget.bar.address);
+              await secureStorage.delete(key: 'card${widget.bar.address}');
               await router.pop();
               await _balanceStore.removeSelectedBar();
               showTopSnackBar(
@@ -138,7 +135,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
                   ),
                 ),
               );
-              await router.pop(const Dashboard());
+              await router.pop();
             },
             child: const Text(
               'Delete',
@@ -173,6 +170,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
               ),
             ),
           ),
+          const Gap(20),
         ],
       ),
     );

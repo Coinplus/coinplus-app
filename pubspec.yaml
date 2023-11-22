@@ -68,12 +68,15 @@ dependencies:
   hashlib: ^1.12.0
   amplitude_flutter: ^3.13.0
   pin_code_fields: ^8.0.1
-  firebase_auth: ^4.11.1
+  firebase_auth: ^4.14.0
   firebase_core: ^2.19.0
   dart_jsonwebtoken: ^2.12.0
   cloud_functions: ^4.5.1
   flutter_windowmanager: ^0.2.0
   wolt_modal_sheet: ^0.1.4
+  app_settings: ^5.1.1
+  flutter_web_browser: ^0.17.1
+  nxp_originality_verifier: ^0.0.6
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
@@ -137,7 +140,7 @@ flutter_gen:
       # - dot-delimiter
       style: dot-delimiter
       class_name: Assets
-    exclude: ['assets/flags/*.png', 'assets/translations/*.json']
+    exclude: ['assets/flags/*.png', 'assets/translations/*.json',]
   fonts:
     # Optional
     enabled: true
@@ -173,6 +176,8 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/colors/
+    - assets/images/bar/
+    - assets/images/card/
     - assets/animated_logo/nfcanimation.json
     - assets/animated_logo/qr_animation.json
     - assets/animated_logo/address_validation_success.json

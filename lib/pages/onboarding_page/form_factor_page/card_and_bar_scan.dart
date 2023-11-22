@@ -35,7 +35,7 @@ class CardAndBarScanMethodsPage extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor: MaterialStateProperty.all(AppColors.silver),
+                  backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                 ),
             onPressed: () async {
               await router.pop(context);
@@ -50,7 +50,7 @@ class CardAndBarScanMethodsPage extends HookWidget {
             },
             child: Row(
               children: [
-                Assets.images.qrCode.image(
+                Assets.icons.qrCode.image(
                   height: 24,
                   width: 24,
                   color: AppColors.primaryButtonColor,
@@ -79,12 +79,12 @@ class CardAndBarScanMethodsPage extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor: MaterialStateProperty.all(AppColors.silver),
+                  backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                 ),
             onPressed: formFactorState.toggleWidget,
             child: Row(
               children: [
-                Assets.images.stylus.image(
+                Assets.icons.stylus.image(
                   height: 24,
                   width: 24,
                   color: AppColors.primaryButtonColor,
