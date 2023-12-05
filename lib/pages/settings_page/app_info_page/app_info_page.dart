@@ -38,8 +38,7 @@ class AboutAppPage extends StatelessWidget {
             Center(
               child: Container(
                 height: 100,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Assets.images.appLogo.image(),
@@ -80,8 +79,7 @@ class AboutAppPage extends StatelessWidget {
             const Gap(10),
             const Text(
               'Coinplus',
-              style:
-                  TextStyle(fontSize: 18, fontFamily: FontFamily.redHatMedium),
+              style: TextStyle(fontSize: 18, fontFamily: FontFamily.redHatMedium),
             ),
             const Gap(20),
             Padding(
@@ -104,8 +102,7 @@ class AboutAppPage extends StatelessWidget {
                       splashFactory: InkSparkle.splashFactory,
                       highlightColor: Colors.transparent,
                       child: ListTile(
-                        trailing:
-                            Assets.icons.arrowForwardIos.image(height: 20),
+                        trailing: Assets.icons.arrowForwardIos.image(height: 20),
                         minLeadingWidth: 10,
                         leading: Assets.icons.share.image(
                           color: Colors.blue,
@@ -140,10 +137,8 @@ class AboutAppPage extends StatelessWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -151,8 +146,7 @@ class AboutAppPage extends StatelessWidget {
                       splashFactory: InkSparkle.splashFactory,
                       highlightColor: Colors.transparent,
                       child: ListTile(
-                        trailing:
-                            Assets.icons.arrowForwardIos.image(height: 20),
+                        trailing: Assets.icons.arrowForwardIos.image(height: 20),
                         minLeadingWidth: 10,
                         leading: Assets.icons.web.image(
                           height: 22,
@@ -180,8 +174,7 @@ class AboutAppPage extends StatelessWidget {
                       splashFactory: InkSparkle.splashFactory,
                       highlightColor: Colors.transparent,
                       child: ListTile(
-                        trailing:
-                            Assets.icons.arrowForwardIos.image(height: 20),
+                        trailing: Assets.icons.arrowForwardIos.image(height: 20),
                         minLeadingWidth: 10,
                         leading: Assets.icons.rate.image(
                           height: 22,

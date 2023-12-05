@@ -9,7 +9,12 @@ enum CardColor {
   GOLD,
 }
 
-const cardColors = [CardColor.ORANGE, CardColor.WHITE, CardColor.BLACK, CardColor.TRACKER];
+const cardColors = [
+  CardColor.ORANGE,
+  CardColor.WHITE,
+  CardColor.BLACK,
+  CardColor.TRACKER,
+];
 const CardColors = [CardColor.SILVER, CardColor.GOLD];
 
 extension CardColorHelper on CardColor {

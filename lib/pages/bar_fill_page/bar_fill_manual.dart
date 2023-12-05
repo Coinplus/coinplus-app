@@ -19,6 +19,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -486,7 +487,6 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           ),
                                         ),
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -577,8 +577,8 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                     ),
                                                   )
                                                 : Padding(
-                                                  padding: const EdgeInsets.all(8),
-                                                  child: Lottie.asset(
+                                                    padding: const EdgeInsets.all(8),
+                                                    child: Lottie.asset(
                                                       'assets/animated_logo/address_validation_success.json',
                                                       height: 30,
                                                       controller: _lottieController,
@@ -591,7 +591,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                         _lottieController.duration = composition.duration;
                                                       },
                                                     ),
-                                                );
+                                                  );
                                           },
                                         ),
                                         focusedBorder: OutlineInputBorder(
@@ -816,6 +816,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                       ? LoadingButton(
                           onPressed: () async {
                             if (_checkboxState.isActive) {
+                              await signInAnonymously(address: _btcAddressController.text);
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
                                 if (hasShown) {

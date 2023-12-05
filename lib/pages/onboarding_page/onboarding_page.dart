@@ -31,7 +31,6 @@ import 'connect_manually_button/connect_manually_button.dart';
 class OnboardingPage extends HookWidget {
   const OnboardingPage({Key? key}) : super(key: key);
 
-
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
@@ -40,7 +39,6 @@ class OnboardingPage extends HookWidget {
     final deepLinkRes = useRef<String?>(null);
     final resumed = useState(false);
     final isMifareUltralight = useRef<bool?>(false);
-
 
     useOnAppLifecycleStateChange(
       (previous, current) => resumed.value = [AppLifecycleState.resumed].contains(current),
@@ -115,13 +113,13 @@ class OnboardingPage extends HookWidget {
                 LoadingButton(
                   onPressed: Platform.isIOS
                       ? () async {
-                    await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                    await router.pop();
-                    await nfcSessionIos(
-                      isMifareUltralight: isMifareUltralight.value,
-                      walletProtectState: _walletProtectState,
-                    );
-                  }
+                          await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                          await router.pop();
+                          await nfcSessionIos(
+                            isMifareUltralight: isMifareUltralight.value,
+                            walletProtectState: _walletProtectState,
+                          );
+                        }
                       : () async {
                           await router.pop();
                           await nfcSessionAndroid(

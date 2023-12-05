@@ -18,6 +18,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -643,6 +644,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
+                          await signInAnonymously(address: _btcAddressController.text);
                           _balanceStore.saveSelectedBar();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {

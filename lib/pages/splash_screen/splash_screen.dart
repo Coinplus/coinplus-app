@@ -24,7 +24,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    signInAnonymously();
     hasShownWallet().then(
       (hasShown) async {
         if (hasShown) {

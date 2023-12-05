@@ -11,36 +11,30 @@ _$LoginEventImpl _$$LoginEventImplFromJson(Map json) => _$LoginEventImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$LoginEventImplToJson(_$LoginEventImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$LoginEventImplToJson(_$LoginEventImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'runtimeType': instance.$type,
     };
 
-_$CardAddedEventImpl _$$CardAddedEventImplFromJson(Map json) =>
-    _$CardAddedEventImpl(
+_$CardAddedEventImpl _$$CardAddedEventImplFromJson(Map json) => _$CardAddedEventImpl(
       eventType: json['eventType'] as String? ?? 'CARD_ADDED',
       card: CardModel.fromJson(Map<String, dynamic>.from(json['card'] as Map)),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$CardAddedEventImplToJson(
-        _$CardAddedEventImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CardAddedEventImplToJson(_$CardAddedEventImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'card': instance.card.toJson(),
       'runtimeType': instance.$type,
     };
 
-_$BarAddedEventImpl _$$BarAddedEventImplFromJson(Map json) =>
-    _$BarAddedEventImpl(
+_$BarAddedEventImpl _$$BarAddedEventImplFromJson(Map json) => _$BarAddedEventImpl(
       eventType: json['eventType'] as String? ?? 'BAR_ADDED',
       bar: BarModel.fromJson(Map<String, dynamic>.from(json['bar'] as Map)),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$BarAddedEventImplToJson(_$BarAddedEventImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$BarAddedEventImplToJson(_$BarAddedEventImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'bar': instance.bar.toJson(),
       'runtimeType': instance.$type,
