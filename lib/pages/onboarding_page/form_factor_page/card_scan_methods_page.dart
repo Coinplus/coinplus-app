@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +7,6 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nfc_manager/nfc_manager.dart';
-import 'package:nfc_manager/platform_tags.dart';
-import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
 import '../../../extensions/context_extension.dart';
 import '../../../extensions/elevated_button_extensions.dart';
@@ -24,6 +18,7 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../../utils/card_nfc_session.dart';
 import '../../../widgets/loading_button.dart';
 
 class CardScanMethodsPage extends HookWidget {
@@ -38,6 +33,7 @@ class CardScanMethodsPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMifareUltralight = useRef<bool?>(false);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -58,103 +54,19 @@ class CardScanMethodsPage extends HookWidget {
                 ? () async {
                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                     await router.pop();
-                    await NfcManager.instance.startSession(
-                      alertMessage: 'It’s easy! Just hold your phone near the Coinplus Card.',
-                      onDiscovered: (tag) async {
-                        final ndef = Ndef.from(tag);
-                        final records = ndef!.cachedMessage!.records;
-                        dynamic walletAddress;
-                        if (records.length >= 2) {
-                          final hasJson = records[1].payload;
-                          final payloadString = String.fromCharCodes(hasJson);
-                          final Map payloadData = await json.decode(payloadString);
-                          walletAddress = payloadData['a'];
-                        } else {
-                          final hasUrl = records[0].payload;
-                          final payloadString = String.fromCharCodes(hasUrl);
-                          final parts = payloadString.split('air.coinplus.com/btc/');
-                          walletAddress = parts[1];
-                        }
-
-                        final mifare = MiFare.from(tag);
-                        final tagId = mifare!.identifier;
-                        final signature = await mifare.sendMiFareCommand(
-                          Uint8List.fromList(
-                            [0x3C, 0x00],
-                          ),
-                        );
-                        var isOriginalTag = false;
-                        if (signature.length > 2) {
-                          isOriginalTag = OriginalityVerifier().verify(
-                            tagId,
-                            signature,
-                          );
-                        }
-                        if (isOriginalTag) {
-                          await NfcManager.instance.stopSession(
-                            alertMessage: 'Complete',
-                          );
-                          await Future.delayed(
-                            const Duration(
-                              milliseconds: 2500,
-                            ),
-                          );
-                          await router.push(
-                            CardFillWithNfc(
-                              receivedData: walletAddress,
-                            ),
-                          );
-                        } else {
-                          await NfcManager.instance.stopSession();
-                          await router.pop();
-                          await Future.delayed(
-                            const Duration(
-                              milliseconds: 2500,
-                            ),
-                          );
-                          await router.push(
-                            CardFillWithNfc(
-                              receivedData: walletAddress,
-                            ),
-                          );
-                        }
-                        await _walletProtectState.updateNfcSessionStatus(isStarted: false);
-                      },
-                      onError: (_) => Future(() => _walletProtectState.updateNfcSessionStatus(isStarted: false)),
+                    await nfcSessionIos(
+                      isMifareUltralight: isMifareUltralight.value,
+                      walletProtectState: _walletProtectState,
+                      isBarList: false,
                     );
                   }
                 : () async {
                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                    await NfcManager.instance.startSession(
-                      onDiscovered: (tag) async {
-                        final ndef = Ndef.from(tag);
-                        final records = ndef!.cachedMessage!.records;
-                        dynamic walletAddress;
-
-                        if (records.length >= 2) {
-                          final hasJson = records[1].payload;
-                          final payloadString = String.fromCharCodes(hasJson);
-                          final Map payloadData = await json.decode(payloadString);
-                          walletAddress = payloadData['a'];
-                        } else {
-                          final hasUrl = records[0].payload;
-                          final payloadString = String.fromCharCodes(hasUrl);
-                          final parts = payloadString.split('air.coinplus.com/btc/');
-                          walletAddress = parts[1];
-                        }
-
-                        await router.pop();
-                        await router.push(
-                          CardFillWithNfc(
-                            receivedData: walletAddress.toString(),
-                          ),
-                        );
-                        await _walletProtectState.updateNfcSessionStatus(isStarted: false);
-                      },
-                      onError: (_) => Future(() => _walletProtectState.updateNfcSessionStatus(isStarted: false)),
+                    await nfcSessionAndroid(
+                      isMifareUltralight: isMifareUltralight.value,
+                      walletProtectState: _walletProtectState,
                     );
                     await router.pop();
-
                     await showModalBottomSheet(
                       context: context,
                       shape: const RoundedRectangleBorder(
@@ -206,7 +118,7 @@ class CardScanMethodsPage extends HookWidget {
                                 ),
                                 const Gap(25),
                                 const Text(
-                                  'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+                                  'It’s easy! Hold your phone near the Coinplus Card',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 14,

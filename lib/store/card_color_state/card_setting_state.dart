@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-
 import '../../constants/card_color.dart';
 import '../../models/card_model/card_model.dart';
 
@@ -9,9 +8,11 @@ class CardSettingState = _CardSettingState with _$CardSettingState;
 
 abstract class _CardSettingState with Store {
   late CardModel card;
+  late CardColor previousCardColor;
 
   _CardSettingState({required this.card}) {
     selectedCardColor = card.color;
+    previousCardColor = card.color;
   }
 
   @observable
@@ -30,11 +31,12 @@ abstract class _CardSettingState with Store {
 
   @action
   void colorState() {
-    isColorChanged = true;
+    isColorChanged = selectedCardColor != previousCardColor;
   }
 
   @action
   Future<void> changeCardColor(CardColor color) async {
     selectedCardColor = color;
+    colorState();
   }
 }

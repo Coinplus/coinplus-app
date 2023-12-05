@@ -4,6 +4,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
@@ -54,16 +55,43 @@ class _CreatePinCodeState extends State<CreatePinCode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.transparent,
         ),
-        title: const Text(
-          'Create passcode',
-          style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 18),
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: router.pop,
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                'Create passcode',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Gap(46),
+          ],
         ),
       ),
       body: PageView(
@@ -77,13 +105,30 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                 height: 50,
               ),
               const Gap(50),
-              const Text(
-                'Enter passcode',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatMedium,
-                  fontSize: 20,
-                  color: AppColors.primary,
-                ),
+              Observer(
+                builder: (context) {
+                  return AnimatedCrossFade(
+                    firstChild: const Text(
+                      'Enter your passcode',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 20,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    secondChild: const Text(
+                      'Incorrect passcode',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 20,
+                        color: AppColors.red,
+                      ),
+                    ),
+                    crossFadeState:
+                        _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 1),
+                  );
+                },
               ),
               const Gap(30),
               Padding(
@@ -134,7 +179,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                   obscureText: true,
                   pastedTextStyle: const TextStyle(fontSize: 12),
                   animationType: AnimationType.fade,
-                  animationDuration: const Duration(milliseconds: 300),
+                  animationDuration: const Duration(milliseconds: 50),
                   onChanged: (value) {},
                   appContext: context,
                 ),
@@ -210,9 +255,9 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                         await Future.delayed(const Duration(milliseconds: 100));
                         await router.pushAndPopAll(const DashboardRoute());
                       } else {
-                        await HapticFeedback.vibrate();
+                        Gaimon.error();
                         _shakeAnimationController.start();
-                        await _walletProtectState.dontMatch();
+                        unawaited(_walletProtectState.dontMatch());
                         _pageController.jumpToPage(0);
                         _reEnterFocusNode.unfocus();
                         _enterFocusNode.requestFocus();
@@ -251,7 +296,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                     obscureText: true,
                     pastedTextStyle: const TextStyle(fontSize: 12),
                     animationType: AnimationType.fade,
-                    animationDuration: const Duration(milliseconds: 300),
+                    animationDuration: const Duration(milliseconds: 50),
                     onChanged: (value) {},
                     appContext: context,
                   ),

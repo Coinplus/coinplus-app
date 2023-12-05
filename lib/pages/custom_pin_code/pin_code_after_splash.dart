@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -51,7 +52,9 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.transparent,
@@ -100,17 +103,13 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
                   if (value == savedPinCode) {
                     await router.pushAndPopAll(const DashboardRoute());
                   } else {
-                    await HapticFeedback.vibrate();
+                    unawaited(_walletProtectState.dontMatch());
+                    Gaimon.error();
                     _pinController.text = '';
                     _shakeAnimationController.start();
-                    _walletProtectState.pinFocusNode.requestFocus();
-                    await _walletProtectState.dontMatch();
-                    await Future.delayed(
-                      const Duration(
-                        milliseconds: 600,
-                      ),
-                    );
+                    await Future.delayed(const Duration(milliseconds: 600));
                     _shakeAnimationController.stop();
+                    _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },
                 textCapitalization: TextCapitalization.characters,
@@ -144,7 +143,7 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
                 obscureText: true,
                 pastedTextStyle: const TextStyle(fontSize: 12),
                 animationType: AnimationType.fade,
-                animationDuration: const Duration(milliseconds: 100),
+                animationDuration: const Duration(milliseconds: 50),
                 onChanged: (value) {},
                 appContext: context,
               ),

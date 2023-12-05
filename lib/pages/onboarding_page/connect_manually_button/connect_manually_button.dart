@@ -38,6 +38,8 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
       BuildContext modalSheetContext,
     ) {
       return WoltModalSheetPage(
+        backgroundColor: Colors.white,
+        sabGradientColor: Colors.white,
         hasTopBarLayer: false,
         isTopBarLayerAlwaysVisible: true,
         leadingNavBarWidget: const Row(

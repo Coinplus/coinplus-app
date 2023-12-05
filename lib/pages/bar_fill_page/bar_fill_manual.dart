@@ -109,6 +109,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -131,11 +132,12 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
               ),
             ),
             const Gap(10),
-            const Text(
+            Text(
               'Virtual bar',
               style: TextStyle(
                 fontSize: 32,
                 fontFamily: FontFamily.redHatBold,
+                color: Colors.black.withOpacity(0.9),
               ),
             ),
           ],
@@ -148,9 +150,8 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Gap(3),
               Expanded(
-                flex: 4,
+                flex: 6,
                 child: Observer(
                   builder: (context) {
                     final data = _balanceStore.coins;
@@ -166,7 +167,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                 image: DecorationImage(
                                   image: _lineStore.isLineVisible
                                       ? Assets.images.bar.filledBar.image().image
-                                      : Assets.images.bar.barEmpty.image().image,
+                                      : Assets.images.bar.barFill.image().image,
                                 ),
                               ),
                               child: BackdropFilter(
@@ -176,7 +177,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     Opacity(
                                       opacity: _lineStore.isLineVisible ? 1 : 0,
                                       child: CustomPaint(
-                                        size: const Size(61, 255),
+                                        size: const Size(61, 245),
                                         painter: BarLinesCustomPaint(),
                                       ),
                                     ),
@@ -189,7 +190,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             Stack(
                                               children: [
                                                 Container(
-                                                  height: 160,
+                                                  height: 164,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                       image: Assets.images.bar.hologramWithFrame.image().image,
@@ -334,7 +335,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             ),
                                             const Gap(15),
                                             Assets.images.bar.barSecret2.image(
-                                              height: 41,
+                                              height: 43,
                                             ),
                                           ],
                                         ),
@@ -349,33 +350,16 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: Assets.images.bar.barEmpty.image().image,
+                                  image: Assets.images.bar.barFill.image().image,
                                 ),
                               ),
                               child: Center(
                                 child: SizedBox(
                                   width: context.width * 0.6,
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Gap(35),
-                                      Stack(
-                                        children: [
-                                          Container(
-                                            height: 160,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: Assets.images.bar.hologramWithFrame.image().image,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Assets.images.bar.barSecret1.image(
-                                                height: 44,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Gap(10),
+                                      Gap(context.height * 0.035),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
@@ -468,7 +452,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           child: Center(
                                             child: Observer(
                                               builder: (context) {
-                                                if (_balanceStore.loadings[_balanceStore.selectedBar!.address] ??
+                                                if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
                                                     false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(
@@ -502,14 +486,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           ),
                                         ),
                                       ),
-                                      const Gap(15),
-                                      Assets.images.bar.barCoinplusLogo.image(
-                                        height: 40,
-                                      ),
-                                      const Gap(15),
-                                      Assets.images.bar.barSecret2.image(
-                                        height: 41,
-                                      ),
+
                                     ],
                                   ),
                                 ),
@@ -517,109 +494,93 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                             ),
                             crossFadeState:
                                 _lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 400),
+                            duration: const Duration(milliseconds: 600),
                           ),
                           secondChild: Container(
                             height: 475,
                             width: context.width - 64,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: Assets.images.bar.barEmpty.image().image,
+                                image: Assets.images.bar.barFill.image().image,
                               ),
                             ),
                             child: Center(
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Gap(35),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        height: 160,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: Assets.images.bar.hologramWithFrame.image().image,
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Assets.images.bar.barSecret1.image(
-                                            height: 44,
-                                          ),
-                                        ),
+                                  Gap(context.height * 0.06),
+                                  ScaleTransition(
+                                    scale: _textFieldAnimationController,
+                                    child: TextField(
+                                      autocorrect: false,
+                                      keyboardType: TextInputType.text,
+                                      onChanged: (_) {
+                                        _validateBTCAddress();
+                                      },
+                                      controller: _btcAddressController,
+                                      maxLines: 2,
+                                      minLines: 1,
+                                      focusNode: _focusNode,
+                                      cursorColor: Colors.blue,
+                                      cursorWidth: 1,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.primaryTextColor,
+                                        fontFamily: FontFamily.redHatLight,
                                       ),
-                                    ],
-                                  ),
-                                  const Gap(40),
-                                  if (_addressState.isAddressVisible)
-                                    const SizedBox()
-                                  else
-                                    ScaleTransition(
-                                      scale: _textFieldAnimationController,
-                                      child: TextField(
-                                        autocorrect: false,
-                                        keyboardType: TextInputType.text,
-                                        onChanged: (_) {
-                                          _validateBTCAddress();
-                                        },
-                                        controller: _btcAddressController,
-                                        maxLines: 2,
-                                        minLines: 1,
-                                        focusNode: _focusNode,
-                                        cursorColor: Colors.blue,
-                                        cursorWidth: 1,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.primaryTextColor,
+                                      onTapOutside: (_) {
+                                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                      },
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        hintText: 'Write here your bar address ',
+                                        hintMaxLines: 1,
+                                        hintStyle: TextStyle(
                                           fontFamily: FontFamily.redHatLight,
+                                          fontSize: 12,
+                                          color: AppColors.primaryTextColor.withOpacity(
+                                            0.8,
+                                          ),
                                         ),
-                                        onTapOutside: (_) {
-                                          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-                                        },
-                                        decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          hintText: 'Write here your bar address ',
-                                          hintStyle: TextStyle(
-                                            fontFamily: FontFamily.redHatLight,
-                                            fontSize: 12,
-                                            color: AppColors.primaryTextColor.withOpacity(
-                                              0.4,
-                                            ),
-                                          ),
-                                          contentPadding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                            vertical: 10,
-                                          ),
-                                          prefixIconConstraints: const BoxConstraints(
-                                            minWidth: 27,
-                                            minHeight: 27,
-                                          ),
-                                          prefixIcon: Observer(
-                                            builder: (context) {
-                                              return _validationStore.isValid
-                                                  ? IconButton(
-                                                      onPressed: () async {
-                                                        _focusNode.unfocus();
-                                                        await Future.delayed(
-                                                          const Duration(
-                                                            milliseconds: 300,
-                                                          ),
-                                                        );
-                                                        final res = await context.pushRoute<String?>(
-                                                          const QrScannerRoute(),
-                                                        );
-                                                        if (res == null) {
-                                                          return;
-                                                        }
+                                        contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 10,
+                                        ),
+                                        prefixIconConstraints: const BoxConstraints(
+                                          minWidth: 27,
+                                          minHeight: 27,
+                                        ),
+                                        prefixIcon: Observer(
+                                          builder: (context) {
+                                            return _validationStore.isValid
+                                                ? IconButton(
+                                                    onPressed: () async {
+                                                      _focusNode.unfocus();
+                                                      await Future.delayed(
+                                                        const Duration(
+                                                          milliseconds: 300,
+                                                        ),
+                                                      );
+                                                      final res = await context.pushRoute<String?>(
+                                                        const QrScannerRoute(),
+                                                      );
+                                                      if (res == null) {
+                                                        return;
+                                                      }
 
-                                                        _btcAddressController.text = res;
-                                                        await _validateBTCAddress();
-                                                      },
-                                                      icon: Assets.icons.qrCode.image(
-                                                        height: 34,
-                                                      ),
-                                                    )
-                                                  : Lottie.asset(
+                                                      _btcAddressController.text = res;
+                                                      await _validateBTCAddress();
+                                                    },
+                                                    icon: Assets.icons.qrCode.image(
+                                                      height: 34,
+                                                    ),
+                                                  )
+                                                : Padding(
+                                                  padding: const EdgeInsets.all(8),
+                                                  child: Lottie.asset(
                                                       'assets/animated_logo/address_validation_success.json',
-                                                      height: 24,
+                                                      height: 30,
                                                       controller: _lottieController,
                                                       onLoaded: (composition) {
                                                         Future.delayed(
@@ -629,36 +590,29 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                         );
                                                         _lottieController.duration = composition.duration;
                                                       },
-                                                    );
-                                            },
+                                                    ),
+                                                );
+                                          },
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.blue,
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Colors.blue,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
+                                          borderRadius: BorderRadius.circular(
+                                            5,
                                           ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Colors.transparent,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            5,
                                           ),
                                         ),
                                       ),
-                                    ).paddingHorizontal(60),
-                                  const Gap(30),
-                                  Assets.images.bar.barCoinplusLogo.image(
-                                    height: 40,
-                                  ),
-                                  const Gap(15),
-                                  Assets.images.bar.barSecret2.image(
-                                    height: 41,
-                                  ),
+                                    ),
+                                  ).paddingHorizontal(60),
                                 ],
                               ),
                             ),
@@ -673,6 +627,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                 ),
               ),
               Flexible(
+                flex: 2,
                 child: Observer(
                   builder: (context) {
                     return ShakeAnimationWidget(
@@ -914,7 +869,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                         ).paddingHorizontal(49);
                 },
               ),
-              if (context.height > 667) const Gap(40) else const Gap(12),
+              if (context.height > 667) const Gap(10) else const Gap(12),
             ],
           );
         },

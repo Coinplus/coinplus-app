@@ -161,18 +161,21 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   Widget build(BuildContext context) {
     final card = _balanceStore.cards[_settingsState.cardCurrentIndex];
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'Virtual card',
           style: TextStyle(
             fontSize: 32,
             fontFamily: FontFamily.redHatBold,
+            color: Colors.black.withOpacity(0.9),
           ),
         ).expandedHorizontally(),
       ),
@@ -323,6 +326,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                           ?.unfocus();
                                                                     },
                                                                     decoration: InputDecoration(
+                                                                      filled: true,
                                                                       hintText: 'Write here your \nsecret 1',
                                                                       fillColor: Colors.white,
                                                                       hintMaxLines: 10,
@@ -330,7 +334,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         fontFamily: FontFamily.redHatLight,
                                                                         fontSize: 13,
                                                                         color: AppColors.primaryTextColor.withOpacity(
-                                                                          0.4,
+                                                                          0.8,
                                                                         ),
                                                                       ),
                                                                       contentPadding: const EdgeInsets.symmetric(
@@ -496,7 +500,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         fontFamily: FontFamily.redHatLight,
                                                                         fontSize: 13,
                                                                         color: AppColors.primaryTextColor.withOpacity(
-                                                                          0.4,
+                                                                          0.8,
                                                                         ),
                                                                       ),
                                                                       contentPadding: const EdgeInsets.symmetric(
@@ -781,7 +785,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
         return DecorationImage(
           image: Assets.images.card.filledBackWhite.image().image,
         );
-      case CardColor.BROWN:
+      case CardColor.BLACK:
         return DecorationImage(
           image: Assets.images.card.filledBackBrown.image().image,
         );
@@ -800,7 +804,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
         return DecorationImage(
           image: Assets.images.card.whiteCardFront.image().image,
         );
-      case CardColor.BROWN:
+      case CardColor.BLACK:
         return DecorationImage(
           image: Assets.images.card.brownCardFront.image().image,
         );

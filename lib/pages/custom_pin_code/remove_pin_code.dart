@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
@@ -24,10 +27,40 @@ class PinRemove extends StatelessWidget {
     final _pinController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: router.pop,
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                'Remove passcode',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Gap(46),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -84,17 +117,13 @@ class PinRemove extends StatelessWidget {
                     await secureStorage.delete(key: 'pin_code');
                     await router.pop();
                   } else {
-                    await HapticFeedback.vibrate();
+                    unawaited(_walletProtectState.dontMatch());
+                    Gaimon.error();
                     _pinController.text = '';
-                    _walletProtectState.pinFocusNode.requestFocus();
                     _shakeAnimationController.start();
-                    await _walletProtectState.dontMatch();
-                    await Future.delayed(
-                      const Duration(
-                        milliseconds: 600,
-                      ),
-                    );
+                    await Future.delayed(const Duration(milliseconds: 600));
                     _shakeAnimationController.stop();
+                    _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },
                 textCapitalization: TextCapitalization.characters,
@@ -128,21 +157,10 @@ class PinRemove extends StatelessWidget {
                 obscureText: true,
                 pastedTextStyle: const TextStyle(fontSize: 12),
                 animationType: AnimationType.fade,
-                animationDuration: const Duration(milliseconds: 100),
+                animationDuration: const Duration(milliseconds: 50),
                 onChanged: (value) {},
                 appContext: context,
               ),
-            ),
-          ),
-          const Gap(20),
-          const Text(
-            'Enter your passcode',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: FontFamily.redHatLight,
-              fontSize: 14,
-              color: AppColors.primary,
-              fontWeight: FontWeight.w700,
             ),
           ),
         ],

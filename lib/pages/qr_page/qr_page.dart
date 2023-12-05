@@ -2,50 +2,44 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
+import 'package:gap/gap.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart' show QrScannerOverlayShape;
+import 'package:qr_code_scanner/qr_code_scanner.dart'
+    show QrScannerOverlayShape;
+import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
+import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 
 @RoutePage<String?>()
-class QrScannerPage extends StatefulWidget {
+class QrScannerPage extends HookWidget {
   const QrScannerPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<QrScannerPage> createState() => _QrScannerPageState();
-}
-
-class _QrScannerPageState extends State<QrScannerPage> {
-  final _qrController = MobileScannerController(
-    formats: [BarcodeFormat.qrCode],
-    detectionTimeoutMs: 1000,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _qrController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final qrDetect = ValidationState();
-
+    final _qrController = MobileScannerController(
+      formats: [BarcodeFormat.qrCode],
+      detectionTimeoutMs: 1000,
+    );
+    final scanWindow = Rect.fromCenter(
+      center: MediaQuery.of(context).size.center(Offset.zero),
+      width: 200,
+      height: 200,
+    );
     return Scaffold(
       body: Stack(
         children: [
           Center(
             child: MobileScanner(
+              scanWindow: scanWindow,
               controller: _qrController,
               placeholderBuilder: (_, widget) {
                 return const Center(
@@ -61,7 +55,8 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   await HapticFeedback.mediumImpact();
                   await router.pop(_data);
                 } else if (_data!.startsWith('https')) {
-                  final newAddress = _data.split('https://air.coinplus.com/btc/');
+                  final newAddress =
+                      _data.split('https://air.coinplus.com/btc/');
                   final splitAddress = newAddress[1];
                   await HapticFeedback.heavyImpact();
                   await router.pop(splitAddress);
@@ -79,7 +74,9 @@ class _QrScannerPageState extends State<QrScannerPage> {
                   decoration: ShapeDecoration(
                     shape: QrScannerOverlayShape(
                       overlayColor: AppColors.primary.withOpacity(0.9),
-                      borderColor: qrDetect.isDetected ? (qrDetect.isValid ? Colors.green : Colors.red) : Colors.blue,
+                      borderColor: qrDetect.isDetected
+                          ? (qrDetect.isValid ? Colors.green : Colors.red)
+                          : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
                       borderWidth: 5,
@@ -128,6 +125,80 @@ class _QrScannerPageState extends State<QrScannerPage> {
                 fontSize: 14,
                 color: Colors.white,
               ),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.75,
+            left: 100,
+            right: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ScaleTap(
+                  enableFeedback: false,
+                  onPressed: () {
+                    Gaimon.rigid();
+                    _qrController.toggleTorch();
+                  },
+                  child: ValueListenableBuilder<TorchState>(
+                    valueListenable: _qrController.torchState,
+                    builder: (context, state, child) {
+                      switch (state) {
+                        case TorchState.off:
+                          return Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  color: Colors.grey.withOpacity(0.2),
+                                ),
+                                child: Assets.icons.torch.image(
+                                  height: 40,
+                                  color: Colors.white.withOpacity(0.7),
+                                ),
+                              ),
+                              const Gap(8),
+                              Text(
+                                'Torch',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          );
+                        case TorchState.on:
+                          return Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  color: Colors.green.withOpacity(0.7),
+                                ),
+                                child: Assets.icons.torch.image(
+                                  height: 40,
+                                  color: Colors.white.withOpacity(0.7),
+                                ),
+                              ),
+                              const Gap(8),
+                              Text(
+                                'Torch',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          );
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],

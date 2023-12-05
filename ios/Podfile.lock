@@ -12,6 +12,9 @@ PODS:
     - Firebase/Functions (= 10.17.0)
     - firebase_core
     - Flutter
+  - connectivity_plus (0.0.1):
+    - Flutter
+    - ReachabilitySwift
   - Firebase/Auth (10.17.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.17.0)
@@ -61,6 +64,8 @@ PODS:
   - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_web_browser (0.17.1):
+    - Flutter
+  - gaimon (0.0.1):
     - Flutter
   - GoogleDataTransport (9.2.5):
     - GoogleUtilities/Environment (~> 7.7)
@@ -134,6 +139,8 @@ PODS:
   - nanopb/encode (2.30909.0)
   - nfc_manager (0.0.1):
     - Flutter
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -141,6 +148,7 @@ PODS:
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
+  - ReachabilitySwift (5.0.0)
   - RecaptchaInterop (100.0.0)
   - share_plus (0.0.1):
     - Flutter
@@ -156,15 +164,18 @@ DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - flutter_branch_sdk (from `.symlinks/plugins/flutter_branch_sdk/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_browser (from `.symlinks/plugins/flutter_web_browser/ios`)
+  - gaimon (from `.symlinks/plugins/gaimon/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - nfc_manager (from `.symlinks/plugins/nfc_manager/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
@@ -200,6 +211,7 @@ SPEC REPOS:
     - MTBBarcodeScanner
     - nanopb
     - PromisesObjC
+    - ReachabilitySwift
     - RecaptchaInterop
 
 EXTERNAL SOURCES:
@@ -209,6 +221,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/app_settings/ios"
   cloud_functions:
     :path: ".symlinks/plugins/cloud_functions/ios"
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -221,12 +235,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_web_browser:
     :path: ".symlinks/plugins/flutter_web_browser/ios"
+  gaimon:
+    :path: ".symlinks/plugins/gaimon/ios"
   local_auth_ios:
     :path: ".symlinks/plugins/local_auth_ios/ios"
   mobile_scanner:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   nfc_manager:
     :path: ".symlinks/plugins/nfc_manager/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   qr_code_scanner:
@@ -247,6 +265,7 @@ SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   BranchSDK: 324f47ce8568005684cf024a47980bb713f47648
   cloud_functions: 5a8a98b2037ff2b57cac56155faede7417d24de9
+  connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
   firebase_auth: 6a41305f668ac6f9bcbefdedfcba5aacb8367e92
   firebase_core: efc9455611b8769fa90fbdae5da182600bd6901c
@@ -263,6 +282,7 @@ SPEC CHECKSUMS:
   flutter_branch_sdk: 938f6f386a976356ee7e5f60969e53d4ae5704d9
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_web_browser: 7bccaafbb0c5b8862afe7bcd158f15557109f61f
+  gaimon: 7688c586f38dcc4782e6fe26f648057d280a9d8b
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
@@ -278,9 +298,11 @@ SPEC CHECKSUMS:
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126

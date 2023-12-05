@@ -156,18 +156,21 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
   Widget build(BuildContext context) {
     final bar = _balanceStore.bars[_settingsState.barCurrentIndex];
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'Virtual bar',
           style: TextStyle(
             fontSize: 32,
             fontFamily: FontFamily.redHatBold,
+            color: Colors.black.withOpacity(0.9),
           ),
         ).expandedHorizontally(),
       ),

@@ -77,6 +77,10 @@ dependencies:
   app_settings: ^5.1.1
   flutter_web_browser: ^0.17.1
   nxp_originality_verifier: ^0.0.6
+  gaimon: ^1.2.1
+  connectivity_plus: ^5.0.2
+  package_info_plus: ^5.0.1
+
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.

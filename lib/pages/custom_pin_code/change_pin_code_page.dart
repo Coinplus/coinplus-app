@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -36,16 +39,42 @@ class ChangePinCode extends StatelessWidget {
     var repeatPin = _repeatPinCodeController.text;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.transparent,
         ),
-        title: const Text(
-          'Change passcode',
-          style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 18),
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: router.pop,
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Expanded(
+              child: Text(
+                'Change passcode',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Gap(46),
+          ],
         ),
       ),
       body: PageView(
@@ -105,11 +134,11 @@ class ChangePinCode extends StatelessWidget {
                       if (enteredPin == savedPinCode) {
                         _pageController.jumpToPage(1);
                       } else {
-                        await HapticFeedback.vibrate();
+                        Gaimon.error();
                         _enteredPinFocusNode.requestFocus();
                         _enteredPinShakeController.start();
                         _enterPinCodeController.text = '';
-                        await _changePinCodeState.newPinMatch();
+                        unawaited(_changePinCodeState.newPinMatch());
                         await Future.delayed(
                           const Duration(
                             milliseconds: 600,
@@ -150,7 +179,7 @@ class ChangePinCode extends StatelessWidget {
                     obscureText: true,
                     pastedTextStyle: const TextStyle(fontSize: 12),
                     animationType: AnimationType.fade,
-                    animationDuration: const Duration(milliseconds: 300),
+                    animationDuration: const Duration(milliseconds: 50),
                     onChanged: (value) {},
                     appContext: context,
                   ),
@@ -166,13 +195,30 @@ class ChangePinCode extends StatelessWidget {
                 height: 50,
               ),
               const Gap(50),
-              const Text(
-                'Write new passcode',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatMedium,
-                  fontSize: 20,
-                  color: AppColors.primary,
-                ),
+              Observer(
+                builder: (context) {
+                  return AnimatedCrossFade(
+                    firstChild: const Text(
+                      'Enter your passcode',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 20,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    secondChild: const Text(
+                      'Incorrect passcode',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        fontSize: 20,
+                        color: AppColors.red,
+                      ),
+                    ),
+                    crossFadeState:
+                        _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                    duration: const Duration(milliseconds: 1),
+                  );
+                },
               ),
               const Gap(30),
               Padding(
@@ -219,7 +265,7 @@ class ChangePinCode extends StatelessWidget {
                   obscureText: true,
                   pastedTextStyle: const TextStyle(fontSize: 12),
                   animationType: AnimationType.fade,
-                  animationDuration: const Duration(milliseconds: 300),
+                  animationDuration: const Duration(milliseconds: 50),
                   onChanged: (value) {},
                   appContext: context,
                 ),
@@ -289,7 +335,7 @@ class ChangePinCode extends StatelessWidget {
                         await _walletProtectState.isBiometricAvailable();
                         await router.pushAndPopAll(const DashboardRoute());
                       } else {
-                        await HapticFeedback.vibrate();
+                        Gaimon.error();
                         _reEnteredPinShakeController.start();
                         await _changePinCodeState.newPinMatch();
                         _pageController.jumpToPage(1);
@@ -330,7 +376,7 @@ class ChangePinCode extends StatelessWidget {
                     obscureText: true,
                     pastedTextStyle: const TextStyle(fontSize: 12),
                     animationType: AnimationType.fade,
-                    animationDuration: const Duration(milliseconds: 300),
+                    animationDuration: const Duration(milliseconds: 50),
                     onChanged: (value) {},
                     appContext: context,
                   ),

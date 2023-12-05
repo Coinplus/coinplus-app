@@ -10,6 +10,8 @@ abstract class AbstractCard {
 
   CardType get type;
 
+  WalletType get label;
+
   String get name;
 
   String get createdAt;

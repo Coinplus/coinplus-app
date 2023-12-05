@@ -23,6 +23,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
+import '../../router.gr.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/bar_color_state/bar_setting_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -53,18 +54,64 @@ class BarSettingsPage extends HookWidget {
 
     final isInactive = useState(false);
     final appLocked = useState(false);
+    final isPaused = useState(false);
+    final deepLinkRes = useRef<String?>(null);
     final isBiometricsRunning = useState(false);
+    final isPrivateKeySet = useState(false);
+    final privateKey = useState('');
+
+    Future<void> fetchPrivateKey() async {
+      final fetchedKey = await secureStorage.read(key: bar.address);
+      if (fetchedKey != null) {
+        privateKey.value = fetchedKey;
+      }
+    }
+
+    Future<void> isPrivateSet() async {
+      isPrivateKeySet.value = await getIsPrivateKeySet(bar.address);
+    }
 
     useOnAppLifecycleStateChange((previous, current) async {
       appLocked.value = await getIsPinCodeSet();
       isInactive.value = [AppLifecycleState.inactive].contains(current);
+      if (isInactive.value) {
+        _cardSettingsState.isPrivateKeyVisible = false;
+      }
+      isPaused.value = [AppLifecycleState.paused].contains(current);
+      if (isPaused.value &&
+          router.current.name == CardSettingsRoute.name &&
+          !_walletProtectState.isBiometricsRunning &&
+          !_walletProtectState.isLinkOpened) {
+        if (appLocked.value) {
+          if (router.stackData
+              .indexWhere(
+                (element) => element.name == PinCodeForAllRoutes.name,
+              )
+              .isNegative) {
+            await router.push(const PinCodeForAllRoutes());
+            isPaused.value = false;
+            isInactive.value = false;
+            if (deepLinkRes.value != null) {
+              await router.push(BarFillRoute(receivedData: deepLinkRes.value));
+              deepLinkRes.value = null;
+            }
+          }
+        }
+      }
+    });
+    useEffect(() {
+      isPrivateSet();
+      fetchPrivateKey();
+      return null;
     });
 
     return Stack(
       children: [
         Scaffold(
           resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.black),
             elevation: 0,
             surfaceTintColor: Colors.white,
             backgroundColor: Colors.white,
@@ -78,6 +125,7 @@ class BarSettingsPage extends HookWidget {
               style: TextStyle(
                 fontSize: 17,
                 fontFamily: FontFamily.redHatMedium,
+                color: Colors.black,
               ),
             ),
           ),
@@ -201,13 +249,10 @@ class BarSettingsPage extends HookWidget {
                       height: 24,
                     ),
                   ),
-                  FutureBuilder(
-                    future: getPrivateKeyFromStorage(key: bar.address),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        return Observer(
+                  if (isPrivateKeySet.value)
+                    Column(
+                      children: [
+                        Observer(
                           builder: (context) {
                             return Column(
                               children: [
@@ -234,18 +279,37 @@ class BarSettingsPage extends HookWidget {
                                     if (!_cardSettingsState.isPrivateKeyVisible) {
                                       if (_walletProtectState.isBiometricsEnabled) {
                                         if (await _isPinSet) {
-                                          isBiometricsRunning.value = true;
-                                          final isAuthorized = await _auth.authenticate(
-                                            localizedReason: 'Authenticate using Face ID',
-                                          );
-                                          if (isAuthorized) {
-                                            _cardSettingsState.makePrivateVisible();
+                                          try {
+                                            isBiometricsRunning.value = true;
+                                            final isAuthorized = await _auth.authenticate(
+                                              localizedReason: 'Authenticate using Face ID',
+                                              options: const AuthenticationOptions(biometricOnly: true),
+                                            );
+                                            if (isAuthorized) {
+                                              _cardSettingsState.makePrivateVisible();
+                                              await Future.delayed(const Duration(milliseconds: 1200));
+                                              isBiometricsRunning.value = false;
+                                            }
+                                          } catch (e) {
+                                            if (e is PlatformException && e.code == 'NotAvailable') {
+                                            } else if (e is PlatformException && e.code == 'NotEnrolled') {
+                                              log('Biometrics not enrolled' as num);
+                                            } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
+                                              log('Biometrics authentication failed or canceled' as num);
+                                            } else {}
+                                            return;
                                           }
                                         } else {
+                                          isBiometricsRunning.value = false;
                                           _cardSettingsState.makePrivateVisible();
                                         }
                                       } else {
-                                        _cardSettingsState.makePrivateVisible();
+                                        if (await _isPinSet) {
+                                          await router
+                                              .push(PinCodeForPrivateKey(bar: bar, isKeyVisible: _cardSettingsState));
+                                        } else {
+                                          _cardSettingsState.makePrivateVisible();
+                                        }
                                       }
                                     } else {
                                       _cardSettingsState.isPrivateKeyVisible = false;
@@ -255,7 +319,7 @@ class BarSettingsPage extends HookWidget {
                                     _cardSettingsState.isPrivateKeyVisible
                                         ? Clipboard.setData(
                                             ClipboardData(
-                                              text: snapshot.data.toString(),
+                                              text: privateKey.value.toString(),
                                             ),
                                           ).then(
                                             (_) {
@@ -318,7 +382,7 @@ class BarSettingsPage extends HookWidget {
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: Text(
-                                                snapshot.data.toString(),
+                                                privateKey.value.toString(),
                                                 style: const TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
@@ -362,57 +426,56 @@ class BarSettingsPage extends HookWidget {
                                     },
                                   ),
                                 ),
-                                ListTile(
-                                  title: ScaleTap(
-                                    enableFeedback: false,
-                                    onPressed: () async {
-                                      await FlutterWebBrowser.openWebPage(
-                                        url:
-                                            'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
-                                        customTabsOptions: const CustomTabsOptions(
-                                          shareState: CustomTabsShareState.on,
-                                          instantAppsEnabled: true,
-                                          showTitle: true,
-                                          urlBarHidingEnabled: true,
-                                        ),
-                                        safariVCOptions: const SafariViewControllerOptions(
-                                          barCollapsingEnabled: true,
-                                          modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                          modalPresentationCapturesStatusBarAppearance: true,
-                                        ),
-                                      );
-                                    },
-                                    child: StyledText(
-                                      text:
-                                          'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
-                                      tags: {
-                                        'p': StyledTextTag(
-                                          style: const TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            decoration: TextDecoration.underline,
-                                            fontSize: 14,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      },
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             );
                           },
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
+                        ),
+                        ListTile(
+                          title: ScaleTap(
+                            enableFeedback: false,
+                            onPressed: () async {
+                              await FlutterWebBrowser.openWebPage(
+                                url:
+                                    'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+                                customTabsOptions: const CustomTabsOptions(
+                                  shareState: CustomTabsShareState.on,
+                                  instantAppsEnabled: true,
+                                  showTitle: true,
+                                  urlBarHidingEnabled: true,
+                                ),
+                                safariVCOptions: const SafariViewControllerOptions(
+                                  barCollapsingEnabled: true,
+                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                                  modalPresentationCapturesStatusBarAppearance: true,
+                                ),
+                              );
+                            },
+                            child: StyledText(
+                              text:
+                                  'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
+                              tags: {
+                                'p': StyledTextTag(
+                                  style: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 14,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              },
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
                   const Gap(16),
                   ListTile(
                     title: Column(

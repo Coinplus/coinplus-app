@@ -187,7 +187,7 @@ abstract class _BalanceStore with Store {
     return null;
   }
 
-  void saveSelectedCard() {
+  void saveSelectedCard({required CardColor color}) {
     if (_selectedCard == null) {
       return;
     }
@@ -197,6 +197,30 @@ abstract class _BalanceStore with Store {
     if (isCardNotExist) {
       _selectedCard = _selectedCard!.copyWith(
         createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+      );
+      _cards.add(_selectedCard!);
+
+      StorageUtils.addCard(_selectedCard!);
+      recordAmplitudeEvent(CardAddedEvent(card: _selectedCard!));
+    } else {
+      throw Exception('Card is already added');
+    }
+  }
+
+  void saveSelectedCardAsTracker({required CardColor color, required WalletType label, required String name}) {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+
+    if (isCardNotExist) {
+      _selectedCard = _selectedCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+        label: label,
+        name: name,
       );
       _cards.add(_selectedCard!);
 
@@ -227,6 +251,36 @@ abstract class _BalanceStore with Store {
     } else {
       throw Exception('Bar is already added');
     }
+  }
+
+  void changeCardIndexAndSave({
+    required int oldIndex,
+    required String cardAddress,
+    required int newIndex,
+  }) {
+    final cardToMove = _cards.removeAt(oldIndex);
+
+    if (newIndex > oldIndex) {
+      _cards.insert(newIndex - 1, cardToMove);
+    } else {
+      _cards.insert(newIndex, cardToMove);
+    }
+    StorageUtils.saveUpdatedCards(_cards);
+  }
+
+  @action
+  void changeBarIndexAndSave({
+    required int oldIndex,
+    required String cardAddress,
+    required int newIndex,
+  }) {
+    final cardToMove = _bars.removeAt(oldIndex);
+    if (newIndex > oldIndex) {
+      _bars.insert(newIndex - 1, cardToMove);
+    } else {
+      _bars.insert(newIndex, cardToMove);
+    }
+    StorageUtils.saveUpdatedBars(_bars);
   }
 
   @action

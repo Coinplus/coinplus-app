@@ -30,6 +30,11 @@ Future<bool> getIsPinCodeSet() async {
   return value != null;
 }
 
+Future<bool> getIsPrivateKeySet(String key) async {
+  final value = await getPrivateKeyFromStorage(key: key);
+  return value != null;
+}
+
 Future<bool> getBiometricStatus() async {
   final value = await secureStorage.read(key: 'biometricAuth');
   return value != null;

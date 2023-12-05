@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
+import '../../constants/card_color.dart';
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -52,6 +54,9 @@ class CardFillPage extends StatefulWidget {
 }
 
 class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMixin {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late int cardCarouselIndex = _balanceStore.cards.length - 1;
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
@@ -61,7 +66,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   final _checkboxState = CheckboxState();
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -71,6 +76,8 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     _nfcStop();
     _toggleCard();
     _flipCardController.toggleCard();
@@ -95,18 +102,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     }
   }
 
-  Future<void> onInitWithAddress() async {
-    _lottieController.reset();
-    await _validateBTCAddress();
-  }
-
-  Future<void> _nfcStop() async {
-    await Future.delayed(const Duration(milliseconds: 10000));
-    await NfcManager.instance.stopSession();
-  }
-
   @override
   void dispose() {
+    _connectivitySubscription.cancel();
     _focusNode.dispose();
     _lottieController.dispose();
     _textFieldAnimationController.dispose();
@@ -117,6 +115,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -133,10 +132,15 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                 highlightColor: Colors.transparent,
               ),
               child: IconButton(
-                onPressed: () {
-                  _flipCardController.controller!.value == 1 && _lineStore.isLineVisible
-                      ? makeLineInvisible()
-                      : router.pop();
+                onPressed: () async {
+                  unawaited(
+                    _flipCardController.controller!.value == 1 && _lineStore.isLineVisible
+                        ? makeLineInvisible()
+                        : router.pop(),
+                  );
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  _checkboxState.isActive = false;
+                  _acceptState.isAccepted = true;
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -147,6 +151,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
               style: TextStyle(
                 fontSize: 32,
                 fontFamily: FontFamily.redHatBold,
+                color: Colors.black,
               ),
             ),
           ],
@@ -156,32 +161,31 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Gap(3),
-          Expanded(
-            child: FlipCard(
-              flipOnTouch: false,
-              controller: _flipCardController,
-              front: Stack(
-                children: [
-                  Center(
-                    child: Container(
-                      height: context.height > 667 ? 455 : 400,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 15,
+          Observer(
+            builder: (context) {
+              return Expanded(
+                child: FlipCard(
+                  flipOnTouch: false,
+                  controller: _flipCardController,
+                  front: Stack(
+                    children: [
+                      Center(
+                        child: Container(
+                          height: context.height > 667 ? 455 : 400,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 1,
+                                blurRadius: 15,
+                              ),
+                            ],
+                            image: DecorationImage(
+                              image: Assets.images.card.front.image().image,
+                            ),
                           ),
-                        ],
-                        image: DecorationImage(
-                          image: Assets.images.card.front.image().image,
-                        ),
-                      ),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Center(
+                          child: Center(
                             child: Observer(
                               builder: (context) {
                                 return Visibility(
@@ -194,7 +198,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                       ),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                          horizontal: context.height > 667 ? 65 : 75,
+                                          horizontal: context.height > 667 ? 65 : 85,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -319,7 +323,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                       const Gap(4),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                          horizontal: context.height > 667 ? 65 : 75,
+                                          horizontal: context.height > 667 ? 65 : 85,
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
@@ -364,39 +368,60 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         );
                                                         final data = _balanceStore.coins;
 
-                                                        if ((_balanceStore
-                                                                    .loadings[_balanceStore.selectedCard?.address] ??
-                                                                false) &&
-                                                            data == null) {
+                                                        if (_balanceStore.selectedCard != null &&
+                                                            _balanceStore.selectedCard!.data != null &&
+                                                            data != null) {
+                                                          final cardBalance = _balanceStore.selectedCard!.data!.balance;
+                                                          final cardTxoSum =
+                                                              _balanceStore.selectedCard!.data!.spentTxoSum;
+                                                          final currentBalance = cardBalance - cardTxoSum;
+
+                                                          if (currentBalance.isNaN) {
+                                                            return const Padding(
+                                                              padding: EdgeInsets.all(4),
+                                                              child: Row(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: 10,
+                                                                    width: 10,
+                                                                    child: CircularProgressIndicator(
+                                                                      color: Colors.white,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            );
+                                                          }
+
+                                                          return Row(
+                                                            children: [
+                                                              Text(
+                                                                '\$${myFormat.format(currentBalance / 100000000 * data.price)}',
+                                                                style: const TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  fontWeight: FontWeight.w700,
+                                                                  color: Colors.white,
+                                                                  fontSize: 20,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        } else {
                                                           return const Padding(
-                                                            padding: EdgeInsets.all(
-                                                              4,
-                                                            ),
+                                                            padding: EdgeInsets.all(4),
                                                             child: Row(
                                                               children: [
                                                                 SizedBox(
                                                                   height: 10,
                                                                   width: 10,
                                                                   child: CircularProgressIndicator(
-                                                                    color: Colors.grey,
+                                                                    color: Colors.white,
                                                                   ),
                                                                 ),
                                                               ],
                                                             ),
                                                           );
                                                         }
-                                                        return Text(
-                                                          (_balanceStore.selectedCard != null
-                                                                  ? '\$${myFormat.format((_balanceStore.selectedCard!.data!.balance - _balanceStore.selectedCard!.data!.spentTxoSum) / 100000000 * data!.price)}'
-                                                                  : '')
-                                                              .toString(),
-                                                          style: const TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            fontWeight: FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ).expandedHorizontally();
                                                       },
                                                     ),
                                                   ],
@@ -413,19 +438,15 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 );
                               },
                             ),
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              back: ClipRRect(
-                clipBehavior: Clip.hardEdge,
-                child: Center(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return AnimatedContainer(
+                  back: ClipRRect(
+                    clipBehavior: Clip.hardEdge,
+                    child: Center(
+                      child: AnimatedContainer(
                         curve: Curves.decelerate,
                         duration: const Duration(milliseconds: 300),
                         height: context.height > 667 ? 455 : 400,
@@ -445,47 +466,38 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 : Assets.images.card.filledBack.image().image,
                           ),
                         ),
-                        child: Observer(
-                          builder: (context) {
-                            return Row(
-                              children: [
-                                AnimatedContainer(
+                        child: Row(
+                          children: [
+                            Observer(
+                              builder: (context) {
+                                return AnimatedContainer(
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.ease,
                                   child: !_addressState.isAddressVisible
                                       ? Row(
                                           children: [
-                                            if (context.height > 667)
-                                              if (context.height > 844)
-                                                SizedBox(
-                                                  width: constraints.maxWidth * 0.11,
-                                                ) // iPhone 12/13/14/15 Pro Screen Size
+                                            if (context.height < 932)
+                                              if (context.height < 867.4)
+                                                if (context.height > 844)
+                                                  Gap(context.width * 0.115)
+                                                else if (context.height > 667)
+                                                  Gap(context.width * 0.075)
+                                                else
+                                                  Gap(context.width * 0.125) //iPhone 13 Pro
                                               else
-                                                SizedBox(
-                                                  width: constraints.maxWidth * 0.075,
-                                                ) // iPhone 12/13/14/15 Pro Max Screen Size
+                                                Gap(context.width * 0.1) //Samsung large display
                                             else
-                                              Gap(
-                                                context.width * 0.135,
-                                              ), // iPhone 7/8/SE Screen Size
+                                              Gap(context.width * 0.115), //iPhone 13 Pro Max
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 Assets.images.card.secret1.image(
-                                                  height: context.height > 667
-                                                      ? constraints.maxHeight < 551
-                                                          ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
-                                                          : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
-                                                      : 180, // iPhone 7/8/SE Screen Size
+                                                  height: context.height > 667 ? 180 : 150,
                                                 ),
-                                                const Gap(70),
+                                                if (context.height > 667) const Gap(70) else const Gap(50),
                                                 Assets.images.card.secret2.image(
-                                                  height: context.height > 667
-                                                      ? constraints.maxHeight < 551
-                                                          ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
-                                                          : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
-                                                      : 180, // iPhone 7/8/SE Screen Size
+                                                  height: context.height > 667 ? 180 : 150,
                                                 ),
                                               ],
                                             ),
@@ -504,11 +516,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                     opacity: _lineStore.isLineVisible ? 1 : 0,
                                                     child: CustomPaint(
                                                       size: Size(
-                                                        context.height > 667
-                                                            ? constraints.maxHeight < 551
-                                                                ? 28 // iPhone 11/12/13/14/15 Pro Screen Size
-                                                                : 40 // iPhone 11/12/13/14/15 Pro Max Screen Size
-                                                            : 43, // iPhone 7/8/SE Screen Size
+                                                        context.height > 844
+                                                            ? 42
+                                                            : context.height > 667
+                                                                ? 28
+                                                                : 38,
                                                         255,
                                                       ),
                                                       painter: LineCustomPaint(),
@@ -531,14 +543,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         ),
                                                       ),
                                                       child: Assets.images.card.secret1.image(
-                                                        height: context.height > 667
-                                                            ? constraints.maxHeight < 551
-                                                                ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
-                                                                : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
-                                                            : 180, // iPhone 7/8/SE Screen Size
+                                                        height: context.height > 667 ? 180 : 150,
                                                       ),
                                                     ),
-                                                    const Gap(70),
+                                                    if (context.height > 667) const Gap(70) else const Gap(50),
                                                     Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(15),
@@ -548,11 +556,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         ),
                                                       ),
                                                       child: Assets.images.card.secret2.image(
-                                                        height: context.height > 667
-                                                            ? constraints.maxHeight < 551
-                                                                ? 180 // iPhone 11/12/13/14/15 Pro Screen Size
-                                                                : 180 // iPhone 11/12/13/14/15 Pro Max Screen Size
-                                                            : 180, // iPhone 7/8/SE Screen Size
+                                                        height: context.height > 667 ? 180 : 150,
                                                       ),
                                                     ),
                                                   ],
@@ -561,236 +565,249 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                             ],
                                           ),
                                         ),
-                                ),
-                                if (context.height > 667)
-                                  if (constraints.maxHeight < 551)
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.117,
-                                    ) // iPhone 11/12/13/14/15 Pro Screen Size
-                                  else
-                                    SizedBox(
-                                      width: constraints.maxWidth * 0.109,
-                                    ) // iPhone 11/12/13/14/15 Pro Max Screen Size
+                                );
+                              },
+                            ),
+                            if (context.height < 932)
+                              if (context.height < 867.4)
+                                if (context.height > 844)
+                                  Gap(context.width * 0.105)
+                                else if (context.height > 667)
+                                  Gap(context.width * 0.1175)
                                 else
-                                  SizedBox(width: constraints.maxWidth * 0.08), // iPhone 7/8/SE Screen Size
-                                Opacity(
-                                  opacity: _lineStore.isLineVisible ? 0 : 1,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  Gap(context.width * 0.065)
+                              else
+                                Gap(context.height * 0.051)
+                            else
+                              Gap(context.height * 0.049),
+                            Opacity(
+                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if (context.height < 932)
+                                    if (context.height < 867.4)
+                                      if (context.height > 844)
+                                        Gap(context.height * 0.04)
+                                      else if (context.height > 667)
+                                        Gap(context.height * 0.04)
+                                      else
+                                        Gap(context.height * 0.03)
+                                    else
+                                      Gap(context.height * 0.035)
+                                  else
+                                    Gap(context.height * 0.035),
+                                  Row(
                                     children: [
-                                      if (context.height > 667) const Gap(34) else const Gap(22),
-                                      Row(
-                                        children: [
-                                          const Gap(15),
-                                          Assets.icons.coinplusLogo.image(height: 32),
-                                        ],
-                                      ),
-                                      const Gap(22),
-                                      ScaleTransition(
-                                        scale: _textFieldAnimationController,
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: context.height > 667
-                                                  ? constraints.maxHeight < 551
-                                                      ? context.height * 0.265 // iPhone 11/12/13/14/15 Pro Screen Size
-
-                                                      : context.height *
-                                                          0.241 // iPhone 11/12/13/14/15 Pro Max Screen Size
-
-                                                  : context.height * 0.265, // iPhone 7/8/SE Screen Size
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
-                                                  width: _focusNode.hasFocus ? 1 : 3,
-                                                ),
-                                                borderRadius: BorderRadius.circular(27),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  SizedBox(
-                                                    width: context.height > 667
-                                                        ? constraints.maxHeight < 551
-                                                            ? context.height *
-                                                                0.114 // iPhone 11/12/13/14/15 Pro Screen Size
-
-                                                            : context.height *
-                                                                0.105 // iPhone 11/12/13/14/15 Pro Max Screen Size
-
-                                                        : context.height * 0.265, // iPhone 7/8/SE Screen Size
-                                                    height: context.height * 0.14,
-                                                    child: Observer(
-                                                      builder: (context) {
-                                                        return TextField(
-                                                          readOnly: !_validationStore.isValid && true,
-                                                          textAlignVertical: TextAlignVertical.top,
-                                                          autocorrect: false,
-                                                          keyboardType: TextInputType.text,
-                                                          textAlign: TextAlign.center,
-                                                          onChanged: (value) {
-                                                            if (value.length > 25) {
-                                                              _validateBTCAddress();
-                                                            }
-                                                          },
-                                                          controller: _btcAddressController,
-                                                          maxLines: 15,
-                                                          focusNode: _focusNode,
-                                                          cursorColor: AppColors.primary,
-                                                          cursorWidth: 1,
-                                                          style: const TextStyle(
-                                                            fontSize: 12,
-                                                            color: AppColors.primaryTextColor,
-                                                            fontFamily: FontFamily.redHatLight,
-                                                          ),
-                                                          onTapOutside: (_) {
-                                                            WidgetsBinding.instance.focusManager.primaryFocus
-                                                                ?.unfocus();
-                                                          },
-                                                          decoration: InputDecoration(
-                                                            hintText: 'Write here your card address',
-                                                            fillColor: Colors.white,
-                                                            hintMaxLines: 10,
-                                                            hintStyle: TextStyle(
-                                                              fontFamily: FontFamily.redHatLight,
-                                                              fontSize: 13,
-                                                              color: AppColors.primaryTextColor.withOpacity(
-                                                                0.4,
-                                                              ),
-                                                            ),
-                                                            contentPadding: const EdgeInsets.symmetric(
-                                                              horizontal: 10,
-                                                              vertical: 16,
-                                                            ),
-                                                            prefixIconConstraints: const BoxConstraints(
-                                                              minWidth: 25,
-                                                              minHeight: 25,
-                                                            ),
-                                                            focusedBorder: OutlineInputBorder(
-                                                              borderSide: const BorderSide(
-                                                                color: Colors.transparent,
-                                                              ),
-                                                              borderRadius: BorderRadius.circular(
-                                                                24,
-                                                              ),
-                                                            ),
-                                                            enabledBorder: OutlineInputBorder(
-                                                              borderSide: const BorderSide(
-                                                                color: Colors.transparent,
-                                                              ),
-                                                              borderRadius: BorderRadius.circular(
-                                                                24,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Observer(
-                                              builder: (context) {
-                                                return Positioned(
-                                                  top: 25,
-                                                  left: 0,
-                                                  right: 0,
-                                                  child: _validationStore.isValid
-                                                      ? ScaleTap(
-                                                          onPressed: () async {
-                                                            _focusNode.unfocus();
-                                                            await Future.delayed(
-                                                              const Duration(
-                                                                milliseconds: 300,
-                                                              ),
-                                                            );
-                                                            final res = await context.pushRoute<String?>(
-                                                              const QrScannerRoute(),
-                                                            );
-                                                            if (res == null) {
-                                                              return;
-                                                            }
-
-                                                            _btcAddressController.text = res;
-                                                            await _validateBTCAddress();
-                                                          },
-                                                          child: SizedBox(
-                                                            height: 50,
-                                                            child: Image.asset(
-                                                              'assets/icons/qr_code.png',
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : Lottie.asset(
-                                                          'assets/animated_logo/address_validation_success.json',
-                                                          height: 40,
-                                                          controller: _lottieController,
-                                                          onLoaded: (composition) {
-                                                            Future.delayed(
-                                                              const Duration(
-                                                                milliseconds: 1000,
-                                                              ),
-                                                            );
-                                                            _lottieController.duration = composition.duration;
-                                                          },
-                                                        ),
-                                                );
-                                              },
-                                            ),
-                                            Observer(
-                                              builder: (context) {
-                                                return Visibility(
-                                                  visible: !_validationStore.isValid,
-                                                  child: Positioned(
-                                                    left: 6,
-                                                    right: 6,
-                                                    top: 6,
-                                                    child: Assets.icons.validationIndicatorGreenTop.image(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            Observer(
-                                              builder: (context) {
-                                                return Visibility(
-                                                  visible: !_validationStore.isValid,
-                                                  child: Positioned(
-                                                    left: 6,
-                                                    right: 6,
-                                                    bottom: 6,
-                                                    child: Assets.icons.validationIndicatorGreenBottom.image(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      if (context.height > 667) const Gap(29) else const Gap(10),
-                                      Assets.icons.cardBackText.image(height: 55),
-                                      const Gap(18),
-                                      SizedBox(
-                                        width: 115,
-                                        child: Assets.icons.cardBackLink.image(),
-                                      ),
-                                      const Gap(20),
+                                      const Gap(15),
+                                      Assets.icons.coinplusLogo.image(height: 32),
                                     ],
                                   ),
-                                ),
-                              ],
-                            );
-                          },
+                                  if (context.height > 844) const Gap(24) else const Gap(21.5),
+                                  ScaleTransition(
+                                    scale: _textFieldAnimationController,
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          height: context.height < 932
+                                              ? context.height < 867.4
+                                                  ? context.height > 844
+                                                      ? context.height * 0.24
+                                                      : context.height * 0.265
+                                                  : context.height * 0.255
+                                              : context.height * 0.24,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
+                                              width: _focusNode.hasFocus ? 1 : 3,
+                                            ),
+                                            borderRadius: BorderRadius.circular(context.height > 667 ? 28 : 25),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              SizedBox(
+                                                width: context.height < 932
+                                                    ? context.height < 867.4
+                                                        ? context.height > 844
+                                                            ? context.width * 0.225
+                                                            : context.height > 667
+                                                                ? context.width * 0.25
+                                                                : context.width * 0.21
+                                                        : context.width * 0.24
+                                                    : context.width * 0.225,
+                                                height: context.height * 0.14,
+                                                child: Observer(
+                                                  builder: (context) {
+                                                    return TextField(
+                                                      readOnly: !_validationStore.isValid && true,
+                                                      textAlignVertical: TextAlignVertical.top,
+                                                      autocorrect: false,
+                                                      keyboardType: TextInputType.text,
+                                                      textAlign: TextAlign.center,
+                                                      onChanged: (value) {
+                                                        if (value.length > 25) {
+                                                          _validateBTCAddress();
+                                                        }
+                                                      },
+                                                      controller: _btcAddressController,
+                                                      maxLines: 15,
+                                                      focusNode: _focusNode,
+                                                      cursorColor: AppColors.primary,
+                                                      cursorWidth: 1,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        color: AppColors.primaryTextColor,
+                                                        fontFamily: FontFamily.redHatLight,
+                                                      ),
+                                                      onTapOutside: (_) {
+                                                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                      },
+                                                      decoration: InputDecoration(
+                                                        hintText: 'Write here your card address',
+                                                        fillColor: Colors.white,
+                                                        hintMaxLines: 10,
+                                                        hintStyle: TextStyle(
+                                                          fontFamily: FontFamily.redHatLight,
+                                                          fontSize: 13,
+                                                          color: AppColors.primaryTextColor.withOpacity(
+                                                            0.4,
+                                                          ),
+                                                        ),
+                                                        contentPadding: const EdgeInsets.symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 16,
+                                                        ),
+                                                        prefixIconConstraints: const BoxConstraints(
+                                                          minWidth: 25,
+                                                          minHeight: 25,
+                                                        ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderSide: const BorderSide(
+                                                            color: Colors.transparent,
+                                                          ),
+                                                          borderRadius: BorderRadius.circular(
+                                                            24,
+                                                          ),
+                                                        ),
+                                                        enabledBorder: OutlineInputBorder(
+                                                          borderSide: const BorderSide(
+                                                            color: Colors.transparent,
+                                                          ),
+                                                          borderRadius: BorderRadius.circular(
+                                                            24,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Positioned(
+                                              top: 25,
+                                              left: 0,
+                                              right: 0,
+                                              child: _validationStore.isValid
+                                                  ? ScaleTap(
+                                                      onPressed: () async {
+                                                        _focusNode.unfocus();
+                                                        await Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 300,
+                                                          ),
+                                                        );
+                                                        final res = await context.pushRoute<String?>(
+                                                          const QrScannerRoute(),
+                                                        );
+                                                        if (res == null) {
+                                                          return;
+                                                        }
+
+                                                        _btcAddressController.text = res;
+                                                        await _validateBTCAddress();
+                                                      },
+                                                      child: SizedBox(
+                                                        height: 50,
+                                                        child: Image.asset(
+                                                          'assets/icons/qr_code.png',
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Lottie.asset(
+                                                      'assets/animated_logo/address_validation_success.json',
+                                                      height: 40,
+                                                      controller: _lottieController,
+                                                      onLoaded: (composition) {
+                                                        Future.delayed(
+                                                          const Duration(
+                                                            milliseconds: 1000,
+                                                          ),
+                                                        );
+                                                        _lottieController.duration = composition.duration;
+                                                      },
+                                                    ),
+                                            );
+                                          },
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Visibility(
+                                              visible: !_validationStore.isValid,
+                                              child: Positioned(
+                                                left: 6,
+                                                right: 6,
+                                                top: 6,
+                                                child: Assets.icons.validationIndicatorGreenTop.image(),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Observer(
+                                          builder: (context) {
+                                            return Visibility(
+                                              visible: !_validationStore.isValid,
+                                              child: Positioned(
+                                                left: 6,
+                                                right: 6,
+                                                bottom: 6,
+                                                child: Assets.icons.validationIndicatorGreenBottom.image(),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (context.height > 844)
+                                    Gap(context.height * 0.03)
+                                  else
+                                    context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
+                                  Assets.icons.cardBackText.image(height: 55),
+                                  Gap(context.height * 0.02),
+                                  SizedBox(
+                                    width: 115,
+                                    child: Assets.icons.cardBackLink.image(),
+                                  ),
+                                  Gap(context.height * 0.025),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
-          if (context.height > 667) const Gap(10) else const SizedBox(),
+          if (context.height > 844) Gap(context.height * 0.001) else Gap(context.height * 0.02),
           Observer(
             builder: (context) {
               return ShakeAnimationWidget(
@@ -962,21 +979,14 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
               );
             },
           ),
-          if (context.height > 844)
-            SizedBox(
-              height: context.width * 0.15,
-            )
-          else
-            SizedBox(
-              height: context.width * 0.06,
-            ),
+          if (context.height > 844) Gap(context.height * 0.04) else Gap(context.height * 0.03),
           Observer(
             builder: (_) {
               return _lineStore.isLineVisible
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          _balanceStore.saveSelectedCard();
+                          _balanceStore.saveSelectedCard(color: CardColor.ORANGE);
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
                               router.pop();
@@ -1007,19 +1017,21 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                       ),
                     ).paddingHorizontal(49)
                   : LoadingButton(
-                      onPressed: _addressState.isAddressVisible
-                          ? () async {
-                              final cardIndex = _balanceStore.cards.indexWhere(
-                                (element) => element.address == _balanceStore.selectedCard?.address,
-                              );
-                              if (cardIndex != -1) {
-                                await alreadySavedCard(context);
-                              } else {
-                                await _toggleCard();
-                                _lineStore.makeVisible();
-                              }
-                            }
-                          : null,
+                      onPressed: _connectionStatus == ConnectivityResult.none
+                          ? null
+                          : _addressState.isAddressVisible
+                              ? () async {
+                                  final cardIndex = _balanceStore.cards.indexWhere(
+                                    (element) => element.address == _balanceStore.selectedCard?.address,
+                                  );
+                                  if (cardIndex != -1) {
+                                    await alreadySavedCard(context);
+                                  } else {
+                                    await _toggleCard();
+                                    _lineStore.makeVisible();
+                                  }
+                                }
+                              : null,
                       child: const Text(
                         'Save to wallet',
                         style: TextStyle(
@@ -1030,7 +1042,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                     ).paddingHorizontal(49);
             },
           ),
-          if (context.height > 667) const Gap(50) else const Gap(12),
+          if (context.height > 844) Gap(context.height * 0.1) else Gap(context.height * 0.05),
         ],
       ),
     );
@@ -1057,6 +1069,35 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
       );
       await _lottieController.forward(from: 0);
     } else {}
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException {
+      return;
+    }
+    if (!mounted) {
+      return Future.value();
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+  Future<void> onInitWithAddress() async {
+    _lottieController.reset();
+    await _validateBTCAddress();
+  }
+
+  Future<void> _nfcStop() async {
+    await Future.delayed(const Duration(milliseconds: 10000));
+    await NfcManager.instance.stopSession();
   }
 
   Future<void> _toggleCard() async {
