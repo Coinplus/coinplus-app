@@ -182,64 +182,62 @@ class SettingsPage extends HookWidget {
                                     ),
                                   ),
                                 ),
-
                                 FutureBuilder(
                                   future: _auth.isDeviceSupported(),
                                   builder: (context, snapshot) {
-                                    if(snapshot.data == true) {
+                                    if (snapshot.data == true) {
                                       return Column(
-                                      children: [
-                                        Divider(
-                                          indent: 0,
-                                          endIndent: 0,
-                                          thickness: 1,
-                                          color: Colors.grey.withOpacity(0.1),
-                                        ),
-                                        InkWell(
-                                          onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
-                                          splashFactory: InkSparkle.splashFactory,
-                                          highlightColor: Colors.transparent,
-                                          child: ListTile(
-                                            splashColor: Colors.transparent,
-                                            minLeadingWidth: 10,
-                                            trailing: Observer(
-                                              builder: (_) {
-                                                return CupertinoSwitch(
-                                                  value: _walletProtectState.isBiometricsEnabled,
-                                                  onChanged: onToggleFaceId,
-                                                );
-                                              },
-                                            ),
-                                            leading: Platform.isAndroid
-                                                ? Assets.icons.faceIdSettings.image(
-                                              height: 22,
-                                            )
-                                                : _walletProtectState.availableBiometric == BiometricType.face
-                                                ? Assets.icons.iphoneTouchId.image(
-                                              height: 22,
-                                            )
-                                                : Assets.icons.faceIdSettings.image(
-                                              height: 22,
-                                            ),
-                                            title: Text(
-                                              Platform.isAndroid ? 'Biometrics' : 'Face ID',
-                                              style: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontSize: 15,
-                                                color: AppColors.primaryTextColor,
-                                                fontWeight: FontWeight.w500,
+                                        children: [
+                                          Divider(
+                                            indent: 0,
+                                            endIndent: 0,
+                                            thickness: 1,
+                                            color: Colors.grey.withOpacity(0.1),
+                                          ),
+                                          InkWell(
+                                            onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
+                                            splashFactory: InkSparkle.splashFactory,
+                                            highlightColor: Colors.transparent,
+                                            child: ListTile(
+                                              splashColor: Colors.transparent,
+                                              minLeadingWidth: 10,
+                                              trailing: Observer(
+                                                builder: (_) {
+                                                  return CupertinoSwitch(
+                                                    value: _walletProtectState.isBiometricsEnabled,
+                                                    onChanged: onToggleFaceId,
+                                                  );
+                                                },
+                                              ),
+                                              leading: Platform.isAndroid
+                                                  ? Assets.icons.faceIdSettings.image(
+                                                      height: 22,
+                                                    )
+                                                  : _walletProtectState.availableBiometric == BiometricType.face
+                                                      ? Assets.icons.iphoneTouchId.image(
+                                                          height: 22,
+                                                        )
+                                                      : Assets.icons.faceIdSettings.image(
+                                                          height: 22,
+                                                        ),
+                                              title: Text(
+                                                Platform.isAndroid ? 'Biometrics' : 'Face ID',
+                                                style: const TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 15,
+                                                  color: AppColors.primaryTextColor,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    );
+                                        ],
+                                      );
                                     } else {
                                       return const SizedBox();
                                     }
                                   },
                                 ),
-
                               ],
                             );
                           },
@@ -567,7 +565,7 @@ class SettingsPage extends HookWidget {
                         ),
                         InkWell(
                           onTap: () async {
-                           await router.push(const AboutAppRoute());
+                            await router.push(const AboutAppRoute());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

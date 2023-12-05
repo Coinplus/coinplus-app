@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/amplitude_event/amplitude_event.dart';
 import 'amplitude_service.dart';
 
-Future<void> signInAnonymously() async {
+Future<void> signInAnonymously({String? address}) async {
   final auth = FirebaseAuth.instance;
   await auth.signInAnonymously();
   unawaited(recordAmplitudeEvent(const LoginEvent()));
@@ -16,7 +16,7 @@ Future<void> signInAnonymously() async {
     dynamic token;
     try {
       final result = await FirebaseFunctions.instance.httpsCallable('getCustomToken').call({
-        'uid': '14DeGgtQ5BFAzXjvb2UpGrdqygAysLyE5x',
+        'uid': '$address',
         // "additionalClaims": {"premiumAccount": true}
       });
       token = result.data as String;

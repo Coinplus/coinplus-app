@@ -135,9 +135,7 @@ class CardSettingsPage extends HookWidget {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       width: 2,
-                      color: _cardSettingsState.selectedCardColor == colors[index]
-                          ? Colors.blue
-                          : Colors.transparent,
+                      color: _cardSettingsState.selectedCardColor == colors[index] ? Colors.blue : Colors.transparent,
                     ),
                   ),
                   child: getColorImage(colors[index]),
@@ -564,52 +562,54 @@ class CardSettingsPage extends HookWidget {
                     endIndent: 5,
                     color: Colors.grey.withOpacity(0.2),
                   ),
-                  if(card.label != WalletType.TRACKER)
-                  Column(children: [
-                    const Gap(16),
-                    ListTile(
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Appearance',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.primaryTextColor,
-                            ),
+                  if (card.label != WalletType.TRACKER)
+                    Column(
+                      children: [
+                        const Gap(16),
+                        ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Appearance',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryTextColor,
+                                ),
+                              ),
+                              const Gap(6),
+                              const Text(
+                                'Choose a color theme for your card',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 14,
+                                  color: AppColors.primaryTextColor,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                              const Gap(25),
+                              Observer(
+                                builder: (_) {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: getColorWidgets(),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                          const Gap(6),
-                          const Text(
-                            'Choose a color theme for your card',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 14,
-                              color: AppColors.primaryTextColor,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          const Gap(25),
-                          Observer(
-                            builder: (_) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: getColorWidgets(),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        const Gap(10),
+                        Divider(
+                          indent: 5,
+                          endIndent: 5,
+                          color: Colors.grey.withOpacity(0.2),
+                        ),
+                        const Gap(10),
+                      ],
                     ),
-                    const Gap(10),
-                    Divider(
-                      indent: 5,
-                      endIndent: 5,
-                      color: Colors.grey.withOpacity(0.2),
-                    ),
-                    const Gap(10),
-                  ],),
                   ListTile(
                     onTap: () {
                       showModalBottomSheet(
@@ -642,84 +642,84 @@ class CardSettingsPage extends HookWidget {
                     ),
                   ),
                   const Gap(10),
-                  if(card.label != WalletType.TRACKER)
-                  Observer(
-                    builder: (context) {
-                      return LoadingButton(
-                        onPressed: _cardSettingsState.isColorChanged
-                            ? () async {
-                                if (_cardSettingsState.selectedCardColor == CardColor.ORANGE) {
-                                  _balanceStore.changeCardColorAndSave(
-                                    cardAddress: card.address,
-                                    color: CardColor.ORANGE,
-                                  );
-                                  showTopSnackBar(
-                                    displayDuration: const Duration(
-                                      milliseconds: 600,
-                                    ),
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                      message: 'Your card color was changed',
-                                      textStyle: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                  if (card.label != WalletType.TRACKER)
+                    Observer(
+                      builder: (context) {
+                        return LoadingButton(
+                          onPressed: _cardSettingsState.isColorChanged
+                              ? () async {
+                                  if (_cardSettingsState.selectedCardColor == CardColor.ORANGE) {
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.ORANGE,
+                                    );
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
                                       ),
-                                    ),
-                                  );
-                                } else if (_cardSettingsState.selectedCardColor == CardColor.WHITE) {
-                                  _balanceStore.changeCardColorAndSave(
-                                    cardAddress: card.address,
-                                    color: CardColor.WHITE,
-                                  );
-                                  showTopSnackBar(
-                                    displayDuration: const Duration(
-                                      milliseconds: 600,
-                                    ),
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                      message: 'Your card color was changed',
-                                      textStyle: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
-                                  _balanceStore.changeCardColorAndSave(
-                                    cardAddress: card.address,
-                                    color: CardColor.BLACK,
-                                  );
-                                  showTopSnackBar(
-                                    displayDuration: const Duration(
-                                      milliseconds: 600,
-                                    ),
-                                    Overlay.of(context),
-                                    CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                      message: 'Your card color was changed',
-                                      textStyle: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                                    );
+                                  } else if (_cardSettingsState.selectedCardColor == CardColor.WHITE) {
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.WHITE,
+                                    );
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
                                       ),
-                                    ),
-                                  );
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.BLACK,
+                                    );
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
+                                      ),
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  await router.pop();
+                                  await _balanceStore.getCardsInfo();
                                 }
-                                await router.pop();
-                                await _balanceStore.getCardsInfo();
-                              }
-                            : null,
-                        child: const Text(
-                          'Save',
-                          style: TextStyle(fontFamily: FontFamily.redHatMedium),
-                        ),
-                      ).paddingHorizontal(64);
-                    },
-                  ),
+                              : null,
+                          child: const Text(
+                            'Save',
+                            style: TextStyle(fontFamily: FontFamily.redHatMedium),
+                          ),
+                        ).paddingHorizontal(64);
+                      },
+                    ),
                   Gap(max(context.bottomPadding, 50)),
                 ],
               ),
