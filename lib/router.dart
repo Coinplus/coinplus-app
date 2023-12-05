@@ -63,7 +63,6 @@ class Router extends $Router {
     ),
     AdaptiveRoute(
       page: PinRemove.page,
-      fullscreenDialog: true,
     ),
     AdaptiveRoute(
       page: PinAfterSplash.page,
@@ -71,6 +70,10 @@ class Router extends $Router {
     ),
     AdaptiveRoute(
       page: PinCodeForPrivateKey.page,
+      fullscreenDialog: true,
+    ),
+    AdaptiveRoute(
+      page: PinCodeForAllRoutes.page,
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
@@ -82,6 +85,9 @@ class Router extends $Router {
     ),
     AdaptiveRoute(
       page: BarSecretFillRoute.page,
+    ),
+    AdaptiveRoute(
+      page: AboutAppRoute.page,
     ),
   ];
 }

@@ -115,6 +115,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                 },
                 cursorColor: AppColors.secondaryButtons,
                 decoration: InputDecoration(
+                  filled: true,
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(
                       color: Colors.blue,
@@ -135,7 +136,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                   hintText: widget.card.name,
                   hintStyle: TextStyle(
                     fontFamily: FontFamily.redHatLight,
-                    color: AppColors.primaryTextColor.withOpacity(0.5),
+                    color: AppColors.primaryTextColor.withOpacity(0.8),
                     fontSize: 14,
                   ),
                   fillColor: Colors.grey.withOpacity(0.1),

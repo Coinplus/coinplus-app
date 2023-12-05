@@ -58,7 +58,7 @@ class AndroidCardNfcModal extends StatelessWidget {
             ),
             const Gap(25),
             const Text(
-              'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
+              "Please tap your card on the phone to verify it's legitimacy",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -70,8 +70,9 @@ class AndroidCardNfcModal extends StatelessWidget {
               onPressed: () async {
                 await router.pop();
                 await NfcManager.instance.stopSession();
+                await Future.delayed(const Duration(milliseconds: 1000));
                 await showModalBottomSheet(
-                  context: context,
+                  context: router.navigatorKey.currentContext!,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(

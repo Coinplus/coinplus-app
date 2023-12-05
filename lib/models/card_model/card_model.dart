@@ -18,6 +18,7 @@ class CardModel with _$CardModel {
     required String address,
     @Default(CardColor.ORANGE) CardColor color,
     @Default(CardType.CARD) CardType type,
+    @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Card') String name,
     int? totalReceived,
     int? totalSent,

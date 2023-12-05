@@ -9,12 +9,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:styled_text/styled_text.dart';
 
 import '../../constants/card_color.dart';
+import '../../constants/card_type.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
@@ -53,18 +55,116 @@ class CardSettingsPage extends HookWidget {
 
     final isInactive = useState(false);
     final appLocked = useState(false);
+    final isPaused = useState(false);
+    final deepLinkRes = useRef<String?>(null);
+    final isPrivateKeySet = useState(false);
     final isBiometricsRunning = useState(false);
+    final privateKey = useState('');
+
+    Future<void> fetchPrivateKey() async {
+      final fetchedKey = await secureStorage.read(key: card.address);
+      if (fetchedKey != null) {
+        privateKey.value = fetchedKey;
+      }
+    }
+
+    Future<void> isPrivateSet() async {
+      isPrivateKeySet.value = await getIsPrivateKeySet(card.address);
+    }
 
     useOnAppLifecycleStateChange((previous, current) async {
       appLocked.value = await getIsPinCodeSet();
       isInactive.value = [AppLifecycleState.inactive].contains(current);
+      if (isInactive.value) {
+        _cardSettingsState.isPrivateKeyVisible = false;
+      }
+      isPaused.value = [AppLifecycleState.paused].contains(current);
+      if (isPaused.value &&
+          router.current.name == CardSettingsRoute.name &&
+          !_walletProtectState.isBiometricsRunning &&
+          !_walletProtectState.isLinkOpened) {
+        if (appLocked.value) {
+          if (router.stackData
+              .indexWhere(
+                (element) => element.name == PinCodeForAllRoutes.name,
+              )
+              .isNegative) {
+            await router.push(const PinCodeForAllRoutes());
+            isPaused.value = false;
+            isInactive.value = false;
+            if (deepLinkRes.value != null) {
+              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+              deepLinkRes.value = null;
+            }
+          }
+        }
+      }
     });
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        if (Platform.isAndroid) {
+          await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+        }
+      });
+      isPrivateSet();
+      fetchPrivateKey();
+      return null;
+    });
+
+    List<Widget> getColorWidgets() {
+      final colorWidgets = <Widget>[];
+
+      final colors = <CardColor>[
+        CardColor.ORANGE,
+        CardColor.WHITE,
+        CardColor.BLACK,
+      ];
+
+      for (var index = 0; index < colors.length; index++) {
+        colorWidgets.add(
+          ScaleTap(
+            enableFeedback: false,
+            onPressed: () {
+              _cardSettingsState.changeCardColor(colors[index]);
+            },
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: _cardSettingsState.selectedCardColor == colors[index]
+                          ? Colors.blue
+                          : Colors.transparent,
+                    ),
+                  ),
+                  child: getColorImage(colors[index]),
+                ),
+                Radio(
+                  activeColor: Colors.blue,
+                  value: index,
+                  groupValue: colors.indexOf(_cardSettingsState.selectedCardColor),
+                  onChanged: (selectedIndex) {
+                    _cardSettingsState.changeCardColor(colors[selectedIndex!]);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      return colorWidgets;
+    }
 
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
+            iconTheme: const IconThemeData(color: Colors.black),
             elevation: 0,
             surfaceTintColor: Colors.white,
             backgroundColor: Colors.white,
@@ -78,6 +178,7 @@ class CardSettingsPage extends HookWidget {
               style: TextStyle(
                 fontSize: 17,
                 fontFamily: FontFamily.redHatMedium,
+                color: Colors.black,
               ),
             ),
           ),
@@ -201,13 +302,10 @@ class CardSettingsPage extends HookWidget {
                       height: 24,
                     ),
                   ),
-                  FutureBuilder(
-                    future: getPrivateKeyFromStorage(key: card.address),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.hasData) {
-                        return Observer(
+                  if (isPrivateKeySet.value)
+                    Column(
+                      children: [
+                        Observer(
                           builder: (context) {
                             return Column(
                               children: [
@@ -276,7 +374,7 @@ class CardSettingsPage extends HookWidget {
                                     _cardSettingsState.isPrivateKeyVisible
                                         ? Clipboard.setData(
                                             ClipboardData(
-                                              text: snapshot.data.toString(),
+                                              text: privateKey.value.toString(),
                                             ),
                                           ).then(
                                             (_) {
@@ -339,7 +437,7 @@ class CardSettingsPage extends HookWidget {
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
                                               child: Text(
-                                                snapshot.data.toString(),
+                                                privateKey.value.toString(),
                                                 style: const TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
@@ -383,57 +481,56 @@ class CardSettingsPage extends HookWidget {
                                     },
                                   ),
                                 ),
-                                ListTile(
-                                  title: ScaleTap(
-                                    enableFeedback: false,
-                                    onPressed: () async {
-                                      await FlutterWebBrowser.openWebPage(
-                                        url:
-                                            'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
-                                        customTabsOptions: const CustomTabsOptions(
-                                          shareState: CustomTabsShareState.on,
-                                          instantAppsEnabled: true,
-                                          showTitle: true,
-                                          urlBarHidingEnabled: true,
-                                        ),
-                                        safariVCOptions: const SafariViewControllerOptions(
-                                          barCollapsingEnabled: true,
-                                          modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                          modalPresentationCapturesStatusBarAppearance: true,
-                                        ),
-                                      );
-                                    },
-                                    child: StyledText(
-                                      text:
-                                          'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
-                                      tags: {
-                                        'p': StyledTextTag(
-                                          style: const TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            decoration: TextDecoration.underline,
-                                            fontSize: 14,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      },
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             );
                           },
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
+                        ),
+                        ListTile(
+                          title: ScaleTap(
+                            enableFeedback: false,
+                            onPressed: () async {
+                              await FlutterWebBrowser.openWebPage(
+                                url:
+                                    'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+                                customTabsOptions: const CustomTabsOptions(
+                                  shareState: CustomTabsShareState.on,
+                                  instantAppsEnabled: true,
+                                  showTitle: true,
+                                  urlBarHidingEnabled: true,
+                                ),
+                                safariVCOptions: const SafariViewControllerOptions(
+                                  barCollapsingEnabled: true,
+                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                                  modalPresentationCapturesStatusBarAppearance: true,
+                                ),
+                              );
+                            },
+                            child: StyledText(
+                              text:
+                                  'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
+                              tags: {
+                                'p': StyledTextTag(
+                                  style: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 14,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              },
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    const SizedBox(),
                   const Gap(16),
                   ListTile(
                     title: Column(
@@ -467,99 +564,52 @@ class CardSettingsPage extends HookWidget {
                     endIndent: 5,
                     color: Colors.grey.withOpacity(0.2),
                   ),
-                  const Gap(16),
-                  ListTile(
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Appearance',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primaryTextColor,
+                  if(card.label != WalletType.TRACKER)
+                  Column(children: [
+                    const Gap(16),
+                    ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Appearance',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryTextColor,
+                            ),
                           ),
-                        ),
-                        const Gap(6),
-                        const Text(
-                          'Choose a color theme for your card',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 14,
-                            color: AppColors.primaryTextColor,
-                            fontWeight: FontWeight.w300,
+                          const Gap(6),
+                          const Text(
+                            'Choose a color theme for your card',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontSize: 14,
+                              color: AppColors.primaryTextColor,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
-                        ),
-                        const Gap(25),
-                        Observer(
-                          builder: (_) {
-                            final colorWidgets = <Widget>[];
-
-                            final colors = <CardColor>[
-                              CardColor.ORANGE,
-                              CardColor.WHITE,
-                              CardColor.BROWN,
-                            ];
-
-                            for (var index = 0; index < colors.length; index++) {
-                              colorWidgets.add(
-                                ScaleTap(
-                                  enableFeedback: false,
-                                  onPressed: () {
-                                    HapticFeedback.selectionClick();
-                                    _cardSettingsState
-                                      ..changeCardColor(colors[index])
-                                      ..colorState();
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(
-                                            width: 2,
-                                            color: _cardSettingsState.selectedCardColor == colors[index]
-                                                ? Colors.blue
-                                                : Colors.transparent,
-                                          ),
-                                        ),
-                                        child: getColorImage(colors[index]),
-                                      ),
-                                      Radio(
-                                        activeColor: AppColors.secondaryButtons,
-                                        value: index,
-                                        groupValue: colors.indexOf(
-                                          _cardSettingsState.selectedCardColor,
-                                        ),
-                                        onChanged: (selectedIndex) {
-                                          _cardSettingsState.changeCardColor(
-                                            colors[selectedIndex!],
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          const Gap(25),
+                          Observer(
+                            builder: (_) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: getColorWidgets(),
                               );
-                            }
-
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: colorWidgets,
-                            );
-                          },
-                        ),
-                      ],
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Gap(10),
-                  Divider(
-                    indent: 5,
-                    endIndent: 5,
-                    color: Colors.grey.withOpacity(0.2),
-                  ),
-                  const Gap(10),
+                    const Gap(10),
+                    Divider(
+                      indent: 5,
+                      endIndent: 5,
+                      color: Colors.grey.withOpacity(0.2),
+                    ),
+                    const Gap(10),
+                  ],),
                   ListTile(
                     onTap: () {
                       showModalBottomSheet(
@@ -592,6 +642,7 @@ class CardSettingsPage extends HookWidget {
                     ),
                   ),
                   const Gap(10),
+                  if(card.label != WalletType.TRACKER)
                   Observer(
                     builder: (context) {
                       return LoadingButton(
@@ -637,10 +688,10 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     ),
                                   );
-                                } else if (_cardSettingsState.selectedCardColor == CardColor.BROWN) {
+                                } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: card.address,
-                                    color: CardColor.BROWN,
+                                    color: CardColor.BLACK,
                                   );
                                   showTopSnackBar(
                                     displayDuration: const Duration(
@@ -690,7 +741,7 @@ Widget getColorImage(CardColor color) {
       return Assets.images.card.orangeCardFront.image(height: 130);
     case CardColor.WHITE:
       return Assets.images.card.whiteCardFront.image(height: 130);
-    case CardColor.BROWN:
+    case CardColor.BLACK:
       return Assets.images.card.brownCardFront.image(height: 130);
     default:
       return const SizedBox.shrink();

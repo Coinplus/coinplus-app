@@ -35,9 +35,11 @@ import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class BarFillWithNfc extends StatefulWidget {
-  const BarFillWithNfc({super.key, this.receivedData});
+  const BarFillWithNfc({super.key, this.receivedData, this.barColor, this.isOriginalTag});
 
   final String? receivedData;
+  final String? barColor;
+  final bool? isOriginalTag;
 
   @override
   State<BarFillWithNfc> createState() => _BarFillWithNfcState();
@@ -96,6 +98,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -115,11 +118,12 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
               ),
             ),
             const Gap(10),
-            const Text(
+            Text(
               'Virtual bar',
               style: TextStyle(
                 fontSize: 32,
                 fontFamily: FontFamily.redHatBold,
+                color: Colors.black.withOpacity(0.9),
               ),
             ),
           ],
@@ -135,7 +139,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
         children: [
           const Gap(3),
           Expanded(
-            flex: 4,
+            flex: 6,
             child: Observer(
               builder: (context) {
                 final data = _balanceStore.coins;
@@ -150,7 +154,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                           image: DecorationImage(
                             image: _lineStore.isLineVisible
                                 ? Assets.images.bar.filledBar.image().image
-                                : Assets.images.bar.barEmpty.image().image,
+                                : Assets.images.bar.barFill.image().image,
                           ),
                         ),
                         child: BackdropFilter(
@@ -315,7 +319,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                       ),
                                       const Gap(15),
                                       Assets.images.bar.barSecret2.image(
-                                        height: 41,
+                                        height: 44,
                                       ),
                                     ],
                                   ),
@@ -330,33 +334,16 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                         width: context.width - 34,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: Assets.images.bar.barEmpty.image().image,
+                            image: Assets.images.bar.barFill.image().image,
                           ),
                         ),
                         child: Center(
                           child: SizedBox(
                             width: context.width * 0.6,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Gap(35),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      height: 160,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: Assets.images.bar.hologramWithFrame.image().image,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Assets.images.bar.barSecret1.image(
-                                          height: 44,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Gap(10),
+                                Gap(context.height * 0.04),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -481,14 +468,6 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                     ),
                                   ),
                                 ),
-                                const Gap(15),
-                                Assets.images.bar.barCoinplusLogo.image(
-                                  height: 40,
-                                ),
-                                const Gap(15),
-                                Assets.images.bar.barSecret2.image(
-                                  height: 41,
-                                ),
                               ],
                             ),
                           ),
@@ -503,6 +482,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
             ),
           ),
           Flexible(
+            flex: 2,
             child: Observer(
               builder: (context) {
                 return ShakeAnimationWidget(
@@ -512,101 +492,99 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                   shakeAnimationType: ShakeAnimationType.LeftRightShake,
                   child: Stack(
                     children: [
-                      Column(
-                        children: [
-                          AnimatedCrossFade(
-                            firstChild: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
-                                ),
-                                color: Colors.white.withOpacity(0.7),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14),
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      'Coinplus virtual bar',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    const Gap(4),
-                                    const Text(
-                                      'This is the virtual copy of your physical Coinplus bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                  ],
-                                ),
-                              ),
+                      AnimatedCrossFade(
+                        firstChild: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.grey.withOpacity(0.3),
                             ),
-                            secondChild: GestureDetector(
-                              onTap: () {
-                                _checkboxState.makeActive();
-                                HapticFeedback.heavyImpact();
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: _checkboxState.isActive
-                                            ? const Color(0xFF73C3A6)
-                                            : _acceptState.isAccepted
-                                                ? Colors.grey.withOpacity(0.3)
-                                                : const Color(0xFFFF2E00).withOpacity(0.6),
-                                      ),
-                                      color: _checkboxState.isActive
-                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : _acceptState.isAccepted
-                                              ? Colors.white.withOpacity(0.7)
-                                              : const Color(0xFFFF2E00).withOpacity(0.05),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(14),
-                                      child: Column(
-                                        children: [
-                                          const Text(
-                                            'Keep your bar safe!',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          const Gap(4),
-                                          const Text(
-                                            'Make sure to keep your bar safe! You will need your \nSecret 1 and Secret 2 in the future to manage your crypto.',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            crossFadeState:
-                                !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 400),
+                            color: Colors.white.withOpacity(0.7),
                           ),
-                        ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'Coinplus virtual bar',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                                ).expandedHorizontally(),
+                                const Gap(4),
+                                const Text(
+                                  'This is the virtual copy of your physical Coinplus bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                                ).expandedHorizontally(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        secondChild: GestureDetector(
+                          onTap: () {
+                            _checkboxState.makeActive();
+                            HapticFeedback.heavyImpact();
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: _checkboxState.isActive
+                                        ? const Color(0xFF73C3A6)
+                                        : _acceptState.isAccepted
+                                            ? Colors.grey.withOpacity(0.3)
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                  ),
+                                  color: _checkboxState.isActive
+                                      ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                      : _acceptState.isAccepted
+                                          ? Colors.white.withOpacity(0.7)
+                                          : const Color(0xFFFF2E00).withOpacity(0.05),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        'Keep your bar safe!',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                      const Gap(4),
+                                      const Text(
+                                        'Make sure to keep your bar safe! You will need your \nSecret 1 and Secret 2 in the future to manage your crypto.',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ).expandedHorizontally(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        crossFadeState:
+                            !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                        duration: const Duration(milliseconds: 400),
                       ).paddingHorizontal(16),
                       Visibility(
                         visible: _lineStore.isLineVisible,
@@ -721,7 +699,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                     ).paddingHorizontal(49);
             },
           ),
-          if (context.height > 667) const Gap(40) else const Gap(12),
+          if (context.height > 667) const Gap(10) else const Gap(12),
         ],
       ),
     );

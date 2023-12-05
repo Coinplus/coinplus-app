@@ -6,9 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -28,6 +30,7 @@ class PinCodePage extends HookWidget {
     final _pinController = useTextEditingController();
     final isResumed = useState(false);
     final isFirstTime = useState(true);
+    final _enteredPinShakeController = useMemoized(ShakeAnimationController.new);
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -46,7 +49,9 @@ class PinCodePage extends HookWidget {
       },
     );
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -90,60 +95,68 @@ class PinCodePage extends HookWidget {
           const Gap(30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: PinCodeTextField(
-              focusNode: _walletProtectState.pinFocusNode,
-              controller: _pinController,
-              autoDisposeControllers: false,
-              blinkDuration: const Duration(milliseconds: 1),
-              obscuringWidget: const Text(
-                '●',
-                style: TextStyle(fontSize: 15),
+            child: ShakeAnimationWidget(
+              shakeAnimationController: _enteredPinShakeController,
+              shakeAnimationType: ShakeAnimationType.LeftRightShake,
+              isForward: false,
+              child: PinCodeTextField(
+                focusNode: _walletProtectState.pinFocusNode,
+                controller: _pinController,
+                autoDisposeControllers: false,
+                blinkDuration: const Duration(milliseconds: 1),
+                obscuringWidget: const Text(
+                  '●',
+                  style: TextStyle(fontSize: 15),
+                ),
+                onCompleted: (value) async {
+                  final savedPinCode = await getSavedPinCode();
+                  if (value == savedPinCode) {
+                    await router.pop();
+                  } else {
+                    unawaited(_walletProtectState.dontMatch());
+                    Gaimon.error();
+                    _pinController.text = '';
+                    _enteredPinShakeController.start();
+                    await Future.delayed(const Duration(milliseconds: 600));
+                    _enteredPinShakeController.stop();
+                    _walletProtectState.pinFocusNode.requestFocus();
+                  }
+                },
+                textCapitalization: TextCapitalization.characters,
+                backgroundColor: Colors.white,
+                pinTheme: PinTheme(
+                  disabledBorderWidth: 2,
+                  errorBorderWidth: 2,
+                  fieldWidth: 42,
+                  fieldOuterPadding: const EdgeInsets.only(left: 5),
+                  errorBorderColor: Colors.white,
+                  disabledColor: Colors.white,
+                  fieldHeight: 45,
+                  activeFillColor: Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                  inactiveBorderWidth: 2,
+                  selectedColor: Colors.grey,
+                  selectedFillColor: Colors.white,
+                  borderWidth: 2,
+                  activeColor: Colors.grey,
+                  selectedBorderWidth: 2,
+                  activeBorderWidth: 2,
+                  shape: PinCodeFieldShape.box,
+                  inactiveFillColor: Colors.white,
+                  inactiveColor: Colors.grey,
+                ),
+                useHapticFeedback: true,
+                keyboardAppearance: Brightness.light,
+                keyboardType: TextInputType.number,
+                showCursor: false,
+                length: 6,
+                obscureText: true,
+                pastedTextStyle: const TextStyle(fontSize: 12),
+                animationType: AnimationType.fade,
+                animationDuration: const Duration(milliseconds: 50),
+                onChanged: (value) {},
+                appContext: context,
               ),
-              onCompleted: (value) async {
-                final savedPinCode = await getSavedPinCode();
-                if (value == savedPinCode) {
-                  await router.pop();
-                } else {
-                  await HapticFeedback.vibrate();
-                  _pinController.text = '';
-                  _walletProtectState.pinFocusNode.requestFocus();
-                  await _walletProtectState.dontMatch();
-                }
-              },
-              textCapitalization: TextCapitalization.characters,
-              backgroundColor: Colors.white,
-              pinTheme: PinTheme(
-                disabledBorderWidth: 2,
-                errorBorderWidth: 2,
-                fieldWidth: 42,
-                fieldOuterPadding: const EdgeInsets.only(left: 5),
-                errorBorderColor: Colors.white,
-                disabledColor: Colors.white,
-                fieldHeight: 45,
-                activeFillColor: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-                inactiveBorderWidth: 2,
-                selectedColor: Colors.grey,
-                selectedFillColor: Colors.white,
-                borderWidth: 2,
-                activeColor: Colors.grey,
-                selectedBorderWidth: 2,
-                activeBorderWidth: 2,
-                shape: PinCodeFieldShape.box,
-                inactiveFillColor: Colors.white,
-                inactiveColor: Colors.grey,
-              ),
-              useHapticFeedback: true,
-              keyboardAppearance: Brightness.light,
-              keyboardType: TextInputType.number,
-              showCursor: false,
-              length: 6,
-              obscureText: true,
-              pastedTextStyle: const TextStyle(fontSize: 12),
-              animationType: AnimationType.fade,
-              animationDuration: const Duration(milliseconds: 100),
-              onChanged: (value) {},
-              appContext: context,
             ),
           ),
           const Gap(20),

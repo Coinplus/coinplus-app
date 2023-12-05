@@ -68,6 +68,16 @@ class StorageUtils {
     }
   }
 
+  static Future<void> saveUpdatedCards(List<CardModel> updatedCards) async {
+    final serializedCards = updatedCards.map((card) => card.toJson()).toList();
+    await _save(Preferences.cards, serializedCards);
+  }
+
+  static Future<void> saveUpdatedBars(List<BarModel> updatedCards) async {
+    final serializedCards = updatedCards.map((card) => card.toJson()).toList();
+    await _save(Preferences.bars, serializedCards);
+  }
+
   static Future<void> addCard(CardModel card) async {
     final cards = await getCards();
     cards.add(card);

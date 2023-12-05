@@ -9,6 +9,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -27,6 +28,7 @@ class SettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    final _auth = LocalAuthentication();
     useEffect(() {
       _walletProtectState.checkBiometrics();
       return null;
@@ -60,12 +62,12 @@ class SettingsPage extends HookWidget {
     );
 
     return CupertinoPageScaffold(
+      backgroundColor: Colors.white,
       child: CustomScrollView(
         slivers: [
           const CupertinoSliverNavigationBar(
             border: Border(),
             stretch: true,
-            transitionBetweenRoutes: false,
             backgroundColor: Colors.transparent,
             brightness: Brightness.light,
             largeTitle: Text(
@@ -180,41 +182,64 @@ class SettingsPage extends HookWidget {
                                     ),
                                   ),
                                 ),
-                                Divider(
-                                  indent: 0,
-                                  endIndent: 0,
-                                  thickness: 1,
-                                  color: Colors.grey.withOpacity(0.1),
+
+                                FutureBuilder(
+                                  future: _auth.isDeviceSupported(),
+                                  builder: (context, snapshot) {
+                                    if(snapshot.data == true) {
+                                      return Column(
+                                      children: [
+                                        Divider(
+                                          indent: 0,
+                                          endIndent: 0,
+                                          thickness: 1,
+                                          color: Colors.grey.withOpacity(0.1),
+                                        ),
+                                        InkWell(
+                                          onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
+                                          splashFactory: InkSparkle.splashFactory,
+                                          highlightColor: Colors.transparent,
+                                          child: ListTile(
+                                            splashColor: Colors.transparent,
+                                            minLeadingWidth: 10,
+                                            trailing: Observer(
+                                              builder: (_) {
+                                                return CupertinoSwitch(
+                                                  value: _walletProtectState.isBiometricsEnabled,
+                                                  onChanged: onToggleFaceId,
+                                                );
+                                              },
+                                            ),
+                                            leading: Platform.isAndroid
+                                                ? Assets.icons.faceIdSettings.image(
+                                              height: 22,
+                                            )
+                                                : _walletProtectState.availableBiometric == BiometricType.face
+                                                ? Assets.icons.iphoneTouchId.image(
+                                              height: 22,
+                                            )
+                                                : Assets.icons.faceIdSettings.image(
+                                              height: 22,
+                                            ),
+                                            title: Text(
+                                              Platform.isAndroid ? 'Biometrics' : 'Face ID',
+                                              style: const TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontSize: 15,
+                                                color: AppColors.primaryTextColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                    } else {
+                                      return const SizedBox();
+                                    }
+                                  },
                                 ),
-                                InkWell(
-                                  onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
-                                  splashFactory: InkSparkle.splashFactory,
-                                  highlightColor: Colors.transparent,
-                                  child: ListTile(
-                                    splashColor: Colors.transparent,
-                                    minLeadingWidth: 10,
-                                    trailing: Observer(
-                                      builder: (_) {
-                                        return CupertinoSwitch(
-                                          value: _walletProtectState.isBiometricsEnabled,
-                                          onChanged: onToggleFaceId,
-                                        );
-                                      },
-                                    ),
-                                    leading: Assets.icons.faceIdSettings.image(
-                                      height: 22,
-                                    ),
-                                    title: Text(
-                                      Platform.isAndroid ? 'Biometrics' : 'Face ID',
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 15,
-                                        color: AppColors.primaryTextColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+
                               ],
                             );
                           },
@@ -534,11 +559,41 @@ class SettingsPage extends HookWidget {
                             ),
                           ),
                         ),
+                        Divider(
+                          indent: 0,
+                          endIndent: 0,
+                          thickness: 1,
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                        InkWell(
+                          onTap: () async {
+                           await router.push(const AboutAppRoute());
+                          },
+                          splashFactory: InkSparkle.splashFactory,
+                          highlightColor: Colors.transparent,
+                          child: ListTile(
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            minLeadingWidth: 10,
+                            leading: Assets.icons.info.image(
+                              height: 22,
+                              color: Colors.blue,
+                            ),
+                            title: const Text(
+                              'About app',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 15,
+                                color: AppColors.primaryTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                const Gap(100),
+                const Gap(120),
               ],
             ),
           ),

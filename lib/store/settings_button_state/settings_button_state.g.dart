@@ -9,7 +9,8 @@ part of 'settings_button_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SettingsState on _SettingsState, Store {
-  late final _$cardCurrentIndexAtom = Atom(name: '_SettingsState.cardCurrentIndex', context: context);
+  late final _$cardCurrentIndexAtom =
+      Atom(name: '_SettingsState.cardCurrentIndex', context: context);
 
   @override
   int get cardCurrentIndex {
@@ -24,7 +25,8 @@ mixin _$SettingsState on _SettingsState, Store {
     });
   }
 
-  late final _$barCurrentIndexAtom = Atom(name: '_SettingsState.barCurrentIndex', context: context);
+  late final _$barCurrentIndexAtom =
+      Atom(name: '_SettingsState.barCurrentIndex', context: context);
 
   @override
   int get barCurrentIndex {
@@ -39,7 +41,8 @@ mixin _$SettingsState on _SettingsState, Store {
     });
   }
 
-  late final _$cardAndBarTabBarIndexAtom = Atom(name: '_SettingsState.cardAndBarTabBarIndex', context: context);
+  late final _$cardAndBarTabBarIndexAtom =
+      Atom(name: '_SettingsState.cardAndBarTabBarIndex', context: context);
 
   @override
   int get cardAndBarTabBarIndex {
@@ -49,12 +52,14 @@ mixin _$SettingsState on _SettingsState, Store {
 
   @override
   set cardAndBarTabBarIndex(int value) {
-    _$cardAndBarTabBarIndexAtom.reportWrite(value, super.cardAndBarTabBarIndex, () {
+    _$cardAndBarTabBarIndexAtom.reportWrite(value, super.cardAndBarTabBarIndex,
+        () {
       super.cardAndBarTabBarIndex = value;
     });
   }
 
-  late final _$isAddressCopiedAtom = Atom(name: '_SettingsState.isAddressCopied', context: context);
+  late final _$isAddressCopiedAtom =
+      Atom(name: '_SettingsState.isAddressCopied', context: context);
 
   @override
   bool get isAddressCopied {
@@ -69,32 +74,69 @@ mixin _$SettingsState on _SettingsState, Store {
     });
   }
 
-  late final _$setCardCurrentIndexAsyncAction = AsyncAction('_SettingsState.setCardCurrentIndex', context: context);
+  late final _$isReorderingStartAtom =
+      Atom(name: '_SettingsState.isReorderingStart', context: context);
+
+  @override
+  bool get isReorderingStart {
+    _$isReorderingStartAtom.reportRead();
+    return super.isReorderingStart;
+  }
+
+  @override
+  set isReorderingStart(bool value) {
+    _$isReorderingStartAtom.reportWrite(value, super.isReorderingStart, () {
+      super.isReorderingStart = value;
+    });
+  }
+
+  late final _$setCardCurrentIndexAsyncAction =
+      AsyncAction('_SettingsState.setCardCurrentIndex', context: context);
 
   @override
   Future<void> setCardCurrentIndex(int index) {
-    return _$setCardCurrentIndexAsyncAction.run(() => super.setCardCurrentIndex(index));
+    return _$setCardCurrentIndexAsyncAction
+        .run(() => super.setCardCurrentIndex(index));
   }
 
-  late final _$setBarCurrentIndexAsyncAction = AsyncAction('_SettingsState.setBarCurrentIndex', context: context);
+  late final _$setBarCurrentIndexAsyncAction =
+      AsyncAction('_SettingsState.setBarCurrentIndex', context: context);
 
   @override
   Future<void> setBarCurrentIndex(int index) {
-    return _$setBarCurrentIndexAsyncAction.run(() => super.setBarCurrentIndex(index));
+    return _$setBarCurrentIndexAsyncAction
+        .run(() => super.setBarCurrentIndex(index));
   }
 
-  late final _$copyAddressAsyncAction = AsyncAction('_SettingsState.copyAddress', context: context);
+  late final _$copyAddressAsyncAction =
+      AsyncAction('_SettingsState.copyAddress', context: context);
 
   @override
   Future<void> copyAddress() {
     return _$copyAddressAsyncAction.run(() => super.copyAddress());
   }
 
-  late final _$changeTabBarIndexAsyncAction = AsyncAction('_SettingsState.changeTabBarIndex', context: context);
+  late final _$changeTabBarIndexAsyncAction =
+      AsyncAction('_SettingsState.changeTabBarIndex', context: context);
 
   @override
   Future<void> changeTabBarIndex(int index) {
-    return _$changeTabBarIndexAsyncAction.run(() => super.changeTabBarIndex(index));
+    return _$changeTabBarIndexAsyncAction
+        .run(() => super.changeTabBarIndex(index));
+  }
+
+  late final _$_SettingsStateActionController =
+      ActionController(name: '_SettingsState', context: context);
+
+  @override
+  void startReorder() {
+    final _$actionInfo = _$_SettingsStateActionController.startAction(
+        name: '_SettingsState.startReorder');
+    try {
+      return super.startReorder();
+    } finally {
+      _$_SettingsStateActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
@@ -103,7 +145,8 @@ mixin _$SettingsState on _SettingsState, Store {
 cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
 cardAndBarTabBarIndex: ${cardAndBarTabBarIndex},
-isAddressCopied: ${isAddressCopied}
+isAddressCopied: ${isAddressCopied},
+isReorderingStart: ${isReorderingStart}
     ''';
   }
 }

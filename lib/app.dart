@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 
 import 'providers/flavor_service.dart';
 import 'providers/screen_service.dart';
-import 'themes/light_theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: !GetIt.I<FlavorService>().isProduction,
-        theme: lightTheme,
+        theme: ThemeData(useMaterial3: false),
         routerDelegate: router.delegate(
           navigatorObservers: () => [
             // analyticsService.observer,

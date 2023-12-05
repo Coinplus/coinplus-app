@@ -13,6 +13,13 @@ abstract class _SettingsState with Store {
   int cardAndBarTabBarIndex = 0;
   @observable
   bool isAddressCopied = false;
+  @observable
+  bool isReorderingStart = false;
+
+  @action
+  void startReorder() {
+    isReorderingStart = true;
+  }
 
   @action
   Future<void> setCardCurrentIndex(int index) async {

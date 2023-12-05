@@ -14,7 +14,6 @@ part 'wallet_protect_state.g.dart';
 class WalletProtectState = _WalletProtectState with _$WalletProtectState;
 
 abstract class _WalletProtectState with Store {
-  final isPinCodeSet = getIsPinCodeSet();
   final _auth = LocalAuthentication();
   late FocusNode pinFocusNode = FocusNode();
 
@@ -117,6 +116,61 @@ abstract class _WalletProtectState with Store {
     return false;
   }
 
+  @observable
+  BiometricType? availableBiometric;
+
+  @action
+  Future<void> checkAvailableBiometrics() async {
+    try {
+      final availableBiometrics = await _auth.getAvailableBiometrics();
+      if (availableBiometrics.contains(BiometricType.face)) {
+        availableBiometric = BiometricType.face;
+      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        availableBiometric = BiometricType.fingerprint;
+      } else {
+        availableBiometric = null;
+      }
+    } catch (e) {
+      availableBiometric = null;
+    }
+  }
+
+  @action
+  Future<bool> authenticateWithBiometricsAndPop() async {
+    isBiometricsRunning = true;
+    if (await isBiometricAvailable()) {
+      try {
+        final isAuthorized = await _auth.authenticate(
+          localizedReason: 'Authenticate using Face ID',
+          options: const AuthenticationOptions(
+            biometricOnly: true,
+          ),
+        );
+        if (isAuthorized) {
+          await enableBiometricAuth();
+          await router.pop();
+          return true;
+        }
+      } catch (e) {
+        if (e is PlatformException && e.code == 'NotAvailable') {
+          pinFocusNode.requestFocus();
+        } else if (e is PlatformException && e.code == 'NotEnrolled') {
+          log('Biometrics not enrolled');
+        } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
+          log('Biometrics authentication failed or canceled');
+        } else {
+          log('Unhandled exception: $e');
+        }
+        return false;
+      } finally {
+        isBiometricsRunning = false;
+      }
+    }
+    isBiometricsRunning = false;
+
+    return false;
+  }
+
   @action
   Future<bool> isBiometricAvailable() async {
     try {
@@ -129,7 +183,7 @@ abstract class _WalletProtectState with Store {
   @action
   Future<void> dontMatch() async {
     isCreatedPinMatch = true;
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 1000));
     isCreatedPinMatch = false;
   }
 

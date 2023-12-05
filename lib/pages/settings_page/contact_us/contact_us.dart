@@ -60,6 +60,7 @@ class _ContactUsState extends State<ContactUs> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            backgroundColor: Colors.white,
             elevation: 0,
             systemOverlayStyle: const SystemUiOverlayStyle(
               systemNavigationBarColor: Colors.white,
@@ -67,6 +68,7 @@ class _ContactUsState extends State<ContactUs> {
             ),
             iconTheme: const IconThemeData(color: Colors.white, size: 25),
             toolbarHeight: 110,
+            centerTitle: true,
             title: const Text(
               'Hi there 👋\nHow can we help?',
               textAlign: TextAlign.center,
@@ -123,6 +125,7 @@ class _ContactUsState extends State<ContactUs> {
                   onEditingComplete: _nameFocusNode.nextFocus,
                   cursorColor: AppColors.secondaryButtons,
                   decoration: InputDecoration(
+                    filled: true,
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Colors.blueAccent,
@@ -206,6 +209,7 @@ class _ContactUsState extends State<ContactUs> {
                       },
                       cursorColor: AppColors.secondaryButtons,
                       decoration: InputDecoration(
+                        filled: true,
                         errorText: store.isEmailValid ? null : 'Invalid email address',
                         errorStyle: const TextStyle(color: Colors.red),
                         focusedBorder: OutlineInputBorder(
@@ -287,6 +291,7 @@ class _ContactUsState extends State<ContactUs> {
                   },
                   cursorColor: AppColors.secondaryButtons,
                   decoration: InputDecoration(
+                    filled: true,
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Colors.blue,

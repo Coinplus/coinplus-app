@@ -85,6 +85,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         surfaceTintColor: Colors.white,
@@ -194,7 +195,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                           child: SizedBox(
                             height: 15,
                             width: 15,
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                           ),
                         );
                       }

@@ -1,10 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -30,18 +29,25 @@ class WalletProtectionPage extends HookWidget {
   Widget build(BuildContext context) {
     useEffect(() {
       setWalletShown();
+      _walletProtectState
+        ..checkPinCodeStatus()
+        ..checkBiometricStatus();
       return;
     });
+
     final onToggleAppLock = useCallback(
       (isEnable) async {
         if (isEnable) {
           await router.push(const CreatePinCode());
+        } else {
+          await router.push(const PinRemove());
         }
         await _walletProtectState.checkPinCodeStatus();
         await _walletProtectState.checkBiometricStatus();
       },
       [_walletProtectState.isSetPinCode],
     );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -79,55 +85,55 @@ class WalletProtectionPage extends HookWidget {
             flex: 5,
           ),
           // if (Platform.isIOS)
-          Container(
-            height: 66,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey.withOpacity(0.1),
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Assets.icons.lock.image(
-                    color: const Color(0xFF007AFF),
-                    height: 28,
+          ScaleTap(
+            onPressed: () {
+              onToggleAppLock(!_walletProtectState.isSetPinCode);
+            },
+            child: Container(
+              height: 66,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey.withOpacity(0.1),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Assets.icons.lock.image(
+                      color: AppColors.primary,
+                      height: 28,
+                    ),
                   ),
-                ),
-                const Gap(18),
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'App Lock',
-                      style: TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary,
+                  const Gap(18),
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'App Lock',
+                        style: TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Secure your wallet with passcode',
-                      style: TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        color: AppColors.textHintsColor,
+                      Text(
+                        'Secure your wallet with passcode',
+                        style: TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          color: AppColors.textHintsColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Observer(
-                  builder: (context) {
-                    return CupertinoSwitch(
-                      value: _walletProtectState.isSetPinCode,
-                      onChanged: onToggleAppLock,
-                    );
-                  },
-                ),
-              ],
-            ).paddingOnly(top: 9, bottom: 9, left: 12, right: 12),
-          ).paddingHorizontal(16),
+                    ],
+                  ),
+                  const Spacer(),
+                  Assets.icons.arrowForwardIos.image(
+                    height: 30,
+                  ),
+                ],
+              ).paddingOnly(top: 9, bottom: 9, left: 12, right: 12),
+            ).paddingHorizontal(16),
+          ),
           const Spacer(
             flex: 5,
           ),

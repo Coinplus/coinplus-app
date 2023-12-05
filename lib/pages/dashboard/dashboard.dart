@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
@@ -23,6 +22,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../constants/card_record.dart';
+import '../../constants/card_type.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -231,6 +231,7 @@ class DashboardPage extends HookWidget {
     final isPaused = useState(false);
     final isInactive = useState(false);
     final appLocked = useState(false);
+    final resumed = useState(false);
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -241,6 +242,7 @@ class DashboardPage extends HookWidget {
         }
 
         isPaused.value = [AppLifecycleState.paused].contains(current);
+        resumed.value = [AppLifecycleState.resumed].contains(current);
         if (!_walletProtectState.isBiometricsRunning) {
           isInactive.value = [AppLifecycleState.inactive].contains(current);
         }
@@ -250,16 +252,13 @@ class DashboardPage extends HookWidget {
             !_walletProtectState.isBiometricsRunning &&
             !_walletProtectState.isLinkOpened) {
           if (appLocked.value) {
-            if (router.stackData
-                .indexWhere(
-                  (element) => element.name == PinCodeRoute.name,
-                )
-                .isNegative) {
+            if (router.stackData.indexWhere((element) => element.name == PinCodeRoute.name).isNegative) {
               await router.push(const PinCodeRoute());
               isPaused.value = false;
               isInactive.value = false;
+              resumed.value = true;
               if (deepLinkRes.value != null) {
-                await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+                await router.push(CardFillWithNfc(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               }
             }
@@ -274,8 +273,14 @@ class DashboardPage extends HookWidget {
         final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
-            if (!appLocked.value && deepLinkRes.value != null) {
-              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+            if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
+              await router.push(CardFillWithNfc(receivedData: deepLinkRes.value));
+              deepLinkRes.value = null;
+            } else if (appLocked.value &&
+                deepLinkRes.value != null &&
+                resumed.value &&
+                router.current.name != CardFillWithNfc.name) {
+              await router.push(CardFillWithNfc(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
           },
@@ -314,9 +319,10 @@ class DashboardPage extends HookWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Divider(
-                  thickness: 0.5,
+                  thickness: 0.3,
                   endIndent: 1,
                   indent: 0,
+                  height: 1,
                   color: Colors.grey.withOpacity(0.2),
                 ),
                 Theme(
@@ -834,6 +840,7 @@ class DashboardPage extends HookWidget {
                           ),
                         ),
                         const Gap(8),
+                        if(card.label != WalletType.TRACKER)
                         Observer(
                           builder: (context) {
                             Future<bool> isCardWalletActivated() async {
@@ -919,9 +926,7 @@ class DashboardPage extends HookWidget {
                                                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                                                     await router.pop();
                                                     await NfcManager.instance.startSession(
-                                                      alertMessage: isBarList
-                                                          ? 'It’s easy! Hold your phone near the top of your Bar’s box'
-                                                          : "Please tap your card on the phone to verify it's legitimacy",
+                                                      alertMessage: "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
                                                       onDiscovered: (tag) async {
                                                         final ndef = Ndef.from(tag);
                                                         final records = ndef!.cachedMessage!.records;
@@ -969,6 +974,7 @@ class DashboardPage extends HookWidget {
                                                                 milliseconds: 2500,
                                                               ),
                                                             );
+                                                            await router.pop();
                                                             isBarList
                                                                 ? await router.push(
                                                                     BarSecretFillRoute(
@@ -1011,13 +1017,11 @@ class DashboardPage extends HookWidget {
                                                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                                                     await router.pop();
                                                     await NfcManager.instance.startSession(
-                                                      alertMessage: isBarList
-                                                          ? 'It’s easy! Hold your phone near the top of your Bar’s box'
-                                                          : "Please tap your card on the phone to verify it's legitimacy",
                                                       onDiscovered: (tag) async {
                                                         final ndef = Ndef.from(tag);
                                                         final records = ndef!.cachedMessage!.records;
                                                         dynamic walletAddress;
+
                                                         if (records.length >= 2) {
                                                           final hasJson = records[1].payload;
                                                           final payloadString = String.fromCharCodes(
@@ -1040,17 +1044,22 @@ class DashboardPage extends HookWidget {
                                                         if (card.address == walletAddress) {
                                                           final nfcA = NfcA.from(tag);
                                                           final uid = nfcA!.identifier;
-                                                          final signature = await nfcA.transceive(
-                                                            data: Uint8List.fromList(
-                                                              [0x3C, 0x00],
-                                                            ),
-                                                          );
+                                                          Uint8List? signature;
                                                           var isOriginalTag = false;
-                                                          if (signature.length > 2) {
-                                                            isOriginalTag = OriginalityVerifier().verify(
-                                                              uid,
-                                                              signature,
+
+                                                          try {
+                                                            final response = await nfcA.transceive(
+                                                              data: Uint8List.fromList([0x3C, 0x00]),
                                                             );
+                                                            signature = Uint8List.fromList(response);
+                                                            if (signature.length > 2) {
+                                                              isOriginalTag = OriginalityVerifier().verify(
+                                                                uid,
+                                                                signature,
+                                                              );
+                                                            }
+                                                          } catch (e) {
+                                                            signature = null;
                                                           }
                                                           if (isOriginalTag) {
                                                             await router.pop();
@@ -1066,67 +1075,14 @@ class DashboardPage extends HookWidget {
                                                                     ),
                                                                   );
                                                           } else {
-                                                            await notCoinplusCardAlert(
-                                                              context,
-                                                            );
+                                                            await router.pop();
+                                                            await notCoinplusCard();
                                                           }
                                                         } else {
                                                           await router.pop();
-                                                          await showModalBottomSheet(
-                                                            context: context,
-                                                            shape: const RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.only(
-                                                                topLeft: Radius.circular(
-                                                                  20,
-                                                                ),
-                                                                topRight: Radius.circular(
-                                                                  20,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            backgroundColor: Colors.white,
-                                                            builder: (context) {
-                                                              return Padding(
-                                                                padding: const EdgeInsets.all(
-                                                                  8,
-                                                                ),
-                                                                child: Column(
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  children: [
-                                                                    Assets.icons.notch.image(
-                                                                      height: 4,
-                                                                    ),
-                                                                    const Gap(
-                                                                      30,
-                                                                    ),
-                                                                    Lottie.asset(
-                                                                      'assets/animated_logo/warning.json',
-                                                                      repeat: false,
-                                                                      height: 120,
-                                                                    ),
-                                                                    const Gap(
-                                                                      30,
-                                                                    ),
-                                                                    const Text(
-                                                                      'You tapped the wrong card. Please check the wallet address of the card',
-                                                                      textAlign: TextAlign.center,
-                                                                      style: TextStyle(
-                                                                        fontSize: 14,
-                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                      ),
-                                                                    ),
-                                                                    const Gap(
-                                                                      60,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-                                                          await NfcManager.instance.stopSession(
-                                                            errorMessage:
-                                                                'You tapped the wrong card. Please check the wallet address of the card.',
-                                                          );
+                                                          await showWrongCardModal();
+                                                          await Future.delayed(const Duration(milliseconds: 3000));
+                                                          await NfcManager.instance.stopSession();
                                                         }
                                                         await _walletProtectState.updateNfcSessionStatus(
                                                           isStarted: false,
@@ -1247,9 +1203,7 @@ class DashboardPage extends HookWidget {
                                                     await router.pop();
                                                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                                                     await NfcManager.instance.startSession(
-                                                      alertMessage: isBarList
-                                                          ? 'It’s easy! Hold your phone near the top of your Bar’s box'
-                                                          : "Please tap your card on the phone to verify it's legitimacy",
+                                                      alertMessage: "Please tap your card on the phone to verify it's legitimacy",
                                                       onDiscovered: (tag) async {
                                                         final ndef = Ndef.from(tag);
                                                         final records = ndef!.cachedMessage!.records;
@@ -1297,13 +1251,8 @@ class DashboardPage extends HookWidget {
                                                                 milliseconds: 2500,
                                                               ),
                                                             );
-                                                            isBarList
-                                                                ? await router.push(
-                                                                    BarSecretFillRoute(
-                                                                      receivedData: walletAddress.toString(),
-                                                                    ),
-                                                                  )
-                                                                : await router.push(
+                                                            await router.pop();
+                                                           await router.push(
                                                                     CardSecretFillRoute(
                                                                       receivedData: walletAddress.toString(),
                                                                     ),
@@ -1339,9 +1288,6 @@ class DashboardPage extends HookWidget {
                                                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                                                     await router.pop();
                                                     await NfcManager.instance.startSession(
-                                                      alertMessage: isBarList
-                                                          ? 'It’s easy! Hold your phone near the top of your Bar’s box'
-                                                          : "Please tap your card on the phone to verify it's legitimacy",
                                                       onDiscovered: (tag) async {
                                                         final ndef = Ndef.from(tag);
                                                         final records = ndef!.cachedMessage!.records;
@@ -1369,45 +1315,41 @@ class DashboardPage extends HookWidget {
                                                           final nfcA = NfcA.from(tag);
                                                           final uid = nfcA!.identifier;
 
-                                                          final signature = await nfcA.transceive(
-                                                            data: Uint8List.fromList(
-                                                              [0x3C, 0x00],
-                                                            ),
-                                                          );
-
-                                                          log(signature.toString());
+                                                          Uint8List? signature;
                                                           var isOriginalTag = false;
-                                                          if (signature.length > 2) {
-                                                            isOriginalTag = OriginalityVerifier().verify(
-                                                              uid,
-                                                              signature,
+
+                                                          try {
+                                                            final response = await nfcA.transceive(
+                                                              data: Uint8List.fromList([0x3C, 0x00]),
                                                             );
+                                                            signature = Uint8List.fromList(response);
+                                                            if (signature.length > 2) {
+                                                              isOriginalTag = OriginalityVerifier().verify(
+                                                                uid,
+                                                                signature,
+                                                              );
+                                                            }
+                                                          } catch (e) {
+                                                            signature = null;
                                                           }
                                                           if (isOriginalTag) {
                                                             await router.pop();
-                                                            isBarList
-                                                                ? await router.push(
-                                                                    BarSecretFillRoute(
-                                                                      receivedData: walletAddress.toString(),
-                                                                    ),
-                                                                  )
-                                                                : await router.push(
+                                                            await router.push(
                                                                     CardSecretFillRoute(
-                                                                      receivedData: walletAddress.toString(),
+                                                                      receivedData: walletAddress,
                                                                     ),
                                                                   );
                                                           } else {
-                                                            await NfcManager.instance.stopSession();
                                                             await router.pop();
                                                             await notCoinplusCard();
+                                                            await Future.delayed(const Duration(milliseconds: 3000));
+                                                            await NfcManager.instance.stopSession();
                                                           }
                                                         } else {
                                                           await router.pop();
                                                           await showWrongCardModal();
-                                                          await NfcManager.instance.stopSession(
-                                                            errorMessage:
-                                                                'You tapped the wrong card. Please check the wallet address of the card.',
-                                                          );
+                                                          await Future.delayed(const Duration(milliseconds: 3000));
+                                                          await NfcManager.instance.stopSession();
                                                         }
                                                         await _walletProtectState.updateNfcSessionStatus(
                                                           isStarted: false,
@@ -1415,8 +1357,9 @@ class DashboardPage extends HookWidget {
                                                       },
                                                       onError: (_) {
                                                         _walletProtectState.updateNfcSessionStatus(isStarted: false);
-                                                        return Future(() {
-                                                          NfcManager.instance.stopSession();
+                                                        return Future(() async {
+                                                          await NfcManager.instance.stopSession();
+                                                          await Future.delayed(const Duration(milliseconds: 1000));
                                                           return Future(showCardTapIssueBottomSheet);
                                                         });
                                                       },

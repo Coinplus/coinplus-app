@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -46,6 +47,19 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
   void initState() {
     super.initState();
     _nfcStore.checkNfcSupport();
+  }
+
+  Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Material(
+          color: Colors.transparent,
+          child: child,
+        );
+      },
+      child: child,
+    );
   }
 
   @override
@@ -176,184 +190,400 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: context.height > 844 ? 30 : 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                blurRadius: 15,
-                                spreadRadius: 0.5,
-                              ),
-                            ],
-                            image: DecorationImage(
-                              image: bar.color.image.image().image,
-                            ),
-                          ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                const Gap(35),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      height: 160,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: Assets.images.bar.hologramWithFrame.image().image,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Assets.images.bar.barSecret1.image(
-                                          height: 44,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Gap(10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        const Text(
-                                          'Balance',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: FontFamily.redHatMedium,
-                                          ),
-                                        ),
-                                        Observer(
-                                          builder: (context) {
-                                            final data = _balanceStore.coins;
-                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                              locale: 'en_us',
-                                              decimalDigits: 2,
-                                            );
-                                            if (data == null) {
-                                              return const Padding(
-                                                padding: EdgeInsets.all(
-                                                  4,
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                      width: 10,
-                                                      child: CircularProgressIndicator(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }
-                                            return Text(
-                                              (bar.data?.balance != null
-                                                      ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
-                                                      : '')
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black.withOpacity(0.7),
-                                                fontSize: 20,
+                  Observer(
+                    builder: (context) {
+                      return Expanded(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: context.height > 844 ? 30 : 10),
+                            child: ScaleTap(
+                              enableFeedback: false,
+                              opacityMinValue: .99,
+                              scaleMinValue: .99,
+                              onLongPress: _settingsState.barCurrentIndex == index
+                                  ? _balanceStore.bars.length > 1
+                                      ? () {
+                                          HapticFeedback.mediumImpact();
+                                          showModalBottomSheet(
+                                            useSafeArea: false,
+                                            isScrollControlled: true,
+                                            context: context,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ).paddingHorizontal(40),
-                                const Gap(10),
-                                ScaleTap(
-                                  enableFeedback: false,
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                      ClipboardData(
-                                        text: bar.address.toString(),
-                                      ),
-                                    ).then(
-                                      (_) {
-                                        HapticFeedback.mediumImpact();
-                                        showTopSnackBar(
-                                          displayDuration: const Duration(
-                                            milliseconds: 400,
-                                          ),
-                                          Overlay.of(context),
-                                          CustomSnackBar.success(
-                                            backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                            message: 'Address was copied',
-                                            textStyle: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: Colors.white,
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 33,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(image: Assets.images.bar.barAddress.image().image),
-                                    ),
-                                    child: Center(
-                                      child: Observer(
-                                        builder: (context) {
-                                          if (_balanceStore.loadings[bar.address] ?? false) {
-                                            return const Padding(
-                                              padding: EdgeInsets.all(
-                                                4,
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 10,
-                                                    width: 10,
-                                                    child: CircularProgressIndicator(
-                                                      color: Colors.white,
+                                            builder: (context) {
+                                              return SizedBox(
+                                                height: 600,
+                                                child: Scaffold(
+                                                  appBar: AppBar(
+                                                    toolbarHeight: 130,
+                                                    automaticallyImplyLeading: false,
+                                                    elevation: 0,
+                                                    backgroundColor: Colors.transparent,
+                                                    flexibleSpace: Column(
+                                                      children: <Widget>[
+                                                        const Gap(15),
+                                                        Assets.icons.notch.image(height: 4),
+                                                        const Gap(10),
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left: 10, right: 10),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              const Text(
+                                                                'Re-order bars',
+                                                                style: TextStyle(
+                                                                  color: Colors.black,
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  fontSize: 30,
+                                                                ),
+                                                              ),
+                                                              const Gap(10),
+                                                              Container(
+                                                                padding: const EdgeInsets.symmetric(
+                                                                  horizontal: 15,
+                                                                  vertical: 10,
+                                                                ),
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  color: Colors.grey.withOpacity(0.1),
+                                                                ),
+                                                                child: const Text(
+                                                                  'Hold and slide the wallet across the list to re-order',
+                                                                  style: TextStyle(
+                                                                    fontFamily: FontFamily.redHatMedium,
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          }
-                                          return Text(
-                                            visibleAddress,
-                                            style: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              color: Colors.black,
-                                              fontSize: 13,
-                                            ),
+                                                  backgroundColor: Colors.transparent,
+                                                  body: Builder(
+                                                    builder: (context) {
+                                                      final data = _balanceStore.coins;
+                                                      final myFormat = NumberFormat.decimalPatternDigits(
+                                                        locale: 'en_us',
+                                                        decimalDigits: 2,
+                                                      );
+                                                      return SizedBox(
+                                                        height: 700,
+                                                        child: ReorderableListView.builder(
+                                                          padding: const EdgeInsets.only(bottom: 30),
+                                                          proxyDecorator: proxyDecorator,
+                                                          itemCount: _balanceStore.bars.length,
+                                                          itemBuilder: (_, index) {
+                                                            final item = _balanceStore.bars[index];
+
+                                                            return Container(
+                                                              key: ValueKey(item.address),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.symmetric(
+                                                                  vertical: 7,
+                                                                  horizontal: 20,
+                                                                ),
+                                                                child: Container(
+                                                                  padding: const EdgeInsets.all(15),
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(10),
+                                                                    color: Colors.grey.withOpacity(0.2),
+                                                                  ),
+                                                                  child: Row(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      item.color.image.image(height: 80),
+                                                                      const Gap(20),
+                                                                      Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Row(
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Name:',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                              ),
+                                                                              const Gap(5),
+                                                                              Text(
+                                                                                item.name,
+                                                                                style: const TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Address:',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                              ),
+                                                                              const Gap(5),
+                                                                              Text(
+                                                                                _getVisibleAddress(item.address),
+                                                                                style: const TextStyle(
+                                                                                  fontSize: 12,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Date added:',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                              ),
+                                                                              const Gap(5),
+                                                                              Text(
+                                                                                item.createdAt,
+                                                                                style: const TextStyle(
+                                                                                  fontSize: 12,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Balance:',
+                                                                                style: TextStyle(
+                                                                                  fontSize: 14,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                ),
+                                                                              ),
+                                                                              const Gap(5),
+                                                                              Text(
+                                                                                '\$${myFormat.format((item.data!.balance - item.data!.spentTxoSum) / 100000000 * data!.price)}',
+                                                                                style: const TextStyle(
+                                                                                  fontSize: 13,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                          const Gap(25),
+                                                                          Center(
+                                                                            child: Icon(
+                                                                              Icons.drag_handle,
+                                                                              color: Colors.grey.withOpacity(0.5),
+                                                                              size: 30,
+                                                                            ),
+                                                                          ),
+                                                                          const Gap(25),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          onReorder: (oldIndex, newIndex) {
+                                                            _balanceStore.changeBarIndexAndSave(
+                                                              oldIndex: oldIndex,
+                                                              newIndex: newIndex,
+                                                              cardAddress: _balanceStore.bars[oldIndex].address,
+                                                            );
+                                                            widget.onCarouselScroll(index);
+                                                            widget.onCardSelected(
+                                                              _balanceStore.bars.elementAtOrNull(index)
+                                                                  as AbstractCard?,
+                                                            );
+                                                            _settingsState.setBarCurrentIndex(index);
+                                                          },
+                                                          onReorderStart: (val) {
+                                                            HapticFeedback.heavyImpact();
+                                                          },
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           );
-                                        },
-                                      ),
+                                        }
+                                      : () async {
+                                          Gaimon.error();
+                                        }
+                                  : null,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      blurRadius: 15,
+                                      spreadRadius: 0.5,
                                     ),
+                                  ],
+                                  image: DecorationImage(
+                                    image: bar.color.image.image().image,
                                   ),
                                 ),
-                                const Gap(15),
-                                Assets.images.bar.barCoinplusLogo.image(
-                                  height: 40,
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Gap(context.height * 0.03),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              const Text(
+                                                'Balance',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                ),
+                                              ),
+                                              Observer(
+                                                builder: (context) {
+                                                  final data = _balanceStore.coins;
+                                                  final myFormat = NumberFormat.decimalPatternDigits(
+                                                    locale: 'en_us',
+                                                    decimalDigits: 2,
+                                                  );
+                                                  if (data == null) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(
+                                                        4,
+                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 10,
+                                                            width: 10,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    (bar.data?.balance != null
+                                                            ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                            : '')
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.black.withOpacity(0.7),
+                                                      fontSize: 20,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ).paddingHorizontal(40),
+                                      const Gap(10),
+                                      ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: _settingsState.barCurrentIndex == index
+                                            ? () {
+                                                Clipboard.setData(
+                                                  ClipboardData(
+                                                    text: bar.address.toString(),
+                                                  ),
+                                                ).then(
+                                                  (_) {
+                                                    HapticFeedback.mediumImpact();
+                                                    showTopSnackBar(
+                                                      displayDuration: const Duration(
+                                                        milliseconds: 400,
+                                                      ),
+                                                      Overlay.of(context),
+                                                      CustomSnackBar.success(
+                                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                        message: 'Address was copied',
+                                                        textStyle: const TextStyle(
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            : null,
+                                        child: Container(
+                                          height: 33,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(image: Assets.images.bar.barAddress.image().image),
+                                          ),
+                                          child: Center(
+                                            child: Observer(
+                                              builder: (context) {
+                                                if (_balanceStore.loadings[bar.address] ?? false) {
+                                                  return Text(
+                                                    visibleAddress,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: Colors.black,
+                                                      fontSize: 13,
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  visibleAddress,
+                                                  style: const TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    color: Colors.black,
+                                                    fontSize: 13,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const Gap(15),
-                                Assets.images.bar.barSecret2.image(
-                                  height: 41,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               );

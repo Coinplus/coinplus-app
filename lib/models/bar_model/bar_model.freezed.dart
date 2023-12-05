@@ -23,6 +23,7 @@ mixin _$BarModel {
   String get address => throw _privateConstructorUsedError;
   CardColor get color => throw _privateConstructorUsedError;
   CardType get type => throw _privateConstructorUsedError;
+  WalletType get label => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int? get totalReceived => throw _privateConstructorUsedError;
   int? get totalSent => throw _privateConstructorUsedError;
@@ -36,17 +37,20 @@ mixin _$BarModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BarModelCopyWith<BarModel> get copyWith => throw _privateConstructorUsedError;
+  $BarModelCopyWith<BarModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $BarModelCopyWith<$Res> {
-  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) = _$BarModelCopyWithImpl<$Res, BarModel>;
+  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) =
+      _$BarModelCopyWithImpl<$Res, BarModel>;
   @useResult
   $Res call(
       {String address,
       CardColor color,
       CardType type,
+      WalletType label,
       String name,
       int? totalReceived,
       int? totalSent,
@@ -57,7 +61,8 @@ abstract class $BarModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCopyWith<$Res> {
+class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
+    implements $BarModelCopyWith<$Res> {
   _$BarModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -71,6 +76,7 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCo
     Object? address = null,
     Object? color = null,
     Object? type = null,
+    Object? label = null,
     Object? name = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
@@ -92,6 +98,10 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCo
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as CardType,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as WalletType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -125,8 +135,10 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCo
 }
 
 /// @nodoc
-abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> {
-  factory _$$BarModelImplCopyWith(_$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
+abstract class _$$BarModelImplCopyWith<$Res>
+    implements $BarModelCopyWith<$Res> {
+  factory _$$BarModelImplCopyWith(
+          _$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
       __$$BarModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -134,6 +146,7 @@ abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> 
       {String address,
       CardColor color,
       CardType type,
+      WalletType label,
       String name,
       int? totalReceived,
       int? totalSent,
@@ -144,9 +157,12 @@ abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> 
 }
 
 /// @nodoc
-class __$$BarModelImplCopyWithImpl<$Res> extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
+class __$$BarModelImplCopyWithImpl<$Res>
+    extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
     implements _$$BarModelImplCopyWith<$Res> {
-  __$$BarModelImplCopyWithImpl(_$BarModelImpl _value, $Res Function(_$BarModelImpl) _then) : super(_value, _then);
+  __$$BarModelImplCopyWithImpl(
+      _$BarModelImpl _value, $Res Function(_$BarModelImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -154,6 +170,7 @@ class __$$BarModelImplCopyWithImpl<$Res> extends _$BarModelCopyWithImpl<$Res, _$
     Object? address = null,
     Object? color = null,
     Object? type = null,
+    Object? label = null,
     Object? name = null,
     Object? totalReceived = freezed,
     Object? totalSent = freezed,
@@ -175,6 +192,10 @@ class __$$BarModelImplCopyWithImpl<$Res> extends _$BarModelCopyWithImpl<$Res, _$
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as CardType,
+      label: null == label
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as WalletType,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -214,6 +235,7 @@ class _$BarModelImpl implements _BarModel {
       {required this.address,
       this.color = CardColor.SILVER,
       this.type = CardType.BAR,
+      this.label = WalletType.COINPLUS_WALLET,
       this.name = 'Coinplus Bitcoin Bar',
       this.totalReceived,
       this.totalSent,
@@ -222,7 +244,8 @@ class _$BarModelImpl implements _BarModel {
       @JsonKey(name: 'chain_stats') this.data,
       @JsonKey(name: 'mempool_stats') this.mempoolStats});
 
-  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) => _$$BarModelImplFromJson(json);
+  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarModelImplFromJson(json);
 
   @override
   final String address;
@@ -232,6 +255,9 @@ class _$BarModelImpl implements _BarModel {
   @override
   @JsonKey()
   final CardType type;
+  @override
+  @JsonKey()
+  final WalletType label;
   @override
   @JsonKey()
   final String name;
@@ -253,7 +279,7 @@ class _$BarModelImpl implements _BarModel {
 
   @override
   String toString() {
-    return 'BarModel(address: $address, color: $color, type: $type, name: $name, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, createdAt: $createdAt, data: $data, mempoolStats: $mempoolStats)';
+    return 'BarModel(address: $address, color: $color, type: $type, label: $label, name: $name, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, createdAt: $createdAt, data: $data, mempoolStats: $mempoolStats)';
   }
 
   @override
@@ -264,19 +290,24 @@ class _$BarModelImpl implements _BarModel {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.totalReceived, totalReceived) || other.totalReceived == totalReceived) &&
-            (identical(other.totalSent, totalSent) || other.totalSent == totalSent) &&
+            (identical(other.totalReceived, totalReceived) ||
+                other.totalReceived == totalReceived) &&
+            (identical(other.totalSent, totalSent) ||
+                other.totalSent == totalSent) &&
             (identical(other.balance, balance) || other.balance == balance) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.mempoolStats, mempoolStats) || other.mempoolStats == mempoolStats));
+            (identical(other.mempoolStats, mempoolStats) ||
+                other.mempoolStats == mempoolStats));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, address, color, type, name, totalReceived, totalSent, balance, createdAt, data, mempoolStats);
+  int get hashCode => Object.hash(runtimeType, address, color, type, label,
+      name, totalReceived, totalSent, balance, createdAt, data, mempoolStats);
 
   @JsonKey(ignore: true)
   @override
@@ -294,18 +325,21 @@ class _$BarModelImpl implements _BarModel {
 
 abstract class _BarModel implements BarModel, AbstractCard {
   const factory _BarModel(
-      {required final String address,
-      final CardColor color,
-      final CardType type,
-      final String name,
-      final int? totalReceived,
-      final int? totalSent,
-      final int? balance,
-      @JsonKey(fromJson: timeFromJson) final String createdAt,
-      @JsonKey(name: 'chain_stats') final ChainStats? data,
-      @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) = _$BarModelImpl;
+          {required final String address,
+          final CardColor color,
+          final CardType type,
+          final WalletType label,
+          final String name,
+          final int? totalReceived,
+          final int? totalSent,
+          final int? balance,
+          @JsonKey(fromJson: timeFromJson) final String createdAt,
+          @JsonKey(name: 'chain_stats') final ChainStats? data,
+          @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) =
+      _$BarModelImpl;
 
-  factory _BarModel.fromJson(Map<String, dynamic> json) = _$BarModelImpl.fromJson;
+  factory _BarModel.fromJson(Map<String, dynamic> json) =
+      _$BarModelImpl.fromJson;
 
   @override
   String get address;
@@ -313,6 +347,8 @@ abstract class _BarModel implements BarModel, AbstractCard {
   CardColor get color;
   @override
   CardType get type;
+  @override
+  WalletType get label;
   @override
   String get name;
   @override
@@ -332,5 +368,6 @@ abstract class _BarModel implements BarModel, AbstractCard {
   MempoolStats? get mempoolStats;
   @override
   @JsonKey(ignore: true)
-  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

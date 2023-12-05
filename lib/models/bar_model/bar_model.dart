@@ -17,6 +17,7 @@ class BarModel with _$BarModel {
     required String address,
     @Default(CardColor.SILVER) CardColor color,
     @Default(CardType.BAR) CardType type,
+    @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Bar') String name,
     int? totalReceived,
     int? totalSent,
