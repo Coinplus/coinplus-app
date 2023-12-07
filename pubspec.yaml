@@ -80,6 +80,9 @@ dependencies:
   gaimon: ^1.2.1
   connectivity_plus: ^5.0.2
   package_info_plus: ^5.0.1
+  cloud_firestore: ^4.13.3
+  cloud_firestore_odm: ^1.0.0-dev.78
+  ramp_flutter: ^2.0.2
 
 
 dev_dependencies:

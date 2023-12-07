@@ -9,7 +9,8 @@ part of 'wallet_protect_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$WalletProtectState on _WalletProtectState, Store {
-  late final _$isCreatedPinMatchAtom = Atom(name: '_WalletProtectState.isCreatedPinMatch', context: context);
+  late final _$isCreatedPinMatchAtom =
+      Atom(name: '_WalletProtectState.isCreatedPinMatch', context: context);
 
   @override
   bool get isCreatedPinMatch {
@@ -24,7 +25,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$isBiometricsRunningAtom = Atom(name: '_WalletProtectState.isBiometricsRunning', context: context);
+  late final _$isBiometricsRunningAtom =
+      Atom(name: '_WalletProtectState.isBiometricsRunning', context: context);
 
   @override
   bool get isBiometricsRunning {
@@ -39,7 +41,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$isBiometricsEnabledAtom = Atom(name: '_WalletProtectState.isBiometricsEnabled', context: context);
+  late final _$isBiometricsEnabledAtom =
+      Atom(name: '_WalletProtectState.isBiometricsEnabled', context: context);
 
   @override
   bool get isBiometricsEnabled {
@@ -54,7 +57,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$_isNfcSessionStartedAtom = Atom(name: '_WalletProtectState._isNfcSessionStarted', context: context);
+  late final _$_isNfcSessionStartedAtom =
+      Atom(name: '_WalletProtectState._isNfcSessionStarted', context: context);
 
   bool get isNfcSessionStarted {
     _$_isNfcSessionStartedAtom.reportRead();
@@ -66,12 +70,14 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
 
   @override
   set _isNfcSessionStarted(bool value) {
-    _$_isNfcSessionStartedAtom.reportWrite(value, super._isNfcSessionStarted, () {
+    _$_isNfcSessionStartedAtom.reportWrite(value, super._isNfcSessionStarted,
+        () {
       super._isNfcSessionStarted = value;
     });
   }
 
-  late final _$isSetPinCodeAtom = Atom(name: '_WalletProtectState.isSetPinCode', context: context);
+  late final _$isSetPinCodeAtom =
+      Atom(name: '_WalletProtectState.isSetPinCode', context: context);
 
   @override
   bool get isSetPinCode {
@@ -86,7 +92,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$isLinkOpenedAtom = Atom(name: '_WalletProtectState.isLinkOpened', context: context);
+  late final _$isLinkOpenedAtom =
+      Atom(name: '_WalletProtectState.isLinkOpened', context: context);
 
   @override
   bool get isLinkOpened {
@@ -101,7 +108,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$canCheckBiometricsAtom = Atom(name: '_WalletProtectState.canCheckBiometrics', context: context);
+  late final _$canCheckBiometricsAtom =
+      Atom(name: '_WalletProtectState.canCheckBiometrics', context: context);
 
   @override
   bool get canCheckBiometrics {
@@ -116,7 +124,8 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$availableBiometricAtom = Atom(name: '_WalletProtectState.availableBiometric', context: context);
+  late final _$availableBiometricAtom =
+      Atom(name: '_WalletProtectState.availableBiometric', context: context);
 
   @override
   BiometricType? get availableBiometric {
@@ -131,18 +140,21 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
-  late final _$checkBiometricsAsyncAction = AsyncAction('_WalletProtectState.checkBiometrics', context: context);
+  late final _$checkBiometricsAsyncAction =
+      AsyncAction('_WalletProtectState.checkBiometrics', context: context);
 
   @override
   Future<void> checkBiometrics() {
     return _$checkBiometricsAsyncAction.run(() => super.checkBiometrics());
   }
 
-  late final _$checkPinCodeStatusAsyncAction = AsyncAction('_WalletProtectState.checkPinCodeStatus', context: context);
+  late final _$checkPinCodeStatusAsyncAction =
+      AsyncAction('_WalletProtectState.checkPinCodeStatus', context: context);
 
   @override
   Future<void> checkPinCodeStatus() {
-    return _$checkPinCodeStatusAsyncAction.run(() => super.checkPinCodeStatus());
+    return _$checkPinCodeStatusAsyncAction
+        .run(() => super.checkPinCodeStatus());
   }
 
   late final _$checkBiometricStatusAsyncAction =
@@ -150,46 +162,56 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
 
   @override
   Future<void> checkBiometricStatus() {
-    return _$checkBiometricStatusAsyncAction.run(() => super.checkBiometricStatus());
+    return _$checkBiometricStatusAsyncAction
+        .run(() => super.checkBiometricStatus());
   }
 
-  late final _$updateNfcSessionStatusAsyncAction =
-      AsyncAction('_WalletProtectState.updateNfcSessionStatus', context: context);
+  late final _$updateNfcSessionStatusAsyncAction = AsyncAction(
+      '_WalletProtectState.updateNfcSessionStatus',
+      context: context);
 
   @override
   Future<void> updateNfcSessionStatus({required bool isStarted}) {
-    return _$updateNfcSessionStatusAsyncAction.run(() => super.updateNfcSessionStatus(isStarted: isStarted));
+    return _$updateNfcSessionStatusAsyncAction
+        .run(() => super.updateNfcSessionStatus(isStarted: isStarted));
   }
 
-  late final _$disableBiometricAsyncAction = AsyncAction('_WalletProtectState.disableBiometric', context: context);
+  late final _$disableBiometricAsyncAction =
+      AsyncAction('_WalletProtectState.disableBiometric', context: context);
 
   @override
   Future<void> disableBiometric() {
     return _$disableBiometricAsyncAction.run(() => super.disableBiometric());
   }
 
-  late final _$authenticateWithBiometricsAsyncAction =
-      AsyncAction('_WalletProtectState.authenticateWithBiometrics', context: context);
+  late final _$authenticateWithBiometricsAsyncAction = AsyncAction(
+      '_WalletProtectState.authenticateWithBiometrics',
+      context: context);
 
   @override
   Future<bool> authenticateWithBiometrics() {
-    return _$authenticateWithBiometricsAsyncAction.run(() => super.authenticateWithBiometrics());
+    return _$authenticateWithBiometricsAsyncAction
+        .run(() => super.authenticateWithBiometrics());
   }
 
-  late final _$checkAvailableBiometricsAsyncAction =
-      AsyncAction('_WalletProtectState.checkAvailableBiometrics', context: context);
+  late final _$checkAvailableBiometricsAsyncAction = AsyncAction(
+      '_WalletProtectState.checkAvailableBiometrics',
+      context: context);
 
   @override
   Future<void> checkAvailableBiometrics() {
-    return _$checkAvailableBiometricsAsyncAction.run(() => super.checkAvailableBiometrics());
+    return _$checkAvailableBiometricsAsyncAction
+        .run(() => super.checkAvailableBiometrics());
   }
 
-  late final _$authenticateWithBiometricsAndPopAsyncAction =
-      AsyncAction('_WalletProtectState.authenticateWithBiometricsAndPop', context: context);
+  late final _$authenticateWithBiometricsAndPopAsyncAction = AsyncAction(
+      '_WalletProtectState.authenticateWithBiometricsAndPop',
+      context: context);
 
   @override
   Future<bool> authenticateWithBiometricsAndPop() {
-    return _$authenticateWithBiometricsAndPopAsyncAction.run(() => super.authenticateWithBiometricsAndPop());
+    return _$authenticateWithBiometricsAndPopAsyncAction
+        .run(() => super.authenticateWithBiometricsAndPop());
   }
 
   late final _$isBiometricAvailableAsyncAction =
@@ -197,21 +219,25 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
 
   @override
   Future<bool> isBiometricAvailable() {
-    return _$isBiometricAvailableAsyncAction.run(() => super.isBiometricAvailable());
+    return _$isBiometricAvailableAsyncAction
+        .run(() => super.isBiometricAvailable());
   }
 
-  late final _$dontMatchAsyncAction = AsyncAction('_WalletProtectState.dontMatch', context: context);
+  late final _$dontMatchAsyncAction =
+      AsyncAction('_WalletProtectState.dontMatch', context: context);
 
   @override
   Future<void> dontMatch() {
     return _$dontMatchAsyncAction.run(() => super.dontMatch());
   }
 
-  late final _$_WalletProtectStateActionController = ActionController(name: '_WalletProtectState', context: context);
+  late final _$_WalletProtectStateActionController =
+      ActionController(name: '_WalletProtectState', context: context);
 
   @override
   void openLink() {
-    final _$actionInfo = _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.openLink');
+    final _$actionInfo = _$_WalletProtectStateActionController.startAction(
+        name: '_WalletProtectState.openLink');
     try {
       return super.openLink();
     } finally {

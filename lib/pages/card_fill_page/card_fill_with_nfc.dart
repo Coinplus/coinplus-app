@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -40,12 +41,14 @@ class CardFillWithNfc extends StatefulWidget {
     this.cardColor,
     this.isOriginalCard,
     this.isMiFareUltralight,
+    this.isOldCard,
   });
 
   final String? receivedData;
   final String? cardColor;
   final bool? isOriginalCard;
   final bool? isMiFareUltralight;
+  final bool? isOldCard;
 
   @override
   State<CardFillWithNfc> createState() => _CardFillWithNfcState();
@@ -322,7 +325,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          await signInAnonymously(address: _btcAddressController.text);
+                          unawaited(signInAnonymously(address: _btcAddressController.text));
+                          log(widget.isOldCard.toString());
                           if (widget.isOriginalCard == true) {
                             if (widget.cardColor == '0') {
                               _balanceStore.saveSelectedCard(color: CardColor.ORANGE);
@@ -335,11 +339,19 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             }
                           } else {
                             if (widget.isMiFareUltralight == true) {
-                              _balanceStore.saveSelectedCardAsTracker(
-                                color: CardColor.ORANGE,
-                                label: WalletType.TRACKER_PLUS,
-                                name: 'Tracker с плюсиком',
-                              );
+                              if(widget.isOldCard == false) {
+                                _balanceStore.saveSelectedCardAsTracker(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.TRACKER_PLUS,
+                                  name: 'Tracker с плюсиком',
+                                );
+                              } else  {
+                                _balanceStore.saveSelectedCardAsTracker(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              }
                             } else {
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.TRACKER,

@@ -644,7 +644,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          await signInAnonymously(address: _btcAddressController.text);
+                          unawaited(signInAnonymously(address: _btcAddressController.text));
                           _balanceStore.saveSelectedBar();
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {

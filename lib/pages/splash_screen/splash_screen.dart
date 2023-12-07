@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
-import '../../services/firebase_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
