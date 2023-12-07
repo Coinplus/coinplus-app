@@ -343,7 +343,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          await signInAnonymously(address: _btcAddressController.text);
+                          unawaited(signInAnonymously(address: _btcAddressController.text));
                           _balanceStore.saveSelectedCard(
                             color: CardColor.ORANGE,
                           );

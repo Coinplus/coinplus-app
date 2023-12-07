@@ -39,6 +39,7 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
 }
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await initializeAmplitude();

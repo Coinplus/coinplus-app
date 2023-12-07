@@ -16,6 +16,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
@@ -48,6 +49,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   @override
   void initState() {
     super.initState();
+    configureRamp(address: _balanceStore.cards[_settingsState.cardCurrentIndex].address);
     _nfcState.checkNfcSupport();
   }
 
@@ -573,7 +575,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                         ),
                                         const Gap(4),
                                         ScaleTap(
-                                          onPressed: _settingsState.cardCurrentIndex == index ? () {} : null,
+                                          onPressed: _settingsState.cardCurrentIndex == index ? presentRamp : null,
                                           enableFeedback: false,
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
@@ -673,6 +675,9 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                   _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
                 );
                 await _settingsState.setCardCurrentIndex(index);
+                if (index != _balanceStore.cards.length) {
+                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                }
               },
               enlargeFactor: 0.35,
               enableInfiniteScroll: false,

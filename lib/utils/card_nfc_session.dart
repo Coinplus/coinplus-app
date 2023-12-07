@@ -5,8 +5,10 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
+import '../pages/dashboard/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../providers/screen_service.dart';
 import '../router.gr.dart';
+import '../services/cloud_firestore_service.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
 
 Future<void> nfcSessionIos({
@@ -24,6 +26,7 @@ Future<void> nfcSessionIos({
       dynamic walletAddress;
       dynamic cardColor;
       dynamic formFactor;
+      dynamic isOriginalTag = false;
       if (records.length >= 2) {
         final hasJson = records[1].payload;
         final payloadString = String.fromCharCodes(hasJson);
@@ -37,23 +40,24 @@ Future<void> nfcSessionIos({
         final parts = payloadString.split('air.coinplus.com/btc/');
         walletAddress = parts[1];
       }
-
+      final card = await getCardData(walletAddress);
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
+      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       final signature = await mifare.sendMiFareCommand(
         Uint8List.fromList(
           [0x3C, 0x00],
         ),
       );
-      var isOriginalTag = false;
       if (signature.length > 2) {
         isOriginalTag = OriginalityVerifier().verify(
           tagId,
           signature,
         );
       }
-      if (isOriginalTag) {
+      if (isOriginalTag && card != null) {
         await NfcManager.instance.stopSession();
+        if(card.nfcId == formattedTagId) {
         await Future.delayed(const Duration(milliseconds: 2700));
         if (formFactor == 'c') {
           await router.push(
@@ -71,19 +75,43 @@ Future<void> nfcSessionIos({
               barColor: cardColor,
             ),
           );
+         }
+        }else {
+          await NfcManager.instance.stopSession();
+          await Future.delayed(const Duration(milliseconds: 2700));
+          await notCoinplusCardAlert(router.navigatorKey.currentContext!);
         }
       } else {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
         if (tag.data.containsKey('mifare')) {
           isMifareUltralight = true;
-          await router.push(
-            CardFillWithNfc(
-              isMiFareUltralight: isMifareUltralight,
-              isOriginalCard: false,
-              receivedData: walletAddress,
-            ),
-          );
+          if(card!.possibleOldCard == true) {
+            if(card.nfcId == formattedTagId) {
+              await router.push(
+                CardFillWithNfc(
+                  isOldCard: card.possibleOldCard,
+                  isMiFareUltralight: isMifareUltralight,
+                  isOriginalCard: false,
+                  receivedData: walletAddress,
+                ),
+              );
+            } else {
+              await NfcManager.instance.stopSession();
+              await Future.delayed(const Duration(milliseconds: 2700));
+              await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+            }
+          } else {
+            await router.push(
+              CardFillWithNfc(
+                isOldCard: card.possibleOldCard,
+                isMiFareUltralight: isMifareUltralight,
+                isOriginalCard: false,
+                receivedData: walletAddress,
+              ),
+            );
+          }
+
         } else {
           await router.push(
             CardFillWithNfc(
@@ -126,8 +154,11 @@ Future<void> nfcSessionAndroid({
         walletAddress = parts[1];
       }
 
+
+
       final nfcA = NfcA.from(tag);
       final uid = nfcA!.identifier;
+
       Uint8List? signature;
       var isOriginalTag = false;
 
@@ -146,23 +177,30 @@ Future<void> nfcSessionAndroid({
         signature = null;
       }
       await router.pop();
-      if (isOriginalTag) {
-        if (formFactor == 'c') {
-          await router.push(
-            CardFillWithNfc(
-              isOriginalCard: isOriginalTag,
-              receivedData: walletAddress,
-              cardColor: cardColor,
-            ),
-          );
-        } else if (formFactor == 'b') {
-          await router.push(
-            BarFillWithNfc(
-              isOriginalTag: isOriginalTag,
-              receivedData: walletAddress,
-              barColor: cardColor,
-            ),
-          );
+      final card = await getCardData(walletAddress);
+      final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+      if (isOriginalTag && card != null) {
+        if(card.nfcId == formattedTagId) {
+          if (formFactor == 'c') {
+            await router.push(
+              CardFillWithNfc(
+                isOriginalCard: isOriginalTag,
+                receivedData: walletAddress,
+                cardColor: cardColor,
+              ),
+            );
+          } else if (formFactor == 'b') {
+            await router.push(
+              BarFillWithNfc(
+                isOriginalTag: isOriginalTag,
+                receivedData: walletAddress,
+                barColor: cardColor,
+              ),
+            );
+          }
+        } else {
+          await NfcManager.instance.stopSession();
+          await notCoinplusCardAlert(router.navigatorKey.currentContext!);
         }
       } else {
         if (tag.data.containsKey('mifareultralight')) {
@@ -172,7 +210,6 @@ Future<void> nfcSessionAndroid({
               isMiFareUltralight: isMifareUltralight,
               isOriginalCard: isOriginalTag,
               receivedData: walletAddress,
-              cardColor: cardColor,
             ),
           );
         } else {

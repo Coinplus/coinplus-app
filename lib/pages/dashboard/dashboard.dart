@@ -31,6 +31,8 @@ import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/cloud_firestore_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
@@ -47,6 +49,7 @@ import '../wallet_page/wallet_page.dart';
 import 'already_activated_alert/already_activated_alert.dart';
 import 'android_nfc_modal/android_bar_nfc_modal.dart';
 import 'android_nfc_modal/android_card_nfc_modal.dart';
+import 'maybe_coinplus_card/maybe_coinplus_card.dart';
 import 'not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import 'trouble_tapping_bar/trouble_tapping_bar.dart';
 import 'trouble_tapping_card/trouble_tapping_card.dart';
@@ -887,7 +890,7 @@ class DashboardPage extends HookWidget {
                                         Colors.grey.withOpacity(0.1),
                                       ),
                                     ),
-                                onPressed: isBarList
+                                onPressed: card.label == WalletType.COINPLUS_WALLET ? isBarList
                                     ? () async {
                                         if (await isBarActivated) {
                                           await router.pop();
@@ -1210,6 +1213,7 @@ class DashboardPage extends HookWidget {
                                                           final ndef = Ndef.from(tag);
                                                           final records = ndef!.cachedMessage!.records;
                                                           dynamic walletAddress;
+                                                          dynamic isOriginalTag = false;
                                                           if (records.length >= 2) {
                                                             final hasJson = records[1].payload;
                                                             final payloadString = String.fromCharCodes(
@@ -1230,35 +1234,43 @@ class DashboardPage extends HookWidget {
                                                             walletAddress = parts[1];
                                                           }
                                                           if (card.address == walletAddress) {
+                                                            final card = await getCardData(walletAddress);
                                                             final mifare = MiFare.from(tag);
                                                             final tagId = mifare!.identifier;
+                                                            final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
                                                             final signature = await mifare.sendMiFareCommand(
                                                               Uint8List.fromList(
                                                                 [0x3C, 0x00],
                                                               ),
                                                             );
-                                                            var isOriginalTag = false;
+
                                                             if (signature.length > 2) {
                                                               isOriginalTag = OriginalityVerifier().verify(
                                                                 tagId,
                                                                 signature,
                                                               );
                                                             }
-                                                            if (isOriginalTag) {
-                                                              await NfcManager.instance.stopSession(
-                                                                alertMessage: 'Complete',
-                                                              );
-                                                              await Future.delayed(
-                                                                const Duration(
-                                                                  milliseconds: 2500,
-                                                                ),
-                                                              );
-                                                              await router.pop();
-                                                              await router.push(
-                                                                CardSecretFillRoute(
-                                                                  receivedData: walletAddress.toString(),
-                                                                ),
-                                                              );
+                                                            if (isOriginalTag && card != null) {
+                                                              if(formattedTagId == card.nfcId) {
+                                                                await NfcManager.instance.stopSession(
+                                                                  alertMessage: 'Complete',
+                                                                );
+                                                                await Future.delayed(
+                                                                  const Duration(
+                                                                    milliseconds: 2500,
+                                                                  ),
+                                                                );
+                                                                await router.pop();
+                                                                await router.push(
+                                                                  CardSecretFillRoute(
+                                                                    receivedData: walletAddress.toString(),
+                                                                  ),
+                                                                );
+                                                              } else{
+                                                                await NfcManager.instance.stopSession();
+                                                                await Future.delayed(const Duration(milliseconds: 2700));
+                                                                await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                                              }
                                                             } else {
                                                               await NfcManager.instance.stopSession();
                                                               await Future.delayed(
@@ -1266,7 +1278,7 @@ class DashboardPage extends HookWidget {
                                                                   milliseconds: 2900,
                                                                 ),
                                                               );
-                                                              await notCoinplusCard();
+                                                              await maybeCoinplusCard(router.navigatorKey.currentContext!);
                                                             }
                                                           } else {
                                                             await _walletProtectState.updateNfcSessionStatus(
@@ -1334,13 +1346,20 @@ class DashboardPage extends HookWidget {
                                                             } catch (e) {
                                                               signature = null;
                                                             }
-                                                            if (isOriginalTag) {
+                                                            final card = await getCardData(walletAddress);
+                                                            final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+
+                                                            if (isOriginalTag && card != null) {
                                                               await router.pop();
-                                                              await router.push(
-                                                                CardSecretFillRoute(
-                                                                  receivedData: walletAddress,
-                                                                ),
-                                                              );
+                                                              if(card.nfcId == formattedTagId) {
+                                                                await router.push(
+                                                                  CardSecretFillRoute(
+                                                                    receivedData: walletAddress,
+                                                                  ),
+                                                                );
+                                                              } else {
+                                                              await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                                              }
                                                             } else {
                                                               await router.pop();
                                                               await notCoinplusCard();
@@ -1434,7 +1453,11 @@ class DashboardPage extends HookWidget {
                                             },
                                           );
                                         }
-                                      },
+                                      } :
+                                    () async {
+                                  await router.pop();
+                                  await maybeCoinplusCard(router.navigatorKey.currentContext!);
+                                },
                                 child: Row(
                                   children: [
                                     Padding(
@@ -1494,7 +1517,10 @@ class DashboardPage extends HookWidget {
                                   Colors.grey.withOpacity(0.1),
                                 ),
                               ),
-                          onPressed: () async {},
+                          onPressed: () async {
+                            await router.pop();
+                            presentRamp();
+                          },
                           child: Row(
                             children: [
                               Padding(
