@@ -339,7 +339,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             }
                           } else {
                             if (widget.isMiFareUltralight == true) {
-                              if(widget.isOldCard == false) {
+                              if(widget.isOldCard == false || widget.isOldCard == null) {
                                 _balanceStore.saveSelectedCardAsTracker(
                                   color: CardColor.ORANGE,
                                   label: WalletType.TRACKER_PLUS,

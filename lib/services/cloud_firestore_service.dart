@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/firebase_model/cards_firebase_model.dart';
@@ -5,26 +6,21 @@ import '../models/firebase_model/cards_firebase_model.dart';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 Future<CardsModel?> getCardData(String documentId) async {
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('cards').doc(documentId).get();
 
-    final DocumentSnapshot documentSnapshot =
-    await _firestore.collection('cards').doc(documentId).get();
+  if (documentSnapshot.exists) {
+    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
 
-    if (documentSnapshot.exists) {
-      final documentData = documentSnapshot.data() as Map<String, dynamic>?;
-
-      if (documentData != null) {
-        final card = CardsModel.fromJson(documentData);
-        return card;
-      }
-    } else {
+    if (documentData != null) {
+      final card = CardsModel.fromJson(documentData);
+      return card;
     }
-    return null;
-  }
+  } else {}
+  return null;
+}
 
 Future<CardsModel?> getBarData(String documentId) async {
-
-  final DocumentSnapshot documentSnapshot =
-  await _firestore.collection('bars').doc(documentId).get();
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('bars').doc(documentId).get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
@@ -33,7 +29,7 @@ Future<CardsModel?> getBarData(String documentId) async {
       final bar = CardsModel.fromJson(documentData);
       return bar;
     }
-  } else {
-  }
+  } else {}
   return null;
 }
+

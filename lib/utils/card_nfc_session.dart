@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:nfc_manager/nfc_manager.dart';
@@ -81,13 +82,15 @@ Future<void> nfcSessionIos({
           await Future.delayed(const Duration(milliseconds: 2700));
           await notCoinplusCardAlert(router.navigatorKey.currentContext!);
         }
-      } else {
+      }
+      else {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
         if (tag.data.containsKey('mifare')) {
           isMifareUltralight = true;
-          if(card!.possibleOldCard == true) {
+          if(card != null && card.possibleOldCard == true) {
             if(card.nfcId == formattedTagId) {
+              //Connect as Coinplus Bitcoin Wallet
               await router.push(
                 CardFillWithNfc(
                   isOldCard: card.possibleOldCard,
@@ -97,14 +100,16 @@ Future<void> nfcSessionIos({
                 ),
               );
             } else {
+              //Fake card
               await NfcManager.instance.stopSession();
               await Future.delayed(const Duration(milliseconds: 2700));
               await notCoinplusCardAlert(router.navigatorKey.currentContext!);
             }
           } else {
+            //Connect as TrackerPlus
             await router.push(
               CardFillWithNfc(
-                isOldCard: card.possibleOldCard,
+                isOldCard: card?.possibleOldCard,
                 isMiFareUltralight: isMifareUltralight,
                 isOriginalCard: false,
                 receivedData: walletAddress,
@@ -113,6 +118,7 @@ Future<void> nfcSessionIos({
           }
 
         } else {
+          //Connect as Tracker
           await router.push(
             CardFillWithNfc(
               isOriginalCard: false,
@@ -180,7 +186,9 @@ Future<void> nfcSessionAndroid({
       final card = await getCardData(walletAddress);
       final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       if (isOriginalTag && card != null) {
+        await NfcManager.instance.stopSession();
         if(card.nfcId == formattedTagId) {
+          await Future.delayed(const Duration(milliseconds: 2700));
           if (formFactor == 'c') {
             await router.push(
               CardFillWithNfc(
@@ -198,25 +206,43 @@ Future<void> nfcSessionAndroid({
               ),
             );
           }
-        } else {
-          await NfcManager.instance.stopSession();
+        }else {
           await notCoinplusCardAlert(router.navigatorKey.currentContext!);
         }
       } else {
         if (tag.data.containsKey('mifareultralight')) {
           isMifareUltralight = true;
-          await router.push(
-            CardFillWithNfc(
-              isMiFareUltralight: isMifareUltralight,
-              isOriginalCard: isOriginalTag,
-              receivedData: walletAddress,
-            ),
-          );
+          if(card != null && card.possibleOldCard == true) {
+            log(card.nfcId.toString());
+            log(formattedTagId.toString());
+            if(card.nfcId == formattedTagId) {
+              await router.push(
+                CardFillWithNfc(
+                  isOldCard: card.possibleOldCard,
+                  isMiFareUltralight: isMifareUltralight,
+                  isOriginalCard: false,
+                  receivedData: walletAddress,
+                ),
+              );
+            } else {
+              await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+            }
+          } else {
+            await router.push(
+              CardFillWithNfc(
+                isOldCard: card?.possibleOldCard,
+                isMiFareUltralight: isMifareUltralight,
+                isOriginalCard: false,
+                receivedData: walletAddress,
+              ),
+            );
+          }
+
         } else {
           await router.push(
             CardFillWithNfc(
-              isOriginalCard: isOriginalTag,
-              isMiFareUltralight: isMifareUltralight,
+              isOriginalCard: false,
+              isMiFareUltralight: false,
               receivedData: walletAddress,
             ),
           );
