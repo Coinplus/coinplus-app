@@ -1,6 +1,6 @@
 #file: noinspection SpellCheckingInspection
 name: coinplus
-description: Crypto Wallet
+description: Coinplus Wallet
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -58,7 +58,7 @@ dependencies:
   text_link: ^1.0.0
   flutter_lints: ^3.0.0
   shake_animation_widget: ^3.0.4
-  flutter_branch_sdk: ^6.8.0
+  flutter_branch_sdk: ^7.0.1
   share_plus: ^7.2.1
   qr_flutter: ^4.1.0
   bs58: ^1.0.2
@@ -84,7 +84,6 @@ dependencies:
   cloud_firestore_odm: ^1.0.0-dev.78
   ramp_flutter: ^2.0.2
 
-
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
   flutter_driver:
@@ -109,7 +108,6 @@ dev_dependencies:
   # Code generation for immutable classes that has a simple
   # syntax/API without compromising on the features.
   freezed: ^2.3.2
-  dart_code_metrics: ^5.7.2
   theme_tailor: ^2.0.0
   retrofit_generator: ^8.0.2
   flutter_launcher_icons: ^0.13.1
@@ -147,7 +145,7 @@ flutter_gen:
       # - dot-delimiter
       style: dot-delimiter
       class_name: Assets
-    exclude: ['assets/flags/*.png', 'assets/translations/*.json',]
+    exclude: ['assets/flags/*.png', 'assets/translations/*.json']
   fonts:
     # Optional
     enabled: true
