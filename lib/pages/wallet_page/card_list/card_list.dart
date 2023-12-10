@@ -1,3 +1,4 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,7 +79,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
               (length) {
                 if (length > _settingsState.cardCurrentIndex) {
                   widget.onCarouselScroll(length - 1);
-                  _settingsState.setCardCurrentIndex(length - 1);
                   final card = _balanceStore.cards.lastOrNull;
                   if (card != null) {
                     widget.onCardSelected(card as AbstractCard);
