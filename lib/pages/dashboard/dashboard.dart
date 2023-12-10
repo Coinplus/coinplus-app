@@ -118,7 +118,7 @@ class DashboardPage extends HookWidget {
     useEffect(
       () {
         _nfcStore.checkNfcSupport();
-        final streamSubscription = FlutterBranchSdk.initSession().listen(
+        final streamSubscription = FlutterBranchSdk.listSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
@@ -1139,7 +1139,8 @@ class DashboardPage extends HookWidget {
                                                                   }
                                                                 } else {
                                                                   await NfcManager.instance.stopSession();
-                                                                  if(card!.possibleOldCard == true && card.nfcId == formattedTagId) {
+                                                                  if (card!.possibleOldCard == true &&
+                                                                      card.nfcId == formattedTagId) {
                                                                     await Future.delayed(
                                                                       const Duration(
                                                                         milliseconds: 2900,
@@ -1612,6 +1613,7 @@ class DashboardPage extends HookWidget {
       ),
     );
   }
+
   void showCardTapIssueBottomSheet() {
     showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
@@ -1699,15 +1701,15 @@ class DashboardPage extends HookWidget {
                 },
                 style: context.theme
                     .buttonStyle(
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    color: AppColors.primaryTextColor,
-                    fontSize: 15,
-                  ),
-                )
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 15,
+                      ),
+                    )
                     .copyWith(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
-                ),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                    ),
                 child: const Text('Close'),
               ).paddingHorizontal(60),
               const Gap(

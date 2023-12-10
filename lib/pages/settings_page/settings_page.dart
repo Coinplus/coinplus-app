@@ -45,6 +45,7 @@ class SettingsPage extends HookWidget {
       },
       [_walletProtectState.isSetPinCode],
     );
+    // ignore: avoid_positional_boolean_parameters
     final onToggleFaceId = useCallback<Future<void> Function(bool p1)>(
       (isEnable) async {
         if (!isEnable) {
