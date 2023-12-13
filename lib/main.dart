@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'app.dart';
@@ -43,7 +42,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await initializeAmplitude();
-  await FlutterBranchSdk.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await run();
 }

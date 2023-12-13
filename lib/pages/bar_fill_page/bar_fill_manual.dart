@@ -816,7 +816,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                       ? LoadingButton(
                           onPressed: () async {
                             if (_checkboxState.isActive) {
-                               unawaited(signInAnonymously(address: _btcAddressController.text));
+                              unawaited(signInAnonymously(address: _btcAddressController.text));
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
                                 if (hasShown) {

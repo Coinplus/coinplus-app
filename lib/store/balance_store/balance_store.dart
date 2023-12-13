@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/card_color.dart';
@@ -15,6 +16,7 @@ import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
 import '../../services/amplitude_service.dart';
 import '../../utils/storage_utils.dart';
+import '../qr_detect_state/qr_detect_state.dart';
 
 part 'balance_store.g.dart';
 
@@ -33,6 +35,8 @@ abstract class _BalanceStore with Store {
   BarModel? _selectedBar;
   @observable
   ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
+
+  ValidationState get _validationStore => GetIt.I<ValidationState>();
 
   _BalanceStore() {
     getCardsFromStorage();
@@ -162,8 +166,9 @@ abstract class _BalanceStore with Store {
         address: address,
       );
       return card;
-    } on DioException catch (e, stc) {
-      log(e.message.toString(), stackTrace: stc);
+    } on DioException {
+      _validationStore.invalidAddress();
+      log('Its not valid btc address');
     } finally {
       loadings[address] = false;
     }

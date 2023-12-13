@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../providers/screen_service.dart';
@@ -89,7 +91,18 @@ abstract class _WalletProtectState with Store {
           localizedReason: 'Authenticate using Face ID',
           options: const AuthenticationOptions(
             biometricOnly: true,
+            stickyAuth: true,
+            sensitiveTransaction: false,
           ),
+          authMessages: const <AuthMessages>[
+            AndroidAuthMessages(
+              signInTitle: 'Oops! Biometric authentication required!',
+              cancelButton: 'No thanks',
+            ),
+            IOSAuthMessages(
+              cancelButton: 'No thanks',
+            ),
+          ],
         );
         if (isAuthorized) {
           await enableBiometricAuth();

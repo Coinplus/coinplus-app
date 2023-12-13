@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -326,7 +325,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                       onPressed: () async {
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
-                          log(widget.isOldCard.toString());
                           if (widget.isOriginalCard == true) {
                             if (widget.cardColor == '0') {
                               _balanceStore.saveSelectedCard(color: CardColor.ORANGE);
@@ -339,13 +337,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             }
                           } else {
                             if (widget.isMiFareUltralight == true) {
-                              if(widget.isOldCard == false || widget.isOldCard == null) {
+                              if (widget.isOldCard == false || widget.isOldCard == null) {
                                 _balanceStore.saveSelectedCardAsTracker(
                                   color: CardColor.ORANGE,
                                   label: WalletType.TRACKER_PLUS,
                                   name: 'Tracker с плюсиком',
                                 );
-                              } else  {
+                              } else {
                                 _balanceStore.saveSelectedCardAsTracker(
                                   color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,

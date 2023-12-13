@@ -47,7 +47,7 @@ class OnboardingPage extends HookWidget {
     useEffect(
       () {
         _nfcState.checkNfcSupport();
-        final streamSubscription = FlutterBranchSdk.listSession().listen(
+        final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (deepLinkRes.value != null &&

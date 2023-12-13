@@ -9,8 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
+import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i28;
 import 'package:coinplus/models/bar_model/bar_model.dart' as _i27;
-import 'package:coinplus/models/card_model/card_model.dart' as _i28;
+import 'package:coinplus/models/card_model/card_model.dart' as _i29;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i2;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i3;
 import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart'
@@ -45,9 +46,9 @@ import 'package:coinplus/pages/settings_page/settings_page.dart' as _i21;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i22;
 import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i23;
-import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i29;
+import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i30;
 import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i30;
+    as _i31;
 import 'package:flutter/cupertino.dart' as _i25;
 import 'package:flutter/material.dart' as _i26;
 
@@ -115,6 +116,7 @@ abstract class $Router extends _i24.RootStackRouter {
         child: _i6.CardFillPage(
           key: args.key,
           receivedData: args.receivedData,
+          onChangeCard: args.onChangeCard,
         ),
       );
     },
@@ -431,12 +433,14 @@ class CardFillRoute extends _i24.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
     _i26.Key? key,
     String? receivedData,
+    void Function(({_i28.AbstractCard? card, int index}))? onChangeCard,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardFillRoute.name,
           args: CardFillRouteArgs(
             key: key,
             receivedData: receivedData,
+            onChangeCard: onChangeCard,
           ),
           initialChildren: children,
         );
@@ -451,15 +455,18 @@ class CardFillRouteArgs {
   const CardFillRouteArgs({
     this.key,
     this.receivedData,
+    this.onChangeCard,
   });
 
   final _i26.Key? key;
 
   final String? receivedData;
 
+  final void Function(({_i28.AbstractCard? card, int index}))? onChangeCard;
+
   @override
   String toString() {
-    return 'CardFillRouteArgs{key: $key, receivedData: $receivedData}';
+    return 'CardFillRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard}';
   }
 }
 
@@ -564,7 +571,7 @@ class CardSecretFillRouteArgs {
 class CardSettingsRoute extends _i24.PageRouteInfo<CardSettingsRouteArgs> {
   CardSettingsRoute({
     _i26.Key? key,
-    required _i28.CardModel card,
+    required _i29.CardModel card,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardSettingsRoute.name,
@@ -589,7 +596,7 @@ class CardSettingsRouteArgs {
 
   final _i26.Key? key;
 
-  final _i28.CardModel card;
+  final _i29.CardModel card;
 
   @override
   String toString() {
@@ -702,9 +709,9 @@ class PinCodeForPrivateKey
   PinCodeForPrivateKey({
     _i26.Key? key,
     _i27.BarModel? bar,
-    _i29.BarSettingState? isKeyVisible,
-    _i28.CardModel? card,
-    _i30.CardSettingState? isVisible,
+    _i30.BarSettingState? isKeyVisible,
+    _i29.CardModel? card,
+    _i31.CardSettingState? isVisible,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           PinCodeForPrivateKey.name,
@@ -737,11 +744,11 @@ class PinCodeForPrivateKeyArgs {
 
   final _i27.BarModel? bar;
 
-  final _i29.BarSettingState? isKeyVisible;
+  final _i30.BarSettingState? isKeyVisible;
 
-  final _i28.CardModel? card;
+  final _i29.CardModel? card;
 
-  final _i30.CardSettingState? isVisible;
+  final _i31.CardSettingState? isVisible;
 
   @override
   String toString() {

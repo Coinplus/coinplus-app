@@ -17,6 +17,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/card_nfc_session.dart';
 import 'please_enable_biometrics.dart';
 
 @RoutePage()
@@ -152,6 +153,7 @@ class SettingsPage extends HookWidget {
                             return Column(
                               children: [
                                 Divider(
+                                  height: 1,
                                   indent: 5,
                                   endIndent: 5,
                                   thickness: 1,
@@ -190,6 +192,7 @@ class SettingsPage extends HookWidget {
                                       return Column(
                                         children: [
                                           Divider(
+                                            height: 1,
                                             indent: 0,
                                             endIndent: 0,
                                             thickness: 1,
@@ -242,6 +245,43 @@ class SettingsPage extends HookWidget {
                               ],
                             );
                           },
+                        ),
+                        Divider(
+                          height: 1,
+                          indent: 5,
+                          endIndent: 5,
+                          thickness: 1,
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                            await checkNfcIos(walletProtectState: _walletProtectState);
+                          },
+                          splashFactory: InkSparkle.splashFactory,
+                          highlightColor: Colors.transparent,
+                          child: ListTile(
+                            minLeadingWidth: 10,
+                            leading: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Assets.icons.verify.image(
+                                  color: Colors.blue,
+                                  height: 22,
+                                ),
+                              ],
+                            ),
+                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            title: const Text(
+                              'Verify Card Authenticity',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 15,
+                                color: AppColors.primaryTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -343,6 +383,7 @@ class SettingsPage extends HookWidget {
                           ),
                         ),
                         Divider(
+                          height: 1,
                           indent: 0,
                           endIndent: 0,
                           thickness: 1,
@@ -516,6 +557,7 @@ class SettingsPage extends HookWidget {
                           ),
                         ),
                         Divider(
+                          height: 1,
                           indent: 0,
                           endIndent: 0,
                           thickness: 1,
@@ -559,6 +601,7 @@ class SettingsPage extends HookWidget {
                           ),
                         ),
                         Divider(
+                          height: 1,
                           indent: 0,
                           endIndent: 0,
                           thickness: 1,

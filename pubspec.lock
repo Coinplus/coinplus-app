@@ -594,10 +594,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_branch_sdk
-      sha256: "84724480677314e73d55d7471bf19ff0e27c908bd621f09c32aaa9244b6f4ed4"
+      sha256: "993a11e5fff9959155d99d45fce6ba6b22a25ce7168c55f7a238c465453f5063"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "6.9.0"
   flutter_driver:
     dependency: "direct dev"
     description: flutter

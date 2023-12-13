@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
@@ -106,7 +107,8 @@ class DashboardPage extends HookWidget {
               isInactive.value = false;
               resumed.value = true;
               if (deepLinkRes.value != null) {
-                await router.push(CardFillWithNfc(receivedData: deepLinkRes.value, isMiFareUltralight: true));
+                await router
+                    .push(CardFillRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               }
             }
@@ -118,17 +120,19 @@ class DashboardPage extends HookWidget {
     useEffect(
       () {
         _nfcStore.checkNfcSupport();
-        final streamSubscription = FlutterBranchSdk.listSession().listen(
+        final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
-              await router.push(CardFillWithNfc(receivedData: deepLinkRes.value, isMiFareUltralight: true));
+              await router
+                  .push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             } else if (appLocked.value &&
                 deepLinkRes.value != null &&
                 resumed.value &&
                 router.current.name != CardFillWithNfc.name) {
-              await router.push(CardFillWithNfc(receivedData: deepLinkRes.value, isMiFareUltralight: true));
+              await router
+                  .push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
           },
@@ -175,49 +179,54 @@ class DashboardPage extends HookWidget {
                 ),
                 Theme(
                   data: ThemeData(
-                    canvasColor: Colors.white,
+                    canvasColor: Colors.white.withOpacity(0.5),
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                   ),
                   child: Observer(
                     builder: (context) {
-                      return BottomNavigationBar(
-                        selectedLabelStyle: const TextStyle(
-                          fontSize: 11,
-                          fontFamily: FontFamily.redHatMedium,
-                        ),
-                        unselectedLabelStyle: const TextStyle(
-                          fontSize: 11,
-                          fontFamily: FontFamily.redHatMedium,
-                        ),
-                        onTap: (index) => [
-                          HapticFeedback.lightImpact(),
-                          _pageController.jumpToPage(
-                            index,
-                          ),
-                          navBarState.updateIndex(index),
-                        ],
-                        currentIndex: navBarState.currentIndex,
-                        elevation: 0,
-                        type: BottomNavigationBarType.fixed,
-                        selectedItemColor: Colors.black,
-                        unselectedItemColor: Colors.black,
-                        items: <BottomNavigationBarItem>[
-                          BottomNavigationBarItem(
-                            icon: Assets.icons.walletIcon.image(
-                              height: 32,
-                              color: navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: BottomNavigationBar(
+                            selectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
                             ),
-                            label: 'Wallet',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Assets.icons.pageInfo.image(
-                              height: 32,
-                              color: navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                            unselectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
                             ),
-                            label: 'Settings',
+                            onTap: (index) => [
+                              HapticFeedback.lightImpact(),
+                              _pageController.jumpToPage(
+                                index,
+                              ),
+                              navBarState.updateIndex(index),
+                            ],
+                            currentIndex: navBarState.currentIndex,
+                            elevation: 0,
+                            type: BottomNavigationBarType.fixed,
+                            selectedItemColor: Colors.black,
+                            unselectedItemColor: Colors.black,
+                            items: <BottomNavigationBarItem>[
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.walletIcon.image(
+                                  height: 32,
+                                  color: navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Wallet',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.pageInfo.image(
+                                  height: 32,
+                                  color: navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Settings',
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       );
                     },
                   ),
