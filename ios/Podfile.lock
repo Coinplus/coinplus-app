@@ -643,12 +643,12 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
   - BranchSDK (2.2.2)
-  - cloud_firestore (4.13.3):
+  - cloud_firestore (4.13.5):
     - Firebase/Firestore (= 10.18.0)
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - cloud_functions (4.5.4):
+  - cloud_functions (4.5.8):
     - Firebase/Functions (= 10.18.0)
     - firebase_core
     - Flutter
@@ -666,11 +666,11 @@ PODS:
   - Firebase/Functions (10.18.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 10.18.0)
-  - firebase_auth (4.14.0):
+  - firebase_auth (4.15.2):
     - Firebase/Auth (= 10.18.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.24.0):
+  - firebase_core (2.24.2):
     - Firebase/CoreOnly (= 10.18.0)
     - Flutter
   - FirebaseAppCheckInterop (10.19.0)
@@ -852,7 +852,7 @@ PODS:
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
     - MLImage (= 1.0.0-beta4)
     - MLKitCommon (~> 9.0)
-  - mobile_scanner (3.5.2):
+  - mobile_scanner (3.5.5):
     - Flutter
     - GoogleMLKit/BarcodeScanning (~> 4.0.0)
   - MTBBarcodeScanner (5.0.11)
@@ -1016,12 +1016,12 @@ SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BranchSDK: 324f47ce8568005684cf024a47980bb713f47648
-  cloud_firestore: 9b25b77371a845d07a48e5146799f6d4552f5940
-  cloud_functions: 26f451a531267145db31607fac902fde7bd6fc25
+  cloud_firestore: d2707a9ead952efd2a89e82347e46dc4b9c32e8d
+  cloud_functions: 8a6f73ee01574ce51bd4d027dbbce520c43a2996
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
-  firebase_auth: 9a3d42edd6ab9d7bcf3e05deaa5a08e57d9d34d6
-  firebase_core: f802c5c1f6caff9b8d38b591a36e7b25f8878936
+  firebase_auth: 0099901926d85bda1688f6e451755b413c16154d
+  firebase_core: 0af4a2b24f62071f9bf283691c0ee41556dcb3f5
   FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
   FirebaseAuth: 12314b438fa76048540c8fb86d6cfc9e08595176
   FirebaseAuthInterop: f90d6820bf6ecf44753b9f13ba941902d00b525a
@@ -1052,7 +1052,7 @@ SPEC CHECKSUMS:
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
-  mobile_scanner: 5090a13b7a35fc1c25b0d97e18e84f271a6eb605
+  mobile_scanner: 202ab6f652e40a9add68b10de4c4fb2a745c4348
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e

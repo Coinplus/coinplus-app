@@ -179,7 +179,8 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
                                             ),
                                             Observer(
                                               builder: (context) {
-                                                if (widget.balanceStore.loadings[widget.balanceStore.selectedCard?.address] ??
+                                                if (widget.balanceStore
+                                                        .loadings[widget.balanceStore.selectedCard?.address] ??
                                                     false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(
@@ -269,7 +270,8 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
                                                     widget.balanceStore.selectedCard!.data != null &&
                                                     data != null) {
                                                   final cardBalance = widget.balanceStore.selectedCard!.data!.balance;
-                                                  final cardTxoSum = widget.balanceStore.selectedCard!.data!.spentTxoSum;
+                                                  final cardTxoSum =
+                                                      widget.balanceStore.selectedCard!.data!.spentTxoSum;
                                                   final currentBalance = cardBalance - cardTxoSum;
 
                                                   if (currentBalance.isNaN) {
@@ -718,6 +720,7 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
       ),
     );
   }
+
   Future<void> _validateBTCAddress() async {
     final btcAddress = widget.btcAddressController.text.trim();
     unawaited(
@@ -735,7 +738,7 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
       );
       Future.delayed(
         const Duration(milliseconds: 1400),
-            () => widget.addressState.isAddressVisible = true,
+        () => widget.addressState.isAddressVisible = true,
       );
       await widget.lottieController.forward(from: 0);
     } else {}

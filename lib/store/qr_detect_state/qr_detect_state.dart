@@ -7,16 +7,23 @@ class ValidationState = _ValidationState with _$ValidationState;
 abstract class _ValidationState with Store {
   @readonly
   bool _isDetected = false;
-  @readonly
-  bool _isValid = true;
+  @observable
+  bool isValid = true;
   @readonly
   bool _isSecret1Valid = false;
   @readonly
   bool _isSecret2Valid = false;
+  @observable
+  bool isInvalidAddress = false;
 
   @action
   void validate() {
-    _isValid = !_isValid;
+    isValid = !isValid;
+  }
+
+  @action
+  void invalidAddress() {
+    isInvalidAddress = true;
   }
 
   @action

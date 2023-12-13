@@ -27,21 +27,19 @@ mixin _$ValidationState on _ValidationState, Store {
     });
   }
 
-  late final _$_isValidAtom =
-      Atom(name: '_ValidationState._isValid', context: context);
+  late final _$isValidAtom =
+      Atom(name: '_ValidationState.isValid', context: context);
 
+  @override
   bool get isValid {
-    _$_isValidAtom.reportRead();
-    return super._isValid;
+    _$isValidAtom.reportRead();
+    return super.isValid;
   }
 
   @override
-  bool get _isValid => isValid;
-
-  @override
-  set _isValid(bool value) {
-    _$_isValidAtom.reportWrite(value, super._isValid, () {
-      super._isValid = value;
+  set isValid(bool value) {
+    _$isValidAtom.reportWrite(value, super.isValid, () {
+      super.isValid = value;
     });
   }
 
@@ -81,6 +79,22 @@ mixin _$ValidationState on _ValidationState, Store {
     });
   }
 
+  late final _$isInvalidAddressAtom =
+      Atom(name: '_ValidationState.isInvalidAddress', context: context);
+
+  @override
+  bool get isInvalidAddress {
+    _$isInvalidAddressAtom.reportRead();
+    return super.isInvalidAddress;
+  }
+
+  @override
+  set isInvalidAddress(bool value) {
+    _$isInvalidAddressAtom.reportWrite(value, super.isInvalidAddress, () {
+      super.isInvalidAddress = value;
+    });
+  }
+
   late final _$_ValidationStateActionController =
       ActionController(name: '_ValidationState', context: context);
 
@@ -90,6 +104,17 @@ mixin _$ValidationState on _ValidationState, Store {
         name: '_ValidationState.validate');
     try {
       return super.validate();
+    } finally {
+      _$_ValidationStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void invalidAddress() {
+    final _$actionInfo = _$_ValidationStateActionController.startAction(
+        name: '_ValidationState.invalidAddress');
+    try {
+      return super.invalidAddress();
     } finally {
       _$_ValidationStateActionController.endAction(_$actionInfo);
     }
@@ -153,7 +178,8 @@ mixin _$ValidationState on _ValidationState, Store {
   @override
   String toString() {
     return '''
-
+isValid: ${isValid},
+isInvalidAddress: ${isInvalidAddress}
     ''';
   }
 }

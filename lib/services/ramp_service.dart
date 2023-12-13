@@ -31,17 +31,17 @@ void presentRamp() {
 }
 
 void onOnrampPurchaseCreated(
-    OnrampPurchase purchase,
-    String purchaseViewToken,
-    String apiUrl,
-    ) {}
+  OnrampPurchase purchase,
+  String purchaseViewToken,
+  String apiUrl,
+) {}
 
 void onSendCryptoRequested(SendCryptoPayload payload) {}
 
 void onOfframpSaleCreated(
-    OfframpSale sale,
-    String saleViewToken,
-    String apiUrl,
-    ) {}
+  OfframpSale sale,
+  String saleViewToken,
+  String apiUrl,
+) {}
 
 void onRampClosed() {}
