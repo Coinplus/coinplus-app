@@ -4,23 +4,25 @@ part 'cards_firebase_model.g.dart';
 
 @JsonSerializable()
 class CardsModel {
-  final String? activation;
-  final String? activationCount;
-  final String? activationFailureCount;
+  late bool? activated;
+  late int? activationCount;
+  late int? activationFailureCount;
   final String? address;
   final bool? approved;
   final int? barcodeId;
   final String? color;
-  final int? connected;
+  late int? connected;
+  late int? deleted;
   final String? email;
   final String? nfcId;
   final bool? possibleOldCard;
-  final List<dynamic>? replenished;
+  late bool? replenished;
+  late List<Map<String, dynamic>>? replenishmentHistory;
   final String? type;
-  final int? verificationFailureCount;
+  late int? verificationFailureCount;
 
   CardsModel({
-    this.activation,
+    this.activated,
     this.activationCount,
     this.activationFailureCount,
     this.address,
@@ -28,10 +30,12 @@ class CardsModel {
     this.barcodeId,
     this.color,
     this.connected,
+    this.deleted,
     this.email,
     this.nfcId,
     this.possibleOldCard,
     this.replenished,
+    this.replenishmentHistory,
     this.type,
     this.verificationFailureCount,
   });
@@ -39,4 +43,5 @@ class CardsModel {
   factory CardsModel.fromJson(Map<String, dynamic> json) => _$CardsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CardsModelToJson(this);
+
 }

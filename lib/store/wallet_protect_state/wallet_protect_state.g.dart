@@ -76,6 +76,24 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
+  late final _$_isModalOpenedAtom =
+      Atom(name: '_WalletProtectState._isModalOpened', context: context);
+
+  bool get isModalOpened {
+    _$_isModalOpenedAtom.reportRead();
+    return super._isModalOpened;
+  }
+
+  @override
+  bool get _isModalOpened => isModalOpened;
+
+  @override
+  set _isModalOpened(bool value) {
+    _$_isModalOpenedAtom.reportWrite(value, super._isModalOpened, () {
+      super._isModalOpened = value;
+    });
+  }
+
   late final _$isSetPinCodeAtom =
       Atom(name: '_WalletProtectState.isSetPinCode', context: context);
 
@@ -174,6 +192,15 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   Future<void> updateNfcSessionStatus({required bool isStarted}) {
     return _$updateNfcSessionStatusAsyncAction
         .run(() => super.updateNfcSessionStatus(isStarted: isStarted));
+  }
+
+  late final _$updateModalStatusAsyncAction =
+      AsyncAction('_WalletProtectState.updateModalStatus', context: context);
+
+  @override
+  Future<void> updateModalStatus({required bool isOpened}) {
+    return _$updateModalStatusAsyncAction
+        .run(() => super.updateModalStatus(isOpened: isOpened));
   }
 
   late final _$disableBiometricAsyncAction =

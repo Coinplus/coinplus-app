@@ -55,7 +55,7 @@ class SettingsPage extends HookWidget {
           if (_walletProtectState.canCheckBiometrics) {
             await _walletProtectState.authenticateWithBiometrics();
           } else {
-            await pleaseEnableBiometrics(context);
+            await pleaseEnableBiometrics(context, _walletProtectState);
           }
         }
         await _walletProtectState.checkBiometricStatus();
@@ -256,6 +256,7 @@ class SettingsPage extends HookWidget {
                         InkWell(
                           onTap: () async {
                             await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                            Platform.isAndroid ? checkNfcAndroid(walletProtectState: _walletProtectState) :
                             await checkNfcIos(walletProtectState: _walletProtectState);
                           },
                           splashFactory: InkSparkle.splashFactory,

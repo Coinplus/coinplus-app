@@ -1032,6 +1032,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           if (widget.receivedData == null) {
                             final card = await getCardData(_btcAddressController.text);
                             if (card != null) {
+                              unawaited(connectedCount(_btcAddressController.text));
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.ORANGE,
                                 label: WalletType.COINPLUS_WALLET,
@@ -1047,6 +1048,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           } else {
                             final card = await getCardData(widget.receivedData!);
                             if (card != null) {
+                              unawaited(connectedCount(widget.receivedData!));
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.ORANGE,
                                 label: WalletType.COINPLUS_WALLET,
@@ -1101,6 +1103,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                     await alreadySavedCard(context);
                                   } else {
                                     await _toggleCard();
+                                    if (widget.receivedData == null) {
+                                      await getCardData(_btcAddressController.text);
+                                    } else {
+                                      await getCardData(widget.receivedData!);
+                                    }
                                     _lineStore.makeVisible();
                                   }
                                 }

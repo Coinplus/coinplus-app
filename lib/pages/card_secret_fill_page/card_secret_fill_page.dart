@@ -22,6 +22,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
@@ -715,6 +716,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
                           if (card.address.hashCode == publicKey.hashCode) {
+                            unawaited(toggleActivation(card.address));
+                            unawaited(incrementActivationCount(card.address));
                             await savePrivateKeyInSecureStorage(
                               key: card.address,
                               value: wif,
@@ -728,6 +731,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             await secretsSuccessAlert(context);
                           } else {
                             await router.pop();
+                            unawaited( activationFailureCount(card.address));
                             await secretsFailDialog(context);
                           }
                         } catch (e) {

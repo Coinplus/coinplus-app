@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
@@ -41,6 +40,8 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../widgets/alert_dialog/dialog_box_with_action.dart';
+import '../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../widgets/loading_button.dart';
 import '../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
 import '../onboarding_page/form_factor_page/card_scan_methods_page.dart';
@@ -95,6 +96,9 @@ class DashboardPage extends HookWidget {
         if (!_walletProtectState.isBiometricsRunning) {
           isInactive.value = [AppLifecycleState.inactive].contains(current);
         }
+        if (isInactive.value == true && _walletProtectState.isModalOpened) {
+          await router.pop();
+        }
         appLocked.value = await getIsPinCodeSet();
         if (isPaused.value &&
             router.current.name == DashboardRoute.name &&
@@ -107,8 +111,7 @@ class DashboardPage extends HookWidget {
               isInactive.value = false;
               resumed.value = true;
               if (deepLinkRes.value != null) {
-                await router
-                    .push(CardFillRoute(receivedData: deepLinkRes.value));
+                await router.push(CardFillRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               }
             }
@@ -124,15 +127,13 @@ class DashboardPage extends HookWidget {
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
-              await router
-                  .push(CardFillRoute(receivedData: deepLinkRes.value));
+              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             } else if (appLocked.value &&
                 deepLinkRes.value != null &&
                 resumed.value &&
                 router.current.name != CardFillWithNfc.name) {
-              await router
-                  .push(CardFillRoute(receivedData: deepLinkRes.value));
+              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
           },
@@ -262,6 +263,7 @@ class DashboardPage extends HookWidget {
 
               if (selectedCard == null || _pageController.page != 0) {
                 if (isBarList) {
+                  await _walletProtectState.updateModalStatus(isOpened: true);
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -305,8 +307,9 @@ class DashboardPage extends HookWidget {
                         ],
                       );
                     },
-                  );
+                  ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
                 } else {
+                  await _walletProtectState.updateModalStatus(isOpened: true);
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -355,7 +358,7 @@ class DashboardPage extends HookWidget {
                         ],
                       );
                     },
-                  );
+                  ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
                 }
                 return;
               }
@@ -370,6 +373,7 @@ class DashboardPage extends HookWidget {
                 backgroundColor: Colors.white,
                 context: context,
                 builder: (_) {
+                  _walletProtectState.updateModalStatus(isOpened: true);
                   final card = [
                     ..._balanceStore.cards,
                     ..._balanceStore.bars,
@@ -414,6 +418,7 @@ class DashboardPage extends HookWidget {
                               isScrollControlled: true,
                               context: context,
                               builder: (_) {
+                                _walletProtectState.updateModalStatus(isOpened: true);
                                 return SizedBox(
                                   height: context.height * 0.93,
                                   child: Padding(
@@ -656,7 +661,7 @@ class DashboardPage extends HookWidget {
                                   ),
                                 );
                               },
-                            );
+                            ).then((value) => _walletProtectState.updateModalStatus(isOpened: true));
                           },
                           child: Row(
                             children: [
@@ -750,325 +755,257 @@ class DashboardPage extends HookWidget {
                                         ? () async {
                                             if (await isBarActivated) {
                                               await router.pop();
-                                              await alreadyActivatedWallet(context);
-                                            } else {
+                                              await alreadyActivatedWallet(
+                                                router.navigatorKey.currentContext!,
+                                                _walletProtectState,
+                                              );
+                                            }
+                                            else {
                                               await router.pop();
-                                              final okButton = LoadingButton(
-                                                onPressed: router.pop,
-                                                child: const Text(
-                                                  'Got it',
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w600,
+                                              await showDialogBox(
+                                                context,
+                                                _walletProtectState,
+                                                DialogBoxWithAction(
+                                                  text:
+                                                  'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
+                                                  title: const Text(
+                                                    'Recommended to wait',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatBold,
+                                                      fontSize: 17,
+                                                    ),
                                                   ),
-                                                ),
-                                              ).paddingHorizontal(40);
-                                              final sendButton = SizedBox(
-                                                height: 48,
-                                                child: LoadingButton(
-                                                  style: context.theme
-                                                      .buttonStyle(
-                                                        textStyle: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          color: AppColors.primaryTextColor,
-                                                          fontSize: 15,
-                                                        ),
-                                                      )
-                                                      .copyWith(
-                                                        backgroundColor: MaterialStateProperty.all(
-                                                          Colors.grey.withOpacity(0.1),
-                                                        ),
-                                                      ),
-                                                  onPressed: Platform.isIOS
+                                                  primaryActionText: 'Got it',
+                                                  primaryAction: router.pop,
+                                                  secondaryActionText: 'Send anyway',
+                                                  secondaryAction:  Platform.isIOS
                                                       ? () async {
+                                                    await _walletProtectState.updateNfcSessionStatus(
+                                                      isStarted: true,
+                                                    );
+                                                    await router.pop();
+                                                    await NfcManager.instance.startSession(
+                                                      alertMessage:
+                                                      "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
+                                                      onDiscovered: (tag) async {
+                                                        final ndef = Ndef.from(tag);
+                                                        final records = ndef!.cachedMessage!.records;
+                                                        dynamic walletAddress;
+                                                        if (records.length >= 2) {
+                                                          final hasJson = records[1].payload;
+                                                          final payloadString = String.fromCharCodes(
+                                                            hasJson,
+                                                          );
+                                                          final Map payloadData = await json.decode(
+                                                            payloadString,
+                                                          );
+                                                          walletAddress = payloadData['a'];
+                                                        } else {
+                                                          final hasUrl = records[0].payload;
+                                                          final payloadString = String.fromCharCodes(
+                                                            hasUrl,
+                                                          );
+                                                          final parts = payloadString.split(
+                                                            'air.coinplus.com/btc/',
+                                                          );
+                                                          walletAddress = parts[1];
+                                                        }
+                                                        if (card.address == walletAddress) {
+                                                          final mifare = MiFare.from(tag);
+                                                          final tagId = mifare!.identifier;
+                                                          final signature = await mifare.sendMiFareCommand(
+                                                            Uint8List.fromList(
+                                                              [0x3C, 0x00],
+                                                            ),
+                                                          );
+                                                          var isOriginalTag = false;
+                                                          if (signature.length > 2) {
+                                                            isOriginalTag = OriginalityVerifier().verify(
+                                                              tagId,
+                                                              signature,
+                                                            );
+                                                          }
+                                                          if (isOriginalTag) {
+                                                            await NfcManager.instance.stopSession(
+                                                              alertMessage: 'Complete',
+                                                            );
+                                                            await Future.delayed(
+                                                              const Duration(
+                                                                milliseconds: 2500,
+                                                              ),
+                                                            );
+                                                            await router.pop();
+                                                            isBarList
+                                                                ? await router.push(
+                                                              BarSecretFillRoute(
+                                                                receivedData: walletAddress.toString(),
+                                                              ),
+                                                            )
+                                                                : await router.push(
+                                                              CardSecretFillRoute(
+                                                                receivedData: walletAddress.toString(),
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            await NfcManager.instance.stopSession();
+                                                            await Future.delayed(
+                                                              const Duration(
+                                                                milliseconds: 2900,
+                                                              ),
+                                                            );
+                                                            await notCoinplusCard();
+                                                          }
+                                                        } else {
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
                                                           );
-                                                          await router.pop();
-                                                          await NfcManager.instance.startSession(
-                                                            alertMessage:
-                                                                "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
-                                                            onDiscovered: (tag) async {
-                                                              final ndef = Ndef.from(tag);
-                                                              final records = ndef!.cachedMessage!.records;
-                                                              dynamic walletAddress;
-                                                              if (records.length >= 2) {
-                                                                final hasJson = records[1].payload;
-                                                                final payloadString = String.fromCharCodes(
-                                                                  hasJson,
-                                                                );
-                                                                final Map payloadData = await json.decode(
-                                                                  payloadString,
-                                                                );
-                                                                walletAddress = payloadData['a'];
-                                                              } else {
-                                                                final hasUrl = records[0].payload;
-                                                                final payloadString = String.fromCharCodes(
-                                                                  hasUrl,
-                                                                );
-                                                                final parts = payloadString.split(
-                                                                  'air.coinplus.com/btc/',
-                                                                );
-                                                                walletAddress = parts[1];
-                                                              }
-                                                              if (card.address == walletAddress) {
-                                                                final mifare = MiFare.from(tag);
-                                                                final tagId = mifare!.identifier;
-                                                                final signature = await mifare.sendMiFareCommand(
-                                                                  Uint8List.fromList(
-                                                                    [0x3C, 0x00],
-                                                                  ),
-                                                                );
-                                                                var isOriginalTag = false;
-                                                                if (signature.length > 2) {
-                                                                  isOriginalTag = OriginalityVerifier().verify(
-                                                                    tagId,
-                                                                    signature,
-                                                                  );
-                                                                }
-                                                                if (isOriginalTag) {
-                                                                  await NfcManager.instance.stopSession(
-                                                                    alertMessage: 'Complete',
-                                                                  );
-                                                                  await Future.delayed(
-                                                                    const Duration(
-                                                                      milliseconds: 2500,
-                                                                    ),
-                                                                  );
-                                                                  await router.pop();
-                                                                  isBarList
-                                                                      ? await router.push(
-                                                                          BarSecretFillRoute(
-                                                                            receivedData: walletAddress.toString(),
-                                                                          ),
-                                                                        )
-                                                                      : await router.push(
-                                                                          CardSecretFillRoute(
-                                                                            receivedData: walletAddress.toString(),
-                                                                          ),
-                                                                        );
-                                                                } else {
-                                                                  await NfcManager.instance.stopSession();
-                                                                  await Future.delayed(
-                                                                    const Duration(
-                                                                      milliseconds: 2900,
-                                                                    ),
-                                                                  );
-                                                                  await notCoinplusCard();
-                                                                }
-                                                              } else {
-                                                                await _walletProtectState.updateNfcSessionStatus(
-                                                                  isStarted: true,
-                                                                );
 
-                                                                await NfcManager.instance.stopSession(
-                                                                  errorMessage:
-                                                                      'You tapped the wrong card. Please check the wallet address of the card.',
-                                                                );
-                                                              }
-                                                            },
-                                                            onError: (_) {
-                                                              _walletProtectState.updateNfcSessionStatus(
-                                                                isStarted: false,
-                                                              );
-                                                              NfcManager.instance.stopSession();
-                                                              return Future(showBarTapIssueBottomSheet);
-                                                            },
+                                                          await NfcManager.instance.stopSession(
+                                                            errorMessage:
+                                                            'You tapped the wrong card. Please check the wallet address of the card.',
                                                           );
                                                         }
+                                                      },
+                                                      onError: (_) {
+                                                        _walletProtectState.updateNfcSessionStatus(
+                                                          isStarted: false,
+                                                        );
+                                                        NfcManager.instance.stopSession();
+                                                        return Future(showBarTapIssueBottomSheet);
+                                                      },
+                                                    );
+                                                  }
                                                       : () async {
-                                                          await _walletProtectState.updateNfcSessionStatus(
-                                                            isStarted: true,
-                                                          );
-                                                          await router.pop();
-                                                          await NfcManager.instance.startSession(
-                                                            onDiscovered: (tag) async {
-                                                              final ndef = Ndef.from(tag);
-                                                              final records = ndef!.cachedMessage!.records;
-                                                              dynamic walletAddress;
+                                                    await _walletProtectState.updateNfcSessionStatus(
+                                                      isStarted: true,
+                                                    );
+                                                    await router.pop();
+                                                    await NfcManager.instance.startSession(
+                                                      onDiscovered: (tag) async {
+                                                        final ndef = Ndef.from(tag);
+                                                        final records = ndef!.cachedMessage!.records;
+                                                        dynamic walletAddress;
 
-                                                              if (records.length >= 2) {
-                                                                final hasJson = records[1].payload;
-                                                                final payloadString = String.fromCharCodes(
-                                                                  hasJson,
-                                                                );
-                                                                final Map payloadData = await json.decode(
-                                                                  payloadString,
-                                                                );
-                                                                walletAddress = payloadData['a'];
-                                                              } else {
-                                                                final hasUrl = records[0].payload;
-                                                                final payloadString = String.fromCharCodes(
-                                                                  hasUrl,
-                                                                );
-                                                                final parts = payloadString.split(
-                                                                  'air.coinplus.com/btc/',
-                                                                );
-                                                                walletAddress = parts[1];
-                                                              }
-                                                              if (card.address == walletAddress) {
-                                                                final nfcA = NfcA.from(tag);
-                                                                final uid = nfcA!.identifier;
-                                                                Uint8List? signature;
-                                                                var isOriginalTag = false;
-
-                                                                try {
-                                                                  final response = await nfcA.transceive(
-                                                                    data: Uint8List.fromList([0x3C, 0x00]),
-                                                                  );
-                                                                  signature = Uint8List.fromList(response);
-                                                                  if (signature.length > 2) {
-                                                                    isOriginalTag = OriginalityVerifier().verify(
-                                                                      uid,
-                                                                      signature,
-                                                                    );
-                                                                  }
-                                                                } catch (e) {
-                                                                  signature = null;
-                                                                }
-                                                                if (isOriginalTag) {
-                                                                  await router.pop();
-                                                                  isBarList
-                                                                      ? await router.push(
-                                                                          BarSecretFillRoute(
-                                                                            receivedData: walletAddress.toString(),
-                                                                          ),
-                                                                        )
-                                                                      : await router.push(
-                                                                          CardSecretFillRoute(
-                                                                            receivedData: walletAddress.toString(),
-                                                                          ),
-                                                                        );
-                                                                } else {
-                                                                  await router.pop();
-                                                                  await notCoinplusCard();
-                                                                }
-                                                              } else {
-                                                                await router.pop();
-                                                                await showWrongCardModal();
-                                                                await Future.delayed(
-                                                                  const Duration(milliseconds: 3000),
-                                                                );
-                                                                await NfcManager.instance.stopSession();
-                                                              }
-                                                              await _walletProtectState.updateNfcSessionStatus(
-                                                                isStarted: false,
-                                                              );
-                                                            },
-                                                            onError: (_) {
-                                                              _walletProtectState.updateNfcSessionStatus(
-                                                                isStarted: false,
-                                                              );
-                                                              return Future(() {
-                                                                NfcManager.instance.stopSession();
-                                                                return Future(showBarTapIssueBottomSheet);
-                                                              });
-                                                            },
+                                                        if (records.length >= 2) {
+                                                          final hasJson = records[1].payload;
+                                                          final payloadString = String.fromCharCodes(
+                                                            hasJson,
                                                           );
+                                                          final Map payloadData = await json.decode(
+                                                            payloadString,
+                                                          );
+                                                          walletAddress = payloadData['a'];
+                                                        } else {
+                                                          final hasUrl = records[0].payload;
+                                                          final payloadString = String.fromCharCodes(
+                                                            hasUrl,
+                                                          );
+                                                          final parts = payloadString.split(
+                                                            'air.coinplus.com/btc/',
+                                                          );
+                                                          walletAddress = parts[1];
+                                                        }
+                                                        if (card.address == walletAddress) {
+                                                          final nfcA = NfcA.from(tag);
+                                                          final uid = nfcA!.identifier;
+                                                          Uint8List? signature;
+                                                          var isOriginalTag = false;
+
+                                                          try {
+                                                            final response = await nfcA.transceive(
+                                                              data: Uint8List.fromList([0x3C, 0x00]),
+                                                            );
+                                                            signature = Uint8List.fromList(response);
+                                                            if (signature.length > 2) {
+                                                              isOriginalTag = OriginalityVerifier().verify(
+                                                                uid,
+                                                                signature,
+                                                              );
+                                                            }
+                                                          } catch (e) {
+                                                            signature = null;
+                                                          }
+                                                          if (isOriginalTag) {
+                                                            await router.pop();
+                                                            isBarList
+                                                                ? await router.push(
+                                                              BarSecretFillRoute(
+                                                                receivedData: walletAddress.toString(),
+                                                              ),
+                                                            )
+                                                                : await router.push(
+                                                              CardSecretFillRoute(
+                                                                receivedData: walletAddress.toString(),
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            await router.pop();
+                                                            await notCoinplusCard();
+                                                          }
+                                                        } else {
                                                           await router.pop();
-                                                          await showAndroidBarNfcBottomSheet();
-                                                        },
-                                                  child: const Text(
-                                                    'Send anyway',
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontFamily: FontFamily.redHatMedium,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: AppColors.primaryTextColor,
-                                                    ),
-                                                  ),
-                                                ).paddingHorizontal(40),
-                                              );
-                                              return showDialog<void>(
-                                                context: context,
-                                                builder: (_) {
-                                                  return EmergeAlertDialog(
-                                                    emergeAlertDialogOptions: EmergeAlertDialogOptions(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(22),
-                                                      ),
-                                                      content: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          const Text(
-                                                            'Recommended to Wait!',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily.redHatBold,
-                                                              fontSize: 17,
-                                                            ),
-                                                          ),
-                                                          const Gap(23),
-                                                          Center(
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                Lottie.asset(
-                                                                  height: 140,
-                                                                  repeat: false,
-                                                                  'assets/animated_logo/please_wait.json',
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ).expandedHorizontally(),
-                                                          const Gap(31),
-                                                          const Text(
-                                                            'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily.redHatLight,
-                                                              fontWeight: FontWeight.w700,
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                          const Gap(18),
-                                                          Center(child: okButton),
-                                                          const Gap(8),
-                                                          Center(child: sendButton),
-                                                        ],
-                                                      ),
-                                                      elevation: 0,
-                                                    ),
-                                                  );
-                                                },
+                                                          await showWrongCardModal();
+                                                          await Future.delayed(
+                                                            const Duration(milliseconds: 3000),
+                                                          );
+                                                          await NfcManager.instance.stopSession();
+                                                        }
+                                                        await _walletProtectState.updateNfcSessionStatus(
+                                                          isStarted: false,
+                                                        );
+                                                      },
+                                                      onError: (_) {
+                                                        _walletProtectState.updateNfcSessionStatus(
+                                                          isStarted: false,
+                                                        );
+                                                        return Future(() {
+                                                          NfcManager.instance.stopSession();
+                                                          return Future(showBarTapIssueBottomSheet);
+                                                        });
+                                                      },
+                                                    );
+                                                    await router.pop();
+                                                    await showAndroidBarNfcBottomSheet();
+                                                  },
+                                                  lottieAsset: 'assets/animated_logo/please_wait.json',
+                                                  lottieHeight: 140,
+                                                ),
+                                                isDismissible: true,
                                               );
                                             }
                                           }
                                         : () async {
                                             if (await isCardActivated) {
                                               await router.pop();
-                                              await alreadyActivatedWallet(context);
-                                            } else {
+                                              await _walletProtectState.updateModalStatus(isOpened: true);
+                                              await alreadyActivatedWallet(
+                                                router.navigatorKey.currentContext!,
+                                                _walletProtectState,
+                                              ).then(
+                                                (value) => _walletProtectState.updateModalStatus(isOpened: false),
+                                              );
+                                            }
+                                            else {
                                               await router.pop();
-                                              final okButton = LoadingButton(
-                                                onPressed: router.pop,
-                                                child: const Text(
-                                                  'Got it',
-                                                  style: TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w600,
+                                              await showDialogBox(
+                                                context,
+                                                _walletProtectState,
+                                                DialogBoxWithAction(
+                                                  text:
+                                                      'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
+                                                  title: const Text(
+                                                    'Recommended to wait',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatBold,
+                                                      fontSize: 17,
+                                                    ),
                                                   ),
-                                                ),
-                                              ).paddingHorizontal(40);
-                                              final sendButton = SizedBox(
-                                                height: 48,
-                                                child: LoadingButton(
-                                                  style: context.theme
-                                                      .buttonStyle(
-                                                        textStyle: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          color: AppColors.primaryTextColor,
-                                                          fontSize: 15,
-                                                        ),
-                                                      )
-                                                      .copyWith(
-                                                        backgroundColor: MaterialStateProperty.all(
-                                                          Colors.grey.withOpacity(0.1),
-                                                        ),
-                                                      ),
-                                                  onPressed: Platform.isIOS
+                                                  primaryActionText: 'Got it',
+                                                  primaryAction: router.pop,
+                                                  secondaryActionText: 'Send anyway',
+                                                  secondaryAction: Platform.isIOS
                                                       ? () async {
                                                           await router.pop();
                                                           await _walletProtectState.updateNfcSessionStatus(
@@ -1167,7 +1104,7 @@ class DashboardPage extends HookWidget {
                                                                       ),
                                                                     );
                                                                     await maybeCoinplusCard(
-                                                                      router.navigatorKey.currentContext!,
+                                                                      router.navigatorKey.currentContext!, _walletProtectState,
                                                                     );
                                                                   }
                                                                 }
@@ -1296,75 +1233,16 @@ class DashboardPage extends HookWidget {
                                                           await router.pop();
                                                           await showAndroidCardNfcBottomSheet();
                                                         },
-                                                  child: const Text(
-                                                    'Send anyway',
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontFamily: FontFamily.redHatMedium,
-                                                      fontWeight: FontWeight.normal,
-                                                      color: AppColors.primaryTextColor,
-                                                    ),
-                                                  ),
-                                                ).paddingHorizontal(40),
-                                              );
-                                              return showDialog<void>(
-                                                context: context,
-                                                builder: (_) {
-                                                  return EmergeAlertDialog(
-                                                    emergeAlertDialogOptions: EmergeAlertDialogOptions(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(22),
-                                                      ),
-                                                      content: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          const Text(
-                                                            'Recommended to Wait!',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily.redHatBold,
-                                                              fontSize: 17,
-                                                            ),
-                                                          ),
-                                                          const Gap(23),
-                                                          Center(
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                Lottie.asset(
-                                                                  height: 140,
-                                                                  repeat: false,
-                                                                  'assets/animated_logo/please_wait.json',
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ).expandedHorizontally(),
-                                                          const Gap(31),
-                                                          const Text(
-                                                            'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily.redHatLight,
-                                                              fontWeight: FontWeight.w700,
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                          const Gap(18),
-                                                          Center(child: okButton),
-                                                          const Gap(8),
-                                                          Center(child: sendButton),
-                                                        ],
-                                                      ),
-                                                      elevation: 0,
-                                                    ),
-                                                  );
-                                                },
+                                                  lottieAsset: 'assets/animated_logo/please_wait.json',
+                                                  lottieHeight: 140,
+                                                ),
+                                                isDismissible: true,
                                               );
                                             }
                                           }
                                     : () async {
                                         await router.pop();
-                                        await maybeCoinplusCard(router.navigatorKey.currentContext!);
+                                        await maybeCoinplusCard(router.navigatorKey.currentContext!, _walletProtectState);
                                       },
                                 child: Row(
                                   children: [
@@ -1548,7 +1426,7 @@ class DashboardPage extends HookWidget {
                     ),
                   );
                 },
-              );
+              ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
             },
             child: Observer(
               builder: (context) {
@@ -1624,6 +1502,7 @@ class DashboardPage extends HookWidget {
   }
 
   void showCardTapIssueBottomSheet() {
+    _walletProtectState.updateModalStatus(isOpened: true);
     showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1640,10 +1519,11 @@ class DashboardPage extends HookWidget {
       builder: (_) {
         return const CardIssueOptionsSheet();
       },
-    );
+    ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
   void showBarTapIssueBottomSheet() {
+    _walletProtectState.updateModalStatus(isOpened: true);
     showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1660,10 +1540,11 @@ class DashboardPage extends HookWidget {
       builder: (_) {
         return const BarIssueOptionsSheet();
       },
-    );
+    ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
   Future<void> showWrongCardModal() async {
+    await _walletProtectState.updateModalStatus(isOpened: true);
     return showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1728,10 +1609,11 @@ class DashboardPage extends HookWidget {
           ),
         );
       },
-    );
+    ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
   Future<void> showAndroidCardNfcBottomSheet() async {
+    await _walletProtectState.updateModalStatus(isOpened: true);
     return showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1748,10 +1630,11 @@ class DashboardPage extends HookWidget {
       builder: (context) {
         return const AndroidCardNfcModal();
       },
-    );
+    ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
   Future<void> showAndroidBarNfcBottomSheet() async {
+    await _walletProtectState.updateModalStatus(isOpened: true);
     return showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1768,7 +1651,7 @@ class DashboardPage extends HookWidget {
       builder: (context) {
         return const AndroidBarNfcModal();
       },
-    );
+    ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
   Future<void> notCoinplusCard() async {

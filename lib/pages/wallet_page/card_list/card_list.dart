@@ -18,10 +18,12 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/cloud_firestore_service.dart';
 import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
+import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
 import '../../onboarding_page/form_factor_page/card_scan_methods_page.dart';
@@ -46,6 +48,9 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
   final _nfcState = NfcStore();
 
   @override
@@ -86,11 +91,11 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                   if (card != null) {
                     widget.onCardSelected(card as AbstractCard);
                   }
-                  configureRamp(address: _balanceStore.cards[_settingsState.cardCurrentIndex].address);
+                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 } else {
                   _settingsState.setCardCurrentIndex(length);
                   widget.onCardSelected(null);
-                  configureRamp(address: _balanceStore.cards[_settingsState.cardCurrentIndex].address);
+                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
             );
@@ -112,6 +117,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                         ),
                         context: context,
                         builder: (context) {
+                          _walletProtectState.updateModalStatus(isOpened: true);
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -146,7 +152,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                             ],
                           );
                         },
-                      );
+                      ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
                     },
                     child: Assets.images.addCard.image(),
                   ),
@@ -443,6 +449,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                           },
                                                           onReorderEnd: (val) {
                                                             _settingsState.isReorderingStart = false;
+                                                            if (index != _balanceStore.cards.length) {
+                                                              configuration.userAddress = _balanceStore
+                                                                  .cards[_settingsState.cardCurrentIndex].address;
+                                                            }
                                                           },
                                                         ),
                                                       );
