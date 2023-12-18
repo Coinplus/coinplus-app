@@ -19,6 +19,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
@@ -326,6 +327,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
                           if (widget.isOriginalCard == true) {
+                            await connectedCount(widget.receivedData!);
                             if (widget.cardColor == '0') {
                               _balanceStore.saveSelectedCard(color: CardColor.ORANGE);
                             } else if (widget.cardColor == '1') {
@@ -344,6 +346,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                   name: 'Tracker с плюсиком',
                                 );
                               } else {
+                                await connectedCount(widget.receivedData!);
                                 _balanceStore.saveSelectedCardAsTracker(
                                   color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,

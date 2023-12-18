@@ -9,7 +9,8 @@ part of 'secret_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SecretState on _SecretState, Store {
-  late final _$secretOneVisibilityAtom = Atom(name: '_SecretState.secretOneVisibility', context: context);
+  late final _$secretOneVisibilityAtom =
+      Atom(name: '_SecretState.secretOneVisibility', context: context);
 
   @override
   bool get secretOneVisibility {
@@ -24,7 +25,8 @@ mixin _$SecretState on _SecretState, Store {
     });
   }
 
-  late final _$secretTwoVisibilityAtom = Atom(name: '_SecretState.secretTwoVisibility', context: context);
+  late final _$secretTwoVisibilityAtom =
+      Atom(name: '_SecretState.secretTwoVisibility', context: context);
 
   @override
   bool get secretTwoVisibility {
@@ -39,11 +41,13 @@ mixin _$SecretState on _SecretState, Store {
     });
   }
 
-  late final _$_SecretStateActionController = ActionController(name: '_SecretState', context: context);
+  late final _$_SecretStateActionController =
+      ActionController(name: '_SecretState', context: context);
 
   @override
   void makeSecretOneVisible() {
-    final _$actionInfo = _$_SecretStateActionController.startAction(name: '_SecretState.makeSecretOneVisible');
+    final _$actionInfo = _$_SecretStateActionController.startAction(
+        name: '_SecretState.makeSecretOneVisible');
     try {
       return super.makeSecretOneVisible();
     } finally {
@@ -53,7 +57,8 @@ mixin _$SecretState on _SecretState, Store {
 
   @override
   void makeSecretTwoVisible() {
-    final _$actionInfo = _$_SecretStateActionController.startAction(name: '_SecretState.makeSecretTwoVisible');
+    final _$actionInfo = _$_SecretStateActionController.startAction(
+        name: '_SecretState.makeSecretTwoVisible');
     try {
       return super.makeSecretTwoVisible();
     } finally {

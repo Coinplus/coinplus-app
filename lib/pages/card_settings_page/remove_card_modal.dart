@@ -12,6 +12,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -118,6 +119,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             onPressed: () async {
               await _balanceStore.getSelectedCard(widget.card.address);
               await secureStorage.delete(key: 'card${widget.card.address}');
+              unawaited(deleteCount(widget.card.address));
               await router.pop();
               await _balanceStore.removeSelectedCard();
               showTopSnackBar(

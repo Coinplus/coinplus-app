@@ -24,8 +24,8 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return BarAddedEvent.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(
-          json, 'runtimeType', 'AmplitudeEvent', 'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(json, 'runtimeType', 'AmplitudeEvent',
+          'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -78,19 +78,22 @@ mixin _$AmplitudeEvent {
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AmplitudeEventCopyWith<AmplitudeEvent> get copyWith => throw _privateConstructorUsedError;
+  $AmplitudeEventCopyWith<AmplitudeEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $AmplitudeEventCopyWith<$Res> {
-  factory $AmplitudeEventCopyWith(AmplitudeEvent value, $Res Function(AmplitudeEvent) then) =
+  factory $AmplitudeEventCopyWith(
+          AmplitudeEvent value, $Res Function(AmplitudeEvent) then) =
       _$AmplitudeEventCopyWithImpl<$Res, AmplitudeEvent>;
   @useResult
   $Res call({String eventType});
 }
 
 /// @nodoc
-class _$AmplitudeEventCopyWithImpl<$Res, $Val extends AmplitudeEvent> implements $AmplitudeEventCopyWith<$Res> {
+class _$AmplitudeEventCopyWithImpl<$Res, $Val extends AmplitudeEvent>
+    implements $AmplitudeEventCopyWith<$Res> {
   _$AmplitudeEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -113,8 +116,10 @@ class _$AmplitudeEventCopyWithImpl<$Res, $Val extends AmplitudeEvent> implements
 }
 
 /// @nodoc
-abstract class _$$LoginEventImplCopyWith<$Res> implements $AmplitudeEventCopyWith<$Res> {
-  factory _$$LoginEventImplCopyWith(_$LoginEventImpl value, $Res Function(_$LoginEventImpl) then) =
+abstract class _$$LoginEventImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$LoginEventImplCopyWith(
+          _$LoginEventImpl value, $Res Function(_$LoginEventImpl) then) =
       __$$LoginEventImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -122,9 +127,12 @@ abstract class _$$LoginEventImplCopyWith<$Res> implements $AmplitudeEventCopyWit
 }
 
 /// @nodoc
-class __$$LoginEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<$Res, _$LoginEventImpl>
+class __$$LoginEventImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$LoginEventImpl>
     implements _$$LoginEventImplCopyWith<$Res> {
-  __$$LoginEventImplCopyWithImpl(_$LoginEventImpl _value, $Res Function(_$LoginEventImpl) _then) : super(_value, _then);
+  __$$LoginEventImplCopyWithImpl(
+      _$LoginEventImpl _value, $Res Function(_$LoginEventImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -143,9 +151,11 @@ class __$$LoginEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<
 /// @nodoc
 @JsonSerializable()
 class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
-  const _$LoginEventImpl({this.eventType = 'LOGIN', final String? $type}) : $type = $type ?? 'login';
+  const _$LoginEventImpl({this.eventType = 'LOGIN', final String? $type})
+      : $type = $type ?? 'login';
 
-  factory _$LoginEventImpl.fromJson(Map<String, dynamic> json) => _$$LoginEventImplFromJson(json);
+  factory _$LoginEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoginEventImplFromJson(json);
 
   @override
   @JsonKey()
@@ -172,7 +182,8 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginEventImpl &&
-            (identical(other.eventType, eventType) || other.eventType == eventType));
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
   }
 
   @JsonKey(ignore: true)
@@ -264,18 +275,22 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
 abstract class LoginEvent implements AmplitudeEvent {
   const factory LoginEvent({final String eventType}) = _$LoginEventImpl;
 
-  factory LoginEvent.fromJson(Map<String, dynamic> json) = _$LoginEventImpl.fromJson;
+  factory LoginEvent.fromJson(Map<String, dynamic> json) =
+      _$LoginEventImpl.fromJson;
 
   @override
   String get eventType;
   @override
   @JsonKey(ignore: true)
-  _$$LoginEventImplCopyWith<_$LoginEventImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$LoginEventImplCopyWith<_$LoginEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CardAddedEventImplCopyWith<$Res> implements $AmplitudeEventCopyWith<$Res> {
-  factory _$$CardAddedEventImplCopyWith(_$CardAddedEventImpl value, $Res Function(_$CardAddedEventImpl) then) =
+abstract class _$$CardAddedEventImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$CardAddedEventImplCopyWith(_$CardAddedEventImpl value,
+          $Res Function(_$CardAddedEventImpl) then) =
       __$$CardAddedEventImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -285,9 +300,11 @@ abstract class _$$CardAddedEventImplCopyWith<$Res> implements $AmplitudeEventCop
 }
 
 /// @nodoc
-class __$$CardAddedEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<$Res, _$CardAddedEventImpl>
+class __$$CardAddedEventImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$CardAddedEventImpl>
     implements _$$CardAddedEventImplCopyWith<$Res> {
-  __$$CardAddedEventImplCopyWithImpl(_$CardAddedEventImpl _value, $Res Function(_$CardAddedEventImpl) _then)
+  __$$CardAddedEventImplCopyWithImpl(
+      _$CardAddedEventImpl _value, $Res Function(_$CardAddedEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -319,11 +336,15 @@ class __$$CardAddedEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithI
 
 /// @nodoc
 @JsonSerializable()
-class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEvent {
-  const _$CardAddedEventImpl({this.eventType = 'CARD_ADDED', required this.card, final String? $type})
+class _$CardAddedEventImpl
+    with DiagnosticableTreeMixin
+    implements CardAddedEvent {
+  const _$CardAddedEventImpl(
+      {this.eventType = 'CARD_ADDED', required this.card, final String? $type})
       : $type = $type ?? 'cardAdded';
 
-  factory _$CardAddedEventImpl.fromJson(Map<String, dynamic> json) => _$$CardAddedEventImplFromJson(json);
+  factory _$CardAddedEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardAddedEventImplFromJson(json);
 
   @override
   @JsonKey()
@@ -353,7 +374,8 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardAddedEventImpl &&
-            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
             (identical(other.card, card) || other.card == card));
   }
 
@@ -365,7 +387,8 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
   @override
   @pragma('vm:prefer-inline')
   _$$CardAddedEventImplCopyWith<_$CardAddedEventImpl> get copyWith =>
-      __$$CardAddedEventImplCopyWithImpl<_$CardAddedEventImpl>(this, _$identity);
+      __$$CardAddedEventImplCopyWithImpl<_$CardAddedEventImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -444,21 +467,27 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
 }
 
 abstract class CardAddedEvent implements AmplitudeEvent {
-  const factory CardAddedEvent({final String eventType, required final CardModel card}) = _$CardAddedEventImpl;
+  const factory CardAddedEvent(
+      {final String eventType,
+      required final CardModel card}) = _$CardAddedEventImpl;
 
-  factory CardAddedEvent.fromJson(Map<String, dynamic> json) = _$CardAddedEventImpl.fromJson;
+  factory CardAddedEvent.fromJson(Map<String, dynamic> json) =
+      _$CardAddedEventImpl.fromJson;
 
   @override
   String get eventType;
   CardModel get card;
   @override
   @JsonKey(ignore: true)
-  _$$CardAddedEventImplCopyWith<_$CardAddedEventImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CardAddedEventImplCopyWith<_$CardAddedEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$BarAddedEventImplCopyWith<$Res> implements $AmplitudeEventCopyWith<$Res> {
-  factory _$$BarAddedEventImplCopyWith(_$BarAddedEventImpl value, $Res Function(_$BarAddedEventImpl) then) =
+abstract class _$$BarAddedEventImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$BarAddedEventImplCopyWith(
+          _$BarAddedEventImpl value, $Res Function(_$BarAddedEventImpl) then) =
       __$$BarAddedEventImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -468,9 +497,11 @@ abstract class _$$BarAddedEventImplCopyWith<$Res> implements $AmplitudeEventCopy
 }
 
 /// @nodoc
-class __$$BarAddedEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<$Res, _$BarAddedEventImpl>
+class __$$BarAddedEventImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$BarAddedEventImpl>
     implements _$$BarAddedEventImplCopyWith<$Res> {
-  __$$BarAddedEventImplCopyWithImpl(_$BarAddedEventImpl _value, $Res Function(_$BarAddedEventImpl) _then)
+  __$$BarAddedEventImplCopyWithImpl(
+      _$BarAddedEventImpl _value, $Res Function(_$BarAddedEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -502,11 +533,15 @@ class __$$BarAddedEventImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithIm
 
 /// @nodoc
 @JsonSerializable()
-class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent {
-  const _$BarAddedEventImpl({this.eventType = 'BAR_ADDED', required this.bar, final String? $type})
+class _$BarAddedEventImpl
+    with DiagnosticableTreeMixin
+    implements BarAddedEvent {
+  const _$BarAddedEventImpl(
+      {this.eventType = 'BAR_ADDED', required this.bar, final String? $type})
       : $type = $type ?? 'barAdded';
 
-  factory _$BarAddedEventImpl.fromJson(Map<String, dynamic> json) => _$$BarAddedEventImplFromJson(json);
+  factory _$BarAddedEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarAddedEventImplFromJson(json);
 
   @override
   @JsonKey()
@@ -536,7 +571,8 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarAddedEventImpl &&
-            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
             (identical(other.bar, bar) || other.bar == bar));
   }
 
@@ -627,14 +663,18 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
 }
 
 abstract class BarAddedEvent implements AmplitudeEvent {
-  const factory BarAddedEvent({final String eventType, required final BarModel bar}) = _$BarAddedEventImpl;
+  const factory BarAddedEvent(
+      {final String eventType,
+      required final BarModel bar}) = _$BarAddedEventImpl;
 
-  factory BarAddedEvent.fromJson(Map<String, dynamic> json) = _$BarAddedEventImpl.fromJson;
+  factory BarAddedEvent.fromJson(Map<String, dynamic> json) =
+      _$BarAddedEventImpl.fromJson;
 
   @override
   String get eventType;
   BarModel get bar;
   @override
   @JsonKey(ignore: true)
-  _$$BarAddedEventImplCopyWith<_$BarAddedEventImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarAddedEventImplCopyWith<_$BarAddedEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

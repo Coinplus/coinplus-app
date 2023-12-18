@@ -36,6 +36,9 @@ abstract class _WalletProtectState with Store {
   @readonly
   bool _isNfcSessionStarted = false;
 
+  @readonly
+  bool _isModalOpened = false;
+
   @observable
   bool isSetPinCode = false;
 
@@ -71,6 +74,11 @@ abstract class _WalletProtectState with Store {
   @action
   Future<void> updateNfcSessionStatus({required bool isStarted}) async {
     _isNfcSessionStarted = isStarted;
+  }
+
+  @action
+  Future<void> updateModalStatus({required bool isOpened}) async {
+    _isModalOpened = isOpened;
   }
 
   @action
