@@ -18,7 +18,6 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
-import '../../../services/cloud_firestore_service.dart';
 import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
@@ -57,7 +56,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     if (_balanceStore.cards.isNotEmpty) {
-      configureRamp(address: _balanceStore.cards[_settingsState.cardCurrentIndex].address);
+      configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
     }
     _nfcState.checkNfcSupport();
   }

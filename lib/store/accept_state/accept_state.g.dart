@@ -25,8 +25,35 @@ mixin _$AcceptState on _AcceptState, Store {
     });
   }
 
+  late final _$isCheckboxAcceptedAtom =
+      Atom(name: '_AcceptState.isCheckboxAccepted', context: context);
+
+  @override
+  bool get isCheckboxAccepted {
+    _$isCheckboxAcceptedAtom.reportRead();
+    return super.isCheckboxAccepted;
+  }
+
+  @override
+  set isCheckboxAccepted(bool value) {
+    _$isCheckboxAcceptedAtom.reportWrite(value, super.isCheckboxAccepted, () {
+      super.isCheckboxAccepted = value;
+    });
+  }
+
   late final _$_AcceptStateActionController =
       ActionController(name: '_AcceptState', context: context);
+
+  @override
+  void checkboxAccept() {
+    final _$actionInfo = _$_AcceptStateActionController.startAction(
+        name: '_AcceptState.checkboxAccept');
+    try {
+      return super.checkboxAccept();
+    } finally {
+      _$_AcceptStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void accept() {
@@ -42,7 +69,8 @@ mixin _$AcceptState on _AcceptState, Store {
   @override
   String toString() {
     return '''
-isAccepted: ${isAccepted}
+isAccepted: ${isAccepted},
+isCheckboxAccepted: ${isCheckboxAccepted}
     ''';
   }
 }

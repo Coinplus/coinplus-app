@@ -188,39 +188,102 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                     Column(
                       children: [
                         AnimatedCrossFade(
-                          firstChild: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.grey.withOpacity(0.3),
-                              ),
-                              color: Colors.white.withOpacity(0.7),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(14),
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    'Coinplus virtual card',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      color: AppColors.textHintsColor,
+                          firstChild: FutureBuilder<bool?>(
+                            future: getCard(),
+                            builder: (context, snapshot) {
+                              final isActivated = snapshot.data;
+                              return AnimatedCrossFade(
+                                firstChild: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.grey.withOpacity(0.3),
                                     ),
-                                  ).expandedHorizontally(),
-                                  const Gap(4),
-                                  const Text(
-                                    'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 14,
-                                      color: AppColors.textHintsColor,
+                                    color: Colors.white.withOpacity(0.7),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(14),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          'Coinplus virtual card',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16,
+                                            color: AppColors.textHintsColor,
+                                          ),
+                                        ).expandedHorizontally(),
+                                        const Gap(4),
+                                        const Text(
+                                          'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontSize: 14,
+                                            color: AppColors.textHintsColor,
+                                          ),
+                                        ).expandedHorizontally(),
+                                      ],
                                     ),
-                                  ).expandedHorizontally(),
-                                ],
-                              ),
-                            ),
+                                  ),
+                                ),
+                                secondChild: Observer(
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _checkboxState.makeActiveCheckbox();
+                                        HapticFeedback.heavyImpact();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: _checkboxState.isActivatedCheckBox
+                                                ? const Color(0xFF73C3A6)
+                                                : _acceptState.isCheckboxAccepted
+                                                    ? Colors.grey.withOpacity(0.3)
+                                                    : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          ),
+                                          color: _checkboxState.isActivatedCheckBox
+                                              ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                              : _acceptState.isCheckboxAccepted
+                                                  ? Colors.white.withOpacity(0.7)
+                                                  : const Color(0xFFFF2E00).withOpacity(0.05),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(14),
+                                          child: Column(
+                                            children: [
+                                              const Text(
+                                                'This card was previously activated!',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              const Gap(4),
+                                              const Text(
+                                                "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 14,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                crossFadeState:
+                                    isActivated == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                                duration: const Duration(milliseconds: 400),
+                              );
+                            },
                           ),
                           secondChild: GestureDetector(
                             onTap: () {
@@ -277,41 +340,91 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                       ],
                     ).paddingHorizontal(16),
                     Visibility(
-                      visible: _lineStore.isLineVisible,
-                      child: Positioned(
-                        right: 16,
-                        child: Transform.scale(
-                          scale: 1.2,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                      visible: !_lineStore.isLineVisible,
+                      child: FutureBuilder<bool?>(
+                        future: getCard(),
+                        builder: (context, snapshot) {
+                          final isActivated = snapshot.data;
+                          return Visibility(
+                            visible: isActivated == true,
+                            child: Positioned(
+                              right: 16,
+                              child: Transform.scale(
+                                scale: 1.2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Observer(
+                                    builder: (context) {
+                                      return Checkbox(
+                                        checkColor: const Color(0xFF73C3A6),
+                                        activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(4),
+                                          ),
+                                        ),
+                                        side: BorderSide(
+                                          color: _acceptState.isCheckboxAccepted
+                                              ? Colors.grey.withOpacity(0.5)
+                                              : const Color(0xFFFF2E00).withOpacity(0.6),
+                                        ),
+                                        value: _checkboxState.isActivatedCheckBox,
+                                        onChanged: (_) {
+                                          _checkboxState.makeActiveCheckbox();
+                                        },
+                                        splashRadius: 15,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
-                            child: Observer(
-                              builder: (context) {
-                                return Checkbox(
-                                  checkColor: const Color(0xFF73C3A6),
-                                  activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(4),
-                                    ),
-                                  ),
-                                  side: BorderSide(
-                                    color: _acceptState.isAccepted
-                                        ? Colors.grey.withOpacity(0.5)
-                                        : const Color(0xFFFF2E00).withOpacity(0.6),
-                                  ),
-                                  value: _checkboxState.isActive,
-                                  onChanged: (_) {
-                                    _checkboxState.makeActive();
+                          );
+                        },
+                      ),
+                    ),
+                    Observer(
+                      builder: (context) {
+                        return Visibility(
+                          visible: _lineStore.isLineVisible,
+                          child: Positioned(
+                            right: 16,
+                            child: Transform.scale(
+                              scale: 1.2,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Observer(
+                                  builder: (context) {
+                                    return Checkbox(
+                                      checkColor: const Color(0xFF73C3A6),
+                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
+                                        ),
+                                      ),
+                                      side: BorderSide(
+                                        color: _acceptState.isAccepted
+                                            ? Colors.grey.withOpacity(0.5)
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      value: _checkboxState.isActive,
+                                      onChanged: (_) {
+                                        _checkboxState.makeActive();
+                                      },
+                                      splashRadius: 15,
+                                    );
                                   },
-                                  splashRadius: 15,
-                                );
-                              },
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -391,33 +504,70 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                         ),
                       ),
                     ).paddingHorizontal(49)
-                  : LoadingButton(
-                      onPressed: _connectionStatus == ConnectivityResult.none
-                          ? null
-                          : _addressState.isAddressVisible
-                              ? () async {
-                                  final cardIndex = _balanceStore.cards.indexWhere(
-                                    (element) => element.address == _balanceStore.selectedCard?.address,
-                                  );
-                                  if (cardIndex != -1) {
-                                    await alreadySavedCard(context);
-                                  } else {
-                                    await _toggleCard();
-                                    await Future.delayed(
-                                      const Duration(milliseconds: 300),
-                                    );
-                                    _lineStore.makeVisible();
-                                  }
-                                }
-                              : null,
-                      child: const Text(
-                        'Save to wallet',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
-                      ),
-                    ).paddingHorizontal(49);
+                  : FutureBuilder<bool?>(
+                      future: getCard(),
+                      builder: (context, snapshot) {
+                        final isActivated = snapshot.data;
+                        return Observer(
+                          builder: (context) {
+                            return LoadingButton(
+                              onPressed: _connectionStatus == ConnectivityResult.none
+                                  ? null
+                                  : _addressState.isAddressVisible
+                                      ? _checkboxState.isActivatedCheckBox
+                                          ? () async {
+                                              final cardIndex = _balanceStore.cards.indexWhere(
+                                                (element) => element.address == _balanceStore.selectedCard?.address,
+                                              );
+                                              if (cardIndex != -1) {
+                                                await alreadySavedCard(context);
+                                              } else {
+                                                await _toggleCard();
+                                                await Future.delayed(
+                                                  const Duration(milliseconds: 300),
+                                                );
+                                                _lineStore.makeVisible();
+                                              }
+                                            }
+                                          : () async {
+                                              if (isActivated == true) {
+                                                await HapticFeedback.vibrate();
+                                                _acceptState.checkboxAccept();
+                                                _shakeAnimationController.start();
+                                                await Future.delayed(
+                                                  const Duration(
+                                                    milliseconds: 600,
+                                                  ),
+                                                );
+                                                _shakeAnimationController.stop();
+                                              } else {
+                                                final cardIndex = _balanceStore.cards.indexWhere(
+                                                  (element) => element.address == _balanceStore.selectedCard?.address,
+                                                );
+                                                if (cardIndex != -1) {
+                                                  await alreadySavedCard(context);
+                                                } else {
+                                                  await _toggleCard();
+                                                  await Future.delayed(
+                                                    const Duration(milliseconds: 300),
+                                                  );
+                                                  _lineStore.makeVisible();
+                                                }
+                                              }
+                                            }
+                                      : null,
+                              child: const Text(
+                                'Save to wallet',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: FontFamily.redHatSemiBold,
+                                ),
+                              ),
+                            ).paddingHorizontal(49);
+                          },
+                        );
+                      },
+                    );
             },
           ),
           if (context.height > 844) Gap(context.height * 0.1) else Gap(context.height * 0.05),
@@ -481,6 +631,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   Future<void> _toggleCard() async {
     await Future.delayed(const Duration(milliseconds: 400));
     await _flipCardController.toggleCard();
+  }
+
+  Future<bool?> getCard() async {
+    final card = await getCardData(widget.receivedData!);
+    return card?.activated;
   }
 
   Future<void> makeLineInvisible() async {

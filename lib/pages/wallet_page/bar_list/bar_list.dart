@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +18,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
@@ -47,6 +50,9 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
   void initState() {
     super.initState();
     _nfcStore.checkNfcSupport();
+    if(_balanceStore.bars.isNotEmpty) {
+      configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+    }
   }
 
   Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
@@ -74,14 +80,16 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
               (length) {
                 if (length > _settingsState.barCurrentIndex) {
                   widget.onCarouselScroll(length - 1);
-                  _settingsState.setBarCurrentIndex(length - 1);
                   final bar = _balanceStore.bars.lastOrNull;
                   if (bar != null) {
                     widget.onCardSelected(bar as AbstractCard);
                   }
+                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+
                 } else {
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
+                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
             );
@@ -198,8 +206,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                             padding: EdgeInsets.only(bottom: context.height > 844 ? 30 : 10),
                             child: ScaleTap(
                               enableFeedback: false,
-                              opacityMinValue: .99,
-                              scaleMinValue: .99,
+                              opacityMinValue: .993,
+                              scaleMinValue: .993,
                               onLongPress: _settingsState.barCurrentIndex == index
                                   ? _balanceStore.bars.length > 1
                                       ? () {
@@ -456,63 +464,83 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Gap(context.height * 0.03),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              const Text(
-                                                'Balance',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: FontFamily.redHatMedium,
+                                      Gap(context.height * 0.045),
+                                      ScaleTap(
+                                        enableFeedback: false,
+                                        opacityMinValue: .98,
+                                        scaleMinValue: .98,
+                                        onPressed: _settingsState.barCurrentIndex == index ? presentRamp : null,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: BackdropFilter(
+                                            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                                            child: Container(
+                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.black.withOpacity(0.4)),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        const Text(
+                                                          'Balance',
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Observer(
+                                                          builder: (context) {
+                                                            final data = _balanceStore.coins;
+                                                            final myFormat = NumberFormat.decimalPatternDigits(
+                                                              locale: 'en_us',
+                                                              decimalDigits: 2,
+                                                            );
+                                                            if (data == null) {
+                                                              return const Padding(
+                                                                padding: EdgeInsets.all(
+                                                                  4,
+                                                                ),
+                                                                child: Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: 10,
+                                                                      width: 10,
+                                                                      child: CircularProgressIndicator(
+                                                                        color: Colors.white,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }
+                                                            return Text(
+                                                              (bar.data?.balance != null
+                                                                      ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                      : '')
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                fontFamily: FontFamily.redHatMedium,
+                                                                fontWeight: FontWeight.w700,
+                                                                color: Colors.white,
+                                                                fontSize: 20,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Assets.icons.alternative.image(height: 48),
+                                                  ],
                                                 ),
                                               ),
-                                              Observer(
-                                                builder: (context) {
-                                                  final data = _balanceStore.coins;
-                                                  final myFormat = NumberFormat.decimalPatternDigits(
-                                                    locale: 'en_us',
-                                                    decimalDigits: 2,
-                                                  );
-                                                  if (data == null) {
-                                                    return const Padding(
-                                                      padding: EdgeInsets.all(
-                                                        4,
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 10,
-                                                            width: 10,
-                                                            child: CircularProgressIndicator(
-                                                              color: Colors.white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }
-                                                  return Text(
-                                                    (bar.data?.balance != null
-                                                            ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
-                                                            : '')
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
-                                                      fontWeight: FontWeight.w700,
-                                                      color: Colors.black.withOpacity(0.7),
-                                                      fontSize: 20,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ],
-                                      ).paddingHorizontal(40),
+                                        ).paddingHorizontal(35),
+                                      ),
                                       const Gap(10),
                                       ScaleTap(
                                         enableFeedback: false,
@@ -589,15 +617,17 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
               );
             },
             options: CarouselOptions(
-              onPageChanged: (index, reason) {
+              onPageChanged: (index, reason) async {
                 widget.onCarouselScroll(index);
                 widget.onCardSelected(
                   _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
                 );
-                _settingsState.setBarCurrentIndex(index);
+                await _settingsState.setBarCurrentIndex(index);
+                if (index != _balanceStore.bars.length) {
+                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                }
               },
               enlargeFactor: 0.35,
-              disableCenter: true,
               enableInfiniteScroll: false,
               viewportFraction: 0.79,
               enlargeCenterPage: true,
