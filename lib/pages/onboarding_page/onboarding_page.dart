@@ -115,6 +115,7 @@ class OnboardingPage extends HookWidget {
                       ? () async {
                           await router.pop();
                           await nfcSessionIos(
+                            isBarList: false,
                             isMifareUltralight: isMifareUltralight.value,
                             walletProtectState: _walletProtectState,
                           );
