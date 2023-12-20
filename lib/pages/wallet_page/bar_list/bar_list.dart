@@ -50,7 +50,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
   void initState() {
     super.initState();
     _nfcStore.checkNfcSupport();
-    if(_balanceStore.bars.isNotEmpty) {
+    if (_balanceStore.bars.isNotEmpty) {
       configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
   }
@@ -85,7 +85,6 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                     widget.onCardSelected(bar as AbstractCard);
                   }
                   configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
-
                 } else {
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
@@ -475,9 +474,16 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                           child: BackdropFilter(
                                             filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
                                             child: Container(
-                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.black.withOpacity(0.4)),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.black.withOpacity(0.4),
+                                              ),
                                               child: Padding(
-                                                padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, ),
+                                                padding: const EdgeInsets.only(
+                                                  top: 2,
+                                                  bottom: 2,
+                                                  left: 8,
+                                                ),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
@@ -539,7 +545,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                               ),
                                             ),
                                           ),
-                                        ).paddingHorizontal(35),
+                                        ).paddingHorizontal(37),
                                       ),
                                       const Gap(10),
                                       ScaleTap(

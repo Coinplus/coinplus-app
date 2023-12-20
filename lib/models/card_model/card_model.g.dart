@@ -8,27 +8,20 @@ part of 'card_model.dart';
 
 _$CardModelImpl _$$CardModelImplFromJson(Map json) => _$CardModelImpl(
       address: json['address'] as String,
-      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
-          CardColor.ORANGE,
-      type:
-          $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.CARD,
-      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ??
-          WalletType.COINPLUS_WALLET,
+      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ?? CardColor.ORANGE,
+      type: $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.CARD,
+      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ?? WalletType.COINPLUS_WALLET,
       name: json['name'] as String? ?? 'Coinplus Bitcoin Card',
       totalReceived: json['totalReceived'] as int?,
       totalSent: json['totalSent'] as int?,
       balance: json['balance'] as int?,
-      createdAt: json['createdAt'] == null
-          ? ''
-          : timeFromJson(json['createdAt'] as String),
+      createdAt: json['createdAt'] == null ? '' : timeFromJson(json['createdAt'] as String),
       data: json['chain_stats'] == null
           ? null
-          : ChainStats.fromJson(
-              Map<String, dynamic>.from(json['chain_stats'] as Map)),
+          : ChainStats.fromJson(Map<String, dynamic>.from(json['chain_stats'] as Map)),
       mempoolStats: json['mempool_stats'] == null
           ? null
-          : MempoolStats.fromJson(
-              Map<String, dynamic>.from(json['mempool_stats'] as Map)),
+          : MempoolStats.fromJson(Map<String, dynamic>.from(json['mempool_stats'] as Map)),
     );
 
 Map<String, dynamic> _$$CardModelImplToJson(_$CardModelImpl instance) {

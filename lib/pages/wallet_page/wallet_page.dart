@@ -74,19 +74,22 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
           : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
-
+      if (_tabController.index == 1 &&
+          _balanceStore.bars.isNotEmpty &&
+          _settingsState.barCurrentIndex != _balanceStore.bars.length) {
+        configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      }
+      if (_tabController.index == 0 &&
+          _balanceStore.cards.isNotEmpty &&
+          _settingsState.cardCurrentIndex != _balanceStore.cards.length) {
+        configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+      }
       widget.onChangeCard(
         (
           card: card as AbstractCard?,
           index: _tabController.index,
         ),
       );
-      if (_tabController.index == 1 && _balanceStore.bars.isNotEmpty) {
-        configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
-      }
-      if (_tabController.index == 0 && _balanceStore.cards.isNotEmpty) {
-        configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
-      }
     });
   }
 

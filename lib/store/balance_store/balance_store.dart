@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -15,6 +16,7 @@ import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
 import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../utils/storage_utils.dart';
 import '../qr_detect_state/qr_detect_state.dart';
 
@@ -354,5 +356,17 @@ abstract class _BalanceStore with Store {
     } else {
       throw Exception('Card not found');
     }
+  }
+
+  @action
+  Future<bool?> getCard({required String? receivedData, required TextEditingController textEditingController}) async {
+    if (receivedData != null) {
+      final card = await getCardData(receivedData);
+      return card?.activated;
+    } else if (textEditingController.text.length > 26) {
+      final card = await getCardData(textEditingController.text);
+      return card?.activated;
+    }
+    return null;
   }
 }

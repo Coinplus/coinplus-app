@@ -12,13 +12,15 @@ Future<void> pleaseEnableBiometrics(BuildContext context, WalletProtectState wal
     context,
     walletProtectState,
     DialogBoxWithAction(
-      text:
-      'Please enable biometrics option in your device settings',
-      title: const Text('Biometrics fail!', textAlign: TextAlign.center,
+      text: 'Please enable biometrics option in your device settings',
+      title: const Text(
+        'Biometrics fail!',
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: FontFamily.redHatBold,
           fontSize: 17,
-        ),),
+        ),
+      ),
       lottieAsset: 'assets/animated_logo/secrets_fail.json',
       lottieHeight: 100,
       primaryActionText: 'Go to settings',
