@@ -5,7 +5,12 @@ import '../../store/wallet_protect_state/wallet_protect_state.dart';
 
 /// Shows dialog with sliding and scaling animation, slides from top when
 /// opened, and slides to bottom when closed.
-Future<T?> showDialogBox<T>(BuildContext context, WalletProtectState walletProtectState, Widget dialogBox, {bool? isDismissible}) async {
+Future<T?> showDialogBox<T>(
+  BuildContext context,
+  WalletProtectState walletProtectState,
+  Widget dialogBox, {
+  bool? isDismissible,
+}) async {
   // Decides if dialog should slide from top(true) or bottom(false).
   var isNew = true;
   Future.delayed(

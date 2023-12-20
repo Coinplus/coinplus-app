@@ -456,7 +456,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 _balanceStore.saveSelectedCardAsTracker(
                                   color: CardColor.ORANGE,
                                   label: WalletType.TRACKER_PLUS,
-                                  name: 'Tracker с плюсиком',
+                                  name: 'Bitcoin Wallet',
                                 );
                               } else {
                                 await connectedCount(widget.receivedData!);
@@ -547,11 +547,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                 if (cardIndex != -1) {
                                                   await alreadySavedCard(context);
                                                 } else {
-                                                  await _toggleCard();
-                                                  await Future.delayed(
-                                                    const Duration(milliseconds: 300),
-                                                  );
-                                                  _lineStore.makeVisible();
+                                                  if (_flipCardController.state!.isFront) {
+                                                    await _toggleCard();
+                                                    _lineStore.makeVisible();
+                                                  }
                                                 }
                                               }
                                             }
@@ -641,6 +640,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   Future<void> makeLineInvisible() async {
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
-    _lineStore.makeVisible();
+    _lineStore.makeInvisible();
   }
 }

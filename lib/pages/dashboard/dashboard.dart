@@ -759,15 +759,14 @@ class DashboardPage extends HookWidget {
                                                 router.navigatorKey.currentContext!,
                                                 _walletProtectState,
                                               );
-                                            }
-                                            else {
+                                            } else {
                                               await router.pop();
                                               await showDialogBox(
                                                 context,
                                                 _walletProtectState,
                                                 DialogBoxWithAction(
                                                   text:
-                                                  'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
+                                                      'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
                                                   title: const Text(
                                                     'Recommended to wait',
                                                     textAlign: TextAlign.center,
@@ -779,195 +778,195 @@ class DashboardPage extends HookWidget {
                                                   primaryActionText: 'Got it',
                                                   primaryAction: router.pop,
                                                   secondaryActionText: 'Send anyway',
-                                                  secondaryAction:  Platform.isIOS
+                                                  secondaryAction: Platform.isIOS
                                                       ? () async {
-                                                    await _walletProtectState.updateNfcSessionStatus(
-                                                      isStarted: true,
-                                                    );
-                                                    await router.pop();
-                                                    await NfcManager.instance.startSession(
-                                                      alertMessage:
-                                                      "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
-                                                      onDiscovered: (tag) async {
-                                                        final ndef = Ndef.from(tag);
-                                                        final records = ndef!.cachedMessage!.records;
-                                                        dynamic walletAddress;
-                                                        if (records.length >= 2) {
-                                                          final hasJson = records[1].payload;
-                                                          final payloadString = String.fromCharCodes(
-                                                            hasJson,
-                                                          );
-                                                          final Map payloadData = await json.decode(
-                                                            payloadString,
-                                                          );
-                                                          walletAddress = payloadData['a'];
-                                                        } else {
-                                                          final hasUrl = records[0].payload;
-                                                          final payloadString = String.fromCharCodes(
-                                                            hasUrl,
-                                                          );
-                                                          final parts = payloadString.split(
-                                                            'air.coinplus.com/btc/',
-                                                          );
-                                                          walletAddress = parts[1];
-                                                        }
-                                                        if (card.address == walletAddress) {
-                                                          final mifare = MiFare.from(tag);
-                                                          final tagId = mifare!.identifier;
-                                                          final signature = await mifare.sendMiFareCommand(
-                                                            Uint8List.fromList(
-                                                              [0x3C, 0x00],
-                                                            ),
-                                                          );
-                                                          var isOriginalTag = false;
-                                                          if (signature.length > 2) {
-                                                            isOriginalTag = OriginalityVerifier().verify(
-                                                              tagId,
-                                                              signature,
-                                                            );
-                                                          }
-                                                          if (isOriginalTag) {
-                                                            await NfcManager.instance.stopSession(
-                                                              alertMessage: 'Complete',
-                                                            );
-                                                            await Future.delayed(
-                                                              const Duration(
-                                                                milliseconds: 2500,
-                                                              ),
-                                                            );
-                                                            await router.pop();
-                                                            isBarList
-                                                                ? await router.push(
-                                                              BarSecretFillRoute(
-                                                                receivedData: walletAddress.toString(),
-                                                              ),
-                                                            )
-                                                                : await router.push(
-                                                              CardSecretFillRoute(
-                                                                receivedData: walletAddress.toString(),
-                                                              ),
-                                                            );
-                                                          } else {
-                                                            await NfcManager.instance.stopSession();
-                                                            await Future.delayed(
-                                                              const Duration(
-                                                                milliseconds: 2900,
-                                                              ),
-                                                            );
-                                                            await notCoinplusCard();
-                                                          }
-                                                        } else {
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
                                                           );
-
-                                                          await NfcManager.instance.stopSession(
-                                                            errorMessage:
-                                                            'You tapped the wrong card. Please check the wallet address of the card.',
-                                                          );
-                                                        }
-                                                      },
-                                                      onError: (_) {
-                                                        _walletProtectState.updateNfcSessionStatus(
-                                                          isStarted: false,
-                                                        );
-                                                        NfcManager.instance.stopSession();
-                                                        return Future(showBarTapIssueBottomSheet);
-                                                      },
-                                                    );
-                                                  }
-                                                      : () async {
-                                                    await _walletProtectState.updateNfcSessionStatus(
-                                                      isStarted: true,
-                                                    );
-                                                    await router.pop();
-                                                    await NfcManager.instance.startSession(
-                                                      onDiscovered: (tag) async {
-                                                        final ndef = Ndef.from(tag);
-                                                        final records = ndef!.cachedMessage!.records;
-                                                        dynamic walletAddress;
-
-                                                        if (records.length >= 2) {
-                                                          final hasJson = records[1].payload;
-                                                          final payloadString = String.fromCharCodes(
-                                                            hasJson,
-                                                          );
-                                                          final Map payloadData = await json.decode(
-                                                            payloadString,
-                                                          );
-                                                          walletAddress = payloadData['a'];
-                                                        } else {
-                                                          final hasUrl = records[0].payload;
-                                                          final payloadString = String.fromCharCodes(
-                                                            hasUrl,
-                                                          );
-                                                          final parts = payloadString.split(
-                                                            'air.coinplus.com/btc/',
-                                                          );
-                                                          walletAddress = parts[1];
-                                                        }
-                                                        if (card.address == walletAddress) {
-                                                          final nfcA = NfcA.from(tag);
-                                                          final uid = nfcA!.identifier;
-                                                          Uint8List? signature;
-                                                          var isOriginalTag = false;
-
-                                                          try {
-                                                            final response = await nfcA.transceive(
-                                                              data: Uint8List.fromList([0x3C, 0x00]),
-                                                            );
-                                                            signature = Uint8List.fromList(response);
-                                                            if (signature.length > 2) {
-                                                              isOriginalTag = OriginalityVerifier().verify(
-                                                                uid,
-                                                                signature,
-                                                              );
-                                                            }
-                                                          } catch (e) {
-                                                            signature = null;
-                                                          }
-                                                          if (isOriginalTag) {
-                                                            await router.pop();
-                                                            isBarList
-                                                                ? await router.push(
-                                                              BarSecretFillRoute(
-                                                                receivedData: walletAddress.toString(),
-                                                              ),
-                                                            )
-                                                                : await router.push(
-                                                              CardSecretFillRoute(
-                                                                receivedData: walletAddress.toString(),
-                                                              ),
-                                                            );
-                                                          } else {
-                                                            await router.pop();
-                                                            await notCoinplusCard();
-                                                          }
-                                                        } else {
                                                           await router.pop();
-                                                          await showWrongCardModal();
-                                                          await Future.delayed(
-                                                            const Duration(milliseconds: 3000),
+                                                          await NfcManager.instance.startSession(
+                                                            alertMessage:
+                                                                "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
+                                                            onDiscovered: (tag) async {
+                                                              final ndef = Ndef.from(tag);
+                                                              final records = ndef!.cachedMessage!.records;
+                                                              dynamic walletAddress;
+                                                              if (records.length >= 2) {
+                                                                final hasJson = records[1].payload;
+                                                                final payloadString = String.fromCharCodes(
+                                                                  hasJson,
+                                                                );
+                                                                final Map payloadData = await json.decode(
+                                                                  payloadString,
+                                                                );
+                                                                walletAddress = payloadData['a'];
+                                                              } else {
+                                                                final hasUrl = records[0].payload;
+                                                                final payloadString = String.fromCharCodes(
+                                                                  hasUrl,
+                                                                );
+                                                                final parts = payloadString.split(
+                                                                  'air.coinplus.com/btc/',
+                                                                );
+                                                                walletAddress = parts[1];
+                                                              }
+                                                              if (card.address == walletAddress) {
+                                                                final mifare = MiFare.from(tag);
+                                                                final tagId = mifare!.identifier;
+                                                                final signature = await mifare.sendMiFareCommand(
+                                                                  Uint8List.fromList(
+                                                                    [0x3C, 0x00],
+                                                                  ),
+                                                                );
+                                                                var isOriginalTag = false;
+                                                                if (signature.length > 2) {
+                                                                  isOriginalTag = OriginalityVerifier().verify(
+                                                                    tagId,
+                                                                    signature,
+                                                                  );
+                                                                }
+                                                                if (isOriginalTag) {
+                                                                  await NfcManager.instance.stopSession(
+                                                                    alertMessage: 'Complete',
+                                                                  );
+                                                                  await Future.delayed(
+                                                                    const Duration(
+                                                                      milliseconds: 2500,
+                                                                    ),
+                                                                  );
+                                                                  await router.pop();
+                                                                  isBarList
+                                                                      ? await router.push(
+                                                                          BarSecretFillRoute(
+                                                                            receivedData: walletAddress.toString(),
+                                                                          ),
+                                                                        )
+                                                                      : await router.push(
+                                                                          CardSecretFillRoute(
+                                                                            receivedData: walletAddress.toString(),
+                                                                          ),
+                                                                        );
+                                                                } else {
+                                                                  await NfcManager.instance.stopSession();
+                                                                  await Future.delayed(
+                                                                    const Duration(
+                                                                      milliseconds: 2900,
+                                                                    ),
+                                                                  );
+                                                                  await notCoinplusCard();
+                                                                }
+                                                              } else {
+                                                                await _walletProtectState.updateNfcSessionStatus(
+                                                                  isStarted: true,
+                                                                );
+
+                                                                await NfcManager.instance.stopSession(
+                                                                  errorMessage:
+                                                                      'You tapped the wrong card. Please check the wallet address of the card.',
+                                                                );
+                                                              }
+                                                            },
+                                                            onError: (_) {
+                                                              _walletProtectState.updateNfcSessionStatus(
+                                                                isStarted: false,
+                                                              );
+                                                              NfcManager.instance.stopSession();
+                                                              return Future(showBarTapIssueBottomSheet);
+                                                            },
                                                           );
-                                                          await NfcManager.instance.stopSession();
                                                         }
-                                                        await _walletProtectState.updateNfcSessionStatus(
-                                                          isStarted: false,
-                                                        );
-                                                      },
-                                                      onError: (_) {
-                                                        _walletProtectState.updateNfcSessionStatus(
-                                                          isStarted: false,
-                                                        );
-                                                        return Future(() {
-                                                          NfcManager.instance.stopSession();
-                                                          return Future(showBarTapIssueBottomSheet);
-                                                        });
-                                                      },
-                                                    );
-                                                    await router.pop();
-                                                    await showAndroidBarNfcBottomSheet();
-                                                  },
+                                                      : () async {
+                                                          await _walletProtectState.updateNfcSessionStatus(
+                                                            isStarted: true,
+                                                          );
+                                                          await router.pop();
+                                                          await NfcManager.instance.startSession(
+                                                            onDiscovered: (tag) async {
+                                                              final ndef = Ndef.from(tag);
+                                                              final records = ndef!.cachedMessage!.records;
+                                                              dynamic walletAddress;
+
+                                                              if (records.length >= 2) {
+                                                                final hasJson = records[1].payload;
+                                                                final payloadString = String.fromCharCodes(
+                                                                  hasJson,
+                                                                );
+                                                                final Map payloadData = await json.decode(
+                                                                  payloadString,
+                                                                );
+                                                                walletAddress = payloadData['a'];
+                                                              } else {
+                                                                final hasUrl = records[0].payload;
+                                                                final payloadString = String.fromCharCodes(
+                                                                  hasUrl,
+                                                                );
+                                                                final parts = payloadString.split(
+                                                                  'air.coinplus.com/btc/',
+                                                                );
+                                                                walletAddress = parts[1];
+                                                              }
+                                                              if (card.address == walletAddress) {
+                                                                final nfcA = NfcA.from(tag);
+                                                                final uid = nfcA!.identifier;
+                                                                Uint8List? signature;
+                                                                var isOriginalTag = false;
+
+                                                                try {
+                                                                  final response = await nfcA.transceive(
+                                                                    data: Uint8List.fromList([0x3C, 0x00]),
+                                                                  );
+                                                                  signature = Uint8List.fromList(response);
+                                                                  if (signature.length > 2) {
+                                                                    isOriginalTag = OriginalityVerifier().verify(
+                                                                      uid,
+                                                                      signature,
+                                                                    );
+                                                                  }
+                                                                } catch (e) {
+                                                                  signature = null;
+                                                                }
+                                                                if (isOriginalTag) {
+                                                                  await router.pop();
+                                                                  isBarList
+                                                                      ? await router.push(
+                                                                          BarSecretFillRoute(
+                                                                            receivedData: walletAddress.toString(),
+                                                                          ),
+                                                                        )
+                                                                      : await router.push(
+                                                                          CardSecretFillRoute(
+                                                                            receivedData: walletAddress.toString(),
+                                                                          ),
+                                                                        );
+                                                                } else {
+                                                                  await router.pop();
+                                                                  await notCoinplusCard();
+                                                                }
+                                                              } else {
+                                                                await router.pop();
+                                                                await showWrongCardModal();
+                                                                await Future.delayed(
+                                                                  const Duration(milliseconds: 3000),
+                                                                );
+                                                                await NfcManager.instance.stopSession();
+                                                              }
+                                                              await _walletProtectState.updateNfcSessionStatus(
+                                                                isStarted: false,
+                                                              );
+                                                            },
+                                                            onError: (_) {
+                                                              _walletProtectState.updateNfcSessionStatus(
+                                                                isStarted: false,
+                                                              );
+                                                              return Future(() {
+                                                                NfcManager.instance.stopSession();
+                                                                return Future(showBarTapIssueBottomSheet);
+                                                              });
+                                                            },
+                                                          );
+                                                          await router.pop();
+                                                          await showAndroidBarNfcBottomSheet();
+                                                        },
                                                   lottieAsset: 'assets/animated_logo/please_wait.json',
                                                   lottieHeight: 140,
                                                 ),
@@ -985,8 +984,7 @@ class DashboardPage extends HookWidget {
                                               ).then(
                                                 (value) => _walletProtectState.updateModalStatus(isOpened: false),
                                               );
-                                            }
-                                            else {
+                                            } else {
                                               await router.pop();
                                               await showDialogBox(
                                                 context,
@@ -1104,7 +1102,8 @@ class DashboardPage extends HookWidget {
                                                                       ),
                                                                     );
                                                                     await maybeCoinplusCard(
-                                                                      router.navigatorKey.currentContext!, _walletProtectState,
+                                                                      router.navigatorKey.currentContext!,
+                                                                      _walletProtectState,
                                                                     );
                                                                   }
                                                                 }
@@ -1242,7 +1241,10 @@ class DashboardPage extends HookWidget {
                                           }
                                     : () async {
                                         await router.pop();
-                                        await maybeCoinplusCard(router.navigatorKey.currentContext!, _walletProtectState);
+                                        await maybeCoinplusCard(
+                                          router.navigatorKey.currentContext!,
+                                          _walletProtectState,
+                                        );
                                       },
                                 child: Row(
                                   children: [

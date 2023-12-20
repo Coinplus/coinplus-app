@@ -68,6 +68,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   final _acceptState = AcceptState();
   final _checkboxState = CheckboxState();
   late String btcAddress = '';
+  late UniqueKey uniqueKey = UniqueKey();
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
@@ -84,8 +85,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     initConnectivity();
     _nfcStop();
     _toggleCard();
-    _flipCardController.toggleCard();
-    _btcAddressController.addListener(_validateBTCAddress);
+    _btcAddressController.addListener(() {
+      _validateBTCAddress();
+      _balanceStore.getCard(receivedData: widget.receivedData, textEditingController: _btcAddressController);
+    });
+
     _btcAddressController = TextEditingController();
     _btcAddressController.text = widget.receivedData ?? '';
     _validationStore
@@ -107,6 +111,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     if (widget.receivedData != null) {
       onInitWithAddress();
+      _balanceStore.getCard(receivedData: widget.receivedData, textEditingController: _btcAddressController);
     }
   }
 
@@ -742,8 +747,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         if (res == null) {
                                                           return;
                                                         }
-
-                                                        _btcAddressController.text = res;
+                                                        setState(() {
+                                                          _btcAddressController.text = res;
+                                                        });
                                                         await _validateBTCAddress();
                                                       },
                                                       child: SizedBox(
@@ -859,126 +865,240 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                 shakeAnimationType: ShakeAnimationType.LeftRightShake,
                 child: Stack(
                   children: [
-                    Column(
-                      children: [
-                        AnimatedCrossFade(
-                          firstChild: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.grey.withOpacity(0.3),
-                              ),
-                              color: Colors.white.withOpacity(0.7),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(14),
-                              child: Column(
-                                children: [
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Fill in the address of your physical card wallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'Coinplus Virtual Card',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState: _addressState.isAddressVisible
-                                        ? CrossFadeState.showSecond
-                                        : CrossFadeState.showFirst,
-                                    duration: const Duration(milliseconds: 400),
-                                  ),
-                                  const Gap(4),
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState: _addressState.isAddressVisible
-                                        ? CrossFadeState.showSecond
-                                        : CrossFadeState.showFirst,
-                                    duration: const Duration(milliseconds: 400),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          secondChild: GestureDetector(
-                            onTap: () {
-                              _checkboxState.makeActive();
-                              HapticFeedback.heavyImpact();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: _checkboxState.isActive
-                                      ? const Color(0xFF73C3A6)
-                                      : _acceptState.isAccepted
-                                          ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00).withOpacity(0.6),
-                                ),
-                                color: _checkboxState.isActive
-                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                    : _acceptState.isAccepted
-                                        ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00).withOpacity(0.05),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14),
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      'Keep your card safe!',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    const Gap(4),
-                                    const Text(
-                                      'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          crossFadeState:
-                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                          duration: const Duration(milliseconds: 400),
+                    AnimatedCrossFade(
+                      firstChild: FutureBuilder<bool?>(
+                        future: _balanceStore.getCard(
+                          receivedData: widget.receivedData,
+                          textEditingController: _btcAddressController,
                         ),
-                      ],
+                        builder: (context, snapshot) {
+                          bool? isActivated = false;
+                          isActivated = snapshot.data;
+                          return AnimatedCrossFade(
+                            firstChild: Observer(
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _checkboxState.makeActiveCheckbox();
+                                    HapticFeedback.heavyImpact();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: _checkboxState.isActivatedCheckBox
+                                            ? const Color(0xFF73C3A6)
+                                            : _acceptState.isCheckboxAccepted
+                                                ? Colors.grey.withOpacity(0.3)
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      color: _checkboxState.isActivatedCheckBox
+                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                          : _acceptState.isCheckboxAccepted
+                                              ? Colors.white.withOpacity(0.7)
+                                              : const Color(0xFFFF2E00).withOpacity(0.05),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(14),
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                            'This card was previously activated!',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          const Gap(4),
+                                          const Text(
+                                            "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            secondChild: Observer(
+                              builder: (context) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: Colors.grey.withOpacity(0.3),
+                                    ),
+                                    color: Colors.white.withOpacity(0.7),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(14),
+                                    child: Column(
+                                      children: [
+                                        AnimatedCrossFade(
+                                          firstChild: const Text(
+                                            'Fill in the address of your physical card wallet',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          secondChild: const Text(
+                                            'Coinplus Virtual Card',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          crossFadeState: _addressState.isAddressVisible
+                                              ? CrossFadeState.showSecond
+                                              : CrossFadeState.showFirst,
+                                          duration: const Duration(milliseconds: 400),
+                                        ),
+                                        const Gap(4),
+                                        AnimatedCrossFade(
+                                          firstChild: const Text(
+                                            'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          secondChild: const Text(
+                                            'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 14,
+                                              color: AppColors.textHintsColor,
+                                            ),
+                                          ).expandedHorizontally(),
+                                          crossFadeState: _addressState.isAddressVisible
+                                              ? CrossFadeState.showSecond
+                                              : CrossFadeState.showFirst,
+                                          duration: const Duration(milliseconds: 400),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            crossFadeState: isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 400),
+                          );
+                        },
+                      ),
+                      secondChild: GestureDetector(
+                        onTap: () {
+                          _checkboxState.makeActive();
+                          HapticFeedback.heavyImpact();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: _checkboxState.isActive
+                                  ? const Color(0xFF73C3A6)
+                                  : _acceptState.isAccepted
+                                      ? Colors.grey.withOpacity(0.3)
+                                      : const Color(0xFFFF2E00).withOpacity(0.6),
+                            ),
+                            color: _checkboxState.isActive
+                                ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                : _acceptState.isAccepted
+                                    ? Colors.white.withOpacity(0.7)
+                                    : const Color(0xFFFF2E00).withOpacity(0.05),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'Keep your card safe!',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                                ).expandedHorizontally(),
+                                const Gap(4),
+                                const Text(
+                                  'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: AppColors.textHintsColor,
+                                  ),
+                                ).expandedHorizontally(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      crossFadeState: !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                      duration: const Duration(milliseconds: 400),
                     ).paddingHorizontal(16),
+                    Visibility(
+                      visible: !_lineStore.isLineVisible,
+                      child: FutureBuilder<bool?>(
+                        future: _balanceStore.getCard(
+                          receivedData: widget.receivedData,
+                          textEditingController: _btcAddressController,
+                        ),
+                        builder: (context, snapshot) {
+                          final isActivated = snapshot.data;
+                          return Visibility(
+                            visible: isActivated == true,
+                            child: Positioned(
+                              right: 16,
+                              child: Transform.scale(
+                                scale: 1.2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Observer(
+                                    builder: (context) {
+                                      return Checkbox(
+                                        checkColor: const Color(0xFF73C3A6),
+                                        activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(4),
+                                          ),
+                                        ),
+                                        side: BorderSide(
+                                          color: _acceptState.isCheckboxAccepted
+                                              ? Colors.grey.withOpacity(0.5)
+                                              : const Color(0xFFFF2E00).withOpacity(0.6),
+                                        ),
+                                        value: _checkboxState.isActivatedCheckBox,
+                                        onChanged: (_) {
+                                          _checkboxState.makeActiveCheckbox();
+                                        },
+                                        splashRadius: 15,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     Visibility(
                       visible: _lineStore.isLineVisible,
                       child: Positioned(
@@ -1042,7 +1162,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.ORANGE,
                                 label: WalletType.TRACKER_PLUS,
-                                name: 'Tracker с плюсиком',
+                                name: 'Bitcoin Wallet',
                               );
                             }
                           } else {
@@ -1058,7 +1178,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.ORANGE,
                                 label: WalletType.TRACKER_PLUS,
-                                name: 'Tracker с плюсиком',
+                                name: 'Bitcoin Wallet',
                               );
                             }
                           }
@@ -1091,35 +1211,72 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                         ),
                       ),
                     ).paddingHorizontal(49)
-                  : LoadingButton(
-                      onPressed: _connectionStatus == ConnectivityResult.none
-                          ? null
-                          : _addressState.isAddressVisible
-                              ? () async {
-                                  final cardIndex = _balanceStore.cards.indexWhere(
-                                    (element) => element.address == _balanceStore.selectedCard?.address,
-                                  );
-                                  if (cardIndex != -1) {
-                                    await alreadySavedCard(context);
-                                  } else {
-                                    await _toggleCard();
-                                    if (widget.receivedData == null) {
-                                      await getCardData(_btcAddressController.text);
-                                    } else {
-                                      await getCardData(widget.receivedData!);
-                                    }
-                                    _lineStore.makeVisible();
-                                  }
-                                }
-                              : null,
-                      child: const Text(
-                        'Save to wallet',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
+                  : FutureBuilder<bool?>(
+                      future: _balanceStore.getCard(
+                        receivedData: widget.receivedData,
+                        textEditingController: _btcAddressController,
                       ),
-                    ).paddingHorizontal(49);
+                      builder: (context, snapshot) {
+                        final isActivated = snapshot.data;
+                        return Observer(
+                          builder: (context) {
+                            return LoadingButton(
+                              onPressed: _connectionStatus == ConnectivityResult.none
+                                  ? null
+                                  : _addressState.isAddressVisible
+                                      ? _checkboxState.isActivatedCheckBox
+                                          ? () async {
+                                              final cardIndex = _balanceStore.cards.indexWhere(
+                                                (element) => element.address == _balanceStore.selectedCard?.address,
+                                              );
+                                              if (cardIndex != -1) {
+                                                await alreadySavedCard(context);
+                                              } else {
+                                                await _toggleCard();
+                                                await Future.delayed(
+                                                  const Duration(milliseconds: 300),
+                                                );
+                                                _lineStore.makeVisible();
+                                              }
+                                            }
+                                          : () async {
+                                              if (isActivated == true) {
+                                                await HapticFeedback.vibrate();
+                                                _acceptState.checkboxAccept();
+                                                _shakeAnimationController.start();
+                                                await Future.delayed(
+                                                  const Duration(
+                                                    milliseconds: 600,
+                                                  ),
+                                                );
+                                                _shakeAnimationController.stop();
+                                              } else {
+                                                final cardIndex = _balanceStore.cards.indexWhere(
+                                                  (element) => element.address == _balanceStore.selectedCard?.address,
+                                                );
+                                                if (cardIndex != -1) {
+                                                  await alreadySavedCard(context);
+                                                } else {
+                                                  if (_flipCardController.state!.isFront) {
+                                                    await _toggleCard();
+                                                    _lineStore.makeVisible();
+                                                  }
+                                                }
+                                              }
+                                            }
+                                      : null,
+                              child: const Text(
+                                'Save to wallet',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontFamily: FontFamily.redHatSemiBold,
+                                ),
+                              ),
+                            ).paddingHorizontal(49);
+                          },
+                        );
+                      },
+                    );
             },
           ),
           if (context.height > 844) Gap(context.height * 0.1) else Gap(context.height * 0.05),
@@ -1130,7 +1287,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
 
   Future<void> _validateBTCAddress() async {
     final btcAddress = _btcAddressController.text.trim();
-
     if (btcAddress.length >= 26) {
       await _balanceStore.getSelectedCard(btcAddress);
       if (isValidPublicAddress(btcAddress)) {
@@ -1189,6 +1345,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   Future<void> makeLineInvisible() async {
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
-    _lineStore.makeVisible();
+    _lineStore.makeInvisible();
   }
 }

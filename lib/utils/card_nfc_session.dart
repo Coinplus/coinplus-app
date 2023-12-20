@@ -301,7 +301,7 @@ Future<void> checkNfcIos({
       if (isOriginalTag && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await yourCardIsOriginal(router.navigatorKey.currentContext!,walletProtectState);
+        await yourCardIsOriginal(router.navigatorKey.currentContext!, walletProtectState);
       } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
@@ -315,7 +315,7 @@ Future<void> checkNfcIos({
       } else if (isOriginalTag == false && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await yourCardIsOriginal(router.navigatorKey.currentContext!,walletProtectState);
+        await yourCardIsOriginal(router.navigatorKey.currentContext!, walletProtectState);
       } else if (isOriginalTag == false && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
@@ -402,15 +402,15 @@ Future<void> checkNfcAndroid({
                 },
                 style: context.theme
                     .buttonStyle(
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    color: AppColors.primaryTextColor,
-                    fontSize: 15,
-                  ),
-                )
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 15,
+                      ),
+                    )
                     .copyWith(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
-                ),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                    ),
                 child: const Text('Cancel'),
               ).paddingHorizontal(60),
             ],
@@ -441,7 +441,6 @@ Future<void> checkNfcAndroid({
       final card = await getCardData(walletAddress);
       final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
 
-
       Uint8List? signature;
 
       try {
@@ -462,7 +461,7 @@ Future<void> checkNfcAndroid({
       if (isOriginalTag && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await router.pop();
-        await yourCardIsOriginal(router.navigatorKey.currentContext!,walletProtectState);
+        await yourCardIsOriginal(router.navigatorKey.currentContext!, walletProtectState);
       } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'FAKE');
@@ -479,7 +478,7 @@ Future<void> checkNfcAndroid({
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await router.pop();
 
-        await yourCardIsOriginal(router.navigatorKey.currentContext!,walletProtectState);
+        await yourCardIsOriginal(router.navigatorKey.currentContext!, walletProtectState);
       } else if (isOriginalTag == false && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'UNKNOWN');

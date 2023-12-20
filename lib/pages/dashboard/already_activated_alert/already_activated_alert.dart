@@ -8,17 +8,19 @@ import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
 Future<void> alreadyActivatedWallet(BuildContext context, WalletProtectState walletProtectState) {
-   return showDialogBox(
+  return showDialogBox(
     context,
     walletProtectState,
     DialogBoxWithAction(
-      text:
-      'Check out our detailed guide on how to send crypto from your wallet.',
-      title: const Text('Your wallet is \nalready activated!', textAlign: TextAlign.center,
+      text: 'Check out our detailed guide on how to send crypto from your wallet.',
+      title: const Text(
+        'Your wallet is \nalready activated!',
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: FontFamily.redHatBold,
           fontSize: 17,
-        ),),
+        ),
+      ),
       lottieAsset: 'assets/animated_logo/info.json',
       primaryActionText: 'Help center',
       primaryAction: () async {
@@ -42,6 +44,6 @@ Future<void> alreadyActivatedWallet(BuildContext context, WalletProtectState wal
       secondaryActionText: 'Close',
       secondaryAction: router.pop,
     ),
-     isDismissible: true,
+    isDismissible: true,
   );
 }

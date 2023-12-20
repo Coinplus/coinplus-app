@@ -11,13 +11,15 @@ Future<void> yourCardIsOriginal(BuildContext context, WalletProtectState walletP
     context,
     walletProtectState,
     DialogBoxWithAction(
-      text:
-      'The card is authentic \nand produced by Coinplus',
-      title: const Text('Your card is authentic', textAlign: TextAlign.center,
+      text: 'The card is authentic \nand produced by Coinplus',
+      title: const Text(
+        'Your card is authentic',
+        textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: FontFamily.redHatBold,
           fontSize: 17,
-        ),),
+        ),
+      ),
       lottieAsset: 'assets/animated_logo/secrets_success.json',
       primaryActionText: 'Close',
       primaryAction: router.pop,

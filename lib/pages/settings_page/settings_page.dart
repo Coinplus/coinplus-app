@@ -256,8 +256,9 @@ class SettingsPage extends HookWidget {
                         InkWell(
                           onTap: () async {
                             await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                            Platform.isAndroid ? checkNfcAndroid(walletProtectState: _walletProtectState) :
-                            await checkNfcIos(walletProtectState: _walletProtectState);
+                            Platform.isAndroid
+                                ? checkNfcAndroid(walletProtectState: _walletProtectState)
+                                : await checkNfcIos(walletProtectState: _walletProtectState);
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

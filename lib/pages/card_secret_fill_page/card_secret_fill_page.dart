@@ -731,7 +731,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             await secretsSuccessAlert(context);
                           } else {
                             await router.pop();
-                            unawaited( activationFailureCount(card.address));
+                            unawaited(activationFailureCount(card.address));
                             await secretsFailDialog(context);
                           }
                         } catch (e) {
