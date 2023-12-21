@@ -77,6 +77,7 @@ Future<void> nfcSessionIos({
                 isOriginalCard: isOriginalTag,
                 receivedData: walletAddress,
                 cardColor: cardColor,
+                isActivated: card.activated,
               ),
             );
           } else if (formFactor == 'b') {
@@ -107,6 +108,7 @@ Future<void> nfcSessionIos({
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalCard: false,
                   receivedData: walletAddress,
+                  isActivated: card.activated,
                 ),
               );
             } else {
@@ -123,6 +125,7 @@ Future<void> nfcSessionIos({
                 isMiFareUltralight: isMifareUltralight,
                 isOriginalCard: false,
                 receivedData: walletAddress,
+                isActivated: card?.activated,
               ),
             );
           }

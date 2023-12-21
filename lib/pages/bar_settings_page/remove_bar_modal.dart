@@ -12,6 +12,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -116,10 +117,11 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
           const Gap(32),
           LoadingButton(
             onPressed: () async {
-              await _balanceStore.getSelectedBar(widget.bar.address);
+              unawaited(_balanceStore.getSelectedBar(widget.bar.address));
               await secureStorage.delete(key: 'card${widget.bar.address}');
+              unawaited(deleteCount(widget.bar.address));
               await router.pop();
-              await _balanceStore.removeSelectedBar();
+              unawaited(_balanceStore.removeSelectedBar());
               showTopSnackBar(
                 displayDuration: const Duration(
                   milliseconds: 600,

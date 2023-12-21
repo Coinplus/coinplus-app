@@ -14,7 +14,8 @@ ChainStats _$ChainStatsFromJson(Map json) => ChainStats(
       txCount: json['tx_count'] as int,
     );
 
-Map<String, dynamic> _$ChainStatsToJson(ChainStats instance) => <String, dynamic>{
+Map<String, dynamic> _$ChainStatsToJson(ChainStats instance) =>
+    <String, dynamic>{
       'funded_txo_count': instance.fundedTxoCount,
       'funded_txo_sum': instance.balance,
       'spent_txo_count': instance.spentTxoCount,
