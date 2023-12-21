@@ -1,0 +1,6 @@
+{
+  "apiUrl": "https://blockstream.info",
+  "coinsUrl": "https://openapiv1.coinstats.app",
+  "env": "DEV",
+  "production": false
+}

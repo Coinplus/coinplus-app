@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
@@ -12,12 +10,9 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
-import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../utils/secure_storage_utils.dart';
-import '../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
+import 'action_slider.dart';
 
 class RemoveCard extends StatefulWidget {
   const RemoveCard({super.key, required this.card});
@@ -30,29 +25,6 @@ class RemoveCard extends StatefulWidget {
 
 class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  late AnimationController _controller;
-  late Animation<Offset> _slideAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    startAnimation();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0.2, 0),
-      end: const Offset(-0.1, 0),
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,27 +54,8 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             ).expandedHorizontally(),
           ),
           const Gap(30),
-          AnimatedBuilder(
-            animation: _slideAnimation,
-            builder: (ctx, child) {
-              return SlideTransition(
-                position: _slideAnimation,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Assets.images.card.cardForm.image(
-                      height: 84,
-                    ),
-                    const Gap(50),
-                    AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: _slideAnimation.isCompleted ? 1 : 0,
-                      child: Assets.icons.binIcon.image(height: 50),
-                    ),
-                  ],
-                ),
-              );
-            },
+          Assets.images.card.cardForm.image(
+            height: 84,
           ),
           const Gap(27),
           const Text(
@@ -114,40 +67,11 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
               color: AppColors.primary,
             ),
           ).paddingHorizontal(31),
-          const Gap(32),
-          LoadingButton(
-            onPressed: () async {
-              await _balanceStore.getSelectedCard(widget.card.address);
-              await secureStorage.delete(key: 'card${widget.card.address}');
-              unawaited(deleteCount(widget.card.address));
-              await router.pop();
-              await _balanceStore.removeSelectedCard();
-              showTopSnackBar(
-                displayDuration: const Duration(
-                  milliseconds: 600,
-                ),
-                Overlay.of(context),
-                CustomSnackBar.success(
-                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                  message: 'Your card was removed',
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    fontSize: 14,
-                    color: Colors.white,
-                  ),
-                ),
-              );
-              await router.pop();
-            },
-            child: const Text(
-              'Delete',
-              style: TextStyle(
-                fontFamily: FontFamily.redHatMedium,
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ).paddingHorizontal(64),
+          const Gap(25),
+          ActionSliderForDelete(
+            balanceStore: _balanceStore,
+            card: widget.card,
+          ).paddingHorizontal(50),
           const Gap(15),
           LoadingButton(
             onPressed: router.pop,
@@ -175,10 +99,5 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
         ],
       ),
     );
-  }
-
-  Future<void> startAnimation() async {
-    await Future.delayed(const Duration(milliseconds: 400));
-    await _controller.forward();
   }
 }

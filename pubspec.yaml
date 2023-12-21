@@ -83,6 +83,7 @@ dependencies:
   cloud_firestore: ^4.13.3
   cloud_firestore_odm: ^1.0.0-dev.78
   ramp_flutter: ^2.0.2
+  action_slider: ^0.7.0
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.

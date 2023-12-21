@@ -14,6 +14,8 @@ import 'services/amplitude_service.dart';
 import 'utils/secure_storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.PROD}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -39,9 +41,7 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
 }
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await initializeAmplitude();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await run();
 }

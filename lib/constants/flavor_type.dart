@@ -1,1 +1,1 @@
-enum Flavor { PROD }
+enum Flavor { PROD, DEV }

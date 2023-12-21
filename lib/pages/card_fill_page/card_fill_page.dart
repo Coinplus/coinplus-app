@@ -31,6 +31,7 @@ import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
+import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/compute_private_key.dart';
@@ -57,7 +58,7 @@ class CardFillPage extends StatefulWidget {
 }
 
 class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMixin {
-  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late int cardCarouselIndex = _balanceStore.cards.length - 1;
@@ -67,8 +68,8 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   final _addressState = AddressState();
   final _acceptState = AcceptState();
   final _checkboxState = CheckboxState();
+  final _connectivityStore = ConnectivityStore();
   late String btcAddress = '';
-  late UniqueKey uniqueKey = UniqueKey();
   late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
@@ -82,7 +83,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    initConnectivity();
+    _connectivityStore.initConnectivity();
     _nfcStop();
     _toggleCard();
     _btcAddressController.addListener(() {
@@ -108,7 +109,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
       lowerBound: 1,
       upperBound: 1.09,
     );
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     if (widget.receivedData != null) {
       onInitWithAddress();
       _balanceStore.getCard(receivedData: widget.receivedData, textEditingController: _btcAddressController);
@@ -1288,7 +1289,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   Future<void> _validateBTCAddress() async {
     final btcAddress = _btcAddressController.text.trim();
     if (btcAddress.length >= 26) {
-      await _balanceStore.getSelectedCard(btcAddress);
+      unawaited( _balanceStore.getSelectedCard(btcAddress));
       if (isValidPublicAddress(btcAddress)) {
         _validationStore.validate();
         await Future.delayed(
@@ -1306,25 +1307,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
         await _lottieController.forward(from: 0);
       } else {}
     }
-  }
-
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
-    try {
-      result = await _connectivity.checkConnectivity();
-    } on PlatformException {
-      return;
-    }
-    if (!mounted) {
-      return Future.value();
-    }
-    return _updateConnectionStatus(result);
-  }
-
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    setState(() {
-      _connectionStatus = result;
-    });
   }
 
   Future<void> onInitWithAddress() async {

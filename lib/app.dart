@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         localizationsDelegates: context.localizationDelegates,
-        debugShowCheckedModeBanner: !GetIt.I<FlavorService>().isProduction,
+        debugShowCheckedModeBanner: GetIt.I<FlavorService>().isDevelopment,
         theme: ThemeData(useMaterial3: false),
         routerDelegate: router.delegate(
           navigatorObservers: () => [
