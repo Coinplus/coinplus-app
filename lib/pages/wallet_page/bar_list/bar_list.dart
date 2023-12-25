@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +15,15 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
+import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
 import '../../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
@@ -99,6 +101,9 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 return ScaleTap(
                   enableFeedback: false,
                   onPressed: () {
+                    recordAmplitudeEvent(
+                      const AddNewClicked(tab: 'Bar'),
+                    );
                     showModalBottomSheet(
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -178,6 +183,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                         ScaleTap(
                                           enableFeedback: false,
                                           onPressed: () async {
+                                            await recordAmplitudeEvent(
+                                              WalletSettingsClicked(
+                                                walletAddress: bar.address,
+                                                walletType: 'Bar',
+                                              ),
+                                            );
                                             await router.push(
                                               BarSettingsRoute(bar: bar),
                                             );
@@ -468,81 +479,90 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                         enableFeedback: false,
                                         opacityMinValue: .98,
                                         scaleMinValue: .98,
-                                        onPressed: _settingsState.barCurrentIndex == index ? presentRamp : null,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: BackdropFilter(
-                                            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Colors.black.withOpacity(0.4),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 2,
-                                                  bottom: 2,
-                                                  left: 8,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        onPressed: _settingsState.barCurrentIndex == index
+                                            ? () async {
+                                                final isActivated = isBarWalletActivated(
+                                                  balanceStore: _balanceStore,
+                                                  settingsState: _settingsState,
+                                                );
+                                                await recordAmplitudeEvent(
+                                                  TopUpButtonClicked(
+                                                    walletType: 'Bar',
+                                                    walletAddress: bar.address,
+                                                    activated: await isActivated,
+                                                  ),
+                                                );
+                                                presentRamp();
+                                              }
+                                            : null,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Colors.black.withOpacity(0.4),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 2,
+                                              bottom: 2,
+                                              left: 8,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        const Text(
-                                                          'Balance',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        Observer(
-                                                          builder: (context) {
-                                                            final data = _balanceStore.coins;
-                                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                                              locale: 'en_us',
-                                                              decimalDigits: 2,
-                                                            );
-                                                            if (data == null) {
-                                                              return const Padding(
-                                                                padding: EdgeInsets.all(
-                                                                  4,
-                                                                ),
-                                                                child: Row(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      height: 10,
-                                                                      width: 10,
-                                                                      child: CircularProgressIndicator(
-                                                                        color: Colors.white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }
-                                                            return Text(
-                                                              (bar.data?.balance != null
-                                                                      ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
-                                                                      : '')
-                                                                  .toString(),
-                                                              style: const TextStyle(
-                                                                fontFamily: FontFamily.redHatMedium,
-                                                                fontWeight: FontWeight.w700,
-                                                                color: Colors.white,
-                                                                fontSize: 20,
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                      ],
+                                                    const Text(
+                                                      'Balance',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
-                                                    Assets.icons.alternative.image(height: 48),
+                                                    Observer(
+                                                      builder: (context) {
+                                                        final data = _balanceStore.coins;
+                                                        final myFormat = NumberFormat.decimalPatternDigits(
+                                                          locale: 'en_us',
+                                                          decimalDigits: 2,
+                                                        );
+                                                        if (data == null) {
+                                                          return const Padding(
+                                                            padding: EdgeInsets.all(
+                                                              4,
+                                                            ),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                  width: 10,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.white,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }
+                                                        return Text(
+                                                          (bar.data?.balance != null
+                                                                  ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                  : '')
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 20,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
                                                   ],
                                                 ),
-                                              ),
+                                                Assets.icons.alternative.image(height: 48),
+                                              ],
                                             ),
                                           ),
                                         ).paddingHorizontal(37),
@@ -551,8 +571,20 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       ScaleTap(
                                         enableFeedback: false,
                                         onPressed: _settingsState.barCurrentIndex == index
-                                            ? () {
-                                                Clipboard.setData(
+                                            ? () async {
+                                                final isBarActivated = isBarWalletActivated(
+                                                  balanceStore: _balanceStore,
+                                                  settingsState: _settingsState,
+                                                );
+                                                await recordAmplitudeEvent(
+                                                  AddressCopied(
+                                                    walletType: 'Bar',
+                                                    walletAddress: bar.address,
+                                                    activated: await isBarActivated,
+                                                    source: 'Wallet',
+                                                  ),
+                                                );
+                                                await Clipboard.setData(
                                                   ClipboardData(
                                                     text: bar.address.toString(),
                                                   ),

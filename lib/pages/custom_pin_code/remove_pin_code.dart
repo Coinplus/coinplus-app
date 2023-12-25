@@ -12,7 +12,9 @@ import 'package:shake_animation_widget/shake_animation_widget.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
 
@@ -115,6 +117,7 @@ class PinRemove extends StatelessWidget {
                   final savedPinCode = await getSavedPinCode();
                   if (value == savedPinCode) {
                     await secureStorage.delete(key: 'pin_code');
+                    await recordAmplitudeEvent(const AppLockDisabled());
                     await router.pop();
                   } else {
                     unawaited(_walletProtectState.dontMatch());

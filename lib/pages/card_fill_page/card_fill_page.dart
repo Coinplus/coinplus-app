@@ -23,8 +23,10 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
@@ -58,7 +60,6 @@ class CardFillPage extends StatefulWidget {
 }
 
 class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMixin {
-  final ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late int cardCarouselIndex = _balanceStore.cards.length - 1;
@@ -70,7 +71,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   final _checkboxState = CheckboxState();
   final _connectivityStore = ConnectivityStore();
   late String btcAddress = '';
-  late TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
@@ -86,13 +86,16 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     _connectivityStore.initConnectivity();
     _nfcStop();
     _toggleCard();
-    _btcAddressController.addListener(() {
+    _addressState.btcAddressController.addListener(() {
       _validateBTCAddress();
-      _balanceStore.getCard(receivedData: widget.receivedData, textEditingController: _btcAddressController);
+      _balanceStore.getCard(
+        receivedData: widget.receivedData,
+        textEditingController: _addressState.btcAddressController,
+      );
     });
 
-    _btcAddressController = TextEditingController();
-    _btcAddressController.text = widget.receivedData ?? '';
+    _addressState.btcAddressController = TextEditingController();
+    _addressState.btcAddressController.text = widget.receivedData ?? '';
     _validationStore
       ..isValid = true
       ..isInvalidAddress = true;
@@ -112,7 +115,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     if (widget.receivedData != null) {
       onInitWithAddress();
-      _balanceStore.getCard(receivedData: widget.receivedData, textEditingController: _btcAddressController);
+      _balanceStore.getCard(
+        receivedData: widget.receivedData,
+        textEditingController: _addressState.btcAddressController,
+      );
     }
   }
 
@@ -216,9 +222,17 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                         ),
                                         child: ScaleTap(
                                           enableFeedback: false,
-                                          onPressed: () {
+                                          onPressed: () async {
+                                            await recordAmplitudeEvent(
+                                              AddressCopied(
+                                                walletType: 'Card',
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                                activated: false,
+                                                source: 'Balance',
+                                              ),
+                                            );
                                             if (Platform.isIOS) {
-                                              Clipboard.setData(
+                                              await Clipboard.setData(
                                                 ClipboardData(
                                                   text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
@@ -247,7 +261,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 },
                                               );
                                             } else {
-                                              Clipboard.setData(
+                                              await Clipboard.setData(
                                                 ClipboardData(
                                                   text: _balanceStore.selectedCard!.address.toString(),
                                                 ),
@@ -315,8 +329,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                             ),
                                                           );
                                                         }
+                                                        final visibleAddress =
+                                                            _getVisibleAddress(_balanceStore.selectedCard!.address);
                                                         return Text(
-                                                          _balanceStore.selectedCard?.address ?? '',
+                                                          visibleAddress,
                                                           overflow: TextOverflow.ellipsis,
                                                           style: const TextStyle(
                                                             fontFamily: FontFamily.redHatMedium,
@@ -381,7 +397,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                           decimalDigits: 2,
                                                         );
                                                         final data = _balanceStore.coins;
-
                                                         if (_balanceStore.selectedCard != null &&
                                                             _balanceStore.selectedCard!.data != null &&
                                                             data != null) {
@@ -663,15 +678,36 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       onChanged: (value) {
                                                         if (value.length > 25) {
                                                           _validateBTCAddress();
+                                                          btcAddress = value;
+                                                          hasShownWallet().then(
+                                                            (hasShown) async {
+                                                              if (hasShown) {
+                                                                await recordAmplitudeEvent(
+                                                                  AddressFilled(
+                                                                    source: 'Wallet',
+                                                                    walletAddress: btcAddress,
+                                                                    walletType: 'Card',
+                                                                  ),
+                                                                );
+                                                              } else {
+                                                                await recordAmplitudeEvent(
+                                                                  AddressFilled(
+                                                                    source: 'Onboarding',
+                                                                    walletAddress: btcAddress,
+                                                                    walletType: 'Card',
+                                                                  ),
+                                                                );
+                                                              }
+                                                            },
+                                                          );
                                                         }
-                                                        btcAddress = value;
                                                       },
                                                       onEditingComplete: () {
                                                         if (btcAddress.length > 25) {
                                                           _validateBTCAddress();
                                                         }
                                                       },
-                                                      controller: _btcAddressController,
+                                                      controller: _addressState.btcAddressController,
                                                       maxLines: 15,
                                                       focusNode: _focusNode,
                                                       cursorColor: AppColors.primary,
@@ -748,9 +784,28 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         if (res == null) {
                                                           return;
                                                         }
-                                                        setState(() {
-                                                          _btcAddressController.text = res;
-                                                        });
+                                                        await hasShownWallet().then(
+                                                          (hasShown) async {
+                                                            if (hasShown) {
+                                                              await recordAmplitudeEvent(
+                                                                AddressFilled(
+                                                                  source: 'Wallet',
+                                                                  walletAddress: res,
+                                                                  walletType: 'Card',
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              await recordAmplitudeEvent(
+                                                                AddressFilled(
+                                                                  source: 'Onboarding',
+                                                                  walletAddress: res,
+                                                                  walletType: 'Card',
+                                                                ),
+                                                              );
+                                                            }
+                                                          },
+                                                        );
+                                                        await _addressState.setBTCAddress(res);
                                                         await _validateBTCAddress();
                                                       },
                                                       child: SizedBox(
@@ -870,7 +925,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                       firstChild: FutureBuilder<bool?>(
                         future: _balanceStore.getCard(
                           receivedData: widget.receivedData,
-                          textEditingController: _btcAddressController,
+                          textEditingController: _addressState.btcAddressController,
                         ),
                         builder: (context, snapshot) {
                           bool? isActivated = false;
@@ -1056,7 +1111,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                       child: FutureBuilder<bool?>(
                         future: _balanceStore.getCard(
                           receivedData: widget.receivedData,
-                          textEditingController: _btcAddressController,
+                          textEditingController: _addressState.btcAddressController,
                         ),
                         builder: (context, snapshot) {
                           final isActivated = snapshot.data;
@@ -1087,6 +1142,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                         ),
                                         value: _checkboxState.isActivatedCheckBox,
                                         onChanged: (_) {
+                                          recordAmplitudeEvent(
+                                            const WarningCheckboxClicked(),
+                                          );
                                           _checkboxState.makeActiveCheckbox();
                                         },
                                         splashRadius: 15,
@@ -1127,6 +1185,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                   ),
                                   value: _checkboxState.isActive,
                                   onChanged: (_) {
+                                    recordAmplitudeEvent(
+                                      const WarningCheckboxClicked(),
+                                    );
                                     _checkboxState.makeActive();
                                   },
                                   splashRadius: 15,
@@ -1148,12 +1209,33 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
               return _lineStore.isLineVisible
                   ? LoadingButton(
                       onPressed: () async {
+                        await hasShownWallet().then(
+                          (hasShown) async {
+                            if (hasShown) {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Wallet',
+                                  walletType: 'Card',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                            } else {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Onboarding',
+                                  walletType: 'Card',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                            }
+                          },
+                        );
                         if (_checkboxState.isActive) {
-                          unawaited(signInAnonymously(address: _btcAddressController.text));
+                          unawaited(signInAnonymously(address: _addressState.btcAddressController.text));
                           if (widget.receivedData == null) {
-                            final card = await getCardData(_btcAddressController.text);
+                            final card = await getCardData(_addressState.btcAddressController.text);
                             if (card != null) {
-                              unawaited(connectedCount(_btcAddressController.text));
+                              unawaited(connectedCount(_addressState.btcAddressController.text));
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.ORANGE,
                                 label: WalletType.COINPLUS_WALLET,
@@ -1215,18 +1297,39 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                   : FutureBuilder<bool?>(
                       future: _balanceStore.getCard(
                         receivedData: widget.receivedData,
-                        textEditingController: _btcAddressController,
+                        textEditingController: _addressState.btcAddressController,
                       ),
                       builder: (context, snapshot) {
                         final isActivated = snapshot.data;
                         return Observer(
                           builder: (context) {
                             return LoadingButton(
-                              onPressed: _connectionStatus == ConnectivityResult.none
+                              onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
                                   ? null
                                   : _addressState.isAddressVisible
                                       ? _checkboxState.isActivatedCheckBox
                                           ? () async {
+                                              await hasShownWallet().then(
+                                                (hasShown) async {
+                                                  if (hasShown) {
+                                                    await recordAmplitudeEvent(
+                                                      SaveToWalletClicked(
+                                                        source: 'Wallet',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    await recordAmplitudeEvent(
+                                                      SaveToWalletClicked(
+                                                        source: 'Onboarding',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              );
                                               final cardIndex = _balanceStore.cards.indexWhere(
                                                 (element) => element.address == _balanceStore.selectedCard?.address,
                                               );
@@ -1241,6 +1344,27 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               }
                                             }
                                           : () async {
+                                              await hasShownWallet().then(
+                                                (hasShown) async {
+                                                  if (hasShown) {
+                                                    await recordAmplitudeEvent(
+                                                      SaveToWalletClicked(
+                                                        source: 'Wallet',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    await recordAmplitudeEvent(
+                                                      SaveToWalletClicked(
+                                                        source: 'Onboarding',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              );
                                               if (isActivated == true) {
                                                 await HapticFeedback.vibrate();
                                                 _acceptState.checkboxAccept();
@@ -1287,9 +1411,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   }
 
   Future<void> _validateBTCAddress() async {
-    final btcAddress = _btcAddressController.text.trim();
+    final btcAddress = _addressState.btcAddressController.text.trim();
     if (btcAddress.length >= 26) {
-      unawaited( _balanceStore.getSelectedCard(btcAddress));
+      unawaited(_balanceStore.getSelectedCard(btcAddress));
       if (isValidPublicAddress(btcAddress)) {
         _validationStore.validate();
         await Future.delayed(
@@ -1328,5 +1452,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
     _lineStore.makeInvisible();
+  }
+
+  String _getVisibleAddress(String fullAddress) {
+    final start = fullAddress.substring(0, 5);
+    final end = fullAddress.substring(fullAddress.length - 5);
+    return '$start ... $end';
   }
 }

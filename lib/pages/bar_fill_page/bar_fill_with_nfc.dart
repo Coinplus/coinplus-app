@@ -16,8 +16,10 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
@@ -251,8 +253,16 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                           enableFeedback: false,
                                           onPressed: _lineStore.isLineVisible
                                               ? null
-                                              : () {
-                                                  Clipboard.setData(
+                                              : () async {
+                                                  await recordAmplitudeEvent(
+                                                    AddressCopied(
+                                                      walletType: 'Bar',
+                                                      walletAddress: _balanceStore.selectedCard!.address,
+                                                      activated: false,
+                                                      source: 'Balance',
+                                                    ),
+                                                  );
+                                                  await Clipboard.setData(
                                                     ClipboardData(
                                                       text: _balanceStore.selectedBar!.address.toString(),
                                                     ),
@@ -666,6 +676,27 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                           );
                           _shakeAnimationController.stop();
                         }
+                        await hasShownWallet().then(
+                          (hasShown) async {
+                            if (hasShown) {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Wallet',
+                                  walletType: 'Bar',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                            } else {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Onboarding',
+                                  walletType: 'Bar',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                            }
+                          },
+                        );
                       },
                       child: const Text(
                         'Got it',
@@ -678,6 +709,27 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                   : LoadingButton(
                       onPressed: _addressState.isAddressVisible
                           ? () async {
+                              await hasShownWallet().then(
+                                (hasShown) async {
+                                  if (hasShown) {
+                                    await recordAmplitudeEvent(
+                                      SaveToWalletClicked(
+                                        source: 'Wallet',
+                                        walletType: 'Bar',
+                                        walletAddress: _balanceStore.selectedCard!.address,
+                                      ),
+                                    );
+                                  } else {
+                                    await recordAmplitudeEvent(
+                                      SaveToWalletClicked(
+                                        source: 'Onboarding',
+                                        walletType: 'Bar',
+                                        walletAddress: _balanceStore.selectedCard!.address,
+                                      ),
+                                    );
+                                  }
+                                },
+                              );
                               final cardIndex = _balanceStore.bars.indexWhere(
                                 (element) => element.address == _balanceStore.selectedBar?.address,
                               );

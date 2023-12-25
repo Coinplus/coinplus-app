@@ -8,9 +8,13 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
+import '../../utils/wallet_activation_status.dart';
 import '../../widgets/loading_button.dart';
 import 'action_slider.dart';
 
@@ -25,6 +29,8 @@ class RemoveCard extends StatefulWidget {
 
 class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +74,23 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
             ),
           ).paddingHorizontal(31),
           const Gap(25),
-          ActionSliderForDelete(
+          ActionSliderForCardDelete(
             balanceStore: _balanceStore,
             card: widget.card,
           ).paddingHorizontal(50),
           const Gap(15),
           LoadingButton(
-            onPressed: router.pop,
+            onPressed: () async {
+              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+              await recordAmplitudeEvent(
+                NotSureClicked(
+                  walletAddress: widget.card.address,
+                  walletType: 'Card',
+                  activated: await isCardActivated,
+                ),
+              );
+              await router.pop();
+            },
             style: context.theme
                 .buttonStyle(
                   buttonType: ButtonTypes.TRANSPARENT,

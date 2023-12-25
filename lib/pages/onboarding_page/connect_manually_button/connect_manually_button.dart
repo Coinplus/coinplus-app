@@ -9,8 +9,10 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../widgets/loading_button.dart';
 import '../form_factor_page/form_factor_page.dart';
@@ -74,6 +76,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                     ),
                 onPressed: () async {
+                  await recordAmplitudeEvent(const ConnectOptionSelected(source: 'Onboarding', connectOption: 'QR'));
                   await router.pop(context);
                   final res = await context.pushRoute<String?>(
                     const QrScannerRoute(),
@@ -117,7 +120,12 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     .copyWith(
                       backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
                     ),
-                onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value + 1,
+                onPressed: () async {
+                  await recordAmplitudeEvent(
+                    const ConnectOptionSelected(source: 'Onboarding', connectOption: 'Manual'),
+                  );
+                  pageIndexNotifier.value = pageIndexNotifier.value + 1;
+                },
                 child: Row(
                   children: [
                     Assets.icons.stylus.image(
@@ -216,8 +224,9 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     ),
                   )
               : null,
-          onPressed: () {
-            WoltModalSheet.show<void>(
+          onPressed: () async {
+            await recordAmplitudeEvent(const ConnectManuallyClicked());
+            await WoltModalSheet.show<void>(
               pageIndexNotifier: pageIndexNotifier,
               context: context,
               pageListBuilder: (modalSheetContext) {

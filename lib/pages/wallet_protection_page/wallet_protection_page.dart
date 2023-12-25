@@ -13,8 +13,10 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
@@ -142,6 +144,9 @@ class WalletProtectionPage extends HookWidget {
               buttonType: ButtonTypes.TRANSPARENT,
             ),
             onPressed: () {
+              recordAmplitudeEvent(
+                const NotNowClicked(),
+              );
               router.pushAndPopAll(const DashboardRoute());
             },
             child: const Text(

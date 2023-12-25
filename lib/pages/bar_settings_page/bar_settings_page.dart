@@ -21,13 +21,17 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/bar_color_state/bar_setting_state.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
@@ -42,6 +46,8 @@ class BarSettingsPage extends HookWidget {
   final BarModel bar;
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
@@ -275,6 +281,9 @@ class BarSettingsPage extends HookWidget {
                                     ],
                                   ),
                                   onLongPress: () async {
+                                    await recordAmplitudeEvent(
+                                      PrivateKeyRevealed(walletAddress: bar.address, walletType: 'Bar'),
+                                    );
                                     await HapticFeedback.selectionClick();
                                     if (!_cardSettingsState.isPrivateKeyVisible) {
                                       if (_walletProtectState.isBiometricsEnabled) {
@@ -315,9 +324,12 @@ class BarSettingsPage extends HookWidget {
                                       _cardSettingsState.isPrivateKeyVisible = false;
                                     }
                                   },
-                                  onTap: () {
-                                    _cardSettingsState.isPrivateKeyVisible
-                                        ? Clipboard.setData(
+                                  onTap: _cardSettingsState.isPrivateKeyVisible
+                                      ? () {
+                                          recordAmplitudeEvent(
+                                            PrivateKeyCopied(walletAddress: bar.address, walletType: 'Bar'),
+                                          );
+                                          Clipboard.setData(
                                             ClipboardData(
                                               text: privateKey.value.toString(),
                                             ),
@@ -340,8 +352,13 @@ class BarSettingsPage extends HookWidget {
                                                 ),
                                               );
                                             },
-                                          )
-                                        : showTopSnackBar(
+                                          );
+                                        }
+                                      : () {
+                                          recordAmplitudeEvent(
+                                            ClickedOnPrivateKey(walletAddress: bar.address, walletType: 'Bar'),
+                                          );
+                                          showTopSnackBar(
                                             displayDuration: const Duration(
                                               milliseconds: 400,
                                             ),
@@ -356,7 +373,7 @@ class BarSettingsPage extends HookWidget {
                                               ),
                                             ),
                                           );
-                                  },
+                                        },
                                   title: Observer(
                                     builder: (context) {
                                       return Column(
@@ -434,6 +451,7 @@ class BarSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
+                              await recordAmplitudeEvent(const HelpCenterClicked(source: 'Wallet Settings'));
                               await FlutterWebBrowser.openWebPage(
                                 url:
                                     'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
@@ -453,7 +471,7 @@ class BarSettingsPage extends HookWidget {
                             },
                             child: StyledText(
                               text:
-                                  'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
+                                  "If you don't know what to do with this Private key, please checkout our <p>Help center</p> article.",
                               tags: {
                                 'p': StyledTextTag(
                                   style: const TextStyle(
@@ -602,16 +620,26 @@ class BarSettingsPage extends HookWidget {
                   ),
                   const Gap(10),
                   ListTile(
-                    onTap: () {
-                      showModalBottomSheet(
+                    onTap: () async {
+                      final isBarActivated =
+                          isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                      await recordAmplitudeEvent(
+                        RemoveCardClicked(
+                          walletAddress: bar.address,
+                          walletType: 'Bar',
+                          activated: await isBarActivated,
+                        ),
+                      );
+                      await showModalBottomSheet(
                         context: context,
+                        isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        backgroundColor: Colors.transparent,
+                        backgroundColor: Colors.white,
                         builder: (context) {
                           return RemoveBar(
                             bar: bar,

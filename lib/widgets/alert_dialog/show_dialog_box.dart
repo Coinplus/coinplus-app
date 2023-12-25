@@ -9,7 +9,7 @@ Future<T?> showDialogBox<T>(
   BuildContext context,
   WalletProtectState walletProtectState,
   Widget dialogBox, {
-  bool? isDismissible,
+   required bool? isDismissible,
 }) async {
   // Decides if dialog should slide from top(true) or bottom(false).
   var isNew = true;

@@ -4,25 +4,25 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import 'app.dart';
 import 'constants/flavor_type.dart';
 import 'firebase_options.dart';
 import 'providers/get_it.dart';
-import 'services/amplitude_service.dart';
 import 'utils/secure_storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.PROD}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  unawaited(
+    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]),
+  );
 
   await EasyLocalization.ensureInitialized();
-  await localStorage();
+  unawaited(localStorage());
   registerGetIt(env);
 
   //await StorageUtils.clear();
@@ -41,7 +41,5 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
 }
 
 Future<void> main() async {
-  await initializeDateFormatting();
-  await initializeAmplitude();
   await run();
 }

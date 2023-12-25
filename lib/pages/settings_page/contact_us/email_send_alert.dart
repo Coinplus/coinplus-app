@@ -11,8 +11,10 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../widgets/loading_button.dart';
 
 Future<void> emailSendAlert(BuildContext context) {
@@ -27,9 +29,10 @@ Future<void> emailSendAlert(BuildContext context) {
     ),
     onPressed: () async {
       await router.pop();
+      await recordAmplitudeEvent(const HelpCenterClicked(source: 'Contact Us'));
       await router.pop(const SettingsRoute());
       await FlutterWebBrowser.openWebPage(
-        url: 'https://coinplus.com/',
+        url: 'https://coinplus.gitbook.io/help-center',
         customTabsOptions: const CustomTabsOptions(
           shareState: CustomTabsShareState.on,
           instantAppsEnabled: true,

@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
@@ -29,8 +29,10 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -40,6 +42,7 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../widgets/loading_button.dart';
@@ -111,6 +114,13 @@ class DashboardPage extends HookWidget {
               isInactive.value = false;
               resumed.value = true;
               if (deepLinkRes.value != null) {
+                await recordAmplitudeEvent(
+                  DeeplinkClicked(
+                    source: 'Wallet',
+                    walletAddress: deepLinkRes.value!,
+                    walletType: 'Card',
+                  ),
+                );
                 await router.push(CardFillRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               }
@@ -127,12 +137,26 @@ class DashboardPage extends HookWidget {
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
+              await recordAmplitudeEvent(
+                DeeplinkClicked(
+                  source: 'Wallet',
+                  walletAddress: deepLinkRes.value!,
+                  walletType: 'Card',
+                ),
+              );
               await router.push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             } else if (appLocked.value &&
                 deepLinkRes.value != null &&
                 resumed.value &&
                 router.current.name != CardFillWithNfc.name) {
+              await recordAmplitudeEvent(
+                DeeplinkClicked(
+                  source: 'Wallet',
+                  walletAddress: deepLinkRes.value!,
+                  walletType: 'Card',
+                ),
+              );
               await router.push(CardFillRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
@@ -186,48 +210,56 @@ class DashboardPage extends HookWidget {
                   ),
                   child: Observer(
                     builder: (context) {
-                      return ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: BottomNavigationBar(
-                            selectedLabelStyle: const TextStyle(
-                              fontSize: 11,
-                              fontFamily: FontFamily.redHatMedium,
-                            ),
-                            unselectedLabelStyle: const TextStyle(
-                              fontSize: 11,
-                              fontFamily: FontFamily.redHatMedium,
-                            ),
-                            onTap: (index) => [
-                              HapticFeedback.lightImpact(),
-                              _pageController.jumpToPage(
-                                index,
-                              ),
-                              navBarState.updateIndex(index),
-                            ],
-                            currentIndex: navBarState.currentIndex,
-                            elevation: 0,
-                            type: BottomNavigationBarType.fixed,
-                            selectedItemColor: Colors.black,
-                            unselectedItemColor: Colors.black,
-                            items: <BottomNavigationBarItem>[
-                              BottomNavigationBarItem(
-                                icon: Assets.icons.walletIcon.image(
-                                  height: 32,
-                                  color: navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
-                                ),
-                                label: 'Wallet',
-                              ),
-                              BottomNavigationBarItem(
-                                icon: Assets.icons.pageInfo.image(
-                                  height: 32,
-                                  color: navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
-                                ),
-                                label: 'Settings',
-                              ),
-                            ],
-                          ),
+                      return BottomNavigationBar(
+                        selectedLabelStyle: const TextStyle(
+                          fontSize: 11,
+                          fontFamily: FontFamily.redHatMedium,
                         ),
+                        unselectedLabelStyle: const TextStyle(
+                          fontSize: 11,
+                          fontFamily: FontFamily.redHatMedium,
+                        ),
+                        onTap: (index) => [
+                          HapticFeedback.lightImpact(),
+                          _pageController.jumpToPage(
+                            index,
+                          ),
+                          navBarState.updateIndex(index),
+                          if (index == 0)
+                            {
+                              recordAmplitudeEvent(
+                                const WalletTabClicked(),
+                              ),
+                            }
+                          else
+                            {
+                              recordAmplitudeEvent(
+                                const SettingsTabClicked(),
+                              ),
+                            },
+                        ],
+                        currentIndex: navBarState.currentIndex,
+                        backgroundColor: Colors.white,
+                        elevation: 0,
+                        type: BottomNavigationBarType.fixed,
+                        selectedItemColor: Colors.black,
+                        unselectedItemColor: Colors.black,
+                        items: <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                            icon: Assets.icons.walletIcon.image(
+                              height: 32,
+                              color: navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
+                            ),
+                            label: 'Wallet',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Assets.icons.pageInfo.image(
+                              height: 32,
+                              color: navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                            ),
+                            label: 'Settings',
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -260,9 +292,13 @@ class DashboardPage extends HookWidget {
             onPressed: () async {
               final selectedCard = currentCard.value.card;
               final isBarList = currentCard.value.index == 1;
-
+              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+              final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
               if (selectedCard == null || _pageController.page != 0) {
                 if (isBarList) {
+                  await recordAmplitudeEvent(
+                    AddNewPlusClicked(source: _pageController.page == 0 ? 'Wallet' : 'Settings'),
+                  );
                   await _walletProtectState.updateModalStatus(isOpened: true);
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
@@ -309,6 +345,9 @@ class DashboardPage extends HookWidget {
                     },
                   ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
                 } else {
+                  await recordAmplitudeEvent(
+                    AddNewPlusClicked(source: _pageController.page == 0 ? 'Wallet' : 'Settings'),
+                  );
                   await _walletProtectState.updateModalStatus(isOpened: true);
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
@@ -406,6 +445,13 @@ class DashboardPage extends HookWidget {
                                 ),
                               ),
                           onPressed: () async {
+                            await recordAmplitudeEvent(
+                              ReceiveClicked(
+                                walletType: isBarList ? 'Bar' : 'Card',
+                                walletAddress: card.address,
+                                activated: isBarList ? await isBarActivated : await isCardActivated,
+                              ),
+                            );
                             await router.pop();
                             await showModalBottomSheet(
                               shape: const RoundedRectangleBorder(
@@ -487,8 +533,17 @@ class DashboardPage extends HookWidget {
                                               ),
                                               ScaleTap(
                                                 enableFeedback: false,
-                                                onPressed: () {
-                                                  Clipboard.setData(
+                                                onPressed: () async {
+                                                  await recordAmplitudeEvent(
+                                                    AddressCopied(
+                                                      walletType: isBarList ? 'Bar' : 'Card',
+                                                      walletAddress: card.address,
+                                                      activated:
+                                                          isBarList ? await isBarActivated : await isCardActivated,
+                                                      source: 'Receive',
+                                                    ),
+                                                  );
+                                                  await Clipboard.setData(
                                                     ClipboardData(
                                                       text: card.address.toString(),
                                                     ),
@@ -643,8 +698,15 @@ class DashboardPage extends HookWidget {
                                         ),
                                         const Spacer(),
                                         LoadingButton(
-                                          onPressed: () {
-                                            Share.share(
+                                          onPressed: () async {
+                                            await recordAmplitudeEvent(
+                                              ShareAddressClicked(
+                                                walletType: isBarList ? 'Bar' : 'Card',
+                                                walletAddress: currentCard.value.card!.address,
+                                                activated: isBarList ? await isBarActivated : await isCardActivated,
+                                              ),
+                                            );
+                                            await Share.share(
                                               card.address,
                                             );
                                           },
@@ -706,32 +768,10 @@ class DashboardPage extends HookWidget {
                         if (card.label != WalletType.TRACKER)
                           Observer(
                             builder: (context) {
-                              Future<bool> isCardWalletActivated() async {
-                                if (_balanceStore.cards.isNotEmpty) {
-                                  return checkWalletStatus(
-                                    _balanceStore.cards[_settingsState.cardCurrentIndex].address,
-                                  );
-                                } else {
-                                  return false;
-                                }
-                              }
-
-                              Future<bool> isBarWalletActivated() async {
-                                if (_balanceStore.bars.isNotEmpty && _balanceStore.cards.isNotEmpty) {
-                                  return isBarList
-                                      ? checkWalletStatus(
-                                          _balanceStore.bars[_settingsState.barCurrentIndex].address,
-                                        )
-                                      : checkWalletStatus(
-                                          _balanceStore.cards[_settingsState.cardCurrentIndex].address,
-                                        );
-                                } else {
-                                  return false;
-                                }
-                              }
-
-                              final isCardActivated = isCardWalletActivated();
-                              final isBarActivated = isBarWalletActivated();
+                              final isCardActivated =
+                                  isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                              final isBarActivated =
+                                  isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
 
                               return LoadingButton(
                                 style: context.theme
@@ -754,12 +794,26 @@ class DashboardPage extends HookWidget {
                                     ? isBarList
                                         ? () async {
                                             if (await isBarActivated) {
+                                              await recordAmplitudeEvent(
+                                                SendClicked(
+                                                  walletType: 'Bar',
+                                                  walletAddress: card.address,
+                                                  activated: await isBarActivated,
+                                                ),
+                                              );
                                               await router.pop();
                                               await alreadyActivatedWallet(
                                                 router.navigatorKey.currentContext!,
                                                 _walletProtectState,
                                               );
                                             } else {
+                                              await recordAmplitudeEvent(
+                                                SendClicked(
+                                                  walletType: 'Bar',
+                                                  walletAddress: card.address,
+                                                  activated: await isBarActivated,
+                                                ),
+                                              );
                                               await router.pop();
                                               await showDialogBox(
                                                 context,
@@ -776,10 +830,14 @@ class DashboardPage extends HookWidget {
                                                     ),
                                                   ),
                                                   primaryActionText: 'Got it',
-                                                  primaryAction: router.pop,
+                                                  primaryAction: () {
+                                                    recordAmplitudeEvent(const GotItSendClicked());
+                                                    router.pop();
+                                                  },
                                                   secondaryActionText: 'Send anyway',
                                                   secondaryAction: Platform.isIOS
                                                       ? () async {
+                                                          await recordAmplitudeEvent(const SendAnywayClicked());
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
                                                           );
@@ -876,6 +934,7 @@ class DashboardPage extends HookWidget {
                                                           );
                                                         }
                                                       : () async {
+                                                          await recordAmplitudeEvent(const SendAnywayClicked());
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
                                                           );
@@ -976,6 +1035,13 @@ class DashboardPage extends HookWidget {
                                           }
                                         : () async {
                                             if (await isCardActivated) {
+                                              await recordAmplitudeEvent(
+                                                SendClicked(
+                                                  walletType: 'Card',
+                                                  walletAddress: card.address,
+                                                  activated: await isCardActivated,
+                                                ),
+                                              );
                                               await router.pop();
                                               await _walletProtectState.updateModalStatus(isOpened: true);
                                               await alreadyActivatedWallet(
@@ -985,6 +1051,13 @@ class DashboardPage extends HookWidget {
                                                 (value) => _walletProtectState.updateModalStatus(isOpened: false),
                                               );
                                             } else {
+                                              await recordAmplitudeEvent(
+                                                SendClicked(
+                                                  walletType: 'Card',
+                                                  walletAddress: card.address,
+                                                  activated: await isCardActivated,
+                                                ),
+                                              );
                                               await router.pop();
                                               await showDialogBox(
                                                 context,
@@ -1001,10 +1074,14 @@ class DashboardPage extends HookWidget {
                                                     ),
                                                   ),
                                                   primaryActionText: 'Got it',
-                                                  primaryAction: router.pop,
+                                                  primaryAction: () {
+                                                    recordAmplitudeEvent(const GotItSendClicked());
+                                                    router.pop();
+                                                  },
                                                   secondaryActionText: 'Send anyway',
                                                   secondaryAction: Platform.isIOS
                                                       ? () async {
+                                                          await recordAmplitudeEvent(const SendAnywayClicked());
                                                           await router.pop();
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
@@ -1128,6 +1205,7 @@ class DashboardPage extends HookWidget {
                                                           );
                                                         }
                                                       : () async {
+                                                          await recordAmplitudeEvent(const SendAnywayClicked());
                                                           await _walletProtectState.updateNfcSessionStatus(
                                                             isStarted: true,
                                                           );
@@ -1306,6 +1384,13 @@ class DashboardPage extends HookWidget {
                                 ),
                               ),
                           onPressed: () async {
+                            await recordAmplitudeEvent(
+                              BuyWithCardClicked(
+                                walletType: isBarList ? 'Bar' : 'Card',
+                                walletAddress: card.address,
+                                activated: isBarList ? await isBarActivated : await isCardActivated,
+                              ),
+                            );
                             await router.pop();
                             presentRamp();
                           },
@@ -1367,6 +1452,13 @@ class DashboardPage extends HookWidget {
                                 ),
                               ),
                           onPressed: () async {
+                            await recordAmplitudeEvent(
+                              HistoryClicked(
+                                walletType: isBarList ? 'Bar' : 'Card',
+                                walletAddress: card.address,
+                                activated: isBarList ? await isBarActivated : await isCardActivated,
+                              ),
+                            );
                             await router.pop();
                             await FlutterWebBrowser.openWebPage(
                               url: 'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
@@ -1428,7 +1520,16 @@ class DashboardPage extends HookWidget {
                     ),
                   );
                 },
-              ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
+              ).then((value) async {
+                await recordAmplitudeEvent(
+                  TransactionsButtonClicked(
+                    walletType: isBarList ? 'Bar' : 'Card',
+                    walletAddress: currentCard.value.card!.address,
+                    activated: isBarList ? await isBarActivated : await isCardActivated,
+                  ),
+                );
+                await _walletProtectState.updateModalStatus(isOpened: false);
+              });
             },
             child: Observer(
               builder: (context) {
