@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -14,14 +13,20 @@ import '../extensions/extensions.dart';
 import '../gen/assets.gen.dart';
 import '../gen/colors.gen.dart';
 import '../gen/fonts.gen.dart';
+import '../models/amplitude_event/amplitude_event.dart';
 import '../pages/dashboard/maybe_coinplus_card/maybe_coinplus_card.dart';
 import '../pages/dashboard/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../pages/settings_page/your_card_is_original.dart';
+import '../pages/splash_screen/splash_screen.dart';
 import '../providers/screen_service.dart';
 import '../router.gr.dart';
+import '../services/amplitude_service.dart';
 import '../services/cloud_firestore_service.dart';
+import '../store/balance_store/balance_store.dart';
+import '../store/settings_button_state/settings_button_state.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
 import '../widgets/loading_button.dart';
+import 'wallet_activation_status.dart';
 
 Future<void> nfcSessionIos({
   required bool? isMifareUltralight,
@@ -52,16 +57,37 @@ Future<void> nfcSessionIos({
         final parts = payloadString.split('air.coinplus.com/btc/');
         walletAddress = parts[1];
       }
+      await hasShownWallet().then(
+        (hasShown) async {
+          if (hasShown) {
+            await recordAmplitudeEvent(NfcTapped(source: 'Wallet', walletAddress: walletAddress));
+          } else {
+            await recordAmplitudeEvent(NfcTapped(source: 'Onboarding', walletAddress: walletAddress));
+          }
+        },
+      );
       final card = await getCardData(walletAddress);
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
       final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
-      final signature = await mifare.sendMiFareCommand(
-        Uint8List.fromList(
-          [0x3C, 0x00],
-        ),
-      );
-      if (signature.length > 2) {
+      Uint8List? signature;
+      try {
+        final response = await mifare.sendMiFareCommand(
+          Uint8List.fromList(
+            [0x3C, 0x00],
+          ),
+        );
+        signature = Uint8List.fromList(response);
+        if (signature.length > 2) {
+          isOriginalTag = OriginalityVerifier().verify(
+            tagId,
+            signature,
+          );
+        }
+      } catch (e) {
+        signature = null;
+      }
+      if (signature!.length > 2) {
         isOriginalTag = OriginalityVerifier().verify(
           tagId,
           signature,
@@ -171,7 +197,15 @@ Future<void> nfcSessionAndroid({
         final parts = payloadString.split('air.coinplus.com/btc/');
         walletAddress = parts[1];
       }
-
+      await hasShownWallet().then(
+        (hasShown) async {
+          if (hasShown) {
+            await recordAmplitudeEvent(NfcTapped(source: 'Wallet', walletAddress: walletAddress));
+          } else {
+            await recordAmplitudeEvent(NfcTapped(source: 'Onboarding', walletAddress: walletAddress));
+          }
+        },
+      );
       final nfcA = NfcA.from(tag);
       final uid = nfcA!.identifier;
 
@@ -223,8 +257,6 @@ Future<void> nfcSessionAndroid({
         if (tag.data.containsKey('mifareultralight')) {
           isMifareUltralight = true;
           if (card != null && card.possibleOldCard == true) {
-            log(card.nfcId.toString());
-            log(formattedTagId.toString());
             if (card.nfcId == formattedTagId) {
               await router.push(
                 CardFillWithNfc(
@@ -265,6 +297,8 @@ Future<void> nfcSessionAndroid({
 
 Future<void> checkNfcIos({
   required WalletProtectState walletProtectState,
+  required BalanceStore balanceStore,
+  required SettingsState settingsState,
   bool? isMifareUltralight,
 }) async {
   await NfcManager.instance.startSession(
@@ -300,7 +334,17 @@ Future<void> checkNfcIos({
           signature,
         );
       }
-
+      final isCardActivated = isCardWalletActivated(
+        balanceStore: balanceStore,
+        settingsState: settingsState,
+      );
+      await recordAmplitudeEvent(
+        VerifyCardClicked(
+          walletAddress: walletAddress,
+          walletType: card?.type ?? '',
+          activated: await isCardActivated,
+        ),
+      );
       if (isOriginalTag && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
@@ -338,6 +382,8 @@ Future<void> checkNfcIos({
 
 Future<void> checkNfcAndroid({
   required WalletProtectState walletProtectState,
+  required BalanceStore balanceStore,
+  required SettingsState settingsState,
   bool? isMifareUltralight,
 }) async {
   await showModalBottomSheet(
@@ -460,7 +506,14 @@ Future<void> checkNfcAndroid({
       } catch (e) {
         signature = null;
       }
-
+      final isCardActivated = isCardWalletActivated(balanceStore: balanceStore, settingsState: settingsState);
+      await recordAmplitudeEvent(
+        VerifyCardClicked(
+          walletAddress: walletAddress,
+          walletType: card?.type ?? '',
+          activated: await isCardActivated,
+        ),
+      );
       if (isOriginalTag && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await router.pop();

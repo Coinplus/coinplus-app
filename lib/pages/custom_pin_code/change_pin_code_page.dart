@@ -13,8 +13,10 @@ import 'package:shake_animation_widget/shake_animation_widget.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/wallet_protect_state/change_pin_code_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -334,6 +336,7 @@ class ChangePinCode extends StatelessWidget {
                         await savePinCode(pinCode: value);
                         await _walletProtectState.isBiometricAvailable();
                         await router.pushAndPopAll(const DashboardRoute());
+                        await recordAmplitudeEvent(const PasscodeChanged());
                       } else {
                         Gaimon.error();
                         _reEnteredPinShakeController.start();

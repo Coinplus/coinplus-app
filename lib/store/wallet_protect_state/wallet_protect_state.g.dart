@@ -110,6 +110,24 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
+  late final _$isSwitchedNotificationsToggleAtom = Atom(
+      name: '_WalletProtectState.isSwitchedNotificationsToggle',
+      context: context);
+
+  @override
+  bool get isSwitchedNotificationsToggle {
+    _$isSwitchedNotificationsToggleAtom.reportRead();
+    return super.isSwitchedNotificationsToggle;
+  }
+
+  @override
+  set isSwitchedNotificationsToggle(bool value) {
+    _$isSwitchedNotificationsToggleAtom
+        .reportWrite(value, super.isSwitchedNotificationsToggle, () {
+      super.isSwitchedNotificationsToggle = value;
+    });
+  }
+
   late final _$isLinkOpenedAtom =
       Atom(name: '_WalletProtectState.isLinkOpened', context: context);
 
@@ -184,6 +202,16 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
         .run(() => super.checkBiometricStatus());
   }
 
+  late final _$checkNotificationToggleStatusAsyncAction = AsyncAction(
+      '_WalletProtectState.checkNotificationToggleStatus',
+      context: context);
+
+  @override
+  Future<void> checkNotificationToggleStatus() {
+    return _$checkNotificationToggleStatusAsyncAction
+        .run(() => super.checkNotificationToggleStatus());
+  }
+
   late final _$updateNfcSessionStatusAsyncAction = AsyncAction(
       '_WalletProtectState.updateNfcSessionStatus',
       context: context);
@@ -209,6 +237,24 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   @override
   Future<void> disableBiometric() {
     return _$disableBiometricAsyncAction.run(() => super.disableBiometric());
+  }
+
+  late final _$disableNotificationAsyncAction =
+      AsyncAction('_WalletProtectState.disableNotification', context: context);
+
+  @override
+  Future<void> disableNotification() {
+    return _$disableNotificationAsyncAction
+        .run(() => super.disableNotification());
+  }
+
+  late final _$enableNotificationAsyncAction =
+      AsyncAction('_WalletProtectState.enableNotification', context: context);
+
+  @override
+  Future<void> enableNotification() {
+    return _$enableNotificationAsyncAction
+        .run(() => super.enableNotification());
   }
 
   late final _$authenticateWithBiometricsAsyncAction = AsyncAction(
@@ -279,6 +325,7 @@ isCreatedPinMatch: ${isCreatedPinMatch},
 isBiometricsRunning: ${isBiometricsRunning},
 isBiometricsEnabled: ${isBiometricsEnabled},
 isSetPinCode: ${isSetPinCode},
+isSwitchedNotificationsToggle: ${isSwitchedNotificationsToggle},
 isLinkOpened: ${isLinkOpened},
 canCheckBiometrics: ${canCheckBiometrics},
 availableBiometric: ${availableBiometric}

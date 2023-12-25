@@ -18,8 +18,11 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
@@ -51,6 +54,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
 
   late String secret1B58 = '';
   late String secret2B58 = '';
+  late String walletAddress = '';
   late final TextEditingController _secretOneController = TextEditingController();
   late final TextEditingController _secretTwoController = TextEditingController();
   late AnimationController _lottieController;
@@ -159,20 +163,39 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
+        automaticallyImplyLeading: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'Virtual bar',
-          style: TextStyle(
-            fontSize: 32,
-            fontFamily: FontFamily.redHatBold,
-            color: Colors.black.withOpacity(0.9),
-          ),
-        ).expandedHorizontally(),
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  recordAmplitudeEvent(const BackButtonClicked(source: 'Bar Secrets Screen'));
+                  router.pop();
+                },
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Gap(10),
+            Text(
+              'Virtual bar',
+              style: TextStyle(
+                fontSize: 32,
+                fontFamily: FontFamily.redHatBold,
+                color: Colors.black.withOpacity(0.9),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -691,6 +714,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                 onPressed: !_validationStore.isSecret2Valid
                     ? null
                     : () async {
+                        await recordAmplitudeEvent(ContinueCLicked(walletAddress: walletAddress, walletType: 'Bar'));
                         unawaited(
                           showDialog(
                             context: context,
@@ -711,9 +735,10 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
-                          log(bar.address);
-                          log(publicKey.toString());
+                          walletAddress = publicKey!;
                           if (bar.address == publicKey) {
+                            unawaited(toggleActivation(bar.address));
+                            unawaited(incrementActivationCount(bar.address));
                             await savePrivateKeyInSecureStorage(
                               key: bar.address,
                               value: wif,
@@ -724,9 +749,20 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               address: bar.address,
                             );
                             await HapticFeedback.heavyImpact();
-                            await secretsSuccessAlert(context);
+                            await recordAmplitudeEvent(
+                              ValidationSuccessful(walletAddress: walletAddress, walletType: 'Bar'),
+                            );
+                            await secretsSuccessAlert(
+                              context: context,
+                              walletAddress: walletAddress,
+                              walletType: 'Bar',
+                            );
                           } else {
                             await router.pop();
+                            await recordAmplitudeEvent(
+                              ValidationFailed(walletAddress: walletAddress, walletType: 'Bar'),
+                            );
+                            unawaited(activationFailureCount(bar.address));
                             await secretsFailDialog(context);
                           }
                         } catch (e) {
@@ -801,6 +837,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
         const Duration(milliseconds: 200),
         _secretState.makeSecretTwoVisible,
       );
+      await recordAmplitudeEvent(Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'));
 
       await _secretOneLottieController.forward(from: 0);
     } else {}
@@ -814,6 +851,8 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
         const Duration(milliseconds: 400),
       );
       _secretTwoFocusNode.unfocus();
+      await recordAmplitudeEvent(Secret2Validated(walletAddress: walletAddress, walletType: 'Bar'));
+
       await _secretTwoLottieController.forward(from: 0);
     }
   }

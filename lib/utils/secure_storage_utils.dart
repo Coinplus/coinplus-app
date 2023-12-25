@@ -48,6 +48,19 @@ Future<void> disableBiometricAuth() async {
   await secureStorage.delete(key: 'biometricAuth');
 }
 
+Future<bool> getNotificationToggleStatus() async {
+  final value = await secureStorage.read(key: 'notification');
+  return value != null;
+}
+
+Future<void> enableNotificationToggle() async {
+  await secureStorage.write(key: 'notification', value: 'ENABLED');
+}
+
+Future<void> disableNotificationToggle() async {
+  await secureStorage.delete(key: 'notification');
+}
+
 Future<void> isWalletActivated({
   required bool isSet,
   required String address,

@@ -35,7 +35,7 @@ dependencies:
   mobx: ^2.2.0
   flutter_mobx: ^2.1.1
   intl: ^0.18.0
-  auto_route: ^7.3.2
+  auto_route: ^7.8.4
   easy_localization: ^3.0.2
   url_launcher: ^6.1.11
   flutter_hooks: ^0.20.3
@@ -72,7 +72,6 @@ dependencies:
   firebase_core: ^2.19.0
   dart_jsonwebtoken: ^2.12.0
   cloud_functions: ^4.5.1
-  flutter_windowmanager: ^0.2.0
   wolt_modal_sheet: ^0.1.4
   app_settings: ^5.1.1
   flutter_web_browser: ^0.17.1

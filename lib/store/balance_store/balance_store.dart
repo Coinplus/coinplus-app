@@ -209,7 +209,6 @@ abstract class _BalanceStore with Store {
       _cards.add(_selectedCard!);
 
       StorageUtils.addCard(_selectedCard!);
-      recordAmplitudeEvent(CardAddedEvent(card: _selectedCard!));
     } else {
       throw Exception('Card is already added');
     }
@@ -232,7 +231,7 @@ abstract class _BalanceStore with Store {
       _cards.add(_selectedCard!);
 
       StorageUtils.addCard(_selectedCard!);
-      recordAmplitudeEvent(CardAddedEvent(card: _selectedCard!));
+      recordAmplitudeEvent(CardAddedEvent(address: _selectedCard!.address));
     } else {
       throw Exception('Card is already added');
     }
@@ -255,6 +254,7 @@ abstract class _BalanceStore with Store {
           createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         ),
       );
+      recordAmplitudeEvent(BarAddedEvent(address: _selectedCard!.address));
     } else {
       throw Exception('Bar is already added');
     }

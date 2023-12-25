@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
-import '../../models/card_model/card_model.dart';
+import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
@@ -18,14 +18,14 @@ import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 
-class ActionSliderForCardDelete extends StatelessWidget {
-  const ActionSliderForCardDelete({
+class ActionSliderForBarDelete extends StatelessWidget {
+  const ActionSliderForBarDelete({
     super.key,
-    required this.card,
+    required this.bar,
     required this.balanceStore,
   });
 
-  final CardModel card;
+  final BarModel bar;
   final BalanceStore balanceStore;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
@@ -50,14 +50,14 @@ class ActionSliderForCardDelete extends StatelessWidget {
         controller.loading();
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
-        unawaited(balanceStore.getSelectedCard(card.address));
-        await secureStorage.delete(key: 'card${card.address}');
-        unawaited(deleteCount(card.address));
+        unawaited(_balanceStore.getSelectedBar(bar.address));
+        await secureStorage.delete(key: 'card${bar.address}');
+        unawaited(deleteCount(bar.address));
         await router.pop();
-        unawaited(balanceStore.removeSelectedCard());
-        final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+        unawaited(_balanceStore.removeSelectedBar());
+        final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
         await recordAmplitudeEvent(
-          CardDeleted(walletAddress: card.address, walletType: 'Card', activated: await isCardActivated),
+          CardDeleted(walletAddress: bar.address, walletType: 'Bar', activated: await isBarActivated),
         );
         showTopSnackBar(
           displayDuration: const Duration(
@@ -66,7 +66,7 @@ class ActionSliderForCardDelete extends StatelessWidget {
           Overlay.of(context),
           CustomSnackBar.success(
             backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-            message: 'Your card was removed',
+            message: 'Your bar was removed',
             textStyle: const TextStyle(
               fontFamily: FontFamily.redHatMedium,
               fontSize: 14,

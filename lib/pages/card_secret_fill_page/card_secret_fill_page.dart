@@ -20,8 +20,10 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
@@ -54,6 +56,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
 
   late String secret1B58 = '';
   late String secret2B58 = '';
+  late String walletAddress = '';
   late final TextEditingController _secretOneController = TextEditingController();
   late final TextEditingController _secretTwoController = TextEditingController();
   late AnimationController _lottieController;
@@ -165,20 +168,39 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
+        automaticallyImplyLeading: false,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'Virtual card',
-          style: TextStyle(
-            fontSize: 32,
-            fontFamily: FontFamily.redHatBold,
-            color: Colors.black.withOpacity(0.9),
-          ),
-        ).expandedHorizontally(),
+        title: Row(
+          children: [
+            Theme(
+              data: ThemeData(
+                canvasColor: Colors.white,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  recordAmplitudeEvent(const BackButtonClicked(source: 'Card Secrets Screen'));
+                  router.pop();
+                },
+                icon: Assets.icons.arrowBackIos.image(height: 22),
+              ),
+            ),
+            const Gap(10),
+            Text(
+              'Virtual card',
+              style: TextStyle(
+                fontSize: 32,
+                fontFamily: FontFamily.redHatBold,
+                color: Colors.black.withOpacity(0.9),
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -695,6 +717,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                 onPressed: !_validationStore.isSecret2Valid
                     ? null
                     : () async {
+                        await recordAmplitudeEvent(ContinueCLicked(walletAddress: walletAddress, walletType: 'Card'));
                         unawaited(
                           showDialog(
                             context: context,
@@ -715,6 +738,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
+                          walletAddress = publicKey!;
                           if (card.address.hashCode == publicKey.hashCode) {
                             unawaited(toggleActivation(card.address));
                             unawaited(incrementActivationCount(card.address));
@@ -728,9 +752,19 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               address: card.address,
                             );
                             await HapticFeedback.heavyImpact();
-                            await secretsSuccessAlert(context);
+                            await recordAmplitudeEvent(
+                              ValidationSuccessful(walletAddress: walletAddress, walletType: 'Card'),
+                            );
+                            await secretsSuccessAlert(
+                              context: context,
+                              walletAddress: walletAddress,
+                              walletType: 'Card',
+                            );
                           } else {
                             await router.pop();
+                            await recordAmplitudeEvent(
+                              ValidationFailed(walletAddress: walletAddress, walletType: 'Card'),
+                            );
                             unawaited(activationFailureCount(card.address));
                             await secretsFailDialog(context);
                           }
@@ -831,7 +865,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
         const Duration(milliseconds: 200),
         _secretState.makeSecretTwoVisible,
       );
-
+      await recordAmplitudeEvent(Secret1Validated(walletAddress: walletAddress, walletType: 'Card'));
       await _secretOneLottieController.forward(from: 0);
     } else {}
   }
@@ -844,6 +878,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
         const Duration(milliseconds: 400),
       );
       _secretTwoFocusNode.unfocus();
+      await recordAmplitudeEvent(Secret2Validated(walletAddress: walletAddress, walletType: 'Card'));
+
       await _secretTwoLottieController.forward(from: 0);
     }
   }

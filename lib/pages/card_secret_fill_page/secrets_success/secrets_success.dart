@@ -6,13 +6,20 @@ import 'package:lottie/lottie.dart';
 
 import '../../../extensions/extensions.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../widgets/loading_button.dart';
 
-Future<void> secretsSuccessAlert(BuildContext context) {
+Future<void> secretsSuccessAlert({
+  required BuildContext context,
+  required String walletAddress,
+  required String walletType,
+}) {
   final okButton = LoadingButton(
     onPressed: () async {
+      await recordAmplitudeEvent(GuideMeClicked(walletAddress: walletAddress, walletType: walletType));
       router.popUntilRouteWithName(DashboardRoute.name);
       await FlutterWebBrowser.openWebPage(
         url: 'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',

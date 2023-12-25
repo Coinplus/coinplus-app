@@ -14,8 +14,12 @@ import 'package:local_auth/local_auth.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import 'please_enable_biometrics.dart';
@@ -25,6 +29,10 @@ class SettingsPage extends HookWidget {
   const SettingsPage({super.key});
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +44,7 @@ class SettingsPage extends HookWidget {
     });
     final onToggleAppLock = useCallback(
       (isEnable) async {
+        await recordAmplitudeEvent(const AppLockClicked());
         if (isEnable) {
           await router.push(const CreatePinCode());
         } else {
@@ -54,6 +63,7 @@ class SettingsPage extends HookWidget {
         } else {
           if (_walletProtectState.canCheckBiometrics) {
             await _walletProtectState.authenticateWithBiometrics();
+            await recordAmplitudeEvent(const FaceIdEnabled());
           } else {
             await pleaseEnableBiometrics(context, _walletProtectState);
           }
@@ -61,6 +71,21 @@ class SettingsPage extends HookWidget {
         await _walletProtectState.checkBiometricStatus();
       },
       [_walletProtectState.isBiometricsEnabled],
+    );
+    // ignore: avoid_positional_boolean_parameters
+    final onToggleNotifications = useCallback<Future<void> Function(bool p1)>(
+      (isEnable) async {
+        if (!isEnable) {
+          await recordAmplitudeEvent(const PushNotificationsOn());
+          await _walletProtectState.enableNotification();
+        } else {
+          await _walletProtectState.disableNotification();
+
+          await recordAmplitudeEvent(const PushNotificationsOff());
+        }
+        await _walletProtectState.checkNotificationToggleStatus();
+      },
+      [_walletProtectState.isSwitchedNotificationsToggle],
     );
 
     return CupertinoPageScaffold(
@@ -70,7 +95,7 @@ class SettingsPage extends HookWidget {
           const CupertinoSliverNavigationBar(
             border: Border(),
             stretch: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             brightness: Brightness.light,
             largeTitle: Text(
               'Settings',
@@ -162,6 +187,7 @@ class SettingsPage extends HookWidget {
                                 InkWell(
                                   onTap: () {
                                     router.push(const ChangePinCode());
+                                    recordAmplitudeEvent(const ChangePasscodeClicked());
                                   },
                                   splashFactory: InkSparkle.splashFactory,
                                   highlightColor: Colors.transparent,
@@ -257,8 +283,16 @@ class SettingsPage extends HookWidget {
                           onTap: () async {
                             await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                             Platform.isAndroid
-                                ? checkNfcAndroid(walletProtectState: _walletProtectState)
-                                : await checkNfcIos(walletProtectState: _walletProtectState);
+                                ? checkNfcAndroid(
+                                    walletProtectState: _walletProtectState,
+                                    balanceStore: _balanceStore,
+                                    settingsState: _settingsState,
+                                  )
+                                : await checkNfcIos(
+                                    walletProtectState: _walletProtectState,
+                                    balanceStore: _balanceStore,
+                                    settingsState: _settingsState,
+                                  );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
@@ -312,29 +346,37 @@ class SettingsPage extends HookWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     clipBehavior: Clip.hardEdge,
-                    child: InkWell(
-                      onTap: () {},
-                      splashFactory: InkSparkle.splashFactory,
-                      highlightColor: Colors.transparent,
-                      child: ListTile(
-                        minLeadingWidth: 10,
-                        trailing: CupertinoSwitch(
-                          value: true,
-                          onChanged: (value) {},
-                        ),
-                        leading: Assets.icons.notifications.image(
-                          height: 22,
-                        ),
-                        title: const Text(
-                          'Push notifications',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 15,
-                            color: AppColors.primaryTextColor,
-                            fontWeight: FontWeight.w500,
+                    child: Observer(
+                      builder: (context) {
+                        return InkWell(
+                          onTap: () {
+                            onToggleNotifications(_walletProtectState.isSwitchedNotificationsToggle);
+                          },
+                          splashFactory: InkSplash.splashFactory,
+                          highlightColor: Colors.transparent,
+                          child: ListTile(
+                            minLeadingWidth: 10,
+                            trailing: CupertinoSwitch(
+                              value: _walletProtectState.isSwitchedNotificationsToggle,
+                              onChanged: (_) {
+                                onToggleNotifications(_walletProtectState.isSwitchedNotificationsToggle);
+                              },
+                            ),
+                            leading: Assets.icons.notifications.image(
+                              height: 22,
+                            ),
+                            title: const Text(
+                              'Push notifications',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 15,
+                                color: AppColors.primaryTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -364,7 +406,24 @@ class SettingsPage extends HookWidget {
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            await recordAmplitudeEvent(const HelpCenterClicked(source: 'Settings'));
+                            await FlutterWebBrowser.openWebPage(
+                              url: 'https://coinplus.gitbook.io/help-center',
+                              customTabsOptions: const CustomTabsOptions(
+                                shareState: CustomTabsShareState.on,
+                                instantAppsEnabled: true,
+                                showTitle: true,
+                                urlBarHidingEnabled: true,
+                              ),
+                              safariVCOptions: const SafariViewControllerOptions(
+                                barCollapsingEnabled: true,
+                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance: true,
+                              ),
+                            );
+                          },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
@@ -394,6 +453,7 @@ class SettingsPage extends HookWidget {
                         InkWell(
                           onTap: () {
                             router.push(const ContactUs());
+                            recordAmplitudeEvent(const ContactUsClicked());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
@@ -436,7 +496,9 @@ class SettingsPage extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ScaleTap(
-                      onPressed: () {},
+                      onPressed: () {
+                        recordAmplitudeEvent(const JoinCommunityClicked(social: 'Twitter'));
+                      },
                       enableFeedback: false,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -451,7 +513,9 @@ class SettingsPage extends HookWidget {
                     ),
                     const Gap(12),
                     ScaleTap(
-                      onPressed: () {},
+                      onPressed: () {
+                        recordAmplitudeEvent(const JoinCommunityClicked(social: 'Discord'));
+                      },
                       enableFeedback: false,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -466,7 +530,9 @@ class SettingsPage extends HookWidget {
                     ),
                     const Gap(12),
                     ScaleTap(
-                      onPressed: () {},
+                      onPressed: () {
+                        recordAmplitudeEvent(const JoinCommunityClicked(social: 'Reddit'));
+                      },
                       enableFeedback: false,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -481,7 +547,9 @@ class SettingsPage extends HookWidget {
                     ),
                     const Gap(12),
                     ScaleTap(
-                      onPressed: () {},
+                      onPressed: () {
+                        recordAmplitudeEvent(const JoinCommunityClicked(social: 'Trust Pilot'));
+                      },
                       enableFeedback: false,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
@@ -538,6 +606,7 @@ class SettingsPage extends HookWidget {
                                 modalPresentationCapturesStatusBarAppearance: true,
                               ),
                             );
+                            await recordAmplitudeEvent(const PrivacyPolicyClicked());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
@@ -582,6 +651,7 @@ class SettingsPage extends HookWidget {
                                 modalPresentationCapturesStatusBarAppearance: true,
                               ),
                             );
+                            await recordAmplitudeEvent(const TermsOfUseClicked());
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

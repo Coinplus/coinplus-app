@@ -30,6 +30,6 @@ Future<void> pleaseEnableBiometrics(BuildContext context, WalletProtectState wal
       },
       secondaryActionText: 'Close',
       secondaryAction: router.pop,
-    ),
+    ), isDismissible: true,
   );
 }

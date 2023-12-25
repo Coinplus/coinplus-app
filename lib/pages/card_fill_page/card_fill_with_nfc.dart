@@ -17,8 +17,10 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
@@ -59,6 +61,7 @@ class CardFillWithNfc extends StatefulWidget {
 
 class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderStateMixin {
   final Connectivity _connectivity = Connectivity();
+
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
@@ -79,11 +82,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   @override
   void initState() {
     super.initState();
-    _connectivityStore.initConnectivity();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
-    _nfcStop();
     _toggleCard();
-    _flipCardController.toggleCard();
+    _nfcStop();
     _btcAddressController.addListener(_validateBTCAddress);
     _btcAddressController = TextEditingController();
     _btcAddressController.text = widget.receivedData ?? '';
@@ -103,6 +103,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
     if (widget.receivedData != null) {
       onInitWithAddress();
     }
+    _connectivityStore.initConnectivity();
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
   }
 
   @override
@@ -239,11 +241,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                       border: Border.all(
                                         color: _checkboxState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
-                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
                                       color: _checkboxState.isActivatedCheckBox
                                           ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                              : const Color(0xFFFF2E00).withOpacity(0.05),
+                                          : const Color(0xFFFF2E00).withOpacity(0.05),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(14),
@@ -359,6 +361,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                     ),
                                     value: _checkboxState.isActivatedCheckBox,
                                     onChanged: (_) {
+                                      recordAmplitudeEvent(
+                                        const WarningCheckboxClicked(),
+                                      );
                                       _checkboxState.makeActiveCheckbox();
                                     },
                                     splashRadius: 15,
@@ -399,6 +404,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                       ),
                                       value: _checkboxState.isActive,
                                       onChanged: (_) {
+                                        recordAmplitudeEvent(
+                                          const WarningCheckboxClicked(),
+                                        );
                                         _checkboxState.makeActive();
                                       },
                                       splashRadius: 15,
@@ -425,7 +433,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
                           if (widget.isOriginalCard == true) {
-                             unawaited(connectedCount(widget.receivedData!));
+                            unawaited(connectedCount(widget.receivedData!));
                             if (widget.cardColor == '0') {
                               _balanceStore.saveSelectedCard(color: CardColor.ORANGE);
                             } else if (widget.cardColor == '1') {
@@ -480,6 +488,29 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           );
                           _shakeAnimationController.stop();
                         }
+                        await hasShownWallet().then(
+                          (hasShown) async {
+                            if (hasShown) {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Wallet',
+                                  walletType: 'Card',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                              await recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
+                            } else {
+                              await recordAmplitudeEvent(
+                                GotItClicked(
+                                  source: 'Onboarding',
+                                  walletType: 'Card',
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                ),
+                              );
+                              await recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
+                            }
+                          },
+                        );
                       },
                       child: const Text(
                         'Got it',
@@ -490,62 +521,104 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                       ),
                     ).paddingHorizontal(49)
                   : Observer(
-                    builder: (context) {
-                      return LoadingButton(
-                        onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
-                            ? null
-                            : _addressState.isAddressVisible
-                                ? _checkboxState.isActivatedCheckBox
-                                    ? () async {
-                                        final cardIndex = _balanceStore.cards.indexWhere(
-                                          (element) => element.address == _balanceStore.selectedCard?.address,
-                                        );
-                                        if (cardIndex != -1) {
-                                          await alreadySavedCard(context);
-                                        } else {
-                                          await _toggleCard();
-                                          await Future.delayed(
-                                            const Duration(milliseconds: 300),
+                      builder: (context) {
+                        return LoadingButton(
+                          onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
+                              ? null
+                              : _addressState.isAddressVisible
+                                  ? _checkboxState.isActivatedCheckBox
+                                      ? () async {
+                                          await hasShownWallet().then(
+                                            (hasShown) async {
+                                              if (hasShown) {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                );
+                                              } else {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                );
+                                              }
+                                            },
                                           );
-                                          _lineStore.makeVisible();
-                                        }
-                                      }
-                                    : () async {
-                                        if (widget.isActivated == true) {
-                                          await HapticFeedback.vibrate();
-                                          _acceptState.checkboxAccept();
-                                          _shakeAnimationController.start();
-                                          await Future.delayed(
-                                            const Duration(
-                                              milliseconds: 600,
-                                            ),
-                                          );
-                                          _shakeAnimationController.stop();
-                                        } else {
                                           final cardIndex = _balanceStore.cards.indexWhere(
                                             (element) => element.address == _balanceStore.selectedCard?.address,
                                           );
                                           if (cardIndex != -1) {
                                             await alreadySavedCard(context);
                                           } else {
-                                            if (_flipCardController.state!.isFront) {
-                                              await _toggleCard();
-                                              _lineStore.makeVisible();
+                                            await _toggleCard();
+                                            await Future.delayed(
+                                              const Duration(milliseconds: 300),
+                                            );
+                                            _lineStore.makeVisible();
+                                          }
+                                        }
+                                      : () async {
+                                          await hasShownWallet().then(
+                                            (hasShown) async {
+                                              if (hasShown) {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                );
+                                              } else {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          );
+                                          if (widget.isActivated == true) {
+                                            await HapticFeedback.vibrate();
+                                            _acceptState.checkboxAccept();
+                                            _shakeAnimationController.start();
+                                            await Future.delayed(
+                                              const Duration(
+                                                milliseconds: 600,
+                                              ),
+                                            );
+                                            _shakeAnimationController.stop();
+                                          } else {
+                                            final cardIndex = _balanceStore.cards.indexWhere(
+                                              (element) => element.address == _balanceStore.selectedCard?.address,
+                                            );
+                                            if (cardIndex != -1) {
+                                              await alreadySavedCard(context);
+                                            } else {
+                                              if (_flipCardController.state!.isFront) {
+                                                await _toggleCard();
+                                                _lineStore.makeVisible();
+                                              }
                                             }
                                           }
                                         }
-                                      }
-                                : null,
-                        child: const Text(
-                          'Save to wallet',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontFamily: FontFamily.redHatSemiBold,
+                                  : null,
+                          child: const Text(
+                            'Save to wallet',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: FontFamily.redHatSemiBold,
+                            ),
                           ),
-                        ),
-                      ).paddingHorizontal(49);
-                    },
-                  );
+                        ).paddingHorizontal(49);
+                      },
+                    );
             },
           ),
           if (context.height > 844) Gap(context.height * 0.1) else Gap(context.height * 0.05),

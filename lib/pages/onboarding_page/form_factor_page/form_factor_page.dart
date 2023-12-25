@@ -6,8 +6,10 @@ import 'package:gap/gap.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/form_factor_state/form_factor_state.dart';
 
 class FormFactorPage extends StatefulWidget {
@@ -57,6 +59,12 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                           );
                           await router.pop(context);
                           widget.pageIndexNotifier.value = 0;
+                          await recordAmplitudeEvent(
+                            const TypeSelected(
+                              source: 'Onboarding',
+                              walletType: 'Card',
+                            ),
+                          );
                           await router.push(CardFillRoute());
                         },
                         child: Visibility(
@@ -102,6 +110,12 @@ class _FormFactorPageState extends State<FormFactorPage> with TickerProviderStat
                           );
                           await router.pop(context);
                           widget.pageIndexNotifier.value = 0;
+                          await recordAmplitudeEvent(
+                            const TypeSelected(
+                              source: 'Onboarding',
+                              walletType: 'Bar',
+                            ),
+                          );
                           await router.push(BarFillRoute());
                         },
                         child: Visibility(

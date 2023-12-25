@@ -16,7 +16,9 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/qr_detect_state/qr_detect_state.dart';
@@ -100,9 +102,17 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
                                 ),
                                 child: ScaleTap(
                                   enableFeedback: false,
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    await recordAmplitudeEvent(
+                                      AddressCopied(
+                                        walletType: 'Card',
+                                        walletAddress: widget.balanceStore.selectedCard!.address,
+                                        activated: false,
+                                        source: 'Balance',
+                                      ),
+                                    );
                                     if (Platform.isIOS) {
-                                      Clipboard.setData(
+                                      await Clipboard.setData(
                                         ClipboardData(
                                           text: widget.balanceStore.selectedCard!.address.toString(),
                                         ),
@@ -131,7 +141,7 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
                                         },
                                       );
                                     } else {
-                                      Clipboard.setData(
+                                      await Clipboard.setData(
                                         ClipboardData(
                                           text: widget.balanceStore.selectedCard!.address.toString(),
                                         ),
@@ -199,8 +209,10 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
                                                     ),
                                                   );
                                                 }
+                                                final visibleAddress =
+                                                    _getVisibleAddress(widget.balanceStore.selectedCard!.address);
                                                 return Text(
-                                                  widget.balanceStore.selectedCard?.address ?? '',
+                                                  visibleAddress,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontFamily: FontFamily.redHatMedium,
@@ -747,5 +759,11 @@ class _CardWidgetNfcFillState extends State<CardWidgetNfcFill> {
   Future<void> _toggleCard() async {
     await Future.delayed(const Duration(milliseconds: 400));
     await widget.flipCardController.toggleCard();
+  }
+
+  String _getVisibleAddress(String fullAddress) {
+    final start = fullAddress.substring(0, 5);
+    final end = fullAddress.substring(fullAddress.length - 5);
+    return '$start ... $end';
   }
 }

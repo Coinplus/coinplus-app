@@ -22,6 +22,7 @@ abstract class _WalletProtectState with Store {
   _WalletProtectState() {
     checkPinCodeStatus();
     checkBiometricStatus();
+    checkNotificationToggleStatus();
   }
 
   @observable
@@ -41,6 +42,9 @@ abstract class _WalletProtectState with Store {
 
   @observable
   bool isSetPinCode = false;
+
+  @observable
+  bool isSwitchedNotificationsToggle = false;
 
   @observable
   bool isLinkOpened = false;
@@ -72,6 +76,11 @@ abstract class _WalletProtectState with Store {
   }
 
   @action
+  Future<void> checkNotificationToggleStatus() async {
+    isSwitchedNotificationsToggle = await getNotificationToggleStatus();
+  }
+
+  @action
   Future<void> updateNfcSessionStatus({required bool isStarted}) async {
     _isNfcSessionStarted = isStarted;
   }
@@ -88,6 +97,18 @@ abstract class _WalletProtectState with Store {
       await disableBiometricAuth();
       isBiometricsEnabled = false;
     }
+  }
+
+  @action
+  Future<void> disableNotification() async {
+    await disableNotificationToggle();
+    isSwitchedNotificationsToggle = false;
+  }
+
+  @action
+  Future<void> enableNotification() async {
+    await enableNotificationToggle();
+    isSwitchedNotificationsToggle = true;
   }
 
   @action

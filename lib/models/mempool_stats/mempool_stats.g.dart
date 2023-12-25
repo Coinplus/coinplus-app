@@ -14,8 +14,7 @@ MempoolStats _$MempoolStatsFromJson(Map json) => MempoolStats(
       txCount: json['tx_count'] as int,
     );
 
-Map<String, dynamic> _$MempoolStatsToJson(MempoolStats instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MempoolStatsToJson(MempoolStats instance) => <String, dynamic>{
       'funded_txo_count': instance.fundedTxoCount,
       'funded_txo_sum': instance.fundedTxoSum,
       'spent_txo_count': instance.spentTxoCount,

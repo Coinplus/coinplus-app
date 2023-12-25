@@ -9,7 +9,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
@@ -22,13 +21,17 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_color_state/card_setting_state.dart';
+import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
@@ -44,12 +47,15 @@ class CardSettingsPage extends HookWidget {
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
+
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
 
     final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
+
     final _isPinSet = getIsPinCodeSet();
     final _auth = LocalAuthentication();
 
@@ -102,11 +108,6 @@ class CardSettingsPage extends HookWidget {
     });
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-        if (Platform.isAndroid) {
-          await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-        }
-      });
       isPrivateSet();
       fetchPrivateKey();
       return null;
@@ -326,6 +327,9 @@ class CardSettingsPage extends HookWidget {
                                     ],
                                   ),
                                   onLongPress: () async {
+                                    await recordAmplitudeEvent(
+                                      PrivateKeyRevealed(walletAddress: card.address, walletType: 'Card'),
+                                    );
                                     await HapticFeedback.selectionClick();
                                     if (!_cardSettingsState.isPrivateKeyVisible) {
                                       if (_walletProtectState.isBiometricsEnabled) {
@@ -368,9 +372,12 @@ class CardSettingsPage extends HookWidget {
                                       _cardSettingsState.isPrivateKeyVisible = false;
                                     }
                                   },
-                                  onTap: () {
-                                    _cardSettingsState.isPrivateKeyVisible
-                                        ? Clipboard.setData(
+                                  onTap: _cardSettingsState.isPrivateKeyVisible
+                                      ? () {
+                                          recordAmplitudeEvent(
+                                            PrivateKeyCopied(walletAddress: card.address, walletType: 'Card'),
+                                          );
+                                          Clipboard.setData(
                                             ClipboardData(
                                               text: privateKey.value.toString(),
                                             ),
@@ -393,8 +400,13 @@ class CardSettingsPage extends HookWidget {
                                                 ),
                                               );
                                             },
-                                          )
-                                        : showTopSnackBar(
+                                          );
+                                        }
+                                      : () {
+                                          recordAmplitudeEvent(
+                                            ClickedOnPrivateKey(walletAddress: card.address, walletType: 'Card'),
+                                          );
+                                          showTopSnackBar(
                                             displayDuration: const Duration(
                                               milliseconds: 400,
                                             ),
@@ -409,7 +421,7 @@ class CardSettingsPage extends HookWidget {
                                               ),
                                             ),
                                           );
-                                  },
+                                        },
                                   title: Observer(
                                     builder: (context) {
                                       return Column(
@@ -487,6 +499,7 @@ class CardSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
+                              await recordAmplitudeEvent(const HelpCenterClicked(source: 'Wallet Settings'));
                               await FlutterWebBrowser.openWebPage(
                                 url:
                                     'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
@@ -506,7 +519,7 @@ class CardSettingsPage extends HookWidget {
                             },
                             child: StyledText(
                               text:
-                                  'If you dont know what to do with this Private key, please checkout our <p>Help center</p> article.',
+                                  "If you don't know what to do with this Private key, please checkout our <p>Help center</p> article.",
                               tags: {
                                 'p': StyledTextTag(
                                   style: const TextStyle(
@@ -611,8 +624,17 @@ class CardSettingsPage extends HookWidget {
                       ],
                     ),
                   ListTile(
-                    onTap: () {
-                      showModalBottomSheet(
+                    onTap: () async {
+                      final isCardActivated =
+                          isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                      await recordAmplitudeEvent(
+                        RemoveCardClicked(
+                          walletAddress: card.address,
+                          walletType: 'Card',
+                          activated: await isCardActivated,
+                        ),
+                      );
+                      await showModalBottomSheet(
                         context: context,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -649,6 +671,9 @@ class CardSettingsPage extends HookWidget {
                           onPressed: _cardSettingsState.isColorChanged
                               ? () async {
                                   if (_cardSettingsState.selectedCardColor == CardColor.ORANGE) {
+                                    await recordAmplitudeEvent(
+                                      CardColorCHanged(walletAddress: card.address, color: 'ORANGE'),
+                                    );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
                                       color: CardColor.ORANGE,
@@ -669,6 +694,9 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     );
                                   } else if (_cardSettingsState.selectedCardColor == CardColor.WHITE) {
+                                    await recordAmplitudeEvent(
+                                      CardColorCHanged(walletAddress: card.address, color: 'WHITE'),
+                                    );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
                                       color: CardColor.WHITE,
@@ -689,6 +717,9 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     );
                                   } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
+                                    await recordAmplitudeEvent(
+                                      CardColorCHanged(walletAddress: card.address, color: 'BLACK'),
+                                    );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
                                       color: CardColor.BLACK,

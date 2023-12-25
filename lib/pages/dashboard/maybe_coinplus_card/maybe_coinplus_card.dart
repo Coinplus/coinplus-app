@@ -20,6 +20,6 @@ Future<void> maybeCoinplusCard(BuildContext context, WalletProtectState walletPr
         await router.pop();
         await router.push(const ContactUs());
       },
-    ),
+    ), isDismissible: true,
   );
 }

@@ -8,8 +8,10 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_name_sate/card_name_sate.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -166,6 +168,7 @@ class _BarNameChangeModalState extends State<BarNameChangeModal> {
                               const Duration(milliseconds: 100),
                             );
                             await router.pop();
+                            await recordAmplitudeEvent(const CardNameChanged(walletType: 'Bar'));
                             showTopSnackBar(
                               displayDuration: const Duration(
                                 milliseconds: 600,
