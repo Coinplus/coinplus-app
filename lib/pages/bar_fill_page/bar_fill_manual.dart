@@ -48,7 +48,6 @@ class BarFillPage extends StatefulWidget {
 }
 
 class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin {
-  late TextEditingController _btcAddressController = TextEditingController();
   late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
@@ -67,9 +66,9 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
     super.initState();
     _nfcStop();
     _toggleWidgets();
-    _btcAddressController.addListener(_validateBTCAddress);
-    _btcAddressController = TextEditingController();
-    _btcAddressController.text = widget.receivedData ?? '';
+    _addressState.btcAddressController.addListener(_validateBTCAddress);
+    _addressState.btcAddressController = TextEditingController();
+    _addressState.btcAddressController.text = widget.receivedData ?? '';
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -527,7 +526,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                       onChanged: (_) {
                                         _validateBTCAddress();
                                       },
-                                      controller: _btcAddressController,
+                                      controller: _addressState.btcAddressController,
                                       maxLines: 2,
                                       minLines: 1,
                                       focusNode: _focusNode,
@@ -566,6 +565,11 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             return _validationStore.isValid
                                                 ? IconButton(
                                                     onPressed: () async {
+                                                      unawaited(
+                                                        recordAmplitudeEvent(
+                                                          const QrButtonClicked(walletType: 'Bar'),
+                                                        ),
+                                                      );
                                                       _focusNode.unfocus();
                                                       await Future.delayed(
                                                         const Duration(
@@ -578,8 +582,24 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                       if (res == null) {
                                                         return;
                                                       }
-
-                                                      _btcAddressController.text = res;
+                                                      await hasShownWallet().then(
+                                                        (hasShown) async {
+                                                          if (hasShown) {
+                                                            unawaited(
+                                                              recordAmplitudeEvent(
+                                                                QrScanned(source: 'Wallet', walletAddress: res),
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            unawaited(
+                                                              recordAmplitudeEvent(
+                                                                QrScanned(source: 'Onboarding', walletAddress: res),
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
+                                                      );
+                                                      await _addressState.setBTCAddress(res);
                                                       await _validateBTCAddress();
                                                     },
                                                     icon: Assets.icons.qrCode.image(
@@ -796,6 +816,9 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                         ),
                                         value: _checkboxState.isActive,
                                         onChanged: (_) {
+                                          recordAmplitudeEvent(
+                                            const WarningCheckboxClicked(),
+                                          );
                                           _checkboxState.makeActive();
                                         },
                                         splashRadius: 15,
@@ -826,7 +849,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                       ? LoadingButton(
                           onPressed: () async {
                             if (_checkboxState.isActive) {
-                              unawaited(signInAnonymously(address: _btcAddressController.text));
+                              unawaited(signInAnonymously(address: _addressState.btcAddressController.text));
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
                                 if (hasShown) {
@@ -855,7 +878,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     GotItClicked(
                                       source: 'Wallet',
                                       walletType: 'Bar',
-                                      walletAddress: _btcAddressController.text,
+                                      walletAddress: _addressState.btcAddressController.text,
                                     ),
                                   );
                                 } else {
@@ -863,11 +886,14 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     GotItClicked(
                                       source: 'Onboarding',
                                       walletType: 'Bar',
-                                      walletAddress: _btcAddressController.text,
+                                      walletAddress: _addressState.btcAddressController.text,
                                     ),
                                   );
                                 }
                               },
+                            );
+                            unawaited(
+                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );
                           },
                           child: const Text(
@@ -888,7 +914,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           SaveToWalletClicked(
                                             source: 'Wallet',
                                             walletType: 'Bar',
-                                            walletAddress: _btcAddressController.text,
+                                            walletAddress: _addressState.btcAddressController.text,
                                           ),
                                         );
                                       } else {
@@ -896,7 +922,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           SaveToWalletClicked(
                                             source: 'Onboarding',
                                             walletType: 'Bar',
-                                            walletAddress: _btcAddressController.text,
+                                            walletAddress: _addressState.btcAddressController.text,
                                           ),
                                         );
                                       }
@@ -906,7 +932,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     (element) => element.address == _balanceStore.selectedBar?.address,
                                   );
                                   if (cardIndex != -1) {
-                                    await alreadySavedBar(context);
+                                    await alreadySavedBar(
+                                      context: context,
+                                      walletAddress: _balanceStore.selectedCard!.address,
+                                    );
                                   } else {
                                     _lineStore.makeVisible();
                                   }
@@ -931,7 +960,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   }
 
   Future<void> _validateBTCAddress() async {
-    final btcAddress = _btcAddressController.text.trim();
+    final btcAddress = _addressState.btcAddressController.text.trim();
     unawaited(
       _balanceStore.getSelectedBar(btcAddress),
     );

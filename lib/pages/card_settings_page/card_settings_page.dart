@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
@@ -235,9 +236,9 @@ class CardSettingsPage extends HookWidget {
                   ),
                   const Gap(16),
                   ListTile(
-                    onTap: () {
+                    onTap: () async {
                       if (Platform.isIOS) {
-                        Clipboard.setData(
+                        await Clipboard.setData(
                           ClipboardData(
                             text: card.address.toString(),
                           ),
@@ -262,7 +263,7 @@ class CardSettingsPage extends HookWidget {
                           },
                         );
                       } else {
-                        Clipboard.setData(
+                        await Clipboard.setData(
                           ClipboardData(
                             text: card.address.toString(),
                           ),
@@ -272,6 +273,18 @@ class CardSettingsPage extends HookWidget {
                           },
                         );
                       }
+                      final isCardActivated =
+                          isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                      unawaited(
+                        recordAmplitudeEvent(
+                          AddressCopied(
+                            source: 'Card Settings',
+                            walletType: 'Card',
+                            walletAddress: card.address,
+                            activated: await isCardActivated,
+                          ),
+                        ),
+                      );
                     },
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -95,7 +95,7 @@ class _BarNameChangeModalState extends State<BarNameChangeModal> {
               const Gap(4),
               TextField(
                 inputFormatters: [
-                  LengthLimitingTextInputFormatter(20),
+                  LengthLimitingTextInputFormatter(24),
                 ],
                 controller: _nameState.nameController,
                 keyboardType: TextInputType.text,

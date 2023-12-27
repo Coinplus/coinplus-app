@@ -738,7 +738,9 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
-                          walletAddress = publicKey!;
+                          setState(() {
+                            walletAddress = publicKey!;
+                          });
                           if (card.address.hashCode == publicKey.hashCode) {
                             unawaited(toggleActivation(card.address));
                             unawaited(incrementActivationCount(card.address));
@@ -766,7 +768,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               ValidationFailed(walletAddress: walletAddress, walletType: 'Card'),
                             );
                             unawaited(activationFailureCount(card.address));
-                            await secretsFailDialog(context);
+                            await secretsFailDialog(context: context, walletAddress: walletAddress, walletType: 'Card');
                           }
                         } catch (e) {
                           log(e.toString());

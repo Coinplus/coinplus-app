@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -82,6 +84,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     const QrScannerRoute(),
                   );
                   if (res != null) {
+                    unawaited(recordAmplitudeEvent(QrScanned(source: 'Onboarding', walletAddress: res)));
                     await router.push(
                       CardFillRoute(receivedData: res),
                     );
@@ -225,7 +228,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                   )
               : null,
           onPressed: () async {
-            await recordAmplitudeEvent(const ConnectManuallyClicked());
+            unawaited(recordAmplitudeEvent(const ConnectManuallyClicked(source: 'Onboarding')));
             await WoltModalSheet.show<void>(
               pageIndexNotifier: pageIndexNotifier,
               context: context,

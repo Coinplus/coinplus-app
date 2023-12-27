@@ -14,7 +14,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../widgets/loading_button.dart';
 
-Future<void> notCoinplusCardAlert(BuildContext context) {
+Future<void> notCoinplusCardAlert({required BuildContext context, required String walletAddress}) {
   final closeButton = LoadingButton(
     style: context.theme.buttonStyle(
       textStyle: const TextStyle(

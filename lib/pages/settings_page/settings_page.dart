@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
@@ -66,6 +67,7 @@ class SettingsPage extends HookWidget {
             await recordAmplitudeEvent(const FaceIdEnabled());
           } else {
             await pleaseEnableBiometrics(context, _walletProtectState);
+            await recordAmplitudeEvent(const FaceIdDisabled());
           }
         }
         await _walletProtectState.checkBiometricStatus();
@@ -76,12 +78,11 @@ class SettingsPage extends HookWidget {
     final onToggleNotifications = useCallback<Future<void> Function(bool p1)>(
       (isEnable) async {
         if (!isEnable) {
-          await recordAmplitudeEvent(const PushNotificationsOn());
+          unawaited(recordAmplitudeEvent(const PushNotificationsOn()));
           await _walletProtectState.enableNotification();
         } else {
           await _walletProtectState.disableNotification();
-
-          await recordAmplitudeEvent(const PushNotificationsOff());
+          unawaited(recordAmplitudeEvent(const PushNotificationsOff()));
         }
         await _walletProtectState.checkNotificationToggleStatus();
       },
@@ -282,6 +283,7 @@ class SettingsPage extends HookWidget {
                         InkWell(
                           onTap: () async {
                             await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                            unawaited(recordAmplitudeEvent(const VerifyCardClicked()));
                             Platform.isAndroid
                                 ? checkNfcAndroid(
                                     walletProtectState: _walletProtectState,

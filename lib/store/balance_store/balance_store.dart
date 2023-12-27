@@ -11,11 +11,9 @@ import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
-import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../utils/storage_utils.dart';
 import '../qr_detect_state/qr_detect_state.dart';
@@ -231,7 +229,6 @@ abstract class _BalanceStore with Store {
       _cards.add(_selectedCard!);
 
       StorageUtils.addCard(_selectedCard!);
-      recordAmplitudeEvent(CardAddedEvent(address: _selectedCard!.address));
     } else {
       throw Exception('Card is already added');
     }
@@ -254,7 +251,6 @@ abstract class _BalanceStore with Store {
           createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         ),
       );
-      recordAmplitudeEvent(BarAddedEvent(address: _selectedCard!.address));
     } else {
       throw Exception('Bar is already added');
     }

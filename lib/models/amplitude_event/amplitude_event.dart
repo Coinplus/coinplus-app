@@ -17,7 +17,24 @@ class AmplitudeEvent with _$AmplitudeEvent {
 
   const factory AmplitudeEvent.connectManuallyClicked({
     @Default('CONNECT_MANUALLY_CLICKED') String eventType,
+    required String source,
   }) = ConnectManuallyClicked;
+
+  const factory AmplitudeEvent.connectWithQrClicked({
+    @Default('CONNECT_WITH_QR_CLICKED') String eventType,
+    required String source,
+  }) = ConnectWitchQrClicked;
+
+  const factory AmplitudeEvent.qrButtonClicked({
+    @Default('QR_BUTTON_CLICKED') String eventType,
+    required String walletType,
+  }) = QrButtonClicked;
+
+  const factory AmplitudeEvent.qrScanned({
+    @Default('QR_SCANNED') String eventType,
+    required String source,
+    required String walletAddress,
+  }) = QrScanned;
 
   const factory AmplitudeEvent.buyNewCardClicked({
     @Default('BUY_NEW_CARD_CLICKED') String eventType,
@@ -48,13 +65,6 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletAddress,
   }) = AddressFilled;
 
-  const factory AmplitudeEvent.qrScanned({
-    @Default('QR_SCANNED') String eventType,
-    required String source,
-    required String walletType,
-    required String walletAddress,
-  }) = QrScanned;
-
   const factory AmplitudeEvent.deepLinkClicked({
     @Default('DEEPLINK_CLICKED') String eventType,
     required String source,
@@ -63,7 +73,7 @@ class AmplitudeEvent with _$AmplitudeEvent {
   }) = DeeplinkClicked;
 
   const factory AmplitudeEvent.typeSelected({
-    @Default('TYPE_SELECTED') String eventType,
+    @Default('WALLET_TYPE_SELECTED') String eventType,
     required String source,
     required String walletType,
   }) = TypeSelected;
@@ -74,6 +84,19 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletType,
     required String walletAddress,
   }) = SaveToWalletClicked;
+
+  const factory AmplitudeEvent.alreadySavedGotItClicked({
+    @Default('ALREADY_SAVED_GOT_IT_CLICKED') String eventType,
+    required String walletType,
+    required String walletAddress,
+  }) = AlreadySavedGotItClicked;
+
+  const factory AmplitudeEvent.activatedCheckboxClicked({
+    @Default('ACTIVATED_CHECKBOX_CLICKED') String eventType,
+    required String source,
+    required String walletType,
+    required String walletAddress,
+  }) = ActivatedCheckboxClicked;
 
   const factory AmplitudeEvent.gotItClicked({
     @Default('GOT_IT_CLICKED') String eventType,
@@ -206,6 +229,12 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletType,
   }) = ContinueCLicked;
 
+  const factory AmplitudeEvent.editSecretsClicked({
+    @Default('EDIT_SECRETS_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+  }) = EditSecretsClicked;
+
   const factory AmplitudeEvent.validationSuccessful({
     @Default('VALIDATION_SUCCESSFUL') String eventType,
     required String walletAddress,
@@ -303,6 +332,10 @@ class AmplitudeEvent with _$AmplitudeEvent {
     @Default('FACE_ID_ENABLED') String eventType,
   }) = FaceIdEnabled;
 
+  const factory AmplitudeEvent.faceIdDisabled({
+    @Default('FACE_ID_DISABLED') String eventType,
+  }) = FaceIdDisabled;
+
   const factory AmplitudeEvent.pushNotificationsOn({
     @Default('PUSH_NOTIFICATIONS_ON') String eventType,
   }) = PushNotificationsOn;
@@ -325,15 +358,88 @@ class AmplitudeEvent with _$AmplitudeEvent {
   }) = TermsOfUseClicked;
 
   const factory AmplitudeEvent.verifyCardClicked({
-    @Default('PUSH_NOTIFICATIONS_ON') String eventType,
+    @Default('VERIFY_CARD_CLICKED') String eventType,
+  }) = VerifyCardClicked;
+
+  const factory AmplitudeEvent.verifyCardTapped({
+    @Default('VERIFY_CARD_TAPPED') String eventType,
     required String walletAddress,
     required String walletType,
     required bool activated,
-  }) = VerifyCardClicked;
+  }) = VerifyCardTapped;
 
   const factory AmplitudeEvent.sendMessageClicked({
     @Default('SEND_MESSAGE_CLICKED') String eventType,
   }) = SendMessageClicked;
+
+  const factory AmplitudeEvent.cardTabClicked({
+    @Default('CARD_TAB_CLICKED') String eventType,
+  }) = CardTabClicked;
+
+  const factory AmplitudeEvent.barTabClicked({
+    @Default('BAR_TAB_CLICKED') String eventType,
+  }) = BarTabClicked;
+
+  const factory AmplitudeEvent.tapToConnectClicked({
+    @Default('TAP_TO_CONNECT_CLICKED') String eventType,
+    required String tab,
+  }) = TapToConnectClicked;
+
+  const factory AmplitudeEvent.cardDamagedClicked({
+    @Default('CARD_DAMAGED_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = CardDamagedClicked;
+
+  const factory AmplitudeEvent.nfcNotWorkingClicked({
+    @Default('NFC_NOT_WORKING_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = NfcNotWorkingCLicked;
+
+  const factory AmplitudeEvent.dontHaveCardClicked({
+    @Default('DONT_HAVE_CARD_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = DontHaveCardClicked;
+
+  const factory AmplitudeEvent.lostCardClicked({
+    @Default('LOST_CARD_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = LostCardClicked;
+
+  const factory AmplitudeEvent.troubleActivateClicked({
+    @Default('TROUBLE_ACTIVATE_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = TroubleActivateClicked;
+
+  const factory AmplitudeEvent.troubleCloseClicked({
+    @Default('TROUBLE_CLOSE_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = TroubleCloseClicked;
+
+  const factory AmplitudeEvent.troubleGotItClicked({
+    @Default('TROUBLE_GOT_IT_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = TroubleGotItClicked;
+
+  const factory AmplitudeEvent.troubleActivateNowClicked({
+    @Default('TROUBLE_ACTIVATE_NOW_CLICKED') String eventType,
+    required String walletAddress,
+    required String walletType,
+    required bool activated,
+  }) = TroubleActivateNowClicked;
 
   const factory AmplitudeEvent.cardAdded({
     @Default('CARD_ADDED') String eventType,

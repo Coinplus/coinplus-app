@@ -15,6 +15,8 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
@@ -90,6 +92,11 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
           index: _tabController.index,
         ),
       );
+      if (_tabController.index == 0) {
+        unawaited(recordAmplitudeEvent(const CardTabClicked()));
+      } else {
+        unawaited(recordAmplitudeEvent(const BarTabClicked()));
+      }
     });
   }
 

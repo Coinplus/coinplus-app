@@ -28,11 +28,51 @@ Map<String, dynamic> _$$ConnectWalletClickedImplToJson(_$ConnectWalletClickedImp
 
 _$ConnectManuallyClickedImpl _$$ConnectManuallyClickedImplFromJson(Map json) => _$ConnectManuallyClickedImpl(
       eventType: json['eventType'] as String? ?? 'CONNECT_MANUALLY_CLICKED',
+      source: json['source'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$ConnectManuallyClickedImplToJson(_$ConnectManuallyClickedImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
+      'source': instance.source,
+      'runtimeType': instance.$type,
+    };
+
+_$ConnectWitchQrClickedImpl _$$ConnectWitchQrClickedImplFromJson(Map json) => _$ConnectWitchQrClickedImpl(
+      eventType: json['eventType'] as String? ?? 'CONNECT_WITH_QR_CLICKED',
+      source: json['source'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$ConnectWitchQrClickedImplToJson(_$ConnectWitchQrClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'source': instance.source,
+      'runtimeType': instance.$type,
+    };
+
+_$QrButtonClickedImpl _$$QrButtonClickedImplFromJson(Map json) => _$QrButtonClickedImpl(
+      eventType: json['eventType'] as String? ?? 'QR_BUTTON_CLICKED',
+      walletType: json['walletType'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$QrButtonClickedImplToJson(_$QrButtonClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletType': instance.walletType,
+      'runtimeType': instance.$type,
+    };
+
+_$QrScannedImpl _$$QrScannedImplFromJson(Map json) => _$QrScannedImpl(
+      eventType: json['eventType'] as String? ?? 'QR_SCANNED',
+      source: json['source'] as String,
+      walletAddress: json['walletAddress'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$QrScannedImplToJson(_$QrScannedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'source': instance.source,
+      'walletAddress': instance.walletAddress,
       'runtimeType': instance.$type,
     };
 
@@ -104,22 +144,6 @@ Map<String, dynamic> _$$AddressFilledImplToJson(_$AddressFilledImpl instance) =>
       'runtimeType': instance.$type,
     };
 
-_$QrScannedImpl _$$QrScannedImplFromJson(Map json) => _$QrScannedImpl(
-      eventType: json['eventType'] as String? ?? 'QR_SCANNED',
-      source: json['source'] as String,
-      walletType: json['walletType'] as String,
-      walletAddress: json['walletAddress'] as String,
-      $type: json['runtimeType'] as String?,
-    );
-
-Map<String, dynamic> _$$QrScannedImplToJson(_$QrScannedImpl instance) => <String, dynamic>{
-      'eventType': instance.eventType,
-      'source': instance.source,
-      'walletType': instance.walletType,
-      'walletAddress': instance.walletAddress,
-      'runtimeType': instance.$type,
-    };
-
 _$DeeplinkClickedImpl _$$DeeplinkClickedImplFromJson(Map json) => _$DeeplinkClickedImpl(
       eventType: json['eventType'] as String? ?? 'DEEPLINK_CLICKED',
       source: json['source'] as String,
@@ -137,7 +161,7 @@ Map<String, dynamic> _$$DeeplinkClickedImplToJson(_$DeeplinkClickedImpl instance
     };
 
 _$TypeSelectedImpl _$$TypeSelectedImplFromJson(Map json) => _$TypeSelectedImpl(
-      eventType: json['eventType'] as String? ?? 'TYPE_SELECTED',
+      eventType: json['eventType'] as String? ?? 'WALLET_TYPE_SELECTED',
       source: json['source'] as String,
       walletType: json['walletType'] as String,
       $type: json['runtimeType'] as String?,
@@ -159,6 +183,38 @@ _$SaveToWalletClickedImpl _$$SaveToWalletClickedImplFromJson(Map json) => _$Save
     );
 
 Map<String, dynamic> _$$SaveToWalletClickedImplToJson(_$SaveToWalletClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'source': instance.source,
+      'walletType': instance.walletType,
+      'walletAddress': instance.walletAddress,
+      'runtimeType': instance.$type,
+    };
+
+_$AlreadySavedGotItClickedImpl _$$AlreadySavedGotItClickedImplFromJson(Map json) => _$AlreadySavedGotItClickedImpl(
+      eventType: json['eventType'] as String? ?? 'ALREADY_SAVED_GOT_IT_CLICKED',
+      walletType: json['walletType'] as String,
+      walletAddress: json['walletAddress'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$AlreadySavedGotItClickedImplToJson(_$AlreadySavedGotItClickedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletType': instance.walletType,
+      'walletAddress': instance.walletAddress,
+      'runtimeType': instance.$type,
+    };
+
+_$ActivatedCheckboxClickedImpl _$$ActivatedCheckboxClickedImplFromJson(Map json) => _$ActivatedCheckboxClickedImpl(
+      eventType: json['eventType'] as String? ?? 'ACTIVATED_CHECKBOX_CLICKED',
+      source: json['source'] as String,
+      walletType: json['walletType'] as String,
+      walletAddress: json['walletAddress'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$ActivatedCheckboxClickedImplToJson(_$ActivatedCheckboxClickedImpl instance) =>
+    <String, dynamic>{
       'eventType': instance.eventType,
       'source': instance.source,
       'walletType': instance.walletType,
@@ -475,6 +531,20 @@ Map<String, dynamic> _$$ContinueCLickedImplToJson(_$ContinueCLickedImpl instance
       'runtimeType': instance.$type,
     };
 
+_$EditSecretsClickedImpl _$$EditSecretsClickedImplFromJson(Map json) => _$EditSecretsClickedImpl(
+      eventType: json['eventType'] as String? ?? 'EDIT_SECRETS_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$EditSecretsClickedImplToJson(_$EditSecretsClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'runtimeType': instance.$type,
+    };
+
 _$ValidationSuccessfulImpl _$$ValidationSuccessfulImplFromJson(Map json) => _$ValidationSuccessfulImpl(
       eventType: json['eventType'] as String? ?? 'VALIDATION_SUCCESSFUL',
       walletAddress: json['walletAddress'] as String,
@@ -705,6 +775,16 @@ Map<String, dynamic> _$$FaceIdEnabledImplToJson(_$FaceIdEnabledImpl instance) =>
       'runtimeType': instance.$type,
     };
 
+_$FaceIdDisabledImpl _$$FaceIdDisabledImplFromJson(Map json) => _$FaceIdDisabledImpl(
+      eventType: json['eventType'] as String? ?? 'FACE_ID_DISABLED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$FaceIdDisabledImplToJson(_$FaceIdDisabledImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
 _$PushNotificationsOnImpl _$$PushNotificationsOnImplFromJson(Map json) => _$PushNotificationsOnImpl(
       eventType: json['eventType'] as String? ?? 'PUSH_NOTIFICATIONS_ON',
       $type: json['runtimeType'] as String?,
@@ -758,14 +838,24 @@ Map<String, dynamic> _$$TermsOfUseClickedImplToJson(_$TermsOfUseClickedImpl inst
     };
 
 _$VerifyCardClickedImpl _$$VerifyCardClickedImplFromJson(Map json) => _$VerifyCardClickedImpl(
-      eventType: json['eventType'] as String? ?? 'PUSH_NOTIFICATIONS_ON',
+      eventType: json['eventType'] as String? ?? 'VERIFY_CARD_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$VerifyCardClickedImplToJson(_$VerifyCardClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$VerifyCardTappedImpl _$$VerifyCardTappedImplFromJson(Map json) => _$VerifyCardTappedImpl(
+      eventType: json['eventType'] as String? ?? 'VERIFY_CARD_TAPPED',
       walletAddress: json['walletAddress'] as String,
       walletType: json['walletType'] as String,
       activated: json['activated'] as bool,
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$VerifyCardClickedImplToJson(_$VerifyCardClickedImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$VerifyCardTappedImplToJson(_$VerifyCardTappedImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'walletAddress': instance.walletAddress,
       'walletType': instance.walletType,
@@ -780,6 +870,167 @@ _$SendMessageClickedImpl _$$SendMessageClickedImplFromJson(Map json) => _$SendMe
 
 Map<String, dynamic> _$$SendMessageClickedImplToJson(_$SendMessageClickedImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$CardTabClickedImpl _$$CardTabClickedImplFromJson(Map json) => _$CardTabClickedImpl(
+      eventType: json['eventType'] as String? ?? 'CARD_TAB_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CardTabClickedImplToJson(_$CardTabClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$BarTabClickedImpl _$$BarTabClickedImplFromJson(Map json) => _$BarTabClickedImpl(
+      eventType: json['eventType'] as String? ?? 'BAR_TAB_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$BarTabClickedImplToJson(_$BarTabClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$TapToConnectClickedImpl _$$TapToConnectClickedImplFromJson(Map json) => _$TapToConnectClickedImpl(
+      eventType: json['eventType'] as String? ?? 'TAP_TO_CONNECT_CLICKED',
+      tab: json['tab'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TapToConnectClickedImplToJson(_$TapToConnectClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'tab': instance.tab,
+      'runtimeType': instance.$type,
+    };
+
+_$CardDamagedClickedImpl _$$CardDamagedClickedImplFromJson(Map json) => _$CardDamagedClickedImpl(
+      eventType: json['eventType'] as String? ?? 'CARD_DAMAGED_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$CardDamagedClickedImplToJson(_$CardDamagedClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$NfcNotWorkingCLickedImpl _$$NfcNotWorkingCLickedImplFromJson(Map json) => _$NfcNotWorkingCLickedImpl(
+      eventType: json['eventType'] as String? ?? 'NFC_NOT_WORKING_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$NfcNotWorkingCLickedImplToJson(_$NfcNotWorkingCLickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$DontHaveCardClickedImpl _$$DontHaveCardClickedImplFromJson(Map json) => _$DontHaveCardClickedImpl(
+      eventType: json['eventType'] as String? ?? 'DONT_HAVE_CARD_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$DontHaveCardClickedImplToJson(_$DontHaveCardClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$LostCardClickedImpl _$$LostCardClickedImplFromJson(Map json) => _$LostCardClickedImpl(
+      eventType: json['eventType'] as String? ?? 'LOST_CARD_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$LostCardClickedImplToJson(_$LostCardClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$TroubleActivateClickedImpl _$$TroubleActivateClickedImplFromJson(Map json) => _$TroubleActivateClickedImpl(
+      eventType: json['eventType'] as String? ?? 'TROUBLE_ACTIVATE_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TroubleActivateClickedImplToJson(_$TroubleActivateClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$TroubleCloseClickedImpl _$$TroubleCloseClickedImplFromJson(Map json) => _$TroubleCloseClickedImpl(
+      eventType: json['eventType'] as String? ?? 'TROUBLE_CLOSE_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TroubleCloseClickedImplToJson(_$TroubleCloseClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$TroubleGotItClickedImpl _$$TroubleGotItClickedImplFromJson(Map json) => _$TroubleGotItClickedImpl(
+      eventType: json['eventType'] as String? ?? 'TROUBLE_GOT_IT_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TroubleGotItClickedImplToJson(_$TroubleGotItClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
+      'runtimeType': instance.$type,
+    };
+
+_$TroubleActivateNowClickedImpl _$$TroubleActivateNowClickedImplFromJson(Map json) => _$TroubleActivateNowClickedImpl(
+      eventType: json['eventType'] as String? ?? 'TROUBLE_ACTIVATE_NOW_CLICKED',
+      walletAddress: json['walletAddress'] as String,
+      walletType: json['walletType'] as String,
+      activated: json['activated'] as bool,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TroubleActivateNowClickedImplToJson(_$TroubleActivateNowClickedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'walletAddress': instance.walletAddress,
+      'walletType': instance.walletType,
+      'activated': instance.activated,
       'runtimeType': instance.$type,
     };
 

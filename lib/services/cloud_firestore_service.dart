@@ -122,6 +122,21 @@ Future<void> deleteCount(String documentId) async {
   }
 }
 
+Future<void> verificationFailureCount(String documentId) async {
+  final card = await getCardData(documentId);
+
+  if (card != null) {
+    final verificationFailureCount = card.verificationFailureCount ?? 0;
+    final newFailureCount = verificationFailureCount + 1;
+
+    card.verificationFailureCount = newFailureCount;
+
+    await _firestore.collection('cards').doc(documentId).update({
+      'verificationFailureCount': newFailureCount,
+    });
+  }
+}
+
 Future<void> addReplenishmentHistory({
   required String documentId,
   required int amount,
