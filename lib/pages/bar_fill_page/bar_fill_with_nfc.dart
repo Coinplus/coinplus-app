@@ -624,6 +624,9 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                     ),
                                     value: _checkboxState.isActive,
                                     onChanged: (_) {
+                                      recordAmplitudeEvent(
+                                        const WarningCheckboxClicked(),
+                                      );
                                       _checkboxState.makeActive();
                                     },
                                     splashRadius: 15,
@@ -656,6 +659,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
                           _balanceStore.saveSelectedBar();
+
                           await hasShownWallet().then((hasShown) {
                             if (hasShown) {
                               router.pop();
@@ -697,6 +701,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                             }
                           },
                         );
+                        unawaited(recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)));
                       },
                       child: const Text(
                         'Got it',
@@ -734,7 +739,10 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                 (element) => element.address == _balanceStore.selectedBar?.address,
                               );
                               if (cardIndex != -1) {
-                                await alreadySavedBar(context);
+                                await alreadySavedBar(
+                                  context: context,
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                );
                               } else {
                                 await Future.delayed(
                                   const Duration(milliseconds: 300),

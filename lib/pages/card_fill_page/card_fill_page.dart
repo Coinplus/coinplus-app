@@ -772,6 +772,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               child: _validationStore.isValid
                                                   ? ScaleTap(
                                                       onPressed: () async {
+                                                        unawaited(
+                                                          recordAmplitudeEvent(
+                                                            const QrButtonClicked(walletType: 'Card'),
+                                                          ),
+                                                        );
                                                         _focusNode.unfocus();
                                                         await Future.delayed(
                                                           const Duration(
@@ -787,25 +792,23 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         await hasShownWallet().then(
                                                           (hasShown) async {
                                                             if (hasShown) {
-                                                              await recordAmplitudeEvent(
-                                                                AddressFilled(
-                                                                  source: 'Wallet',
-                                                                  walletAddress: res,
-                                                                  walletType: 'Card',
+                                                              unawaited(
+                                                                recordAmplitudeEvent(
+                                                                  QrScanned(source: 'Wallet', walletAddress: res),
                                                                 ),
                                                               );
                                                             } else {
-                                                              await recordAmplitudeEvent(
-                                                                AddressFilled(
-                                                                  source: 'Onboarding',
-                                                                  walletAddress: res,
-                                                                  walletType: 'Card',
+                                                              unawaited(
+                                                                recordAmplitudeEvent(
+                                                                  QrScanned(source: 'Onboarding', walletAddress: res),
                                                                 ),
                                                               );
                                                             }
                                                           },
                                                         );
-                                                        await _addressState.setBTCAddress(res);
+                                                        setState(() {
+                                                          _addressState.setBTCAddress(res);
+                                                        });
                                                         await _validateBTCAddress();
                                                       },
                                                       child: SizedBox(
@@ -935,6 +938,31 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               builder: (context) {
                                 return GestureDetector(
                                   onTap: () {
+                                    hasShownWallet().then(
+                                      (hasShown) async {
+                                        if (hasShown) {
+                                          unawaited(
+                                            recordAmplitudeEvent(
+                                              ActivatedCheckboxClicked(
+                                                source: 'Wallet',
+                                                walletType: 'Card',
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          unawaited(
+                                            recordAmplitudeEvent(
+                                              ActivatedCheckboxClicked(
+                                                source: 'Onboarding',
+                                                walletType: 'Card',
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
                                     _checkboxState.makeActiveCheckbox();
                                     HapticFeedback.heavyImpact();
                                   },
@@ -944,15 +972,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                       border: Border.all(
                                         color: _checkboxState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
-                                            : _acceptState.isCheckboxAccepted
-                                                ? Colors.grey.withOpacity(0.3)
-                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
                                       color: _checkboxState.isActivatedCheckBox
                                           ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : _acceptState.isCheckboxAccepted
-                                              ? Colors.white.withOpacity(0.7)
-                                              : const Color(0xFFFF2E00).withOpacity(0.05),
+                                          : const Color(0xFFFF2E00).withOpacity(0.05),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(14),
@@ -1057,6 +1081,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                       ),
                       secondChild: GestureDetector(
                         onTap: () {
+                          unawaited(
+                            recordAmplitudeEvent(
+                              const WarningCheckboxClicked(),
+                            ),
+                          );
                           _checkboxState.makeActive();
                           HapticFeedback.heavyImpact();
                         },
@@ -1136,15 +1165,36 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                           ),
                                         ),
                                         side: BorderSide(
-                                          color: _acceptState.isCheckboxAccepted
-                                              ? Colors.grey.withOpacity(0.5)
-                                              : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          color: const Color(0xFFFF2E00).withOpacity(0.6),
                                         ),
                                         value: _checkboxState.isActivatedCheckBox,
                                         onChanged: (_) {
-                                          recordAmplitudeEvent(
-                                            const WarningCheckboxClicked(),
+                                          hasShownWallet().then(
+                                            (hasShown) async {
+                                              if (hasShown) {
+                                                unawaited(
+                                                  recordAmplitudeEvent(
+                                                    ActivatedCheckboxClicked(
+                                                      source: 'Wallet',
+                                                      walletType: 'Card',
+                                                      walletAddress: _balanceStore.selectedCard!.address,
+                                                    ),
+                                                  ),
+                                                );
+                                              } else {
+                                                unawaited(
+                                                  recordAmplitudeEvent(
+                                                    ActivatedCheckboxClicked(
+                                                      source: 'Onboarding',
+                                                      walletType: 'Card',
+                                                      walletAddress: _balanceStore.selectedCard!.address,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            },
                                           );
+
                                           _checkboxState.makeActiveCheckbox();
                                         },
                                         splashRadius: 15,
@@ -1185,8 +1235,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                   ),
                                   value: _checkboxState.isActive,
                                   onChanged: (_) {
-                                    recordAmplitudeEvent(
-                                      const WarningCheckboxClicked(),
+                                    unawaited(
+                                      recordAmplitudeEvent(
+                                        const WarningCheckboxClicked(),
+                                      ),
                                     );
                                     _checkboxState.makeActive();
                                   },
@@ -1266,6 +1318,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                             }
                           }
                           await hasShownWallet().then((hasShown) {
+                            unawaited(
+                              recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
+                            );
                             if (hasShown) {
                               router.pop();
                             } else {
@@ -1334,7 +1389,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 (element) => element.address == _balanceStore.selectedCard?.address,
                                               );
                                               if (cardIndex != -1) {
-                                                await alreadySavedCard(context);
+                                                await alreadySavedCard(
+                                                  context: context,
+                                                  walletAddress: _balanceStore.selectedCard!.address,
+                                                );
                                               } else {
                                                 await _toggleCard();
                                                 await Future.delayed(
@@ -1380,7 +1438,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                   (element) => element.address == _balanceStore.selectedCard?.address,
                                                 );
                                                 if (cardIndex != -1) {
-                                                  await alreadySavedCard(context);
+                                                  await alreadySavedCard(
+                                                    context: context,
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  );
                                                 } else {
                                                   if (_flipCardController.state!.isFront) {
                                                     await _toggleCard();

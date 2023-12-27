@@ -232,6 +232,31 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               builder: (context) {
                                 return GestureDetector(
                                   onTap: () {
+                                    hasShownWallet().then(
+                                      (hasShown) async {
+                                        if (hasShown) {
+                                          unawaited(
+                                            recordAmplitudeEvent(
+                                              ActivatedCheckboxClicked(
+                                                source: 'Wallet',
+                                                walletType: 'Card',
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          unawaited(
+                                            recordAmplitudeEvent(
+                                              ActivatedCheckboxClicked(
+                                                source: 'Onboarding',
+                                                walletType: 'Card',
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    );
                                     _checkboxState.makeActiveCheckbox();
                                     HapticFeedback.heavyImpact();
                                   },
@@ -282,6 +307,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           ),
                           secondChild: GestureDetector(
                             onTap: () {
+                              unawaited(
+                                recordAmplitudeEvent(
+                                  const WarningCheckboxClicked(),
+                                ),
+                              );
                               _checkboxState.makeActive();
                               HapticFeedback.heavyImpact();
                             },
@@ -361,8 +391,30 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                     ),
                                     value: _checkboxState.isActivatedCheckBox,
                                     onChanged: (_) {
-                                      recordAmplitudeEvent(
-                                        const WarningCheckboxClicked(),
+                                      hasShownWallet().then(
+                                        (hasShown) async {
+                                          if (hasShown) {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Wallet',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore.selectedCard!.address,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Onboarding',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore.selectedCard!.address,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
                                       );
                                       _checkboxState.makeActiveCheckbox();
                                     },
@@ -460,6 +512,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 );
                               }
                             } else {
+                              await recordAmplitudeEvent(CardAddedEvent(address: _btcAddressController.text));
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.TRACKER,
                                 label: WalletType.TRACKER,
@@ -553,7 +606,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             (element) => element.address == _balanceStore.selectedCard?.address,
                                           );
                                           if (cardIndex != -1) {
-                                            await alreadySavedCard(context);
+                                            await alreadySavedCard(
+                                              context: context,
+                                              walletAddress: _balanceStore.selectedCard!.address,
+                                            );
                                           } else {
                                             await _toggleCard();
                                             await Future.delayed(
@@ -599,7 +655,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                               (element) => element.address == _balanceStore.selectedCard?.address,
                                             );
                                             if (cardIndex != -1) {
-                                              await alreadySavedCard(context);
+                                              await alreadySavedCard(
+                                                context: context,
+                                                walletAddress: _balanceStore.selectedCard!.address,
+                                              );
                                             } else {
                                               if (_flipCardController.state!.isFront) {
                                                 await _toggleCard();
@@ -649,7 +708,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
       await _lottieController.forward(from: 0);
     } else {}
   }
-
 
   Future<void> onInitWithAddress() async {
     _lottieController.reset();

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -206,7 +207,7 @@ class OnboardingPage extends HookWidget {
                                 } else {
                                   await NfcManager.instance.stopSession();
                                   await Future.delayed(const Duration(milliseconds: 2700));
-                                  await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                  await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                 }
                               } else {
                                 await NfcManager.instance.stopSession();
@@ -229,7 +230,7 @@ class OnboardingPage extends HookWidget {
                                       //Fake card
                                       await NfcManager.instance.stopSession();
                                       await Future.delayed(const Duration(milliseconds: 2700));
-                                      await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                      await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                     }
                                   } else {
                                     //Connect as TrackerPlus
@@ -335,7 +336,7 @@ class OnboardingPage extends HookWidget {
                                     );
                                   }
                                 } else {
-                                  await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                  await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                 }
                               } else {
                                 if (tag.data.containsKey('mifareultralight')) {
@@ -351,7 +352,7 @@ class OnboardingPage extends HookWidget {
                                         ),
                                       );
                                     } else {
-                                      await notCoinplusCardAlert(router.navigatorKey.currentContext!);
+                                      await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                     }
                                   } else {
                                     await router.push(
@@ -492,7 +493,7 @@ class OnboardingPage extends HookWidget {
               ),
               LoadingButton(
                 onPressed: () async {
-                  await recordAmplitudeEvent(const BuyNewCardClicked(source: 'Onboarding'));
+                  unawaited(recordAmplitudeEvent(const BuyNewCardClicked(source: 'Onboarding')));
                   await FlutterWebBrowser.openWebPage(
                     url: 'https://coinplus.com/shop/',
                     customTabsOptions: const CustomTabsOptions(

@@ -735,7 +735,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
-                          walletAddress = publicKey!;
+                          setState(() {
+                            walletAddress = publicKey!;
+                          });
                           if (bar.address == publicKey) {
                             unawaited(toggleActivation(bar.address));
                             unawaited(incrementActivationCount(bar.address));
@@ -763,7 +765,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               ValidationFailed(walletAddress: walletAddress, walletType: 'Bar'),
                             );
                             unawaited(activationFailureCount(bar.address));
-                            await secretsFailDialog(context);
+                            await secretsFailDialog(context: context, walletType: 'Bar', walletAddress: walletAddress);
                           }
                         } catch (e) {
                           log(e.toString());

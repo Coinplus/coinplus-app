@@ -911,7 +911,7 @@ class DashboardPage extends HookWidget {
                                                                       milliseconds: 2900,
                                                                     ),
                                                                   );
-                                                                  await notCoinplusCard();
+                                                                  await notCoinplusCard(walletAddress);
                                                                 }
                                                               } else {
                                                                 await _walletProtectState.updateNfcSessionStatus(
@@ -999,7 +999,7 @@ class DashboardPage extends HookWidget {
                                                                         );
                                                                 } else {
                                                                   await router.pop();
-                                                                  await notCoinplusCard();
+                                                                  await notCoinplusCard(walletAddress);
                                                                 }
                                                               } else {
                                                                 await router.pop();
@@ -1154,9 +1154,7 @@ class DashboardPage extends HookWidget {
                                                                     await Future.delayed(
                                                                       const Duration(milliseconds: 2500),
                                                                     );
-                                                                    await notCoinplusCardAlert(
-                                                                      router.navigatorKey.currentContext!,
-                                                                    );
+                                                                    await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                                                   }
                                                                 } else {
                                                                   await NfcManager.instance.stopSession();
@@ -1270,13 +1268,11 @@ class DashboardPage extends HookWidget {
                                                                       ),
                                                                     );
                                                                   } else {
-                                                                    await notCoinplusCardAlert(
-                                                                      router.navigatorKey.currentContext!,
-                                                                    );
+                                                                    await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
                                                                   }
                                                                 } else {
                                                                   await router.pop();
-                                                                  await notCoinplusCard();
+                                                                  await notCoinplusCard(walletAddress);
                                                                   await Future.delayed(
                                                                     const Duration(milliseconds: 3000),
                                                                   );
@@ -1757,9 +1753,7 @@ class DashboardPage extends HookWidget {
     ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
   }
 
-  Future<void> notCoinplusCard() async {
-    await notCoinplusCardAlert(
-      router.navigatorKey.currentContext!,
-    );
+  Future<void> notCoinplusCard(String walletAddress) async {
+    await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
   }
 }

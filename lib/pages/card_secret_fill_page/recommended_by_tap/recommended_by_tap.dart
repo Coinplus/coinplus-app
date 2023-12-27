@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -7,13 +9,27 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../widgets/loading_button.dart';
 
-Future<void> recommendedByTapAlert(BuildContext context) {
+Future<void> recommendedByTapAlert({
+  required BuildContext context,
+  required String walletAddress,
+  required String walletType,
+  required bool activated,
+}) {
   final okButton = LoadingButton(
-    onPressed: router.pop,
+    onPressed: () {
+      unawaited(
+        recordAmplitudeEvent(
+          TroubleGotItClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+        ),
+      );
+      router.pop();
+    },
     child: const Text(
       'Got it',
       style: TextStyle(
@@ -39,6 +55,11 @@ Future<void> recommendedByTapAlert(BuildContext context) {
           ),
       onPressed: () async {
         await router.pop();
+        unawaited(
+          recordAmplitudeEvent(
+            TroubleActivateNowClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+          ),
+        );
         await router.push(CardSecretFillRoute());
       },
       child: const Text(

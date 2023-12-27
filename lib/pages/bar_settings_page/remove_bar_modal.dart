@@ -97,7 +97,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
                 padding: const MaterialStatePropertyAll(EdgeInsets.zero),
               ),
           child: const Text(
-            'Not sure',
+            'Not now',
             style: TextStyle(
               fontFamily: FontFamily.redHatMedium,
               fontWeight: FontWeight.w500,

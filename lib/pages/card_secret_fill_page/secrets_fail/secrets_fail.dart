@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:emerge_alert_dialog/emerge_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -7,10 +9,16 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../widgets/loading_button.dart';
 
-Future<void> secretsFailDialog(BuildContext context) {
+Future<void> secretsFailDialog({
+  required BuildContext context,
+  required String walletAddress,
+  required String walletType,
+}) {
   final closeButton = LoadingButton(
     style: context.theme
         .buttonStyle(
@@ -24,6 +32,7 @@ Future<void> secretsFailDialog(BuildContext context) {
           backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
         ),
     onPressed: () async {
+      unawaited(recordAmplitudeEvent(EditSecretsClicked(walletAddress: walletAddress, walletType: walletType)));
       await router.pop();
     },
     child: const Text(

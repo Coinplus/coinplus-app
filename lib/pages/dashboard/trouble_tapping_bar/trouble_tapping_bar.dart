@@ -1,12 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../store/settings_button_state/settings_button_state.dart';
+import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/loading_button.dart';
 import '../../bar_secret_fill_page/recommended_by_tap/recommended_by_tap.dart';
 import 'recommended_activate_bar_by_tap.dart';
@@ -14,8 +22,16 @@ import 'recommended_activate_bar_by_tap.dart';
 class BarIssueOptionsSheet extends StatelessWidget {
   const BarIssueOptionsSheet({super.key});
 
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
+
   @override
   Widget build(BuildContext context) {
+    final bar = _balanceStore.bars[_settingsState.barCurrentIndex];
+    final walletAddress = bar.address;
+    final isActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 12,
@@ -61,7 +77,17 @@ class BarIssueOptionsSheet extends StatelessWidget {
             ),
             onPressed: () async {
               await router.pop();
-              await recommendedActivateBarByTap(context);
+              unawaited(
+                recordAmplitudeEvent(
+                  CardDamagedClicked(walletAddress: walletAddress, walletType: 'Bar', activated: await isActivated),
+                ),
+              );
+              await recommendedActivateBarByTap(
+                context: context,
+                walletAddress: walletAddress,
+                walletType: 'Card',
+                activated: await isActivated,
+              );
             },
           ),
           const Gap(8),
@@ -71,7 +97,13 @@ class BarIssueOptionsSheet extends StatelessWidget {
             Assets.icons.contactlessOff.image(height: 24),
             onPressed: () async {
               await router.pop();
-              await recommendedActivateBarByTap(context);
+
+              await recommendedActivateBarByTap(
+                context: context,
+                walletAddress: walletAddress,
+                walletType: 'Bar',
+                activated: await isActivated,
+              );
             },
           ),
           const Gap(8),
@@ -81,7 +113,12 @@ class BarIssueOptionsSheet extends StatelessWidget {
             Assets.icons.dontHaveCardWithMeNow.image(height: 24),
             onPressed: () async {
               await router.pop();
-              await recommendedByTapBarAlert(context);
+              await recommendedByTapBarAlert(
+                walletAddress: walletAddress,
+                walletType: 'Bar',
+                activated: await isActivated,
+                context: context,
+              );
             },
           ),
           const Gap(8),
@@ -91,7 +128,12 @@ class BarIssueOptionsSheet extends StatelessWidget {
             Assets.icons.creditCardOff.image(height: 24),
             onPressed: () async {
               await router.pop();
-              await recommendedActivateBarByTap(context);
+              await recommendedActivateBarByTap(
+                context: context,
+                walletAddress: walletAddress,
+                walletType: 'Bar',
+                activated: await isActivated,
+              );
             },
           ),
           const Gap(30),

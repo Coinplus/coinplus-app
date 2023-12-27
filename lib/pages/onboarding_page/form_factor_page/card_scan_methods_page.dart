@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -14,8 +15,10 @@ import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
@@ -52,6 +55,7 @@ class CardScanMethodsPage extends HookWidget {
                 ),
             onPressed: Platform.isIOS
                 ? () async {
+                    unawaited(recordAmplitudeEvent(const TapToConnectClicked(tab: 'Card')));
                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                     await router.pop();
                     await nfcSessionIos(
@@ -61,6 +65,7 @@ class CardScanMethodsPage extends HookWidget {
                     );
                   }
                 : () async {
+                    unawaited(recordAmplitudeEvent(const TapToConnectClicked(tab: 'Card')));
                     await _walletProtectState.updateNfcSessionStatus(isStarted: true);
                     await nfcSessionAndroid(
                       isMifareUltralight: isMifareUltralight.value,
@@ -184,11 +189,13 @@ class CardScanMethodsPage extends HookWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
+            unawaited(recordAmplitudeEvent(const ConnectWitchQrClicked(source: 'Card')));
             await router.pop(context);
             final res = await context.pushRoute<String?>(
               const QrScannerRoute(),
             );
             if (res != null) {
+              unawaited(recordAmplitudeEvent(QrScanned(source: 'Wallet', walletAddress: res)));
               await router.push(
                 CardFillRoute(receivedData: res),
               );
@@ -231,6 +238,7 @@ class CardScanMethodsPage extends HookWidget {
             router
               ..pop()
               ..push(CardFillRoute());
+            unawaited(recordAmplitudeEvent(const ConnectManuallyClicked(source: 'Wallet')));
           },
           child: Row(
             children: [
@@ -266,6 +274,7 @@ class CardScanMethodsPage extends HookWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
+            unawaited(recordAmplitudeEvent(const BuyNewCardClicked(source: 'Wallet')));
             await FlutterWebBrowser.openWebPage(
               url: 'https://coinplus.com/shop/',
               customTabsOptions: const CustomTabsOptions(
