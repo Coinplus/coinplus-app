@@ -662,9 +662,9 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                           _balanceStore.saveSelectedBar();
                           await hasShownWallet().then((hasShown) {
                             unawaited(
-                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
+                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedBar!.address)),
                             );
-                            recordUserProperty(BarTap(walletAddress: _balanceStore.selectedCard!.address));
+                            recordUserProperty(const BarTap());
                             if (hasShown) {
                               router.pop();
                             } else {
@@ -691,7 +691,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                 GotItClicked(
                                   source: 'Wallet',
                                   walletType: 'Bar',
-                                  walletAddress: _balanceStore.selectedCard!.address,
+                                  walletAddress: _balanceStore.selectedBar!.address,
                                 ),
                               );
                             } else {
@@ -699,7 +699,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                 GotItClicked(
                                   source: 'Onboarding',
                                   walletType: 'Bar',
-                                  walletAddress: _balanceStore.selectedCard!.address,
+                                  walletAddress: _balanceStore.selectedBar!.address,
                                 ),
                               );
                             }
@@ -724,7 +724,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                       SaveToWalletClicked(
                                         source: 'Wallet',
                                         walletType: 'Bar',
-                                        walletAddress: _balanceStore.selectedCard!.address,
+                                        walletAddress: _balanceStore.selectedBar!.address,
                                       ),
                                     );
                                   } else {
@@ -732,7 +732,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                       SaveToWalletClicked(
                                         source: 'Onboarding',
                                         walletType: 'Bar',
-                                        walletAddress: _balanceStore.selectedCard!.address,
+                                        walletAddress: _balanceStore.selectedBar!.address,
                                       ),
                                     );
                                   }
@@ -744,7 +744,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                               if (cardIndex != -1) {
                                 await alreadySavedBar(
                                   context: context,
-                                  walletAddress: _balanceStore.selectedCard!.address,
+                                  walletAddress: _balanceStore.selectedBar!.address,
                                 );
                               } else {
                                 await Future.delayed(

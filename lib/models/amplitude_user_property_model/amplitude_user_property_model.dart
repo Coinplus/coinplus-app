@@ -9,31 +9,26 @@ part 'amplitude_user_property_model.g.dart';
 abstract class IdentifyModel with _$IdentifyModel {
   const factory IdentifyModel.cardTap({
     @Default('true') String cardTap,
-    required String walletAddress,
   }) = CardTap;
 
   const factory IdentifyModel.barTap({
     @Default('true') String barTap,
-    required String walletAddress,
   }) = BarTap;
 
   const factory IdentifyModel.cardManual({
     @Default('true') String cardManual,
-    required String walletAddress,
   }) = CardManual;
 
   const factory IdentifyModel.barManual({
     @Default('true') String barManual,
-    required String walletAddress,
   }) = BarManual;
 
   const factory IdentifyModel.tracker({
     @Default('true') String tracker,
-    required String walletAddress,
   }) = Tracker;
 
   const factory IdentifyModel.cardHolder({
-    @Default('ACTIVATED_CARD') String cardHolder,
+    @Default('true') String cardHolder,
   }) = CardHolder;
 
   const factory IdentifyModel.barHolder({

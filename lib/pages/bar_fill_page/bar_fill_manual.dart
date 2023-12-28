@@ -853,7 +853,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               unawaited(signInAnonymously(address: _addressState.btcAddressController.text));
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
-                                recordUserProperty(BarManual(walletAddress: _addressState.btcAddressController.text));
+                                recordUserProperty(const BarManual());
                                 unawaited(
                                   recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
                                 );

@@ -513,7 +513,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 );
                               }
                             } else {
-                              await recordUserProperty(Tracker(walletAddress: _balanceStore.selectedCard!.address));
+                              await recordUserProperty(const Tracker());
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.TRACKER,
                                 label: WalletType.TRACKER,
@@ -523,7 +523,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           }
                           await hasShownWallet().then((hasShown) {
                             recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
-                            recordUserProperty(CardTap(walletAddress: _balanceStore.selectedCard!.address));
+                            recordUserProperty(const CardTap());
                             if (hasShown) {
                               router.pop();
                             } else {

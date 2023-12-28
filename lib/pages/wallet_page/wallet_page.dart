@@ -188,7 +188,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ),
             ),
             Positioned(
-              bottom: 12,
+              top: 55,
               left: 22,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +229,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                       final balance = _balanceStore.allCardsBalances;
                       if (data == null) {
                         return const Padding(
-                          padding: EdgeInsets.all(8),
+                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                           child: SizedBox(
                             height: 15,
                             width: 15,
@@ -262,6 +262,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.95),
       body: RefreshIndicator(
+
         displacement: 50,
         triggerMode: RefreshIndicatorTriggerMode.anywhere,
         color: Colors.black,
@@ -279,7 +280,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                   if (context.height > 667) const Gap(15) else const SizedBox(),
                   //Cards Slider
                   Expanded(
-                    flex: context.height > 667 ? 6 : 10,
+                    flex: context.height > 667 ? 7 : 10,
                     child: TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _tabController,
@@ -301,228 +302,230 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                   ),
                   // Current price(btc)
                   if (context.height > 667)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                          child: Observer(
-                            builder: (_) {
-                              final data = _balanceStore.coins;
-                              if (data == null) {
-                                return Row(
-                                  children: [
-                                    Assets.icons.bTCIcon.image(height: 24),
-                                    const Gap(8),
-                                    const Text(
-                                      'Bitcoin',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        color: Colors.black,
-                                        fontSize: 16,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                            child: Observer(
+                              builder: (_) {
+                                final data = _balanceStore.coins;
+                                if (data == null) {
+                                  return Row(
+                                    children: [
+                                      Assets.icons.bTCIcon.image(height: 24),
+                                      const Gap(8),
+                                      const Text(
+                                        'Bitcoin',
+                                        style: TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(8),
-                                    Column(
-                                      children: [
-                                        const Gap(3),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(2),
-                                            color: Colors.grey.withOpacity(0.1),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 4,
-                                            vertical: 2,
-                                          ),
-                                          child: const Text(
-                                            'BTC',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 10,
-                                              color: AppColors.textHintsColor,
+                                      const Gap(8),
+                                      Column(
+                                        children: [
+                                          const Gap(3),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(2),
+                                              color: Colors.grey.withOpacity(0.1),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        const Row(
-                                          children: [
-                                            Text(
-                                              r'$',
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 4,
+                                              vertical: 2,
+                                            ),
+                                            child: const Text(
+                                              'BTC',
                                               style: TextStyle(
-                                                fontSize: 16,
                                                 fontFamily: FontFamily.redHatMedium,
-                                                color: AppColors.primaryTextColor,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 22,
-                                              width: 22,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8),
-                                                child: CircularProgressIndicator(
-                                                  color: Colors.black,
-                                                  strokeWidth: 2,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Gap(4),
-                                        Padding(
-                                          padding: const EdgeInsets.all(3),
-                                          child: Row(
-                                            children: [
-                                              Assets.icons.schedule.image(
-                                                height: 18,
+                                                fontSize: 10,
                                                 color: AppColors.textHintsColor,
                                               ),
-                                              const Gap(4),
-                                              const Text(
-                                                '24h',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          const Row(
+                                            children: [
+                                              Text(
+                                                r'$',
                                                 style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: AppColors.textHintsColor,
-                                                  fontFamily: FontFamily.redHatBold,
+                                                  fontSize: 16,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  color: AppColors.primaryTextColor,
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                height: 22,
-                                                width: 22,
+                                              SizedBox(
+                                                height: 17,
+                                                width: 17,
                                                 child: Padding(
-                                                  padding: EdgeInsets.all(8),
+                                                  padding: EdgeInsets.all(4),
                                                   child: CircularProgressIndicator(
-                                                    color: Colors.black,
+                                                    color: AppColors.primaryTextColor,
                                                     strokeWidth: 2,
                                                   ),
                                                 ),
                                               ),
-                                              const Text(
-                                                ' %',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
                                             ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                final myFormat = NumberFormat.decimalPattern('en_us');
-                                final formattedPrice = myFormat.format(data.price).toString();
-                                return Row(
-                                  children: [
-                                    Assets.icons.bTCIcon.image(height: 24),
-                                    const Gap(8),
-                                    Text(
-                                      data.name,
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    const Gap(8),
-                                    Column(
-                                      children: [
-                                        const Gap(3),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(2),
-                                            color: Colors.grey.withOpacity(0.1),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 4,
-                                            vertical: 2,
-                                          ),
-                                          child: Text(
-                                            data.symbol.toUpperCase(),
-                                            style: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 10,
-                                              color: AppColors.textHintsColor,
+                                          const Gap(4),
+                                          Padding(
+                                            padding: const EdgeInsets.all(3),
+                                            child: Row(
+                                              children: [
+                                                Assets.icons.schedule.image(
+                                                  height: 18,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                                const Gap(4),
+                                                const Text(
+                                                  '24h',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: AppColors.textHintsColor,
+                                                    fontFamily: FontFamily.redHatBold,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 17,
+                                                  width: 17,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(4),
+                                                    child: CircularProgressIndicator(
+                                                      color: AppColors.primaryTextColor,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Text(
+                                                  ' %',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  final myFormat = NumberFormat.decimalPattern('en_us');
+                                  final formattedPrice = myFormat.format(data.price).toString();
+                                  return Row(
+                                    children: [
+                                      Assets.icons.bTCIcon.image(height: 24),
+                                      const Gap(8),
+                                      Text(
+                                        data.name,
+                                        style: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: Colors.black,
+                                          fontSize: 16,
                                         ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '\$${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: FontFamily.redHatMedium,
-                                            color: AppColors.primaryTextColor,
-                                          ),
-                                        ),
-                                        const Gap(4),
-                                        Padding(
-                                          padding: const EdgeInsets.all(3),
-                                          child: Row(
-                                            children: [
-                                              Assets.icons.schedule.image(
-                                                height: 18,
+                                      ),
+                                      const Gap(8),
+                                      Column(
+                                        children: [
+                                          const Gap(3),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(2),
+                                              color: Colors.grey.withOpacity(0.1),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 4,
+                                              vertical: 2,
+                                            ),
+                                            child: Text(
+                                              data.symbol.toUpperCase(),
+                                              style: const TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontSize: 10,
                                                 color: AppColors.textHintsColor,
                                               ),
-                                              const Gap(4),
-                                              const Text(
-                                                '24h',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: AppColors.textHintsColor,
-                                                  fontFamily: FontFamily.redHatBold,
-                                                ),
-                                              ),
-                                              if (data.priceChange1d > 0)
-                                                const Icon(
-                                                  Icons.arrow_drop_up,
-                                                  size: 25,
-                                                  color: Colors.green,
-                                                )
-                                              else
-                                                const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  size: 25,
-                                                  color: Colors.red,
-                                                ),
-                                              Text(
-                                                '${data.priceChange1d.toStringAsFixed(2)} %',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: data.priceChange1d > 0 ? Colors.green : Colors.red,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            '\$ ${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: FontFamily.redHatMedium,
+                                              color: AppColors.primaryTextColor,
+                                            ),
+                                          ),
+                                          const Gap(4),
+                                          Padding(
+                                            padding: const EdgeInsets.all(3),
+                                            child: Row(
+                                              children: [
+                                                Assets.icons.schedule.image(
+                                                  height: 18,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                                const Gap(4),
+                                                const Text(
+                                                  '24h',
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: AppColors.textHintsColor,
+                                                    fontFamily: FontFamily.redHatBold,
+                                                  ),
+                                                ),
+                                                if (data.priceChange1d > 0)
+                                                  const Icon(
+                                                    Icons.arrow_drop_up,
+                                                    size: 25,
+                                                    color: Colors.green,
+                                                  )
+                                                else
+                                                  const Icon(
+                                                    Icons.arrow_drop_down,
+                                                    size: 25,
+                                                    color: Colors.red,
+                                                  ),
+                                                Text(
+                                                  '${data.priceChange1d.toStringAsFixed(2)} %',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ).paddingHorizontal(16)
+                        ],
+                      ).paddingHorizontal(16),
+                    )
                   else
                     const SizedBox(),
                   const Spacer(),
-                  const Gap(20),
+                  const Gap(30),
                 ],
               ),
             ),

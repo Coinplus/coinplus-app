@@ -1326,7 +1326,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           }
                           await hasShownWallet().then((hasShown) {
                             unawaited(
-                              recordUserProperty(CardManual(walletAddress: _balanceStore.selectedCard!.address)),
+                              recordUserProperty(const CardManual()),
                             );
                             unawaited(
                               recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address)),

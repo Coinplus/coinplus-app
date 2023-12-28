@@ -284,167 +284,186 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                     ),
                                                   ),
                                                   backgroundColor: Colors.transparent,
-                                                  body: Builder(
-                                                    builder: (context) {
-                                                      final data = _balanceStore.coins;
-                                                      final myFormat = NumberFormat.decimalPatternDigits(
-                                                        locale: 'en_us',
-                                                        decimalDigits: 2,
-                                                      );
-                                                      return SizedBox(
-                                                        height: 700,
-                                                        child: ReorderableListView.builder(
-                                                          padding: const EdgeInsets.only(bottom: 30),
-                                                          proxyDecorator: proxyDecorator,
-                                                          itemCount: _balanceStore.bars.length,
-                                                          itemBuilder: (_, index) {
-                                                            final item = _balanceStore.bars[index];
+                                                  body: SizedBox(
+                                                    height: 700,
+                                                    child: ReorderableListView.builder(
+                                                      padding: const EdgeInsets.only(bottom: 30),
+                                                      proxyDecorator: proxyDecorator,
+                                                      itemCount: _balanceStore.bars.length,
+                                                      itemBuilder: (_, index) {
+                                                        final item = _balanceStore.bars[index];
 
-                                                            return Container(
-                                                              key: ValueKey(item.address),
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  vertical: 7,
-                                                                  horizontal: 20,
-                                                                ),
-                                                                child: Container(
-                                                                  padding: const EdgeInsets.all(15),
-                                                                  decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    color: Colors.grey.withOpacity(0.2),
-                                                                  ),
-                                                                  child: Row(
+                                                        return Container(
+                                                          key: ValueKey(item.address),
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.symmetric(
+                                                              vertical: 7,
+                                                              horizontal: 20,
+                                                            ),
+                                                            child: Container(
+                                                              padding: const EdgeInsets.all(15),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                color: Colors.grey.withOpacity(0.2),
+                                                              ),
+                                                              child: Row(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  item.color.image.image(height: 80),
+                                                                  const Gap(20),
+                                                                  Column(
                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
-                                                                      item.color.image.image(height: 80),
-                                                                      const Gap(20),
-                                                                      Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      Row(
                                                                         children: [
-                                                                          Row(
-                                                                            children: [
-                                                                              const Text(
-                                                                                'Name:',
-                                                                                style: TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w700,
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(5),
-                                                                              Text(
-                                                                                item.name,
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                            ],
+                                                                          const Text(
+                                                                            'Name:',
+                                                                            style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
                                                                           ),
-                                                                          Row(
-                                                                            children: [
-                                                                              const Text(
-                                                                                'Address:',
-                                                                                style: TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w700,
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(5),
-                                                                              Text(
-                                                                                _getVisibleAddress(item.address),
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 12,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                ),
-                                                                              ),
-                                                                            ],
+                                                                          const Gap(5),
+                                                                          Text(
+                                                                            item.name,
+                                                                            style: const TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
                                                                           ),
-                                                                          Row(
-                                                                            children: [
-                                                                              const Text(
-                                                                                'Date added:',
-                                                                                style: TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w700,
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(5),
-                                                                              Text(
-                                                                                item.createdAt,
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 12,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                ),
-                                                                              ),
-                                                                            ],
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          const Text(
+                                                                            'Address:',
+                                                                            style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
                                                                           ),
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                                            children: [
-                                                                              const Text(
-                                                                                'Balance:',
-                                                                                style: TextStyle(
-                                                                                  fontSize: 14,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w700,
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(5),
-                                                                              Text(
-                                                                                '\$${myFormat.format((item.data!.balance - item.data!.spentTxoSum) / 100000000 * data!.price)}',
+                                                                          const Gap(5),
+                                                                          Text(
+                                                                            _getVisibleAddress(item.address),
+                                                                            style: const TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          const Text(
+                                                                            'Date added:',
+                                                                            style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
+                                                                          ),
+                                                                          const Gap(5),
+                                                                          Text(
+                                                                            item.createdAt,
+                                                                            style: const TextStyle(
+                                                                              fontSize: 12,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        children: [
+                                                                          const Text(
+                                                                            'Balance:',
+                                                                            style: TextStyle(
+                                                                              fontSize: 14,
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              fontWeight: FontWeight.w700,
+                                                                            ),
+                                                                          ),
+                                                                          const Gap(5),
+                                                                          Builder(
+                                                                            builder: (context) {
+                                                                              final data = _balanceStore.coins;
+                                                                              final myFormat = NumberFormat.decimalPatternDigits(
+                                                                                locale: 'en_us',
+                                                                                decimalDigits: 2,
+                                                                              );
+                                                                              if (data == null) {
+                                                                                return const Padding(
+                                                                                  padding: EdgeInsets.all(
+                                                                                    4,
+                                                                                  ),
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      SizedBox(
+                                                                                        height: 10,
+                                                                                        width: 10,
+                                                                                        child: CircularProgressIndicator(
+                                                                                          strokeWidth: 1,
+                                                                                          color: Colors.black,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                              return Text(
+                                                                                '\$${myFormat.format((item.data!.balance - item.data!.spentTxoSum) / 100000000 * data.price)}',
                                                                                 style: const TextStyle(
                                                                                   fontSize: 13,
                                                                                   fontFamily: FontFamily.redHatMedium,
                                                                                 ),
-                                                                              ),
-                                                                            ],
+                                                                              );
+                                                                            },
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                      const Spacer(),
-                                                                      Column(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        children: [
-                                                                          const Gap(25),
-                                                                          Center(
-                                                                            child: Icon(
-                                                                              Icons.drag_handle,
-                                                                              color: Colors.grey.withOpacity(0.5),
-                                                                              size: 30,
-                                                                            ),
-                                                                          ),
-                                                                          const Gap(25),
                                                                         ],
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                ),
+                                                                  const Spacer(),
+                                                                  Column(
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    children: [
+                                                                      const Gap(25),
+                                                                      Center(
+                                                                        child: Icon(
+                                                                          Icons.drag_handle,
+                                                                          color: Colors.grey.withOpacity(0.5),
+                                                                          size: 30,
+                                                                        ),
+                                                                      ),
+                                                                      const Gap(25),
+                                                                    ],
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            );
-                                                          },
-                                                          onReorder: (oldIndex, newIndex) {
-                                                            _balanceStore.changeBarIndexAndSave(
-                                                              oldIndex: oldIndex,
-                                                              newIndex: newIndex,
-                                                              cardAddress: _balanceStore.bars[oldIndex].address,
-                                                            );
-                                                            widget.onCarouselScroll(index);
-                                                            widget.onCardSelected(
-                                                              _balanceStore.bars.elementAtOrNull(index)
-                                                                  as AbstractCard?,
-                                                            );
-                                                            _settingsState.setBarCurrentIndex(index);
-                                                          },
-                                                          onReorderStart: (val) {
-                                                            HapticFeedback.heavyImpact();
-                                                          },
-                                                        ),
-                                                      );
-                                                    },
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      onReorder: (oldIndex, newIndex) {
+                                                        _balanceStore.changeBarIndexAndSave(
+                                                          oldIndex: oldIndex,
+                                                          newIndex: newIndex,
+                                                          cardAddress: _balanceStore.bars[oldIndex].address,
+                                                        );
+                                                        widget.onCarouselScroll(index);
+                                                        widget.onCardSelected(
+                                                          _balanceStore.bars.elementAtOrNull(index)
+                                                              as AbstractCard?,
+                                                        );
+                                                        _settingsState.setBarCurrentIndex(index);
+                                                      },
+                                                      onReorderStart: (val) {
+                                                        HapticFeedback.heavyImpact();
+                                                      },
+                                                    ),
                                                   ),
                                                 ),
                                               );
@@ -497,7 +516,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(8),
-                                            color: Colors.black.withOpacity(0.4),
+                                            color: Colors.black.withOpacity(0.3),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -528,8 +547,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                         );
                                                         if (data == null) {
                                                           return const Padding(
-                                                            padding: EdgeInsets.all(
-                                                              4,
+                                                            padding: EdgeInsets.symmetric(
+                                                              vertical: 4, horizontal: 2,
                                                             ),
                                                             child: Row(
                                                               children: [
@@ -537,6 +556,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   height: 10,
                                                                   width: 10,
                                                                   child: CircularProgressIndicator(
+                                                                    strokeWidth: 3,
                                                                     color: Colors.white,
                                                                   ),
                                                                 ),
