@@ -38,8 +38,8 @@ IdentifyModel _$IdentifyModelFromJson(Map<String, dynamic> json) {
       return NotificationsOn.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(
-          json, 'runtimeType', 'IdentifyModel', 'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(json, 'runtimeType', 'IdentifyModel',
+          'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -47,11 +47,11 @@ IdentifyModel _$IdentifyModelFromJson(Map<String, dynamic> json) {
 mixin _$IdentifyModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -61,11 +61,11 @@ mixin _$IdentifyModel {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -75,11 +75,11 @@ mixin _$IdentifyModel {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -136,12 +136,14 @@ mixin _$IdentifyModel {
 
 /// @nodoc
 abstract class $IdentifyModelCopyWith<$Res> {
-  factory $IdentifyModelCopyWith(IdentifyModel value, $Res Function(IdentifyModel) then) =
+  factory $IdentifyModelCopyWith(
+          IdentifyModel value, $Res Function(IdentifyModel) then) =
       _$IdentifyModelCopyWithImpl<$Res, IdentifyModel>;
 }
 
 /// @nodoc
-class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel> implements $IdentifyModelCopyWith<$Res> {
+class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel>
+    implements $IdentifyModelCopyWith<$Res> {
   _$IdentifyModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -152,31 +154,30 @@ class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel> implements $
 
 /// @nodoc
 abstract class _$$CardTapImplCopyWith<$Res> {
-  factory _$$CardTapImplCopyWith(_$CardTapImpl value, $Res Function(_$CardTapImpl) then) =
+  factory _$$CardTapImplCopyWith(
+          _$CardTapImpl value, $Res Function(_$CardTapImpl) then) =
       __$$CardTapImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String cardTap, String walletAddress});
+  $Res call({String cardTap});
 }
 
 /// @nodoc
-class __$$CardTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardTapImpl>
+class __$$CardTapImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$CardTapImpl>
     implements _$$CardTapImplCopyWith<$Res> {
-  __$$CardTapImplCopyWithImpl(_$CardTapImpl _value, $Res Function(_$CardTapImpl) _then) : super(_value, _then);
+  __$$CardTapImplCopyWithImpl(
+      _$CardTapImpl _value, $Res Function(_$CardTapImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? cardTap = null,
-    Object? walletAddress = null,
   }) {
     return _then(_$CardTapImpl(
       cardTap: null == cardTap
           ? _value.cardTap
           : cardTap // ignore: cast_nullable_to_non_nullable
-              as String,
-      walletAddress: null == walletAddress
-          ? _value.walletAddress
-          : walletAddress // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -185,23 +186,22 @@ class __$$CardTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res
 /// @nodoc
 @JsonSerializable()
 class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
-  const _$CardTapImpl({this.cardTap = 'true', required this.walletAddress, final String? $type})
+  const _$CardTapImpl({this.cardTap = 'true', final String? $type})
       : $type = $type ?? 'cardTap';
 
-  factory _$CardTapImpl.fromJson(Map<String, dynamic> json) => _$$CardTapImplFromJson(json);
+  factory _$CardTapImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardTapImplFromJson(json);
 
   @override
   @JsonKey()
   final String cardTap;
-  @override
-  final String walletAddress;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'IdentifyModel.cardTap(cardTap: $cardTap, walletAddress: $walletAddress)';
+    return 'IdentifyModel.cardTap(cardTap: $cardTap)';
   }
 
   @override
@@ -209,8 +209,7 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'IdentifyModel.cardTap'))
-      ..add(DiagnosticsProperty('cardTap', cardTap))
-      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+      ..add(DiagnosticsProperty('cardTap', cardTap));
   }
 
   @override
@@ -218,61 +217,61 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardTapImpl &&
-            (identical(other.cardTap, cardTap) || other.cardTap == cardTap) &&
-            (identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress));
+            (identical(other.cardTap, cardTap) || other.cardTap == cardTap));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, cardTap, walletAddress);
+  int get hashCode => Object.hash(runtimeType, cardTap);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith => __$$CardTapImplCopyWithImpl<_$CardTapImpl>(this, _$identity);
+  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
+      __$$CardTapImplCopyWithImpl<_$CardTapImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
     required TResult Function(String activationFailed) activationFailed,
     required TResult Function(String notificationOn) notificationsOn,
   }) {
-    return cardTap(this.cardTap, walletAddress);
+    return cardTap(this.cardTap);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
     TResult? Function(String activationFailed)? activationFailed,
     TResult? Function(String notificationOn)? notificationsOn,
   }) {
-    return cardTap?.call(this.cardTap, walletAddress);
+    return cardTap?.call(this.cardTap);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -281,7 +280,7 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
     required TResult orElse(),
   }) {
     if (cardTap != null) {
-      return cardTap(this.cardTap, walletAddress);
+      return cardTap(this.cardTap);
     }
     return orElse();
   }
@@ -350,43 +349,42 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
 }
 
 abstract class CardTap implements IdentifyModel {
-  const factory CardTap({final String cardTap, required final String walletAddress}) = _$CardTapImpl;
+  const factory CardTap({final String cardTap}) = _$CardTapImpl;
 
   factory CardTap.fromJson(Map<String, dynamic> json) = _$CardTapImpl.fromJson;
 
   String get cardTap;
-  String get walletAddress;
   @JsonKey(ignore: true)
-  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarTapImplCopyWith<$Res> {
-  factory _$$BarTapImplCopyWith(_$BarTapImpl value, $Res Function(_$BarTapImpl) then) =
+  factory _$$BarTapImplCopyWith(
+          _$BarTapImpl value, $Res Function(_$BarTapImpl) then) =
       __$$BarTapImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String barTap, String walletAddress});
+  $Res call({String barTap});
 }
 
 /// @nodoc
-class __$$BarTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarTapImpl>
+class __$$BarTapImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$BarTapImpl>
     implements _$$BarTapImplCopyWith<$Res> {
-  __$$BarTapImplCopyWithImpl(_$BarTapImpl _value, $Res Function(_$BarTapImpl) _then) : super(_value, _then);
+  __$$BarTapImplCopyWithImpl(
+      _$BarTapImpl _value, $Res Function(_$BarTapImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? barTap = null,
-    Object? walletAddress = null,
   }) {
     return _then(_$BarTapImpl(
       barTap: null == barTap
           ? _value.barTap
           : barTap // ignore: cast_nullable_to_non_nullable
-              as String,
-      walletAddress: null == walletAddress
-          ? _value.walletAddress
-          : walletAddress // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -395,23 +393,22 @@ class __$$BarTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res,
 /// @nodoc
 @JsonSerializable()
 class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
-  const _$BarTapImpl({this.barTap = 'true', required this.walletAddress, final String? $type})
+  const _$BarTapImpl({this.barTap = 'true', final String? $type})
       : $type = $type ?? 'barTap';
 
-  factory _$BarTapImpl.fromJson(Map<String, dynamic> json) => _$$BarTapImplFromJson(json);
+  factory _$BarTapImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarTapImplFromJson(json);
 
   @override
   @JsonKey()
   final String barTap;
-  @override
-  final String walletAddress;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'IdentifyModel.barTap(barTap: $barTap, walletAddress: $walletAddress)';
+    return 'IdentifyModel.barTap(barTap: $barTap)';
   }
 
   @override
@@ -419,8 +416,7 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'IdentifyModel.barTap'))
-      ..add(DiagnosticsProperty('barTap', barTap))
-      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+      ..add(DiagnosticsProperty('barTap', barTap));
   }
 
   @override
@@ -428,61 +424,61 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarTapImpl &&
-            (identical(other.barTap, barTap) || other.barTap == barTap) &&
-            (identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress));
+            (identical(other.barTap, barTap) || other.barTap == barTap));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, barTap, walletAddress);
+  int get hashCode => Object.hash(runtimeType, barTap);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith => __$$BarTapImplCopyWithImpl<_$BarTapImpl>(this, _$identity);
+  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
+      __$$BarTapImplCopyWithImpl<_$BarTapImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
     required TResult Function(String activationFailed) activationFailed,
     required TResult Function(String notificationOn) notificationsOn,
   }) {
-    return barTap(this.barTap, walletAddress);
+    return barTap(this.barTap);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
     TResult? Function(String activationFailed)? activationFailed,
     TResult? Function(String notificationOn)? notificationsOn,
   }) {
-    return barTap?.call(this.barTap, walletAddress);
+    return barTap?.call(this.barTap);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -491,7 +487,7 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
     required TResult orElse(),
   }) {
     if (barTap != null) {
-      return barTap(this.barTap, walletAddress);
+      return barTap(this.barTap);
     }
     return orElse();
   }
@@ -560,43 +556,42 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
 }
 
 abstract class BarTap implements IdentifyModel {
-  const factory BarTap({final String barTap, required final String walletAddress}) = _$BarTapImpl;
+  const factory BarTap({final String barTap}) = _$BarTapImpl;
 
   factory BarTap.fromJson(Map<String, dynamic> json) = _$BarTapImpl.fromJson;
 
   String get barTap;
-  String get walletAddress;
   @JsonKey(ignore: true)
-  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$CardManualImplCopyWith<$Res> {
-  factory _$$CardManualImplCopyWith(_$CardManualImpl value, $Res Function(_$CardManualImpl) then) =
+  factory _$$CardManualImplCopyWith(
+          _$CardManualImpl value, $Res Function(_$CardManualImpl) then) =
       __$$CardManualImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String cardManual, String walletAddress});
+  $Res call({String cardManual});
 }
 
 /// @nodoc
-class __$$CardManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardManualImpl>
+class __$$CardManualImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$CardManualImpl>
     implements _$$CardManualImplCopyWith<$Res> {
-  __$$CardManualImplCopyWithImpl(_$CardManualImpl _value, $Res Function(_$CardManualImpl) _then) : super(_value, _then);
+  __$$CardManualImplCopyWithImpl(
+      _$CardManualImpl _value, $Res Function(_$CardManualImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? cardManual = null,
-    Object? walletAddress = null,
   }) {
     return _then(_$CardManualImpl(
       cardManual: null == cardManual
           ? _value.cardManual
           : cardManual // ignore: cast_nullable_to_non_nullable
-              as String,
-      walletAddress: null == walletAddress
-          ? _value.walletAddress
-          : walletAddress // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -605,23 +600,22 @@ class __$$CardManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$
 /// @nodoc
 @JsonSerializable()
 class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
-  const _$CardManualImpl({this.cardManual = 'true', required this.walletAddress, final String? $type})
+  const _$CardManualImpl({this.cardManual = 'true', final String? $type})
       : $type = $type ?? 'cardManual';
 
-  factory _$CardManualImpl.fromJson(Map<String, dynamic> json) => _$$CardManualImplFromJson(json);
+  factory _$CardManualImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardManualImplFromJson(json);
 
   @override
   @JsonKey()
   final String cardManual;
-  @override
-  final String walletAddress;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'IdentifyModel.cardManual(cardManual: $cardManual, walletAddress: $walletAddress)';
+    return 'IdentifyModel.cardManual(cardManual: $cardManual)';
   }
 
   @override
@@ -629,8 +623,7 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'IdentifyModel.cardManual'))
-      ..add(DiagnosticsProperty('cardManual', cardManual))
-      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+      ..add(DiagnosticsProperty('cardManual', cardManual));
   }
 
   @override
@@ -638,13 +631,13 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardManualImpl &&
-            (identical(other.cardManual, cardManual) || other.cardManual == cardManual) &&
-            (identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress));
+            (identical(other.cardManual, cardManual) ||
+                other.cardManual == cardManual));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, cardManual, walletAddress);
+  int get hashCode => Object.hash(runtimeType, cardManual);
 
   @JsonKey(ignore: true)
   @override
@@ -655,45 +648,45 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
     required TResult Function(String activationFailed) activationFailed,
     required TResult Function(String notificationOn) notificationsOn,
   }) {
-    return cardManual(this.cardManual, walletAddress);
+    return cardManual(this.cardManual);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
     TResult? Function(String activationFailed)? activationFailed,
     TResult? Function(String notificationOn)? notificationsOn,
   }) {
-    return cardManual?.call(this.cardManual, walletAddress);
+    return cardManual?.call(this.cardManual);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -702,7 +695,7 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
     required TResult orElse(),
   }) {
     if (cardManual != null) {
-      return cardManual(this.cardManual, walletAddress);
+      return cardManual(this.cardManual);
     }
     return orElse();
   }
@@ -771,43 +764,43 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
 }
 
 abstract class CardManual implements IdentifyModel {
-  const factory CardManual({final String cardManual, required final String walletAddress}) = _$CardManualImpl;
+  const factory CardManual({final String cardManual}) = _$CardManualImpl;
 
-  factory CardManual.fromJson(Map<String, dynamic> json) = _$CardManualImpl.fromJson;
+  factory CardManual.fromJson(Map<String, dynamic> json) =
+      _$CardManualImpl.fromJson;
 
   String get cardManual;
-  String get walletAddress;
   @JsonKey(ignore: true)
-  _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarManualImplCopyWith<$Res> {
-  factory _$$BarManualImplCopyWith(_$BarManualImpl value, $Res Function(_$BarManualImpl) then) =
+  factory _$$BarManualImplCopyWith(
+          _$BarManualImpl value, $Res Function(_$BarManualImpl) then) =
       __$$BarManualImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String barManual, String walletAddress});
+  $Res call({String barManual});
 }
 
 /// @nodoc
-class __$$BarManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarManualImpl>
+class __$$BarManualImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$BarManualImpl>
     implements _$$BarManualImplCopyWith<$Res> {
-  __$$BarManualImplCopyWithImpl(_$BarManualImpl _value, $Res Function(_$BarManualImpl) _then) : super(_value, _then);
+  __$$BarManualImplCopyWithImpl(
+      _$BarManualImpl _value, $Res Function(_$BarManualImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? barManual = null,
-    Object? walletAddress = null,
   }) {
     return _then(_$BarManualImpl(
       barManual: null == barManual
           ? _value.barManual
           : barManual // ignore: cast_nullable_to_non_nullable
-              as String,
-      walletAddress: null == walletAddress
-          ? _value.walletAddress
-          : walletAddress // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -816,23 +809,22 @@ class __$$BarManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$R
 /// @nodoc
 @JsonSerializable()
 class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
-  const _$BarManualImpl({this.barManual = 'true', required this.walletAddress, final String? $type})
+  const _$BarManualImpl({this.barManual = 'true', final String? $type})
       : $type = $type ?? 'barManual';
 
-  factory _$BarManualImpl.fromJson(Map<String, dynamic> json) => _$$BarManualImplFromJson(json);
+  factory _$BarManualImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarManualImplFromJson(json);
 
   @override
   @JsonKey()
   final String barManual;
-  @override
-  final String walletAddress;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'IdentifyModel.barManual(barManual: $barManual, walletAddress: $walletAddress)';
+    return 'IdentifyModel.barManual(barManual: $barManual)';
   }
 
   @override
@@ -840,8 +832,7 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'IdentifyModel.barManual'))
-      ..add(DiagnosticsProperty('barManual', barManual))
-      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+      ..add(DiagnosticsProperty('barManual', barManual));
   }
 
   @override
@@ -849,13 +840,13 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarManualImpl &&
-            (identical(other.barManual, barManual) || other.barManual == barManual) &&
-            (identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress));
+            (identical(other.barManual, barManual) ||
+                other.barManual == barManual));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, barManual, walletAddress);
+  int get hashCode => Object.hash(runtimeType, barManual);
 
   @JsonKey(ignore: true)
   @override
@@ -866,45 +857,45 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
     required TResult Function(String activationFailed) activationFailed,
     required TResult Function(String notificationOn) notificationsOn,
   }) {
-    return barManual(this.barManual, walletAddress);
+    return barManual(this.barManual);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
     TResult? Function(String activationFailed)? activationFailed,
     TResult? Function(String notificationOn)? notificationsOn,
   }) {
-    return barManual?.call(this.barManual, walletAddress);
+    return barManual?.call(this.barManual);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -913,7 +904,7 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
     required TResult orElse(),
   }) {
     if (barManual != null) {
-      return barManual(this.barManual, walletAddress);
+      return barManual(this.barManual);
     }
     return orElse();
   }
@@ -982,43 +973,43 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
 }
 
 abstract class BarManual implements IdentifyModel {
-  const factory BarManual({final String barManual, required final String walletAddress}) = _$BarManualImpl;
+  const factory BarManual({final String barManual}) = _$BarManualImpl;
 
-  factory BarManual.fromJson(Map<String, dynamic> json) = _$BarManualImpl.fromJson;
+  factory BarManual.fromJson(Map<String, dynamic> json) =
+      _$BarManualImpl.fromJson;
 
   String get barManual;
-  String get walletAddress;
   @JsonKey(ignore: true)
-  _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TrackerImplCopyWith<$Res> {
-  factory _$$TrackerImplCopyWith(_$TrackerImpl value, $Res Function(_$TrackerImpl) then) =
+  factory _$$TrackerImplCopyWith(
+          _$TrackerImpl value, $Res Function(_$TrackerImpl) then) =
       __$$TrackerImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String tracker, String walletAddress});
+  $Res call({String tracker});
 }
 
 /// @nodoc
-class __$$TrackerImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$TrackerImpl>
+class __$$TrackerImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$TrackerImpl>
     implements _$$TrackerImplCopyWith<$Res> {
-  __$$TrackerImplCopyWithImpl(_$TrackerImpl _value, $Res Function(_$TrackerImpl) _then) : super(_value, _then);
+  __$$TrackerImplCopyWithImpl(
+      _$TrackerImpl _value, $Res Function(_$TrackerImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? tracker = null,
-    Object? walletAddress = null,
   }) {
     return _then(_$TrackerImpl(
       tracker: null == tracker
           ? _value.tracker
           : tracker // ignore: cast_nullable_to_non_nullable
-              as String,
-      walletAddress: null == walletAddress
-          ? _value.walletAddress
-          : walletAddress // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -1027,23 +1018,22 @@ class __$$TrackerImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res
 /// @nodoc
 @JsonSerializable()
 class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
-  const _$TrackerImpl({this.tracker = 'true', required this.walletAddress, final String? $type})
+  const _$TrackerImpl({this.tracker = 'true', final String? $type})
       : $type = $type ?? 'tracker';
 
-  factory _$TrackerImpl.fromJson(Map<String, dynamic> json) => _$$TrackerImplFromJson(json);
+  factory _$TrackerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TrackerImplFromJson(json);
 
   @override
   @JsonKey()
   final String tracker;
-  @override
-  final String walletAddress;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'IdentifyModel.tracker(tracker: $tracker, walletAddress: $walletAddress)';
+    return 'IdentifyModel.tracker(tracker: $tracker)';
   }
 
   @override
@@ -1051,8 +1041,7 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'IdentifyModel.tracker'))
-      ..add(DiagnosticsProperty('tracker', tracker))
-      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+      ..add(DiagnosticsProperty('tracker', tracker));
   }
 
   @override
@@ -1060,61 +1049,61 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TrackerImpl &&
-            (identical(other.tracker, tracker) || other.tracker == tracker) &&
-            (identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress));
+            (identical(other.tracker, tracker) || other.tracker == tracker));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, tracker, walletAddress);
+  int get hashCode => Object.hash(runtimeType, tracker);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith => __$$TrackerImplCopyWithImpl<_$TrackerImpl>(this, _$identity);
+  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
+      __$$TrackerImplCopyWithImpl<_$TrackerImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
     required TResult Function(String activationFailed) activationFailed,
     required TResult Function(String notificationOn) notificationsOn,
   }) {
-    return tracker(this.tracker, walletAddress);
+    return tracker(this.tracker);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
     TResult? Function(String activationFailed)? activationFailed,
     TResult? Function(String notificationOn)? notificationsOn,
   }) {
-    return tracker?.call(this.tracker, walletAddress);
+    return tracker?.call(this.tracker);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -1123,7 +1112,7 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
     required TResult orElse(),
   }) {
     if (tracker != null) {
-      return tracker(this.tracker, walletAddress);
+      return tracker(this.tracker);
     }
     return orElse();
   }
@@ -1192,28 +1181,32 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
 }
 
 abstract class Tracker implements IdentifyModel {
-  const factory Tracker({final String tracker, required final String walletAddress}) = _$TrackerImpl;
+  const factory Tracker({final String tracker}) = _$TrackerImpl;
 
   factory Tracker.fromJson(Map<String, dynamic> json) = _$TrackerImpl.fromJson;
 
   String get tracker;
-  String get walletAddress;
   @JsonKey(ignore: true)
-  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$CardHolderImplCopyWith<$Res> {
-  factory _$$CardHolderImplCopyWith(_$CardHolderImpl value, $Res Function(_$CardHolderImpl) then) =
+  factory _$$CardHolderImplCopyWith(
+          _$CardHolderImpl value, $Res Function(_$CardHolderImpl) then) =
       __$$CardHolderImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String cardHolder});
 }
 
 /// @nodoc
-class __$$CardHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardHolderImpl>
+class __$$CardHolderImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$CardHolderImpl>
     implements _$$CardHolderImplCopyWith<$Res> {
-  __$$CardHolderImplCopyWithImpl(_$CardHolderImpl _value, $Res Function(_$CardHolderImpl) _then) : super(_value, _then);
+  __$$CardHolderImplCopyWithImpl(
+      _$CardHolderImpl _value, $Res Function(_$CardHolderImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1232,9 +1225,11 @@ class __$$CardHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$
 /// @nodoc
 @JsonSerializable()
 class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
-  const _$CardHolderImpl({this.cardHolder = 'ACTIVATED_CARD', final String? $type}) : $type = $type ?? 'cardHolder';
+  const _$CardHolderImpl({this.cardHolder = 'true', final String? $type})
+      : $type = $type ?? 'cardHolder';
 
-  factory _$CardHolderImpl.fromJson(Map<String, dynamic> json) => _$$CardHolderImplFromJson(json);
+  factory _$CardHolderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CardHolderImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1261,7 +1256,8 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardHolderImpl &&
-            (identical(other.cardHolder, cardHolder) || other.cardHolder == cardHolder));
+            (identical(other.cardHolder, cardHolder) ||
+                other.cardHolder == cardHolder));
   }
 
   @JsonKey(ignore: true)
@@ -1277,11 +1273,11 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -1294,11 +1290,11 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -1311,11 +1307,11 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -1395,25 +1391,31 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
 abstract class CardHolder implements IdentifyModel {
   const factory CardHolder({final String cardHolder}) = _$CardHolderImpl;
 
-  factory CardHolder.fromJson(Map<String, dynamic> json) = _$CardHolderImpl.fromJson;
+  factory CardHolder.fromJson(Map<String, dynamic> json) =
+      _$CardHolderImpl.fromJson;
 
   String get cardHolder;
   @JsonKey(ignore: true)
-  _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarHolderImplCopyWith<$Res> {
-  factory _$$BarHolderImplCopyWith(_$BarHolderImpl value, $Res Function(_$BarHolderImpl) then) =
+  factory _$$BarHolderImplCopyWith(
+          _$BarHolderImpl value, $Res Function(_$BarHolderImpl) then) =
       __$$BarHolderImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String barHolder});
 }
 
 /// @nodoc
-class __$$BarHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarHolderImpl>
+class __$$BarHolderImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$BarHolderImpl>
     implements _$$BarHolderImplCopyWith<$Res> {
-  __$$BarHolderImplCopyWithImpl(_$BarHolderImpl _value, $Res Function(_$BarHolderImpl) _then) : super(_value, _then);
+  __$$BarHolderImplCopyWithImpl(
+      _$BarHolderImpl _value, $Res Function(_$BarHolderImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1432,9 +1434,11 @@ class __$$BarHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$R
 /// @nodoc
 @JsonSerializable()
 class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
-  const _$BarHolderImpl({this.barHolder = 'ACTIVATED_BAR', final String? $type}) : $type = $type ?? 'barHolder';
+  const _$BarHolderImpl({this.barHolder = 'ACTIVATED_BAR', final String? $type})
+      : $type = $type ?? 'barHolder';
 
-  factory _$BarHolderImpl.fromJson(Map<String, dynamic> json) => _$$BarHolderImplFromJson(json);
+  factory _$BarHolderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarHolderImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1461,7 +1465,8 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarHolderImpl &&
-            (identical(other.barHolder, barHolder) || other.barHolder == barHolder));
+            (identical(other.barHolder, barHolder) ||
+                other.barHolder == barHolder));
   }
 
   @JsonKey(ignore: true)
@@ -1477,11 +1482,11 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -1494,11 +1499,11 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -1511,11 +1516,11 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -1595,25 +1600,30 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
 abstract class BarHolder implements IdentifyModel {
   const factory BarHolder({final String barHolder}) = _$BarHolderImpl;
 
-  factory BarHolder.fromJson(Map<String, dynamic> json) = _$BarHolderImpl.fromJson;
+  factory BarHolder.fromJson(Map<String, dynamic> json) =
+      _$BarHolderImpl.fromJson;
 
   String get barHolder;
   @JsonKey(ignore: true)
-  _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FraudActivityImplCopyWith<$Res> {
-  factory _$$FraudActivityImplCopyWith(_$FraudActivityImpl value, $Res Function(_$FraudActivityImpl) then) =
+  factory _$$FraudActivityImplCopyWith(
+          _$FraudActivityImpl value, $Res Function(_$FraudActivityImpl) then) =
       __$$FraudActivityImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String fraudActivity});
 }
 
 /// @nodoc
-class __$$FraudActivityImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$FraudActivityImpl>
+class __$$FraudActivityImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$FraudActivityImpl>
     implements _$$FraudActivityImplCopyWith<$Res> {
-  __$$FraudActivityImplCopyWithImpl(_$FraudActivityImpl _value, $Res Function(_$FraudActivityImpl) _then)
+  __$$FraudActivityImplCopyWithImpl(
+      _$FraudActivityImpl _value, $Res Function(_$FraudActivityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1632,10 +1642,14 @@ class __$$FraudActivityImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImp
 
 /// @nodoc
 @JsonSerializable()
-class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity {
-  const _$FraudActivityImpl({this.fraudActivity = 'true', final String? $type}) : $type = $type ?? 'fraudActivity';
+class _$FraudActivityImpl
+    with DiagnosticableTreeMixin
+    implements FraudActivity {
+  const _$FraudActivityImpl({this.fraudActivity = 'true', final String? $type})
+      : $type = $type ?? 'fraudActivity';
 
-  factory _$FraudActivityImpl.fromJson(Map<String, dynamic> json) => _$$FraudActivityImplFromJson(json);
+  factory _$FraudActivityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FraudActivityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1662,7 +1676,8 @@ class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity 
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FraudActivityImpl &&
-            (identical(other.fraudActivity, fraudActivity) || other.fraudActivity == fraudActivity));
+            (identical(other.fraudActivity, fraudActivity) ||
+                other.fraudActivity == fraudActivity));
   }
 
   @JsonKey(ignore: true)
@@ -1678,11 +1693,11 @@ class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -1695,11 +1710,11 @@ class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -1712,11 +1727,11 @@ class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -1794,27 +1809,33 @@ class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity 
 }
 
 abstract class FraudActivity implements IdentifyModel {
-  const factory FraudActivity({final String fraudActivity}) = _$FraudActivityImpl;
+  const factory FraudActivity({final String fraudActivity}) =
+      _$FraudActivityImpl;
 
-  factory FraudActivity.fromJson(Map<String, dynamic> json) = _$FraudActivityImpl.fromJson;
+  factory FraudActivity.fromJson(Map<String, dynamic> json) =
+      _$FraudActivityImpl.fromJson;
 
   String get fraudActivity;
   @JsonKey(ignore: true)
-  _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ActivationFailedImplCopyWith<$Res> {
-  factory _$$ActivationFailedImplCopyWith(_$ActivationFailedImpl value, $Res Function(_$ActivationFailedImpl) then) =
+  factory _$$ActivationFailedImplCopyWith(_$ActivationFailedImpl value,
+          $Res Function(_$ActivationFailedImpl) then) =
       __$$ActivationFailedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String activationFailed});
 }
 
 /// @nodoc
-class __$$ActivationFailedImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$ActivationFailedImpl>
+class __$$ActivationFailedImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$ActivationFailedImpl>
     implements _$$ActivationFailedImplCopyWith<$Res> {
-  __$$ActivationFailedImplCopyWithImpl(_$ActivationFailedImpl _value, $Res Function(_$ActivationFailedImpl) _then)
+  __$$ActivationFailedImplCopyWithImpl(_$ActivationFailedImpl _value,
+      $Res Function(_$ActivationFailedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1833,11 +1854,15 @@ class __$$ActivationFailedImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWith
 
 /// @nodoc
 @JsonSerializable()
-class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationFailed {
-  const _$ActivationFailedImpl({this.activationFailed = 'true', final String? $type})
+class _$ActivationFailedImpl
+    with DiagnosticableTreeMixin
+    implements ActivationFailed {
+  const _$ActivationFailedImpl(
+      {this.activationFailed = 'true', final String? $type})
       : $type = $type ?? 'activationFailed';
 
-  factory _$ActivationFailedImpl.fromJson(Map<String, dynamic> json) => _$$ActivationFailedImplFromJson(json);
+  factory _$ActivationFailedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ActivationFailedImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1864,7 +1889,8 @@ class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationF
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ActivationFailedImpl &&
-            (identical(other.activationFailed, activationFailed) || other.activationFailed == activationFailed));
+            (identical(other.activationFailed, activationFailed) ||
+                other.activationFailed == activationFailed));
   }
 
   @JsonKey(ignore: true)
@@ -1875,16 +1901,17 @@ class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationF
   @override
   @pragma('vm:prefer-inline')
   _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
-      __$$ActivationFailedImplCopyWithImpl<_$ActivationFailedImpl>(this, _$identity);
+      __$$ActivationFailedImplCopyWithImpl<_$ActivationFailedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -1897,11 +1924,11 @@ class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationF
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -1914,11 +1941,11 @@ class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationF
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -1996,27 +2023,33 @@ class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationF
 }
 
 abstract class ActivationFailed implements IdentifyModel {
-  const factory ActivationFailed({final String activationFailed}) = _$ActivationFailedImpl;
+  const factory ActivationFailed({final String activationFailed}) =
+      _$ActivationFailedImpl;
 
-  factory ActivationFailed.fromJson(Map<String, dynamic> json) = _$ActivationFailedImpl.fromJson;
+  factory ActivationFailed.fromJson(Map<String, dynamic> json) =
+      _$ActivationFailedImpl.fromJson;
 
   String get activationFailed;
   @JsonKey(ignore: true)
-  _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$NotificationsOnImplCopyWith<$Res> {
-  factory _$$NotificationsOnImplCopyWith(_$NotificationsOnImpl value, $Res Function(_$NotificationsOnImpl) then) =
+  factory _$$NotificationsOnImplCopyWith(_$NotificationsOnImpl value,
+          $Res Function(_$NotificationsOnImpl) then) =
       __$$NotificationsOnImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String notificationOn});
 }
 
 /// @nodoc
-class __$$NotificationsOnImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$NotificationsOnImpl>
+class __$$NotificationsOnImplCopyWithImpl<$Res>
+    extends _$IdentifyModelCopyWithImpl<$Res, _$NotificationsOnImpl>
     implements _$$NotificationsOnImplCopyWith<$Res> {
-  __$$NotificationsOnImplCopyWithImpl(_$NotificationsOnImpl _value, $Res Function(_$NotificationsOnImpl) _then)
+  __$$NotificationsOnImplCopyWithImpl(
+      _$NotificationsOnImpl _value, $Res Function(_$NotificationsOnImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2035,10 +2068,15 @@ class __$$NotificationsOnImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithI
 
 /// @nodoc
 @JsonSerializable()
-class _$NotificationsOnImpl with DiagnosticableTreeMixin implements NotificationsOn {
-  const _$NotificationsOnImpl({this.notificationOn = 'true', final String? $type}) : $type = $type ?? 'notificationsOn';
+class _$NotificationsOnImpl
+    with DiagnosticableTreeMixin
+    implements NotificationsOn {
+  const _$NotificationsOnImpl(
+      {this.notificationOn = 'true', final String? $type})
+      : $type = $type ?? 'notificationsOn';
 
-  factory _$NotificationsOnImpl.fromJson(Map<String, dynamic> json) => _$$NotificationsOnImplFromJson(json);
+  factory _$NotificationsOnImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationsOnImplFromJson(json);
 
   @override
   @JsonKey()
@@ -2065,7 +2103,8 @@ class _$NotificationsOnImpl with DiagnosticableTreeMixin implements Notification
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationsOnImpl &&
-            (identical(other.notificationOn, notificationOn) || other.notificationOn == notificationOn));
+            (identical(other.notificationOn, notificationOn) ||
+                other.notificationOn == notificationOn));
   }
 
   @JsonKey(ignore: true)
@@ -2076,16 +2115,17 @@ class _$NotificationsOnImpl with DiagnosticableTreeMixin implements Notification
   @override
   @pragma('vm:prefer-inline')
   _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
-      __$$NotificationsOnImplCopyWithImpl<_$NotificationsOnImpl>(this, _$identity);
+      __$$NotificationsOnImplCopyWithImpl<_$NotificationsOnImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String cardTap, String walletAddress) cardTap,
-    required TResult Function(String barTap, String walletAddress) barTap,
-    required TResult Function(String cardManual, String walletAddress) cardManual,
-    required TResult Function(String barManual, String walletAddress) barManual,
-    required TResult Function(String tracker, String walletAddress) tracker,
+    required TResult Function(String cardTap) cardTap,
+    required TResult Function(String barTap) barTap,
+    required TResult Function(String cardManual) cardManual,
+    required TResult Function(String barManual) barManual,
+    required TResult Function(String tracker) tracker,
     required TResult Function(String cardHolder) cardHolder,
     required TResult Function(String barHolder) barHolder,
     required TResult Function(String fraudActivity) fraudActivity,
@@ -2098,11 +2138,11 @@ class _$NotificationsOnImpl with DiagnosticableTreeMixin implements Notification
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String cardTap, String walletAddress)? cardTap,
-    TResult? Function(String barTap, String walletAddress)? barTap,
-    TResult? Function(String cardManual, String walletAddress)? cardManual,
-    TResult? Function(String barManual, String walletAddress)? barManual,
-    TResult? Function(String tracker, String walletAddress)? tracker,
+    TResult? Function(String cardTap)? cardTap,
+    TResult? Function(String barTap)? barTap,
+    TResult? Function(String cardManual)? cardManual,
+    TResult? Function(String barManual)? barManual,
+    TResult? Function(String tracker)? tracker,
     TResult? Function(String cardHolder)? cardHolder,
     TResult? Function(String barHolder)? barHolder,
     TResult? Function(String fraudActivity)? fraudActivity,
@@ -2115,11 +2155,11 @@ class _$NotificationsOnImpl with DiagnosticableTreeMixin implements Notification
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String cardTap, String walletAddress)? cardTap,
-    TResult Function(String barTap, String walletAddress)? barTap,
-    TResult Function(String cardManual, String walletAddress)? cardManual,
-    TResult Function(String barManual, String walletAddress)? barManual,
-    TResult Function(String tracker, String walletAddress)? tracker,
+    TResult Function(String cardTap)? cardTap,
+    TResult Function(String barTap)? barTap,
+    TResult Function(String cardManual)? cardManual,
+    TResult Function(String barManual)? barManual,
+    TResult Function(String tracker)? tracker,
     TResult Function(String cardHolder)? cardHolder,
     TResult Function(String barHolder)? barHolder,
     TResult Function(String fraudActivity)? fraudActivity,
@@ -2197,11 +2237,14 @@ class _$NotificationsOnImpl with DiagnosticableTreeMixin implements Notification
 }
 
 abstract class NotificationsOn implements IdentifyModel {
-  const factory NotificationsOn({final String notificationOn}) = _$NotificationsOnImpl;
+  const factory NotificationsOn({final String notificationOn}) =
+      _$NotificationsOnImpl;
 
-  factory NotificationsOn.fromJson(Map<String, dynamic> json) = _$NotificationsOnImpl.fromJson;
+  factory NotificationsOn.fromJson(Map<String, dynamic> json) =
+      _$NotificationsOnImpl.fromJson;
 
   String get notificationOn;
   @JsonKey(ignore: true)
-  _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
