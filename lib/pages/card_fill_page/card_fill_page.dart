@@ -24,6 +24,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -670,6 +671,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 child: Observer(
                                                   builder: (context) {
                                                     return TextField(
+                                                      inputFormatters: [
+                                                        LengthLimitingTextInputFormatter(35),
+                                                      ],
                                                       readOnly: !_validationStore.isValid && true,
                                                       textAlignVertical: TextAlignVertical.top,
                                                       autocorrect: false,
@@ -774,7 +778,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       onPressed: () async {
                                                         unawaited(
                                                           recordAmplitudeEvent(
-                                                            const QrButtonClicked(walletType: 'Card'),
+                                                            const QrButtonClicked(
+                                                              walletType: 'Card',
+                                                              source: 'Connect',
+                                                            ),
                                                           ),
                                                         );
                                                         _focusNode.unfocus();
@@ -1318,6 +1325,9 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                             }
                           }
                           await hasShownWallet().then((hasShown) {
+                            unawaited(
+                              recordUserProperty(CardManual(walletAddress: _balanceStore.selectedCard!.address)),
+                            );
                             unawaited(
                               recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );

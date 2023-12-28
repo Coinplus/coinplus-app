@@ -1154,7 +1154,10 @@ class DashboardPage extends HookWidget {
                                                                     await Future.delayed(
                                                                       const Duration(milliseconds: 2500),
                                                                     );
-                                                                    await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                                                    await notCoinplusCardAlert(
+                                                                      context: router.navigatorKey.currentContext!,
+                                                                      walletAddress: walletAddress,
+                                                                    );
                                                                   }
                                                                 } else {
                                                                   await NfcManager.instance.stopSession();
@@ -1268,7 +1271,10 @@ class DashboardPage extends HookWidget {
                                                                       ),
                                                                     );
                                                                   } else {
-                                                                    await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                                                    await notCoinplusCardAlert(
+                                                                      context: router.navigatorKey.currentContext!,
+                                                                      walletAddress: walletAddress,
+                                                                    );
                                                                   }
                                                                 } else {
                                                                   await router.pop();

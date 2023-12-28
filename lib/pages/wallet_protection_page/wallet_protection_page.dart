@@ -145,7 +145,7 @@ class WalletProtectionPage extends HookWidget {
             ),
             onPressed: () {
               recordAmplitudeEvent(
-                const NotNowClicked(),
+                const NotNowLockClicked(),
               );
               router.pushAndPopAll(const DashboardRoute());
             },

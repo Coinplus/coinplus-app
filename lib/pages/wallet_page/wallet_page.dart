@@ -46,6 +46,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
+  bool _isAmplitudeEventInProgress = false;
   late final _tabController = TabController(
     length: 2,
     vsync: this,
@@ -92,17 +93,28 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
           index: _tabController.index,
         ),
       );
+      amplitudeEvent();
+    });
+  }
+
+  void amplitudeEvent() {
+    if (!_isAmplitudeEventInProgress) {
+      _isAmplitudeEventInProgress = true;
       if (_tabController.index == 0) {
         unawaited(recordAmplitudeEvent(const CardTabClicked()));
-      } else {
+      } else if (_tabController.index == 1) {
         unawaited(recordAmplitudeEvent(const BarTabClicked()));
       }
-    });
+      Future.delayed(const Duration(seconds: 1), () {
+        _isAmplitudeEventInProgress = false;
+      });
+    }
   }
 
   @override
   void dispose() {
     reRegisterStoreGetIt();
+    _tabController.removeListener(amplitudeEvent);
     super.dispose();
   }
 

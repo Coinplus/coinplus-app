@@ -207,7 +207,10 @@ class OnboardingPage extends HookWidget {
                                 } else {
                                   await NfcManager.instance.stopSession();
                                   await Future.delayed(const Duration(milliseconds: 2700));
-                                  await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                  await notCoinplusCardAlert(
+                                    context: router.navigatorKey.currentContext!,
+                                    walletAddress: walletAddress,
+                                  );
                                 }
                               } else {
                                 await NfcManager.instance.stopSession();
@@ -230,7 +233,10 @@ class OnboardingPage extends HookWidget {
                                       //Fake card
                                       await NfcManager.instance.stopSession();
                                       await Future.delayed(const Duration(milliseconds: 2700));
-                                      await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                      await notCoinplusCardAlert(
+                                        context: router.navigatorKey.currentContext!,
+                                        walletAddress: walletAddress,
+                                      );
                                     }
                                   } else {
                                     //Connect as TrackerPlus
@@ -336,7 +342,10 @@ class OnboardingPage extends HookWidget {
                                     );
                                   }
                                 } else {
-                                  await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                  await notCoinplusCardAlert(
+                                    context: router.navigatorKey.currentContext!,
+                                    walletAddress: walletAddress,
+                                  );
                                 }
                               } else {
                                 if (tag.data.containsKey('mifareultralight')) {
@@ -352,7 +361,10 @@ class OnboardingPage extends HookWidget {
                                         ),
                                       );
                                     } else {
-                                      await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+                                      await notCoinplusCardAlert(
+                                        context: router.navigatorKey.currentContext!,
+                                        walletAddress: walletAddress,
+                                      );
                                     }
                                   } else {
                                     await router.push(

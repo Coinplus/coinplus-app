@@ -19,6 +19,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -759,11 +760,13 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               walletAddress: walletAddress,
                               walletType: 'Bar',
                             );
+                            await recordUserProperty(const BarHolder());
                           } else {
                             await router.pop();
                             await recordAmplitudeEvent(
                               ValidationFailed(walletAddress: walletAddress, walletType: 'Bar'),
                             );
+                            await recordUserProperty(const ActivationFailed());
                             unawaited(activationFailureCount(bar.address));
                             await secretsFailDialog(context: context, walletType: 'Bar', walletAddress: walletAddress);
                           }
