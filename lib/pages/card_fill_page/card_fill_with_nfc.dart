@@ -18,6 +18,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -512,7 +513,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 );
                               }
                             } else {
-                              await recordAmplitudeEvent(CardAddedEvent(address: _btcAddressController.text));
+                              await recordUserProperty(Tracker(walletAddress: _balanceStore.selectedCard!.address));
                               _balanceStore.saveSelectedCardAsTracker(
                                 color: CardColor.TRACKER,
                                 label: WalletType.TRACKER,
@@ -520,8 +521,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               );
                             }
                           }
-
                           await hasShownWallet().then((hasShown) {
+                            recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
+                            recordUserProperty(CardTap(walletAddress: _balanceStore.selectedCard!.address));
                             if (hasShown) {
                               router.pop();
                             } else {
@@ -551,7 +553,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                   walletAddress: _balanceStore.selectedCard!.address,
                                 ),
                               );
-                              await recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
                             } else {
                               await recordAmplitudeEvent(
                                 GotItClicked(

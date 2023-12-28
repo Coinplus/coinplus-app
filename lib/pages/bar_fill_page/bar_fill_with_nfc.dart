@@ -17,6 +17,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -659,8 +660,11 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
                           _balanceStore.saveSelectedBar();
-
                           await hasShownWallet().then((hasShown) {
+                            unawaited(
+                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
+                            );
+                            recordUserProperty(BarTap(walletAddress: _balanceStore.selectedCard!.address));
                             if (hasShown) {
                               router.pop();
                             } else {
@@ -701,7 +705,6 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                             }
                           },
                         );
-                        unawaited(recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)));
                       },
                       child: const Text(
                         'Got it',

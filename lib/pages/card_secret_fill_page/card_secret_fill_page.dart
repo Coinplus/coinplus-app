@@ -21,6 +21,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -135,12 +136,12 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
 
   Future<void> onInitWithSecretOne() async {
     _secretOneLottieController.reset();
-    await _validateSecretOne();
+    await _validateSecretOne(walletAddress);
   }
 
   Future<void> onInitWithSecretTwo() async {
     _secretTwoLottieController.reset();
-    await _validateSecretTwo();
+    await _validateSecretTwo(walletAddress);
   }
 
   Future<void> stopNfc() async {
@@ -324,7 +325,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                       value,
                                                                     ) {
                                                                       if (value.length == 30) {
-                                                                        _validateSecretOne();
+                                                                        _validateSecretOne(card.address);
                                                                       } else if (value.length < 30) {
                                                                         _validationStore.invalidSecretOne();
                                                                         _secretOneLottieController.reset();
@@ -411,9 +412,16 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                           if (res == null) {
                                                                             return;
                                                                           }
-
+                                                                          unawaited(
+                                                                            recordAmplitudeEvent(
+                                                                              const QrButtonClicked(
+                                                                                walletType: 'Card',
+                                                                                source: 'Secret',
+                                                                              ),
+                                                                            ),
+                                                                          );
                                                                           secret1B58 = _secretOneController.text = res;
-                                                                          await _validateSecretOne();
+                                                                          await _validateSecretOne(card.address);
                                                                         },
                                                                         child: SizedBox(
                                                                           height: 50,
@@ -493,7 +501,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                     textAlign: TextAlign.center,
                                                                     onChanged: (value) {
                                                                       if (value.length == 30) {
-                                                                        _validateSecretTwo();
+                                                                        _validateSecretTwo(card.address);
                                                                       } else if (value.length < 30) {
                                                                         _validationStore.invalidSecretTwo();
                                                                         _secretTwoLottieController.reset();
@@ -577,9 +585,16 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                           if (res == null) {
                                                                             return;
                                                                           }
-
+                                                                          unawaited(
+                                                                            recordAmplitudeEvent(
+                                                                              const QrButtonClicked(
+                                                                                walletType: 'Card',
+                                                                                source: 'Secret',
+                                                                              ),
+                                                                            ),
+                                                                          );
                                                                           secret2B58 = _secretTwoController.text = res;
-                                                                          await _validateSecretTwo();
+                                                                          await _validateSecretTwo(card.address);
                                                                         },
                                                                         child: SizedBox(
                                                                           height: 50,
@@ -755,18 +770,20 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             );
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEvent(
-                              ValidationSuccessful(walletAddress: walletAddress, walletType: 'Card'),
+                              ValidationSuccessful(walletAddress: card.address, walletType: 'Card'),
                             );
                             await secretsSuccessAlert(
                               context: context,
                               walletAddress: walletAddress,
                               walletType: 'Card',
                             );
+                            await recordUserProperty(const CardHolder());
                           } else {
                             await router.pop();
                             await recordAmplitudeEvent(
-                              ValidationFailed(walletAddress: walletAddress, walletType: 'Card'),
+                              ValidationFailed(walletAddress: card.address, walletType: 'Card'),
                             );
+                            await recordUserProperty(const ActivationFailed());
                             unawaited(activationFailureCount(card.address));
                             await secretsFailDialog(context: context, walletAddress: walletAddress, walletType: 'Card');
                           }
@@ -855,7 +872,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
     }
   }
 
-  Future<void> _validateSecretOne() async {
+  Future<void> _validateSecretOne(String walletAddress) async {
     final secretOne = _secretOneController.text.trim();
     if (isValidSecret(secretOne)) {
       _validationStore.validateSecretOne();
@@ -872,7 +889,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
     } else {}
   }
 
-  Future<void> _validateSecretTwo() async {
+  Future<void> _validateSecretTwo(String walletAddress) async {
     final secretTwo = _secretTwoController.text.trim();
     if (isValidSecret(secretTwo)) {
       _validationStore.validateSecretTwo();

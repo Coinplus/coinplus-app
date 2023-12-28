@@ -16,6 +16,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
@@ -61,13 +62,13 @@ class SettingsPage extends HookWidget {
       (isEnable) async {
         if (!isEnable) {
           await _walletProtectState.disableBiometric();
+          await recordAmplitudeEvent(const FaceIdDisabled());
         } else {
           if (_walletProtectState.canCheckBiometrics) {
             await _walletProtectState.authenticateWithBiometrics();
             await recordAmplitudeEvent(const FaceIdEnabled());
           } else {
             await pleaseEnableBiometrics(context, _walletProtectState);
-            await recordAmplitudeEvent(const FaceIdDisabled());
           }
         }
         await _walletProtectState.checkBiometricStatus();
@@ -79,9 +80,11 @@ class SettingsPage extends HookWidget {
       (isEnable) async {
         if (!isEnable) {
           unawaited(recordAmplitudeEvent(const PushNotificationsOn()));
+          unawaited(recordUserProperty(const NotificationsOn()));
           await _walletProtectState.enableNotification();
         } else {
           await _walletProtectState.disableNotification();
+          unawaited(deleteIdentifyProperties(const NotificationsOn()));
           unawaited(recordAmplitudeEvent(const PushNotificationsOff()));
         }
         await _walletProtectState.checkNotificationToggleStatus();

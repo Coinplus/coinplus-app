@@ -18,6 +18,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -567,7 +568,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                     onPressed: () async {
                                                       unawaited(
                                                         recordAmplitudeEvent(
-                                                          const QrButtonClicked(walletType: 'Bar'),
+                                                          const QrButtonClicked(walletType: 'Bar', source: 'Connect'),
                                                         ),
                                                       );
                                                       _focusNode.unfocus();
@@ -852,6 +853,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               unawaited(signInAnonymously(address: _addressState.btcAddressController.text));
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
+                                recordUserProperty(BarManual(walletAddress: _addressState.btcAddressController.text));
+                                unawaited(
+                                  recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
+                                );
                                 if (hasShown) {
                                   router.pop();
                                 } else {
@@ -891,9 +896,6 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                   );
                                 }
                               },
-                            );
-                            unawaited(
-                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );
                           },
                           child: const Text(

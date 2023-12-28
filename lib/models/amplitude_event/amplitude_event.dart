@@ -28,6 +28,7 @@ class AmplitudeEvent with _$AmplitudeEvent {
   const factory AmplitudeEvent.qrButtonClicked({
     @Default('QR_BUTTON_CLICKED') String eventType,
     required String walletType,
+    required String source,
   }) = QrButtonClicked;
 
   const factory AmplitudeEvent.qrScanned({
@@ -113,9 +114,9 @@ class AmplitudeEvent with _$AmplitudeEvent {
     @Default('APP_LOCK_ENABLED') String eventType,
   }) = AppLockEnabled;
 
-  const factory AmplitudeEvent.notNowClicked({
-    @Default('NOT_NOW_CLICKED') String eventType,
-  }) = NotNowClicked;
+  const factory AmplitudeEvent.notNowLockClicked({
+    @Default('NOT_NOW_LOCK_CLICKED') String eventType,
+  }) = NotNowLockClicked;
 
   const factory AmplitudeEvent.walletTabClicked({
     @Default('WALLET_TAB_CLICKED') String eventType,

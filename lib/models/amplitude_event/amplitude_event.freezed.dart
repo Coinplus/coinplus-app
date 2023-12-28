@@ -54,8 +54,8 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return WarningCheckboxClicked.fromJson(json);
     case 'appLockEnabled':
       return AppLockEnabled.fromJson(json);
-    case 'notNowClicked':
-      return NotNowClicked.fromJson(json);
+    case 'notNowLockClicked':
+      return NotNowLockClicked.fromJson(json);
     case 'walletTabClicked':
       return WalletTabClicked.fromJson(json);
     case 'settingsTabClicked':
@@ -194,7 +194,8 @@ mixin _$AmplitudeEvent {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -231,7 +232,7 @@ mixin _$AmplitudeEvent {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -369,7 +370,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -400,7 +402,7 @@ mixin _$AmplitudeEvent {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -532,7 +534,8 @@ mixin _$AmplitudeEvent {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -562,7 +565,7 @@ mixin _$AmplitudeEvent {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -704,7 +707,7 @@ mixin _$AmplitudeEvent {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -793,7 +796,7 @@ mixin _$AmplitudeEvent {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -879,7 +882,7 @@ mixin _$AmplitudeEvent {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -1074,7 +1077,8 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -1111,7 +1115,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -1252,7 +1256,8 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -1283,7 +1288,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -1418,7 +1423,8 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -1448,7 +1454,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -1596,7 +1602,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -1688,7 +1694,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -1777,7 +1783,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -1965,7 +1971,8 @@ class _$ConnectWalletClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -2002,7 +2009,7 @@ class _$ConnectWalletClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -2143,7 +2150,8 @@ class _$ConnectWalletClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -2174,7 +2182,7 @@ class _$ConnectWalletClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -2309,7 +2317,8 @@ class _$ConnectWalletClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -2339,7 +2348,7 @@ class _$ConnectWalletClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -2487,7 +2496,7 @@ class _$ConnectWalletClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -2579,7 +2588,7 @@ class _$ConnectWalletClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -2668,7 +2677,7 @@ class _$ConnectWalletClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -2870,7 +2879,8 @@ class _$ConnectManuallyClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -2907,7 +2917,7 @@ class _$ConnectManuallyClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -3048,7 +3058,8 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -3079,7 +3090,7 @@ class _$ConnectManuallyClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -3214,7 +3225,8 @@ class _$ConnectManuallyClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -3244,7 +3256,7 @@ class _$ConnectManuallyClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -3392,7 +3404,7 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -3484,7 +3496,7 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -3573,7 +3585,7 @@ class _$ConnectManuallyClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -3775,7 +3787,8 @@ class _$ConnectWitchQrClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -3812,7 +3825,7 @@ class _$ConnectWitchQrClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -3953,7 +3966,8 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -3984,7 +3998,7 @@ class _$ConnectWitchQrClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -4119,7 +4133,8 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -4149,7 +4164,7 @@ class _$ConnectWitchQrClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -4297,7 +4312,7 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -4389,7 +4404,7 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -4478,7 +4493,7 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -4582,7 +4597,7 @@ abstract class _$$QrButtonClickedImplCopyWith<$Res>
       __$$QrButtonClickedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String eventType, String walletType});
+  $Res call({String eventType, String walletType, String source});
 }
 
 /// @nodoc
@@ -4598,6 +4613,7 @@ class __$$QrButtonClickedImplCopyWithImpl<$Res>
   $Res call({
     Object? eventType = null,
     Object? walletType = null,
+    Object? source = null,
   }) {
     return _then(_$QrButtonClickedImpl(
       eventType: null == eventType
@@ -4607,6 +4623,10 @@ class __$$QrButtonClickedImplCopyWithImpl<$Res>
       walletType: null == walletType
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -4620,6 +4640,7 @@ class _$QrButtonClickedImpl
   const _$QrButtonClickedImpl(
       {this.eventType = 'QR_BUTTON_CLICKED',
       required this.walletType,
+      required this.source,
       final String? $type})
       : $type = $type ?? 'qrButtonClicked';
 
@@ -4631,13 +4652,15 @@ class _$QrButtonClickedImpl
   final String eventType;
   @override
   final String walletType;
+  @override
+  final String source;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AmplitudeEvent.qrButtonClicked(eventType: $eventType, walletType: $walletType)';
+    return 'AmplitudeEvent.qrButtonClicked(eventType: $eventType, walletType: $walletType, source: $source)';
   }
 
   @override
@@ -4646,7 +4669,8 @@ class _$QrButtonClickedImpl
     properties
       ..add(DiagnosticsProperty('type', 'AmplitudeEvent.qrButtonClicked'))
       ..add(DiagnosticsProperty('eventType', eventType))
-      ..add(DiagnosticsProperty('walletType', walletType));
+      ..add(DiagnosticsProperty('walletType', walletType))
+      ..add(DiagnosticsProperty('source', source));
   }
 
   @override
@@ -4657,12 +4681,13 @@ class _$QrButtonClickedImpl
             (identical(other.eventType, eventType) ||
                 other.eventType == eventType) &&
             (identical(other.walletType, walletType) ||
-                other.walletType == walletType));
+                other.walletType == walletType) &&
+            (identical(other.source, source) || other.source == source));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, eventType, walletType);
+  int get hashCode => Object.hash(runtimeType, eventType, walletType, source);
 
   @JsonKey(ignore: true)
   @override
@@ -4680,7 +4705,8 @@ class _$QrButtonClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -4717,7 +4743,7 @@ class _$QrButtonClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -4848,7 +4874,7 @@ class _$QrButtonClickedImpl
     required TResult Function(String eventType, String address) cardAdded,
     required TResult Function(String eventType, String address) barAdded,
   }) {
-    return qrButtonClicked(eventType, walletType);
+    return qrButtonClicked(eventType, walletType, source);
   }
 
   @override
@@ -4858,7 +4884,8 @@ class _$QrButtonClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -4889,7 +4916,7 @@ class _$QrButtonClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -5014,7 +5041,7 @@ class _$QrButtonClickedImpl
     TResult? Function(String eventType, String address)? cardAdded,
     TResult? Function(String eventType, String address)? barAdded,
   }) {
-    return qrButtonClicked?.call(eventType, walletType);
+    return qrButtonClicked?.call(eventType, walletType, source);
   }
 
   @override
@@ -5024,7 +5051,8 @@ class _$QrButtonClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -5054,7 +5082,7 @@ class _$QrButtonClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -5170,7 +5198,7 @@ class _$QrButtonClickedImpl
     required TResult orElse(),
   }) {
     if (qrButtonClicked != null) {
-      return qrButtonClicked(eventType, walletType);
+      return qrButtonClicked(eventType, walletType, source);
     }
     return orElse();
   }
@@ -5202,7 +5230,7 @@ class _$QrButtonClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -5294,7 +5322,7 @@ class _$QrButtonClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -5383,7 +5411,7 @@ class _$QrButtonClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -5465,7 +5493,8 @@ class _$QrButtonClickedImpl
 abstract class QrButtonClicked implements AmplitudeEvent {
   const factory QrButtonClicked(
       {final String eventType,
-      required final String walletType}) = _$QrButtonClickedImpl;
+      required final String walletType,
+      required final String source}) = _$QrButtonClickedImpl;
 
   factory QrButtonClicked.fromJson(Map<String, dynamic> json) =
       _$QrButtonClickedImpl.fromJson;
@@ -5473,6 +5502,7 @@ abstract class QrButtonClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get walletType;
+  String get source;
   @override
   @JsonKey(ignore: true)
   _$$QrButtonClickedImplCopyWith<_$QrButtonClickedImpl> get copyWith =>
@@ -5593,7 +5623,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -5630,7 +5661,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -5771,7 +5802,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -5802,7 +5834,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -5937,7 +5969,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -5967,7 +6000,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -6115,7 +6148,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -6207,7 +6240,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -6296,7 +6329,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -6499,7 +6532,8 @@ class _$BuyNewCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -6536,7 +6570,7 @@ class _$BuyNewCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -6677,7 +6711,8 @@ class _$BuyNewCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -6708,7 +6743,7 @@ class _$BuyNewCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -6843,7 +6878,8 @@ class _$BuyNewCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -6873,7 +6909,7 @@ class _$BuyNewCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -7021,7 +7057,7 @@ class _$BuyNewCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -7113,7 +7149,7 @@ class _$BuyNewCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -7202,7 +7238,7 @@ class _$BuyNewCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -7416,7 +7452,8 @@ class _$ConnectOptionSelectedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -7453,7 +7490,7 @@ class _$ConnectOptionSelectedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -7594,7 +7631,8 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -7625,7 +7663,7 @@ class _$ConnectOptionSelectedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -7760,7 +7798,8 @@ class _$ConnectOptionSelectedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -7790,7 +7829,7 @@ class _$ConnectOptionSelectedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -7938,7 +7977,7 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -8030,7 +8069,7 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -8119,7 +8158,7 @@ class _$ConnectOptionSelectedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -8331,7 +8370,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -8368,7 +8408,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -8509,7 +8549,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -8540,7 +8581,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -8675,7 +8716,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -8705,7 +8747,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -8853,7 +8895,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -8945,7 +8987,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -9034,7 +9076,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -9234,7 +9276,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -9271,7 +9314,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -9412,7 +9455,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -9443,7 +9487,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -9578,7 +9622,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -9608,7 +9653,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -9756,7 +9801,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -9848,7 +9893,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -9937,7 +9982,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -10163,7 +10208,8 @@ class _$AddressFilledImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -10200,7 +10246,7 @@ class _$AddressFilledImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -10341,7 +10387,8 @@ class _$AddressFilledImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -10372,7 +10419,7 @@ class _$AddressFilledImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -10507,7 +10554,8 @@ class _$AddressFilledImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -10537,7 +10585,7 @@ class _$AddressFilledImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -10685,7 +10733,7 @@ class _$AddressFilledImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -10777,7 +10825,7 @@ class _$AddressFilledImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -10866,7 +10914,7 @@ class _$AddressFilledImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -11098,7 +11146,8 @@ class _$DeeplinkClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -11135,7 +11184,7 @@ class _$DeeplinkClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -11276,7 +11325,8 @@ class _$DeeplinkClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -11307,7 +11357,7 @@ class _$DeeplinkClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -11442,7 +11492,8 @@ class _$DeeplinkClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -11472,7 +11523,7 @@ class _$DeeplinkClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -11620,7 +11671,7 @@ class _$DeeplinkClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -11712,7 +11763,7 @@ class _$DeeplinkClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -11801,7 +11852,7 @@ class _$DeeplinkClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -12014,7 +12065,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -12051,7 +12103,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -12192,7 +12244,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -12223,7 +12276,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -12358,7 +12411,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -12388,7 +12442,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -12536,7 +12590,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -12628,7 +12682,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -12717,7 +12771,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -12947,7 +13001,8 @@ class _$SaveToWalletClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -12984,7 +13039,7 @@ class _$SaveToWalletClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -13125,7 +13180,8 @@ class _$SaveToWalletClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -13156,7 +13212,7 @@ class _$SaveToWalletClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -13292,7 +13348,8 @@ class _$SaveToWalletClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -13322,7 +13379,7 @@ class _$SaveToWalletClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -13470,7 +13527,7 @@ class _$SaveToWalletClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -13562,7 +13619,7 @@ class _$SaveToWalletClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -13651,7 +13708,7 @@ class _$SaveToWalletClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -13872,7 +13929,8 @@ class _$AlreadySavedGotItClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -13909,7 +13967,7 @@ class _$AlreadySavedGotItClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -14050,7 +14108,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -14081,7 +14140,7 @@ class _$AlreadySavedGotItClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -14216,7 +14275,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -14246,7 +14306,7 @@ class _$AlreadySavedGotItClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -14394,7 +14454,7 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -14486,7 +14546,7 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -14575,7 +14635,7 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -14808,7 +14868,8 @@ class _$ActivatedCheckboxClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -14845,7 +14906,7 @@ class _$ActivatedCheckboxClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -14987,7 +15048,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -15018,7 +15080,7 @@ class _$ActivatedCheckboxClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -15154,7 +15216,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -15184,7 +15247,7 @@ class _$ActivatedCheckboxClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -15333,7 +15396,7 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -15425,7 +15488,7 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -15514,7 +15577,7 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -15743,7 +15806,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -15780,7 +15844,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -15921,7 +15985,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -15952,7 +16017,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -16087,7 +16152,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -16117,7 +16183,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -16265,7 +16331,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -16357,7 +16423,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -16446,7 +16512,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -16643,7 +16709,8 @@ class _$WarningCheckboxClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -16680,7 +16747,7 @@ class _$WarningCheckboxClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -16821,7 +16888,8 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -16852,7 +16920,7 @@ class _$WarningCheckboxClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -16987,7 +17055,8 @@ class _$WarningCheckboxClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -17017,7 +17086,7 @@ class _$WarningCheckboxClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -17165,7 +17234,7 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -17257,7 +17326,7 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -17346,7 +17415,7 @@ class _$WarningCheckboxClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -17534,7 +17603,8 @@ class _$AppLockEnabledImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -17571,7 +17641,7 @@ class _$AppLockEnabledImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -17712,7 +17782,8 @@ class _$AppLockEnabledImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -17743,7 +17814,7 @@ class _$AppLockEnabledImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -17878,7 +17949,8 @@ class _$AppLockEnabledImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -17908,7 +17980,7 @@ class _$AppLockEnabledImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -18056,7 +18128,7 @@ class _$AppLockEnabledImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -18148,7 +18220,7 @@ class _$AppLockEnabledImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -18237,7 +18309,7 @@ class _$AppLockEnabledImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -18331,22 +18403,22 @@ abstract class AppLockEnabled implements AmplitudeEvent {
 }
 
 /// @nodoc
-abstract class _$$NotNowClickedImplCopyWith<$Res>
+abstract class _$$NotNowLockClickedImplCopyWith<$Res>
     implements $AmplitudeEventCopyWith<$Res> {
-  factory _$$NotNowClickedImplCopyWith(
-          _$NotNowClickedImpl value, $Res Function(_$NotNowClickedImpl) then) =
-      __$$NotNowClickedImplCopyWithImpl<$Res>;
+  factory _$$NotNowLockClickedImplCopyWith(_$NotNowLockClickedImpl value,
+          $Res Function(_$NotNowLockClickedImpl) then) =
+      __$$NotNowLockClickedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String eventType});
 }
 
 /// @nodoc
-class __$$NotNowClickedImplCopyWithImpl<$Res>
-    extends _$AmplitudeEventCopyWithImpl<$Res, _$NotNowClickedImpl>
-    implements _$$NotNowClickedImplCopyWith<$Res> {
-  __$$NotNowClickedImplCopyWithImpl(
-      _$NotNowClickedImpl _value, $Res Function(_$NotNowClickedImpl) _then)
+class __$$NotNowLockClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$NotNowLockClickedImpl>
+    implements _$$NotNowLockClickedImplCopyWith<$Res> {
+  __$$NotNowLockClickedImplCopyWithImpl(_$NotNowLockClickedImpl _value,
+      $Res Function(_$NotNowLockClickedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -18354,7 +18426,7 @@ class __$$NotNowClickedImplCopyWithImpl<$Res>
   $Res call({
     Object? eventType = null,
   }) {
-    return _then(_$NotNowClickedImpl(
+    return _then(_$NotNowLockClickedImpl(
       eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
@@ -18365,15 +18437,15 @@ class __$$NotNowClickedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NotNowClickedImpl
+class _$NotNowLockClickedImpl
     with DiagnosticableTreeMixin
-    implements NotNowClicked {
-  const _$NotNowClickedImpl(
-      {this.eventType = 'NOT_NOW_CLICKED', final String? $type})
-      : $type = $type ?? 'notNowClicked';
+    implements NotNowLockClicked {
+  const _$NotNowLockClickedImpl(
+      {this.eventType = 'NOT_NOW_LOCK_CLICKED', final String? $type})
+      : $type = $type ?? 'notNowLockClicked';
 
-  factory _$NotNowClickedImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NotNowClickedImplFromJson(json);
+  factory _$NotNowLockClickedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotNowLockClickedImplFromJson(json);
 
   @override
   @JsonKey()
@@ -18384,14 +18456,14 @@ class _$NotNowClickedImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AmplitudeEvent.notNowClicked(eventType: $eventType)';
+    return 'AmplitudeEvent.notNowLockClicked(eventType: $eventType)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.notNowClicked'))
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.notNowLockClicked'))
       ..add(DiagnosticsProperty('eventType', eventType));
   }
 
@@ -18399,7 +18471,7 @@ class _$NotNowClickedImpl
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotNowClickedImpl &&
+            other is _$NotNowLockClickedImpl &&
             (identical(other.eventType, eventType) ||
                 other.eventType == eventType));
   }
@@ -18411,8 +18483,9 @@ class _$NotNowClickedImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$NotNowClickedImplCopyWith<_$NotNowClickedImpl> get copyWith =>
-      __$$NotNowClickedImplCopyWithImpl<_$NotNowClickedImpl>(this, _$identity);
+  _$$NotNowLockClickedImplCopyWith<_$NotNowLockClickedImpl> get copyWith =>
+      __$$NotNowLockClickedImplCopyWithImpl<_$NotNowLockClickedImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -18423,7 +18496,8 @@ class _$NotNowClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -18460,7 +18534,7 @@ class _$NotNowClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -18591,7 +18665,7 @@ class _$NotNowClickedImpl
     required TResult Function(String eventType, String address) cardAdded,
     required TResult Function(String eventType, String address) barAdded,
   }) {
-    return notNowClicked(eventType);
+    return notNowLockClicked(eventType);
   }
 
   @override
@@ -18601,7 +18675,8 @@ class _$NotNowClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -18632,7 +18707,7 @@ class _$NotNowClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -18757,7 +18832,7 @@ class _$NotNowClickedImpl
     TResult? Function(String eventType, String address)? cardAdded,
     TResult? Function(String eventType, String address)? barAdded,
   }) {
-    return notNowClicked?.call(eventType);
+    return notNowLockClicked?.call(eventType);
   }
 
   @override
@@ -18767,7 +18842,8 @@ class _$NotNowClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -18797,7 +18873,7 @@ class _$NotNowClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -18912,8 +18988,8 @@ class _$NotNowClickedImpl
     TResult Function(String eventType, String address)? barAdded,
     required TResult orElse(),
   }) {
-    if (notNowClicked != null) {
-      return notNowClicked(eventType);
+    if (notNowLockClicked != null) {
+      return notNowLockClicked(eventType);
     }
     return orElse();
   }
@@ -18945,7 +19021,7 @@ class _$NotNowClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -19012,7 +19088,7 @@ class _$NotNowClickedImpl
     required TResult Function(CardAddedEvent value) cardAdded,
     required TResult Function(BarAddedEvent value) barAdded,
   }) {
-    return notNowClicked(this);
+    return notNowLockClicked(this);
   }
 
   @override
@@ -19037,7 +19113,7 @@ class _$NotNowClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -19101,7 +19177,7 @@ class _$NotNowClickedImpl
     TResult? Function(CardAddedEvent value)? cardAdded,
     TResult? Function(BarAddedEvent value)? barAdded,
   }) {
-    return notNowClicked?.call(this);
+    return notNowLockClicked?.call(this);
   }
 
   @override
@@ -19126,7 +19202,7 @@ class _$NotNowClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -19191,31 +19267,32 @@ class _$NotNowClickedImpl
     TResult Function(BarAddedEvent value)? barAdded,
     required TResult orElse(),
   }) {
-    if (notNowClicked != null) {
-      return notNowClicked(this);
+    if (notNowLockClicked != null) {
+      return notNowLockClicked(this);
     }
     return orElse();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NotNowClickedImplToJson(
+    return _$$NotNowLockClickedImplToJson(
       this,
     );
   }
 }
 
-abstract class NotNowClicked implements AmplitudeEvent {
-  const factory NotNowClicked({final String eventType}) = _$NotNowClickedImpl;
+abstract class NotNowLockClicked implements AmplitudeEvent {
+  const factory NotNowLockClicked({final String eventType}) =
+      _$NotNowLockClickedImpl;
 
-  factory NotNowClicked.fromJson(Map<String, dynamic> json) =
-      _$NotNowClickedImpl.fromJson;
+  factory NotNowLockClicked.fromJson(Map<String, dynamic> json) =
+      _$NotNowLockClickedImpl.fromJson;
 
   @override
   String get eventType;
   @override
   @JsonKey(ignore: true)
-  _$$NotNowClickedImplCopyWith<_$NotNowClickedImpl> get copyWith =>
+  _$$NotNowLockClickedImplCopyWith<_$NotNowLockClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -19313,7 +19390,8 @@ class _$WalletTabClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -19350,7 +19428,7 @@ class _$WalletTabClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -19491,7 +19569,8 @@ class _$WalletTabClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -19522,7 +19601,7 @@ class _$WalletTabClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -19657,7 +19736,8 @@ class _$WalletTabClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -19687,7 +19767,7 @@ class _$WalletTabClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -19835,7 +19915,7 @@ class _$WalletTabClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -19927,7 +20007,7 @@ class _$WalletTabClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -20016,7 +20096,7 @@ class _$WalletTabClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -20204,7 +20284,8 @@ class _$SettingsTabClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -20241,7 +20322,7 @@ class _$SettingsTabClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -20382,7 +20463,8 @@ class _$SettingsTabClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -20413,7 +20495,7 @@ class _$SettingsTabClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -20548,7 +20630,8 @@ class _$SettingsTabClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -20578,7 +20661,7 @@ class _$SettingsTabClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -20726,7 +20809,7 @@ class _$SettingsTabClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -20818,7 +20901,7 @@ class _$SettingsTabClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -20907,7 +20990,7 @@ class _$SettingsTabClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -21137,7 +21220,8 @@ class _$TransactionsButtonClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -21174,7 +21258,7 @@ class _$TransactionsButtonClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -21316,7 +21400,8 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -21347,7 +21432,7 @@ class _$TransactionsButtonClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -21483,7 +21568,8 @@ class _$TransactionsButtonClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -21513,7 +21599,7 @@ class _$TransactionsButtonClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -21662,7 +21748,7 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -21754,7 +21840,7 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -21843,7 +21929,7 @@ class _$TransactionsButtonClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -22047,7 +22133,8 @@ class _$AddNewClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -22084,7 +22171,7 @@ class _$AddNewClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -22225,7 +22312,8 @@ class _$AddNewClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -22256,7 +22344,7 @@ class _$AddNewClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -22391,7 +22479,8 @@ class _$AddNewClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -22421,7 +22510,7 @@ class _$AddNewClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -22569,7 +22658,7 @@ class _$AddNewClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -22661,7 +22750,7 @@ class _$AddNewClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -22750,7 +22839,7 @@ class _$AddNewClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -22951,7 +23040,8 @@ class _$AddNewPlusClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -22988,7 +23078,7 @@ class _$AddNewPlusClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -23129,7 +23219,8 @@ class _$AddNewPlusClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -23160,7 +23251,7 @@ class _$AddNewPlusClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -23295,7 +23386,8 @@ class _$AddNewPlusClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -23325,7 +23417,7 @@ class _$AddNewPlusClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -23473,7 +23565,7 @@ class _$AddNewPlusClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -23565,7 +23657,7 @@ class _$AddNewPlusClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -23654,7 +23746,7 @@ class _$AddNewPlusClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -23869,7 +23961,8 @@ class _$WalletSettingsClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -23906,7 +23999,7 @@ class _$WalletSettingsClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -24047,7 +24140,8 @@ class _$WalletSettingsClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -24078,7 +24172,7 @@ class _$WalletSettingsClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -24213,7 +24307,8 @@ class _$WalletSettingsClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -24243,7 +24338,7 @@ class _$WalletSettingsClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -24391,7 +24486,7 @@ class _$WalletSettingsClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -24483,7 +24578,7 @@ class _$WalletSettingsClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -24572,7 +24667,7 @@ class _$WalletSettingsClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -24803,7 +24898,8 @@ class _$TopUpButtonClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -24840,7 +24936,7 @@ class _$TopUpButtonClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -24981,7 +25077,8 @@ class _$TopUpButtonClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -25012,7 +25109,7 @@ class _$TopUpButtonClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -25148,7 +25245,8 @@ class _$TopUpButtonClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -25178,7 +25276,7 @@ class _$TopUpButtonClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -25327,7 +25425,7 @@ class _$TopUpButtonClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -25419,7 +25517,7 @@ class _$TopUpButtonClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -25508,7 +25606,7 @@ class _$TopUpButtonClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -25741,7 +25839,8 @@ class _$ReceiveClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -25778,7 +25877,7 @@ class _$ReceiveClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -25919,7 +26018,8 @@ class _$ReceiveClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -25950,7 +26050,7 @@ class _$ReceiveClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -26086,7 +26186,8 @@ class _$ReceiveClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -26116,7 +26217,7 @@ class _$ReceiveClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -26264,7 +26365,7 @@ class _$ReceiveClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -26356,7 +26457,7 @@ class _$ReceiveClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -26445,7 +26546,7 @@ class _$ReceiveClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -26675,7 +26776,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -26712,7 +26814,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -26853,7 +26955,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -26884,7 +26987,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -27019,7 +27122,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -27049,7 +27153,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -27197,7 +27301,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -27289,7 +27393,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -27378,7 +27482,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -27611,7 +27715,8 @@ class _$BuyWithCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -27648,7 +27753,7 @@ class _$BuyWithCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -27789,7 +27894,8 @@ class _$BuyWithCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -27820,7 +27926,7 @@ class _$BuyWithCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -27956,7 +28062,8 @@ class _$BuyWithCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -27986,7 +28093,7 @@ class _$BuyWithCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -28135,7 +28242,7 @@ class _$BuyWithCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -28227,7 +28334,7 @@ class _$BuyWithCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -28316,7 +28423,7 @@ class _$BuyWithCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -28549,7 +28656,8 @@ class _$HistoryClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -28586,7 +28694,7 @@ class _$HistoryClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -28727,7 +28835,8 @@ class _$HistoryClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -28758,7 +28867,7 @@ class _$HistoryClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -28894,7 +29003,8 @@ class _$HistoryClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -28924,7 +29034,7 @@ class _$HistoryClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -29072,7 +29182,7 @@ class _$HistoryClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -29164,7 +29274,7 @@ class _$HistoryClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -29253,7 +29363,7 @@ class _$HistoryClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -29496,7 +29606,8 @@ class _$AddressCopiedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -29533,7 +29644,7 @@ class _$AddressCopiedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -29675,7 +29786,8 @@ class _$AddressCopiedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -29706,7 +29818,7 @@ class _$AddressCopiedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -29842,7 +29954,8 @@ class _$AddressCopiedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -29872,7 +29985,7 @@ class _$AddressCopiedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -30021,7 +30134,7 @@ class _$AddressCopiedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -30113,7 +30226,7 @@ class _$AddressCopiedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -30202,7 +30315,7 @@ class _$AddressCopiedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -30437,7 +30550,8 @@ class _$ShareAddressClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -30474,7 +30588,7 @@ class _$ShareAddressClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -30615,7 +30729,8 @@ class _$ShareAddressClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -30646,7 +30761,7 @@ class _$ShareAddressClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -30782,7 +30897,8 @@ class _$ShareAddressClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -30812,7 +30928,7 @@ class _$ShareAddressClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -30961,7 +31077,7 @@ class _$ShareAddressClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -31053,7 +31169,7 @@ class _$ShareAddressClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -31142,7 +31258,7 @@ class _$ShareAddressClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -31336,7 +31452,8 @@ class _$GotItSendClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -31373,7 +31490,7 @@ class _$GotItSendClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -31514,7 +31631,8 @@ class _$GotItSendClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -31545,7 +31663,7 @@ class _$GotItSendClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -31680,7 +31798,8 @@ class _$GotItSendClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -31710,7 +31829,7 @@ class _$GotItSendClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -31858,7 +31977,7 @@ class _$GotItSendClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -31950,7 +32069,7 @@ class _$GotItSendClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -32039,7 +32158,7 @@ class _$GotItSendClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -32227,7 +32346,8 @@ class _$SendAnywayClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -32264,7 +32384,7 @@ class _$SendAnywayClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -32405,7 +32525,8 @@ class _$SendAnywayClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -32436,7 +32557,7 @@ class _$SendAnywayClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -32571,7 +32692,8 @@ class _$SendAnywayClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -32601,7 +32723,7 @@ class _$SendAnywayClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -32749,7 +32871,7 @@ class _$SendAnywayClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -32841,7 +32963,7 @@ class _$SendAnywayClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -32930,7 +33052,7 @@ class _$SendAnywayClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -33129,7 +33251,8 @@ class _$BackButtonClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -33166,7 +33289,7 @@ class _$BackButtonClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -33307,7 +33430,8 @@ class _$BackButtonClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -33338,7 +33462,7 @@ class _$BackButtonClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -33473,7 +33597,8 @@ class _$BackButtonClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -33503,7 +33628,7 @@ class _$BackButtonClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -33651,7 +33776,7 @@ class _$BackButtonClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -33743,7 +33868,7 @@ class _$BackButtonClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -33832,7 +33957,7 @@ class _$BackButtonClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -34046,7 +34171,8 @@ class _$Secret1ValidatedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -34083,7 +34209,7 @@ class _$Secret1ValidatedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -34224,7 +34350,8 @@ class _$Secret1ValidatedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -34255,7 +34382,7 @@ class _$Secret1ValidatedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -34390,7 +34517,8 @@ class _$Secret1ValidatedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -34420,7 +34548,7 @@ class _$Secret1ValidatedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -34568,7 +34696,7 @@ class _$Secret1ValidatedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -34660,7 +34788,7 @@ class _$Secret1ValidatedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -34749,7 +34877,7 @@ class _$Secret1ValidatedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -34965,7 +35093,8 @@ class _$Secret2ValidatedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -35002,7 +35131,7 @@ class _$Secret2ValidatedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -35143,7 +35272,8 @@ class _$Secret2ValidatedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -35174,7 +35304,7 @@ class _$Secret2ValidatedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -35309,7 +35439,8 @@ class _$Secret2ValidatedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -35339,7 +35470,7 @@ class _$Secret2ValidatedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -35487,7 +35618,7 @@ class _$Secret2ValidatedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -35579,7 +35710,7 @@ class _$Secret2ValidatedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -35668,7 +35799,7 @@ class _$Secret2ValidatedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -35884,7 +36015,8 @@ class _$ContinueCLickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -35921,7 +36053,7 @@ class _$ContinueCLickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -36062,7 +36194,8 @@ class _$ContinueCLickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -36093,7 +36226,7 @@ class _$ContinueCLickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -36228,7 +36361,8 @@ class _$ContinueCLickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -36258,7 +36392,7 @@ class _$ContinueCLickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -36406,7 +36540,7 @@ class _$ContinueCLickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -36498,7 +36632,7 @@ class _$ContinueCLickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -36587,7 +36721,7 @@ class _$ContinueCLickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -36803,7 +36937,8 @@ class _$EditSecretsClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -36840,7 +36975,7 @@ class _$EditSecretsClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -36981,7 +37116,8 @@ class _$EditSecretsClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -37012,7 +37148,7 @@ class _$EditSecretsClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -37147,7 +37283,8 @@ class _$EditSecretsClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -37177,7 +37314,7 @@ class _$EditSecretsClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -37325,7 +37462,7 @@ class _$EditSecretsClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -37417,7 +37554,7 @@ class _$EditSecretsClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -37506,7 +37643,7 @@ class _$EditSecretsClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -37723,7 +37860,8 @@ class _$ValidationSuccessfulImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -37760,7 +37898,7 @@ class _$ValidationSuccessfulImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -37901,7 +38039,8 @@ class _$ValidationSuccessfulImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -37932,7 +38071,7 @@ class _$ValidationSuccessfulImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -38067,7 +38206,8 @@ class _$ValidationSuccessfulImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -38097,7 +38237,7 @@ class _$ValidationSuccessfulImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -38245,7 +38385,7 @@ class _$ValidationSuccessfulImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -38337,7 +38477,7 @@ class _$ValidationSuccessfulImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -38426,7 +38566,7 @@ class _$ValidationSuccessfulImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -38642,7 +38782,8 @@ class _$ValidationFailedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -38679,7 +38820,7 @@ class _$ValidationFailedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -38820,7 +38961,8 @@ class _$ValidationFailedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -38851,7 +38993,7 @@ class _$ValidationFailedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -38986,7 +39128,8 @@ class _$ValidationFailedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -39016,7 +39159,7 @@ class _$ValidationFailedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -39164,7 +39307,7 @@ class _$ValidationFailedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -39256,7 +39399,7 @@ class _$ValidationFailedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -39345,7 +39488,7 @@ class _$ValidationFailedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -39561,7 +39704,8 @@ class _$GuideMeClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -39598,7 +39742,7 @@ class _$GuideMeClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -39739,7 +39883,8 @@ class _$GuideMeClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -39770,7 +39915,7 @@ class _$GuideMeClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -39905,7 +40050,8 @@ class _$GuideMeClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -39935,7 +40081,7 @@ class _$GuideMeClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -40083,7 +40229,7 @@ class _$GuideMeClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -40175,7 +40321,7 @@ class _$GuideMeClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -40264,7 +40410,7 @@ class _$GuideMeClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -40478,7 +40624,8 @@ class _$CardColorCHangedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -40515,7 +40662,7 @@ class _$CardColorCHangedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -40656,7 +40803,8 @@ class _$CardColorCHangedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -40687,7 +40835,7 @@ class _$CardColorCHangedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -40822,7 +40970,8 @@ class _$CardColorCHangedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -40852,7 +41001,7 @@ class _$CardColorCHangedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -41000,7 +41149,7 @@ class _$CardColorCHangedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -41092,7 +41241,7 @@ class _$CardColorCHangedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -41181,7 +41330,7 @@ class _$CardColorCHangedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -41397,7 +41546,8 @@ class _$ClickedOnPrivateKeyImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -41434,7 +41584,7 @@ class _$ClickedOnPrivateKeyImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -41575,7 +41725,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -41606,7 +41757,7 @@ class _$ClickedOnPrivateKeyImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -41741,7 +41892,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -41771,7 +41923,7 @@ class _$ClickedOnPrivateKeyImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -41919,7 +42071,7 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -42011,7 +42163,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -42100,7 +42252,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -42316,7 +42468,8 @@ class _$PrivateKeyRevealedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -42353,7 +42506,7 @@ class _$PrivateKeyRevealedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -42494,7 +42647,8 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -42525,7 +42679,7 @@ class _$PrivateKeyRevealedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -42660,7 +42814,8 @@ class _$PrivateKeyRevealedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -42690,7 +42845,7 @@ class _$PrivateKeyRevealedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -42838,7 +42993,7 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -42930,7 +43085,7 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -43019,7 +43174,7 @@ class _$PrivateKeyRevealedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -43235,7 +43390,8 @@ class _$PrivateKeyCopiedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -43272,7 +43428,7 @@ class _$PrivateKeyCopiedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -43413,7 +43569,8 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -43444,7 +43601,7 @@ class _$PrivateKeyCopiedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -43579,7 +43736,8 @@ class _$PrivateKeyCopiedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -43609,7 +43767,7 @@ class _$PrivateKeyCopiedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -43757,7 +43915,7 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -43849,7 +44007,7 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -43938,7 +44096,7 @@ class _$PrivateKeyCopiedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -44142,7 +44300,8 @@ class _$CardNameChangedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -44179,7 +44338,7 @@ class _$CardNameChangedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -44320,7 +44479,8 @@ class _$CardNameChangedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -44351,7 +44511,7 @@ class _$CardNameChangedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -44486,7 +44646,8 @@ class _$CardNameChangedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -44516,7 +44677,7 @@ class _$CardNameChangedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -44664,7 +44825,7 @@ class _$CardNameChangedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -44756,7 +44917,7 @@ class _$CardNameChangedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -44845,7 +45006,7 @@ class _$CardNameChangedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -45046,7 +45207,8 @@ class _$HelpCenterClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -45083,7 +45245,7 @@ class _$HelpCenterClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -45224,7 +45386,8 @@ class _$HelpCenterClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -45255,7 +45418,7 @@ class _$HelpCenterClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -45390,7 +45553,8 @@ class _$HelpCenterClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -45420,7 +45584,7 @@ class _$HelpCenterClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -45568,7 +45732,7 @@ class _$HelpCenterClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -45660,7 +45824,7 @@ class _$HelpCenterClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -45749,7 +45913,7 @@ class _$HelpCenterClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -45978,7 +46142,8 @@ class _$RemoveCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -46015,7 +46180,7 @@ class _$RemoveCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -46156,7 +46321,8 @@ class _$RemoveCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -46187,7 +46353,7 @@ class _$RemoveCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -46323,7 +46489,8 @@ class _$RemoveCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -46353,7 +46520,7 @@ class _$RemoveCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -46501,7 +46668,7 @@ class _$RemoveCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -46593,7 +46760,7 @@ class _$RemoveCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -46682,7 +46849,7 @@ class _$RemoveCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -46912,7 +47079,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -46949,7 +47117,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -47090,7 +47258,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -47121,7 +47290,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -47256,7 +47425,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -47286,7 +47456,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -47434,7 +47604,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -47526,7 +47696,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -47615,7 +47785,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -47848,7 +48018,8 @@ class _$NotSureClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -47885,7 +48056,7 @@ class _$NotSureClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -48026,7 +48197,8 @@ class _$NotSureClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -48057,7 +48229,7 @@ class _$NotSureClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -48193,7 +48365,8 @@ class _$NotSureClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -48223,7 +48396,7 @@ class _$NotSureClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -48371,7 +48544,7 @@ class _$NotSureClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -48463,7 +48636,7 @@ class _$NotSureClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -48552,7 +48725,7 @@ class _$NotSureClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -48746,7 +48919,8 @@ class _$ContactUsClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -48783,7 +48957,7 @@ class _$ContactUsClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -48924,7 +49098,8 @@ class _$ContactUsClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -48955,7 +49130,7 @@ class _$ContactUsClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -49090,7 +49265,8 @@ class _$ContactUsClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -49120,7 +49296,7 @@ class _$ContactUsClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -49268,7 +49444,7 @@ class _$ContactUsClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -49360,7 +49536,7 @@ class _$ContactUsClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -49449,7 +49625,7 @@ class _$ContactUsClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -49637,7 +49813,8 @@ class _$AppLockClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -49674,7 +49851,7 @@ class _$AppLockClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -49815,7 +49992,8 @@ class _$AppLockClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -49846,7 +50024,7 @@ class _$AppLockClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -49981,7 +50159,8 @@ class _$AppLockClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -50011,7 +50190,7 @@ class _$AppLockClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -50159,7 +50338,7 @@ class _$AppLockClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -50251,7 +50430,7 @@ class _$AppLockClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -50340,7 +50519,7 @@ class _$AppLockClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -50527,7 +50706,8 @@ class _$AppLockDisabledImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -50564,7 +50744,7 @@ class _$AppLockDisabledImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -50705,7 +50885,8 @@ class _$AppLockDisabledImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -50736,7 +50917,7 @@ class _$AppLockDisabledImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -50871,7 +51052,8 @@ class _$AppLockDisabledImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -50901,7 +51083,7 @@ class _$AppLockDisabledImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -51049,7 +51231,7 @@ class _$AppLockDisabledImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -51141,7 +51323,7 @@ class _$AppLockDisabledImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -51230,7 +51412,7 @@ class _$AppLockDisabledImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -51419,7 +51601,8 @@ class _$ChangePasscodeClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -51456,7 +51639,7 @@ class _$ChangePasscodeClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -51597,7 +51780,8 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -51628,7 +51812,7 @@ class _$ChangePasscodeClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -51763,7 +51947,8 @@ class _$ChangePasscodeClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -51793,7 +51978,7 @@ class _$ChangePasscodeClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -51941,7 +52126,7 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -52033,7 +52218,7 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -52122,7 +52307,7 @@ class _$ChangePasscodeClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -52310,7 +52495,8 @@ class _$PasscodeChangedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -52347,7 +52533,7 @@ class _$PasscodeChangedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -52488,7 +52674,8 @@ class _$PasscodeChangedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -52519,7 +52706,7 @@ class _$PasscodeChangedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -52654,7 +52841,8 @@ class _$PasscodeChangedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -52684,7 +52872,7 @@ class _$PasscodeChangedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -52832,7 +53020,7 @@ class _$PasscodeChangedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -52924,7 +53112,7 @@ class _$PasscodeChangedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -53013,7 +53201,7 @@ class _$PasscodeChangedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -53200,7 +53388,8 @@ class _$FaceIdEnabledImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -53237,7 +53426,7 @@ class _$FaceIdEnabledImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -53378,7 +53567,8 @@ class _$FaceIdEnabledImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -53409,7 +53599,7 @@ class _$FaceIdEnabledImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -53544,7 +53734,8 @@ class _$FaceIdEnabledImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -53574,7 +53765,7 @@ class _$FaceIdEnabledImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -53722,7 +53913,7 @@ class _$FaceIdEnabledImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -53814,7 +54005,7 @@ class _$FaceIdEnabledImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -53903,7 +54094,7 @@ class _$FaceIdEnabledImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -54090,7 +54281,8 @@ class _$FaceIdDisabledImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -54127,7 +54319,7 @@ class _$FaceIdDisabledImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -54268,7 +54460,8 @@ class _$FaceIdDisabledImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -54299,7 +54492,7 @@ class _$FaceIdDisabledImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -54434,7 +54627,8 @@ class _$FaceIdDisabledImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -54464,7 +54658,7 @@ class _$FaceIdDisabledImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -54612,7 +54806,7 @@ class _$FaceIdDisabledImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -54704,7 +54898,7 @@ class _$FaceIdDisabledImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -54793,7 +54987,7 @@ class _$FaceIdDisabledImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -54980,7 +55174,8 @@ class _$PushNotificationsOnImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -55017,7 +55212,7 @@ class _$PushNotificationsOnImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -55158,7 +55353,8 @@ class _$PushNotificationsOnImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -55189,7 +55385,7 @@ class _$PushNotificationsOnImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -55324,7 +55520,8 @@ class _$PushNotificationsOnImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -55354,7 +55551,7 @@ class _$PushNotificationsOnImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -55502,7 +55699,7 @@ class _$PushNotificationsOnImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -55594,7 +55791,7 @@ class _$PushNotificationsOnImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -55683,7 +55880,7 @@ class _$PushNotificationsOnImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -55872,7 +56069,8 @@ class _$PushNotificationsOffImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -55909,7 +56107,7 @@ class _$PushNotificationsOffImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -56050,7 +56248,8 @@ class _$PushNotificationsOffImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -56081,7 +56280,7 @@ class _$PushNotificationsOffImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -56216,7 +56415,8 @@ class _$PushNotificationsOffImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -56246,7 +56446,7 @@ class _$PushNotificationsOffImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -56394,7 +56594,7 @@ class _$PushNotificationsOffImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -56486,7 +56686,7 @@ class _$PushNotificationsOffImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -56575,7 +56775,7 @@ class _$PushNotificationsOffImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -56775,7 +56975,8 @@ class _$JoinCommunityClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -56812,7 +57013,7 @@ class _$JoinCommunityClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -56953,7 +57154,8 @@ class _$JoinCommunityClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -56984,7 +57186,7 @@ class _$JoinCommunityClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -57119,7 +57321,8 @@ class _$JoinCommunityClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -57149,7 +57352,7 @@ class _$JoinCommunityClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -57297,7 +57500,7 @@ class _$JoinCommunityClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -57389,7 +57592,7 @@ class _$JoinCommunityClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -57478,7 +57681,7 @@ class _$JoinCommunityClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -57669,7 +57872,8 @@ class _$PrivacyPolicyClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -57706,7 +57910,7 @@ class _$PrivacyPolicyClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -57847,7 +58051,8 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -57878,7 +58083,7 @@ class _$PrivacyPolicyClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -58013,7 +58218,8 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -58043,7 +58249,7 @@ class _$PrivacyPolicyClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -58191,7 +58397,7 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -58283,7 +58489,7 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -58372,7 +58578,7 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -58560,7 +58766,8 @@ class _$TermsOfUseClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -58597,7 +58804,7 @@ class _$TermsOfUseClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -58738,7 +58945,8 @@ class _$TermsOfUseClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -58769,7 +58977,7 @@ class _$TermsOfUseClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -58904,7 +59112,8 @@ class _$TermsOfUseClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -58934,7 +59143,7 @@ class _$TermsOfUseClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -59082,7 +59291,7 @@ class _$TermsOfUseClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -59174,7 +59383,7 @@ class _$TermsOfUseClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -59263,7 +59472,7 @@ class _$TermsOfUseClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -59451,7 +59660,8 @@ class _$VerifyCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -59488,7 +59698,7 @@ class _$VerifyCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -59629,7 +59839,8 @@ class _$VerifyCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -59660,7 +59871,7 @@ class _$VerifyCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -59795,7 +60006,8 @@ class _$VerifyCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -59825,7 +60037,7 @@ class _$VerifyCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -59973,7 +60185,7 @@ class _$VerifyCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -60065,7 +60277,7 @@ class _$VerifyCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -60154,7 +60366,7 @@ class _$VerifyCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -60381,7 +60593,8 @@ class _$VerifyCardTappedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -60418,7 +60631,7 @@ class _$VerifyCardTappedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -60559,7 +60772,8 @@ class _$VerifyCardTappedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -60590,7 +60804,7 @@ class _$VerifyCardTappedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -60726,7 +60940,8 @@ class _$VerifyCardTappedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -60756,7 +60971,7 @@ class _$VerifyCardTappedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -60904,7 +61119,7 @@ class _$VerifyCardTappedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -60996,7 +61211,7 @@ class _$VerifyCardTappedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -61085,7 +61300,7 @@ class _$VerifyCardTappedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -61279,7 +61494,8 @@ class _$SendMessageClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -61316,7 +61532,7 @@ class _$SendMessageClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -61457,7 +61673,8 @@ class _$SendMessageClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -61488,7 +61705,7 @@ class _$SendMessageClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -61623,7 +61840,8 @@ class _$SendMessageClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -61653,7 +61871,7 @@ class _$SendMessageClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -61801,7 +62019,7 @@ class _$SendMessageClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -61893,7 +62111,7 @@ class _$SendMessageClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -61982,7 +62200,7 @@ class _$SendMessageClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -62170,7 +62388,8 @@ class _$CardTabClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -62207,7 +62426,7 @@ class _$CardTabClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -62348,7 +62567,8 @@ class _$CardTabClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -62379,7 +62599,7 @@ class _$CardTabClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -62514,7 +62734,8 @@ class _$CardTabClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -62544,7 +62765,7 @@ class _$CardTabClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -62692,7 +62913,7 @@ class _$CardTabClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -62784,7 +63005,7 @@ class _$CardTabClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -62873,7 +63094,7 @@ class _$CardTabClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -63059,7 +63280,8 @@ class _$BarTabClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -63096,7 +63318,7 @@ class _$BarTabClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -63237,7 +63459,8 @@ class _$BarTabClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -63268,7 +63491,7 @@ class _$BarTabClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -63403,7 +63626,8 @@ class _$BarTabClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -63433,7 +63657,7 @@ class _$BarTabClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -63581,7 +63805,7 @@ class _$BarTabClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -63673,7 +63897,7 @@ class _$BarTabClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -63762,7 +63986,7 @@ class _$BarTabClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -63960,7 +64184,8 @@ class _$TapToConnectClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -63997,7 +64222,7 @@ class _$TapToConnectClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -64138,7 +64363,8 @@ class _$TapToConnectClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -64169,7 +64395,7 @@ class _$TapToConnectClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -64304,7 +64530,8 @@ class _$TapToConnectClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -64334,7 +64561,7 @@ class _$TapToConnectClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -64482,7 +64709,7 @@ class _$TapToConnectClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -64574,7 +64801,7 @@ class _$TapToConnectClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -64663,7 +64890,7 @@ class _$TapToConnectClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -64892,7 +65119,8 @@ class _$CardDamagedClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -64929,7 +65157,7 @@ class _$CardDamagedClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -65070,7 +65298,8 @@ class _$CardDamagedClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -65101,7 +65330,7 @@ class _$CardDamagedClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -65237,7 +65466,8 @@ class _$CardDamagedClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -65267,7 +65497,7 @@ class _$CardDamagedClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -65416,7 +65646,7 @@ class _$CardDamagedClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -65508,7 +65738,7 @@ class _$CardDamagedClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -65597,7 +65827,7 @@ class _$CardDamagedClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -65831,7 +66061,8 @@ class _$NfcNotWorkingCLickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -65868,7 +66099,7 @@ class _$NfcNotWorkingCLickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -66010,7 +66241,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -66041,7 +66273,7 @@ class _$NfcNotWorkingCLickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -66177,7 +66409,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -66207,7 +66440,7 @@ class _$NfcNotWorkingCLickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -66356,7 +66589,7 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -66448,7 +66681,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -66537,7 +66770,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -66770,7 +67003,8 @@ class _$DontHaveCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -66807,7 +67041,7 @@ class _$DontHaveCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -66948,7 +67182,8 @@ class _$DontHaveCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -66979,7 +67214,7 @@ class _$DontHaveCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -67115,7 +67350,8 @@ class _$DontHaveCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -67145,7 +67381,7 @@ class _$DontHaveCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -67294,7 +67530,7 @@ class _$DontHaveCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -67386,7 +67622,7 @@ class _$DontHaveCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -67475,7 +67711,7 @@ class _$DontHaveCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -67708,7 +67944,8 @@ class _$LostCardClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -67745,7 +67982,7 @@ class _$LostCardClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -67886,7 +68123,8 @@ class _$LostCardClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -67917,7 +68155,7 @@ class _$LostCardClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -68053,7 +68291,8 @@ class _$LostCardClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -68083,7 +68322,7 @@ class _$LostCardClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -68231,7 +68470,7 @@ class _$LostCardClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -68323,7 +68562,7 @@ class _$LostCardClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -68412,7 +68651,7 @@ class _$LostCardClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -68648,7 +68887,8 @@ class _$TroubleActivateClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -68685,7 +68925,7 @@ class _$TroubleActivateClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -68827,7 +69067,8 @@ class _$TroubleActivateClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -68858,7 +69099,7 @@ class _$TroubleActivateClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -68994,7 +69235,8 @@ class _$TroubleActivateClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -69024,7 +69266,7 @@ class _$TroubleActivateClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -69173,7 +69415,7 @@ class _$TroubleActivateClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -69265,7 +69507,7 @@ class _$TroubleActivateClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -69354,7 +69596,7 @@ class _$TroubleActivateClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -69587,7 +69829,8 @@ class _$TroubleCloseClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -69624,7 +69867,7 @@ class _$TroubleCloseClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -69765,7 +70008,8 @@ class _$TroubleCloseClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -69796,7 +70040,7 @@ class _$TroubleCloseClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -69932,7 +70176,8 @@ class _$TroubleCloseClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -69962,7 +70207,7 @@ class _$TroubleCloseClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -70111,7 +70356,7 @@ class _$TroubleCloseClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -70203,7 +70448,7 @@ class _$TroubleCloseClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -70292,7 +70537,7 @@ class _$TroubleCloseClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -70525,7 +70770,8 @@ class _$TroubleGotItClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -70562,7 +70808,7 @@ class _$TroubleGotItClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -70703,7 +70949,8 @@ class _$TroubleGotItClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -70734,7 +70981,7 @@ class _$TroubleGotItClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -70870,7 +71117,8 @@ class _$TroubleGotItClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -70900,7 +71148,7 @@ class _$TroubleGotItClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -71049,7 +71297,7 @@ class _$TroubleGotItClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -71141,7 +71389,7 @@ class _$TroubleGotItClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -71230,7 +71478,7 @@ class _$TroubleGotItClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -71466,7 +71714,8 @@ class _$TroubleActivateNowClickedImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -71503,7 +71752,7 @@ class _$TroubleActivateNowClickedImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -71645,7 +71894,8 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -71676,7 +71926,7 @@ class _$TroubleActivateNowClickedImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -71812,7 +72062,8 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -71842,7 +72093,7 @@ class _$TroubleActivateNowClickedImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -71991,7 +72242,7 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -72083,7 +72334,7 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -72172,7 +72423,7 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -72377,7 +72628,8 @@ class _$CardAddedEventImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -72414,7 +72666,7 @@ class _$CardAddedEventImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -72555,7 +72807,8 @@ class _$CardAddedEventImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -72586,7 +72839,7 @@ class _$CardAddedEventImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -72721,7 +72974,8 @@ class _$CardAddedEventImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -72751,7 +73005,7 @@ class _$CardAddedEventImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -72899,7 +73153,7 @@ class _$CardAddedEventImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -72991,7 +73245,7 @@ class _$CardAddedEventImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -73080,7 +73334,7 @@ class _$CardAddedEventImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?
@@ -73280,7 +73534,8 @@ class _$BarAddedEventImpl
         connectManuallyClicked,
     required TResult Function(String eventType, String source)
         connectWithQrClicked,
-    required TResult Function(String eventType, String walletType)
+    required TResult Function(
+            String eventType, String walletType, String source)
         qrButtonClicked,
     required TResult Function(
             String eventType, String source, String walletAddress)
@@ -73317,7 +73572,7 @@ class _$BarAddedEventImpl
         gotItClicked,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
-    required TResult Function(String eventType) notNowClicked,
+    required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType,
@@ -73458,7 +73713,8 @@ class _$BarAddedEventImpl
     TResult? Function(String eventType)? connectWalletClicked,
     TResult? Function(String eventType, String source)? connectManuallyClicked,
     TResult? Function(String eventType, String source)? connectWithQrClicked,
-    TResult? Function(String eventType, String walletType)? qrButtonClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult? Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult? Function(String eventType, String source)? buyNewCardClicked,
@@ -73489,7 +73745,7 @@ class _$BarAddedEventImpl
         gotItClicked,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
-    TResult? Function(String eventType)? notNowClicked,
+    TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress,
@@ -73624,7 +73880,8 @@ class _$BarAddedEventImpl
     TResult Function(String eventType)? connectWalletClicked,
     TResult Function(String eventType, String source)? connectManuallyClicked,
     TResult Function(String eventType, String source)? connectWithQrClicked,
-    TResult Function(String eventType, String walletType)? qrButtonClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
     TResult Function(String eventType, String source, String walletAddress)?
         qrScanned,
     TResult Function(String eventType, String source)? buyNewCardClicked,
@@ -73654,7 +73911,7 @@ class _$BarAddedEventImpl
         gotItClicked,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
-    TResult Function(String eventType)? notNowClicked,
+    TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress,
@@ -73802,7 +74059,7 @@ class _$BarAddedEventImpl
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
-    required TResult Function(NotNowClicked value) notNowClicked,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value)
@@ -73894,7 +74151,7 @@ class _$BarAddedEventImpl
     TResult? Function(GotItClicked value)? gotItClicked,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
-    TResult? Function(NotNowClicked value)? notNowClicked,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)?
@@ -73983,7 +74240,7 @@ class _$BarAddedEventImpl
     TResult Function(GotItClicked value)? gotItClicked,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
-    TResult Function(NotNowClicked value)? notNowClicked,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)?

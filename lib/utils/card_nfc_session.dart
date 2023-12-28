@@ -141,7 +141,8 @@ Future<void> nfcSessionIos({
               //Fake card
               await NfcManager.instance.stopSession();
               await Future.delayed(const Duration(milliseconds: 2700));
-              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);            }
+              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+            }
           } else {
             //Connect as TrackerPlus
             await router.push(
@@ -250,7 +251,8 @@ Future<void> nfcSessionAndroid({
             );
           }
         } else {
-          await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);        }
+          await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+        }
       } else {
         if (tag.data.containsKey('mifareultralight')) {
           isMifareUltralight = true;
@@ -265,7 +267,8 @@ Future<void> nfcSessionAndroid({
                 ),
               );
             } else {
-              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);            }
+              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+            }
           } else {
             await router.push(
               CardFillWithNfc(

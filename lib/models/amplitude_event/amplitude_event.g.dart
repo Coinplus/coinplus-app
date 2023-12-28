@@ -53,12 +53,14 @@ Map<String, dynamic> _$$ConnectWitchQrClickedImplToJson(_$ConnectWitchQrClickedI
 _$QrButtonClickedImpl _$$QrButtonClickedImplFromJson(Map json) => _$QrButtonClickedImpl(
       eventType: json['eventType'] as String? ?? 'QR_BUTTON_CLICKED',
       walletType: json['walletType'] as String,
+      source: json['source'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$QrButtonClickedImplToJson(_$QrButtonClickedImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'walletType': instance.walletType,
+      'source': instance.source,
       'runtimeType': instance.$type,
     };
 
@@ -258,12 +260,12 @@ Map<String, dynamic> _$$AppLockEnabledImplToJson(_$AppLockEnabledImpl instance) 
       'runtimeType': instance.$type,
     };
 
-_$NotNowClickedImpl _$$NotNowClickedImplFromJson(Map json) => _$NotNowClickedImpl(
-      eventType: json['eventType'] as String? ?? 'NOT_NOW_CLICKED',
+_$NotNowLockClickedImpl _$$NotNowLockClickedImplFromJson(Map json) => _$NotNowLockClickedImpl(
+      eventType: json['eventType'] as String? ?? 'NOT_NOW_LOCK_CLICKED',
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$NotNowClickedImplToJson(_$NotNowClickedImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$NotNowLockClickedImplToJson(_$NotNowLockClickedImpl instance) => <String, dynamic>{
       'eventType': instance.eventType,
       'runtimeType': instance.$type,
     };
