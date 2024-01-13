@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -31,7 +32,6 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
-import '../../utils/compute_private_key.dart';
 import '../../widgets/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 import 'already_saved_card_dialog/already_saved_card_dialog.dart';
@@ -67,10 +67,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   final _flipCardController = FlipCardController();
   final _lineStore = LinesStore();
   final _focusNode = FocusNode();
-  final _addressState = AddressState();
+  final _addressState = AddressState(CardType.CARD);
   final _acceptState = AcceptState();
   final _checkboxState = CheckboxState();
-  late TextEditingController _btcAddressController = TextEditingController();
+  late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
@@ -84,10 +84,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   void initState() {
     super.initState();
     _toggleCard();
-    _nfcStop();
-    _btcAddressController.addListener(_validateBTCAddress);
-    _btcAddressController = TextEditingController();
-    _btcAddressController.text = widget.receivedData ?? '';
+    if (Platform.isAndroid) {
+      _nfcStop();
+    }
+    _btcAddressController.addListener(_addressState.validateBTCAddress);
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -102,7 +102,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
       upperBound: 1.09,
     );
     if (widget.receivedData != null) {
-      onInitWithAddress();
+      Future.delayed(const Duration(milliseconds: 300), () {
+        _btcAddressController.text = widget.receivedData ?? '';
+        _addressState.btcAddress = widget.receivedData!;
+      });
     }
     _connectivityStore.initConnectivity();
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
@@ -611,6 +614,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                               context: context,
                                               walletAddress: _balanceStore.selectedCard!.address,
                                             );
+                                            _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                                           } else {
                                             await _toggleCard();
                                             await Future.delayed(
@@ -660,6 +664,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                 context: context,
                                                 walletAddress: _balanceStore.selectedCard!.address,
                                               );
+                                              _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                                             } else {
                                               if (_flipCardController.state!.isFront) {
                                                 await _toggleCard();
@@ -685,34 +690,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
         ],
       ),
     );
-  }
-
-  Future<void> _validateBTCAddress() async {
-    final btcAddress = _btcAddressController.text.trim();
-    unawaited(
-      _balanceStore.getSelectedCard(btcAddress),
-    );
-    if (isValidPublicAddress(btcAddress)) {
-      _validationStore.validate();
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-      _focusNode.unfocus();
-      Future.delayed(
-        const Duration(milliseconds: 700),
-        _toggleCard,
-      );
-      Future.delayed(
-        const Duration(milliseconds: 1400),
-        () => _addressState.isAddressVisible = true,
-      );
-      await _lottieController.forward(from: 0);
-    } else {}
-  }
-
-  Future<void> onInitWithAddress() async {
-    _lottieController.reset();
-    await _validateBTCAddress();
   }
 
   Future<void> _nfcStop() async {

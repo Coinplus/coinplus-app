@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
+import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -55,7 +56,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
   final _validationStore = ValidationState();
-  final _addressState = AddressState();
+  final _addressState = AddressState(CardType.BAR);
   final _focusNode = FocusNode();
   final _lineStore = LinesStore();
   final _acceptState = AcceptState();
@@ -258,7 +259,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                                   await recordAmplitudeEvent(
                                                     AddressCopied(
                                                       walletType: 'Bar',
-                                                      walletAddress: _balanceStore.selectedCard!.address,
+                                                      walletAddress: _balanceStore.selectedBar!.address,
                                                       activated: false,
                                                       source: 'Balance',
                                                     ),
@@ -544,6 +545,9 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                           onTap: () {
                             _checkboxState.makeActive();
                             HapticFeedback.heavyImpact();
+                            recordAmplitudeEvent(
+                              const WarningCheckboxClicked(),
+                            );
                           },
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -746,6 +750,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                   context: context,
                                   walletAddress: _balanceStore.selectedBar!.address,
                                 );
+                                _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               } else {
                                 await Future.delayed(
                                   const Duration(milliseconds: 300),

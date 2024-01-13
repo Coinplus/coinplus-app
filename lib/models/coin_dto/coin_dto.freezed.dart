@@ -201,7 +201,7 @@ class _$CoinDtoImpl with DiagnosticableTreeMixin implements _CoinDto {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CoinDtoImpl &&

@@ -643,18 +643,20 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
   - BranchSDK (2.2.2)
-  - cloud_firestore (4.13.5):
+  - cloud_firestore (4.14.0):
     - Firebase/Firestore (= 10.18.0)
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - cloud_functions (4.5.8):
+  - cloud_functions (4.6.0):
     - Firebase/Functions (= 10.18.0)
     - firebase_core
     - Flutter
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
+  - did_change_authlocal (0.0.1):
+    - Flutter
   - Firebase/Auth (10.18.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.18.0)
@@ -666,7 +668,7 @@ PODS:
   - Firebase/Functions (10.18.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 10.18.0)
-  - firebase_auth (4.15.2):
+  - firebase_auth (4.16.0):
     - Firebase/Auth (= 10.18.0)
     - firebase_core
     - Flutter
@@ -852,7 +854,7 @@ PODS:
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
     - MLImage (= 1.0.0-beta4)
     - MLKitCommon (~> 9.0)
-  - mobile_scanner (3.5.5):
+  - mobile_scanner (3.5.6):
     - Flutter
     - GoogleMLKit/BarcodeScanning (~> 4.0.0)
   - MTBBarcodeScanner (5.0.11)
@@ -894,6 +896,7 @@ DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - did_change_authlocal (from `.symlinks/plugins/did_change_authlocal/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
@@ -963,6 +966,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_functions/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
+  did_change_authlocal:
+    :path: ".symlinks/plugins/did_change_authlocal/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -1016,11 +1021,12 @@ SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BranchSDK: 324f47ce8568005684cf024a47980bb713f47648
-  cloud_firestore: d2707a9ead952efd2a89e82347e46dc4b9c32e8d
-  cloud_functions: 8a6f73ee01574ce51bd4d027dbbce520c43a2996
+  cloud_firestore: 73eece22ce25a0565238c283ee9990f1618d8063
+  cloud_functions: ac380580bd5eae13e242c2107512e2fe43cd8e1e
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
+  did_change_authlocal: 4c744cc61a03ecfc0a058f4eb12128e0466edbc0
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
-  firebase_auth: 0099901926d85bda1688f6e451755b413c16154d
+  firebase_auth: 8e9ec02991ca4659111cc671c84d0c010b6bfb26
   firebase_core: 0af4a2b24f62071f9bf283691c0ee41556dcb3f5
   FirebaseAppCheckInterop: 37884781f3e16a1ba47e7ec80a1e805f987788e3
   FirebaseAuth: 12314b438fa76048540c8fb86d6cfc9e08595176
@@ -1033,7 +1039,7 @@ SPEC CHECKSUMS:
   FirebaseFunctions: b2565df59e28f00e070ff066bd61c2ce4da0e735
   FirebaseMessagingInterop: ec84569ed0436f52280ca07a214a83f48674cf5c
   FirebaseSharedSwift: f34eeb7d3ea87a34497629b6ca41657beadef76a
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_branch_sdk: 938f6f386a976356ee7e5f60969e53d4ae5704d9
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_web_browser: 7bccaafbb0c5b8862afe7bcd158f15557109f61f
@@ -1047,17 +1053,17 @@ SPEC CHECKSUMS:
   gRPC-Core: a21a60aefc08c68c247b439a9ef97174b0c54f96
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
-  local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
+  local_auth_ios: 1ba1475238daa33a6ffa2a29242558437be435ac
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
-  mobile_scanner: 202ab6f652e40a9add68b10de4c4fb2a745c4348
+  mobile_scanner: 38dcd8a49d7d485f632b7de65e4900010187aef2
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   Ramp: 3f843fb75cac12ad40842afa3226bae36dc93521
@@ -1065,10 +1071,10 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
-  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
-  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
-PODFILE CHECKSUM: 2131686b819c3f8f26ffe04dfd780f80c13f3062
+PODFILE CHECKSUM: 549b46006236ca978f7c89c4bdb3116a4c7cdbe9
 
 COCOAPODS: 1.14.3

@@ -240,6 +240,22 @@ Map<String, dynamic> _$$GotItClickedImplToJson(_$GotItClickedImpl instance) => <
       'runtimeType': instance.$type,
     };
 
+_$FakeWalletImpl _$$FakeWalletImplFromJson(Map json) => _$FakeWalletImpl(
+      eventType: json['eventType'] as String? ?? 'FAKE_WALLET',
+      source: json['source'] as String,
+      walletType: json['walletType'] as String,
+      walletAddress: json['walletAddress'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$FakeWalletImplToJson(_$FakeWalletImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'source': instance.source,
+      'walletType': instance.walletType,
+      'walletAddress': instance.walletAddress,
+      'runtimeType': instance.$type,
+    };
+
 _$WarningCheckboxClickedImpl _$$WarningCheckboxClickedImplFromJson(Map json) => _$WarningCheckboxClickedImpl(
       eventType: json['eventType'] as String? ?? 'WARNING_CHECKBOX_CLICKED',
       $type: json['runtimeType'] as String?,

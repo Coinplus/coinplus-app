@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
+import 'package:did_change_authlocal/did_change_authlocal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -24,6 +25,7 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
+import '../../utils/storage_utils.dart';
 import 'please_enable_biometrics.dart';
 
 @RoutePage()
@@ -66,6 +68,8 @@ class SettingsPage extends HookWidget {
         } else {
           if (_walletProtectState.canCheckBiometrics) {
             await _walletProtectState.authenticateWithBiometrics();
+            final currentToken = await DidChangeAuthLocal.instance.getTokenBiometric();
+            await StorageUtils.setString(key: 'biometricsToken', value: currentToken);
             await recordAmplitudeEvent(const FaceIdEnabled());
           } else {
             await pleaseEnableBiometrics(context, _walletProtectState);

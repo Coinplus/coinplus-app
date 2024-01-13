@@ -50,6 +50,8 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return ActivatedCheckboxClicked.fromJson(json);
     case 'gotItClicked':
       return GotItClicked.fromJson(json);
+    case 'fakeWallet':
+      return FakeWallet.fromJson(json);
     case 'warningCheckboxClicked':
       return WarningCheckboxClicked.fromJson(json);
     case 'appLockEnabled':
@@ -230,6 +232,9 @@ mixin _$AmplitudeEvent {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -400,6 +405,9 @@ mixin _$AmplitudeEvent {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -563,6 +571,9 @@ mixin _$AmplitudeEvent {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -704,6 +715,7 @@ mixin _$AmplitudeEvent {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -794,6 +806,7 @@ mixin _$AmplitudeEvent {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -880,6 +893,7 @@ mixin _$AmplitudeEvent {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -1050,7 +1064,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginEventImpl &&
@@ -1113,6 +1127,9 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -1286,6 +1303,9 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -1452,6 +1472,9 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -1599,6 +1622,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -1692,6 +1716,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -1781,6 +1806,7 @@ class _$LoginEventImpl with DiagnosticableTreeMixin implements LoginEvent {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -1942,7 +1968,7 @@ class _$ConnectWalletClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConnectWalletClickedImpl &&
@@ -2007,6 +2033,9 @@ class _$ConnectWalletClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -2180,6 +2209,9 @@ class _$ConnectWalletClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -2346,6 +2378,9 @@ class _$ConnectWalletClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -2493,6 +2528,7 @@ class _$ConnectWalletClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -2586,6 +2622,7 @@ class _$ConnectWalletClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -2675,6 +2712,7 @@ class _$ConnectWalletClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -2850,7 +2888,7 @@ class _$ConnectManuallyClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConnectManuallyClickedImpl &&
@@ -2915,6 +2953,9 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -3088,6 +3129,9 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -3254,6 +3298,9 @@ class _$ConnectManuallyClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -3401,6 +3448,7 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -3494,6 +3542,7 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -3583,6 +3632,7 @@ class _$ConnectManuallyClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -3758,7 +3808,7 @@ class _$ConnectWitchQrClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConnectWitchQrClickedImpl &&
@@ -3823,6 +3873,9 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -3996,6 +4049,9 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -4162,6 +4218,9 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -4309,6 +4368,7 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -4402,6 +4462,7 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -4491,6 +4552,7 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -4674,7 +4736,7 @@ class _$QrButtonClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QrButtonClickedImpl &&
@@ -4741,6 +4803,9 @@ class _$QrButtonClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -4914,6 +4979,9 @@ class _$QrButtonClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -5080,6 +5148,9 @@ class _$QrButtonClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -5227,6 +5298,7 @@ class _$QrButtonClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -5320,6 +5392,7 @@ class _$QrButtonClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -5409,6 +5482,7 @@ class _$QrButtonClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -5592,7 +5666,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QrScannedImpl &&
@@ -5659,6 +5733,9 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -5832,6 +5909,9 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -5998,6 +6078,9 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -6145,6 +6228,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -6238,6 +6322,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -6327,6 +6412,7 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -6503,7 +6589,7 @@ class _$BuyNewCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BuyNewCardClickedImpl &&
@@ -6568,6 +6654,9 @@ class _$BuyNewCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -6741,6 +6830,9 @@ class _$BuyNewCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -6907,6 +6999,9 @@ class _$BuyNewCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -7054,6 +7149,7 @@ class _$BuyNewCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -7147,6 +7243,7 @@ class _$BuyNewCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -7236,6 +7333,7 @@ class _$BuyNewCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -7420,7 +7518,7 @@ class _$ConnectOptionSelectedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConnectOptionSelectedImpl &&
@@ -7488,6 +7586,9 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -7661,6 +7762,9 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -7827,6 +7931,9 @@ class _$ConnectOptionSelectedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -7974,6 +8081,7 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -8067,6 +8175,7 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -8156,6 +8265,7 @@ class _$ConnectOptionSelectedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -8339,7 +8449,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NfcTappedImpl &&
@@ -8406,6 +8516,9 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -8579,6 +8692,9 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -8745,6 +8861,9 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -8892,6 +9011,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -8985,6 +9105,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -9074,6 +9195,7 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -9248,7 +9370,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NfcClosedImpl &&
@@ -9312,6 +9434,9 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -9485,6 +9610,9 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -9651,6 +9779,9 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -9798,6 +9929,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -9891,6 +10023,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -9980,6 +10113,7 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -10175,7 +10309,7 @@ class _$AddressFilledImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddressFilledImpl &&
@@ -10244,6 +10378,9 @@ class _$AddressFilledImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -10417,6 +10554,9 @@ class _$AddressFilledImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -10583,6 +10723,9 @@ class _$AddressFilledImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -10730,6 +10873,7 @@ class _$AddressFilledImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -10823,6 +10967,7 @@ class _$AddressFilledImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -10912,6 +11057,7 @@ class _$AddressFilledImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -11112,7 +11258,7 @@ class _$DeeplinkClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeeplinkClickedImpl &&
@@ -11182,6 +11328,9 @@ class _$DeeplinkClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -11355,6 +11504,9 @@ class _$DeeplinkClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -11521,6 +11673,9 @@ class _$DeeplinkClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -11668,6 +11823,7 @@ class _$DeeplinkClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -11761,6 +11917,7 @@ class _$DeeplinkClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -11850,6 +12007,7 @@ class _$DeeplinkClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -12035,7 +12193,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TypeSelectedImpl &&
@@ -12101,6 +12259,9 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -12274,6 +12435,9 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -12440,6 +12604,9 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -12587,6 +12754,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -12680,6 +12848,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -12769,6 +12938,7 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -12967,7 +13137,7 @@ class _$SaveToWalletClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaveToWalletClickedImpl &&
@@ -13037,6 +13207,9 @@ class _$SaveToWalletClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -13210,6 +13383,9 @@ class _$SaveToWalletClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -13377,6 +13553,9 @@ class _$SaveToWalletClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -13524,6 +13703,7 @@ class _$SaveToWalletClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -13617,6 +13797,7 @@ class _$SaveToWalletClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -13706,6 +13887,7 @@ class _$SaveToWalletClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -13896,7 +14078,7 @@ class _$AlreadySavedGotItClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AlreadySavedGotItClickedImpl &&
@@ -13965,6 +14147,9 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -14138,6 +14323,9 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -14304,6 +14492,9 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -14451,6 +14642,7 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -14544,6 +14736,7 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -14633,6 +14826,7 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -14834,7 +15028,7 @@ class _$ActivatedCheckboxClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ActivatedCheckboxClickedImpl &&
@@ -14904,6 +15098,9 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -15078,6 +15275,9 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -15245,6 +15445,9 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -15393,6 +15596,7 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -15486,6 +15690,7 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -15575,6 +15780,7 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -15773,7 +15979,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GotItClickedImpl &&
@@ -15842,6 +16048,9 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -16015,6 +16224,9 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -16181,6 +16393,9 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -16328,6 +16543,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -16421,6 +16637,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -16510,6 +16727,7 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -16613,6 +16831,953 @@ abstract class GotItClicked implements AmplitudeEvent {
 }
 
 /// @nodoc
+abstract class _$$FakeWalletImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$FakeWalletImplCopyWith(
+          _$FakeWalletImpl value, $Res Function(_$FakeWalletImpl) then) =
+      __$$FakeWalletImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String eventType,
+      String source,
+      String walletType,
+      String walletAddress});
+}
+
+/// @nodoc
+class __$$FakeWalletImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$FakeWalletImpl>
+    implements _$$FakeWalletImplCopyWith<$Res> {
+  __$$FakeWalletImplCopyWithImpl(
+      _$FakeWalletImpl _value, $Res Function(_$FakeWalletImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? source = null,
+    Object? walletType = null,
+    Object? walletAddress = null,
+  }) {
+    return _then(_$FakeWalletImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+      walletType: null == walletType
+          ? _value.walletType
+          : walletType // ignore: cast_nullable_to_non_nullable
+              as String,
+      walletAddress: null == walletAddress
+          ? _value.walletAddress
+          : walletAddress // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
+  const _$FakeWalletImpl(
+      {this.eventType = 'FAKE_WALLET',
+      required this.source,
+      required this.walletType,
+      required this.walletAddress,
+      final String? $type})
+      : $type = $type ?? 'fakeWallet';
+
+  factory _$FakeWalletImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FakeWalletImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String source;
+  @override
+  final String walletType;
+  @override
+  final String walletAddress;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.fakeWallet(eventType: $eventType, source: $source, walletType: $walletType, walletAddress: $walletAddress)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.fakeWallet'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('source', source))
+      ..add(DiagnosticsProperty('walletType', walletType))
+      ..add(DiagnosticsProperty('walletAddress', walletAddress));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FakeWalletImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.source, source) || other.source == source) &&
+            (identical(other.walletType, walletType) ||
+                other.walletType == walletType) &&
+            (identical(other.walletAddress, walletAddress) ||
+                other.walletAddress == walletAddress));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, eventType, source, walletType, walletAddress);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FakeWalletImplCopyWith<_$FakeWalletImpl> get copyWith =>
+      __$$FakeWalletImplCopyWithImpl<_$FakeWalletImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) login,
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source)
+        connectManuallyClicked,
+    required TResult Function(String eventType, String source)
+        connectWithQrClicked,
+    required TResult Function(
+            String eventType, String walletType, String source)
+        qrButtonClicked,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        qrScanned,
+    required TResult Function(String eventType, String source)
+        buyNewCardClicked,
+    required TResult Function(
+            String eventType, String source, String connectOption)
+        connectOptionSelected,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        addressFilled,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        deepLinkClicked,
+    required TResult Function(
+            String eventType, String source, String walletType)
+        typeSelected,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String walletAddress)
+        alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source)
+        addNewPlusClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletSettingsClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        receiveClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        sendClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        historyClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType, String source)
+        backButtonClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret1Validated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret2Validated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        continueClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        editSecretsClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationSuccessful,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationFailed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        guideMeClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String color)
+        cardColorChanged,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        clickedOnPrivateKey,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyRevealed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyCopied,
+    required TResult Function(String eventType, String walletType)
+        cardNameChanged,
+    required TResult Function(String eventType, String source)
+        helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDeleted,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social)
+        joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+  }) {
+    return fakeWallet(eventType, source, walletType, walletAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? login,
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult? Function(
+            String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+  }) {
+    return fakeWallet?.call(eventType, source, walletType, walletAddress);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? login,
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    required TResult orElse(),
+  }) {
+    if (fakeWallet != null) {
+      return fakeWallet(eventType, source, walletType, walletAddress);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoginEvent value) login,
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value)
+        connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value)
+        connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value)
+        alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value)
+        activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value)
+        warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value)
+        transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value)
+        walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value)
+        changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value)
+        troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value)
+        troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+  }) {
+    return fakeWallet(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoginEvent value)? login,
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+  }) {
+    return fakeWallet?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoginEvent value)? login,
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    required TResult orElse(),
+  }) {
+    if (fakeWallet != null) {
+      return fakeWallet(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FakeWalletImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class FakeWallet implements AmplitudeEvent {
+  const factory FakeWallet(
+      {final String eventType,
+      required final String source,
+      required final String walletType,
+      required final String walletAddress}) = _$FakeWalletImpl;
+
+  factory FakeWallet.fromJson(Map<String, dynamic> json) =
+      _$FakeWalletImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get source;
+  String get walletType;
+  String get walletAddress;
+  @override
+  @JsonKey(ignore: true)
+  _$$FakeWalletImplCopyWith<_$FakeWalletImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 abstract class _$$WarningCheckboxClickedImplCopyWith<$Res>
     implements $AmplitudeEventCopyWith<$Res> {
   factory _$$WarningCheckboxClickedImplCopyWith(
@@ -16681,7 +17846,7 @@ class _$WarningCheckboxClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WarningCheckboxClickedImpl &&
@@ -16745,6 +17910,9 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -16918,6 +18086,9 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -17084,6 +18255,9 @@ class _$WarningCheckboxClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -17231,6 +18405,7 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -17324,6 +18499,7 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -17413,6 +18589,7 @@ class _$WarningCheckboxClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -17575,7 +18752,7 @@ class _$AppLockEnabledImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppLockEnabledImpl &&
@@ -17639,6 +18816,9 @@ class _$AppLockEnabledImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -17812,6 +18992,9 @@ class _$AppLockEnabledImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -17978,6 +19161,9 @@ class _$AppLockEnabledImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -18125,6 +19311,7 @@ class _$AppLockEnabledImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -18218,6 +19405,7 @@ class _$AppLockEnabledImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -18307,6 +19495,7 @@ class _$AppLockEnabledImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -18468,7 +19657,7 @@ class _$NotNowLockClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotNowLockClickedImpl &&
@@ -18532,6 +19721,9 @@ class _$NotNowLockClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -18705,6 +19897,9 @@ class _$NotNowLockClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -18871,6 +20066,9 @@ class _$NotNowLockClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -19018,6 +20216,7 @@ class _$NotNowLockClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -19111,6 +20310,7 @@ class _$NotNowLockClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -19200,6 +20400,7 @@ class _$NotNowLockClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -19362,7 +20563,7 @@ class _$WalletTabClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WalletTabClickedImpl &&
@@ -19426,6 +20627,9 @@ class _$WalletTabClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -19599,6 +20803,9 @@ class _$WalletTabClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -19765,6 +20972,9 @@ class _$WalletTabClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -19912,6 +21122,7 @@ class _$WalletTabClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -20005,6 +21216,7 @@ class _$WalletTabClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -20094,6 +21306,7 @@ class _$WalletTabClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -20256,7 +21469,7 @@ class _$SettingsTabClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SettingsTabClickedImpl &&
@@ -20320,6 +21533,9 @@ class _$SettingsTabClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -20493,6 +21709,9 @@ class _$SettingsTabClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -20659,6 +21878,9 @@ class _$SettingsTabClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -20806,6 +22028,7 @@ class _$SettingsTabClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -20899,6 +22122,7 @@ class _$SettingsTabClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -20988,6 +22212,7 @@ class _$SettingsTabClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -21185,7 +22410,7 @@ class _$TransactionsButtonClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionsButtonClickedImpl &&
@@ -21256,6 +22481,9 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -21430,6 +22658,9 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -21597,6 +22828,9 @@ class _$TransactionsButtonClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -21745,6 +22979,7 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -21838,6 +23073,7 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -21927,6 +23163,7 @@ class _$TransactionsButtonClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -22105,7 +23342,7 @@ class _$AddNewClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddNewClickedImpl &&
@@ -22169,6 +23406,9 @@ class _$AddNewClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -22342,6 +23582,9 @@ class _$AddNewClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -22508,6 +23751,9 @@ class _$AddNewClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -22655,6 +23901,7 @@ class _$AddNewClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -22748,6 +23995,7 @@ class _$AddNewClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -22837,6 +24085,7 @@ class _$AddNewClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -23011,7 +24260,7 @@ class _$AddNewPlusClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddNewPlusClickedImpl &&
@@ -23076,6 +24325,9 @@ class _$AddNewPlusClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -23249,6 +24501,9 @@ class _$AddNewPlusClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -23415,6 +24670,9 @@ class _$AddNewPlusClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -23562,6 +24820,7 @@ class _$AddNewPlusClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -23655,6 +24914,7 @@ class _$AddNewPlusClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -23744,6 +25004,7 @@ class _$AddNewPlusClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -23928,7 +25189,7 @@ class _$WalletSettingsClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WalletSettingsClickedImpl &&
@@ -23997,6 +25258,9 @@ class _$WalletSettingsClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -24170,6 +25434,9 @@ class _$WalletSettingsClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -24336,6 +25603,9 @@ class _$WalletSettingsClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -24483,6 +25753,7 @@ class _$WalletSettingsClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -24576,6 +25847,7 @@ class _$WalletSettingsClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -24665,6 +25937,7 @@ class _$WalletSettingsClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -24863,7 +26136,7 @@ class _$TopUpButtonClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TopUpButtonClickedImpl &&
@@ -24934,6 +26207,9 @@ class _$TopUpButtonClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -25107,6 +26383,9 @@ class _$TopUpButtonClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -25274,6 +26553,9 @@ class _$TopUpButtonClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -25422,6 +26704,7 @@ class _$TopUpButtonClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -25515,6 +26798,7 @@ class _$TopUpButtonClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -25604,6 +26888,7 @@ class _$TopUpButtonClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -25804,7 +27089,7 @@ class _$ReceiveClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReceiveClickedImpl &&
@@ -25875,6 +27160,9 @@ class _$ReceiveClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -26048,6 +27336,9 @@ class _$ReceiveClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -26215,6 +27506,9 @@ class _$ReceiveClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -26362,6 +27656,7 @@ class _$ReceiveClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -26455,6 +27750,7 @@ class _$ReceiveClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -26544,6 +27840,7 @@ class _$ReceiveClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -26742,7 +28039,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SendClickedImpl &&
@@ -26812,6 +28109,9 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -26985,6 +28285,9 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -27151,6 +28454,9 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -27298,6 +28604,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -27391,6 +28698,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -27480,6 +28788,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -27680,7 +28989,7 @@ class _$BuyWithCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BuyWithCardClickedImpl &&
@@ -27751,6 +29060,9 @@ class _$BuyWithCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -27924,6 +29236,9 @@ class _$BuyWithCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -28091,6 +29406,9 @@ class _$BuyWithCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -28239,6 +29557,7 @@ class _$BuyWithCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -28332,6 +29651,7 @@ class _$BuyWithCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -28421,6 +29741,7 @@ class _$BuyWithCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -28621,7 +29942,7 @@ class _$HistoryClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HistoryClickedImpl &&
@@ -28692,6 +30013,9 @@ class _$HistoryClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -28865,6 +30189,9 @@ class _$HistoryClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -29032,6 +30359,9 @@ class _$HistoryClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -29179,6 +30509,7 @@ class _$HistoryClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -29272,6 +30603,7 @@ class _$HistoryClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -29361,6 +30693,7 @@ class _$HistoryClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -29571,7 +30904,7 @@ class _$AddressCopiedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddressCopiedImpl &&
@@ -29642,6 +30975,9 @@ class _$AddressCopiedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -29816,6 +31152,9 @@ class _$AddressCopiedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -29983,6 +31322,9 @@ class _$AddressCopiedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -30131,6 +31473,7 @@ class _$AddressCopiedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -30224,6 +31567,7 @@ class _$AddressCopiedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -30313,6 +31657,7 @@ class _$AddressCopiedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -30515,7 +31860,7 @@ class _$ShareAddressClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShareAddressClickedImpl &&
@@ -30586,6 +31931,9 @@ class _$ShareAddressClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -30759,6 +32107,9 @@ class _$ShareAddressClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -30926,6 +32277,9 @@ class _$ShareAddressClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -31074,6 +32428,7 @@ class _$ShareAddressClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -31167,6 +32522,7 @@ class _$ShareAddressClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -31256,6 +32612,7 @@ class _$ShareAddressClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -31424,7 +32781,7 @@ class _$GotItSendClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GotItSendClickedImpl &&
@@ -31488,6 +32845,9 @@ class _$GotItSendClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -31661,6 +33021,9 @@ class _$GotItSendClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -31827,6 +33190,9 @@ class _$GotItSendClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -31974,6 +33340,7 @@ class _$GotItSendClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -32067,6 +33434,7 @@ class _$GotItSendClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -32156,6 +33524,7 @@ class _$GotItSendClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -32318,7 +33687,7 @@ class _$SendAnywayClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SendAnywayClickedImpl &&
@@ -32382,6 +33751,9 @@ class _$SendAnywayClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -32555,6 +33927,9 @@ class _$SendAnywayClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -32721,6 +34096,9 @@ class _$SendAnywayClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -32868,6 +34246,7 @@ class _$SendAnywayClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -32961,6 +34340,7 @@ class _$SendAnywayClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -33050,6 +34430,7 @@ class _$SendAnywayClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -33222,7 +34603,7 @@ class _$BackButtonClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BackButtonClickedImpl &&
@@ -33287,6 +34668,9 @@ class _$BackButtonClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -33460,6 +34844,9 @@ class _$BackButtonClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -33626,6 +35013,9 @@ class _$BackButtonClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -33773,6 +35163,7 @@ class _$BackButtonClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -33866,6 +35257,7 @@ class _$BackButtonClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -33955,6 +35347,7 @@ class _$BackButtonClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -34138,7 +35531,7 @@ class _$Secret1ValidatedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Secret1ValidatedImpl &&
@@ -34207,6 +35600,9 @@ class _$Secret1ValidatedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -34380,6 +35776,9 @@ class _$Secret1ValidatedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -34546,6 +35945,9 @@ class _$Secret1ValidatedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -34693,6 +36095,7 @@ class _$Secret1ValidatedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -34786,6 +36189,7 @@ class _$Secret1ValidatedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -34875,6 +36279,7 @@ class _$Secret1ValidatedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -35060,7 +36465,7 @@ class _$Secret2ValidatedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Secret2ValidatedImpl &&
@@ -35129,6 +36534,9 @@ class _$Secret2ValidatedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -35302,6 +36710,9 @@ class _$Secret2ValidatedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -35468,6 +36879,9 @@ class _$Secret2ValidatedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -35615,6 +37029,7 @@ class _$Secret2ValidatedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -35708,6 +37123,7 @@ class _$Secret2ValidatedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -35797,6 +37213,7 @@ class _$Secret2ValidatedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -35982,7 +37399,7 @@ class _$ContinueCLickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ContinueCLickedImpl &&
@@ -36051,6 +37468,9 @@ class _$ContinueCLickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -36224,6 +37644,9 @@ class _$ContinueCLickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -36390,6 +37813,9 @@ class _$ContinueCLickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -36537,6 +37963,7 @@ class _$ContinueCLickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -36630,6 +38057,7 @@ class _$ContinueCLickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -36719,6 +38147,7 @@ class _$ContinueCLickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -36904,7 +38333,7 @@ class _$EditSecretsClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EditSecretsClickedImpl &&
@@ -36973,6 +38402,9 @@ class _$EditSecretsClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -37146,6 +38578,9 @@ class _$EditSecretsClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -37312,6 +38747,9 @@ class _$EditSecretsClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -37459,6 +38897,7 @@ class _$EditSecretsClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -37552,6 +38991,7 @@ class _$EditSecretsClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -37641,6 +39081,7 @@ class _$EditSecretsClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -37826,7 +39267,7 @@ class _$ValidationSuccessfulImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ValidationSuccessfulImpl &&
@@ -37896,6 +39337,9 @@ class _$ValidationSuccessfulImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -38069,6 +39513,9 @@ class _$ValidationSuccessfulImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -38235,6 +39682,9 @@ class _$ValidationSuccessfulImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -38382,6 +39832,7 @@ class _$ValidationSuccessfulImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -38475,6 +39926,7 @@ class _$ValidationSuccessfulImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -38564,6 +40016,7 @@ class _$ValidationSuccessfulImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -38749,7 +40202,7 @@ class _$ValidationFailedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ValidationFailedImpl &&
@@ -38818,6 +40271,9 @@ class _$ValidationFailedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -38991,6 +40447,9 @@ class _$ValidationFailedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -39157,6 +40616,9 @@ class _$ValidationFailedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -39304,6 +40766,7 @@ class _$ValidationFailedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -39397,6 +40860,7 @@ class _$ValidationFailedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -39486,6 +40950,7 @@ class _$ValidationFailedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -39671,7 +41136,7 @@ class _$GuideMeClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GuideMeClickedImpl &&
@@ -39740,6 +41205,9 @@ class _$GuideMeClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -39913,6 +41381,9 @@ class _$GuideMeClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -40079,6 +41550,9 @@ class _$GuideMeClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -40226,6 +41700,7 @@ class _$GuideMeClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -40319,6 +41794,7 @@ class _$GuideMeClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -40408,6 +41884,7 @@ class _$GuideMeClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -40593,7 +42070,7 @@ class _$CardColorCHangedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardColorCHangedImpl &&
@@ -40660,6 +42137,9 @@ class _$CardColorCHangedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -40833,6 +42313,9 @@ class _$CardColorCHangedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -40999,6 +42482,9 @@ class _$CardColorCHangedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -41146,6 +42632,7 @@ class _$CardColorCHangedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -41239,6 +42726,7 @@ class _$CardColorCHangedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -41328,6 +42816,7 @@ class _$CardColorCHangedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -41513,7 +43002,7 @@ class _$ClickedOnPrivateKeyImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ClickedOnPrivateKeyImpl &&
@@ -41582,6 +43071,9 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -41755,6 +43247,9 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -41921,6 +43416,9 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -42068,6 +43566,7 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -42161,6 +43660,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -42250,6 +43750,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -42435,7 +43936,7 @@ class _$PrivateKeyRevealedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PrivateKeyRevealedImpl &&
@@ -42504,6 +44005,9 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -42677,6 +44181,9 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -42843,6 +44350,9 @@ class _$PrivateKeyRevealedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -42990,6 +44500,7 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -43083,6 +44594,7 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -43172,6 +44684,7 @@ class _$PrivateKeyRevealedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -43357,7 +44870,7 @@ class _$PrivateKeyCopiedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PrivateKeyCopiedImpl &&
@@ -43426,6 +44939,9 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -43599,6 +45115,9 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -43765,6 +45284,9 @@ class _$PrivateKeyCopiedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -43912,6 +45434,7 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -44005,6 +45528,7 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -44094,6 +45618,7 @@ class _$PrivateKeyCopiedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -44270,7 +45795,7 @@ class _$CardNameChangedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardNameChangedImpl &&
@@ -44336,6 +45861,9 @@ class _$CardNameChangedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -44509,6 +46037,9 @@ class _$CardNameChangedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -44675,6 +46206,9 @@ class _$CardNameChangedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -44822,6 +46356,7 @@ class _$CardNameChangedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -44915,6 +46450,7 @@ class _$CardNameChangedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -45004,6 +46540,7 @@ class _$CardNameChangedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -45178,7 +46715,7 @@ class _$HelpCenterClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HelpCenterClickedImpl &&
@@ -45243,6 +46780,9 @@ class _$HelpCenterClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -45416,6 +46956,9 @@ class _$HelpCenterClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -45582,6 +47125,9 @@ class _$HelpCenterClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -45729,6 +47275,7 @@ class _$HelpCenterClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -45822,6 +47369,7 @@ class _$HelpCenterClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -45911,6 +47459,7 @@ class _$HelpCenterClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -46107,7 +47656,7 @@ class _$RemoveCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RemoveCardClickedImpl &&
@@ -46178,6 +47727,9 @@ class _$RemoveCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -46351,6 +47903,9 @@ class _$RemoveCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -46518,6 +48073,9 @@ class _$RemoveCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -46665,6 +48223,7 @@ class _$RemoveCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -46758,6 +48317,7 @@ class _$RemoveCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -46847,6 +48407,7 @@ class _$RemoveCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -47045,7 +48606,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardDeletedImpl &&
@@ -47115,6 +48676,9 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -47288,6 +48852,9 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -47454,6 +49021,9 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -47601,6 +49171,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -47694,6 +49265,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -47783,6 +49355,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -47983,7 +49556,7 @@ class _$NotSureClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotSureClickedImpl &&
@@ -48054,6 +49627,9 @@ class _$NotSureClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -48227,6 +49803,9 @@ class _$NotSureClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -48394,6 +49973,9 @@ class _$NotSureClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -48541,6 +50123,7 @@ class _$NotSureClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -48634,6 +50217,7 @@ class _$NotSureClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -48723,6 +50307,7 @@ class _$NotSureClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -48891,7 +50476,7 @@ class _$ContactUsClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ContactUsClickedImpl &&
@@ -48955,6 +50540,9 @@ class _$ContactUsClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -49128,6 +50716,9 @@ class _$ContactUsClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -49294,6 +50885,9 @@ class _$ContactUsClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -49441,6 +51035,7 @@ class _$ContactUsClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -49534,6 +51129,7 @@ class _$ContactUsClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -49623,6 +51219,7 @@ class _$ContactUsClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -49785,7 +51382,7 @@ class _$AppLockClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppLockClickedImpl &&
@@ -49849,6 +51446,9 @@ class _$AppLockClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -50022,6 +51622,9 @@ class _$AppLockClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -50188,6 +51791,9 @@ class _$AppLockClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -50335,6 +51941,7 @@ class _$AppLockClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -50428,6 +52035,7 @@ class _$AppLockClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -50517,6 +52125,7 @@ class _$AppLockClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -50678,7 +52287,7 @@ class _$AppLockDisabledImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppLockDisabledImpl &&
@@ -50742,6 +52351,9 @@ class _$AppLockDisabledImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -50915,6 +52527,9 @@ class _$AppLockDisabledImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -51081,6 +52696,9 @@ class _$AppLockDisabledImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -51228,6 +52846,7 @@ class _$AppLockDisabledImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -51321,6 +52940,7 @@ class _$AppLockDisabledImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -51410,6 +53030,7 @@ class _$AppLockDisabledImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -51573,7 +53194,7 @@ class _$ChangePasscodeClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChangePasscodeClickedImpl &&
@@ -51637,6 +53258,9 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -51810,6 +53434,9 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -51976,6 +53603,9 @@ class _$ChangePasscodeClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -52123,6 +53753,7 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -52216,6 +53847,7 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -52305,6 +53937,7 @@ class _$ChangePasscodeClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -52467,7 +54100,7 @@ class _$PasscodeChangedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PasscodeChangedImpl &&
@@ -52531,6 +54164,9 @@ class _$PasscodeChangedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -52704,6 +54340,9 @@ class _$PasscodeChangedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -52870,6 +54509,9 @@ class _$PasscodeChangedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -53017,6 +54659,7 @@ class _$PasscodeChangedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -53110,6 +54753,7 @@ class _$PasscodeChangedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -53199,6 +54843,7 @@ class _$PasscodeChangedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -53361,7 +55006,7 @@ class _$FaceIdEnabledImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FaceIdEnabledImpl &&
@@ -53424,6 +55069,9 @@ class _$FaceIdEnabledImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -53597,6 +55245,9 @@ class _$FaceIdEnabledImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -53763,6 +55414,9 @@ class _$FaceIdEnabledImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -53910,6 +55564,7 @@ class _$FaceIdEnabledImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -54003,6 +55658,7 @@ class _$FaceIdEnabledImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -54092,6 +55748,7 @@ class _$FaceIdEnabledImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -54253,7 +55910,7 @@ class _$FaceIdDisabledImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FaceIdDisabledImpl &&
@@ -54317,6 +55974,9 @@ class _$FaceIdDisabledImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -54490,6 +56150,9 @@ class _$FaceIdDisabledImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -54656,6 +56319,9 @@ class _$FaceIdDisabledImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -54803,6 +56469,7 @@ class _$FaceIdDisabledImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -54896,6 +56563,7 @@ class _$FaceIdDisabledImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -54985,6 +56653,7 @@ class _$FaceIdDisabledImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -55146,7 +56815,7 @@ class _$PushNotificationsOnImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PushNotificationsOnImpl &&
@@ -55210,6 +56879,9 @@ class _$PushNotificationsOnImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -55383,6 +57055,9 @@ class _$PushNotificationsOnImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -55549,6 +57224,9 @@ class _$PushNotificationsOnImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -55696,6 +57374,7 @@ class _$PushNotificationsOnImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -55789,6 +57468,7 @@ class _$PushNotificationsOnImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -55878,6 +57558,7 @@ class _$PushNotificationsOnImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -56040,7 +57721,7 @@ class _$PushNotificationsOffImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PushNotificationsOffImpl &&
@@ -56105,6 +57786,9 @@ class _$PushNotificationsOffImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -56278,6 +57962,9 @@ class _$PushNotificationsOffImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -56444,6 +58131,9 @@ class _$PushNotificationsOffImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -56591,6 +58281,7 @@ class _$PushNotificationsOffImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -56684,6 +58375,7 @@ class _$PushNotificationsOffImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -56773,6 +58465,7 @@ class _$PushNotificationsOffImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -56945,7 +58638,7 @@ class _$JoinCommunityClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$JoinCommunityClickedImpl &&
@@ -57011,6 +58704,9 @@ class _$JoinCommunityClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -57184,6 +58880,9 @@ class _$JoinCommunityClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -57350,6 +59049,9 @@ class _$JoinCommunityClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -57497,6 +59199,7 @@ class _$JoinCommunityClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -57590,6 +59293,7 @@ class _$JoinCommunityClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -57679,6 +59383,7 @@ class _$JoinCommunityClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -57843,7 +59548,7 @@ class _$PrivacyPolicyClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PrivacyPolicyClickedImpl &&
@@ -57908,6 +59613,9 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -58081,6 +59789,9 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -58247,6 +59958,9 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -58394,6 +60108,7 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -58487,6 +60202,7 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -58576,6 +60292,7 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -58738,7 +60455,7 @@ class _$TermsOfUseClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TermsOfUseClickedImpl &&
@@ -58802,6 +60519,9 @@ class _$TermsOfUseClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -58975,6 +60695,9 @@ class _$TermsOfUseClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -59141,6 +60864,9 @@ class _$TermsOfUseClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -59288,6 +61014,7 @@ class _$TermsOfUseClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -59381,6 +61108,7 @@ class _$TermsOfUseClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -59470,6 +61198,7 @@ class _$TermsOfUseClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -59632,7 +61361,7 @@ class _$VerifyCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VerifyCardClickedImpl &&
@@ -59696,6 +61425,9 @@ class _$VerifyCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -59869,6 +61601,9 @@ class _$VerifyCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -60035,6 +61770,9 @@ class _$VerifyCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -60182,6 +61920,7 @@ class _$VerifyCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -60275,6 +62014,7 @@ class _$VerifyCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -60364,6 +62104,7 @@ class _$VerifyCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -60558,7 +62299,7 @@ class _$VerifyCardTappedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VerifyCardTappedImpl &&
@@ -60629,6 +62370,9 @@ class _$VerifyCardTappedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -60802,6 +62546,9 @@ class _$VerifyCardTappedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -60969,6 +62716,9 @@ class _$VerifyCardTappedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -61116,6 +62866,7 @@ class _$VerifyCardTappedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -61209,6 +62960,7 @@ class _$VerifyCardTappedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -61298,6 +63050,7 @@ class _$VerifyCardTappedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -61466,7 +63219,7 @@ class _$SendMessageClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SendMessageClickedImpl &&
@@ -61530,6 +63283,9 @@ class _$SendMessageClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -61703,6 +63459,9 @@ class _$SendMessageClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -61869,6 +63628,9 @@ class _$SendMessageClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -62016,6 +63778,7 @@ class _$SendMessageClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -62109,6 +63872,7 @@ class _$SendMessageClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -62198,6 +63962,7 @@ class _$SendMessageClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -62360,7 +64125,7 @@ class _$CardTabClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardTabClickedImpl &&
@@ -62424,6 +64189,9 @@ class _$CardTabClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -62597,6 +64365,9 @@ class _$CardTabClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -62763,6 +64534,9 @@ class _$CardTabClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -62910,6 +64684,7 @@ class _$CardTabClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -63003,6 +64778,7 @@ class _$CardTabClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -63092,6 +64868,7 @@ class _$CardTabClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -63253,7 +65030,7 @@ class _$BarTabClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarTabClickedImpl &&
@@ -63316,6 +65093,9 @@ class _$BarTabClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -63489,6 +65269,9 @@ class _$BarTabClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -63655,6 +65438,9 @@ class _$BarTabClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -63802,6 +65588,7 @@ class _$BarTabClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -63895,6 +65682,7 @@ class _$BarTabClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -63984,6 +65772,7 @@ class _$BarTabClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -64155,7 +65944,7 @@ class _$TapToConnectClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TapToConnectClickedImpl &&
@@ -64220,6 +66009,9 @@ class _$TapToConnectClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -64393,6 +66185,9 @@ class _$TapToConnectClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -64559,6 +66354,9 @@ class _$TapToConnectClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -64706,6 +66504,7 @@ class _$TapToConnectClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -64799,6 +66598,7 @@ class _$TapToConnectClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -64888,6 +66688,7 @@ class _$TapToConnectClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -65084,7 +66885,7 @@ class _$CardDamagedClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardDamagedClickedImpl &&
@@ -65155,6 +66956,9 @@ class _$CardDamagedClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -65328,6 +67132,9 @@ class _$CardDamagedClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -65495,6 +67302,9 @@ class _$CardDamagedClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -65643,6 +67453,7 @@ class _$CardDamagedClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -65736,6 +67547,7 @@ class _$CardDamagedClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -65825,6 +67637,7 @@ class _$CardDamagedClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -66025,7 +67838,7 @@ class _$NfcNotWorkingCLickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NfcNotWorkingCLickedImpl &&
@@ -66097,6 +67910,9 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -66271,6 +68087,9 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -66438,6 +68257,9 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -66586,6 +68408,7 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -66679,6 +68502,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -66768,6 +68592,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -66968,7 +68793,7 @@ class _$DontHaveCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DontHaveCardClickedImpl &&
@@ -67039,6 +68864,9 @@ class _$DontHaveCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -67212,6 +69040,9 @@ class _$DontHaveCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -67379,6 +69210,9 @@ class _$DontHaveCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -67527,6 +69361,7 @@ class _$DontHaveCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -67620,6 +69455,7 @@ class _$DontHaveCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -67709,6 +69545,7 @@ class _$DontHaveCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -67909,7 +69746,7 @@ class _$LostCardClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LostCardClickedImpl &&
@@ -67980,6 +69817,9 @@ class _$LostCardClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -68153,6 +69993,9 @@ class _$LostCardClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -68320,6 +70163,9 @@ class _$LostCardClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -68467,6 +70313,7 @@ class _$LostCardClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -68560,6 +70407,7 @@ class _$LostCardClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -68649,6 +70497,7 @@ class _$LostCardClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -68852,7 +70701,7 @@ class _$TroubleActivateClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TroubleActivateClickedImpl &&
@@ -68923,6 +70772,9 @@ class _$TroubleActivateClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -69097,6 +70949,9 @@ class _$TroubleActivateClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -69264,6 +71119,9 @@ class _$TroubleActivateClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -69412,6 +71270,7 @@ class _$TroubleActivateClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -69505,6 +71364,7 @@ class _$TroubleActivateClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -69594,6 +71454,7 @@ class _$TroubleActivateClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -69794,7 +71655,7 @@ class _$TroubleCloseClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TroubleCloseClickedImpl &&
@@ -69865,6 +71726,9 @@ class _$TroubleCloseClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -70038,6 +71902,9 @@ class _$TroubleCloseClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -70205,6 +72072,9 @@ class _$TroubleCloseClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -70353,6 +72223,7 @@ class _$TroubleCloseClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -70446,6 +72317,7 @@ class _$TroubleCloseClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -70535,6 +72407,7 @@ class _$TroubleCloseClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -70735,7 +72608,7 @@ class _$TroubleGotItClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TroubleGotItClickedImpl &&
@@ -70806,6 +72679,9 @@ class _$TroubleGotItClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -70979,6 +72855,9 @@ class _$TroubleGotItClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -71146,6 +73025,9 @@ class _$TroubleGotItClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -71294,6 +73176,7 @@ class _$TroubleGotItClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -71387,6 +73270,7 @@ class _$TroubleGotItClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -71476,6 +73360,7 @@ class _$TroubleGotItClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -71679,7 +73564,7 @@ class _$TroubleActivateNowClickedImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TroubleActivateNowClickedImpl &&
@@ -71750,6 +73635,9 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -71924,6 +73812,9 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -72091,6 +73982,9 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -72239,6 +74133,7 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -72332,6 +74227,7 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -72421,6 +74317,7 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -72599,7 +74496,7 @@ class _$CardAddedEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardAddedEventImpl &&
@@ -72664,6 +74561,9 @@ class _$CardAddedEventImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -72837,6 +74737,9 @@ class _$CardAddedEventImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -73003,6 +74906,9 @@ class _$CardAddedEventImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -73150,6 +75056,7 @@ class _$CardAddedEventImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -73243,6 +75150,7 @@ class _$CardAddedEventImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -73332,6 +75240,7 @@ class _$CardAddedEventImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
@@ -73506,7 +75415,7 @@ class _$BarAddedEventImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarAddedEventImpl &&
@@ -73570,6 +75479,9 @@ class _$BarAddedEventImpl
     required TResult Function(String eventType, String source,
             String walletType, String walletAddress)
         gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
     required TResult Function(String eventType) warningCheckboxClicked,
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
@@ -73743,6 +75655,9 @@ class _$BarAddedEventImpl
     TResult? Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult? Function(String eventType)? warningCheckboxClicked,
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
@@ -73909,6 +75824,9 @@ class _$BarAddedEventImpl
     TResult Function(String eventType, String source, String walletType,
             String walletAddress)?
         gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
     TResult Function(String eventType)? warningCheckboxClicked,
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
@@ -74056,6 +75974,7 @@ class _$BarAddedEventImpl
     required TResult Function(ActivatedCheckboxClicked value)
         activatedCheckboxClicked,
     required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
     required TResult Function(WarningCheckboxClicked value)
         warningCheckboxClicked,
     required TResult Function(AppLockEnabled value) appLockEnabled,
@@ -74149,6 +76068,7 @@ class _$BarAddedEventImpl
     TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
     TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
@@ -74238,6 +76158,7 @@ class _$BarAddedEventImpl
     TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
     TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
     TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
     TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,

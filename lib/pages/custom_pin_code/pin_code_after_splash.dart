@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
+import 'package:did_change_authlocal/did_change_authlocal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
@@ -18,39 +21,58 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/storage_utils.dart';
 
 @RoutePage()
-class PinAfterSplash extends StatefulWidget {
+class PinAfterSplash extends HookWidget {
   const PinAfterSplash({super.key});
 
-  @override
-  State<PinAfterSplash> createState() => _PinAfterSplashState();
-}
-
-WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
-
-class _PinAfterSplashState extends State<PinAfterSplash> {
-  late final _shakeAnimationController = ShakeAnimationController();
-  final _pinController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _walletProtectState.checkBiometrics();
-    Future.delayed(Duration.zero, () async {
-      await _walletProtectState.checkBiometricStatus();
-      if (_walletProtectState.isBiometricsEnabled) {
-        if (_walletProtectState.canCheckBiometrics) {
-          await _walletProtectState.authenticateWithBiometrics();
-        }
-      } else {
-        _walletProtectState.pinFocusNode.requestFocus();
-      }
-    });
-  }
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   Widget build(BuildContext context) {
+    late final _shakeAnimationController = useMemoized(ShakeAnimationController.new);
+    final _pinController = useTextEditingController();
+
+    final isLocalAuthChanged = useCallback<Future<bool> Function()>(
+      () async {
+        final currentToken = await StorageUtils.getString(key: 'biometricsToken');
+
+        if (currentToken == null) {
+          return false;
+        }
+
+        final status = Platform.isIOS
+            ? await DidChangeAuthLocal.instance.checkBiometricIOS(token: currentToken)
+            : await DidChangeAuthLocal.instance.checkBiometricAndroid();
+        return status == AuthLocalStatus.changed;
+      },
+    );
+
+    useEffect(() {
+      _walletProtectState.checkBiometrics();
+      Future.delayed(Duration.zero, () async {
+        await _walletProtectState.checkBiometricStatus();
+        final isAuthChanged = await isLocalAuthChanged();
+
+        if (isAuthChanged) {
+          await disableBiometricAuth();
+          _walletProtectState.isBiometricsEnabled = false;
+        }
+
+        if (_walletProtectState.isBiometricsEnabled && !isAuthChanged) {
+          final currentToken = await DidChangeAuthLocal.instance.getTokenBiometric();
+          await StorageUtils.setString(key: 'biometricsToken', value: currentToken);
+          if (_walletProtectState.canCheckBiometrics) {
+            await _walletProtectState.authenticateWithBiometrics();
+          }
+        } else {
+          _walletProtectState.pinFocusNode.requestFocus();
+        }
+      });
+      return null;
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -150,52 +172,60 @@ class _PinAfterSplashState extends State<PinAfterSplash> {
             ),
           ),
           const Gap(20),
-          Observer(
-            builder: (_) {
-              if (!_walletProtectState.isBiometricsEnabled) {
-                return const SizedBox();
-              }
-
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
-                        height: 1,
-                        width: 155,
-                      ),
-                      const Text(
-                        'Or',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatLight,
-                          color: AppColors.primary,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+          FutureBuilder(
+            future: isLocalAuthChanged(),
+            builder: (context, snapshot) {
+              return Observer(
+                builder: (_) {
+                  if (!_walletProtectState.isBiometricsEnabled) {
+                    return const SizedBox();
+                  }
+                  if (snapshot.data == true) {
+                    return const SizedBox();
+                  } else {
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
+                              height: 1,
+                              width: 155,
+                            ),
+                            const Text(
+                              'Or',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatLight,
+                                color: AppColors.primary,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              height: 1,
+                              width: 155,
+                            ),
+                          ],
                         ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(10),
+                        const Gap(20),
+                        ScaleTap(
+                          enableFeedback: false,
+                          onPressed: () {
+                            _walletProtectState.authenticateWithBiometrics();
+                          },
+                          child: Assets.icons.faceIDSuccess.image(
+                            height: 30,
+                          ),
                         ),
-                        height: 1,
-                        width: 155,
-                      ),
-                    ],
-                  ),
-                  const Gap(20),
-                  ScaleTap(
-                    enableFeedback: false,
-                    onPressed: () {
-                      _walletProtectState.authenticateWithBiometrics();
-                    },
-                    child: Assets.icons.faceIDSuccess.image(
-                      height: 30,
-                    ),
-                  ),
-                ],
+                      ],
+                    );
+                  }
+                },
               );
             },
           ),

@@ -23,6 +23,12 @@ part 'balance_store.g.dart';
 class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
+  late void Function(String addr) onCardAdded = _defaultOnCardAdded;
+  late void Function(String addr) onBarAdded = _defaultOnBarAdded;
+
+  void _defaultOnCardAdded(String addr) {}
+
+  void _defaultOnBarAdded(String addr) {}
   @readonly
   CoinDto? _coins;
   @readonly
@@ -42,6 +48,14 @@ abstract class _BalanceStore with Store {
     getCardsFromStorage();
     getBarsFromStorage();
     getCoins();
+  }
+
+  Future<void> setOnCardAddedCallback(void Function(String addr) onCardAdded) async {
+    this.onCardAdded = onCardAdded;
+  }
+
+  Future<void> setOnBarAddedCallback(void Function(String addr) onBarAdded) async {
+    this.onBarAdded = onBarAdded;
   }
 
   Future<void> getCoins() async {
@@ -207,7 +221,10 @@ abstract class _BalanceStore with Store {
       _cards.add(_selectedCard!);
 
       StorageUtils.addCard(_selectedCard!);
+      onCardAdded(_selectedCard!.address);
     } else {
+      onCardAdded(_selectedCard!.address);
+
       throw Exception('Card is already added');
     }
   }
@@ -227,9 +244,12 @@ abstract class _BalanceStore with Store {
         name: name,
       );
       _cards.add(_selectedCard!);
+      onCardAdded(_selectedCard!.address);
 
       StorageUtils.addCard(_selectedCard!);
     } else {
+      onCardAdded(_selectedCard!.address);
+
       throw Exception('Card is already added');
     }
   }
@@ -251,7 +271,10 @@ abstract class _BalanceStore with Store {
           createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         ),
       );
+      onBarAdded(_selectedBar!.address);
     } else {
+      onBarAdded(_selectedBar!.address);
+
       throw Exception('Bar is already added');
     }
   }

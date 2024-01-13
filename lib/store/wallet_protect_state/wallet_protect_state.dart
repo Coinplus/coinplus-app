@@ -135,6 +135,7 @@ abstract class _WalletProtectState with Store {
         );
         if (isAuthorized) {
           await enableBiometricAuth();
+
           await router.pushAndPopAll(const DashboardRoute());
           return true;
         }

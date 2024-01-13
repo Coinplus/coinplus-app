@@ -13,6 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
+import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -50,11 +51,12 @@ class BarFillPage extends StatefulWidget {
 
 class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin {
   late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final _cardAnimationState = CardAnimationState();
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
-  final _addressState = AddressState();
+  final _addressState = AddressState(CardType.BAR);
   final _focusNode = FocusNode();
   final _lineStore = LinesStore();
   final _acceptState = AcceptState();
@@ -67,9 +69,9 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
     super.initState();
     _nfcStop();
     _toggleWidgets();
-    _addressState.btcAddressController.addListener(_validateBTCAddress);
-    _addressState.btcAddressController = TextEditingController();
-    _addressState.btcAddressController.text = widget.receivedData ?? '';
+    _btcAddressController
+      ..addListener(_validateBTCAddress)
+      ..text = widget.receivedData ?? '';
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -271,7 +273,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                         await recordAmplitudeEvent(
                                                           AddressCopied(
                                                             walletType: 'Bar',
-                                                            walletAddress: _balanceStore.selectedCard!.address,
+                                                            walletAddress: _balanceStore.selectedBar!.address,
                                                             activated: false,
                                                             source: 'Balance',
                                                           ),
@@ -527,7 +529,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                       onChanged: (_) {
                                         _validateBTCAddress();
                                       },
-                                      controller: _addressState.btcAddressController,
+                                      controller: _btcAddressController,
                                       maxLines: 2,
                                       minLines: 1,
                                       focusNode: _focusNode,
@@ -600,7 +602,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                           }
                                                         },
                                                       );
-                                                      await _addressState.setBTCAddress(res);
+                                                      _btcAddressController.text = res;
                                                       await _validateBTCAddress();
                                                     },
                                                     icon: Assets.icons.qrCode.image(
@@ -850,12 +852,12 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                       ? LoadingButton(
                           onPressed: () async {
                             if (_checkboxState.isActive) {
-                              unawaited(signInAnonymously(address: _addressState.btcAddressController.text));
+                              unawaited(signInAnonymously(address: _btcAddressController.text));
                               _balanceStore.saveSelectedBar();
                               await hasShownWallet().then((hasShown) {
                                 recordUserProperty(const BarManual());
                                 unawaited(
-                                  recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedCard!.address)),
+                                  recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedBar!.address)),
                                 );
                                 if (hasShown) {
                                   router.pop();
@@ -883,7 +885,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     GotItClicked(
                                       source: 'Wallet',
                                       walletType: 'Bar',
-                                      walletAddress: _addressState.btcAddressController.text,
+                                      walletAddress: _btcAddressController.text,
                                     ),
                                   );
                                 } else {
@@ -891,7 +893,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     GotItClicked(
                                       source: 'Onboarding',
                                       walletType: 'Bar',
-                                      walletAddress: _addressState.btcAddressController.text,
+                                      walletAddress: _btcAddressController.text,
                                     ),
                                   );
                                 }
@@ -916,7 +918,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           SaveToWalletClicked(
                                             source: 'Wallet',
                                             walletType: 'Bar',
-                                            walletAddress: _addressState.btcAddressController.text,
+                                            walletAddress: _btcAddressController.text,
                                           ),
                                         );
                                       } else {
@@ -924,7 +926,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                           SaveToWalletClicked(
                                             source: 'Onboarding',
                                             walletType: 'Bar',
-                                            walletAddress: _addressState.btcAddressController.text,
+                                            walletAddress: _btcAddressController.text,
                                           ),
                                         );
                                       }
@@ -936,8 +938,9 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                   if (cardIndex != -1) {
                                     await alreadySavedBar(
                                       context: context,
-                                      walletAddress: _balanceStore.selectedCard!.address,
+                                      walletAddress: _balanceStore.selectedBar!.address,
                                     );
+                                    _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                                   } else {
                                     _lineStore.makeVisible();
                                   }
@@ -962,7 +965,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   }
 
   Future<void> _validateBTCAddress() async {
-    final btcAddress = _addressState.btcAddressController.text.trim();
+    final btcAddress = _btcAddressController.text.trim();
     unawaited(
       _balanceStore.getSelectedBar(btcAddress),
     );
