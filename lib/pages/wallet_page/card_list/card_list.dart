@@ -52,6 +52,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   final _nfcState = NfcStore();
+  final carouselController = CarouselController();
 
   @override
   void initState() {
@@ -59,6 +60,13 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
     if (_balanceStore.cards.isNotEmpty) {
       configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
     }
+    _balanceStore.setOnCardAddedCallback((address) {
+      final index = _balanceStore.cards.indexWhere((element) => element.address == address);
+      if (index.isNegative) {
+        return;
+      }
+      carouselController.animateToPage(index);
+    });
     _nfcState.checkNfcSupport();
   }
 
@@ -101,6 +109,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
             );
           },
           child: CarouselSlider.builder(
+            carouselController: carouselController,
             itemBuilder: (context, index, constrains) {
               if (index == _balanceStore.cards.length) {
                 return Padding(
@@ -690,7 +699,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                             if (data == null) {
                                                               return const Padding(
                                                                 padding: EdgeInsets.symmetric(
-                                                                  vertical: 4,horizontal: 2,
+                                                                  vertical: 4,
+                                                                  horizontal: 2,
                                                                 ),
                                                                 child: Row(
                                                                   children: [

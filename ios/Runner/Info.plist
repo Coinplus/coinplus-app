@@ -87,7 +87,7 @@
 	<key>branch_universal_link_domains</key>
 	<array>
 		<string>air.coinplus.com</string>
-		<string>coinplus-alternate.test-app.link</string>
+		<string>tap.coinplus.com</string>
 		<string>coinplus-alternate.test-app.link</string>
 	</array>
 	<key>com.apple.developer.associated-domains</key>

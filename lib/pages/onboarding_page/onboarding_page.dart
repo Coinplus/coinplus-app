@@ -167,16 +167,10 @@ class OnboardingPage extends HookWidget {
                                   ),
                                 );
                                 signature = Uint8List.fromList(response);
-                                if (signature.length > 2) {
-                                  isOriginalTag = OriginalityVerifier().verify(
-                                    tagId,
-                                    signature,
-                                  );
-                                }
                               } catch (e) {
                                 signature = null;
                               }
-                              if (signature!.length > 2) {
+                              if (signature != null && signature.length > 2) {
                                 isOriginalTag = OriginalityVerifier().verify(
                                   tagId,
                                   signature,
@@ -210,6 +204,8 @@ class OnboardingPage extends HookWidget {
                                   await notCoinplusCardAlert(
                                     context: router.navigatorKey.currentContext!,
                                     walletAddress: walletAddress,
+                                    walletType: 'Card',
+                                    source: 'Onboarding',
                                   );
                                 }
                               } else {
@@ -236,6 +232,8 @@ class OnboardingPage extends HookWidget {
                                       await notCoinplusCardAlert(
                                         context: router.navigatorKey.currentContext!,
                                         walletAddress: walletAddress,
+                                        walletType: 'Card',
+                                        source: 'Onboarding',
                                       );
                                     }
                                   } else {
@@ -345,6 +343,8 @@ class OnboardingPage extends HookWidget {
                                   await notCoinplusCardAlert(
                                     context: router.navigatorKey.currentContext!,
                                     walletAddress: walletAddress,
+                                    walletType: 'Card',
+                                    source: 'Onboarding',
                                   );
                                 }
                               } else {
@@ -364,6 +364,8 @@ class OnboardingPage extends HookWidget {
                                       await notCoinplusCardAlert(
                                         context: router.navigatorKey.currentContext!,
                                         walletAddress: walletAddress,
+                                        walletType: 'Card',
+                                        source: 'Onboarding',
                                       );
                                     }
                                   } else {

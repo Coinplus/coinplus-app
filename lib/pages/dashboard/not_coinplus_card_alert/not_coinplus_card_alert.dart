@@ -11,12 +11,18 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../widgets/loading_button.dart';
 
-Future<void> notCoinplusCardAlert({required BuildContext context, required String walletAddress}) {
+Future<void> notCoinplusCardAlert({
+  required BuildContext context,
+  required String walletAddress,
+  required String walletType,
+  required String source,
+}) {
   final closeButton = LoadingButton(
     style: context.theme.buttonStyle(
       textStyle: const TextStyle(
@@ -38,6 +44,7 @@ Future<void> notCoinplusCardAlert({required BuildContext context, required Strin
       ),
     ),
   ).paddingHorizontal(40);
+  recordAmplitudeEvent(FakeWallet(source: source, walletType: walletType, walletAddress: walletAddress));
   recordUserProperty(const FraudActivity());
   return showDialog<void>(
     barrierDismissible: false,

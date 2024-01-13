@@ -32,7 +32,7 @@ abstract class IdentifyModel with _$IdentifyModel {
   }) = CardHolder;
 
   const factory IdentifyModel.barHolder({
-    @Default('ACTIVATED_BAR') String barHolder,
+    @Default('true') String barHolder,
   }) = BarHolder;
 
   const factory IdentifyModel.fraudActivity({

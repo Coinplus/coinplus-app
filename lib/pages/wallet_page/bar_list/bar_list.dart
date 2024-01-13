@@ -46,6 +46,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
   final _nfcStore = NfcStore();
+  final carouselController = CarouselController();
 
   @override
   void initState() {
@@ -54,6 +55,13 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     if (_balanceStore.bars.isNotEmpty) {
       configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
+    _balanceStore.setOnBarAddedCallback((address) {
+      final index = _balanceStore.bars.indexWhere((element) => element.address == address);
+      if (index.isNegative) {
+        return;
+      }
+      carouselController.animateToPage(index);
+    });
   }
 
   Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
@@ -95,6 +103,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
             );
           },
           child: CarouselSlider.builder(
+            carouselController: carouselController,
             itemBuilder: (context, index, constrains) {
               if (index == _balanceStore.bars.length) {
                 return ScaleTap(
@@ -390,7 +399,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                           Builder(
                                                                             builder: (context) {
                                                                               final data = _balanceStore.coins;
-                                                                              final myFormat = NumberFormat.decimalPatternDigits(
+                                                                              final myFormat =
+                                                                                  NumberFormat.decimalPatternDigits(
                                                                                 locale: 'en_us',
                                                                                 decimalDigits: 2,
                                                                               );
@@ -404,7 +414,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                                       SizedBox(
                                                                                         height: 10,
                                                                                         width: 10,
-                                                                                        child: CircularProgressIndicator(
+                                                                                        child:
+                                                                                            CircularProgressIndicator(
                                                                                           strokeWidth: 1,
                                                                                           color: Colors.black,
                                                                                         ),
@@ -455,8 +466,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                         );
                                                         widget.onCarouselScroll(index);
                                                         widget.onCardSelected(
-                                                          _balanceStore.bars.elementAtOrNull(index)
-                                                              as AbstractCard?,
+                                                          _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
                                                         );
                                                         _settingsState.setBarCurrentIndex(index);
                                                       },
@@ -548,7 +558,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                         if (data == null) {
                                                           return const Padding(
                                                             padding: EdgeInsets.symmetric(
-                                                              vertical: 4, horizontal: 2,
+                                                              vertical: 4,
+                                                              horizontal: 2,
                                                             ),
                                                             child: Row(
                                                               children: [

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
@@ -95,6 +96,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       );
       amplitudeEvent();
     });
+    if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
+      _tabController.animateTo(1);
+    }
   }
 
   void amplitudeEvent() {
@@ -188,68 +192,71 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ),
             ),
             Positioned(
-              top: 55,
+              bottom: 14,
               left: 22,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'Wallet',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatBold,
-                          fontSize: 28,
-                          color: Colors.white,
+              child: SizedBox(
+                height: 100,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          'Wallet',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatBold,
+                            fontSize: 28,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const Gap(14),
-                      Assets.icons.coinplusVector.image(
-                        height: 26,
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    'Total balance',
-                    style: TextStyle(
-                      fontFamily: FontFamily.redHatLight,
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                        const Gap(14),
+                        Assets.icons.coinplusVector.image(
+                          height: 26,
+                        ),
+                      ],
                     ),
-                  ),
-                  const Gap(5),
-                  Observer(
-                    builder: (context) {
-                      final data = _balanceStore.coins;
-                      final myFormat = NumberFormat.decimalPatternDigits(
-                        locale: 'en_us',
-                        decimalDigits: 2,
-                      );
-                      final balance = _balanceStore.allCardsBalances;
-                      if (data == null) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                          child: SizedBox(
-                            height: 15,
-                            width: 15,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
+                    const Text(
+                      'Total balance',
+                      style: TextStyle(
+                        fontFamily: FontFamily.redHatLight,
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Gap(5),
+                    Observer(
+                      builder: (context) {
+                        final data = _balanceStore.coins;
+                        final myFormat = NumberFormat.decimalPatternDigits(
+                          locale: 'en_us',
+                          decimalDigits: 2,
+                        );
+                        final balance = _balanceStore.allCardsBalances;
+                        if (data == null) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                            child: SizedBox(
+                              height: 15,
+                              width: 15,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
                             ),
+                          );
+                        }
+                        return Text(
+                          '\$${myFormat.format(balance / 100000000 * data.price)}',
+                          style: const TextStyle(
+                            fontFamily: FontFamily.redHatBold,
+                            color: Colors.white,
+                            fontSize: 28,
                           ),
                         );
-                      }
-                      return Text(
-                        '\$${myFormat.format(balance / 100000000 * data.price)}',
-                        style: const TextStyle(
-                          fontFamily: FontFamily.redHatBold,
-                          color: Colors.white,
-                          fontSize: 28,
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -257,12 +264,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
         ),
       ),
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.95),
       body: RefreshIndicator(
-
         displacement: 50,
         triggerMode: RefreshIndicatorTriggerMode.anywhere,
         color: Colors.black,
@@ -314,105 +321,103 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 if (data == null) {
                                   return Row(
                                     children: [
-                                      Assets.icons.bTCIcon.image(height: 24),
+                                      Shimmer.fromColors(
+                                        baseColor: Colors.grey.withOpacity(0.3),
+                                        highlightColor: Colors.white,
+                                        child: Assets.icons.bTCIcon.image(height: 24),
+                                      ),
                                       const Gap(8),
-                                      const Text(
-                                        'Bitcoin',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          color: Colors.black,
-                                          fontSize: 16,
+                                      Shimmer.fromColors(
+                                        baseColor: Colors.grey.withOpacity(0.3),
+                                        highlightColor: Colors.white,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Colors.grey,
+                                          ),
+                                          child: const Text(
+                                            'Bitcoin',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       const Gap(8),
-                                      Column(
-                                        children: [
-                                          const Gap(3),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(2),
-                                              color: Colors.grey.withOpacity(0.1),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 4,
-                                              vertical: 2,
-                                            ),
-                                            child: const Text(
-                                              'BTC',
-                                              style: TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontSize: 10,
-                                                color: AppColors.textHintsColor,
-                                              ),
-                                            ),
+                                      Shimmer.fromColors(
+                                        baseColor: Colors.grey.withOpacity(0.3),
+                                        highlightColor: Colors.white,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Colors.grey,
                                           ),
-                                        ],
+                                          child: Column(
+                                            children: [
+                                              const Gap(3),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(2),
+                                                  color: Colors.grey.withOpacity(0.1),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(
+                                                  horizontal: 4,
+                                                  vertical: 2,
+                                                ),
+                                                child: const Text(
+                                                  'BTC',
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontSize: 10,
+                                                    color: AppColors.textHintsColor,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                       const Spacer(),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
-                                          const Row(
-                                            children: [
-                                              Text(
-                                                r'$',
+                                          Shimmer.fromColors(
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.grey,
+                                              ),
+                                              child: const Text(
+                                                r'$ 43,831.61',
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: FontFamily.redHatMedium,
                                                   color: AppColors.primaryTextColor,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 17,
-                                                width: 17,
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(4),
-                                                  child: CircularProgressIndicator(
-                                                    color: AppColors.primaryTextColor,
-                                                    strokeWidth: 2,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                           const Gap(4),
-                                          Padding(
-                                            padding: const EdgeInsets.all(3),
-                                            child: Row(
-                                              children: [
-                                                Assets.icons.schedule.image(
-                                                  height: 18,
-                                                  color: AppColors.textHintsColor,
+                                          Shimmer.fromColors(
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.grey,
+                                              ),
+                                              child: const Text(
+                                                r'$ 43,831.61     ',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  color: AppColors.primaryTextColor,
                                                 ),
-                                                const Gap(4),
-                                                const Text(
-                                                  '24h',
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: AppColors.textHintsColor,
-                                                    fontFamily: FontFamily.redHatBold,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 17,
-                                                  width: 17,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(4),
-                                                    child: CircularProgressIndicator(
-                                                      color: AppColors.primaryTextColor,
-                                                      strokeWidth: 2,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const Text(
-                                                  ' %',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ],

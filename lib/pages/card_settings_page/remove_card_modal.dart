@@ -35,7 +35,6 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 409,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(
@@ -43,6 +42,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Gap(10),
           Assets.icons.notch.image(height: 4),

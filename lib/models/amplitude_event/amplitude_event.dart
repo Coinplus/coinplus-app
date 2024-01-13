@@ -106,6 +106,13 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletAddress,
   }) = GotItClicked;
 
+  const factory AmplitudeEvent.fakeWallet({
+    @Default('FAKE_WALLET') String eventType,
+    required String source,
+    required String walletType,
+    required String walletAddress,
+  }) = FakeWallet;
+
   const factory AmplitudeEvent.warningCheckboxClicked({
     @Default('WARNING_CHECKBOX_CLICKED') String eventType,
   }) = WarningCheckboxClicked;

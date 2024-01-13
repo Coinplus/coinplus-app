@@ -87,12 +87,6 @@ Future<void> nfcSessionIos({
       } catch (e) {
         signature = null;
       }
-      if (signature!.length > 2) {
-        isOriginalTag = OriginalityVerifier().verify(
-          tagId,
-          signature,
-        );
-      }
       if (isOriginalTag && card != null) {
         await NfcManager.instance.stopSession();
         if (card.nfcId == formattedTagId) {
@@ -118,7 +112,12 @@ Future<void> nfcSessionIos({
         } else {
           await NfcManager.instance.stopSession();
           await Future.delayed(const Duration(milliseconds: 2700));
-          await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+          await notCoinplusCardAlert(
+            context: router.navigatorKey.currentContext!,
+            walletAddress: walletAddress,
+            walletType: 'Card',
+            source: 'Wallet',
+          );
         }
       } else {
         await NfcManager.instance.stopSession();
@@ -141,7 +140,12 @@ Future<void> nfcSessionIos({
               //Fake card
               await NfcManager.instance.stopSession();
               await Future.delayed(const Duration(milliseconds: 2700));
-              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+              await notCoinplusCardAlert(
+                context: router.navigatorKey.currentContext!,
+                walletAddress: walletAddress,
+                walletType: 'Card',
+                source: 'Wallet',
+              );
             }
           } else {
             //Connect as TrackerPlus
@@ -251,7 +255,12 @@ Future<void> nfcSessionAndroid({
             );
           }
         } else {
-          await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+          await notCoinplusCardAlert(
+            context: router.navigatorKey.currentContext!,
+            walletAddress: walletAddress,
+            walletType: 'Card',
+            source: 'Wallet',
+          );
         }
       } else {
         if (tag.data.containsKey('mifareultralight')) {
@@ -267,7 +276,12 @@ Future<void> nfcSessionAndroid({
                 ),
               );
             } else {
-              await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+              await notCoinplusCardAlert(
+                context: router.navigatorKey.currentContext!,
+                walletAddress: walletAddress,
+                walletType: 'Card',
+                source: 'Wallet',
+              );
             }
           } else {
             await router.push(
@@ -353,7 +367,12 @@ Future<void> checkNfcIos({
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'FAKE');
-        await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+        await notCoinplusCardAlert(
+          context: router.navigatorKey.currentContext!,
+          walletAddress: walletAddress,
+          walletType: 'Card',
+          source: 'Wallet',
+        );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
@@ -523,7 +542,12 @@ Future<void> checkNfcAndroid({
         await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'FAKE');
         await router.pop();
 
-        await notCoinplusCardAlert(context: router.navigatorKey.currentContext!, walletAddress: walletAddress);
+        await notCoinplusCardAlert(
+          context: router.navigatorKey.currentContext!,
+          walletAddress: walletAddress,
+          walletType: 'Card',
+          source: 'Wallet',
+        );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'TRACKER');
