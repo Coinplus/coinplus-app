@@ -84,6 +84,9 @@ class BarSettingsPage extends HookWidget {
       if (isInactive.value) {
         _cardSettingsState.isPrivateKeyVisible = false;
       }
+      if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened) {
+        await router.pop();
+      }
       isPaused.value = [AppLifecycleState.paused].contains(current);
       if (isPaused.value &&
           router.current.name == CardSettingsRoute.name &&
@@ -142,8 +145,9 @@ class BarSettingsPage extends HookWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ListTile(
-                    onTap: () {
-                      showModalBottomSheet(
+                    onTap: () async {
+                      await _walletProtectState.updateModalStatus(isOpened: true);
+                      await showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
                         shape: const RoundedRectangleBorder(
@@ -159,6 +163,7 @@ class BarSettingsPage extends HookWidget {
                           );
                         },
                       );
+                      await _walletProtectState.updateModalStatus(isOpened: false);
                     },
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -643,6 +648,7 @@ class BarSettingsPage extends HookWidget {
                           activated: await isBarActivated,
                         ),
                       );
+                      await _walletProtectState.updateModalStatus(isOpened: true);
                       await showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
@@ -659,6 +665,7 @@ class BarSettingsPage extends HookWidget {
                           );
                         },
                       );
+                      await _walletProtectState.updateModalStatus(isOpened: false);
                     },
                     trailing: Assets.icons.trash.image(
                       height: 24,

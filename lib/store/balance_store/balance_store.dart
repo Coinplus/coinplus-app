@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +14,7 @@ import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coin_dto/coin_dto.dart';
 import '../../services/cloud_firestore_service.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 import '../qr_detect_state/qr_detect_state.dart';
 
@@ -157,7 +157,6 @@ abstract class _BalanceStore with Store {
     final index = _cards.indexWhere((element) => element.address == _selectedCard!.address);
     _cards.removeAt(index);
     await StorageUtils.removeCard(_selectedCard!.address);
-    const secureStorage = FlutterSecureStorage();
     await secureStorage.delete(key: _selectedCard!.address);
   }
 
@@ -169,7 +168,6 @@ abstract class _BalanceStore with Store {
     final index = _bars.indexWhere((element) => element.address == _selectedBar!.address);
     _bars.removeAt(index);
     await StorageUtils.removeBar(_selectedBar!.address);
-    const secureStorage = FlutterSecureStorage();
     await secureStorage.delete(key: _selectedBar!.address);
   }
 

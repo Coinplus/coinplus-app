@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nfc_manager/nfc_manager.dart';
+import 'package:mobx/mobx.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../constants/card_type.dart';
@@ -27,16 +28,15 @@ import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/card_animation_state/card_animation_state.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
-import '../../utils/compute_private_key.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines_bar.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
-import '../card_fill_page/already_saved_card_dialog/already_saved_card_dialog.dart';
+import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
@@ -53,10 +53,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
   late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  final _cardAnimationState = CardAnimationState();
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
   final _addressState = AddressState(CardType.BAR);
+  late String btcAddress = '';
   final _focusNode = FocusNode();
   final _lineStore = LinesStore();
   final _acceptState = AcceptState();
@@ -67,11 +67,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _nfcStop();
-    _toggleWidgets();
-    _btcAddressController
-      ..addListener(_validateBTCAddress)
-      ..text = widget.receivedData ?? '';
+    if (Platform.isAndroid) {
+      nfcStop();
+    }
+    _btcAddressController.addListener(_addressState.validateBTCAddress);
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -86,29 +85,18 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
       upperBound: 1.09,
     );
     if (widget.receivedData != null) {
-      onInitWithAddress();
+      Future.delayed(const Duration(milliseconds: 300), () {
+        _btcAddressController.text = widget.receivedData ?? '';
+        _addressState.btcAddress = widget.receivedData!;
+      });
     }
   }
 
   @override
   void dispose() {
     super.dispose();
+    _lottieController.dispose();
     _textFieldAnimationController.dispose();
-  }
-
-  Future<void> onInitWithAddress() async {
-    _lottieController.reset();
-    await _validateBTCAddress();
-  }
-
-  Future<void> _toggleWidgets() async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    _cardAnimationState.startLoading();
-  }
-
-  Future<void> _nfcStop() async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    await NfcManager.instance.stopSession();
   }
 
   @override
@@ -155,8 +143,24 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                flex: 6,
+              ReactionBuilder(
+                builder: (context) {
+                  return reaction(
+                    (p0) => _addressState.isAddressValid,
+                    (p0) async {
+                      _validationStore.validate();
+                      await Future.delayed(
+                        const Duration(seconds: 1),
+                      );
+                      _focusNode.unfocus();
+                      Future.delayed(
+                        const Duration(milliseconds: 1000),
+                        () => _addressState.isAddressVisible = true,
+                      );
+                      await _lottieController.forward(from: 0);
+                    },
+                  );
+                },
                 child: Observer(
                   builder: (context) {
                     final data = _balanceStore.coins;
@@ -526,8 +530,11 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     child: TextField(
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
-                                      onChanged: (_) {
-                                        _validateBTCAddress();
+                                      onChanged: (value) {
+                                        _addressState
+                                          ..btcAddress = value
+                                          ..validateBTCAddress();
+                                        btcAddress = value;
                                       },
                                       controller: _btcAddressController,
                                       maxLines: 2,
@@ -585,6 +592,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                       if (res == null) {
                                                         return;
                                                       }
+
                                                       await hasShownWallet().then(
                                                         (hasShown) async {
                                                           if (hasShown) {
@@ -602,8 +610,11 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                           }
                                                         },
                                                       );
-                                                      _btcAddressController.text = res;
-                                                      await _validateBTCAddress();
+                                                      setState(() {
+                                                        _btcAddressController.text = res;
+                                                      });
+                                                      _addressState.btcAddress = res;
+                                                      await _addressState.validateBTCAddress();
                                                     },
                                                     icon: Assets.icons.qrCode.image(
                                                       height: 34,
@@ -659,193 +670,183 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                   },
                 ),
               ),
-              Flexible(
-                flex: 2,
-                child: Observer(
-                  builder: (context) {
-                    return ShakeAnimationWidget(
-                      shakeRange: 0.3,
-                      isForward: false,
-                      shakeAnimationController: _shakeAnimationController,
-                      shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                      child: Stack(
-                        children: [
-                          AnimatedCrossFade(
-                            firstChild: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
-                                ),
-                                color: Colors.white.withOpacity(0.7),
+              Observer(
+                builder: (context) {
+                  return ShakeAnimationWidget(
+                    shakeRange: 0.3,
+                    isForward: false,
+                    shakeAnimationController: _shakeAnimationController,
+                    shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                    child: Stack(
+                      children: [
+                        AnimatedCrossFade(
+                          firstChild: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.3),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    AnimatedCrossFade(
-                                      firstChild: const Text(
-                                        'Fill in the address of your physical bar wallet',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          color: AppColors.textHintsColor,
-                                        ),
-                                      ).expandedHorizontally(),
-                                      secondChild: const Text(
-                                        'Coinplus Virtual Bar',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          color: AppColors.textHintsColor,
-                                        ),
-                                      ).expandedHorizontally(),
-                                      crossFadeState: _addressState.isAddressVisible
-                                          ? CrossFadeState.showSecond
-                                          : CrossFadeState.showFirst,
-                                      duration: const Duration(milliseconds: 400),
-                                    ),
-                                    const Gap(4),
-                                    AnimatedCrossFade(
-                                      firstChild: const Text(
-                                        'Please fill the address from your physical bar into the address input field, or scan the QR code.',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontSize: 14,
-                                          color: AppColors.textHintsColor,
-                                        ),
-                                      ).expandedHorizontally(),
-                                      secondChild: const Text(
-                                        'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontSize: 14,
-                                          color: AppColors.textHintsColor,
-                                        ),
-                                      ).expandedHorizontally(),
-                                      crossFadeState: _addressState.isAddressVisible
-                                          ? CrossFadeState.showSecond
-                                          : CrossFadeState.showFirst,
-                                      duration: const Duration(milliseconds: 400),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              color: Colors.white.withOpacity(0.7),
                             ),
-                            secondChild: GestureDetector(
-                              onTap: () {
-                                _checkboxState.makeActive();
-                                HapticFeedback.heavyImpact();
-                              },
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: _checkboxState.isActive
-                                            ? const Color(0xFF73C3A6)
-                                            : _acceptState.isAccepted
-                                                ? Colors.grey.withOpacity(0.3)
-                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                  AnimatedCrossFade(
+                                    firstChild: const Text(
+                                      'Fill in the address of your physical bar wallet',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: AppColors.textHintsColor,
                                       ),
-                                      color: _checkboxState.isActive
-                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : _acceptState.isAccepted
-                                              ? Colors.white.withOpacity(0.7)
-                                              : const Color(0xFFFF2E00).withOpacity(0.05),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(14),
-                                      child: Column(
-                                        children: [
-                                          const Text(
-                                            'Keep your bar safe!',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          const Gap(4),
-                                          const Text(
-                                            'Make sure to keep your bar safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                        ],
+                                    ).expandedHorizontally(),
+                                    secondChild: const Text(
+                                      'Coinplus Virtual Bar',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: AppColors.textHintsColor,
                                       ),
-                                    ),
+                                    ).expandedHorizontally(),
+                                    crossFadeState: _addressState.isAddressVisible
+                                        ? CrossFadeState.showSecond
+                                        : CrossFadeState.showFirst,
+                                    duration: const Duration(milliseconds: 400),
+                                  ),
+                                  const Gap(4),
+                                  AnimatedCrossFade(
+                                    firstChild: const Text(
+                                      'Please fill the address from your physical bar into the address input field, or scan the QR code.',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 14,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                    secondChild: const Text(
+                                      'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 14,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                    crossFadeState: _addressState.isAddressVisible
+                                        ? CrossFadeState.showSecond
+                                        : CrossFadeState.showFirst,
+                                    duration: const Duration(milliseconds: 400),
                                   ),
                                 ],
                               ),
                             ),
-                            crossFadeState:
-                                !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 400),
-                          ).paddingHorizontal(16),
-                          Visibility(
-                            visible: _lineStore.isLineVisible,
-                            child: Positioned(
-                              right: 16,
-                              child: Transform.scale(
-                                scale: 1.2,
-                                child: Container(
+                          ),
+                          secondChild: GestureDetector(
+                            onTap: () {
+                              _checkboxState.makeActive();
+                              HapticFeedback.heavyImpact();
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Observer(
-                                    builder: (context) {
-                                      return Checkbox(
-                                        checkColor: const Color(0xFF73C3A6),
-                                        activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(4),
-                                          ),
-                                        ),
-                                        side: BorderSide(
-                                          color: _acceptState.isAccepted
-                                              ? Colors.grey.withOpacity(0.5)
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: _checkboxState.isActive
+                                          ? const Color(0xFF73C3A6)
+                                          : _acceptState.isAccepted
+                                              ? Colors.grey.withOpacity(0.3)
                                               : const Color(0xFFFF2E00).withOpacity(0.6),
-                                        ),
-                                        value: _checkboxState.isActive,
-                                        onChanged: (_) {
-                                          recordAmplitudeEvent(
-                                            const WarningCheckboxClicked(),
-                                          );
-                                          _checkboxState.makeActive();
-                                        },
-                                        splashRadius: 15,
-                                      );
-                                    },
+                                    ),
+                                    color: _checkboxState.isActive
+                                        ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                        : _acceptState.isAccepted
+                                            ? Colors.white.withOpacity(0.7)
+                                            : const Color(0xFFFF2E00).withOpacity(0.05),
                                   ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(14),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          'Keep your bar safe!',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 16,
+                                            color: AppColors.textHintsColor,
+                                          ),
+                                        ).expandedHorizontally(),
+                                        const Gap(4),
+                                        const Text(
+                                          'Make sure to keep your bar safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontSize: 14,
+                                            color: AppColors.textHintsColor,
+                                          ),
+                                        ).expandedHorizontally(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          crossFadeState:
+                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          duration: const Duration(milliseconds: 400),
+                        ).paddingHorizontal(16),
+                        Visibility(
+                          visible: _lineStore.isLineVisible,
+                          child: Positioned(
+                            right: 16,
+                            child: Transform.scale(
+                              scale: 1.2,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Observer(
+                                  builder: (context) {
+                                    return Checkbox(
+                                      checkColor: const Color(0xFF73C3A6),
+                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
+                                        ),
+                                      ),
+                                      side: BorderSide(
+                                        color: _acceptState.isAccepted
+                                            ? Colors.grey.withOpacity(0.5)
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      value: _checkboxState.isActive,
+                                      onChanged: (_) {
+                                        recordAmplitudeEvent(
+                                          const WarningCheckboxClicked(),
+                                        );
+                                        _checkboxState.makeActive();
+                                      },
+                                      splashRadius: 15,
+                                    );
+                                  },
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-              if (context.height > 844)
-                SizedBox(
-                  height: context.width * 0.15,
-                )
-              else
-                SizedBox(
-                  height: context.width * 0.04,
-                ),
+              const Gap(20),
               Observer(
                 builder: (_) {
                   return _lineStore.isLineVisible
@@ -854,6 +855,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                             if (_checkboxState.isActive) {
                               unawaited(signInAnonymously(address: _btcAddressController.text));
                               _balanceStore.saveSelectedBar();
+                              _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               await hasShownWallet().then((hasShown) {
                                 recordUserProperty(const BarManual());
                                 unawaited(
@@ -956,7 +958,6 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                         ).paddingHorizontal(49);
                 },
               ),
-              if (context.height > 667) const Gap(10) else const Gap(12),
             ],
           );
         },
@@ -964,27 +965,8 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
     );
   }
 
-  Future<void> _validateBTCAddress() async {
-    final btcAddress = _btcAddressController.text.trim();
-    unawaited(
-      _balanceStore.getSelectedBar(btcAddress),
-    );
-    if (isValidPublicAddress(btcAddress)) {
-      _validationStore.validate();
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-      _focusNode.unfocus();
-      Future.delayed(
-        const Duration(milliseconds: 1200),
-        () => _addressState.isAddressVisible = true,
-      );
-      await _lottieController.forward(from: 0);
-    } else {}
-  }
-
   Future<void> makeLineInvisible() async {
     await Future.delayed(const Duration(milliseconds: 350));
-    _lineStore.makeVisible();
+    _lineStore.makeInvisible();
   }
 }

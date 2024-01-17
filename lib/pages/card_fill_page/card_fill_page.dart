@@ -14,7 +14,6 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../constants/card_color.dart';
@@ -38,12 +37,14 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
+import '../../utils/data_utils.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
+import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
-import 'already_saved_card_dialog/already_saved_card_dialog.dart';
 
 @RoutePage()
 class CardFillPage extends StatefulWidget {
@@ -87,7 +88,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     super.initState();
     _connectivityStore.initConnectivity();
     if (Platform.isAndroid) {
-      _nfcStop();
+      nfcStop();
     }
     _toggleCard();
     _btcAddressController.addListener(() {
@@ -178,325 +179,314 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
         ),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Observer(
             builder: (context) {
-              return Expanded(
-                child: ReactionBuilder(
-                  builder: (context) {
-                    return reaction(
-                      (p0) => _addressState.isAddressValid,
-                      (p0) async {
-                        _validationStore.validate();
-                        await Future.delayed(
-                          const Duration(seconds: 1),
-                        );
-                        _focusNode.unfocus();
-                        Future.delayed(
-                          const Duration(milliseconds: 700),
-                          _toggleCard,
-                        );
-                        Future.delayed(
-                          const Duration(milliseconds: 1400),
-                          () => _addressState.isAddressVisible = true,
-                        );
-                        await _lottieController.forward(from: 0);
-                      },
-                    );
-                  },
-                  child: FlipCard(
-                    flipOnTouch: false,
-                    controller: _flipCardController,
-                    front: Stack(
-                      children: [
-                        Center(
-                          child: Container(
-                            height: context.height > 667 ? 455 : 400,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1),
-                                  spreadRadius: 1,
-                                  blurRadius: 15,
-                                ),
-                              ],
-                              image: DecorationImage(
-                                image: Assets.images.card.front.image().image,
-                              ),
-                            ),
-                            child: Center(
-                              child: Observer(
-                                builder: (context) {
-                                  return Visibility(
-                                    visible: _addressState.isAddressVisible,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          height: context.height * 0.22,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: context.height > 667 ? 65 : 85,
-                                          ),
-                                          child: ScaleTap(
-                                            enableFeedback: false,
-                                            onPressed: () async {
-                                              await recordAmplitudeEvent(
-                                                AddressCopied(
-                                                  walletType: 'Card',
-                                                  walletAddress: _balanceStore.selectedCard!.address,
-                                                  activated: false,
-                                                  source: 'Balance',
-                                                ),
-                                              );
-                                              if (Platform.isIOS) {
-                                                await Clipboard.setData(
-                                                  ClipboardData(
-                                                    text: _balanceStore.selectedCard!.address.toString(),
-                                                  ),
-                                                ).then(
-                                                  (_) {
-                                                    HapticFeedback.mediumImpact();
-                                                    showTopSnackBar(
-                                                      displayDuration: const Duration(
-                                                        milliseconds: 400,
-                                                      ),
-                                                      Overlay.of(
-                                                        context,
-                                                      ),
-                                                      CustomSnackBar.success(
-                                                        backgroundColor: const Color(
-                                                          0xFF4A4A4A,
-                                                        ).withOpacity(0.9),
-                                                        message: 'Address was copied',
-                                                        textStyle: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              } else {
-                                                await Clipboard.setData(
-                                                  ClipboardData(
-                                                    text: _balanceStore.selectedCard!.address.toString(),
-                                                  ),
-                                                ).then(
-                                                  (_) {
-                                                    HapticFeedback.mediumImpact();
-                                                  },
-                                                );
-                                              }
-                                            },
-                                            child: ClipRRect(
-                                              child: BackdropFilter(
-                                                filter: ImageFilter.blur(
-                                                  sigmaX: 5,
-                                                  sigmaY: 5,
-                                                ),
-                                                child: Container(
-                                                  padding: const EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                    top: 12,
-                                                    bottom: 12,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(
-                                                      6,
-                                                    ),
-                                                    color: Colors.black.withOpacity(
-                                                      0.2,
-                                                    ),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      const Row(
-                                                        children: [
-                                                          Text(
-                                                            'Address',
-                                                            style: TextStyle(
-                                                              fontSize: 11,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: Colors.white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Observer(
-                                                        builder: (context) {
-                                                          if (_balanceStore
-                                                                  .loadings[_balanceStore.selectedCard?.address] ??
-                                                              false) {
-                                                            return const Padding(
-                                                              padding: EdgeInsets.all(
-                                                                4,
-                                                              ),
-                                                              child: Row(
-                                                                children: [
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                    width: 10,
-                                                                    child: CircularProgressIndicator(
-                                                                      color: Colors.grey,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }
-                                                          final visibleAddress =
-                                                              _getVisibleAddress(_balanceStore.selectedCard!.address);
-                                                          return Text(
-                                                            visibleAddress,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: const TextStyle(
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ).expandedHorizontally();
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(4),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: context.height > 667 ? 65 : 85,
-                                          ),
-                                          child: ScaleTap(
-                                            enableFeedback: false,
-                                            onPressed: () {},
-                                            child: ClipRRect(
-                                              child: BackdropFilter(
-                                                filter: ImageFilter.blur(
-                                                  sigmaX: 5,
-                                                  sigmaY: 5,
-                                                ),
-                                                child: Container(
-                                                  padding: const EdgeInsets.all(
-                                                    8,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(
-                                                      6,
-                                                    ),
-                                                    color: Colors.black.withOpacity(
-                                                      0.2,
-                                                    ),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      const Row(
-                                                        children: [
-                                                          Text(
-                                                            'Balance',
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: Colors.white,
-                                                              fontSize: 11,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Observer(
-                                                        builder: (context) {
-                                                          final myFormat = NumberFormat.decimalPatternDigits(
-                                                            locale: 'en_us',
-                                                            decimalDigits: 2,
-                                                          );
-                                                          final data = _balanceStore.coins;
-                                                          if (_balanceStore.selectedCard != null &&
-                                                              _balanceStore.selectedCard!.data != null &&
-                                                              data != null) {
-                                                            final cardBalance =
-                                                                _balanceStore.selectedCard!.data!.balance;
-                                                            final cardTxoSum =
-                                                                _balanceStore.selectedCard!.data!.spentTxoSum;
-                                                            final currentBalance = cardBalance - cardTxoSum;
-
-                                                            if (currentBalance.isNaN) {
-                                                              return const Padding(
-                                                                padding: EdgeInsets.all(4),
-                                                                child: Row(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      height: 10,
-                                                                      width: 10,
-                                                                      child: CircularProgressIndicator(
-                                                                        color: Colors.white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }
-
-                                                            return Row(
-                                                              children: [
-                                                                Text(
-                                                                  '\$${myFormat.format(currentBalance / 100000000 * data.price)}',
-                                                                  style: const TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontWeight: FontWeight.w700,
-                                                                    color: Colors.white,
-                                                                    fontSize: 20,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          } else {
-                                                            return const Padding(
-                                                              padding: EdgeInsets.all(4),
-                                                              child: Row(
-                                                                children: [
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                    width: 10,
-                                                                    child: CircularProgressIndicator(
-                                                                      color: Colors.white,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ).paddingHorizontal(
-                                    context.height < 845 ? 0 : 20,
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
+              return ReactionBuilder(
+                builder: (context) {
+                  return reaction(
+                    (p0) => _addressState.isAddressValid,
+                    (p0) async {
+                      _validationStore.validate();
+                      await Future.delayed(
+                        const Duration(seconds: 1),
+                      );
+                      _focusNode.unfocus();
+                      Future.delayed(
+                        const Duration(milliseconds: 700),
+                        _toggleCard,
+                      );
+                      Future.delayed(
+                        const Duration(milliseconds: 1400),
+                        () => _addressState.isAddressVisible = true,
+                      );
+                      await _lottieController.forward(from: 0);
+                    },
+                  );
+                },
+                child: FlipCard(
+                  flipOnTouch: false,
+                  controller: _flipCardController,
+                  front: Container(
+                    height: context.height > 667 ? 455 : 400,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 1,
+                          blurRadius: 15,
                         ),
                       ],
+                      image: DecorationImage(
+                        image: Assets.images.card.front.image().image,
+                      ),
                     ),
-                    back: ClipRRect(
-                      clipBehavior: Clip.hardEdge,
+                    child: Center(
+                      child: Observer(
+                        builder: (context) {
+                          return Visibility(
+                            visible: _addressState.isAddressVisible,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: context.height * 0.22,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.height > 667 ? 55 : 85,
+                                  ),
+                                  child: ScaleTap(
+                                    enableFeedback: false,
+                                    onPressed: () async {
+                                      await recordAmplitudeEvent(
+                                        AddressCopied(
+                                          walletType: 'Card',
+                                          walletAddress: _balanceStore.selectedCard!.address,
+                                          activated: false,
+                                          source: 'Balance',
+                                        ),
+                                      );
+                                      if (Platform.isIOS) {
+                                        await Clipboard.setData(
+                                          ClipboardData(
+                                            text: _balanceStore.selectedCard!.address.toString(),
+                                          ),
+                                        ).then(
+                                          (_) {
+                                            HapticFeedback.mediumImpact();
+                                            showTopSnackBar(
+                                              displayDuration: const Duration(
+                                                milliseconds: 400,
+                                              ),
+                                              Overlay.of(
+                                                context,
+                                              ),
+                                              CustomSnackBar.success(
+                                                backgroundColor: const Color(
+                                                  0xFF4A4A4A,
+                                                ).withOpacity(0.9),
+                                                message: 'Address was copied',
+                                                textStyle: const TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await Clipboard.setData(
+                                          ClipboardData(
+                                            text: _balanceStore.selectedCard!.address.toString(),
+                                          ),
+                                        ).then(
+                                          (_) {
+                                            HapticFeedback.mediumImpact();
+                                          },
+                                        );
+                                      }
+                                    },
+                                    child: ClipRRect(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 5,
+                                          sigmaY: 5,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                            left: 8,
+                                            right: 8,
+                                            top: 12,
+                                            bottom: 12,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              6,
+                                            ),
+                                            color: Colors.black.withOpacity(
+                                              0.2,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const Row(
+                                                children: [
+                                                  Text(
+                                                    'Address',
+                                                    style: TextStyle(
+                                                      fontSize: 11,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Observer(
+                                                builder: (context) {
+                                                  if (_balanceStore.loadings[_balanceStore.selectedCard?.address] ??
+                                                      false) {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(
+                                                        4,
+                                                      ),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 10,
+                                                            width: 10,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.grey,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                  final visibleAddress =
+                                                      getSplitAddress(_balanceStore.selectedCard!.address);
+                                                  return Text(
+                                                    visibleAddress,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                    ),
+                                                  ).expandedHorizontally();
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Gap(4),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.height > 667 ? 55 : 85,
+                                  ),
+                                  child: ScaleTap(
+                                    enableFeedback: false,
+                                    onPressed: () {},
+                                    child: ClipRRect(
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 5,
+                                          sigmaY: 5,
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(
+                                            8,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              6,
+                                            ),
+                                            color: Colors.black.withOpacity(
+                                              0.2,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              const Row(
+                                                children: [
+                                                  Text(
+                                                    'Balance',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: Colors.white,
+                                                      fontSize: 11,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Observer(
+                                                builder: (context) {
+                                                  final myFormat = NumberFormat.decimalPatternDigits(
+                                                    locale: 'en_us',
+                                                    decimalDigits: 2,
+                                                  );
+                                                  final data = _balanceStore.coins;
+                                                  if (_balanceStore.selectedCard != null &&
+                                                      _balanceStore.selectedCard!.data != null &&
+                                                      data != null) {
+                                                    final cardBalance = _balanceStore.selectedCard!.data!.balance;
+                                                    final cardTxoSum = _balanceStore.selectedCard!.data!.spentTxoSum;
+                                                    final currentBalance = cardBalance - cardTxoSum;
+
+                                                    if (currentBalance.isNaN) {
+                                                      return const Padding(
+                                                        padding: EdgeInsets.all(4),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 10,
+                                                              width: 10,
+                                                              child: CircularProgressIndicator(
+                                                                color: Colors.white,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }
+
+                                                    return Row(
+                                                      children: [
+                                                        Text(
+                                                          '\$${myFormat.format(currentBalance / 100000000 * data.price)}',
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
+                                                            color: Colors.white,
+                                                            fontSize: 20,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  } else {
+                                                    return const Padding(
+                                                      padding: EdgeInsets.all(4),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 10,
+                                                            width: 10,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).paddingHorizontal(
+                            context.height < 845 ? 0 : 20,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  back: ClipRRect(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
                       child: Center(
                         child: AnimatedContainer(
                           curve: Curves.decelerate,
@@ -531,7 +521,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               if (context.height < 932)
                                                 if (context.height < 867.4)
                                                   if (context.height > 844)
-                                                    Gap(context.width * 0.115)
+                                                    Gap(context.width * 0.085)
                                                   else if (context.height > 667)
                                                     Gap(context.width * 0.075)
                                                   else
@@ -569,11 +559,11 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       child: CustomPaint(
                                                         size: Size(
                                                           context.height > 844
-                                                              ? 42
+                                                              ? 28
                                                               : context.height > 667
                                                                   ? 28
                                                                   : 38,
-                                                          255,
+                                                          265,
                                                         ),
                                                         painter: LineCustomPaint(),
                                                       ),
@@ -623,7 +613,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               if (context.height < 932)
                                 if (context.height < 867.4)
                                   if (context.height > 844)
-                                    Gap(context.width * 0.105)
+                                    Gap(context.width * 0.109)
                                   else if (context.height > 667)
                                     Gap(context.width * 0.1175)
                                   else
@@ -640,7 +630,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                     if (context.height < 932)
                                       if (context.height < 867.4)
                                         if (context.height > 844)
-                                          Gap(context.height * 0.04)
+                                          Gap(context.height * 0.035)
                                         else if (context.height > 667)
                                           Gap(context.height * 0.04)
                                         else
@@ -664,7 +654,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                             height: context.height < 932
                                                 ? context.height < 867.4
                                                     ? context.height > 844
-                                                        ? context.height * 0.24
+                                                        ? context.height * 0.26
                                                         : context.height * 0.265
                                                     : context.height * 0.255
                                                 : context.height * 0.24,
@@ -683,7 +673,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                   width: context.height < 932
                                                       ? context.height < 867.4
                                                           ? context.height > 844
-                                                              ? context.width * 0.225
+                                                              ? context.width * 0.241
                                                               : context.height > 667
                                                                   ? context.width * 0.25
                                                                   : context.width * 0.21
@@ -948,348 +938,355 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
               );
             },
           ),
-          if (context.height > 844) Gap(context.height * 0.001) else Gap(context.height * 0.02),
-          Observer(
-            builder: (context) {
-              return ShakeAnimationWidget(
-                shakeRange: 0.3,
-                isForward: false,
-                shakeAnimationController: _shakeAnimationController,
-                shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                child: Stack(
-                  children: [
-                    AnimatedCrossFade(
-                      firstChild: FutureBuilder<bool?>(
-                        future: _balanceStore.getCard(
-                          receivedData: widget.receivedData,
-                          textEditingController: _btcAddressController,
-                        ),
-                        builder: (context, snapshot) {
-                          bool? isActivated = false;
-                          isActivated = snapshot.data;
-                          return AnimatedCrossFade(
-                            firstChild: Observer(
-                              builder: (context) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    hasShownWallet().then(
-                                      (hasShown) async {
-                                        if (hasShown) {
-                                          unawaited(
-                                            recordAmplitudeEvent(
-                                              ActivatedCheckboxClicked(
-                                                source: 'Wallet',
-                                                walletType: 'Card',
-                                                walletAddress: _balanceStore.selectedCard!.address,
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          unawaited(
-                                            recordAmplitudeEvent(
-                                              ActivatedCheckboxClicked(
-                                                source: 'Onboarding',
-                                                walletType: 'Card',
-                                                walletAddress: _balanceStore.selectedCard!.address,
-                                              ),
-                                            ),
-                                          );
-                                        }
+          const Gap(10),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Observer(
+                builder: (context) {
+                  return ShakeAnimationWidget(
+                    shakeRange: 0.3,
+                    isForward: false,
+                    shakeAnimationController: _shakeAnimationController,
+                    shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                    child: Stack(
+                      children: [
+                        AnimatedCrossFade(
+                          firstChild: FutureBuilder<bool?>(
+                            future: _balanceStore.getCard(
+                              receivedData: widget.receivedData,
+                              textEditingController: _btcAddressController,
+                            ),
+                            builder: (context, snapshot) {
+                              bool? isActivated = false;
+                              isActivated = snapshot.data;
+                              return AnimatedCrossFade(
+                                firstChild: Observer(
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        hasShownWallet().then(
+                                          (hasShown) async {
+                                            if (hasShown) {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        );
+                                        _checkboxState.makeActiveCheckbox();
+                                        HapticFeedback.heavyImpact();
                                       },
-                                    );
-                                    _checkboxState.makeActiveCheckbox();
-                                    HapticFeedback.heavyImpact();
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: _checkboxState.isActivatedCheckBox
-                                            ? const Color(0xFF73C3A6)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
-                                      ),
-                                      color: _checkboxState.isActivatedCheckBox
-                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : const Color(0xFFFF2E00).withOpacity(0.05),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(14),
-                                      child: Column(
-                                        children: [
-                                          const Text(
-                                            'This card was previously activated!',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          const Gap(4),
-                                          const Text(
-                                            "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            secondChild: Observer(
-                              builder: (context) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Colors.grey.withOpacity(0.3),
-                                    ),
-                                    color: Colors.white.withOpacity(0.7),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(14),
-                                    child: Column(
-                                      children: [
-                                        AnimatedCrossFade(
-                                          firstChild: const Text(
-                                            'Fill in the address of your physical card wallet',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          secondChild: const Text(
-                                            'Coinplus Virtual Card',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          crossFadeState: _addressState.isAddressVisible
-                                              ? CrossFadeState.showSecond
-                                              : CrossFadeState.showFirst,
-                                          duration: const Duration(milliseconds: 400),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          border: Border.all(
+                                            color: _checkboxState.isActivatedCheckBox
+                                                ? const Color(0xFF73C3A6)
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          ),
+                                          color: _checkboxState.isActivatedCheckBox
+                                              ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                              : const Color(0xFFFF2E00).withOpacity(0.05),
                                         ),
-                                        const Gap(4),
-                                        AnimatedCrossFade(
-                                          firstChild: const Text(
-                                            'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          secondChild: const Text(
-                                            'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              color: AppColors.textHintsColor,
-                                            ),
-                                          ).expandedHorizontally(),
-                                          crossFadeState: _addressState.isAddressVisible
-                                              ? CrossFadeState.showSecond
-                                              : CrossFadeState.showFirst,
-                                          duration: const Duration(milliseconds: 400),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            crossFadeState: isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                            duration: const Duration(milliseconds: 400),
-                          );
-                        },
-                      ),
-                      secondChild: GestureDetector(
-                        onTap: () {
-                          unawaited(
-                            recordAmplitudeEvent(
-                              const WarningCheckboxClicked(),
-                            ),
-                          );
-                          _checkboxState.makeActive();
-                          HapticFeedback.heavyImpact();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: _checkboxState.isActive
-                                  ? const Color(0xFF73C3A6)
-                                  : _acceptState.isAccepted
-                                      ? Colors.grey.withOpacity(0.3)
-                                      : const Color(0xFFFF2E00).withOpacity(0.6),
-                            ),
-                            color: _checkboxState.isActive
-                                ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                : _acceptState.isAccepted
-                                    ? Colors.white.withOpacity(0.7)
-                                    : const Color(0xFFFF2E00).withOpacity(0.05),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Column(
-                              children: [
-                                const Text(
-                                  'Keep your card safe!',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: AppColors.textHintsColor,
-                                  ),
-                                ).expandedHorizontally(),
-                                const Gap(4),
-                                const Text(
-                                  'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 14,
-                                    color: AppColors.textHintsColor,
-                                  ),
-                                ).expandedHorizontally(),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      crossFadeState: !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                      duration: const Duration(milliseconds: 400),
-                    ).paddingHorizontal(16),
-                    Visibility(
-                      visible: !_lineStore.isLineVisible,
-                      child: FutureBuilder<bool?>(
-                        future: _balanceStore.getCard(
-                          receivedData: widget.receivedData,
-                          textEditingController: _btcAddressController,
-                        ),
-                        builder: (context, snapshot) {
-                          final isActivated = snapshot.data;
-                          return Visibility(
-                            visible: isActivated == true,
-                            child: Positioned(
-                              right: 16,
-                              child: Transform.scale(
-                                scale: 1.2,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Observer(
-                                    builder: (context) {
-                                      return Checkbox(
-                                        checkColor: const Color(0xFF73C3A6),
-                                        activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(4),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(14),
+                                          child: Column(
+                                            children: [
+                                              const Text(
+                                                'This card was previously activated!',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              const Gap(4),
+                                              const Text(
+                                                "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 14,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                            ],
                                           ),
                                         ),
-                                        side: BorderSide(
-                                          color: const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                secondChild: Observer(
+                                  builder: (context) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.grey.withOpacity(0.3),
                                         ),
-                                        value: _checkboxState.isActivatedCheckBox,
-                                        onChanged: (_) {
-                                          hasShownWallet().then(
-                                            (hasShown) async {
-                                              if (hasShown) {
-                                                unawaited(
-                                                  recordAmplitudeEvent(
-                                                    ActivatedCheckboxClicked(
-                                                      source: 'Wallet',
-                                                      walletType: 'Card',
-                                                      walletAddress: _balanceStore.selectedCard!.address,
-                                                    ),
-                                                  ),
-                                                );
-                                              } else {
-                                                unawaited(
-                                                  recordAmplitudeEvent(
-                                                    ActivatedCheckboxClicked(
-                                                      source: 'Onboarding',
-                                                      walletType: 'Card',
-                                                      walletAddress: _balanceStore.selectedCard!.address,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          );
-
-                                          _checkboxState.makeActiveCheckbox();
-                                        },
-                                        splashRadius: 15,
-                                      );
-                                    },
-                                  ),
+                                        color: Colors.white.withOpacity(0.7),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(14),
+                                        child: Column(
+                                          children: [
+                                            AnimatedCrossFade(
+                                              firstChild: const Text(
+                                                'Fill in the address of your physical card wallet',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              secondChild: const Text(
+                                                'Coinplus Virtual Card',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              crossFadeState: _addressState.isAddressVisible
+                                                  ? CrossFadeState.showSecond
+                                                  : CrossFadeState.showFirst,
+                                              duration: const Duration(milliseconds: 400),
+                                            ),
+                                            const Gap(4),
+                                            AnimatedCrossFade(
+                                              firstChild: const Text(
+                                                'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 14,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              secondChild: const Text(
+                                                'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontSize: 14,
+                                                  color: AppColors.textHintsColor,
+                                                ),
+                                              ).expandedHorizontally(),
+                                              crossFadeState: _addressState.isAddressVisible
+                                                  ? CrossFadeState.showSecond
+                                                  : CrossFadeState.showFirst,
+                                              duration: const Duration(milliseconds: 400),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                crossFadeState:
+                                    isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                duration: const Duration(milliseconds: 400),
+                              );
+                            },
+                          ),
+                          secondChild: GestureDetector(
+                            onTap: () {
+                              unawaited(
+                                recordAmplitudeEvent(
+                                  const WarningCheckboxClicked(),
+                                ),
+                              );
+                              _checkboxState.makeActive();
+                              HapticFeedback.heavyImpact();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: _checkboxState.isActive
+                                      ? const Color(0xFF73C3A6)
+                                      : _acceptState.isAccepted
+                                          ? Colors.grey.withOpacity(0.3)
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
+                                ),
+                                color: _checkboxState.isActive
+                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                    : _acceptState.isAccepted
+                                        ? Colors.white.withOpacity(0.7)
+                                        : const Color(0xFFFF2E00).withOpacity(0.05),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(14),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'Keep your card safe!',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                    const Gap(4),
+                                    const Text(
+                                      'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 14,
+                                        color: AppColors.textHintsColor,
+                                      ),
+                                    ).expandedHorizontally(),
+                                  ],
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                    Visibility(
-                      visible: _lineStore.isLineVisible,
-                      child: Positioned(
-                        right: 16,
-                        child: Transform.scale(
-                          scale: 1.2,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                          ),
+                          crossFadeState:
+                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                          duration: const Duration(milliseconds: 400),
+                        ).paddingHorizontal(16),
+                        Visibility(
+                          visible: !_lineStore.isLineVisible,
+                          child: FutureBuilder<bool?>(
+                            future: _balanceStore.getCard(
+                              receivedData: widget.receivedData,
+                              textEditingController: _btcAddressController,
                             ),
-                            child: Observer(
-                              builder: (context) {
-                                return Checkbox(
-                                  checkColor: const Color(0xFF73C3A6),
-                                  activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(4),
+                            builder: (context, snapshot) {
+                              final isActivated = snapshot.data;
+                              return Visibility(
+                                visible: isActivated == true,
+                                child: Positioned(
+                                  right: 16,
+                                  child: Transform.scale(
+                                    scale: 1.2,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Observer(
+                                        builder: (context) {
+                                          return Checkbox(
+                                            checkColor: const Color(0xFF73C3A6),
+                                            activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(4),
+                                              ),
+                                            ),
+                                            side: BorderSide(
+                                              color: const Color(0xFFFF2E00).withOpacity(0.6),
+                                            ),
+                                            value: _checkboxState.isActivatedCheckBox,
+                                            onChanged: (_) {
+                                              hasShownWallet().then(
+                                                (hasShown) async {
+                                                  if (hasShown) {
+                                                    unawaited(
+                                                      recordAmplitudeEvent(
+                                                        ActivatedCheckboxClicked(
+                                                          source: 'Wallet',
+                                                          walletType: 'Card',
+                                                          walletAddress: _balanceStore.selectedCard!.address,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    unawaited(
+                                                      recordAmplitudeEvent(
+                                                        ActivatedCheckboxClicked(
+                                                          source: 'Onboarding',
+                                                          walletType: 'Card',
+                                                          walletAddress: _balanceStore.selectedCard!.address,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              );
+
+                                              _checkboxState.makeActiveCheckbox();
+                                            },
+                                            splashRadius: 15,
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
-                                  side: BorderSide(
-                                    color: _acceptState.isAccepted
-                                        ? Colors.grey.withOpacity(0.5)
-                                        : const Color(0xFFFF2E00).withOpacity(0.6),
-                                  ),
-                                  value: _checkboxState.isActive,
-                                  onChanged: (_) {
-                                    unawaited(
-                                      recordAmplitudeEvent(
-                                        const WarningCheckboxClicked(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Visibility(
+                          visible: _lineStore.isLineVisible,
+                          child: Positioned(
+                            right: 16,
+                            child: Transform.scale(
+                              scale: 1.2,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Observer(
+                                  builder: (context) {
+                                    return Checkbox(
+                                      checkColor: const Color(0xFF73C3A6),
+                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
+                                        ),
                                       ),
+                                      side: BorderSide(
+                                        color: _acceptState.isAccepted
+                                            ? Colors.grey.withOpacity(0.5)
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                      ),
+                                      value: _checkboxState.isActive,
+                                      onChanged: (_) {
+                                        unawaited(
+                                          recordAmplitudeEvent(
+                                            const WarningCheckboxClicked(),
+                                          ),
+                                        );
+                                        _checkboxState.makeActive();
+                                      },
+                                      splashRadius: 15,
                                     );
-                                    _checkboxState.makeActive();
                                   },
-                                  splashRadius: 15,
-                                );
-                              },
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ],
           ),
-          if (context.height > 844) Gap(context.height * 0.04) else Gap(context.height * 0.03),
+          const Spacer(),
           Observer(
             builder: (_) {
               return _lineStore.isLineVisible
@@ -1317,6 +1314,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                           },
                         );
                         if (_checkboxState.isActive) {
+                          _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                           unawaited(signInAnonymously(address: _btcAddressController.text));
                           if (widget.receivedData == null) {
                             final card = await getCardData(_btcAddressController.text);
@@ -1504,15 +1502,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                     );
             },
           ),
-          if (context.height > 844) Gap(context.height * 0.1) else Gap(context.height * 0.05),
+          const Spacer(flex: 2),
         ],
       ),
     );
-  }
-
-  Future<void> _nfcStop() async {
-    await Future.delayed(const Duration(milliseconds: 10000));
-    await NfcManager.instance.stopSession();
   }
 
   Future<void> _toggleCard() async {
@@ -1524,11 +1517,5 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
     _lineStore.makeInvisible();
-  }
-
-  String _getVisibleAddress(String fullAddress) {
-    final start = fullAddress.substring(0, 5);
-    final end = fullAddress.substring(fullAddress.length - 5);
-    return '$start ... $end';
   }
 }

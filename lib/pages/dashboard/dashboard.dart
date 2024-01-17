@@ -46,18 +46,18 @@ import '../../utils/wallet_activation_status.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../widgets/loading_button.dart';
+import '../all_alert_dialogs/already_activated_alert/already_activated_alert.dart';
+import '../all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
+import '../all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';
+import '../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../all_alert_dialogs/trouble_tapping_bar/trouble_tapping_bar.dart';
+import '../all_alert_dialogs/trouble_tapping_card/trouble_tapping_card.dart';
 import '../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
 import '../onboarding_page/form_factor_page/card_scan_methods_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
-import 'already_activated_alert/already_activated_alert.dart';
-import 'android_nfc_modal/android_bar_nfc_modal.dart';
-import 'android_nfc_modal/android_card_nfc_modal.dart';
-import 'maybe_coinplus_card/maybe_coinplus_card.dart';
-import 'not_coinplus_card_alert/not_coinplus_card_alert.dart';
-import 'trouble_tapping_bar/trouble_tapping_bar.dart';
-import 'trouble_tapping_card/trouble_tapping_card.dart';
 
 @RoutePage()
 class DashboardPage extends HookWidget {
@@ -99,7 +99,7 @@ class DashboardPage extends HookWidget {
         if (!_walletProtectState.isBiometricsRunning) {
           isInactive.value = [AppLifecycleState.inactive].contains(current);
         }
-        if (isInactive.value == true && _walletProtectState.isModalOpened) {
+        if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened) {
           await router.pop();
         }
         appLocked.value = await getIsPinCodeSet();
@@ -177,20 +177,36 @@ class DashboardPage extends HookWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                WalletPage(
-                  onChangeCard: (val) {
-                    currentCard.value = val;
-                    _navBarState
-                      ..updateAddCardPosition(tabIndex: val.index, card: val.card)
-                      ..updateTabIndex(val.index);
-                  },
+            ReactionBuilder(
+              builder: (context) {
+                return reaction((_) => _balanceStore.cards.length, (length) {
+                  _pageController.jumpToPage(0);
+                  _navBarState.updateIndex(0);
+                });
+              },
+              child: ReactionBuilder(
+                builder: (context) {
+                  return reaction((_) => _balanceStore.bars.length, (length) {
+                    _pageController.jumpToPage(0);
+                    _navBarState.updateIndex(0);
+                  });
+                },
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    WalletPage(
+                      onChangeCard: (val) {
+                        currentCard.value = val;
+                        _navBarState
+                          ..updateAddCardPosition(tabIndex: val.index, card: val.card)
+                          ..updateTabIndex(val.index);
+                      },
+                    ),
+                    const SettingsPage(),
+                  ],
                 ),
-                const SettingsPage(),
-              ],
+              ),
             ),
             Column(
               mainAxisSize: MainAxisSize.min,

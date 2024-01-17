@@ -17,3 +17,9 @@ Uint8List bigIntToBytes(BigInt number) {
 String bytesToHex(Uint8List bytes) {
   return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 }
+
+String getSplitAddress(String fullAddress) {
+  final start = fullAddress.substring(0, 5);
+  final end = fullAddress.substring(fullAddress.length - 5);
+  return '$start ... $end';
+}

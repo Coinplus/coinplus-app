@@ -32,7 +32,7 @@ import '../../store/nfc_state/nfc_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
 import '../../widgets/loading_button.dart';
-import '../dashboard/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import 'connect_manually_button/connect_manually_button.dart';
 
 @RoutePage()

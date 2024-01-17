@@ -20,7 +20,6 @@ abstract class _AddressState with Store {
     reaction(
       (p0) => btcAddress,
       (p0) => validateBTCAddress(),
-      delay: 300,
     );
   }
 

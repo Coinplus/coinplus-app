@@ -112,6 +112,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
               ),
             ),
           ),
+          const Gap(30),
         ],
       ),
     );

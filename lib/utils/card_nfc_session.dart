@@ -14,8 +14,8 @@ import '../gen/assets.gen.dart';
 import '../gen/colors.gen.dart';
 import '../gen/fonts.gen.dart';
 import '../models/amplitude_event/amplitude_event.dart';
-import '../pages/dashboard/maybe_coinplus_card/maybe_coinplus_card.dart';
-import '../pages/dashboard/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../pages/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../pages/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../pages/settings_page/your_card_is_original.dart';
 import '../pages/splash_screen/splash_screen.dart';
 import '../providers/screen_service.dart';
@@ -576,4 +576,9 @@ Future<void> checkNfcAndroid({
     },
     onError: (_) => Future(() => walletProtectState.updateNfcSessionStatus(isStarted: false)),
   );
+}
+
+Future<void> nfcStop() async {
+  await Future.delayed(const Duration(milliseconds: 10000));
+  await NfcManager.instance.stopSession();
 }
