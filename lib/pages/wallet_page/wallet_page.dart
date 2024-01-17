@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../constants/card_record.dart';
@@ -42,11 +43,12 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
+  late int tabIndex = 0;
   bool _isAmplitudeEventInProgress = false;
   late final _tabController = TabController(
     length: 2,
@@ -105,8 +107,10 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (!_isAmplitudeEventInProgress) {
       _isAmplitudeEventInProgress = true;
       if (_tabController.index == 0) {
+        tabIndex = _tabController.index;
         unawaited(recordAmplitudeEvent(const CardTabClicked()));
       } else if (_tabController.index == 1) {
+        tabIndex = _tabController.index;
         unawaited(recordAmplitudeEvent(const BarTabClicked()));
       }
       Future.delayed(const Duration(seconds: 1), () {
@@ -144,7 +148,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             ),
             Positioned(
               bottom: context.height > 667 ? 6 : 0,
-              right: context.height > 844 ? context.width * 0.055 : context.width * 0.04,
+              right: context.height < 932 ? context.height * 0.017 : context.height * 0.025,
               child: Container(
                 height: 40,
                 width: 128,
@@ -269,92 +273,200 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       ),
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.95),
-      body: RefreshIndicator(
-        displacement: 50,
-        triggerMode: RefreshIndicatorTriggerMode.anywhere,
-        color: Colors.black,
-        onRefresh: () async {
-          await HapticFeedback.mediumImpact();
-          await _balanceStore.getCoins();
-          unawaited(_balanceStore.getCardsInfo());
-          unawaited(_balanceStore.getBarsInfo());
+      body: ReactionBuilder(
+        builder: (_) {
+          return reaction(
+            (_) => _balanceStore.bars.length,
+            (length) {
+              if (length > _settingsState.barCurrentIndex) {
+                _tabController.animateTo(1);
+              }
+            },
+          );
         },
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              child: Column(
-                children: [
-                  if (context.height > 667) const Gap(15) else const SizedBox(),
-                  //Cards Slider
-                  Expanded(
-                    flex: context.height > 667 ? 7 : 10,
-                    child: TabBarView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      controller: _tabController,
-                      children: [
-                        CardList(
-                          onCardSelected: (card) => widget.onChangeCard(
-                            (card: card, index: 0),
-                          ),
-                          onCarouselScroll: (val) => cardCarouselIndex = val,
+        child: ReactionBuilder(
+          builder: (context) {
+            return reaction(
+              (_) => _balanceStore.cards.length,
+              (length) {
+                if (length > _settingsState.cardCurrentIndex) {
+                  _tabController.animateTo(0);
+                }
+              },
+            );
+          },
+          child: RefreshIndicator(
+            displacement: 50,
+            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+            color: Colors.black,
+            onRefresh: () async {
+              await HapticFeedback.mediumImpact();
+              await _balanceStore.getCoins();
+              unawaited(_balanceStore.getCardsInfo());
+              unawaited(_balanceStore.getBarsInfo());
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  child: Column(
+                    children: [
+                      if (context.height > 667) const Gap(15) else const SizedBox(),
+                      //Cards Slider
+                      Expanded(
+                        flex: context.height > 667 ? 7 : 10,
+                        child: TabBarView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: _tabController,
+                          children: [
+                            CardList(
+                              onCardSelected: (card) => widget.onChangeCard(
+                                (card: card, index: 0),
+                              ),
+                              onCarouselScroll: (val) => cardCarouselIndex = val,
+                            ),
+                            BarList(
+                              onCardSelected: (card) => widget.onChangeCard(
+                                (card: card, index: 1),
+                              ),
+                              onCarouselScroll: (val) => barCarouselIndex = val,
+                            ),
+                          ],
                         ),
-                        BarList(
-                          onCardSelected: (card) => widget.onChangeCard(
-                            (card: card, index: 1),
-                          ),
-                          onCarouselScroll: (val) => barCarouselIndex = val,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Current price(btc)
-                  if (context.height > 667)
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                            child: Observer(
-                              builder: (_) {
-                                final data = _balanceStore.coins;
-                                if (data == null) {
-                                  return Row(
-                                    children: [
-                                      Shimmer.fromColors(
-                                        baseColor: Colors.grey.withOpacity(0.3),
-                                        highlightColor: Colors.white,
-                                        child: Assets.icons.bTCIcon.image(height: 24),
-                                      ),
-                                      const Gap(8),
-                                      Shimmer.fromColors(
-                                        baseColor: Colors.grey.withOpacity(0.3),
-                                        highlightColor: Colors.white,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: Colors.grey,
+                      ),
+                      // Current price(btc)
+                      if (context.height > 667)
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                                child: Observer(
+                                  builder: (_) {
+                                    final data = _balanceStore.coins;
+                                    if (data == null) {
+                                      return Row(
+                                        children: [
+                                          Shimmer.fromColors(
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white,
+                                            child: Assets.icons.bTCIcon.image(height: 24),
                                           ),
-                                          child: const Text(
-                                            'Bitcoin',
-                                            style: TextStyle(
+                                          const Gap(8),
+                                          Shimmer.fromColors(
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.grey,
+                                              ),
+                                              child: const Text(
+                                                'Bitcoin',
+                                                style: TextStyle(
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Gap(8),
+                                          Shimmer.fromColors(
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.grey,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  const Gap(3),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(2),
+                                                      color: Colors.grey.withOpacity(0.1),
+                                                    ),
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 4,
+                                                      vertical: 2,
+                                                    ),
+                                                    child: const Text(
+                                                      'BTC',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontSize: 10,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Shimmer.fromColors(
+                                                baseColor: Colors.grey.withOpacity(0.3),
+                                                highlightColor: Colors.white,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Colors.grey,
+                                                  ),
+                                                  child: const Text(
+                                                    r'$ 43,831.61',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: AppColors.primaryTextColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const Gap(4),
+                                              Shimmer.fromColors(
+                                                baseColor: Colors.grey.withOpacity(0.3),
+                                                highlightColor: Colors.white,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Colors.grey,
+                                                  ),
+                                                  child: const Text(
+                                                    r'$ 43,831.61     ',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: AppColors.primaryTextColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      final myFormat = NumberFormat.decimalPattern('en_us');
+                                      final formattedPrice = myFormat.format(data.price).toString();
+                                      return Row(
+                                        children: [
+                                          Assets.icons.bTCIcon.image(height: 24),
+                                          const Gap(8),
+                                          Text(
+                                            data.name,
+                                            style: const TextStyle(
                                               fontFamily: FontFamily.redHatMedium,
                                               color: Colors.black,
                                               fontSize: 16,
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      const Gap(8),
-                                      Shimmer.fromColors(
-                                        baseColor: Colors.grey.withOpacity(0.3),
-                                        highlightColor: Colors.white,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: Colors.grey,
-                                          ),
-                                          child: Column(
+                                          const Gap(8),
+                                          Column(
                                             children: [
                                               const Gap(3),
                                               Container(
@@ -366,9 +478,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                                   horizontal: 4,
                                                   vertical: 2,
                                                 ),
-                                                child: const Text(
-                                                  'BTC',
-                                                  style: TextStyle(
+                                                child: Text(
+                                                  data.symbol.toUpperCase(),
+                                                  style: const TextStyle(
                                                     fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 10,
                                                     color: AppColors.textHintsColor,
@@ -377,164 +489,80 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey.withOpacity(0.3),
-                                            highlightColor: Colors.white,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Colors.grey,
-                                              ),
-                                              child: const Text(
-                                                r'$ 43,831.61',
-                                                style: TextStyle(
+                                          const Spacer(),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$ ${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
+                                                style: const TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: FontFamily.redHatMedium,
                                                   color: AppColors.primaryTextColor,
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                          const Gap(4),
-                                          Shimmer.fromColors(
-                                            baseColor: Colors.grey.withOpacity(0.3),
-                                            highlightColor: Colors.white,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Colors.grey,
-                                              ),
-                                              child: const Text(
-                                                r'$ 43,831.61     ',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  color: AppColors.primaryTextColor,
+                                              const Gap(4),
+                                              Padding(
+                                                padding: const EdgeInsets.all(3),
+                                                child: Row(
+                                                  children: [
+                                                    Assets.icons.schedule.image(
+                                                      height: 18,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                    const Gap(4),
+                                                    const Text(
+                                                      '24h',
+                                                      style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: AppColors.textHintsColor,
+                                                        fontFamily: FontFamily.redHatBold,
+                                                      ),
+                                                    ),
+                                                    if (data.priceChange1d > 0)
+                                                      const Icon(
+                                                        Icons.arrow_drop_up,
+                                                        size: 25,
+                                                        color: Colors.green,
+                                                      )
+                                                    else
+                                                      const Icon(
+                                                        Icons.arrow_drop_down,
+                                                        size: 25,
+                                                        color: Colors.red,
+                                                      ),
+                                                    Text(
+                                                      '${data.priceChange1d.toStringAsFixed(2)} %',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  final myFormat = NumberFormat.decimalPattern('en_us');
-                                  final formattedPrice = myFormat.format(data.price).toString();
-                                  return Row(
-                                    children: [
-                                      Assets.icons.bTCIcon.image(height: 24),
-                                      const Gap(8),
-                                      Text(
-                                        data.name,
-                                        style: const TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      const Gap(8),
-                                      Column(
-                                        children: [
-                                          const Gap(3),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(2),
-                                              color: Colors.grey.withOpacity(0.1),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 4,
-                                              vertical: 2,
-                                            ),
-                                            child: Text(
-                                              data.symbol.toUpperCase(),
-                                              style: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontSize: 10,
-                                                color: AppColors.textHintsColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            '\$ ${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: FontFamily.redHatMedium,
-                                              color: AppColors.primaryTextColor,
-                                            ),
-                                          ),
-                                          const Gap(4),
-                                          Padding(
-                                            padding: const EdgeInsets.all(3),
-                                            child: Row(
-                                              children: [
-                                                Assets.icons.schedule.image(
-                                                  height: 18,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                                const Gap(4),
-                                                const Text(
-                                                  '24h',
-                                                  style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: AppColors.textHintsColor,
-                                                    fontFamily: FontFamily.redHatBold,
-                                                  ),
-                                                ),
-                                                if (data.priceChange1d > 0)
-                                                  const Icon(
-                                                    Icons.arrow_drop_up,
-                                                    size: 25,
-                                                    color: Colors.green,
-                                                  )
-                                                else
-                                                  const Icon(
-                                                    Icons.arrow_drop_down,
-                                                    size: 25,
-                                                    color: Colors.red,
-                                                  ),
-                                                Text(
-                                                  '${data.priceChange1d.toStringAsFixed(2)} %',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: data.priceChange1d > 0 ? Colors.green : Colors.red,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ).paddingHorizontal(16),
-                    )
-                  else
-                    const SizedBox(),
-                  const Spacer(),
-                  const Gap(30),
-                ],
-              ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ).paddingHorizontal(16),
+                        )
+                      else
+                        const SizedBox(),
+                      const Spacer(),
+                      const Gap(30),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

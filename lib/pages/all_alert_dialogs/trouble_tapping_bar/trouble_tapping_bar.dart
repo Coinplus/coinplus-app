@@ -16,7 +16,7 @@ import '../../../store/balance_store/balance_store.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/loading_button.dart';
-import '../../bar_secret_fill_page/recommended_by_tap/recommended_by_tap.dart';
+import '../recommended_by_tap_bar/recommended_by_tap.dart';
 import 'recommended_activate_bar_by_tap.dart';
 
 class BarIssueOptionsSheet extends StatelessWidget {

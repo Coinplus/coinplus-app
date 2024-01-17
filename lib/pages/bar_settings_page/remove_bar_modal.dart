@@ -105,7 +105,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
             ),
           ),
         ),
-        const Gap(20),
+        const Gap(30),
       ],
     );
   }

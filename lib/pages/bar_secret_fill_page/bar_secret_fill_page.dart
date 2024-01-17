@@ -32,8 +32,8 @@ import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/loading_button.dart';
-import '../card_secret_fill_page/secrets_fail/secrets_fail.dart';
-import '../card_secret_fill_page/secrets_success/secrets_success.dart';
+import '../all_alert_dialogs/secrets_fail/secrets_fail.dart';
+import '../all_alert_dialogs/secrets_success/secrets_success.dart';
 
 @RoutePage()
 class BarSecretFillPage extends StatefulWidget {

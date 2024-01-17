@@ -22,6 +22,7 @@ import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
+import '../../../utils/data_utils.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
@@ -106,62 +107,68 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
             carouselController: carouselController,
             itemBuilder: (context, index, constrains) {
               if (index == _balanceStore.bars.length) {
-                return ScaleTap(
-                  enableFeedback: false,
-                  onPressed: () {
-                    recordAmplitudeEvent(
-                      const AddNewClicked(tab: 'Bar'),
-                    );
-                    showModalBottomSheet(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                      ),
-                      context: context,
-                      builder: (context) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Assets.icons.notch.image(
-                                height: 4,
-                              ),
-                            ),
-                            const Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 20, top: 10),
-                                  child: Text(
-                                    'Add new wallet',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatBold,
-                                      fontSize: 17,
-                                      color: AppColors.primaryTextColor,
-                                    ),
+                return Observer(
+                  builder: (context) {
+                    return ScaleTap(
+                      enableFeedback: false,
+                      onPressed: _settingsState.barCurrentIndex == _balanceStore.bars.length
+                          ? () {
+                              recordAmplitudeEvent(
+                                const AddNewClicked(tab: 'Bar'),
+                              );
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const Gap(18),
-                            BarScanMethodsPage(
-                              isAvailable: _nfcStore,
-                            ).paddingHorizontal(20),
-                            const Gap(40),
-                          ],
-                        );
-                      },
+                                context: context,
+                                builder: (context) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Assets.icons.notch.image(
+                                          height: 4,
+                                        ),
+                                      ),
+                                      const Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(left: 20, top: 10),
+                                            child: Text(
+                                              'Add new wallet',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.redHatBold,
+                                                fontSize: 17,
+                                                color: AppColors.primaryTextColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(18),
+                                      BarScanMethodsPage(
+                                        isAvailable: _nfcStore,
+                                      ).paddingHorizontal(20),
+                                      const Gap(40),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          : null,
+                      child: Assets.images.addCard.image(),
                     );
                   },
-                  child: Assets.images.addCard.image(),
                 );
               }
 
               final bar = _balanceStore.bars[index];
-              final visibleAddress = _getVisibleAddress(bar.address);
+              final visibleAddress = getSplitAddress(bar.address);
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -179,7 +186,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 25),
+                                          padding: const EdgeInsets.only(left: 30),
                                           child: Text(
                                             bar.name,
                                             style: const TextStyle(
@@ -356,7 +363,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                           ),
                                                                           const Gap(5),
                                                                           Text(
-                                                                            _getVisibleAddress(item.address),
+                                                                            getSplitAddress(item.address),
                                                                             style: const TextStyle(
                                                                               fontSize: 12,
                                                                               fontFamily: FontFamily.redHatMedium,
@@ -706,12 +713,6 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
         );
       },
     );
-  }
-
-  String _getVisibleAddress(String fullAddress) {
-    final start = fullAddress.substring(0, 5);
-    final end = fullAddress.substring(fullAddress.length - 5);
-    return '$start ... $end';
   }
 
   @override

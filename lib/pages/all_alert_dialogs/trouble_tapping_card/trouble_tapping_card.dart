@@ -16,7 +16,7 @@ import '../../../store/balance_store/balance_store.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/loading_button.dart';
-import '../../card_secret_fill_page/recommended_by_tap/recommended_by_tap.dart';
+import '../recommended_by_tap_card/recommended_by_tap.dart';
 import 'recommended_activate_with_nfc.dart';
 
 class CardIssueOptionsSheet extends StatelessWidget {
@@ -81,11 +81,13 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   CardDamagedClicked(walletAddress: walletAddress, walletType: 'Card', activated: await isActivated),
                 ),
               );
-              await recommendedActivateByTap(
-                context: context,
-                walletAddress: walletAddress,
-                walletType: 'Card',
-                activated: await isActivated,
+              unawaited(
+                recommendedActivateByTap(
+                  context: context,
+                  walletAddress: walletAddress,
+                  walletType: 'Card',
+                  activated: await isActivated,
+                ),
               );
             },
           ),
@@ -105,11 +107,13 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   ),
                 ),
               );
-              await recommendedActivateByTap(
-                context: context,
-                walletAddress: walletAddress,
-                walletType: 'Card',
-                activated: await isActivated,
+              unawaited(
+                recommendedActivateByTap(
+                  context: context,
+                  walletAddress: walletAddress,
+                  walletType: 'Card',
+                  activated: await isActivated,
+                ),
               );
             },
           ),
@@ -153,11 +157,13 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   ),
                 ),
               );
-              await recommendedActivateByTap(
-                context: context,
-                walletAddress: walletAddress,
-                walletType: 'Card',
-                activated: await isActivated,
+              unawaited(
+                recommendedActivateByTap(
+                  context: context,
+                  walletAddress: walletAddress,
+                  walletType: 'Card',
+                  activated: await isActivated,
+                ),
               );
             },
           ),

@@ -34,8 +34,8 @@ import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/loading_button.dart';
-import 'secrets_fail/secrets_fail.dart';
-import 'secrets_success/secrets_success.dart';
+import '../all_alert_dialogs/secrets_fail/secrets_fail.dart';
+import '../all_alert_dialogs/secrets_success/secrets_success.dart';
 
 @RoutePage()
 class CardSecretFillPage extends StatefulWidget {
@@ -271,7 +271,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                         children: [
                                           if (context.height > 844)
                                             SizedBox(
-                                              width: constraints.maxWidth * 0.11,
+                                              width: constraints.maxWidth * 0.082,
                                             )
                                           else
                                             SizedBox(
