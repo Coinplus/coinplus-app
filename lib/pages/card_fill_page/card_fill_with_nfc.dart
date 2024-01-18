@@ -36,6 +36,7 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
@@ -44,6 +45,7 @@ import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button.dart';
 import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../splash_screen/splash_screen.dart';
+import 'card_color_detecting/card_color_detecting.dart';
 
 @RoutePage()
 class CardFillWithNfc extends StatefulWidget {
@@ -88,6 +90,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   final _connectivityStore = ConnectivityStore();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   void initState() {
@@ -216,7 +220,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                         ),
                       ],
                       image: DecorationImage(
-                        image: Assets.images.card.front.image().image,
+                        image: getFrontImageForCardColor(widget.cardColor).image,
                       ),
                     ),
                     child: Center(
@@ -501,8 +505,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             ],
                             image: DecorationImage(
                               image: !_addressState.isAddressVisible
-                                  ? Assets.images.card.back.image().image
-                                  : Assets.images.card.filledBack.image().image,
+                                  ? getBackImageForCardColor(widget.cardColor).image
+                                  : getFilledBackImageForCardColor(widget.cardColor).image,
                             ),
                           ),
                           child: Row(
@@ -1336,8 +1340,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                           );
                                           if (cardIndex != -1) {
                                             await alreadySavedCard(
-                                              context: context,
-                                              walletAddress: _balanceStore.selectedCard!.address,
+                                              context,
+                                              _walletProtectState,
+                                              _balanceStore.selectedCard!.address,
                                             );
                                             _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                                           } else {
@@ -1386,8 +1391,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             );
                                             if (cardIndex != -1) {
                                               await alreadySavedCard(
-                                                context: context,
-                                                walletAddress: _balanceStore.selectedCard!.address,
+                                                context,
+                                                _walletProtectState,
+                                                _balanceStore.selectedCard!.address,
                                               );
                                               _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                                             } else {

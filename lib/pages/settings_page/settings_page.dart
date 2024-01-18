@@ -103,7 +103,7 @@ class SettingsPage extends HookWidget {
           const CupertinoSliverNavigationBar(
             border: Border(),
             stretch: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             brightness: Brightness.light,
             largeTitle: Text(
               'Settings',

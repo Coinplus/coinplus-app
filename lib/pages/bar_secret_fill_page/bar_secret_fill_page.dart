@@ -28,6 +28,7 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -50,6 +51,8 @@ class BarSecretFillPage extends StatefulWidget {
 
 class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProviderStateMixin {
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -759,6 +762,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               context: context,
                               walletAddress: walletAddress,
                               walletType: 'Bar',
+                              walletProtectState: _walletProtectState,
                             );
                             await recordUserProperty(const BarHolder());
                           } else {
@@ -768,7 +772,12 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                             );
                             await recordUserProperty(const ActivationFailed());
                             unawaited(activationFailureCount(bar.address));
-                            await secretsFailDialog(context: context, walletType: 'Bar', walletAddress: walletAddress);
+                            await secretsFailDialog(
+                              context: context,
+                              walletType: 'Bar',
+                              walletAddress: walletAddress,
+                              walletProtectState: _walletProtectState,
+                            );
                           }
                         } catch (e) {
                           log(e.toString());
@@ -845,7 +854,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
       await recordAmplitudeEvent(Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'));
 
       await _secretOneLottieController.forward(from: 0);
-    } else {}
+    }
   }
 
   Future<void> _validateSecretTwo() async {

@@ -206,6 +206,7 @@ class OnboardingPage extends HookWidget {
                                     walletAddress: walletAddress,
                                     walletType: 'Card',
                                     source: 'Onboarding',
+                                    walletProtectState: _walletProtectState,
                                   );
                                 }
                               } else {
@@ -234,6 +235,7 @@ class OnboardingPage extends HookWidget {
                                         walletAddress: walletAddress,
                                         walletType: 'Card',
                                         source: 'Onboarding',
+                                        walletProtectState: _walletProtectState,
                                       );
                                     }
                                   } else {
@@ -345,6 +347,7 @@ class OnboardingPage extends HookWidget {
                                     walletAddress: walletAddress,
                                     walletType: 'Card',
                                     source: 'Onboarding',
+                                    walletProtectState: _walletProtectState,
                                   );
                                 }
                               } else {
@@ -366,6 +369,7 @@ class OnboardingPage extends HookWidget {
                                         walletAddress: walletAddress,
                                         walletType: 'Card',
                                         source: 'Onboarding',
+                                        walletProtectState: _walletProtectState,
                                       );
                                     }
                                   } else {

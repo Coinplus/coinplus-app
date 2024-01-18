@@ -19,7 +19,7 @@ import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../services/amplitude_service.dart';
-import '../../services/ramp_service.dart';
+//import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/store.dart';
@@ -69,13 +69,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
-    configureRamp(
-      address: _balanceStore.cards.isNotEmpty
-          ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
-          : _balanceStore.bars.isNotEmpty
-              ? _balanceStore.bars[_settingsState.barCurrentIndex].address
-              : '',
-    );
+    // configureRamp(
+    //   address: _balanceStore.cards.isNotEmpty
+    //       ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
+    //       : _balanceStore.bars.isNotEmpty
+    //           ? _balanceStore.bars[_settingsState.barCurrentIndex].address
+    //           : '',
+    // );
     _tabController.addListener(() {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
@@ -83,12 +83,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _settingsState.barCurrentIndex != _balanceStore.bars.length) {
-        configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+        // configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
           _settingsState.cardCurrentIndex != _balanceStore.cards.length) {
-        configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+        //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
       }
       widget.onChangeCard(
         (
