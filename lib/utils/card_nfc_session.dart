@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
@@ -27,6 +28,8 @@ import '../store/settings_button_state/settings_button_state.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
 import '../widgets/loading_button.dart';
 import 'wallet_activation_status.dart';
+
+WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
 Future<void> nfcSessionIos({
   required bool? isMifareUltralight,
@@ -117,6 +120,7 @@ Future<void> nfcSessionIos({
             walletAddress: walletAddress,
             walletType: 'Card',
             source: 'Wallet',
+            walletProtectState: _walletProtectState,
           );
         }
       } else {
@@ -145,6 +149,7 @@ Future<void> nfcSessionIos({
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 source: 'Wallet',
+                walletProtectState: _walletProtectState,
               );
             }
           } else {
@@ -243,6 +248,7 @@ Future<void> nfcSessionAndroid({
                 isOriginalCard: isOriginalTag,
                 receivedData: walletAddress,
                 cardColor: cardColor,
+                isActivated: card.activated,
               ),
             );
           } else if (formFactor == 'b') {
@@ -260,6 +266,7 @@ Future<void> nfcSessionAndroid({
             walletAddress: walletAddress,
             walletType: 'Card',
             source: 'Wallet',
+            walletProtectState: _walletProtectState,
           );
         }
       } else {
@@ -272,6 +279,7 @@ Future<void> nfcSessionAndroid({
                   isOldCard: card.possibleOldCard,
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalCard: false,
+                  isActivated: card.activated,
                   receivedData: walletAddress,
                 ),
               );
@@ -281,6 +289,7 @@ Future<void> nfcSessionAndroid({
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 source: 'Wallet',
+                walletProtectState: _walletProtectState,
               );
             }
           } else {
@@ -289,6 +298,7 @@ Future<void> nfcSessionAndroid({
                 isOldCard: card?.possibleOldCard,
                 isMiFareUltralight: isMifareUltralight,
                 isOriginalCard: false,
+                isActivated: card?.activated,
                 receivedData: walletAddress,
               ),
             );
@@ -299,6 +309,7 @@ Future<void> nfcSessionAndroid({
               isOriginalCard: false,
               isMiFareUltralight: false,
               receivedData: walletAddress,
+              isActivated: card?.activated,
             ),
           );
         }
@@ -372,6 +383,7 @@ Future<void> checkNfcIos({
           walletAddress: walletAddress,
           walletType: 'Card',
           source: 'Wallet',
+          walletProtectState: _walletProtectState,
         );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
@@ -547,6 +559,7 @@ Future<void> checkNfcAndroid({
           walletAddress: walletAddress,
           walletType: 'Card',
           source: 'Wallet',
+          walletProtectState: _walletProtectState,
         );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');

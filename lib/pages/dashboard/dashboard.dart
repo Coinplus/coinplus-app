@@ -34,7 +34,7 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../services/ramp_service.dart';
+//import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
@@ -259,7 +259,7 @@ class DashboardPage extends HookWidget {
                         elevation: 0,
                         type: BottomNavigationBarType.fixed,
                         selectedItemColor: Colors.black,
-                        unselectedItemColor: Colors.black,
+                        unselectedItemColor: const Color(0xFfB8BEC5),
                         items: <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
                             icon: Assets.icons.walletIcon.image(
@@ -929,6 +929,7 @@ class DashboardPage extends HookWidget {
                                                                     walletAddress: walletAddress,
                                                                     walletType: isBarList ? 'Bar' : 'Card',
                                                                     source: 'Wallet',
+                                                                    walletProtectState: _walletProtectState,
                                                                   );
                                                                 }
                                                               } else {
@@ -1022,6 +1023,7 @@ class DashboardPage extends HookWidget {
                                                                     walletAddress: walletAddress,
                                                                     walletType: isBarList ? 'Bar' : 'Card',
                                                                     source: 'Wallet',
+                                                                    walletProtectState: _walletProtectState,
                                                                   );
                                                                 }
                                                               } else {
@@ -1182,6 +1184,7 @@ class DashboardPage extends HookWidget {
                                                                       walletAddress: walletAddress,
                                                                       walletType: isBarList ? 'Bar' : 'Card',
                                                                       source: 'Wallet',
+                                                                      walletProtectState: _walletProtectState,
                                                                     );
                                                                   }
                                                                 } else {
@@ -1301,20 +1304,25 @@ class DashboardPage extends HookWidget {
                                                                       walletAddress: walletAddress,
                                                                       walletType: isBarList ? 'Bar' : 'Card',
                                                                       source: 'Wallet',
+                                                                      walletProtectState: _walletProtectState,
                                                                     );
                                                                   }
                                                                 } else {
-                                                                  await router.pop();
-                                                                  await notCoinplusCardAlert(
-                                                                    context: router.navigatorKey.currentContext!,
-                                                                    walletAddress: walletAddress,
-                                                                    walletType: isBarList ? 'Bar' : 'Card',
-                                                                    source: 'Wallet',
-                                                                  );
-                                                                  await Future.delayed(
-                                                                    const Duration(milliseconds: 3000),
-                                                                  );
-                                                                  await NfcManager.instance.stopSession();
+                                                                  if (card!.possibleOldCard == true &&
+                                                                      card.nfcId == formattedTagId) {
+                                                                    await router.pop();
+                                                                    await router.push(
+                                                                      CardSecretFillRoute(
+                                                                        receivedData: walletAddress.toString(),
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    await router.pop();
+                                                                    await maybeCoinplusCard(
+                                                                      router.navigatorKey.currentContext!,
+                                                                      _walletProtectState,
+                                                                    );
+                                                                  }
                                                                 }
                                                               } else {
                                                                 await router.pop();
@@ -1426,7 +1434,7 @@ class DashboardPage extends HookWidget {
                               ),
                             );
                             await router.pop();
-                            presentRamp();
+                            //presentRamp();
                           },
                           child: Row(
                             children: [

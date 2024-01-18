@@ -48,7 +48,6 @@ dependencies:
   uni_links: ^0.5.1
   mobile_scanner: ^3.4.1
   flip_card: ^0.7.0
-  emerge_alert_dialog: ^0.0.3
   local_auth: ^2.1.6
   carousel_slider: ^4.2.1
   shared_preferences: ^2.2.0
@@ -81,7 +80,7 @@ dependencies:
   package_info_plus: ^5.0.1
   cloud_firestore: ^4.13.3
   cloud_firestore_odm: ^1.0.0-dev.78
-  ramp_flutter: ^2.0.2
+  #ramp_flutter: ^2.0.2
   action_slider: ^0.7.0
   did_change_authlocal: ^0.0.6
   shimmer: ^3.0.0
@@ -173,17 +172,9 @@ flutter:
     - assets/colors/
     - assets/images/bar/
     - assets/images/card/
-    - assets/animated_logo/nfcanimation.json
-    - assets/animated_logo/qr_animation.json
-    - assets/animated_logo/address_validation_success.json
-    - assets/animated_logo/loading_animation.json
-    - assets/animated_logo/secrets_success.json
-    - assets/animated_logo/secrets_fail.json
-    - assets/animated_logo/please_wait.json
+    - assets/lottie_animations/
     - assets/translations/en-US.json
-    - assets/animated_logo/warning.json
-    - assets/animated_logo/fake_card.json
-    - assets/animated_logo/info.json
+
 
   fonts:
     - family: RedHatLight

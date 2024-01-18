@@ -18,7 +18,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../services/ramp_service.dart';
+//import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
@@ -54,7 +54,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
       final index = _balanceStore.bars.indexWhere((element) => element.address == address);
@@ -94,11 +94,11 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                   if (bar != null) {
                     widget.onCardSelected(bar as AbstractCard);
                   }
-                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 } else {
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
-                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
             );
@@ -527,7 +527,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                     activated: await isActivated,
                                                   ),
                                                 );
-                                                presentRamp();
+                                                //presentRamp();
                                               }
                                             : null,
                                         child: Container(
@@ -699,7 +699,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 );
                 await _settingsState.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
               enlargeFactor: 0.35,

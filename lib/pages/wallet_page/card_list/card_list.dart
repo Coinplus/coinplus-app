@@ -18,7 +18,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../services/ramp_service.dart';
+//import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
@@ -59,7 +59,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     if (_balanceStore.cards.isNotEmpty) {
-      configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+      //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
     }
     _balanceStore.setOnCardAddedCallback((address) {
       final index = _balanceStore.cards.indexWhere((element) => element.address == address);
@@ -100,11 +100,11 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                   if (card != null) {
                     widget.onCardSelected(card as AbstractCard);
                   }
-                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 } else {
                   _settingsState.setCardCurrentIndex(length);
                   widget.onCardSelected(null);
-                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
             );
@@ -496,8 +496,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       onReorderEnd: (val) {
                                                         _settingsState.isReorderingStart = false;
                                                         if (index != _balanceStore.cards.length) {
-                                                          configuration.userAddress = _balanceStore
-                                                              .cards[_settingsState.cardCurrentIndex].address;
+                                                          // configuration.userAddress = _balanceStore
+                                                          //     .cards[_settingsState.cardCurrentIndex].address;
                                                         }
                                                       },
                                                     ),
@@ -660,7 +660,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       activated: await isActivated,
                                                     ),
                                                   );
-                                                  presentRamp();
+                                                  //presentRamp();
                                                 }
                                               : null,
                                           enableFeedback: false,
@@ -765,7 +765,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                 );
                 await _settingsState.setCardCurrentIndex(index);
                 if (index != _balanceStore.cards.length) {
-                  configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
               enlargeFactor: 0.35,

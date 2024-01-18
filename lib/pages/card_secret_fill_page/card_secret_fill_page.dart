@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
@@ -12,7 +12,6 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../constants/card_color.dart';
 import '../../extensions/context_extension.dart';
@@ -30,6 +29,8 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -52,6 +53,8 @@ class CardSecretFillPage extends StatefulWidget {
 
 class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProviderStateMixin {
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -80,6 +83,9 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
     _secretOneTextField();
     _secretOneController.text = secret1B58;
     _secretTwoController.text = secret2B58;
+    if (Platform.isAndroid) {
+      nfcStop();
+    }
     _lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -142,13 +148,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   Future<void> onInitWithSecretTwo() async {
     _secretTwoLottieController.reset();
     await _validateSecretTwo(walletAddress);
-  }
-
-  Future<void> stopNfc() async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    await NfcManager.instance.stopSession(
-      alertMessage: 'Complete',
-    );
   }
 
   @override
@@ -776,6 +775,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               context: context,
                               walletAddress: walletAddress,
                               walletType: 'Card',
+                              walletProtectState: _walletProtectState,
                             );
                             await recordUserProperty(const CardHolder());
                           } else {
@@ -785,10 +785,25 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             );
                             await recordUserProperty(const ActivationFailed());
                             unawaited(activationFailureCount(card.address));
-                            await secretsFailDialog(context: context, walletAddress: walletAddress, walletType: 'Card');
+                            await secretsFailDialog(
+                              context: context,
+                              walletAddress: walletAddress,
+                              walletType: 'Card',
+                              walletProtectState: _walletProtectState,
+                            );
                           }
                         } catch (e) {
-                          log(e.toString());
+                          await recordAmplitudeEvent(
+                            ValidationFailed(walletAddress: card.address, walletType: 'Card'),
+                          );
+                          await recordUserProperty(const ActivationFailed());
+                          unawaited(activationFailureCount(card.address));
+                          await secretsFailDialog(
+                            context: context,
+                            walletAddress: walletAddress,
+                            walletType: 'Card',
+                            walletProtectState: _walletProtectState,
+                          );
                         }
                       },
                 child: const Text(
@@ -886,7 +901,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
       );
       await recordAmplitudeEvent(Secret1Validated(walletAddress: walletAddress, walletType: 'Card'));
       await _secretOneLottieController.forward(from: 0);
-    } else {}
+    }
   }
 
   Future<void> _validateSecretTwo(String walletAddress) async {

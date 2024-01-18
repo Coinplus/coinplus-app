@@ -31,6 +31,7 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines_bar.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -64,6 +65,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
   final _checkboxState = CheckboxState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   void initState() {
@@ -909,8 +912,9 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                               );
                               if (cardIndex != -1) {
                                 await alreadySavedBar(
-                                  context: context,
-                                  walletAddress: _balanceStore.selectedBar!.address,
+                                  context,
+                                  _walletProtectState,
+                                  _balanceStore.selectedBar!.address,
                                 );
                                 _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               } else {

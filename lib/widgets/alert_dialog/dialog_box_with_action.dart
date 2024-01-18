@@ -22,6 +22,7 @@ class DialogBoxWithAction extends HookWidget {
     this.lottieAsset,
     this.titlePadding = const EdgeInsets.only(top: 32, left: 32, right: 32),
     this.lottieHeight = 120,
+    this.widget,
     super.key,
   });
 
@@ -35,6 +36,7 @@ class DialogBoxWithAction extends HookWidget {
   final EdgeInsets? titlePadding;
   final double lottieHeight;
   final String? lottieAsset;
+  final Widget? widget;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +62,7 @@ class DialogBoxWithAction extends HookWidget {
               repeat: false,
             ),
           const Gap(20),
+          widget ?? const SizedBox(),
           Text(
             text,
             textAlign: TextAlign.center,
