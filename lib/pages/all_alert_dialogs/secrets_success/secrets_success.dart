@@ -30,7 +30,7 @@ Future<void> secretsSuccessAlert({
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       text:
           'Your wallet activation is successful. \nTo proceed, please check out our informative guide for detailed instructions.',
       primaryActionText: 'Guide Me',

@@ -38,7 +38,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
       direction: TextDirection.rtl,
       height: 60,
       loadingIcon: Lottie.asset(
-        'assets/animated_logo/loading_animation.json',
+        'assets/lottie_animations/loading_animation.json',
         repeat: true,
         height: 30,
       ),

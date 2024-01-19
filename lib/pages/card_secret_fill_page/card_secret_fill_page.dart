@@ -430,7 +430,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         ),
                                                                       )
                                                                     : Lottie.asset(
-                                                                        'assets/animated_logo/address_validation_success.json',
+                                                                        'assets/lottie_animations/address_validation_success.json',
                                                                         height: 40,
                                                                         controller: _secretOneLottieController,
                                                                         onLoaded: (composition) {
@@ -603,7 +603,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                                         ),
                                                                       )
                                                                     : Lottie.asset(
-                                                                        'assets/animated_logo/address_validation_success.json',
+                                                                        'assets/lottie_animations/address_validation_success.json',
                                                                         height: 40,
                                                                         controller: _secretTwoLottieController,
                                                                         onLoaded: (composition) {
@@ -742,7 +742,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                   height: 60,
                                   width: 60,
                                   child: Lottie.asset(
-                                    'assets/animated_logo/loading_animation.json',
+                                    'assets/lottie_animations/loading_animation.json',
                                   ),
                                 ),
                               );
@@ -832,7 +832,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
             height: 80,
             width: 80,
             child: Lottie.asset(
-              'assets/animated_logo/loading_animation.json',
+              'assets/lottie_animations/loading_animation.json',
               controller: _lottieController,
               onLoaded: (composition) {
                 Future.delayed(

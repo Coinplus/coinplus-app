@@ -28,7 +28,7 @@ Future<void> secretsFailDialog({
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_fail.json',
+      lottieAsset: 'assets/lottie_animations/secrets_fail.json',
       lottieHeight: 100,
       text:
           "It appears the secrets you've entered don't match your wallet. Please double-check both Secret 1 and Secret 2 to ensure they are entered correctly.",

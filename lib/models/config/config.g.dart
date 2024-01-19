@@ -13,7 +13,8 @@ _$ConfigImpl _$$ConfigImplFromJson(Map json) => _$ConfigImpl(
       coinsUrl: json['coinsUrl'] as String,
     );
 
-Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
+    <String, dynamic>{
       'env': _$FlavorEnumMap[instance.env]!,
       'production': instance.production,
       'apiUrl': instance.apiUrl,

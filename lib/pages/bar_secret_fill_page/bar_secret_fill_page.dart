@@ -393,7 +393,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                       ),
                                                                     )
                                                                   : Lottie.asset(
-                                                                      'assets/animated_logo/address_validation_success.json',
+                                                                      'assets/lottie_animations/address_validation_success.json',
                                                                       height: 40,
                                                                       controller: _secretOneLottieController,
                                                                       onLoaded: (composition) {
@@ -585,7 +585,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                                 ),
                                                                               )
                                                                             : Lottie.asset(
-                                                                                'assets/animated_logo/address_validation_success.json',
+                                                                                'assets/lottie_animations/address_validation_success.json',
                                                                                 height: 40,
                                                                                 controller: _secretTwoLottieController,
                                                                                 onLoaded: (composition) {
@@ -729,7 +729,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                   height: 60,
                                   width: 60,
                                   child: Lottie.asset(
-                                    'assets/animated_logo/loading_animation.json',
+                                    'assets/lottie_animations/loading_animation.json',
                                   ),
                                 ),
                               );
@@ -809,7 +809,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
             height: 80,
             width: 80,
             child: Lottie.asset(
-              'assets/animated_logo/loading_animation.json',
+              'assets/lottie_animations/loading_animation.json',
               controller: _lottieController,
               onLoaded: (composition) {
                 Future.delayed(

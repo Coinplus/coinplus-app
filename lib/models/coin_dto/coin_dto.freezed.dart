@@ -36,7 +36,8 @@ mixin _$CoinDto {
 
 /// @nodoc
 abstract class $CoinDtoCopyWith<$Res> {
-  factory $CoinDtoCopyWith(CoinDto value, $Res Function(CoinDto) then) = _$CoinDtoCopyWithImpl<$Res, CoinDto>;
+  factory $CoinDtoCopyWith(CoinDto value, $Res Function(CoinDto) then) =
+      _$CoinDtoCopyWithImpl<$Res, CoinDto>;
   @useResult
   $Res call(
       {String id,
@@ -48,7 +49,8 @@ abstract class $CoinDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto> implements $CoinDtoCopyWith<$Res> {
+class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto>
+    implements $CoinDtoCopyWith<$Res> {
   _$CoinDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -97,7 +99,8 @@ class _$CoinDtoCopyWithImpl<$Res, $Val extends CoinDto> implements $CoinDtoCopyW
 
 /// @nodoc
 abstract class _$$CoinDtoImplCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
-  factory _$$CoinDtoImplCopyWith(_$CoinDtoImpl value, $Res Function(_$CoinDtoImpl) then) =
+  factory _$$CoinDtoImplCopyWith(
+          _$CoinDtoImpl value, $Res Function(_$CoinDtoImpl) then) =
       __$$CoinDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -111,9 +114,12 @@ abstract class _$$CoinDtoImplCopyWith<$Res> implements $CoinDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$CoinDtoImplCopyWithImpl<$Res> extends _$CoinDtoCopyWithImpl<$Res, _$CoinDtoImpl>
+class __$$CoinDtoImplCopyWithImpl<$Res>
+    extends _$CoinDtoCopyWithImpl<$Res, _$CoinDtoImpl>
     implements _$$CoinDtoImplCopyWith<$Res> {
-  __$$CoinDtoImplCopyWithImpl(_$CoinDtoImpl _value, $Res Function(_$CoinDtoImpl) _then) : super(_value, _then);
+  __$$CoinDtoImplCopyWithImpl(
+      _$CoinDtoImpl _value, $Res Function(_$CoinDtoImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -163,9 +169,11 @@ class _$CoinDtoImpl with DiagnosticableTreeMixin implements _CoinDto {
       required this.name,
       required this.icon,
       @JsonKey(name: 'price', defaultValue: 0) required this.price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0) required this.priceChange1d});
+      @JsonKey(name: 'priceChange1d', defaultValue: 0)
+      required this.priceChange1d});
 
-  factory _$CoinDtoImpl.fromJson(Map<String, dynamic> json) => _$$CoinDtoImplFromJson(json);
+  factory _$CoinDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinDtoImplFromJson(json);
 
   @override
   final String id;
@@ -210,17 +218,20 @@ class _$CoinDtoImpl with DiagnosticableTreeMixin implements _CoinDto {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.priceChange1d, priceChange1d) || other.priceChange1d == priceChange1d));
+            (identical(other.priceChange1d, priceChange1d) ||
+                other.priceChange1d == priceChange1d));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price, priceChange1d);
+  int get hashCode =>
+      Object.hash(runtimeType, id, symbol, name, icon, price, priceChange1d);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith => __$$CoinDtoImplCopyWithImpl<_$CoinDtoImpl>(this, _$identity);
+  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith =>
+      __$$CoinDtoImplCopyWithImpl<_$CoinDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -237,7 +248,8 @@ abstract class _CoinDto implements CoinDto {
       required final String name,
       required final String icon,
       @JsonKey(name: 'price', defaultValue: 0) required final num price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0) required final num priceChange1d}) = _$CoinDtoImpl;
+      @JsonKey(name: 'priceChange1d', defaultValue: 0)
+      required final num priceChange1d}) = _$CoinDtoImpl;
 
   factory _CoinDto.fromJson(Map<String, dynamic> json) = _$CoinDtoImpl.fromJson;
 
@@ -257,5 +269,6 @@ abstract class _CoinDto implements CoinDto {
   num get priceChange1d;
   @override
   @JsonKey(ignore: true)
-  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CoinDtoImplCopyWith<_$CoinDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

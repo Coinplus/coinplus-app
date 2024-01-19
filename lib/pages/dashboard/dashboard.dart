@@ -1051,7 +1051,7 @@ class DashboardPage extends HookWidget {
                                                           await router.pop();
                                                           await showAndroidBarNfcBottomSheet();
                                                         },
-                                                  lottieAsset: 'assets/animated_logo/please_wait.json',
+                                                  lottieAsset: 'assets/lottie_animations/please_wait.json',
                                                   lottieHeight: 140,
                                                 ),
                                                 isDismissible: true,
@@ -1352,7 +1352,7 @@ class DashboardPage extends HookWidget {
                                                           await router.pop();
                                                           await showAndroidCardNfcBottomSheet();
                                                         },
-                                                  lottieAsset: 'assets/animated_logo/please_wait.json',
+                                                  lottieAsset: 'assets/lottie_animations/please_wait.json',
                                                   lottieHeight: 140,
                                                 ),
                                                 isDismissible: true,
@@ -1715,7 +1715,7 @@ class DashboardPage extends HookWidget {
                 40,
               ),
               Lottie.asset(
-                'assets/animated_logo/warning.json',
+                'assets/lottie_animations/warning.json',
                 repeat: false,
                 height: 120,
               ),

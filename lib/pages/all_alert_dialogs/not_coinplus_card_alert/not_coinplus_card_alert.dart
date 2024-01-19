@@ -34,7 +34,7 @@ Future<void> notCoinplusCardAlert({
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/fake_card.json',
+      lottieAsset: 'assets/lottie_animations/fake_card.json',
       primaryActionText: 'Got it',
       primaryAction: router.pop,
       widget: ScaleTap(

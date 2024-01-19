@@ -463,7 +463,7 @@ Future<void> checkNfcAndroid({
                 height: 150,
                 width: 150,
                 child: Lottie.asset(
-                  'assets/animated_logo/nfcanimation.json',
+                  'assets/lottie_animations/nfcanimation.json',
                 ).expandedHorizontally(),
               ),
               const Gap(25),
