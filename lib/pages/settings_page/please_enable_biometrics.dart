@@ -21,7 +21,7 @@ Future<void> pleaseEnableBiometrics(BuildContext context, WalletProtectState wal
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_fail.json',
+      lottieAsset: 'assets/lottie_animations/secrets_fail.json',
       lottieHeight: 100,
       primaryActionText: 'Go to settings',
       primaryAction: () async {

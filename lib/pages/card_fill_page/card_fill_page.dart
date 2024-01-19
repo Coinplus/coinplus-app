@@ -845,7 +845,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                         ),
                                                       )
                                                     : Lottie.asset(
-                                                        'assets/animated_logo/address_validation_success.json',
+                                                        'assets/lottie_animations/address_validation_success.json',
                                                         height: 40,
                                                         controller: _lottieController,
                                                         onLoaded: (composition) {

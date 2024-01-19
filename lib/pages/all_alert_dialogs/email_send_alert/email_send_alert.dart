@@ -27,7 +27,7 @@ Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProte
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Help Center',
       primaryAction: () async {
         await router.pop();

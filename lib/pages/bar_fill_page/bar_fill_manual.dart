@@ -626,7 +626,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                 : Padding(
                                                     padding: const EdgeInsets.all(8),
                                                     child: Lottie.asset(
-                                                      'assets/animated_logo/address_validation_success.json',
+                                                      'assets/lottie_animations/address_validation_success.json',
                                                       height: 30,
                                                       controller: _lottieController,
                                                       onLoaded: (composition) {

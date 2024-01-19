@@ -20,7 +20,7 @@ Future<void> yourCardIsOriginal(BuildContext context, WalletProtectState walletP
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Close',
       primaryAction: router.pop,
     ),

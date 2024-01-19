@@ -26,7 +26,7 @@ Future<void> maybeCoinplusCard(BuildContext context, WalletProtectState walletPr
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/please_wait.json',
+      lottieAsset: 'assets/lottie_animations/please_wait.json',
       primaryActionText: 'Contact Us',
       primaryAction: () async {
         await router.pop();

@@ -21,7 +21,7 @@ Future<void> alreadyActivatedWallet(BuildContext context, WalletProtectState wal
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/info.json',
+      lottieAsset: 'assets/lottie_animations/info.json',
       primaryActionText: 'Help center',
       primaryAction: () async {
         await router.pop();

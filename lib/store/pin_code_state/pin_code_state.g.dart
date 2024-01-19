@@ -24,7 +24,8 @@ mixin _$PinLockStore on _PinLockStore, Store {
     });
   }
 
-  late final _$isEnteredCorrectAtom = Atom(name: '_PinLockStore.isEnteredCorrect', context: context);
+  late final _$isEnteredCorrectAtom =
+      Atom(name: '_PinLockStore.isEnteredCorrect', context: context);
 
   @override
   bool? get isEnteredCorrect {
@@ -39,11 +40,13 @@ mixin _$PinLockStore on _PinLockStore, Store {
     });
   }
 
-  late final _$_PinLockStoreActionController = ActionController(name: '_PinLockStore', context: context);
+  late final _$_PinLockStoreActionController =
+      ActionController(name: '_PinLockStore', context: context);
 
   @override
   void onNumberTap(int number, int pinLength, int correctPin) {
-    final _$actionInfo = _$_PinLockStoreActionController.startAction(name: '_PinLockStore.onNumberTap');
+    final _$actionInfo = _$_PinLockStoreActionController.startAction(
+        name: '_PinLockStore.onNumberTap');
     try {
       return super.onNumberTap(number, pinLength, correctPin);
     } finally {
@@ -53,7 +56,8 @@ mixin _$PinLockStore on _PinLockStore, Store {
 
   @override
   void onDelete() {
-    final _$actionInfo = _$_PinLockStoreActionController.startAction(name: '_PinLockStore.onDelete');
+    final _$actionInfo = _$_PinLockStoreActionController.startAction(
+        name: '_PinLockStore.onDelete');
     try {
       return super.onDelete();
     } finally {
@@ -63,7 +67,8 @@ mixin _$PinLockStore on _PinLockStore, Store {
 
   @override
   void clearValue() {
-    final _$actionInfo = _$_PinLockStoreActionController.startAction(name: '_PinLockStore.clearValue');
+    final _$actionInfo = _$_PinLockStoreActionController.startAction(
+        name: '_PinLockStore.clearValue');
     try {
       return super.clearValue();
     } finally {

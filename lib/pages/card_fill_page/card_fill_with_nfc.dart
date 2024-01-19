@@ -843,7 +843,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                         ),
                                                       )
                                                     : Lottie.asset(
-                                                        'assets/animated_logo/address_validation_success.json',
+                                                        'assets/lottie_animations/address_validation_success.json',
                                                         height: 40,
                                                         controller: _lottieController,
                                                         onLoaded: (composition) {

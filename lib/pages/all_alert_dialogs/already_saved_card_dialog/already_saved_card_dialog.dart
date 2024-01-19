@@ -30,7 +30,7 @@ Future<void> alreadySavedCard(BuildContext context, WalletProtectState walletPro
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Got it',
       primaryAction: () async {
         await hasShownWallet().then((hasShown) {
@@ -71,7 +71,7 @@ Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProt
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Got it',
       primaryAction: () async {
         await hasShownWallet().then((hasShown) {

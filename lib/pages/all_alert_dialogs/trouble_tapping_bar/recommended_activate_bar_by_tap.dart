@@ -30,7 +30,7 @@ Future<void> recommendedActivateBarByTap({
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/animated_logo/warning.json',
+      lottieAsset: 'assets/lottie_animations/warning.json',
       primaryActionText: 'Activate',
       primaryAction: () async {
         await router.pop();
