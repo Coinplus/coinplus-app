@@ -211,7 +211,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                   flipOnTouch: false,
                   controller: _flipCardController,
                   front: Container(
-                    height: context.height > 667 ? 455 : 400,
+                    height: context.height > 667 ? 455 : 350,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
@@ -494,7 +494,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                         child: AnimatedContainer(
                           curve: Curves.decelerate,
                           duration: const Duration(milliseconds: 300),
-                          height: context.height > 667 ? 455 : 400,
+                          height: context.height > 667 ? 455 : 365,
                           width: context.width - 64,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -941,7 +941,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
               );
             },
           ),
-          const Gap(10),
+          if (context.height > 667) const Gap(10) else const SizedBox(),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
