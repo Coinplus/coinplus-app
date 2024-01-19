@@ -459,7 +459,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                                                           : CrossFadeState.showSecond,
                                                     ),
                                                   ),
-                                                  const Gap(70),
+                                                  if (context.height > 667) const Gap(70) else const Gap(50),
                                                   ScaleTransition(
                                                     scale: _secretTwoAnimationController,
                                                     child: AnimatedCrossFade(

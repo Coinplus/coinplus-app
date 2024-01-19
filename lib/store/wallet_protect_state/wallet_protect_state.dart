@@ -22,6 +22,7 @@ abstract class _WalletProtectState with Store {
   _WalletProtectState() {
     checkPinCodeStatus();
     checkBiometricStatus();
+    checkAvailableBiometrics();
     checkNotificationToggleStatus();
   }
 
@@ -117,7 +118,7 @@ abstract class _WalletProtectState with Store {
     if (await isBiometricAvailable()) {
       try {
         final isAuthorized = await _auth.authenticate(
-          localizedReason: 'Authenticate using Face ID',
+          localizedReason: 'Authenticate with Biometrics',
           options: const AuthenticationOptions(
             biometricOnly: true,
             stickyAuth: true,
@@ -184,7 +185,7 @@ abstract class _WalletProtectState with Store {
     if (await isBiometricAvailable()) {
       try {
         final isAuthorized = await _auth.authenticate(
-          localizedReason: 'Authenticate using Face ID',
+          localizedReason: 'Authenticate with Biometrics',
           options: const AuthenticationOptions(
             biometricOnly: true,
           ),

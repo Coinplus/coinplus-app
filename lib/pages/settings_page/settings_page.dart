@@ -251,7 +251,7 @@ class SettingsPage extends HookWidget {
                                                   ? Assets.icons.faceIdSettings.image(
                                                       height: 22,
                                                     )
-                                                  : _walletProtectState.availableBiometric == BiometricType.face
+                                                  : _walletProtectState.availableBiometric == BiometricType.fingerprint
                                                       ? Assets.icons.iphoneTouchId.image(
                                                           height: 22,
                                                         )
@@ -259,7 +259,7 @@ class SettingsPage extends HookWidget {
                                                           height: 22,
                                                         ),
                                               title: Text(
-                                                Platform.isAndroid ? 'Biometrics' : 'Face ID',
+                                                Platform.isAndroid ? 'Biometrics' : _walletProtectState.availableBiometric == BiometricType.fingerprint ? 'Touch ID' : 'Face ID',
                                                 style: const TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 15,

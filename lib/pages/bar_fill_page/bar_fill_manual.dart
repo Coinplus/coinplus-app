@@ -168,12 +168,12 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                   builder: (context) {
                     final data = _balanceStore.coins;
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(bottom: context.height > 667 ? 20 : 0),
                       child: Center(
                         child: AnimatedCrossFade(
                           firstChild: AnimatedCrossFade(
                             firstChild: Container(
-                              height: 475,
+                              height: context.height > 667 ? 475 : 400,
                               width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -189,7 +189,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     Opacity(
                                       opacity: _lineStore.isLineVisible ? 1 : 0,
                                       child: CustomPaint(
-                                        size: const Size(61, 245),
+                                        size: Size(61,context.height > 667 ? 245 : 280),
                                         painter: BarLinesCustomPaint(),
                                       ),
                                     ),
@@ -198,11 +198,11 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                         width: context.width * 0.6,
                                         child: Column(
                                           children: [
-                                            const Gap(35),
+                                            if (context.height > 667) const Gap(35) else const Gap(20),
                                             Stack(
                                               children: [
                                                 Container(
-                                                  height: 164,
+                                                  height: context.height > 667 ? 164 : 140,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                       image: Assets.images.bar.hologramWithFrame.image().image,
@@ -210,7 +210,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                   ),
                                                   child: Center(
                                                     child: Assets.images.bar.barSecret1.image(
-                                                      height: 44,
+                                                      height: context.height > 667 ? 44 : 40,
                                                     ),
                                                   ),
                                                 ),
@@ -269,7 +269,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                 ],
                                               ),
                                             ),
-                                            const Gap(15),
+                                            if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
                                               opacity: _lineStore.isLineVisible ? 0 : 1,
                                               child: ScaleTap(
@@ -346,16 +346,16 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                 ),
                                               ),
                                             ),
-                                            const Gap(15),
+                                            if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
                                               opacity: _lineStore.isLineVisible ? 0 : 1,
                                               child: Assets.images.bar.barCoinplusLogo.image(
                                                 height: 40,
                                               ),
                                             ),
-                                            const Gap(15),
+                                            if (context.height > 667) const Gap(15) else const Gap(25),
                                             Assets.images.bar.barSecret2.image(
-                                              height: 43,
+                                              height: context.height > 667 ? 43 : 36,
                                             ),
                                           ],
                                         ),
@@ -366,7 +366,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               ),
                             ),
                             secondChild: Container(
-                              height: 475,
+                              height: context.height > 667 ? 475 : 400,
                               width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -516,7 +516,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                             duration: const Duration(milliseconds: 600),
                           ),
                           secondChild: Container(
-                            height: 475,
+                            height: context.height > 667 ? 475 : 400,
                             width: context.width - 64,
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -849,7 +849,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                   );
                 },
               ),
-              const Gap(20),
+              if (context.height > 667) const Gap(20) else const Gap(5),
               Observer(
                 builder: (_) {
                   return _lineStore.isLineVisible
