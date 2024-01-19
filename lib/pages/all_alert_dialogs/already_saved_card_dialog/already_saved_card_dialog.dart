@@ -30,6 +30,7 @@ Future<void> alreadySavedCard(BuildContext context, WalletProtectState walletPro
           fontSize: 17,
         ),
       ),
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Got it',
       primaryAction: () async {
         await hasShownWallet().then((hasShown) {
@@ -39,23 +40,17 @@ Future<void> alreadySavedCard(BuildContext context, WalletProtectState walletPro
           }
         });
       },
-      widget: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Gap(40),
-                Assets.images.card.cardForm.image(height: 63),
-                const Gap(16),
-                Assets.icons.taskAlt.image(height: 24),
-              ],
-            ),
-          ).expandedHorizontally(),
-          const Gap(20),
-        ],
-      ),
+      widget: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Gap(40),
+            Assets.images.card.cardForm.image(height: 63),
+            const Gap(16),
+            Assets.icons.taskAlt.image(height: 24),
+          ],
+        ),
+      ).expandedHorizontally(),
     ),
     isDismissible: false,
   );
@@ -76,6 +71,7 @@ Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProt
           fontSize: 17,
         ),
       ),
+      lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Got it',
       primaryAction: () async {
         await hasShownWallet().then((hasShown) {
@@ -85,23 +81,17 @@ Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProt
           }
         });
       },
-      widget: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Gap(40),
-                Assets.images.bar.barForm.image(height: 90),
-                const Gap(16),
-                Assets.icons.taskAlt.image(height: 24),
-              ],
-            ),
-          ).expandedHorizontally(),
-          const Gap(20),
-        ],
-      ),
+      widget: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Gap(40),
+            Assets.images.bar.barForm.image(height: 90),
+            const Gap(16),
+            Assets.icons.taskAlt.image(height: 24),
+          ],
+        ),
+      ).expandedHorizontally(),
     ),
     isDismissible: false,
   );

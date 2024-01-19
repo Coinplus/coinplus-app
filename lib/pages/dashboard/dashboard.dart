@@ -34,14 +34,12 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-
 //import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../utils/data_utils.dart';
 import '../../utils/deep_link_util.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
@@ -218,7 +216,7 @@ class DashboardPage extends HookWidget {
                   endIndent: 1,
                   indent: 0,
                   height: 1,
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.2),
                 ),
                 Theme(
                   data: ThemeData(
@@ -525,7 +523,7 @@ class DashboardPage extends HookWidget {
                                           ),
                                         ],
                                       ),
-                                      const Spacer(),
+                                      const Gap(60),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(14),
@@ -626,27 +624,16 @@ class DashboardPage extends HookWidget {
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  secondChild: context.height > 667
-                                                                      ? Text(
-                                                                          card.address,
-                                                                          style: const TextStyle(
-                                                                            fontFamily: FontFamily.redHatMedium,
-                                                                            fontSize: 14,
-                                                                            color: Color(
-                                                                              0xFF4F6486,
-                                                                            ),
-                                                                          ),
-                                                                        )
-                                                                      : Text(
-                                                                          getSplitAddress(card.address),
-                                                                          style: const TextStyle(
-                                                                            fontFamily: FontFamily.redHatMedium,
-                                                                            fontSize: 14,
-                                                                            color: Color(
-                                                                              0xFF4F6486,
-                                                                            ),
-                                                                          ),
-                                                                        ),
+                                                                  secondChild: Text(
+                                                                    card.address,
+                                                                    style: const TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      fontSize: 14,
+                                                                      color: Color(
+                                                                        0xFF4F6486,
+                                                                      ),
+                                                                    ),
+                                                                  ),
                                                                   crossFadeState: _settingsState.isAddressCopied
                                                                       ? CrossFadeState.showFirst
                                                                       : CrossFadeState.showSecond,
@@ -723,7 +710,7 @@ class DashboardPage extends HookWidget {
                                           ),
                                         ),
                                       ),
-                                      const Spacer(),
+                                      const Gap(120),
                                       LoadingButton(
                                         onPressed: () async {
                                           await recordAmplitudeEvent(
@@ -1685,7 +1672,6 @@ class DashboardPage extends HookWidget {
     _walletProtectState.updateModalStatus(isOpened: true);
     showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
-      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(
