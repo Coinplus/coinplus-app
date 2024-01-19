@@ -9,6 +9,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
@@ -63,7 +64,7 @@ class PinCodeForAllPages extends HookWidget {
       ),
       body: Column(
         children: [
-          const Gap(80),
+          const Gap(70),
           Assets.images.coinpluslogo.image(
             height: 50,
           ),
@@ -160,7 +161,6 @@ class PinCodeForAllPages extends HookWidget {
               ),
             ),
           ),
-          const Gap(20),
           Observer(
             builder: (_) {
               if (!_walletProtectState.isBiometricsEnabled) {
@@ -202,7 +202,9 @@ class PinCodeForAllPages extends HookWidget {
                     onPressed: () {
                       _walletProtectState.authenticateWithBiometrics();
                     },
-                    child: Assets.icons.faceIDSuccess.image(
+                    child: _walletProtectState.availableBiometric == BiometricType.fingerprint ?  Assets.icons.iphoneTouchId.image(
+                      height: 30,
+                    ) : Assets.icons.faceIDSuccess.image(
                       height: 30,
                     ),
                   ),
