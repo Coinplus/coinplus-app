@@ -238,7 +238,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? 55 : 85,
+                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -372,7 +372,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 const Gap(4),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? 55 : 85,
+                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -524,13 +524,13 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               if (context.height < 932)
                                                 if (context.height < 867.4)
                                                   if (context.height > 844)
-                                                    Gap(context.width * 0.085)
+                                                    Gap(context.width * 0.08)
                                                   else if (context.height > 667)
                                                     Gap(context.width * 0.075)
                                                   else
                                                     Gap(context.width * 0.125) //iPhone 13 Pro
                                                 else
-                                                  Gap(context.width * 0.1) //Samsung large display
+                                                  Gap(context.width * 0.115) //Samsung large display
                                               else
                                                 Gap(context.width * 0.115), //iPhone 13 Pro Max
                                               Column(
@@ -561,11 +561,13 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                       opacity: _lineStore.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
-                                                          context.height > 844
-                                                              ? 28
-                                                              : context.height > 667
-                                                                  ? 28
-                                                                  : 38,
+                                                          context.height > 852
+                                                              ? context.height > 844
+                                                                  ? 42
+                                                                  : context.height > 667
+                                                                      ? 28
+                                                                      : 38
+                                                              : 30,
                                                           265,
                                                         ),
                                                         painter: LineCustomPaint(),
@@ -616,13 +618,13 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               if (context.height < 932)
                                 if (context.height < 867.4)
                                   if (context.height > 844)
-                                    Gap(context.width * 0.109)
+                                    Gap(context.width * 0.114)
                                   else if (context.height > 667)
                                     Gap(context.width * 0.1175)
                                   else
                                     Gap(context.width * 0.065)
                                 else
-                                  Gap(context.height * 0.051)
+                                  Gap(context.height * 0.048)
                               else
                                 Gap(context.height * 0.049),
                               Opacity(
@@ -659,7 +661,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                     ? context.height > 844
                                                         ? context.height * 0.26
                                                         : context.height * 0.265
-                                                    : context.height * 0.255
+                                                    : context.height * 0.24
                                                 : context.height * 0.24,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
@@ -680,7 +682,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                               : context.height > 667
                                                                   ? context.width * 0.25
                                                                   : context.width * 0.21
-                                                          : context.width * 0.24
+                                                          : context.width * 0.23
                                                       : context.width * 0.225,
                                                   height: context.height * 0.14,
                                                   child: Observer(
@@ -1426,7 +1428,12 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               final cardIndex = _balanceStore.cards.indexWhere(
                                                 (element) => element.address == _balanceStore.selectedCard?.address,
                                               );
-                                              if (cardIndex != -1) {
+
+                                              final barIndex = _balanceStore.bars.indexWhere(
+                                                (element) => element.address == _balanceStore.selectedCard?.address,
+                                              );
+
+                                              if (cardIndex != -1 && barIndex != -1) {
                                                 await alreadySavedCard(
                                                   context,
                                                   _walletProtectState,
@@ -1477,7 +1484,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 final cardIndex = _balanceStore.cards.indexWhere(
                                                   (element) => element.address == _balanceStore.selectedCard?.address,
                                                 );
-                                                if (cardIndex != -1) {
+                                                final barIndex = _balanceStore.bars.indexWhere(
+                                                  (element) => element.address == _balanceStore.selectedCard?.address,
+                                                );
+                                                if (cardIndex != -1 || barIndex != -1) {
                                                   await alreadySavedCard(
                                                     context,
                                                     _walletProtectState,

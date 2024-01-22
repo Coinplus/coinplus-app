@@ -195,6 +195,7 @@ class OnboardingPage extends HookWidget {
                                         isOriginalTag: isOriginalTag,
                                         receivedData: walletAddress,
                                         barColor: cardColor,
+                                        isActivated: card.activated,
                                       ),
                                     );
                                   }
@@ -338,6 +339,7 @@ class OnboardingPage extends HookWidget {
                                         isOriginalTag: isOriginalTag,
                                         receivedData: walletAddress,
                                         barColor: cardColor,
+                                        isActivated: card.activated,
                                       ),
                                     );
                                   }

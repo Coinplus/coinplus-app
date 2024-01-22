@@ -53,13 +53,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   late final _tabController = TabController(
     length: 2,
     vsync: this,
-    initialIndex: _balanceStore.cards.isEmpty
-        ? _balanceStore.bars.isEmpty
-            ? 0
-            : 1
-        : _balanceStore.cards.isEmpty
-            ? 1
-            : 0,
+    // initialIndex: _balanceStore.cards.isEmpty
+    //     ? _balanceStore.bars.isEmpty
+    //         ? 0
+    //         : 1
+    //     : _balanceStore.cards.isEmpty
+    //         ? 1
+    //         : 0,
   );
 
   @override

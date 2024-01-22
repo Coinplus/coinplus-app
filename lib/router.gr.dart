@@ -14,41 +14,29 @@ import 'package:coinplus/models/bar_model/bar_model.dart' as _i27;
 import 'package:coinplus/models/card_model/card_model.dart' as _i29;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i2;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i3;
-import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart'
-    as _i4;
+import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart' as _i4;
 import 'package:coinplus/pages/bar_settings_page/bar_settings_page.dart' as _i5;
 import 'package:coinplus/pages/card_fill_page/card_fill_page.dart' as _i6;
 import 'package:coinplus/pages/card_fill_page/card_fill_with_nfc.dart' as _i7;
-import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart'
-    as _i8;
-import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
-    as _i9;
-import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart'
-    as _i10;
-import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart'
-    as _i12;
-import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart'
-    as _i15;
-import 'package:coinplus/pages/custom_pin_code/pin_code_for_all_pages.dart'
-    as _i16;
-import 'package:coinplus/pages/custom_pin_code/pin_code_for_private_key.dart'
-    as _i17;
+import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart' as _i8;
+import 'package:coinplus/pages/card_settings_page/card_settings_page.dart' as _i9;
+import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart' as _i10;
+import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart' as _i12;
+import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart' as _i15;
+import 'package:coinplus/pages/custom_pin_code/pin_code_for_all_pages.dart' as _i16;
+import 'package:coinplus/pages/custom_pin_code/pin_code_for_private_key.dart' as _i17;
 import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i18;
 import 'package:coinplus/pages/custom_pin_code/remove_pin_code.dart' as _i19;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i13;
 import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i14;
 import 'package:coinplus/pages/qr_page/qr_page.dart' as _i20;
-import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart'
-    as _i1;
-import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart'
-    as _i11;
+import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart' as _i1;
+import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i11;
 import 'package:coinplus/pages/settings_page/settings_page.dart' as _i21;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i22;
-import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
-    as _i23;
+import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart' as _i23;
 import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i30;
-import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i31;
+import 'package:coinplus/store/card_color_state/card_setting_state.dart' as _i31;
 import 'package:flutter/cupertino.dart' as _i25;
 import 'package:flutter/material.dart' as _i26;
 
@@ -64,8 +52,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     BarFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarFillRouteArgs>(
-          orElse: () => const BarFillRouteArgs());
+      final args = routeData.argsAs<BarFillRouteArgs>(orElse: () => const BarFillRouteArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BarFillPage(
@@ -75,8 +62,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     BarFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<BarFillWithNfcArgs>(
-          orElse: () => const BarFillWithNfcArgs());
+      final args = routeData.argsAs<BarFillWithNfcArgs>();
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.BarFillWithNfc(
@@ -84,12 +70,12 @@ abstract class $Router extends _i24.RootStackRouter {
           receivedData: args.receivedData,
           barColor: args.barColor,
           isOriginalTag: args.isOriginalTag,
+          isActivated: args.isActivated,
         ),
       );
     },
     BarSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarSecretFillRouteArgs>(
-          orElse: () => const BarSecretFillRouteArgs());
+      final args = routeData.argsAs<BarSecretFillRouteArgs>(orElse: () => const BarSecretFillRouteArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.BarSecretFillPage(
@@ -109,8 +95,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     CardFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardFillRouteArgs>(
-          orElse: () => const CardFillRouteArgs());
+      final args = routeData.argsAs<CardFillRouteArgs>(orElse: () => const CardFillRouteArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.CardFillPage(
@@ -121,8 +106,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     CardFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<CardFillWithNfcArgs>(
-          orElse: () => const CardFillWithNfcArgs());
+      final args = routeData.argsAs<CardFillWithNfcArgs>(orElse: () => const CardFillWithNfcArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.CardFillWithNfc(
@@ -137,8 +121,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     CardSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardSecretFillRouteArgs>(
-          orElse: () => const CardSecretFillRouteArgs());
+      final args = routeData.argsAs<CardSecretFillRouteArgs>(orElse: () => const CardSecretFillRouteArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i8.CardSecretFillPage(
@@ -200,8 +183,7 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     PinCodeForPrivateKey.name: (routeData) {
-      final args = routeData.argsAs<PinCodeForPrivateKeyArgs>(
-          orElse: () => const PinCodeForPrivateKeyArgs());
+      final args = routeData.argsAs<PinCodeForPrivateKeyArgs>(orElse: () => const PinCodeForPrivateKeyArgs());
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i17.PinCodeForPrivateKey(
@@ -284,8 +266,7 @@ class BarFillRoute extends _i24.PageRouteInfo<BarFillRouteArgs> {
 
   static const String name = 'BarFillRoute';
 
-  static const _i24.PageInfo<BarFillRouteArgs> page =
-      _i24.PageInfo<BarFillRouteArgs>(name);
+  static const _i24.PageInfo<BarFillRouteArgs> page = _i24.PageInfo<BarFillRouteArgs>(name);
 }
 
 class BarFillRouteArgs {
@@ -312,6 +293,7 @@ class BarFillWithNfc extends _i24.PageRouteInfo<BarFillWithNfcArgs> {
     String? receivedData,
     String? barColor,
     bool? isOriginalTag,
+    required bool? isActivated,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           BarFillWithNfc.name,
@@ -320,14 +302,14 @@ class BarFillWithNfc extends _i24.PageRouteInfo<BarFillWithNfcArgs> {
             receivedData: receivedData,
             barColor: barColor,
             isOriginalTag: isOriginalTag,
+            isActivated: isActivated,
           ),
           initialChildren: children,
         );
 
   static const String name = 'BarFillWithNfc';
 
-  static const _i24.PageInfo<BarFillWithNfcArgs> page =
-      _i24.PageInfo<BarFillWithNfcArgs>(name);
+  static const _i24.PageInfo<BarFillWithNfcArgs> page = _i24.PageInfo<BarFillWithNfcArgs>(name);
 }
 
 class BarFillWithNfcArgs {
@@ -336,6 +318,7 @@ class BarFillWithNfcArgs {
     this.receivedData,
     this.barColor,
     this.isOriginalTag,
+    required this.isActivated,
   });
 
   final _i25.Key? key;
@@ -346,9 +329,11 @@ class BarFillWithNfcArgs {
 
   final bool? isOriginalTag;
 
+  final bool? isActivated;
+
   @override
   String toString() {
-    return 'BarFillWithNfcArgs{key: $key, receivedData: $receivedData, barColor: $barColor, isOriginalTag: $isOriginalTag}';
+    return 'BarFillWithNfcArgs{key: $key, receivedData: $receivedData, barColor: $barColor, isOriginalTag: $isOriginalTag, isActivated: $isActivated}';
   }
 }
 
@@ -370,8 +355,7 @@ class BarSecretFillRoute extends _i24.PageRouteInfo<BarSecretFillRouteArgs> {
 
   static const String name = 'BarSecretFillRoute';
 
-  static const _i24.PageInfo<BarSecretFillRouteArgs> page =
-      _i24.PageInfo<BarSecretFillRouteArgs>(name);
+  static const _i24.PageInfo<BarSecretFillRouteArgs> page = _i24.PageInfo<BarSecretFillRouteArgs>(name);
 }
 
 class BarSecretFillRouteArgs {
@@ -408,8 +392,7 @@ class BarSettingsRoute extends _i24.PageRouteInfo<BarSettingsRouteArgs> {
 
   static const String name = 'BarSettingsRoute';
 
-  static const _i24.PageInfo<BarSettingsRouteArgs> page =
-      _i24.PageInfo<BarSettingsRouteArgs>(name);
+  static const _i24.PageInfo<BarSettingsRouteArgs> page = _i24.PageInfo<BarSettingsRouteArgs>(name);
 }
 
 class BarSettingsRouteArgs {
@@ -448,8 +431,7 @@ class CardFillRoute extends _i24.PageRouteInfo<CardFillRouteArgs> {
 
   static const String name = 'CardFillRoute';
 
-  static const _i24.PageInfo<CardFillRouteArgs> page =
-      _i24.PageInfo<CardFillRouteArgs>(name);
+  static const _i24.PageInfo<CardFillRouteArgs> page = _i24.PageInfo<CardFillRouteArgs>(name);
 }
 
 class CardFillRouteArgs {
@@ -499,8 +481,7 @@ class CardFillWithNfc extends _i24.PageRouteInfo<CardFillWithNfcArgs> {
 
   static const String name = 'CardFillWithNfc';
 
-  static const _i24.PageInfo<CardFillWithNfcArgs> page =
-      _i24.PageInfo<CardFillWithNfcArgs>(name);
+  static const _i24.PageInfo<CardFillWithNfcArgs> page = _i24.PageInfo<CardFillWithNfcArgs>(name);
 }
 
 class CardFillWithNfcArgs {
@@ -552,8 +533,7 @@ class CardSecretFillRoute extends _i24.PageRouteInfo<CardSecretFillRouteArgs> {
 
   static const String name = 'CardSecretFillRoute';
 
-  static const _i24.PageInfo<CardSecretFillRouteArgs> page =
-      _i24.PageInfo<CardSecretFillRouteArgs>(name);
+  static const _i24.PageInfo<CardSecretFillRouteArgs> page = _i24.PageInfo<CardSecretFillRouteArgs>(name);
 }
 
 class CardSecretFillRouteArgs {
@@ -590,8 +570,7 @@ class CardSettingsRoute extends _i24.PageRouteInfo<CardSettingsRouteArgs> {
 
   static const String name = 'CardSettingsRoute';
 
-  static const _i24.PageInfo<CardSettingsRouteArgs> page =
-      _i24.PageInfo<CardSettingsRouteArgs>(name);
+  static const _i24.PageInfo<CardSettingsRouteArgs> page = _i24.PageInfo<CardSettingsRouteArgs>(name);
 }
 
 class CardSettingsRouteArgs {
@@ -710,8 +689,7 @@ class PinCodeForAllRoutes extends _i24.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i17.PinCodeForPrivateKey]
-class PinCodeForPrivateKey
-    extends _i24.PageRouteInfo<PinCodeForPrivateKeyArgs> {
+class PinCodeForPrivateKey extends _i24.PageRouteInfo<PinCodeForPrivateKeyArgs> {
   PinCodeForPrivateKey({
     _i26.Key? key,
     _i27.BarModel? bar,
@@ -733,8 +711,7 @@ class PinCodeForPrivateKey
 
   static const String name = 'PinCodeForPrivateKey';
 
-  static const _i24.PageInfo<PinCodeForPrivateKeyArgs> page =
-      _i24.PageInfo<PinCodeForPrivateKeyArgs>(name);
+  static const _i24.PageInfo<PinCodeForPrivateKeyArgs> page = _i24.PageInfo<PinCodeForPrivateKeyArgs>(name);
 }
 
 class PinCodeForPrivateKeyArgs {

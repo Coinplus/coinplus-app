@@ -42,12 +42,12 @@ Future<void> nfcSessionIos({
         : 'It’s easy! Just hold your phone near the Coinplus Card.',
     onDiscovered: (tag) async {
       final ndef = Ndef.from(tag);
-      final records = ndef!.cachedMessage!.records;
+      final records = ndef!.cachedMessage?.records;
       dynamic walletAddress;
       dynamic cardColor;
       dynamic formFactor;
       dynamic isOriginalTag = false;
-      if (records.length >= 2) {
+      if (records!.length >= 2) {
         final hasJson = records[1].payload;
         final payloadString = String.fromCharCodes(hasJson);
         final Map payloadData = await json.decode(payloadString);
@@ -109,6 +109,7 @@ Future<void> nfcSessionIos({
                 isOriginalTag: isOriginalTag,
                 receivedData: walletAddress,
                 barColor: cardColor,
+                isActivated: card.activated,
               ),
             );
           }
@@ -257,6 +258,7 @@ Future<void> nfcSessionAndroid({
                 isOriginalTag: isOriginalTag,
                 receivedData: walletAddress,
                 barColor: cardColor,
+                isActivated: card.activated,
               ),
             );
           }

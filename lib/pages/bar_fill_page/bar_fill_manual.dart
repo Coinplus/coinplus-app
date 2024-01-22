@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +30,7 @@ import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
+import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -51,12 +53,15 @@ class BarFillPage extends StatefulWidget {
 }
 
 class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin {
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
   late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
   final _addressState = AddressState(CardType.BAR);
+  final _connectivityStore = ConnectivityStore();
   late String btcAddress = '';
   final _focusNode = FocusNode();
   final _lineStore = LinesStore();
@@ -81,6 +86,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
     _focusNode.addListener(() {
       _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     _textFieldAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
@@ -98,6 +104,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   @override
   void dispose() {
     super.dispose();
+    _connectivitySubscription.cancel();
     _lottieController.dispose();
     _textFieldAnimationController.dispose();
   }
@@ -189,7 +196,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     Opacity(
                                       opacity: _lineStore.isLineVisible ? 1 : 0,
                                       child: CustomPaint(
-                                        size: Size(61,context.height > 667 ? 245 : 280),
+                                        size: Size(61, context.height > 667 ? 245 : 280),
                                         painter: BarLinesCustomPaint(),
                                       ),
                                     ),
@@ -673,89 +680,185 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                   },
                 ),
               ),
-              Observer(
-                builder: (context) {
-                  return ShakeAnimationWidget(
-                    shakeRange: 0.3,
-                    isForward: false,
-                    shakeAnimationController: _shakeAnimationController,
-                    shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                    child: Stack(
-                      children: [
-                        AnimatedCrossFade(
-                          firstChild: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.grey.withOpacity(0.3),
-                              ),
-                              color: Colors.white.withOpacity(0.7),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(14),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Fill in the address of your physical bar wallet',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'Coinplus Virtual Bar',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState: _addressState.isAddressVisible
-                                        ? CrossFadeState.showSecond
-                                        : CrossFadeState.showFirst,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Observer(
+                    builder: (context) {
+                      return ShakeAnimationWidget(
+                        shakeRange: 0.3,
+                        isForward: false,
+                        shakeAnimationController: _shakeAnimationController,
+                        shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                        child: Stack(
+                          children: [
+                            AnimatedCrossFade(
+                              firstChild: FutureBuilder<bool?>(
+                                future: _balanceStore.getCard(
+                                  receivedData: widget.receivedData,
+                                  textEditingController: _btcAddressController,
+                                ),
+                                builder: (context, snapshot) {
+                                  bool? isActivated = false;
+                                  isActivated = snapshot.data;
+                                  return AnimatedCrossFade(
+                                    firstChild: Observer(
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            hasShownWallet().then(
+                                              (hasShown) async {
+                                                if (hasShown) {
+                                                  unawaited(
+                                                    recordAmplitudeEvent(
+                                                      ActivatedCheckboxClicked(
+                                                        source: 'Wallet',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedBar!.address,
+                                                      ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  unawaited(
+                                                    recordAmplitudeEvent(
+                                                      ActivatedCheckboxClicked(
+                                                        source: 'Onboarding',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedBar!.address,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            );
+                                            _checkboxState.makeActiveCheckbox();
+                                            HapticFeedback.heavyImpact();
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: _checkboxState.isActivatedCheckBox
+                                                    ? const Color(0xFF73C3A6)
+                                                    : const Color(0xFFFF2E00).withOpacity(0.6),
+                                              ),
+                                              color: _checkboxState.isActivatedCheckBox
+                                                  ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                                  : const Color(0xFFFF2E00).withOpacity(0.05),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(14),
+                                              child: Column(
+                                                children: [
+                                                  const Text(
+                                                    'This bar was previously activated!',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  const Gap(4),
+                                                  const Text(
+                                                    "This bar has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the bar yourself, please avoid using it.",
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    secondChild: Observer(
+                                      builder: (context) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: Colors.grey.withOpacity(0.3),
+                                            ),
+                                            color: Colors.white.withOpacity(0.7),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(14),
+                                            child: Column(
+                                              children: [
+                                                AnimatedCrossFade(
+                                                  firstChild: const Text(
+                                                    'Fill in the address of your physical bar wallet',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  secondChild: const Text(
+                                                    'Coinplus Virtual Bar',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
+                                                  duration: const Duration(milliseconds: 400),
+                                                ),
+                                                const Gap(4),
+                                                AnimatedCrossFade(
+                                                  firstChild: const Text(
+                                                    'Please fill the address from your physical bar into the address input field, or scan the QR code.',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  secondChild: const Text(
+                                                    'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
+                                                  duration: const Duration(milliseconds: 400),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    crossFadeState:
+                                        isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                     duration: const Duration(milliseconds: 400),
-                                  ),
-                                  const Gap(4),
-                                  AnimatedCrossFade(
-                                    firstChild: const Text(
-                                      'Please fill the address from your physical bar into the address input field, or scan the QR code.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    secondChild: const Text(
-                                      'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    crossFadeState: _addressState.isAddressVisible
-                                        ? CrossFadeState.showSecond
-                                        : CrossFadeState.showFirst,
-                                    duration: const Duration(milliseconds: 400),
-                                  ),
-                                ],
+                                  );
+                                },
                               ),
-                            ),
-                          ),
-                          secondChild: GestureDetector(
-                            onTap: () {
-                              _checkboxState.makeActive();
-                              HapticFeedback.heavyImpact();
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
+                              secondChild: GestureDetector(
+                                onTap: () {
+                                  unawaited(
+                                    recordAmplitudeEvent(
+                                      const WarningCheckboxClicked(),
+                                    ),
+                                  );
+                                  _checkboxState.makeActive();
+                                  HapticFeedback.heavyImpact();
+                                },
+                                child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
@@ -797,57 +900,132 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          crossFadeState:
-                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                          duration: const Duration(milliseconds: 400),
-                        ).paddingHorizontal(16),
-                        Visibility(
-                          visible: _lineStore.isLineVisible,
-                          child: Positioned(
-                            right: 16,
-                            child: Transform.scale(
-                              scale: 1.2,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                              ),
+                              crossFadeState:
+                                  !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                              duration: const Duration(milliseconds: 400),
+                            ).paddingHorizontal(16),
+                            Visibility(
+                              visible: !_lineStore.isLineVisible,
+                              child: FutureBuilder<bool?>(
+                                future: _balanceStore.getCard(
+                                  receivedData: widget.receivedData,
+                                  textEditingController: _btcAddressController,
                                 ),
-                                child: Observer(
-                                  builder: (context) {
-                                    return Checkbox(
-                                      checkColor: const Color(0xFF73C3A6),
-                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(4),
+                                builder: (context, snapshot) {
+                                  final isActivated = snapshot.data;
+                                  return Visibility(
+                                    visible: isActivated == true,
+                                    child: Positioned(
+                                      right: 16,
+                                      child: Transform.scale(
+                                        scale: 1.2,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Observer(
+                                            builder: (context) {
+                                              return Checkbox(
+                                                checkColor: const Color(0xFF73C3A6),
+                                                activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                                shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(4),
+                                                  ),
+                                                ),
+                                                side: BorderSide(
+                                                  color: const Color(0xFFFF2E00).withOpacity(0.6),
+                                                ),
+                                                value: _checkboxState.isActivatedCheckBox,
+                                                onChanged: (_) {
+                                                  hasShownWallet().then(
+                                                    (hasShown) async {
+                                                      if (hasShown) {
+                                                        unawaited(
+                                                          recordAmplitudeEvent(
+                                                            ActivatedCheckboxClicked(
+                                                              source: 'Wallet',
+                                                              walletType: 'Card',
+                                                              walletAddress: _balanceStore.selectedBar!.address,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        unawaited(
+                                                          recordAmplitudeEvent(
+                                                            ActivatedCheckboxClicked(
+                                                              source: 'Onboarding',
+                                                              walletType: 'Card',
+                                                              walletAddress: _balanceStore.selectedBar!.address,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  );
+
+                                                  _checkboxState.makeActiveCheckbox();
+                                                },
+                                                splashRadius: 15,
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                      side: BorderSide(
-                                        color: _acceptState.isAccepted
-                                            ? Colors.grey.withOpacity(0.5)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
-                                      ),
-                                      value: _checkboxState.isActive,
-                                      onChanged: (_) {
-                                        recordAmplitudeEvent(
-                                          const WarningCheckboxClicked(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Visibility(
+                              visible: _lineStore.isLineVisible,
+                              child: Positioned(
+                                right: 16,
+                                child: Transform.scale(
+                                  scale: 1.2,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Observer(
+                                      builder: (context) {
+                                        return Checkbox(
+                                          checkColor: const Color(0xFF73C3A6),
+                                          activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(4),
+                                            ),
+                                          ),
+                                          side: BorderSide(
+                                            color: _acceptState.isAccepted
+                                                ? Colors.grey.withOpacity(0.5)
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          ),
+                                          value: _checkboxState.isActive,
+                                          onChanged: (_) {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                const WarningCheckboxClicked(),
+                                              ),
+                                            );
+                                            _checkboxState.makeActive();
+                                          },
+                                          splashRadius: 15,
                                         );
-                                        _checkboxState.makeActive();
                                       },
-                                      splashRadius: 15,
-                                    );
-                                  },
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ],
               ),
               if (context.height > 667) const Gap(20) else const Gap(5),
               Observer(
@@ -913,53 +1091,125 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                             ),
                           ),
                         ).paddingHorizontal(49)
-                      : LoadingButton(
-                          onPressed: _addressState.isAddressVisible
-                              ? () async {
-                                  await hasShownWallet().then(
-                                    (hasShown) async {
-                                      if (hasShown) {
-                                        await recordAmplitudeEvent(
-                                          SaveToWalletClicked(
-                                            source: 'Wallet',
-                                            walletType: 'Bar',
-                                            walletAddress: _btcAddressController.text,
-                                          ),
-                                        );
-                                      } else {
-                                        await recordAmplitudeEvent(
-                                          SaveToWalletClicked(
-                                            source: 'Onboarding',
-                                            walletType: 'Bar',
-                                            walletAddress: _btcAddressController.text,
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  );
-                                  final cardIndex = _balanceStore.bars.indexWhere(
-                                    (element) => element.address == _balanceStore.selectedBar?.address,
-                                  );
-                                  if (cardIndex != -1) {
-                                    await alreadySavedBar(
-                                      context,
-                                      _walletProtectState,
-                                      _balanceStore.selectedBar!.address,
-                                    );
-                                    _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
-                                  } else {
-                                    _lineStore.makeVisible();
-                                  }
-                                }
-                              : null,
-                          child: const Text(
-                            'Save to wallet',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontFamily: FontFamily.redHatSemiBold,
-                            ),
+                      : FutureBuilder(
+                          future: _balanceStore.getCard(
+                            receivedData: widget.receivedData,
+                            textEditingController: _btcAddressController,
                           ),
-                        ).paddingHorizontal(49);
+                          builder: (context, snapshot) {
+                            final isActivated = snapshot.data;
+                            return Observer(
+                              builder: (context) {
+                                return LoadingButton(
+                                  onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
+                                      ? null
+                                      : _addressState.isAddressVisible
+                                          ? _checkboxState.isActivatedCheckBox
+                                              ? () async {
+                                                  await hasShownWallet().then(
+                                                    (hasShown) async {
+                                                      if (hasShown) {
+                                                        await recordAmplitudeEvent(
+                                                          SaveToWalletClicked(
+                                                            source: 'Wallet',
+                                                            walletType: 'Bar',
+                                                            walletAddress: _btcAddressController.text,
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        await recordAmplitudeEvent(
+                                                          SaveToWalletClicked(
+                                                            source: 'Onboarding',
+                                                            walletType: 'Bar',
+                                                            walletAddress: _btcAddressController.text,
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  );
+                                                  final barIndex = _balanceStore.bars.indexWhere(
+                                                    (element) => element.address == _balanceStore.selectedBar?.address,
+                                                  );
+                                                  final cardIndex = _balanceStore.cards.indexWhere(
+                                                    (element) => element.address == _balanceStore.selectedBar?.address,
+                                                  );
+                                                  if (cardIndex != -1 || barIndex != -1) {
+                                                    await alreadySavedBar(
+                                                      context,
+                                                      _walletProtectState,
+                                                      _balanceStore.selectedBar!.address,
+                                                    );
+                                                    _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
+                                                  } else {
+                                                    _lineStore.makeVisible();
+                                                  }
+                                                }
+                                              : () async {
+                                                  await hasShownWallet().then(
+                                                    (hasShown) async {
+                                                      if (hasShown) {
+                                                        await recordAmplitudeEvent(
+                                                          SaveToWalletClicked(
+                                                            source: 'Wallet',
+                                                            walletType: 'Bar',
+                                                            walletAddress: _balanceStore.selectedBar!.address,
+                                                          ),
+                                                        );
+                                                      } else {
+                                                        await recordAmplitudeEvent(
+                                                          SaveToWalletClicked(
+                                                            source: 'Onboarding',
+                                                            walletType: 'Bar',
+                                                            walletAddress: _balanceStore.selectedBar!.address,
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  );
+                                                  if (isActivated == true) {
+                                                    await HapticFeedback.vibrate();
+                                                    _acceptState.checkboxAccept();
+                                                    _shakeAnimationController.start();
+                                                    await Future.delayed(
+                                                      const Duration(
+                                                        milliseconds: 600,
+                                                      ),
+                                                    );
+                                                    _shakeAnimationController.stop();
+                                                  } else {
+                                                    final cardIndex = _balanceStore.cards.indexWhere(
+                                                      (element) =>
+                                                          element.address == _balanceStore.selectedBar?.address,
+                                                    );
+                                                    final barIndex = _balanceStore.bars.indexWhere(
+                                                      (element) =>
+                                                          element.address == _balanceStore.selectedBar?.address,
+                                                    );
+                                                    if (cardIndex != -1 || barIndex != -1) {
+                                                      await alreadySavedCard(
+                                                        context,
+                                                        _walletProtectState,
+                                                        _balanceStore.selectedBar!.address,
+                                                      );
+                                                      _balanceStore.onCardAdded(_balanceStore.selectedBar!.address);
+                                                    } else {
+                                                      _lineStore.makeVisible();
+                                                    }
+                                                  }
+                                                }
+                                          : null,
+                                  child: const Text(
+                                    'Save to wallet',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontFamily: FontFamily.redHatSemiBold,
+                                    ),
+                                  ),
+                                ).paddingHorizontal(49);
+                              },
+                            );
+                          },
+                        );
                 },
               ),
             ],

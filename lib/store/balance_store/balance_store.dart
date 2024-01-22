@@ -23,12 +23,6 @@ part 'balance_store.g.dart';
 class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
-  late void Function(String addr) onCardAdded = _defaultOnCardAdded;
-  late void Function(String addr) onBarAdded = _defaultOnBarAdded;
-
-  void _defaultOnCardAdded(String addr) {}
-
-  void _defaultOnBarAdded(String addr) {}
   @readonly
   CoinDto? _coins;
   @readonly
@@ -41,6 +35,13 @@ abstract class _BalanceStore with Store {
   BarModel? _selectedBar;
   @observable
   ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
+
+  late void Function(String addr) onCardAdded = _defaultOnCardAdded;
+  late void Function(String addr) onBarAdded = _defaultOnBarAdded;
+
+  void _defaultOnCardAdded(String addr) {}
+
+  void _defaultOnBarAdded(String addr) {}
 
   ValidationState get _validationStore => GetIt.I<ValidationState>();
 
@@ -210,8 +211,9 @@ abstract class _BalanceStore with Store {
     }
 
     final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
 
-    if (isCardNotExist) {
+    if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
         createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         color: color,
@@ -233,8 +235,9 @@ abstract class _BalanceStore with Store {
     }
 
     final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
 
-    if (isCardNotExist) {
+    if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
         createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         color: color,
