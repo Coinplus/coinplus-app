@@ -37,6 +37,7 @@ Future<void> notCoinplusCardAlert({
       lottieAsset: 'assets/lottie_animations/fake_card.json',
       primaryActionText: 'Got it',
       primaryAction: router.pop,
+      lottieHeight: 140,
       widget: ScaleTap(
         enableFeedback: false,
         onPressed: () async {

@@ -82,7 +82,6 @@ class PinCodePage extends HookWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.white,
         automaticallyImplyLeading: false,
-
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.white,
           statusBarColor: Colors.transparent,
@@ -235,11 +234,13 @@ class PinCodePage extends HookWidget {
                             onPressed: () {
                               _walletProtectState.authenticateWithBiometrics();
                             },
-                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint ?  Assets.icons.iphoneTouchId.image(
-                              height: 30,
-                            ) : Assets.icons.faceIDSuccess.image(
-                              height: 30,
-                            ),
+                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint
+                                ? Assets.icons.iphoneTouchId.image(
+                                    height: 30,
+                                  )
+                                : Assets.icons.faceIDSuccess.image(
+                                    height: 30,
+                                  ),
                           ),
                         ],
                       );

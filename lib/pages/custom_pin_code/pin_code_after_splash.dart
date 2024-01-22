@@ -220,11 +220,13 @@ class PinAfterSplash extends HookWidget {
                             onPressed: () {
                               _walletProtectState.authenticateWithBiometrics();
                             },
-                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint ?  Assets.icons.iphoneTouchId.image(
-                              height: 30,
-                            ) : Assets.icons.faceIDSuccess.image(
-                              height: 30,
-                            ),
+                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint
+                                ? Assets.icons.iphoneTouchId.image(
+                                    height: 30,
+                                  )
+                                : Assets.icons.faceIDSuccess.image(
+                                    height: 30,
+                                  ),
                           ),
                         ],
                       );

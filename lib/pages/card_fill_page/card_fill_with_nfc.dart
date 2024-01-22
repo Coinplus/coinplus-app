@@ -237,7 +237,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? 45 : 85,
+                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -371,7 +371,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 const Gap(4),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? 45 : 85,
+                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -529,7 +529,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                   else
                                                     Gap(context.width * 0.125) //iPhone 13 Pro
                                                 else
-                                                  Gap(context.width * 0.1) //Samsung large display
+                                                  Gap(context.width * 0.115) //Samsung large display
                                               else
                                                 Gap(context.width * 0.115), //iPhone 13 Pro Max
                                               Column(
@@ -560,11 +560,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                       opacity: _lineStore.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
-                                                          context.height > 844
-                                                              ? 28
-                                                              : context.height > 667
-                                                                  ? 28
-                                                                  : 38,
+                                                          context.height > 852
+                                                              ? context.height > 844
+                                                                  ? 42
+                                                                  : context.height > 667
+                                                                      ? 28
+                                                                      : 38
+                                                              : 30,
                                                           265,
                                                         ),
                                                         painter: LineCustomPaint(),
@@ -621,7 +623,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                   else
                                     Gap(context.width * 0.065)
                                 else
-                                  Gap(context.height * 0.051)
+                                  Gap(context.height * 0.048)
                               else
                                 Gap(context.height * 0.049),
                               Opacity(
@@ -644,7 +646,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        Assets.icons.coinplusLogo.image(height: 32),
+                                        if(!(widget.cardColor == '1'))
+                                        Assets.icons.coinplusLogo.image(height: 32) else Assets.icons.coinplusLogoBlack.image(height: 32),
                                       ],
                                     ),
                                     if (context.height > 844) const Gap(24) else const Gap(21.5),
@@ -658,12 +661,12 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                     ? context.height > 844
                                                         ? context.height * 0.26
                                                         : context.height * 0.265
-                                                    : context.height * 0.255
+                                                    : context.height * 0.24
                                                 : context.height * 0.24,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
-                                                color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
+                                                color: _focusNode.hasFocus ? Colors.blue : widget.cardColor == '1' ? const Color(0xFFF0563C) : const Color(0xFFFBB270),
                                                 width: _focusNode.hasFocus ? 1 : 3,
                                               ),
                                               borderRadius: BorderRadius.circular(context.height > 667 ? 28 : 25),
@@ -679,7 +682,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                               : context.height > 667
                                                                   ? context.width * 0.25
                                                                   : context.width * 0.21
-                                                          : context.width * 0.24
+                                                          : context.width * 0.23
                                                       : context.width * 0.225,
                                                   height: context.height * 0.14,
                                                   child: Observer(
@@ -892,12 +895,17 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    Assets.icons.cardBackText.image(height: 55),
+                                    if(!(widget.cardColor == '1'))
+                                    Assets.icons.cardBackText.image(height: 55) else Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
+                                    if(!(widget.cardColor == '1'))
                                     SizedBox(
                                       width: 115,
                                       child: Assets.icons.cardBackLink.image(),
-                                    ),
+                                    ) else SizedBox(
+                                      width: 115,
+                                      child: Assets.icons.cardBackLinkBlack.image(),
+                                    ) ,
                                     Gap(context.height * 0.025),
                                   ],
                                 ),
@@ -1339,7 +1347,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                           final cardIndex = _balanceStore.cards.indexWhere(
                                             (element) => element.address == _balanceStore.selectedCard?.address,
                                           );
-                                          if (cardIndex != -1) {
+                                          final barIndex = _balanceStore.bars.indexWhere(
+                                            (element) => element.address == _balanceStore.selectedCard?.address,
+                                          );
+                                          if (cardIndex != -1 || barIndex != -1) {
                                             await alreadySavedCard(
                                               context,
                                               _walletProtectState,
@@ -1390,7 +1401,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             final cardIndex = _balanceStore.cards.indexWhere(
                                               (element) => element.address == _balanceStore.selectedCard?.address,
                                             );
-                                            if (cardIndex != -1) {
+                                            final barIndex = _balanceStore.bars.indexWhere(
+                                              (element) => element.address == _balanceStore.selectedCard?.address,
+                                            );
+
+                                            if (cardIndex != -1 || barIndex != -1) {
                                               await alreadySavedCard(
                                                 context,
                                                 _walletProtectState,

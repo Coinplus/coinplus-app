@@ -259,7 +259,12 @@ class SettingsPage extends HookWidget {
                                                           height: 22,
                                                         ),
                                               title: Text(
-                                                Platform.isAndroid ? 'Biometrics' : _walletProtectState.availableBiometric == BiometricType.fingerprint ? 'Touch ID' : 'Face ID',
+                                                Platform.isAndroid
+                                                    ? 'Biometrics'
+                                                    : _walletProtectState.availableBiometric ==
+                                                            BiometricType.fingerprint
+                                                        ? 'Touch ID'
+                                                        : 'Face ID',
                                                 style: const TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 15,
