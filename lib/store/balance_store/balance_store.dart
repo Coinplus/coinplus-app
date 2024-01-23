@@ -255,7 +255,7 @@ abstract class _BalanceStore with Store {
     }
   }
 
-  void saveSelectedBar() {
+  void saveSelectedBar({required CardColor color}) {
     if (_selectedBar == null) {
       return;
     }

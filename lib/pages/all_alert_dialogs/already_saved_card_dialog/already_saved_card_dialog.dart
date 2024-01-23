@@ -15,10 +15,9 @@ import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../splash_screen/splash_screen.dart';
 
-Future<void> alreadySavedCard(BuildContext context, WalletProtectState walletProtectState, String walletAddress) {
+Future<void> alreadySavedCard(BuildContext context, String walletAddress) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text:
           'It looks like you have already saved this card to your wallet. To connect another one please change the wallet address.',
@@ -64,7 +63,6 @@ Future<void> alreadySavedCard(BuildContext context, WalletProtectState walletPro
 Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProtectState, String walletAddress) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text:
           'It looks like you have already saved this bar to your wallet. To connect another one please change the wallet address.',

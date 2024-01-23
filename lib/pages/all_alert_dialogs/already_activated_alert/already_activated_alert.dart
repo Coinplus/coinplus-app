@@ -3,14 +3,12 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
-Future<void> alreadyActivatedWallet(BuildContext context, WalletProtectState walletProtectState) {
+Future<void> alreadyActivatedWallet(BuildContext context) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text: 'Check out our detailed guide on how to send crypto from your wallet.',
       title: const Text(

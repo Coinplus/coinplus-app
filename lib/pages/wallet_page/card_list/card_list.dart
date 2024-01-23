@@ -18,6 +18,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
+
 //import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
@@ -36,10 +37,12 @@ class CardList extends StatefulWidget {
     super.key,
     required this.onCardSelected,
     required this.onCarouselScroll,
+    required this.tabController,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
+  final TabController tabController;
 
   @override
   State<CardList> createState() => _CardListState();
@@ -67,6 +70,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
         return;
       }
       carouselController.animateToPage(index);
+      widget.tabController.animateTo(0);
     });
     _nfcState.checkNfcSupport();
   }
@@ -120,11 +124,12 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                       return ScaleTap(
                         enableFeedback: false,
                         onPressed: _settingsState.cardCurrentIndex == _balanceStore.cards.length
-                            ? () {
-                                recordAmplitudeEvent(
+                            ? () async {
+                                await _walletProtectState.updateModalStatus(isOpened: true);
+                                await recordAmplitudeEvent(
                                   const AddNewClicked(tab: 'Card'),
                                 );
-                                showModalBottomSheet(
+                                await showModalBottomSheet(
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20),
@@ -133,7 +138,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                   ),
                                   context: context,
                                   builder: (context) {
-                                    _walletProtectState.updateModalStatus(isOpened: true);
                                     return Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -245,9 +249,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                               scaleMinValue: .99,
                               onLongPress: _settingsState.cardCurrentIndex == index
                                   ? _balanceStore.cards.length > 1
-                                      ? () {
-                                          HapticFeedback.mediumImpact();
-                                          showModalBottomSheet(
+                                      ? () async {
+                                          await _walletProtectState.updateModalStatus(isOpened: true);
+                                          await HapticFeedback.mediumImpact();
+                                          await showModalBottomSheet(
                                             useSafeArea: false,
                                             isScrollControlled: true,
                                             context: context,
@@ -506,6 +511,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                               );
                                             },
                                           );
+                                          await _walletProtectState.updateModalStatus(isOpened: false);
                                         }
                                       : () async {
                                           Gaimon.error();

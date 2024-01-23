@@ -36,7 +36,6 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
@@ -90,8 +89,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   final _connectivityStore = ConnectivityStore();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   void initState() {
@@ -646,8 +643,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        if(!(widget.cardColor == '1'))
-                                        Assets.icons.coinplusLogo.image(height: 32) else Assets.icons.coinplusLogoBlack.image(height: 32),
+                                        if (!(widget.cardColor == '1'))
+                                          Assets.icons.coinplusLogo.image(height: 32)
+                                        else
+                                          Assets.icons.coinplusLogoBlack.image(height: 32),
                                       ],
                                     ),
                                     if (context.height > 844) const Gap(24) else const Gap(21.5),
@@ -666,7 +665,11 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
-                                                color: _focusNode.hasFocus ? Colors.blue : widget.cardColor == '1' ? const Color(0xFFF0563C) : const Color(0xFFFBB270),
+                                                color: _focusNode.hasFocus
+                                                    ? Colors.blue
+                                                    : widget.cardColor == '1'
+                                                        ? const Color(0xFFF0563C)
+                                                        : const Color(0xFFFBB270),
                                                 width: _focusNode.hasFocus ? 1 : 3,
                                               ),
                                               borderRadius: BorderRadius.circular(context.height > 667 ? 28 : 25),
@@ -895,17 +898,21 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    if(!(widget.cardColor == '1'))
-                                    Assets.icons.cardBackText.image(height: 55) else Assets.icons.cardBackTextBlack.image(height: 55),
+                                    if (!(widget.cardColor == '1'))
+                                      Assets.icons.cardBackText.image(height: 55)
+                                    else
+                                      Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    if(!(widget.cardColor == '1'))
-                                    SizedBox(
-                                      width: 115,
-                                      child: Assets.icons.cardBackLink.image(),
-                                    ) else SizedBox(
-                                      width: 115,
-                                      child: Assets.icons.cardBackLinkBlack.image(),
-                                    ) ,
+                                    if (!(widget.cardColor == '1'))
+                                      SizedBox(
+                                        width: 115,
+                                        child: Assets.icons.cardBackLink.image(),
+                                      )
+                                    else
+                                      SizedBox(
+                                        width: 115,
+                                        child: Assets.icons.cardBackLinkBlack.image(),
+                                      ),
                                     Gap(context.height * 0.025),
                                   ],
                                 ),
@@ -1353,7 +1360,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                           if (cardIndex != -1 || barIndex != -1) {
                                             await alreadySavedCard(
                                               context,
-                                              _walletProtectState,
                                               _balanceStore.selectedCard!.address,
                                             );
                                             _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
@@ -1408,7 +1414,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             if (cardIndex != -1 || barIndex != -1) {
                                               await alreadySavedCard(
                                                 context,
-                                                _walletProtectState,
                                                 _balanceStore.selectedCard!.address,
                                               );
                                               _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);

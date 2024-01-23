@@ -323,12 +323,14 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 (card: card, index: 0),
                               ),
                               onCarouselScroll: (val) => cardCarouselIndex = val,
+                              tabController: _tabController,
                             ),
                             BarList(
                               onCardSelected: (card) => widget.onChangeCard(
                                 (card: card, index: 1),
                               ),
                               onCarouselScroll: (val) => barCarouselIndex = val,
+                              tabController: _tabController,
                             ),
                           ],
                         ),

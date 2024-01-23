@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
 
-Future<void> pleaseEnableBiometrics(BuildContext context, WalletProtectState walletProtectState) {
+Future<void> pleaseEnableBiometrics(BuildContext context) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text: 'Please enable biometrics option in your device settings',
       title: const Text(

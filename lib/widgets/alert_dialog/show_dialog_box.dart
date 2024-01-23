@@ -1,13 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 import '../../constants/durations.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
 
 /// Shows dialog with sliding and scaling animation, slides from top when
 /// opened, and slides to bottom when closed.
 Future<T?> showDialogBox<T>(
   BuildContext context,
-  WalletProtectState walletProtectState,
   Widget dialogBox, {
   required bool? isDismissible,
 }) async {
@@ -23,7 +21,6 @@ Future<T?> showDialogBox<T>(
     barrierDismissible: isDismissible!,
     barrierLabel: '',
     pageBuilder: (context, animation, secondaryAnimation) {
-      walletProtectState.updateModalStatus(isOpened: true);
       return dialogBox;
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {

@@ -14,7 +14,6 @@ import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/loading_button.dart';
 import '../recommended_by_tap_bar/recommended_by_tap.dart';
@@ -24,8 +23,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
   const BarIssueOptionsSheet({super.key});
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   SettingsState get _settingsState => GetIt.I<SettingsState>();
 
@@ -90,7 +87,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
-                walletProtectState: _walletProtectState,
               );
             },
           ),
@@ -107,7 +103,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
-                walletProtectState: _walletProtectState,
               );
             },
           ),
@@ -123,7 +118,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletType: 'Bar',
                 activated: await isActivated,
                 context: context,
-                walletProtectState: _walletProtectState,
               );
             },
           ),
@@ -139,7 +133,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
-                walletProtectState: _walletProtectState,
               );
             },
           ),

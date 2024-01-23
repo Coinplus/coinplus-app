@@ -7,7 +7,6 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
@@ -16,11 +15,9 @@ Future<void> recommendedActivateByTap({
   required String walletAddress,
   required String walletType,
   required bool activated,
-  required WalletProtectState walletProtectState,
 }) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       title: const Text(
         'Recommended to \nactivate by tap!',

@@ -410,11 +410,11 @@ class _ContactUsState extends State<ContactUs> {
         await emailSendAlert(context, _walletProtectState);
       } else {
         await router.pop();
-        await emailSendFailAlert(context, _walletProtectState);
+        await emailSendFailAlert(context);
       }
     } catch (error) {
       await router.pop();
-      await emailSendFailAlert(context, _walletProtectState);
+      await emailSendFailAlert(context);
     }
   }
 }

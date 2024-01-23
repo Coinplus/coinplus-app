@@ -14,7 +14,6 @@ import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/loading_button.dart';
 import '../recommended_by_tap_card/recommended_by_tap.dart';
@@ -24,8 +23,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
   const CardIssueOptionsSheet({super.key});
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   SettingsState get _settingsState => GetIt.I<SettingsState>();
 
@@ -90,7 +87,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  walletProtectState: _walletProtectState,
                 ),
               );
             },
@@ -117,7 +113,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  walletProtectState: _walletProtectState,
                 ),
               );
             },
@@ -143,7 +138,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
-                walletProtectState: _walletProtectState,
               );
             },
           ),
@@ -169,7 +163,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  walletProtectState: _walletProtectState,
                 ),
               );
             },

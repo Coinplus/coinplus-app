@@ -8,20 +8,28 @@ part of 'bar_model.dart';
 
 _$BarModelImpl _$$BarModelImplFromJson(Map json) => _$BarModelImpl(
       address: json['address'] as String,
-      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ?? CardColor.SILVER,
-      type: $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.BAR,
-      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ?? WalletType.COINPLUS_WALLET,
+      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
+          CardColor.SILVER,
+      type:
+          $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.BAR,
+      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ??
+          WalletType.COINPLUS_WALLET,
       name: json['name'] as String? ?? 'Coinplus Bitcoin Bar',
+      blockchain: json['blockchain'] as String? ?? 'BTC',
       totalReceived: json['totalReceived'] as int?,
       totalSent: json['totalSent'] as int?,
       balance: json['balance'] as int?,
-      createdAt: json['createdAt'] == null ? '' : timeFromJson(json['createdAt'] as String),
+      createdAt: json['createdAt'] == null
+          ? ''
+          : timeFromJson(json['createdAt'] as String),
       data: json['chain_stats'] == null
           ? null
-          : ChainStats.fromJson(Map<String, dynamic>.from(json['chain_stats'] as Map)),
+          : ChainStats.fromJson(
+              Map<String, dynamic>.from(json['chain_stats'] as Map)),
       mempoolStats: json['mempool_stats'] == null
           ? null
-          : MempoolStats.fromJson(Map<String, dynamic>.from(json['mempool_stats'] as Map)),
+          : MempoolStats.fromJson(
+              Map<String, dynamic>.from(json['mempool_stats'] as Map)),
     );
 
 Map<String, dynamic> _$$BarModelImplToJson(_$BarModelImpl instance) {
@@ -31,6 +39,7 @@ Map<String, dynamic> _$$BarModelImplToJson(_$BarModelImpl instance) {
     'type': _$CardTypeEnumMap[instance.type]!,
     'label': _$WalletTypeEnumMap[instance.label]!,
     'name': instance.name,
+    'blockchain': instance.blockchain,
   };
 
   void writeNotNull(String key, dynamic value) {

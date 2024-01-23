@@ -16,7 +16,6 @@ import '../../../widgets/alert_dialog/show_dialog_box.dart';
 Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProtectState) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text: 'You’ll get the reply shortly, before that you can check out our Help Center.',
       title: const Text(
@@ -59,10 +58,9 @@ Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProte
   );
 }
 
-Future<void> emailSendFailAlert(BuildContext context, WalletProtectState walletProtectState) {
+Future<void> emailSendFailAlert(BuildContext context) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       text: 'You’ll get the reply shortly, before that you can check out our Help Center.',
       title: const Text(

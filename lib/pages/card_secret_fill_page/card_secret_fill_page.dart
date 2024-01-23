@@ -29,7 +29,6 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
@@ -53,8 +52,6 @@ class CardSecretFillPage extends StatefulWidget {
 
 class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProviderStateMixin {
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -775,7 +772,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               context: context,
                               walletAddress: walletAddress,
                               walletType: 'Card',
-                              walletProtectState: _walletProtectState,
                             );
                             await recordUserProperty(const CardHolder());
                           } else {
@@ -789,7 +785,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               context: context,
                               walletAddress: walletAddress,
                               walletType: 'Card',
-                              walletProtectState: _walletProtectState,
                             );
                           }
                         } catch (e) {
@@ -802,7 +797,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             context: context,
                             walletAddress: walletAddress,
                             walletType: 'Card',
-                            walletProtectState: _walletProtectState,
                           );
                         }
                       },
