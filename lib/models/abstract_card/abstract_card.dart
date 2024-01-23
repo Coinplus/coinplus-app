@@ -14,6 +14,8 @@ abstract class AbstractCard {
 
   String get name;
 
+  String get blockchain;
+
   String get createdAt;
 
   int? get totalReceived;

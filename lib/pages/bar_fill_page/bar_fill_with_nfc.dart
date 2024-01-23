@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
+import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -25,6 +26,7 @@ import '../../models/amplitude_user_property_model/amplitude_user_property_model
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
@@ -979,7 +981,14 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                       onPressed: () async {
                         if (_checkboxState.isActive) {
                           unawaited(signInAnonymously(address: _btcAddressController.text));
-                          _balanceStore.saveSelectedBar();
+                            unawaited(connectedCount(widget.receivedData!));
+                            if (widget.barColor == '0') {
+                              _balanceStore.saveSelectedBar(color: CardColor.SILVER);
+                            } else if (widget.barColor == '1') {
+                              _balanceStore.saveSelectedBar(color: CardColor.GOLD);
+                            } else {
+                              _balanceStore.saveSelectedBar(color: CardColor.SILVER);
+                            }
                           _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                           await hasShownWallet().then((hasShown) {
                             recordUserProperty(const BarManual());
@@ -1130,7 +1139,6 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                                                 if (cardIndex != -1 || barIndex != -1) {
                                                   await alreadySavedCard(
                                                     context,
-                                                    _walletProtectState,
                                                     _balanceStore.selectedBar!.address,
                                                   );
                                                   _balanceStore.onCardAdded(_balanceStore.selectedBar!.address);

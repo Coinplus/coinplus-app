@@ -8,7 +8,6 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
@@ -16,11 +15,9 @@ Future<void> secretsSuccessAlert({
   required BuildContext context,
   required String walletAddress,
   required String walletType,
-  required WalletProtectState walletProtectState,
 }) {
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       title: const Text(
         'Success!',

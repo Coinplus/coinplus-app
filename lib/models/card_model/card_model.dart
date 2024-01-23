@@ -20,6 +20,7 @@ class CardModel with _$CardModel {
     @Default(CardType.CARD) CardType type,
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Card') String name,
+    @Default('BTC') String blockchain,
     int? totalReceived,
     int? totalSent,
     int? balance,

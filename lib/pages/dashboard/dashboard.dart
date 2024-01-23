@@ -75,6 +75,7 @@ class DashboardPage extends HookWidget {
   Widget build(BuildContext context) {
     final _navBarState = useMemoized(NavBarState.new);
     final deepLinkRes = useRef<String?>(null);
+    final isModalOpened = useState(false);
     final _nfcStore = useMemoized(NfcStore.new);
     final _pageController = usePageController();
     final isPaused = useState(false);
@@ -98,10 +99,14 @@ class DashboardPage extends HookWidget {
 
         isPaused.value = [AppLifecycleState.paused].contains(current);
         resumed.value = [AppLifecycleState.resumed].contains(current);
+
         if (!_walletProtectState.isBiometricsRunning) {
           isInactive.value = [AppLifecycleState.inactive].contains(current);
         }
-        if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened) {
+        if (appLocked.value && isInactive.value == true && isModalOpened.value) {
+          await router.pop();
+        }
+        if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened == true) {
           await router.pop();
         }
         appLocked.value = await getIsPinCodeSet();
@@ -317,7 +322,7 @@ class DashboardPage extends HookWidget {
                   await recordAmplitudeEvent(
                     AddNewPlusClicked(source: _pageController.page == 0 ? 'Wallet' : 'Settings'),
                   );
-                  await _walletProtectState.updateModalStatus(isOpened: true);
+                  isModalOpened.value = true;
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -362,12 +367,12 @@ class DashboardPage extends HookWidget {
                       );
                     },
                   );
-                  await _walletProtectState.updateModalStatus(isOpened: false);
+                  isModalOpened.value = false;
                 } else {
                   await recordAmplitudeEvent(
                     AddNewPlusClicked(source: _pageController.page == 0 ? 'Wallet' : 'Settings'),
                   );
-                  await _walletProtectState.updateModalStatus(isOpened: true);
+                  isModalOpened.value = true;
                   await showModalBottomSheet(
                     backgroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -415,19 +420,20 @@ class DashboardPage extends HookWidget {
                       );
                     },
                   );
-                  await _walletProtectState.updateModalStatus(isOpened: false);
+                  isModalOpened.value = false;
                 }
                 return;
               }
-              await _walletProtectState.updateModalStatus(isOpened: true);
+              isModalOpened.value = true;
               await sendReceiveButtonModal(
                 selectedCard: selectedCard,
                 isBarList: isBarList,
                 isCardActivated: isCardActivated,
                 isBarActivated: isBarActivated,
                 currentCard: currentCard,
-              ).then((value) => _walletProtectState.updateModalStatus(isOpened: false));
-              await _walletProtectState.updateModalStatus(isOpened: false);
+                isModalOpened: isModalOpened,
+              ).then((value) => isModalOpened.value = false);
+              isModalOpened.value = false;
               await recordAmplitudeEvent(
                 TransactionsButtonClicked(
                   walletType: isBarList ? 'Bar' : 'Card',
@@ -515,6 +521,7 @@ class DashboardPage extends HookWidget {
     required Future<bool> isCardActivated,
     required Future<bool> isBarActivated,
     required ObjectRef<({AbstractCard? card, int index})> currentCard,
+    required ValueNotifier<bool> isModalOpened,
   }) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -558,298 +565,26 @@ class DashboardPage extends HookWidget {
                       ),
                     ),
                 onPressed: () async {
-                  await recordAmplitudeEvent(
-                    ReceiveClicked(
-                      walletType: isBarList ? 'Bar' : 'Card',
-                      walletAddress: card.address,
-                      activated: isBarList ? await isBarActivated : await isCardActivated,
-                    ),
-                  );
                   await router.pop();
-                  await showModalBottomSheet(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                  unawaited(
+                    recordAmplitudeEvent(
+                      ReceiveClicked(
+                        walletType: isBarList ? 'Bar' : 'Card',
+                        walletAddress: card.address,
+                        activated: isBarList ? await isBarActivated : await isCardActivated,
                       ),
                     ),
-                    backgroundColor: Colors.white,
-                    isScrollControlled: true,
-                    context: router.navigatorKey.currentContext!,
-                    builder: (_) {
-                      _walletProtectState.updateModalStatus(isOpened: true);
-                      return SizedBox(
-                        height: 650,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Assets.icons.notch.image(
-                                height: 4,
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 50,
-                                    child: IconButton(
-                                      onPressed: router.pop,
-                                      icon: Assets.icons.close.image(),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                          'Receive BTC',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        const Gap(6),
-                                        Assets.icons.bTCIcon.image(
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 40,
-                                  ),
-                                ],
-                              ),
-                              const Gap(30),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: const Color(
-                                    0xFFF7F7FA,
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 12,
-                                        left: 62,
-                                        right: 62,
-                                        bottom: 17,
-                                      ),
-                                      child: QrImageView(
-                                        data: card.address,
-                                        size: 220,
-                                        gapless: false,
-                                      ),
-                                    ),
-                                    ScaleTap(
-                                      enableFeedback: false,
-                                      onPressed: () async {
-                                        await recordAmplitudeEvent(
-                                          AddressCopied(
-                                            walletType: isBarList ? 'Bar' : 'Card',
-                                            walletAddress: card.address,
-                                            activated: isBarList ? await isBarActivated : await isCardActivated,
-                                            source: 'Receive',
-                                          ),
-                                        );
-                                        await Clipboard.setData(
-                                          ClipboardData(
-                                            text: card.address.toString(),
-                                          ),
-                                        ).then(
-                                          (_) {
-                                            HapticFeedback.mediumImpact();
-                                            _settingsState.copyAddress();
-                                          },
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 12,
-                                          right: 12,
-                                          bottom: 12,
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              8,
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 10,
-                                              bottom: 10,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Assets.icons.contentCopy.image(
-                                                  height: 32,
-                                                  color: AppColors.primaryButtonColor,
-                                                ),
-                                                const Gap(
-                                                  8,
-                                                ),
-                                                Observer(
-                                                  builder: (context) {
-                                                    return Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        const Text(
-                                                          'Your address',
-                                                          style: TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                        AnimatedCrossFade(
-                                                          firstChild: const Row(
-                                                            children: [
-                                                              Text(
-                                                                'Copied',
-                                                                style: TextStyle(
-                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                  color: Colors.green,
-                                                                ),
-                                                              ),
-                                                              Icon(
-                                                                Icons.check,
-                                                                color: Colors.green,
-                                                                size: 18,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          secondChild: context.height > 667
-                                                              ? Text(
-                                                                  card.address,
-                                                                  style: const TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 14,
-                                                                    color: Color(
-                                                                      0xFF4F6486,
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              : Text(
-                                                                  getSplitAddress(card.address),
-                                                                  style: const TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 14,
-                                                                    color: Color(
-                                                                      0xFF4F6486,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                          crossFadeState: _settingsState.isAddressCopied
-                                                              ? CrossFadeState.showFirst
-                                                              : CrossFadeState.showSecond,
-                                                          duration: const Duration(
-                                                            milliseconds: 200,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Spacer(),
-                              const Gap(10),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: const Color(
-                                      0xFF4A83E0,
-                                    ).withOpacity(
-                                      0.1,
-                                    ),
-                                  ),
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: const Color(
-                                    0xFF4A83E0,
-                                  ).withOpacity(0.05),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14),
-                                  child: Row(
-                                    children: [
-                                      Assets.icons.error.image(
-                                        height: 24,
-                                      ),
-                                      const Gap(10),
-                                      const Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Please note',
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(
-                                                0xFF4F6486,
-                                              ),
-                                            ),
-                                          ),
-                                          Gap(4),
-                                          Text(
-                                            'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.normal,
-                                              color: Color(
-                                                0xFF4F6486,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const Spacer(flex: 2,),
-                              LoadingButton(
-                                onPressed: () async {
-                                  await recordAmplitudeEvent(
-                                    ShareAddressClicked(
-                                      walletType: isBarList ? 'Bar' : 'Card',
-                                      walletAddress: currentCard.value.card!.address,
-                                      activated: isBarList ? await isBarActivated : await isCardActivated,
-                                    ),
-                                  );
-                                  await Share.share(
-                                    card.address,
-                                  );
-                                },
-                                child: const Text(
-                                  'Share',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                  ),
-                                ),
-                              ).paddingHorizontal(60),
-                              const Gap(20),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
                   );
-                  await _walletProtectState.updateModalStatus(isOpened: false);
+                  isModalOpened.value = true;
+                  await receiveModal(
+                    card: card,
+                    isBarList: isBarList,
+                    isCardActivated: isCardActivated,
+                    isBarActivated: isBarActivated,
+                    currentCard: currentCard,
+                    isModalOpened: isModalOpened,
+                  );
+                  isModalOpened.value = false;
                 },
                 child: Row(
                   children: [
@@ -920,6 +655,7 @@ class DashboardPage extends HookWidget {
                           ? isBarList
                               ? () async {
                                   if (await isBarActivated) {
+                                    await router.pop();
                                     await recordAmplitudeEvent(
                                       SendClicked(
                                         walletType: 'Bar',
@@ -927,11 +663,11 @@ class DashboardPage extends HookWidget {
                                         activated: await isBarActivated,
                                       ),
                                     );
-                                    await router.pop();
+                                    isModalOpened.value = true;
                                     await alreadyActivatedWallet(
                                       router.navigatorKey.currentContext!,
-                                      _walletProtectState,
                                     );
+                                    isModalOpened.value = false;
                                   } else {
                                     await recordAmplitudeEvent(
                                       SendClicked(
@@ -941,9 +677,12 @@ class DashboardPage extends HookWidget {
                                       ),
                                     );
                                     await router.pop();
+                                    Future.delayed(
+                                      Duration.zero,
+                                      () => isModalOpened.value = true,
+                                    );
                                     await showDialogBox(
                                       context,
-                                      _walletProtectState,
                                       DialogBoxWithAction(
                                         text:
                                             'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
@@ -1037,12 +776,19 @@ class DashboardPage extends HookWidget {
                                                             milliseconds: 2900,
                                                           ),
                                                         );
+                                                        Future.delayed(
+                                                          Duration.zero,
+                                                          () => isModalOpened.value = true,
+                                                        );
                                                         await notCoinplusCardAlert(
                                                           context: router.navigatorKey.currentContext!,
                                                           walletAddress: walletAddress,
                                                           walletType: isBarList ? 'Bar' : 'Card',
                                                           source: 'Wallet',
-                                                          walletProtectState: _walletProtectState,
+                                                        );
+                                                        Future.delayed(
+                                                          Duration.zero,
+                                                          () => isModalOpened.value = false,
                                                         );
                                                       }
                                                     } else {
@@ -1061,7 +807,9 @@ class DashboardPage extends HookWidget {
                                                       isStarted: false,
                                                     );
                                                     NfcManager.instance.stopSession();
-                                                    return Future(showBarTapIssueBottomSheet);
+                                                    return Future(
+                                                      () => showBarTapIssueBottomSheet(isModalOpened: isModalOpened),
+                                                    );
                                                   },
                                                 );
                                               }
@@ -1131,17 +879,24 @@ class DashboardPage extends HookWidget {
                                                               );
                                                       } else {
                                                         await router.pop();
+                                                        Future.delayed(
+                                                          Duration.zero,
+                                                          () => isModalOpened.value = true,
+                                                        );
                                                         await notCoinplusCardAlert(
                                                           context: router.navigatorKey.currentContext!,
                                                           walletAddress: walletAddress,
                                                           walletType: isBarList ? 'Bar' : 'Card',
                                                           source: 'Wallet',
-                                                          walletProtectState: _walletProtectState,
+                                                        );
+                                                        Future.delayed(
+                                                          Duration.zero,
+                                                          () => isModalOpened.value = false,
                                                         );
                                                       }
                                                     } else {
                                                       await router.pop();
-                                                      await showWrongCardModal();
+                                                      await showWrongCardModal(isModalOpened: isModalOpened);
                                                       await Future.delayed(
                                                         const Duration(milliseconds: 3000),
                                                       );
@@ -1157,22 +912,26 @@ class DashboardPage extends HookWidget {
                                                     );
                                                     return Future(() {
                                                       NfcManager.instance.stopSession();
-                                                      return Future(showBarTapIssueBottomSheet);
+                                                      return Future(
+                                                        () => showBarTapIssueBottomSheet(isModalOpened: isModalOpened),
+                                                      );
                                                     });
                                                   },
                                                 );
                                                 await router.pop();
-                                                await showAndroidBarNfcBottomSheet();
+                                                await showAndroidBarNfcBottomSheet(isModalOpened: isModalOpened);
                                               },
                                         lottieAsset: 'assets/lottie_animations/please_wait.json',
                                         lottieHeight: 140,
                                       ),
                                       isDismissible: true,
                                     );
+                                    isModalOpened.value = false;
                                   }
                                 }
                               : () async {
                                   if (await isCardActivated) {
+                                    await router.pop();
                                     await recordAmplitudeEvent(
                                       SendClicked(
                                         walletType: 'Card',
@@ -1180,14 +939,11 @@ class DashboardPage extends HookWidget {
                                         activated: await isCardActivated,
                                       ),
                                     );
-                                    await router.pop();
-                                    await _walletProtectState.updateModalStatus(isOpened: true);
+                                    isModalOpened.value = true;
                                     await alreadyActivatedWallet(
                                       router.navigatorKey.currentContext!,
-                                      _walletProtectState,
-                                    ).then(
-                                      (value) => _walletProtectState.updateModalStatus(isOpened: false),
                                     );
+                                    isModalOpened.value = false;
                                   } else {
                                     await recordAmplitudeEvent(
                                       SendClicked(
@@ -1197,9 +953,12 @@ class DashboardPage extends HookWidget {
                                       ),
                                     );
                                     await router.pop();
+                                    Future.delayed(
+                                      Duration.zero,
+                                      () => isModalOpened.value = true,
+                                    );
                                     await showDialogBox(
                                       context,
-                                      _walletProtectState,
                                       DialogBoxWithAction(
                                         text:
                                             'The in-app send option will be available soon. To maintain the highest level of security, we encourage you to wait for the upcoming app update.',
@@ -1292,12 +1051,19 @@ class DashboardPage extends HookWidget {
                                                           await Future.delayed(
                                                             const Duration(milliseconds: 2500),
                                                           );
+                                                          Future.delayed(
+                                                            Duration.zero,
+                                                            () => isModalOpened.value = true,
+                                                          );
                                                           await notCoinplusCardAlert(
                                                             context: router.navigatorKey.currentContext!,
                                                             walletAddress: walletAddress,
                                                             walletType: isBarList ? 'Bar' : 'Card',
                                                             source: 'Wallet',
-                                                            walletProtectState: _walletProtectState,
+                                                          );
+                                                          Future.delayed(
+                                                            Duration.zero,
+                                                            () => isModalOpened.value = false,
                                                           );
                                                         }
                                                       } else {
@@ -1315,15 +1081,15 @@ class DashboardPage extends HookWidget {
                                                             ),
                                                           );
                                                         } else {
+                                                          await router.pop();
                                                           await Future.delayed(
                                                             const Duration(
                                                               milliseconds: 2900,
                                                             ),
+                                                            () => isModalOpened.value = true,
                                                           );
-                                                          await maybeCoinplusCard(
-                                                            router.navigatorKey.currentContext!,
-                                                            _walletProtectState,
-                                                          );
+                                                          await maybeCoinplusCardModal(isModalOpened: isModalOpened);
+                                                          isModalOpened.value = false;
                                                         }
                                                       }
                                                     } else {
@@ -1342,7 +1108,9 @@ class DashboardPage extends HookWidget {
                                                       isStarted: false,
                                                     );
                                                     NfcManager.instance.stopSession();
-                                                    return Future(showCardTapIssueBottomSheet);
+                                                    return Future(
+                                                      () => showCardTapIssueBottomSheet(isModalOpened: isModalOpened),
+                                                    );
                                                   },
                                                 );
                                               }
@@ -1412,12 +1180,19 @@ class DashboardPage extends HookWidget {
                                                             ),
                                                           );
                                                         } else {
+                                                          Future.delayed(
+                                                            Duration.zero,
+                                                            () => isModalOpened.value = true,
+                                                          );
                                                           await notCoinplusCardAlert(
                                                             context: router.navigatorKey.currentContext!,
                                                             walletAddress: walletAddress,
                                                             walletType: isBarList ? 'Bar' : 'Card',
                                                             source: 'Wallet',
-                                                            walletProtectState: _walletProtectState,
+                                                          );
+                                                          Future.delayed(
+                                                            Duration.zero,
+                                                            () => isModalOpened.value = false,
                                                           );
                                                         }
                                                       } else {
@@ -1431,15 +1206,17 @@ class DashboardPage extends HookWidget {
                                                           );
                                                         } else {
                                                           await router.pop();
-                                                          await maybeCoinplusCard(
-                                                            router.navigatorKey.currentContext!,
-                                                            _walletProtectState,
+                                                          Future.delayed(
+                                                            Duration.zero,
+                                                            () => isModalOpened.value = true,
                                                           );
+                                                          await maybeCoinplusCardModal(isModalOpened: isModalOpened);
+                                                          isModalOpened.value = false;
                                                         }
                                                       }
                                                     } else {
                                                       await router.pop();
-                                                      await showWrongCardModal();
+                                                      await showWrongCardModal(isModalOpened: isModalOpened);
                                                       await Future.delayed(
                                                         const Duration(milliseconds: 3000),
                                                       );
@@ -1458,26 +1235,31 @@ class DashboardPage extends HookWidget {
                                                       await Future.delayed(
                                                         const Duration(milliseconds: 1000),
                                                       );
-                                                      return Future(showCardTapIssueBottomSheet);
+                                                      return Future(
+                                                        () => showCardTapIssueBottomSheet(isModalOpened: isModalOpened),
+                                                      );
                                                     });
                                                   },
                                                 );
                                                 await router.pop();
-                                                await showAndroidCardNfcBottomSheet();
+                                                await showAndroidCardNfcBottomSheet(isModalOpened: isModalOpened);
                                               },
                                         lottieAsset: 'assets/lottie_animations/please_wait.json',
                                         lottieHeight: 140,
                                       ),
                                       isDismissible: true,
                                     );
+                                    isModalOpened.value = false;
                                   }
                                 }
                           : () async {
                               await router.pop();
-                              await maybeCoinplusCard(
-                                router.navigatorKey.currentContext!,
-                                _walletProtectState,
+                              Future.delayed(
+                                Duration.zero,
+                                () => isModalOpened.value = true,
                               );
+                              await maybeCoinplusCardModal(isModalOpened: isModalOpened);
+                              isModalOpened.value = false;
                             },
                       child: Row(
                         children: [
@@ -1678,8 +1460,304 @@ class DashboardPage extends HookWidget {
     );
   }
 
-  Future<void> showCardTapIssueBottomSheet() async {
-    await _walletProtectState.updateModalStatus(isOpened: true);
+  Future<void> receiveModal({
+    required AbstractCard card,
+    required bool isBarList,
+    required Future<bool> isCardActivated,
+    required Future<bool> isBarActivated,
+    required ObjectRef<({AbstractCard? card, int index})> currentCard,
+    required ValueNotifier<bool> isModalOpened,
+  }) async {
+    isModalOpened.value = true;
+    await showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      context: router.navigatorKey.currentContext!,
+      builder: (_) {
+        return SizedBox(
+          height: 650,
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Assets.icons.notch.image(
+                  height: 4,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      child: IconButton(
+                        onPressed: router.pop,
+                        icon: Assets.icons.close.image(),
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Receive BTC',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const Gap(6),
+                          Assets.icons.bTCIcon.image(
+                            height: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                  ],
+                ),
+                const Gap(30),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: const Color(
+                      0xFFF7F7FA,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 12,
+                          left: 62,
+                          right: 62,
+                          bottom: 17,
+                        ),
+                        child: QrImageView(
+                          data: card.address,
+                          size: 220,
+                          gapless: false,
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () async {
+                          await recordAmplitudeEvent(
+                            AddressCopied(
+                              walletType: isBarList ? 'Bar' : 'Card',
+                              walletAddress: card.address,
+                              activated: isBarList ? await isBarActivated : await isCardActivated,
+                              source: 'Receive',
+                            ),
+                          );
+                          await Clipboard.setData(
+                            ClipboardData(
+                              text: card.address.toString(),
+                            ),
+                          ).then(
+                            (_) {
+                              HapticFeedback.mediumImpact();
+                              _settingsState.copyAddress();
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            right: 12,
+                            bottom: 12,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                8,
+                              ),
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                              ),
+                              child: Row(
+                                children: [
+                                  Assets.icons.contentCopy.image(
+                                    height: 32,
+                                    color: AppColors.primaryButtonColor,
+                                  ),
+                                  const Gap(
+                                    8,
+                                  ),
+                                  Observer(
+                                    builder: (context) {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Your address',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          AnimatedCrossFade(
+                                            firstChild: const Row(
+                                              children: [
+                                                Text(
+                                                  'Copied',
+                                                  style: TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.check,
+                                                  color: Colors.green,
+                                                  size: 18,
+                                                ),
+                                              ],
+                                            ),
+                                            secondChild: context.height > 667
+                                                ? Text(
+                                                    card.address,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: Color(
+                                                        0xFF4F6486,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    getSplitAddress(card.address),
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: Color(
+                                                        0xFF4F6486,
+                                                      ),
+                                                    ),
+                                                  ),
+                                            crossFadeState: _settingsState.isAddressCopied
+                                                ? CrossFadeState.showFirst
+                                                : CrossFadeState.showSecond,
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                const Gap(10),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(
+                        0xFF4A83E0,
+                      ).withOpacity(
+                        0.1,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    color: const Color(
+                      0xFF4A83E0,
+                    ).withOpacity(0.05),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Row(
+                      children: [
+                        Assets.icons.error.image(
+                          height: 24,
+                        ),
+                        const Gap(10),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Please note',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Color(
+                                  0xFF4F6486,
+                                ),
+                              ),
+                            ),
+                            Gap(4),
+                            Text(
+                              'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Color(
+                                  0xFF4F6486,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+                LoadingButton(
+                  onPressed: () async {
+                    await recordAmplitudeEvent(
+                      ShareAddressClicked(
+                        walletType: isBarList ? 'Bar' : 'Card',
+                        walletAddress: currentCard.value.card!.address,
+                        activated: isBarList ? await isBarActivated : await isCardActivated,
+                      ),
+                    );
+                    await Share.share(
+                      card.address,
+                    );
+                  },
+                  child: const Text(
+                    'Share',
+                    style: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                    ),
+                  ),
+                ).paddingHorizontal(60),
+                const Gap(20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    isModalOpened.value = false;
+  }
+
+  Future<void> showCardTapIssueBottomSheet({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
     await showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       isScrollControlled: true,
@@ -1698,11 +1776,11 @@ class DashboardPage extends HookWidget {
         return const CardIssueOptionsSheet();
       },
     );
-    await _walletProtectState.updateModalStatus(isOpened: false);
+    isModalOpened.value = true;
   }
 
-  Future<void> showBarTapIssueBottomSheet() async {
-    await _walletProtectState.updateModalStatus(isOpened: true);
+  Future<void> showBarTapIssueBottomSheet({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
     await showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       isScrollControlled: true,
@@ -1721,11 +1799,11 @@ class DashboardPage extends HookWidget {
         return const BarIssueOptionsSheet();
       },
     );
-    await _walletProtectState.updateModalStatus(isOpened: false);
+    isModalOpened.value = false;
   }
 
-  Future<void> showWrongCardModal() async {
-    await _walletProtectState.updateModalStatus(isOpened: true);
+  Future<void> showWrongCardModal({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
     await showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1791,11 +1869,17 @@ class DashboardPage extends HookWidget {
         );
       },
     );
-    await _walletProtectState.updateModalStatus(isOpened: false);
+    isModalOpened.value = false;
   }
 
-  Future<void> showAndroidCardNfcBottomSheet() async {
-    await _walletProtectState.updateModalStatus(isOpened: true);
+  Future<void> maybeCoinplusCardModal({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
+    await maybeCoinplusCard(router.navigatorKey.currentContext!);
+    isModalOpened.value = false;
+  }
+
+  Future<void> showAndroidCardNfcBottomSheet({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
     await showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1813,11 +1897,11 @@ class DashboardPage extends HookWidget {
         return const AndroidCardNfcModal();
       },
     );
-    await _walletProtectState.updateModalStatus(isOpened: false);
+    isModalOpened.value = true;
   }
 
-  Future<void> showAndroidBarNfcBottomSheet() async {
-    await _walletProtectState.updateModalStatus(isOpened: true);
+  Future<void> showAndroidBarNfcBottomSheet({required ValueNotifier<bool> isModalOpened}) async {
+    isModalOpened.value = true;
     await showModalBottomSheet(
       context: router.navigatorKey.currentContext!,
       shape: const RoundedRectangleBorder(
@@ -1835,6 +1919,6 @@ class DashboardPage extends HookWidget {
         return const AndroidBarNfcModal();
       },
     );
-    await _walletProtectState.updateModalStatus(isOpened: false);
+    isModalOpened.value = false;
   }
 }

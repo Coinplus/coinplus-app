@@ -72,7 +72,7 @@ class SettingsPage extends HookWidget {
             await StorageUtils.setString(key: 'biometricsToken', value: currentToken);
             await recordAmplitudeEvent(const FaceIdEnabled());
           } else {
-            await pleaseEnableBiometrics(context, _walletProtectState);
+            await pleaseEnableBiometrics(context);
           }
         }
         await _walletProtectState.checkBiometricStatus();

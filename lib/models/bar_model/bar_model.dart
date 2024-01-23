@@ -19,6 +19,7 @@ class BarModel with _$BarModel {
     @Default(CardType.BAR) CardType type,
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Bar') String name,
+    @Default('BTC') String blockchain,
     int? totalReceived,
     int? totalSent,
     int? balance,

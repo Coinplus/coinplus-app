@@ -37,7 +37,6 @@ import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
@@ -83,8 +82,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   ValidationState get _validationStore => GetIt.I<ValidationState>();
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
   void initState() {
@@ -1436,7 +1433,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                               if (cardIndex != -1 && barIndex != -1) {
                                                 await alreadySavedCard(
                                                   context,
-                                                  _walletProtectState,
                                                   _balanceStore.selectedCard!.address,
                                                 );
                                                 _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
@@ -1490,7 +1486,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                 if (cardIndex != -1 || barIndex != -1) {
                                                   await alreadySavedCard(
                                                     context,
-                                                    _walletProtectState,
                                                     _balanceStore.selectedCard!.address,
                                                   );
                                                   _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);

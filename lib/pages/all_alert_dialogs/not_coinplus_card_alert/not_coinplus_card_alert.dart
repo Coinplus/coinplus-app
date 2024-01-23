@@ -9,7 +9,6 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
@@ -18,13 +17,11 @@ Future<void> notCoinplusCardAlert({
   required String walletAddress,
   required String walletType,
   required String source,
-  required WalletProtectState walletProtectState,
 }) {
   recordAmplitudeEvent(FakeWallet(source: source, walletType: walletType, walletAddress: walletAddress));
   recordUserProperty(const FraudActivity());
   return showDialogBox(
     context,
-    walletProtectState,
     DialogBoxWithAction(
       title: const Text(
         'The card is not authentic!',

@@ -22,6 +22,7 @@ import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
+import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/data_utils.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
@@ -33,10 +34,12 @@ class BarList extends StatefulWidget {
     super.key,
     required this.onCardSelected,
     required this.onCarouselScroll,
+    required this.tabController,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
+  final TabController tabController;
 
   @override
   State<BarList> createState() => _BarListState();
@@ -44,6 +47,8 @@ class BarList extends StatefulWidget {
 
 class _BarListState extends State<BarList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
   final _nfcStore = NfcStore();
@@ -62,6 +67,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
         return;
       }
       carouselController.animateToPage(index);
+      widget.tabController.animateTo(1);
     });
   }
 
@@ -112,11 +118,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                     return ScaleTap(
                       enableFeedback: false,
                       onPressed: _settingsState.barCurrentIndex == _balanceStore.bars.length
-                          ? () {
-                              recordAmplitudeEvent(
+                          ? () async {
+                             await _walletProtectState.updateModalStatus(isOpened: true);
+                              await recordAmplitudeEvent(
                                 const AddNewClicked(tab: 'Bar'),
                               );
-                              showModalBottomSheet(
+                              await showModalBottomSheet(
                                 shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(20),
@@ -159,6 +166,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                   );
                                 },
                               );
+                              await _walletProtectState.updateModalStatus(isOpened: false);
                             }
                           : null,
                       child: Assets.images.addCard.image(),
@@ -235,9 +243,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                               scaleMinValue: .993,
                               onLongPress: _settingsState.barCurrentIndex == index
                                   ? _balanceStore.bars.length > 1
-                                      ? () {
-                                          HapticFeedback.mediumImpact();
-                                          showModalBottomSheet(
+                                      ? () async {
+                                          await _walletProtectState.updateModalStatus(isOpened: true);
+                                          await HapticFeedback.mediumImpact();
+                                          await showModalBottomSheet(
                                             useSafeArea: false,
                                             isScrollControlled: true,
                                             context: context,
@@ -486,7 +495,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                               );
                                             },
                                           );
-                                        }
+                                          await _walletProtectState.updateModalStatus(isOpened: false);
+                              }
                                       : () async {
                                           Gaimon.error();
                                         }

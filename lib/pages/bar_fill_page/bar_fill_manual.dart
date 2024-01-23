@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
+import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -1035,7 +1036,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                           onPressed: () async {
                             if (_checkboxState.isActive) {
                               unawaited(signInAnonymously(address: _btcAddressController.text));
-                              _balanceStore.saveSelectedBar();
+                              _balanceStore.saveSelectedBar(color: CardColor.SILVER);
                               _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               await hasShownWallet().then((hasShown) {
                                 recordUserProperty(const BarManual());
@@ -1188,7 +1189,6 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                     if (cardIndex != -1 || barIndex != -1) {
                                                       await alreadySavedCard(
                                                         context,
-                                                        _walletProtectState,
                                                         _balanceStore.selectedBar!.address,
                                                       );
                                                       _balanceStore.onCardAdded(_balanceStore.selectedBar!.address);
