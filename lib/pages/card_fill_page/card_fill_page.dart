@@ -24,26 +24,27 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
+import '../../widgets/all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
@@ -80,6 +81,8 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   late AnimationController _lottieController;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   ValidationState get _validationStore => GetIt.I<ValidationState>();
 
@@ -235,7 +238,15 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
+                                    horizontal: context.height < 932
+                                        ? context.height < 867.4
+                                            ? context.height > 844
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
+                                                : context.height > 667
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -290,6 +301,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                       }
                                     },
                                     child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
                                       child: BackdropFilter(
                                         filter: ImageFilter.blur(
                                           sigmaX: 5,
@@ -369,12 +381,21 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                 const Gap(4),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
+                                    horizontal: context.height < 932
+                                        ? context.height < 867.4
+                                            ? context.height > 844
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
+                                                : context.height > 667
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
                                     onPressed: () {},
                                     child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
                                       child: BackdropFilter(
                                         filter: ImageFilter.blur(
                                           sigmaX: 5,
@@ -412,7 +433,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
-                                                  final data = _balanceStore.coins;
+                                                  final data = _marketPageStore.singleCoin?.result.first;
                                                   if (_balanceStore.selectedCard != null &&
                                                       _balanceStore.selectedCard!.data != null &&
                                                       data != null) {
@@ -1317,7 +1338,6 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                         );
                         if (_checkboxState.isActive) {
                           _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
-                          unawaited(signInAnonymously(address: _btcAddressController.text));
                           if (widget.receivedData == null) {
                             final card = await getCardData(_btcAddressController.text);
                             if (card != null) {
@@ -1356,8 +1376,10 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                               recordUserProperty(const CardManual()),
                             );
                             unawaited(
-                              recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
+                              recordAmplitudeEventPartTwo(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );
+                            _marketPageStore.patchWithAddress(address: _balanceStore.selectedCard!.address);
+
                             if (hasShown) {
                               router.pop();
                             } else {

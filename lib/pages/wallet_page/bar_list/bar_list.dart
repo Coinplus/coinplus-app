@@ -18,8 +18,10 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-//import '../../../services/ramp_service.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
+import '../../../store/ip_store/ip_store.dart';
+import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -27,7 +29,7 @@ import '../../../utils/data_utils.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
-import '../../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
+import '../../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 
 class BarList extends StatefulWidget {
   const BarList({
@@ -51,6 +53,13 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   SettingsState get _settingsState => GetIt.instance<SettingsState>();
+
+  IpStore get _ipStore => GetIt.instance<IpStore>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  RampService get _rampService => GetIt.I<RampService>();
+
   final _nfcStore = NfcStore();
   final carouselController = CarouselController();
 
@@ -59,7 +68,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
       final index = _balanceStore.bars.indexWhere((element) => element.address == address);
@@ -100,11 +109,11 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                   if (bar != null) {
                     widget.onCardSelected(bar as AbstractCard);
                   }
-                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 } else {
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
-                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
             );
@@ -119,7 +128,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                       enableFeedback: false,
                       onPressed: _settingsState.barCurrentIndex == _balanceStore.bars.length
                           ? () async {
-                             await _walletProtectState.updateModalStatus(isOpened: true);
+                              await _walletProtectState.updateModalStatus(isOpened: true);
                               await recordAmplitudeEvent(
                                 const AddNewClicked(tab: 'Bar'),
                               );
@@ -414,7 +423,9 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                           const Gap(5),
                                                                           Builder(
                                                                             builder: (context) {
-                                                                              final data = _balanceStore.coins;
+                                                                              final data = _marketPageStore
+                                                                                  .singleCoin?.result.first;
+
                                                                               final myFormat =
                                                                                   NumberFormat.decimalPatternDigits(
                                                                                 locale: 'en_us',
@@ -496,7 +507,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                             },
                                           );
                                           await _walletProtectState.updateModalStatus(isOpened: false);
-                              }
+                                        }
                                       : () async {
                                           Gaimon.error();
                                         }
@@ -520,99 +531,257 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Gap(context.height * 0.045),
-                                      ScaleTap(
-                                        enableFeedback: false,
-                                        opacityMinValue: .98,
-                                        scaleMinValue: .98,
-                                        onPressed: _settingsState.barCurrentIndex == index
-                                            ? () async {
-                                                final isActivated = isBarWalletActivated(
-                                                  balanceStore: _balanceStore,
-                                                  settingsState: _settingsState,
-                                                );
-                                                await recordAmplitudeEvent(
-                                                  TopUpButtonClicked(
-                                                    walletType: 'Bar',
-                                                    walletAddress: bar.address,
-                                                    activated: await isActivated,
-                                                  ),
-                                                );
-                                                //presentRamp();
-                                              }
-                                            : null,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: Colors.black.withOpacity(0.3),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 2,
-                                              bottom: 2,
-                                              left: 8,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      'Balance',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        color: Colors.white,
+                                      Observer(
+                                        builder: (_) {
+                                          final countryStatus = _ipStore.rampCountryStatus;
+                                          final regionStatus = _ipStore.rampRegionStatus;
+                                          return countryStatus
+                                              ? !regionStatus
+                                                  ? ScaleTap(
+                                                      enableFeedback: false,
+                                                      opacityMinValue: .98,
+                                                      scaleMinValue: .98,
+                                                      onPressed: _settingsState.barCurrentIndex == index
+                                                          ? () async {
+                                                              final isActivated = isBarWalletActivated(
+                                                                balanceStore: _balanceStore,
+                                                                settingsState: _settingsState,
+                                                              );
+                                                              await recordAmplitudeEvent(
+                                                                TopUpButtonClicked(
+                                                                  walletType: 'Bar',
+                                                                  walletAddress: bar.address,
+                                                                  activated: await isActivated,
+                                                                ),
+                                                              );
+                                                              _rampService.presentRamp();
+                                                            }
+                                                          : null,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          color: Colors.black.withOpacity(0.3),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.only(
+                                                            top: 2,
+                                                            bottom: 2,
+                                                            left: 8,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  const Text(
+                                                                    'Balance',
+                                                                    style: TextStyle(
+                                                                      fontSize: 12,
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      color: Colors.white,
+                                                                    ),
+                                                                  ),
+                                                                  Observer(
+                                                                    builder: (context) {
+                                                                      final data =
+                                                                          _marketPageStore.singleCoin?.result.first;
+                                                                      final myFormat =
+                                                                          NumberFormat.decimalPatternDigits(
+                                                                        locale: 'en_us',
+                                                                        decimalDigits: 2,
+                                                                      );
+                                                                      if (data == null) {
+                                                                        return const Padding(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                            vertical: 4,
+                                                                            horizontal: 2,
+                                                                          ),
+                                                                          child: Row(
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                height: 10,
+                                                                                width: 10,
+                                                                                child: CircularProgressIndicator(
+                                                                                  strokeWidth: 3,
+                                                                                  color: Colors.white,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        );
+                                                                      }
+                                                                      return Text(
+                                                                        (bar.data?.balance != null
+                                                                                ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                                : '')
+                                                                            .toString(),
+                                                                        style: const TextStyle(
+                                                                          fontFamily: FontFamily.redHatMedium,
+                                                                          fontWeight: FontWeight.w700,
+                                                                          color: Colors.white,
+                                                                          fontSize: 20,
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Assets.icons.alternative.image(height: 48),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ).paddingHorizontal(37),
+                                                    )
+                                                  : Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        color: Colors.black.withOpacity(0.3),
                                                       ),
-                                                    ),
-                                                    Observer(
-                                                      builder: (context) {
-                                                        final data = _balanceStore.coins;
-                                                        final myFormat = NumberFormat.decimalPatternDigits(
-                                                          locale: 'en_us',
-                                                          decimalDigits: 2,
-                                                        );
-                                                        if (data == null) {
-                                                          return const Padding(
-                                                            padding: EdgeInsets.symmetric(
-                                                              vertical: 4,
-                                                              horizontal: 2,
-                                                            ),
-                                                            child: Row(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(
+                                                          top: 2,
+                                                          bottom: 2,
+                                                          left: 8,
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                  width: 10,
-                                                                  child: CircularProgressIndicator(
-                                                                    strokeWidth: 3,
+                                                                const Text(
+                                                                  'Balance',
+                                                                  style: TextStyle(
+                                                                    fontSize: 12,
+                                                                    fontFamily: FontFamily.redHatMedium,
                                                                     color: Colors.white,
                                                                   ),
                                                                 ),
+                                                                Observer(
+                                                                  builder: (context) {
+                                                                    final data =
+                                                                        _marketPageStore.singleCoin?.result.first;
+                                                                    final myFormat = NumberFormat.decimalPatternDigits(
+                                                                      locale: 'en_us',
+                                                                      decimalDigits: 2,
+                                                                    );
+                                                                    if (data == null) {
+                                                                      return const Padding(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                          vertical: 4,
+                                                                          horizontal: 2,
+                                                                        ),
+                                                                        child: Row(
+                                                                          children: [
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                              width: 10,
+                                                                              child: CircularProgressIndicator(
+                                                                                strokeWidth: 3,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    return Text(
+                                                                      (bar.data?.balance != null
+                                                                              ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                              : '')
+                                                                          .toString(),
+                                                                      style: const TextStyle(
+                                                                        fontFamily: FontFamily.redHatMedium,
+                                                                        fontWeight: FontWeight.w700,
+                                                                        color: Colors.white,
+                                                                        fontSize: 20,
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ),
                                                               ],
                                                             ),
-                                                          );
-                                                        }
-                                                        return Text(
-                                                          (bar.data?.balance != null
-                                                                  ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
-                                                                  : '')
-                                                              .toString(),
-                                                          style: const TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            fontWeight: FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        );
-                                                      },
+                                                            const SizedBox(height: 48),
+                                                            //Assets.icons.alternative.image(height: 48),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ).paddingHorizontal(37)
+                                              : Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Colors.black.withOpacity(0.3),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      top: 2,
+                                                      bottom: 2,
+                                                      left: 8,
                                                     ),
-                                                  ],
-                                                ),
-                                                Assets.icons.alternative.image(height: 48),
-                                              ],
-                                            ),
-                                          ),
-                                        ).paddingHorizontal(37),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            const Text(
+                                                              'Balance',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontFamily: FontFamily.redHatMedium,
+                                                                color: Colors.white,
+                                                              ),
+                                                            ),
+                                                            Observer(
+                                                              builder: (context) {
+                                                                final data = _marketPageStore.singleCoin?.result.first;
+                                                                final myFormat = NumberFormat.decimalPatternDigits(
+                                                                  locale: 'en_us',
+                                                                  decimalDigits: 2,
+                                                                );
+                                                                if (data == null) {
+                                                                  return const Padding(
+                                                                    padding: EdgeInsets.symmetric(
+                                                                      vertical: 4,
+                                                                      horizontal: 2,
+                                                                    ),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          height: 10,
+                                                                          width: 10,
+                                                                          child: CircularProgressIndicator(
+                                                                            strokeWidth: 3,
+                                                                            color: Colors.white,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                                }
+                                                                return Text(
+                                                                  (bar.data?.balance != null
+                                                                          ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                          : '')
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                    fontFamily: FontFamily.redHatMedium,
+                                                                    fontWeight: FontWeight.w700,
+                                                                    color: Colors.white,
+                                                                    fontSize: 20,
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(height: 48),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ).paddingHorizontal(37);
+                                        },
                                       ),
                                       const Gap(10),
                                       ScaleTap(
@@ -709,7 +878,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 );
                 await _settingsState.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  //configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
               enlargeFactor: 0.35,

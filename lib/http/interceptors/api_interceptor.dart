@@ -15,9 +15,18 @@ class ApiInterceptor extends Interceptor {
     if (options.path.contains('/coins')) {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }
+
+    if (options.path.contains('/markets')) {
+      options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
+    }
+
+    if (options.path.contains('/wallet')) {
+      options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
+    }
     if (options.data is Map) {
       (options.data as Map<dynamic, dynamic>).removeWhere((k, v) => v == null);
     }
+
     return handler.next(options);
   }
 

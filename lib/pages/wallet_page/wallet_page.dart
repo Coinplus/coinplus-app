@@ -17,12 +17,12 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
-//import '../../services/ramp_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
-import '../../store/store.dart';
 import '../../utils/header_custom_paint.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
@@ -43,7 +43,12 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+  RampService get _rampService => GetIt.I<RampService>();
+
   SettingsState get _settingsState => GetIt.I<SettingsState>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int cardCarouselIndex = 0;
@@ -53,13 +58,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   late final _tabController = TabController(
     length: 2,
     vsync: this,
-    // initialIndex: _balanceStore.cards.isEmpty
-    //     ? _balanceStore.bars.isEmpty
-    //         ? 0
-    //         : 1
-    //     : _balanceStore.cards.isEmpty
-    //         ? 1
-    //         : 0,
   );
 
   @override
@@ -69,13 +67,14 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
-    // configureRamp(
-    //   address: _balanceStore.cards.isNotEmpty
-    //       ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
-    //       : _balanceStore.bars.isNotEmpty
-    //           ? _balanceStore.bars[_settingsState.barCurrentIndex].address
-    //           : '',
-    // );
+    getHistory();
+    _rampService.configureRamp(
+      address: _balanceStore.cards.isNotEmpty
+          ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
+          : _balanceStore.bars.isNotEmpty
+              ? _balanceStore.bars[_settingsState.barCurrentIndex].address
+              : '',
+    );
     _tabController.addListener(() {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
@@ -83,12 +82,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _settingsState.barCurrentIndex != _balanceStore.bars.length) {
-        // configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+        _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
           _settingsState.cardCurrentIndex != _balanceStore.cards.length) {
-        //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+        _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
       }
       widget.onChangeCard(
         (
@@ -101,6 +100,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
       _tabController.animateTo(1);
     }
+    if (_balanceStore.cards.isNotEmpty && _balanceStore.bars.isEmpty) {
+      _tabController.animateTo(0);
+    }
+  }
+
+  Future<void> getHistory() async {
+    await _balanceStore.getHistory();
   }
 
   void amplitudeEvent() {
@@ -108,10 +114,10 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       _isAmplitudeEventInProgress = true;
       if (_tabController.index == 0) {
         tabIndex = _tabController.index;
-        unawaited(recordAmplitudeEvent(const CardTabClicked()));
+        unawaited(recordAmplitudeEventPartTwo(const CardTabClicked()));
       } else if (_tabController.index == 1) {
         tabIndex = _tabController.index;
-        unawaited(recordAmplitudeEvent(const BarTabClicked()));
+        unawaited(recordAmplitudeEventPartTwo(const BarTabClicked()));
       }
       Future.delayed(const Duration(seconds: 1), () {
         _isAmplitudeEventInProgress = false;
@@ -121,7 +127,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    reRegisterStoreGetIt();
     _tabController.removeListener(amplitudeEvent);
     super.dispose();
   }
@@ -136,7 +141,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         foregroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         automaticallyImplyLeading: false,
-        toolbarHeight: 130,
+        toolbarHeight: 110,
         flexibleSpace: Stack(
           children: [
             CustomPaint(
@@ -231,7 +236,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                     const Gap(5),
                     Observer(
                       builder: (context) {
-                        final data = _balanceStore.coins;
+                        final data = _marketPageStore.singleCoin?.result.first;
                         final myFormat = NumberFormat.decimalPatternDigits(
                           locale: 'en_us',
                           decimalDigits: 2,
@@ -301,7 +306,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             color: Colors.black,
             onRefresh: () async {
               await HapticFeedback.mediumImpact();
-              await _balanceStore.getCoins();
+              await _marketPageStore.onRefresh();
               unawaited(_balanceStore.getCardsInfo());
               unawaited(_balanceStore.getBarsInfo());
             },
@@ -310,7 +315,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      if (context.height > 667) const Gap(15) else const SizedBox(),
+                      if (context.height > 667) const Gap(30) else const SizedBox(),
                       //Cards Slider
                       Expanded(
                         flex: context.height > 667 ? 7 : 10,
@@ -345,7 +350,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                                 child: Observer(
                                   builder: (_) {
-                                    final data = _balanceStore.coins;
+                                    final data = _marketPageStore.singleCoin?.result.first;
                                     if (data == null) {
                                       return Row(
                                         children: [

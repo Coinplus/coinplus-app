@@ -15,9 +15,8 @@ import '../gen/assets.gen.dart';
 import '../gen/colors.gen.dart';
 import '../gen/fonts.gen.dart';
 import '../models/amplitude_event/amplitude_event.dart';
-import '../pages/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
-import '../pages/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
-import '../pages/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+
 import '../pages/settings_page/your_card_is_original.dart';
 import '../pages/splash_screen/splash_screen.dart';
 import '../providers/screen_service.dart';
@@ -27,7 +26,10 @@ import '../services/cloud_firestore_service.dart';
 import '../store/balance_store/balance_store.dart';
 import '../store/settings_button_state/settings_button_state.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
-import '../widgets/loading_button.dart';
+import '../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../widgets/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../widgets/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../widgets/loading_button/loading_button.dart';
 import 'wallet_activation_status.dart';
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
@@ -146,7 +148,6 @@ Future<void> nfcSessionIos({
             source: 'Wallet',
           );
           Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
-
         }
       } else {
         await NfcManager.instance.stopSession();
@@ -472,7 +473,7 @@ Future<void> checkNfcIos({
         balanceStore: balanceStore,
         settingsState: settingsState,
       );
-      await recordAmplitudeEvent(
+      await recordAmplitudeEventPartTwo(
         VerifyCardTapped(
           walletAddress: walletAddress,
           walletType: card?.type ?? '',
@@ -648,7 +649,7 @@ Future<void> checkNfcAndroid({
         signature = null;
       }
       final isCardActivated = isCardWalletActivated(balanceStore: balanceStore, settingsState: settingsState);
-      await recordAmplitudeEvent(
+      await recordAmplitudeEventPartTwo(
         VerifyCardTapped(
           walletAddress: walletAddress,
           walletType: card?.type ?? '',

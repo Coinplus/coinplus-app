@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
-import '../loading_button.dart';
+import '../loading_button/loading_button.dart';
 
 class DialogBox extends HookWidget {
   /// Dialog box with single ok button.

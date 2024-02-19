@@ -18,9 +18,10 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
-
-//import '../../../services/ramp_service.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
+import '../../../store/ip_store/ip_store.dart';
+import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -28,7 +29,7 @@ import '../../../utils/data_utils.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
-import '../../onboarding_page/form_factor_page/card_scan_methods_page.dart';
+import '../../../widgets/wallet_connect_methods/card_connect_methods.dart';
 
 typedef CardSelectedCallback = void Function(int index);
 
@@ -55,14 +56,20 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  IpStore get _ipStore => GetIt.instance<IpStore>();
+  RampService get _rampService => GetIt.I<RampService>();
+
   final _nfcState = NfcStore();
+
   final carouselController = CarouselController();
 
   @override
   void initState() {
     super.initState();
     if (_balanceStore.cards.isNotEmpty) {
-      //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
     }
     _balanceStore.setOnCardAddedCallback((address) {
       final index = _balanceStore.cards.indexWhere((element) => element.address == address);
@@ -422,7 +429,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                           const Gap(5),
                                                                           Builder(
                                                                             builder: (context) {
-                                                                              final data = _balanceStore.coins;
+                                                                              final data = _marketPageStore
+                                                                                  .singleCoin?.result.first;
                                                                               final myFormat =
                                                                                   NumberFormat.decimalPatternDigits(
                                                                                 locale: 'en_us',
@@ -535,221 +543,405 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                 child: SizedBox(
                                   height: context.height > 667 ? context.height * 0.52 : 450,
                                   child: Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          height: context.height * 0.2,
-                                        ),
-                                        ScaleTap(
-                                          enableFeedback: false,
-                                          onPressed: _settingsState.cardCurrentIndex == index
-                                              ? () async {
-                                                  final isCardActivated = isCardWalletActivated(
-                                                    balanceStore: _balanceStore,
-                                                    settingsState: _settingsState,
-                                                  );
-                                                  await recordAmplitudeEvent(
-                                                    AddressCopied(
-                                                      walletType: 'Card',
-                                                      walletAddress: card.address,
-                                                      activated: await isCardActivated,
-                                                      source: 'Wallet',
-                                                    ),
-                                                  );
-                                                  await Clipboard.setData(
-                                                    ClipboardData(
-                                                      text: card.address.toString(),
-                                                    ),
-                                                  ).then(
-                                                    (_) {
-                                                      HapticFeedback.mediumImpact();
-                                                      showTopSnackBar(
-                                                        displayDuration: const Duration(
-                                                          milliseconds: 400,
-                                                        ),
-                                                        Overlay.of(context),
-                                                        CustomSnackBar.success(
-                                                          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                          message: 'Address was copied',
-                                                          textStyle: const TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            fontSize: 14,
-                                                            color: Colors.white,
-                                                          ),
+                                    child: Observer(
+                                      builder: (context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              height: context.height * 0.2,
+                                            ),
+                                            ScaleTap(
+                                              enableFeedback: false,
+                                              onPressed: _settingsState.cardCurrentIndex == index
+                                                  ? () async {
+                                                      final isCardActivated = isCardWalletActivated(
+                                                        balanceStore: _balanceStore,
+                                                        settingsState: _settingsState,
+                                                      );
+                                                      await recordAmplitudeEvent(
+                                                        AddressCopied(
+                                                          walletType: 'Card',
+                                                          walletAddress: card.address,
+                                                          activated: await isCardActivated,
+                                                          source: 'Wallet',
                                                         ),
                                                       );
-                                                    },
-                                                  );
-                                                }
-                                              : null,
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: context.height > 667
-                                                  ? context.height * 0.035
-                                                  : context.height * 0.043,
-                                            ),
-                                            child: Container(
-                                              height: 60,
-                                              alignment: Alignment.center,
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                right: 8,
-                                                top: 12,
-                                                bottom: 12,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(6),
-                                                color: Colors.black.withOpacity(
-                                                  0.3,
+                                                      await Clipboard.setData(
+                                                        ClipboardData(
+                                                          text: card.address.toString(),
+                                                        ),
+                                                      ).then(
+                                                        (_) {
+                                                          HapticFeedback.mediumImpact();
+                                                          showTopSnackBar(
+                                                            displayDuration: const Duration(
+                                                              milliseconds: 400,
+                                                            ),
+                                                            Overlay.of(context),
+                                                            CustomSnackBar.success(
+                                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                              message: 'Address was copied',
+                                                              textStyle: const TextStyle(
+                                                                fontFamily: FontFamily.redHatMedium,
+                                                                fontSize: 14,
+                                                                color: Colors.white,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+                                                    }
+                                                  : null,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context.height > 667
+                                                      ? context.height * 0.035
+                                                      : context.height * 0.043,
                                                 ),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  const Row(
+                                                child: Container(
+                                                  height: 60,
+                                                  alignment: Alignment.center,
+                                                  padding: const EdgeInsets.only(
+                                                    left: 8,
+                                                    right: 8,
+                                                    top: 12,
+                                                    bottom: 12,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(6),
+                                                    color: Colors.black.withOpacity(
+                                                      0.3,
+                                                    ),
+                                                  ),
+                                                  child: Column(
                                                     children: [
-                                                      Text(
-                                                        'Address',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          color: Colors.white,
-                                                        ),
+                                                      const Row(
+                                                        children: [
+                                                          Text(
+                                                            'Address',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
-                                                  Observer(
-                                                    builder: (context) {
-                                                      if (_balanceStore.loadings[card.address] ?? false) {
-                                                        return Text(
-                                                          visibleAddress,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          softWrap: true,
-                                                          style: const TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            fontWeight: FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ).expandedHorizontally();
-                                                      }
-                                                      return Text(
-                                                        visibleAddress,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        softWrap: true,
-                                                        style: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          fontWeight: FontWeight.w700,
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ).expandedHorizontally();
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(4),
-                                        ScaleTap(
-                                          onPressed: _settingsState.cardCurrentIndex == index
-                                              ? () async {
-                                                  final isActivated = isCardWalletActivated(
-                                                    balanceStore: _balanceStore,
-                                                    settingsState: _settingsState,
-                                                  );
-                                                  await recordAmplitudeEvent(
-                                                    TopUpButtonClicked(
-                                                      walletType: 'Card',
-                                                      walletAddress: card.address,
-                                                      activated: await isActivated,
-                                                    ),
-                                                  );
-                                                  //presentRamp();
-                                                }
-                                              : null,
-                                          enableFeedback: false,
-                                          child: Container(
-                                            height: 60,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: context.height > 667
-                                                  ? context.height * 0.035
-                                                  : context.height * 0.043,
-                                            ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(6),
-                                                color: Colors.black.withOpacity(
-                                                  0.3,
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.all(
-                                                      8,
-                                                    ),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        const Text(
-                                                          'Balance',
-                                                          style: TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                          ),
-                                                        ),
-                                                        Observer(
-                                                          builder: (context) {
-                                                            final data = _balanceStore.coins;
-                                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                                              locale: 'en_us',
-                                                              decimalDigits: 2,
-                                                            );
-                                                            if (data == null) {
-                                                              return const Padding(
-                                                                padding: EdgeInsets.symmetric(
-                                                                  vertical: 4,
-                                                                  horizontal: 2,
-                                                                ),
-                                                                child: Row(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      height: 10,
-                                                                      width: 10,
-                                                                      child: CircularProgressIndicator(
-                                                                        strokeWidth: 2,
-                                                                        color: Colors.white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }
+                                                      Observer(
+                                                        builder: (context) {
+                                                          if (_balanceStore.loadings[card.address] ?? false) {
                                                             return Text(
-                                                              '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                              visibleAddress,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              softWrap: true,
                                                               style: const TextStyle(
                                                                 fontFamily: FontFamily.redHatMedium,
                                                                 fontWeight: FontWeight.w700,
                                                                 color: Colors.white,
-                                                                fontSize: 20,
+                                                                fontSize: 12,
                                                               ),
-                                                            );
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
+                                                            ).expandedHorizontally();
+                                                          }
+                                                          return Text(
+                                                            visibleAddress,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            softWrap: true,
+                                                            style: const TextStyle(
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              fontWeight: FontWeight.w700,
+                                                              color: Colors.white,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ).expandedHorizontally();
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Assets.icons.alternative.image(height: 50),
-                                                ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
+                                            const Gap(4),
+                                            Observer(
+                                              builder: (_) {
+                                                final countryStatus = _ipStore.rampCountryStatus;
+                                                final regionStatus = _ipStore.rampRegionStatus;
+                                                return countryStatus
+                                                    ? !regionStatus
+                                                        ? ScaleTap(
+                                                            onPressed: _settingsState.cardCurrentIndex == index
+                                                                ? () async {
+                                                                    final isActivated = isCardWalletActivated(
+                                                                      balanceStore: _balanceStore,
+                                                                      settingsState: _settingsState,
+                                                                    );
+                                                                    await recordAmplitudeEvent(
+                                                                      TopUpButtonClicked(
+                                                                        walletType: 'Card',
+                                                                        walletAddress: card.address,
+                                                                        activated: await isActivated,
+                                                                      ),
+                                                                    );
+                                                                    _rampService.presentRamp();
+                                                                  }
+                                                                : null,
+                                                            enableFeedback: false,
+                                                            child: Container(
+                                                              height: 60,
+                                                              padding: EdgeInsets.symmetric(
+                                                                horizontal: context.height > 667
+                                                                    ? context.height * 0.035
+                                                                    : context.height * 0.043,
+                                                              ),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(6),
+                                                                  color: Colors.black.withOpacity(
+                                                                    0.3,
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.all(
+                                                                        8,
+                                                                      ),
+                                                                      child: Column(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const Text(
+                                                                            'Balance',
+                                                                            style: TextStyle(
+                                                                              fontFamily: FontFamily.redHatMedium,
+                                                                              color: Colors.white,
+                                                                              fontSize: 12,
+                                                                            ),
+                                                                          ),
+                                                                          Observer(
+                                                                            builder: (context) {
+                                                                              final data = _marketPageStore
+                                                                                  .singleCoin?.result.first;
+
+                                                                              final myFormat =
+                                                                                  NumberFormat.decimalPatternDigits(
+                                                                                locale: 'en_us',
+                                                                                decimalDigits: 2,
+                                                                              );
+                                                                              if (data == null) {
+                                                                                return const Padding(
+                                                                                  padding: EdgeInsets.symmetric(
+                                                                                    vertical: 4,
+                                                                                    horizontal: 2,
+                                                                                  ),
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      SizedBox(
+                                                                                        height: 10,
+                                                                                        width: 10,
+                                                                                        child:
+                                                                                            CircularProgressIndicator(
+                                                                                          strokeWidth: 2,
+                                                                                          color: Colors.white,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                              return Text(
+                                                                                '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                                                style: const TextStyle(
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  color: Colors.white,
+                                                                                  fontSize: 20,
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    Assets.icons.alternative.image(height: 50),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            height: 60,
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal: context.height > 667
+                                                                  ? context.height * 0.035
+                                                                  : context.height * 0.043,
+                                                            ),
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(6),
+                                                                color: Colors.black.withOpacity(
+                                                                  0.3,
+                                                                ),
+                                                              ),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.all(
+                                                                      8,
+                                                                    ),
+                                                                    child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Balance',
+                                                                          style: TextStyle(
+                                                                            fontFamily: FontFamily.redHatMedium,
+                                                                            color: Colors.white,
+                                                                            fontSize: 12,
+                                                                          ),
+                                                                        ),
+                                                                        Observer(
+                                                                          builder: (context) {
+                                                                            final data = _marketPageStore
+                                                                                .singleCoin?.result.first;
+
+                                                                            final myFormat =
+                                                                                NumberFormat.decimalPatternDigits(
+                                                                              locale: 'en_us',
+                                                                              decimalDigits: 2,
+                                                                            );
+                                                                            if (data == null) {
+                                                                              return const Padding(
+                                                                                padding: EdgeInsets.symmetric(
+                                                                                  vertical: 4,
+                                                                                  horizontal: 2,
+                                                                                ),
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    SizedBox(
+                                                                                      height: 10,
+                                                                                      width: 10,
+                                                                                      child: CircularProgressIndicator(
+                                                                                        strokeWidth: 2,
+                                                                                        color: Colors.white,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            }
+                                                                            return Text(
+                                                                              '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                                              style: const TextStyle(
+                                                                                fontFamily: FontFamily.redHatMedium,
+                                                                                fontWeight: FontWeight.w700,
+                                                                                color: Colors.white,
+                                                                                fontSize: 20,
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  if (!regionStatus)
+                                                                    Assets.icons.alternative.image(height: 50)
+                                                                  else
+                                                                    const SizedBox(),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          )
+                                                    : Container(
+                                                        height: 60,
+                                                        padding: EdgeInsets.symmetric(
+                                                          horizontal: context.height > 667
+                                                              ? context.height * 0.035
+                                                              : context.height * 0.043,
+                                                        ),
+                                                        child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(6),
+                                                            color: Colors.black.withOpacity(
+                                                              0.3,
+                                                            ),
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Padding(
+                                                                padding: const EdgeInsets.all(
+                                                                  8,
+                                                                ),
+                                                                child: Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    const Text(
+                                                                      'Balance',
+                                                                      style: TextStyle(
+                                                                        fontFamily: FontFamily.redHatMedium,
+                                                                        color: Colors.white,
+                                                                        fontSize: 12,
+                                                                      ),
+                                                                    ),
+                                                                    Observer(
+                                                                      builder: (context) {
+                                                                        final data =
+                                                                            _marketPageStore.singleCoin?.result.first;
+
+                                                                        final myFormat =
+                                                                            NumberFormat.decimalPatternDigits(
+                                                                          locale: 'en_us',
+                                                                          decimalDigits: 2,
+                                                                        );
+                                                                        if (data == null) {
+                                                                          return const Padding(
+                                                                            padding: EdgeInsets.symmetric(
+                                                                              vertical: 4,
+                                                                              horizontal: 2,
+                                                                            ),
+                                                                            child: Row(
+                                                                              children: [
+                                                                                SizedBox(
+                                                                                  height: 10,
+                                                                                  width: 10,
+                                                                                  child: CircularProgressIndicator(
+                                                                                    strokeWidth: 2,
+                                                                                    color: Colors.white,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          );
+                                                                        }
+                                                                        return Text(
+                                                                          '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                                          style: const TextStyle(
+                                                                            fontFamily: FontFamily.redHatMedium,
+                                                                            fontWeight: FontWeight.w700,
+                                                                            color: Colors.white,
+                                                                            fontSize: 20,
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              if (countryStatus)
+                                                                Assets.icons.alternative.image(height: 50)
+                                                              else
+                                                                const SizedBox(),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -771,7 +963,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                 );
                 await _settingsState.setCardCurrentIndex(index);
                 if (index != _balanceStore.cards.length) {
-                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
               enlargeFactor: 0.35,

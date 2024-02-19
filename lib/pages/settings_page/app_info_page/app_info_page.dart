@@ -162,35 +162,35 @@ class AboutAppPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Divider(
-                    height: 1,
-                    indent: 0,
-                    endIndent: 0,
-                    thickness: 1,
-                    color: Colors.grey.withOpacity(0.1),
-                  ),
-                  InkWell(
-                    onTap: () async {},
-                    splashFactory: InkSparkle.splashFactory,
-                    highlightColor: Colors.transparent,
-                    child: ListTile(
-                      trailing: Assets.icons.arrowForwardIos.image(height: 20),
-                      minLeadingWidth: 10,
-                      leading: Assets.icons.rate.image(
-                        height: 22,
-                        color: Colors.blue,
-                      ),
-                      title: const Text(
-                        'Rate Coinplus',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontSize: 15,
-                          color: AppColors.primaryTextColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Divider(
+                  //   height: 1,
+                  //   indent: 0,
+                  //   endIndent: 0,
+                  //   thickness: 1,
+                  //   color: Colors.grey.withOpacity(0.1),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {},
+                  //   splashFactory: InkSparkle.splashFactory,
+                  //   highlightColor: Colors.transparent,
+                  //   child: ListTile(
+                  //     trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                  //     minLeadingWidth: 10,
+                  //     leading: Assets.icons.rate.image(
+                  //       height: 22,
+                  //       color: Colors.blue,
+                  //     ),
+                  //     title: const Text(
+                  //       'Rate Coinplus',
+                  //       style: TextStyle(
+                  //         fontFamily: FontFamily.redHatMedium,
+                  //         fontSize: 15,
+                  //         color: AppColors.primaryTextColor,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

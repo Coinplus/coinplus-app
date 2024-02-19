@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/identify.dart';
 import 'package:get_it/get_it.dart';
 
 import '../models/amplitude_event/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../providers/flavor_service.dart';
 
@@ -10,10 +13,18 @@ Future<void> initializeAmplitude() async {
   if (GetIt.I<FlavorService>().isProduction) {
     final amplitude = Amplitude.getInstance();
     await amplitude.init('28670e3f0d1eee7f8f7188ef81e670a4');
+    log('Amplitude init');
   }
 }
 
 Future<void> recordAmplitudeEvent(AmplitudeEvent event) async {
+  await Amplitude.getInstance().logEvent(
+    event.eventType,
+    eventProperties: event.toJson(),
+  );
+}
+
+Future<void> recordAmplitudeEventPartTwo(AmplitudeEventPartTwo event) async {
   await Amplitude.getInstance().logEvent(
     event.eventType,
     eventProperties: event.toJson(),

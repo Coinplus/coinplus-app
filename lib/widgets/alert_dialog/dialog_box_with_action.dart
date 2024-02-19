@@ -7,7 +7,7 @@ import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../loading_button.dart';
+import '../loading_button/loading_button.dart';
 
 class DialogBoxWithAction extends HookWidget {
   /// Dialog box with single ok button.

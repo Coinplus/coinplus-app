@@ -5,7 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:air.coinplus.com</string>
-		<string>applinks:coinplus-alternate.test-app.link</string>
+		<string>applinks:tap.coinplus.com</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.formats</key>
 	<array>

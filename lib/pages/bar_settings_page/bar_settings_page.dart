@@ -23,6 +23,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
@@ -35,7 +36,7 @@ import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/background.dart';
 import 'change_bar_name.dart';
 import 'remove_bar_modal.dart';
@@ -299,7 +300,7 @@ class BarSettingsPage extends HookWidget {
                                     ],
                                   ),
                                   onLongPress: () async {
-                                    await recordAmplitudeEvent(
+                                    await recordAmplitudeEventPartTwo(
                                       PrivateKeyRevealed(walletAddress: bar.address, walletType: 'Bar'),
                                     );
                                     await HapticFeedback.selectionClick();
@@ -344,7 +345,7 @@ class BarSettingsPage extends HookWidget {
                                   },
                                   onTap: _cardSettingsState.isPrivateKeyVisible
                                       ? () {
-                                          recordAmplitudeEvent(
+                                          recordAmplitudeEventPartTwo(
                                             PrivateKeyCopied(walletAddress: bar.address, walletType: 'Bar'),
                                           );
                                           Clipboard.setData(
@@ -373,7 +374,7 @@ class BarSettingsPage extends HookWidget {
                                           );
                                         }
                                       : () {
-                                          recordAmplitudeEvent(
+                                          recordAmplitudeEventPartTwo(
                                             ClickedOnPrivateKey(walletAddress: bar.address, walletType: 'Bar'),
                                           );
                                           showTopSnackBar(
@@ -469,10 +470,10 @@ class BarSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
-                              await recordAmplitudeEvent(const HelpCenterClicked(source: 'Wallet Settings'));
+                              await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Wallet Settings'));
                               await FlutterWebBrowser.openWebPage(
                                 url:
-                                    'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+                                    'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
                                 customTabsOptions: const CustomTabsOptions(
                                   shareState: CustomTabsShareState.on,
                                   instantAppsEnabled: true,
@@ -641,7 +642,7 @@ class BarSettingsPage extends HookWidget {
                     onTap: () async {
                       final isBarActivated =
                           isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
-                      await recordAmplitudeEvent(
+                      await recordAmplitudeEventPartTwo(
                         RemoveCardClicked(
                           walletAddress: bar.address,
                           walletType: 'Bar',

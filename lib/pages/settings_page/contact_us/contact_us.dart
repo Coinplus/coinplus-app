@@ -13,14 +13,14 @@ import 'package:lottie/lottie.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/contact_us_state/contact_us_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/curved_app_bar.dart';
-import '../../../widgets/loading_button.dart';
-import '../../all_alert_dialogs/email_send_alert/email_send_alert.dart';
+import '../../../widgets/all_alert_dialogs/email_send_alert/email_send_alert.dart';
+import '../../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class ContactUs extends StatefulWidget {
@@ -332,7 +332,7 @@ class _ContactUsState extends State<ContactUs> {
                 child: LoadingButton(
                   onPressed: store.isButtonEnabled && store.isEmailValid
                       ? () async {
-                          unawaited(recordAmplitudeEvent(const SendMessageClicked()));
+                          unawaited(recordAmplitudeEventPartTwo(const SendMessageClicked()));
                           await sendEmail();
                           store.mailController.text = '';
                           store.nameController.text = '';
