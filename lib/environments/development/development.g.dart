@@ -9,6 +9,7 @@ part of 'development.dart';
 const _$developmentEnvJsonLiteral = {
   'apiUrl': 'https://blockstream.info',
   'coinsUrl': 'https://openapiv1.coinstats.app',
+  'ipUrl': 'https://api.ipify.org',
   'env': 'DEV',
   'production': false
 };

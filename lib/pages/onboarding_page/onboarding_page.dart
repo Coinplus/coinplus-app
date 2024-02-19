@@ -16,7 +16,7 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
-import '../../constants/buttons/button_settings.dart';
+import '../../constants/button_settings.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/widget_extension.dart';
@@ -31,9 +31,9 @@ import '../../services/cloud_firestore_service.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
-import 'connect_manually_button/connect_manually_button.dart';
+import '../../widgets/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../../widgets/connect_manually_button/connect_manually_button.dart';
+import '../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class OnboardingPage extends HookWidget {

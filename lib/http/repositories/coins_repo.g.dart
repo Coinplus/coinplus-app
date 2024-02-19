@@ -73,20 +73,27 @@ class _CoinsClient implements CoinsClient {
   }
 
   @override
-  Future<CoinDto> getCoins() async {
+  Future<CoinModel> getAllCoins({
+    int? page,
+    int? limit,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'limit': limit,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<CoinDto>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CoinModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/coins/bitcoin',
+              '/coins',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -95,7 +102,61 @@ class _CoinsClient implements CoinsClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = CoinDto.fromJson(_result.data!);
+    final value = CoinModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<MarketCapDto> getMarketCap() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MarketCapDto>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/markets',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = MarketCapDto.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TransactionModel> getTransactions({required String address}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TransactionModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/wallet/transactions?address=${address}&connectionId=bitcoin',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TransactionModel.fromJson(_result.data!);
     return value;
   }
 

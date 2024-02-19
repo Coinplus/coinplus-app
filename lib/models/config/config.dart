@@ -13,6 +13,7 @@ class Config with _$Config {
     required bool production,
     required String apiUrl,
     required String coinsUrl,
+    required String ipUrl,
   }) = _Config;
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);

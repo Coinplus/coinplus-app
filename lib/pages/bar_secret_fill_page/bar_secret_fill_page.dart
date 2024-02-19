@@ -19,6 +19,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
@@ -31,9 +32,9 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/secrets_fail/secrets_fail.dart';
-import '../all_alert_dialogs/secrets_success/secrets_success.dart';
+import '../../widgets/all_alert_dialogs/secrets_fail/secrets_fail.dart';
+import '../../widgets/all_alert_dialogs/secrets_success/secrets_success.dart';
+import '../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class BarSecretFillPage extends StatefulWidget {
@@ -715,7 +716,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                 onPressed: !_validationStore.isSecret2Valid
                     ? null
                     : () async {
-                        await recordAmplitudeEvent(ContinueCLicked(walletAddress: walletAddress, walletType: 'Bar'));
+                        await recordAmplitudeEventPartTwo(
+                          ContinueCLicked(walletAddress: walletAddress, walletType: 'Bar'),
+                        );
                         unawaited(
                           showDialog(
                             context: context,
@@ -752,7 +755,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               address: bar.address,
                             );
                             await HapticFeedback.heavyImpact();
-                            await recordAmplitudeEvent(
+                            await recordAmplitudeEventPartTwo(
                               ValidationSuccessful(walletAddress: walletAddress, walletType: 'Bar'),
                             );
                             await secretsSuccessAlert(
@@ -763,7 +766,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                             await recordUserProperty(const BarHolder());
                           } else {
                             await router.pop();
-                            await recordAmplitudeEvent(
+                            await recordAmplitudeEventPartTwo(
                               ValidationFailed(walletAddress: walletAddress, walletType: 'Bar'),
                             );
                             await recordUserProperty(const ActivationFailed());

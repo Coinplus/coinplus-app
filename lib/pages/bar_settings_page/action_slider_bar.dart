@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
@@ -56,7 +56,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
         await router.pop();
         unawaited(_balanceStore.removeSelectedBar());
         final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
-        await recordAmplitudeEvent(
+        await recordAmplitudeEventPartTwo(
           CardDeleted(walletAddress: bar.address, walletType: 'Bar', activated: await isBarActivated),
         );
         showTopSnackBar(

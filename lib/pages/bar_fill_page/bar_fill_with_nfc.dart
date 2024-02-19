@@ -22,26 +22,27 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines_bar.dart';
+import '../../widgets/all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
@@ -75,6 +76,8 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   @override
   void initState() {
@@ -177,7 +180,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
             },
             child: Observer(
               builder: (context) {
-                final data = _balanceStore.coins;
+                final data = _marketPageStore.singleCoin?.result.first;
                 return Padding(
                   padding: EdgeInsets.only(bottom: context.height > 667 ? 20 : 0),
                   child: Center(
@@ -980,20 +983,19 @@ class _BarFillWithNfcState extends State<BarFillWithNfc> with TickerProviderStat
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          unawaited(signInAnonymously(address: _btcAddressController.text));
-                            unawaited(connectedCount(widget.receivedData!));
-                            if (widget.barColor == '0') {
-                              _balanceStore.saveSelectedBar(color: CardColor.SILVER);
-                            } else if (widget.barColor == '1') {
-                              _balanceStore.saveSelectedBar(color: CardColor.GOLD);
-                            } else {
-                              _balanceStore.saveSelectedBar(color: CardColor.SILVER);
-                            }
+                          unawaited(connectedCount(widget.receivedData!));
+                          if (widget.barColor == '0') {
+                            _balanceStore.saveSelectedBar(color: CardColor.SILVER);
+                          } else if (widget.barColor == '1') {
+                            _balanceStore.saveSelectedBar(color: CardColor.GOLD);
+                          } else {
+                            _balanceStore.saveSelectedBar(color: CardColor.SILVER);
+                          }
                           _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                           await hasShownWallet().then((hasShown) {
                             recordUserProperty(const BarManual());
                             unawaited(
-                              recordAmplitudeEvent(BarAddedEvent(address: _balanceStore.selectedBar!.address)),
+                              recordAmplitudeEventPartTwo(BarAddedEvent(address: _balanceStore.selectedBar!.address)),
                             );
                             if (hasShown) {
                               router.pop();

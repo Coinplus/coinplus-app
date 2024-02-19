@@ -7,7 +7,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../constants/buttons/button_settings.dart';
+import '../../constants/button_settings.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -18,7 +18,7 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../widgets/loading_button.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
 
 @RoutePage()

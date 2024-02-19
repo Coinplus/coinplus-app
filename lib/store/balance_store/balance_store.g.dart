@@ -17,21 +17,55 @@ mixin _$BalanceStore on _BalanceStore, Store {
           name: '_BalanceStore.allCardsBalances'))
       .value;
 
-  late final _$_coinsAtom =
-      Atom(name: '_BalanceStore._coins', context: context);
+  late final _$_marketCapAtom =
+      Atom(name: '_BalanceStore._marketCap', context: context);
 
-  CoinDto? get coins {
-    _$_coinsAtom.reportRead();
-    return super._coins;
+  MarketCapDto? get marketCap {
+    _$_marketCapAtom.reportRead();
+    return super._marketCap;
   }
 
   @override
-  CoinDto? get _coins => coins;
+  MarketCapDto? get _marketCap => marketCap;
 
   @override
-  set _coins(CoinDto? value) {
-    _$_coinsAtom.reportWrite(value, super._coins, () {
-      super._coins = value;
+  set _marketCap(MarketCapDto? value) {
+    _$_marketCapAtom.reportWrite(value, super._marketCap, () {
+      super._marketCap = value;
+    });
+  }
+
+  late final _$transactionsAtom =
+      Atom(name: '_BalanceStore.transactions', context: context);
+
+  @override
+  TransactionModel? get transactions {
+    _$transactionsAtom.reportRead();
+    return super.transactions;
+  }
+
+  @override
+  set transactions(TransactionModel? value) {
+    _$transactionsAtom.reportWrite(value, super.transactions, () {
+      super.transactions = value;
+    });
+  }
+
+  late final _$_currentPageAtom =
+      Atom(name: '_BalanceStore._currentPage', context: context);
+
+  int get currentPage {
+    _$_currentPageAtom.reportRead();
+    return super._currentPage;
+  }
+
+  @override
+  int get _currentPage => currentPage;
+
+  @override
+  set _currentPage(int value) {
+    _$_currentPageAtom.reportWrite(value, super._currentPage, () {
+      super._currentPage = value;
     });
   }
 
@@ -119,6 +153,38 @@ mixin _$BalanceStore on _BalanceStore, Store {
   set loadings(ObservableMap<String, bool> value) {
     _$loadingsAtom.reportWrite(value, super.loadings, () {
       super.loadings = value;
+    });
+  }
+
+  late final _$cardHistoriesAtom =
+      Atom(name: '_BalanceStore.cardHistories', context: context);
+
+  @override
+  ObservableMap<String, TransactionModel?> get cardHistories {
+    _$cardHistoriesAtom.reportRead();
+    return super.cardHistories;
+  }
+
+  @override
+  set cardHistories(ObservableMap<String, TransactionModel?> value) {
+    _$cardHistoriesAtom.reportWrite(value, super.cardHistories, () {
+      super.cardHistories = value;
+    });
+  }
+
+  late final _$historyLoadingAtom =
+      Atom(name: '_BalanceStore.historyLoading', context: context);
+
+  @override
+  bool get historyLoading {
+    _$historyLoadingAtom.reportRead();
+    return super.historyLoading;
+  }
+
+  @override
+  set historyLoading(bool value) {
+    _$historyLoadingAtom.reportWrite(value, super.historyLoading, () {
+      super.historyLoading = value;
     });
   }
 
@@ -256,7 +322,10 @@ mixin _$BalanceStore on _BalanceStore, Store {
   @override
   String toString() {
     return '''
+transactions: ${transactions},
 loadings: ${loadings},
+cardHistories: ${cardHistories},
+historyLoading: ${historyLoading},
 allCardsBalances: ${allCardsBalances}
     ''';
   }

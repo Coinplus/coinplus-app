@@ -174,6 +174,7 @@ class StorageUtils {
 
   static Future<void> clear() async {
     final prefs = await sharedInstance;
+    await prefs.reload();
     await prefs.clear();
   }
 

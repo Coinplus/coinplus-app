@@ -23,6 +23,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
@@ -35,7 +36,7 @@ import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/background.dart';
 import 'change_card_name.dart';
 import 'remove_card_modal.dart';
@@ -345,7 +346,7 @@ class CardSettingsPage extends HookWidget {
                                     ],
                                   ),
                                   onLongPress: () async {
-                                    await recordAmplitudeEvent(
+                                    await recordAmplitudeEventPartTwo(
                                       PrivateKeyRevealed(walletAddress: card.address, walletType: 'Card'),
                                     );
                                     await HapticFeedback.selectionClick();
@@ -392,7 +393,7 @@ class CardSettingsPage extends HookWidget {
                                   },
                                   onTap: _cardSettingsState.isPrivateKeyVisible
                                       ? () {
-                                          recordAmplitudeEvent(
+                                          recordAmplitudeEventPartTwo(
                                             PrivateKeyCopied(walletAddress: card.address, walletType: 'Card'),
                                           );
                                           Clipboard.setData(
@@ -421,7 +422,7 @@ class CardSettingsPage extends HookWidget {
                                           );
                                         }
                                       : () {
-                                          recordAmplitudeEvent(
+                                          recordAmplitudeEventPartTwo(
                                             ClickedOnPrivateKey(walletAddress: card.address, walletType: 'Card'),
                                           );
                                           showTopSnackBar(
@@ -517,10 +518,10 @@ class CardSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
-                              await recordAmplitudeEvent(const HelpCenterClicked(source: 'Wallet Settings'));
+                              await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Wallet Settings'));
                               await FlutterWebBrowser.openWebPage(
                                 url:
-                                    'https://coinplus.gitbook.io/help-center/getting-started/how-to-send-crypto-from-the-coinplus-wallet',
+                                    'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
                                 customTabsOptions: const CustomTabsOptions(
                                   shareState: CustomTabsShareState.on,
                                   instantAppsEnabled: true,
@@ -645,7 +646,7 @@ class CardSettingsPage extends HookWidget {
                     onTap: () async {
                       final isCardActivated =
                           isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
-                      await recordAmplitudeEvent(
+                      await recordAmplitudeEventPartTwo(
                         RemoveCardClicked(
                           walletAddress: card.address,
                           walletType: 'Card',
@@ -692,7 +693,7 @@ class CardSettingsPage extends HookWidget {
                           onPressed: _cardSettingsState.isColorChanged
                               ? () async {
                                   if (_cardSettingsState.selectedCardColor == CardColor.ORANGE) {
-                                    await recordAmplitudeEvent(
+                                    await recordAmplitudeEventPartTwo(
                                       CardColorCHanged(walletAddress: card.address, color: 'ORANGE'),
                                     );
                                     _balanceStore.changeCardColorAndSave(
@@ -715,7 +716,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     );
                                   } else if (_cardSettingsState.selectedCardColor == CardColor.WHITE) {
-                                    await recordAmplitudeEvent(
+                                    await recordAmplitudeEventPartTwo(
                                       CardColorCHanged(walletAddress: card.address, color: 'WHITE'),
                                     );
                                     _balanceStore.changeCardColorAndSave(
@@ -738,7 +739,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     );
                                   } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
-                                    await recordAmplitudeEvent(
+                                    await recordAmplitudeEventPartTwo(
                                       CardColorCHanged(walletAddress: card.address, color: 'BLACK'),
                                     );
                                     _balanceStore.changeCardColorAndSave(

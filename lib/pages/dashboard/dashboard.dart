@@ -34,9 +34,10 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-
-//import '../../services/ramp_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/ip_store/ip_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/nav_bar_state/nav_bar_state.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
@@ -47,16 +48,19 @@ import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/already_activated_alert/already_activated_alert.dart';
-import '../all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
-import '../all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';
-import '../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
-import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
-import '../all_alert_dialogs/trouble_tapping_bar/trouble_tapping_bar.dart';
-import '../all_alert_dialogs/trouble_tapping_card/trouble_tapping_card.dart';
-import '../onboarding_page/form_factor_page/bar_scan_methods_page.dart';
-import '../onboarding_page/form_factor_page/card_scan_methods_page.dart';
+import '../../widgets/all_alert_dialogs/already_activated_alert/already_activated_alert.dart';
+import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../../widgets/all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
+import '../../widgets/all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';
+import '../../widgets/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../../widgets/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
+import '../../widgets/all_alert_dialogs/trouble_tapping_bar/trouble_tapping_bar.dart';
+import '../../widgets/all_alert_dialogs/trouble_tapping_card/trouble_tapping_card.dart';
+import '../../widgets/loading_button/loading_button.dart';
+import '../../widgets/wallet_connect_methods/bar_connect_methods.dart';
+import '../../widgets/wallet_connect_methods/card_connect_methods.dart';
+import '../history_page/history_page.dart';
+import '../market_page/market_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
@@ -67,9 +71,15 @@ class DashboardPage extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+  RampService get _rampService => GetIt.I<RampService>();
+
   SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  IpStore get _ipStore => GetIt.I<IpStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +87,7 @@ class DashboardPage extends HookWidget {
     final deepLinkRes = useRef<String?>(null);
     final isModalOpened = useState(false);
     final _nfcStore = useMemoized(NfcStore.new);
-    final _pageController = usePageController();
+    final _pageController = useMemoized(PageController.new);
     final isPaused = useState(false);
     final isInactive = useState(false);
     final appLocked = useState(false);
@@ -88,6 +98,7 @@ class DashboardPage extends HookWidget {
         index: 0,
       ),
     );
+    Timer? _timer;
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -128,8 +139,23 @@ class DashboardPage extends HookWidget {
                     walletType: 'Card',
                   ),
                 );
-                await router.push(CardFillRoute(receivedData: deepLinkRes.value));
-                deepLinkRes.value = null;
+                final cardExists =
+                    _balanceStore.cards.any((element) => element.address == deepLinkRes.value.toString());
+                if (!cardExists) {
+                  await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+                  deepLinkRes.value = null;
+                } else {
+                  Future.delayed(
+                    Duration.zero,
+                    () async {
+                      await alreadySavedWallet(
+                        router.navigatorKey.currentContext!,
+                        deepLinkRes.toString(),
+                      );
+                      _balanceStore.onCardAdded(deepLinkRes.value.toString());
+                    },
+                  );
+                }
               }
             }
           }
@@ -143,7 +169,7 @@ class DashboardPage extends HookWidget {
         final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
-            if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillWithNfc.name) {
+            if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardFillRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Wallet',
@@ -151,12 +177,26 @@ class DashboardPage extends HookWidget {
                   walletType: 'Card',
                 ),
               );
-              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
-              deepLinkRes.value = null;
+              final cardExists = _balanceStore.cards.any((element) => element.address == deepLinkRes.value.toString());
+              if (!cardExists) {
+                await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+                deepLinkRes.value = null;
+              } else {
+                Future.delayed(
+                  Duration.zero,
+                  () async {
+                    await alreadySavedWallet(
+                      router.navigatorKey.currentContext!,
+                      deepLinkRes.toString(),
+                    );
+                    _balanceStore.onCardAdded(deepLinkRes.value.toString());
+                  },
+                );
+              }
             } else if (appLocked.value &&
                 deepLinkRes.value != null &&
                 resumed.value &&
-                router.current.name != CardFillWithNfc.name) {
+                router.current.name != CardFillRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Wallet',
@@ -164,12 +204,25 @@ class DashboardPage extends HookWidget {
                   walletType: 'Card',
                 ),
               );
-              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
-              deepLinkRes.value = null;
+              final cardExists = _balanceStore.cards.any((element) => element.address == deepLinkRes.value.toString());
+              if (!cardExists) {
+                await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+                deepLinkRes.value = null;
+              } else {
+                Future.delayed(
+                  Duration.zero,
+                  () async {
+                    await alreadySavedWallet(
+                      router.navigatorKey.currentContext!,
+                      deepLinkRes.toString(),
+                    );
+                    _balanceStore.onCardAdded(deepLinkRes.value.toString());
+                  },
+                );
+              }
             }
           },
         );
-
         return streamSubscription.cancel;
       },
       [],
@@ -210,6 +263,8 @@ class DashboardPage extends HookWidget {
                           ..updateTabIndex(val.index);
                       },
                     ),
+                    const MarketPage(),
+                    const HistoryPage(),
                     const SettingsPage(),
                   ],
                 ),
@@ -223,7 +278,7 @@ class DashboardPage extends HookWidget {
                   endIndent: 1,
                   indent: 0,
                   height: 1,
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.4),
                 ),
                 Theme(
                   data: ThemeData(
@@ -254,7 +309,18 @@ class DashboardPage extends HookWidget {
                                 const WalletTabClicked(),
                               ),
                             }
-                          else
+                          else if (index == 1)
+                            {
+                              if (_timer == null || !_timer!.isActive)
+                                {
+                                  _timer = Timer(const Duration(seconds: 5), () {
+                                    _marketPageStore.onRefresh();
+                                  }),
+                                },
+                            }
+                          else if (index == 2)
+                            {}
+                          else if (index == 3)
                             {
                               recordAmplitudeEvent(
                                 const SettingsTabClicked(),
@@ -276,9 +342,29 @@ class DashboardPage extends HookWidget {
                             label: 'Wallet',
                           ),
                           BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 30, top: 5),
+                              child: Assets.icons.market.image(
+                                height: 23,
+                                color: _navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                              ),
+                            ),
+                            label: 'Markets            ',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(left: 30, top: 7, bottom: 2),
+                              child: Assets.icons.history.image(
+                                height: 28,
+                                color: _navBarState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
+                              ),
+                            ),
+                            label: '             History',
+                          ),
+                          BottomNavigationBarItem(
                             icon: Assets.icons.pageInfo.image(
                               height: 32,
-                              color: _navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                              color: _navBarState.currentIndex == 3 ? Colors.black : const Color(0xFfB8BEC5),
                             ),
                             label: 'Settings',
                           ),
@@ -432,6 +518,7 @@ class DashboardPage extends HookWidget {
                 isBarActivated: isBarActivated,
                 currentCard: currentCard,
                 isModalOpened: isModalOpened,
+                ipStore: _ipStore,
               ).then((value) => isModalOpened.value = false);
               isModalOpened.value = false;
               await recordAmplitudeEvent(
@@ -456,7 +543,7 @@ class DashboardPage extends HookWidget {
                     firstChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
                       crossFadeState:
-                          _navBarState.currentIndex == 1 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                          _navBarState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: AnimatedCrossFade(
                         duration: const Duration(milliseconds: 1),
                         crossFadeState: _navBarState.isInAddCard ? CrossFadeState.showSecond : CrossFadeState.showFirst,
@@ -482,7 +569,7 @@ class DashboardPage extends HookWidget {
                     secondChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
                       crossFadeState:
-                          _navBarState.currentIndex == 1 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                          _navBarState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: AnimatedCrossFade(
                         duration: const Duration(milliseconds: 1),
                         crossFadeState: _navBarState.isInAddBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
@@ -522,6 +609,7 @@ class DashboardPage extends HookWidget {
     required Future<bool> isBarActivated,
     required ObjectRef<({AbstractCard? card, int index})> currentCard,
     required ValueNotifier<bool> isModalOpened,
+    required IpStore ipStore,
   }) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -1303,72 +1391,82 @@ class DashboardPage extends HookWidget {
                   },
                 ),
               const Gap(8),
-              LoadingButton(
-                style: router.navigatorKey.currentContext!.theme
-                    .buttonStyle(
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        color: AppColors.primaryTextColor,
-                        fontSize: 15,
-                      ),
-                    )
-                    .copyWith(
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.all(10),
-                      ),
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.grey.withOpacity(0.1),
-                      ),
-                    ),
-                onPressed: () async {
-                  await recordAmplitudeEvent(
-                    BuyWithCardClicked(
-                      walletType: isBarList ? 'Bar' : 'Card',
-                      walletAddress: card.address,
-                      activated: isBarList ? await isBarActivated : await isCardActivated,
-                    ),
-                  );
-                  await router.pop();
-                  //presentRamp();
+              Observer(
+                builder: (_) {
+                  final countryStatus = ipStore.rampCountryStatus;
+                  final regionStatus = ipStore.rampRegionStatus;
+                  return countryStatus
+                      ? !regionStatus
+                          ? LoadingButton(
+                              style: router.navigatorKey.currentContext!.theme
+                                  .buttonStyle(
+                                    textStyle: const TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      color: AppColors.primaryTextColor,
+                                      fontSize: 15,
+                                    ),
+                                  )
+                                  .copyWith(
+                                    padding: const MaterialStatePropertyAll(
+                                      EdgeInsets.all(10),
+                                    ),
+                                    backgroundColor: MaterialStateProperty.all(
+                                      Colors.grey.withOpacity(0.1),
+                                    ),
+                                  ),
+                              onPressed: () async {
+                                await recordAmplitudeEvent(
+                                  BuyWithCardClicked(
+                                    walletType: isBarList ? 'Bar' : 'Card',
+                                    walletAddress: card.address,
+                                    activated: isBarList ? await isBarActivated : await isCardActivated,
+                                  ),
+                                );
+                                await router.pop();
+                                _rampService.presentRamp();
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 8,
+                                    ),
+                                    child: Assets.icons.buy.image(
+                                      height: 24,
+                                      width: 24,
+                                      color: AppColors.primaryButtonColor,
+                                    ),
+                                  ),
+                                  const Gap(8),
+                                  const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Buy with card',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.primaryTextColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Purchase crypto with cash',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.normal,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          : const SizedBox()
+                      : const SizedBox();
                 },
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 8,
-                      ),
-                      child: Assets.icons.buy.image(
-                        height: 24,
-                        width: 24,
-                        color: AppColors.primaryButtonColor,
-                      ),
-                    ),
-                    const Gap(8),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Buy with card',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: FontFamily.redHatMedium,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryTextColor,
-                          ),
-                        ),
-                        Text(
-                          'Purchase crypto with cash',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: FontFamily.redHatMedium,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.textHintsColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ),
               const Gap(8),
               LoadingButton(

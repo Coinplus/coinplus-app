@@ -7,19 +7,24 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart' show QrScannerOverlayShape;
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 
 @RoutePage<String?>()
 class QrScannerPage extends HookWidget {
   const QrScannerPage({
     Key? key,
   }) : super(key: key);
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +62,28 @@ class QrScannerPage extends HookWidget {
                   final newAddress = _data.split('https://air.coinplus.com/btc/');
                   final splitAddress = newAddress[1];
                   await HapticFeedback.heavyImpact();
-                  await router.pop(splitAddress);
+                  final cardExists = _balanceStore.cards.any((element) => element.address == splitAddress);
+                  final barExists = _balanceStore.bars.any((element) => element.address == splitAddress);
+                  if (cardExists || barExists) {
+                    await router.pop();
+                    await alreadySavedWallet(context, splitAddress);
+                    _balanceStore.onCardAdded(splitAddress);
+                    _balanceStore.onBarAdded(splitAddress);
+                  } else {
+                    await router.pop(splitAddress);
+                  }
                 } else {
                   await HapticFeedback.mediumImpact();
-                  await router.pop(_data);
+                  final cardExists = _balanceStore.cards.any((element) => element.address == _data);
+                  final barExists = _balanceStore.bars.any((element) => element.address == _data);
+                  if (cardExists || barExists) {
+                    await router.pop();
+                    await alreadySavedWallet(context, _data);
+                    _balanceStore.onCardAdded(_data);
+                    _balanceStore.onBarAdded(_data);
+                  } else {
+                    await router.pop(_data);
+                  }
                 }
               },
             ),

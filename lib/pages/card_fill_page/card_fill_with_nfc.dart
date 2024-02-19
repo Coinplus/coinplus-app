@@ -23,28 +23,29 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../services/firebase_service.dart';
 import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
+import '../../utils/card_color_detecting.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
+import '../../widgets/all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
-import 'card_color_detecting/card_color_detecting.dart';
 
 @RoutePage()
 class CardFillWithNfc extends StatefulWidget {
@@ -89,6 +90,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   final _connectivityStore = ConnectivityStore();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   @override
   void initState() {
@@ -234,7 +237,15 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 ),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
+                                    horizontal: context.height < 932
+                                        ? context.height < 867.4
+                                            ? context.height > 844
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
+                                                : context.height > 667
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -289,6 +300,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                       }
                                     },
                                     child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
                                       child: BackdropFilter(
                                         filter: ImageFilter.blur(
                                           sigmaX: 5,
@@ -368,12 +380,21 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 const Gap(4),
                                 Container(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.height > 667 ? context.height * 0.06 : 85,
+                                    horizontal: context.height < 932
+                                        ? context.height < 867.4
+                                            ? context.height > 844
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
+                                                : context.height > 667
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
                                     onPressed: () {},
                                     child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
                                       child: BackdropFilter(
                                         filter: ImageFilter.blur(
                                           sigmaX: 5,
@@ -411,7 +432,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
-                                                  final data = _balanceStore.coins;
+                                                  final data = _marketPageStore.singleCoin?.result.first;
                                                   if (_balanceStore.selectedCard != null &&
                                                       _balanceStore.selectedCard!.data != null &&
                                                       data != null) {
@@ -1230,7 +1251,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                   ? LoadingButton(
                       onPressed: () async {
                         if (_checkboxState.isActive) {
-                          unawaited(signInAnonymously(address: _btcAddressController.text));
                           if (widget.isOriginalCard == true) {
                             unawaited(connectedCount(widget.receivedData!));
                             if (widget.cardColor == '0') {
@@ -1269,7 +1289,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             }
                           }
                           await hasShownWallet().then((hasShown) {
-                            recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
+                            recordAmplitudeEventPartTwo(CardAddedEvent(address: _balanceStore.selectedCard!.address));
                             recordUserProperty(const CardTap());
                             if (hasShown) {
                               router.pop();
@@ -1279,6 +1299,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               );
                             }
                           });
+                          await _marketPageStore.patchWithAddress(address: _balanceStore.selectedCard!.address);
                           _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                         } else {
                           await HapticFeedback.vibrate();
@@ -1310,7 +1331,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                 ),
                               );
                             }
-                            await recordAmplitudeEvent(CardAddedEvent(address: _balanceStore.selectedCard!.address));
+                            await recordAmplitudeEventPartTwo(
+                              CardAddedEvent(address: _balanceStore.selectedCard!.address),
+                            );
                           },
                         );
                       },

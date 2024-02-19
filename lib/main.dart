@@ -4,16 +4,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'app.dart';
 import 'constants/flavor_type.dart';
 import 'firebase_options.dart';
 import 'providers/get_it.dart';
+import 'services/amplitude_service.dart';
 import 'utils/secure_storage_utils.dart';
 
-Future<void> run({Flavor env = Flavor.PROD}) async {
+Future<void> run({Flavor env = Flavor.DEV}) async {
+  BackgroundIsolateBinaryMessenger.ensureInitialized(RootIsolateToken.instance!);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   unawaited(
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[
       DeviceOrientation.portraitUp,
@@ -24,7 +26,6 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
   await EasyLocalization.ensureInitialized();
   unawaited(localStorage());
   registerGetIt(env);
-
   //await StorageUtils.clear();
 
   runApp(
@@ -42,4 +43,5 @@ Future<void> run({Flavor env = Flavor.PROD}) async {
 
 Future<void> main() async {
   await run();
+  await initializeAmplitude();
 }

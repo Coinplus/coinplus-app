@@ -20,6 +20,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
@@ -33,9 +34,9 @@ import '../../utils/card_nfc_session.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
-import '../../widgets/loading_button.dart';
-import '../all_alert_dialogs/secrets_fail/secrets_fail.dart';
-import '../all_alert_dialogs/secrets_success/secrets_success.dart';
+import '../../widgets/all_alert_dialogs/secrets_fail/secrets_fail.dart';
+import '../../widgets/all_alert_dialogs/secrets_success/secrets_success.dart';
+import '../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class CardSecretFillPage extends StatefulWidget {
@@ -728,7 +729,9 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                 onPressed: !_validationStore.isSecret2Valid
                     ? null
                     : () async {
-                        await recordAmplitudeEvent(ContinueCLicked(walletAddress: walletAddress, walletType: 'Card'));
+                        await recordAmplitudeEventPartTwo(
+                          ContinueCLicked(walletAddress: walletAddress, walletType: 'Card'),
+                        );
                         unawaited(
                           showDialog(
                             context: context,
@@ -765,7 +768,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                               address: card.address,
                             );
                             await HapticFeedback.heavyImpact();
-                            await recordAmplitudeEvent(
+                            await recordAmplitudeEventPartTwo(
                               ValidationSuccessful(walletAddress: card.address, walletType: 'Card'),
                             );
                             await secretsSuccessAlert(
@@ -776,7 +779,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             await recordUserProperty(const CardHolder());
                           } else {
                             await router.pop();
-                            await recordAmplitudeEvent(
+                            await recordAmplitudeEventPartTwo(
                               ValidationFailed(walletAddress: card.address, walletType: 'Card'),
                             );
                             await recordUserProperty(const ActivationFailed());
@@ -788,7 +791,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                             );
                           }
                         } catch (e) {
-                          await recordAmplitudeEvent(
+                          await recordAmplitudeEventPartTwo(
                             ValidationFailed(walletAddress: card.address, walletType: 'Card'),
                           );
                           await recordUserProperty(const ActivationFailed());

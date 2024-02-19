@@ -47,6 +47,14 @@ class $AssetsIconsGen {
   AssetGenImage get arrowBackIos =>
       const AssetGenImage('assets/icons/arrow_back_ios.png');
 
+  /// File path: assets/icons/arrow_drop_down.png
+  AssetGenImage get arrowDropDown =>
+      const AssetGenImage('assets/icons/arrow_drop_down.png');
+
+  /// File path: assets/icons/arrow_drop_up.png
+  AssetGenImage get arrowDropUp =>
+      const AssetGenImage('assets/icons/arrow_drop_up.png');
+
   /// File path: assets/icons/arrow_forward_ios.png
   AssetGenImage get arrowForwardIos =>
       const AssetGenImage('assets/icons/arrow_forward_ios.png');
@@ -141,6 +149,14 @@ class $AssetsIconsGen {
   AssetGenImage get faceIdSettings =>
       const AssetGenImage('assets/icons/face_id_settings.png');
 
+  /// File path: assets/icons/facebook.png
+  AssetGenImage get facebook =>
+      const AssetGenImage('assets/icons/facebook.png');
+
+  /// File path: assets/icons/formkit_usdc.png
+  AssetGenImage get formkitUsdc =>
+      const AssetGenImage('assets/icons/formkit_usdc.png');
+
   /// File path: assets/icons/help.png
   AssetGenImage get help => const AssetGenImage('assets/icons/help.png');
 
@@ -151,15 +167,30 @@ class $AssetsIconsGen {
   AssetGenImage get historyIcon =>
       const AssetGenImage('assets/icons/history_icon.png');
 
+  /// File path: assets/icons/identity.png
+  AssetGenImage get identity =>
+      const AssetGenImage('assets/icons/identity.png');
+
   /// File path: assets/icons/info.png
   AssetGenImage get info => const AssetGenImage('assets/icons/info.png');
+
+  /// File path: assets/icons/instagram.png
+  AssetGenImage get instagram =>
+      const AssetGenImage('assets/icons/instagram.png');
 
   /// File path: assets/icons/iphone_touch_id.png
   AssetGenImage get iphoneTouchId =>
       const AssetGenImage('assets/icons/iphone_touch_id.png');
 
+  /// File path: assets/icons/linkedin.png
+  AssetGenImage get linkedin =>
+      const AssetGenImage('assets/icons/linkedin.png');
+
   /// File path: assets/icons/lock.png
   AssetGenImage get lock => const AssetGenImage('assets/icons/lock.png');
+
+  /// File path: assets/icons/market.png
+  AssetGenImage get market => const AssetGenImage('assets/icons/market.png');
 
   /// File path: assets/icons/nfc-icon.png
   AssetGenImage get nfcIcon => const AssetGenImage('assets/icons/nfc-icon.png');
@@ -167,6 +198,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/notifications.png
   AssetGenImage get notifications =>
       const AssetGenImage('assets/icons/notifications.png');
+
+  /// File path: assets/icons/outbound.png
+  AssetGenImage get outbound =>
+      const AssetGenImage('assets/icons/outbound.png');
+
+  /// File path: assets/icons/outbound_red.png
+  AssetGenImage get outboundRed =>
+      const AssetGenImage('assets/icons/outbound_red.png');
 
   /// File path: assets/icons/page_info.png
   AssetGenImage get pageInfo =>
@@ -201,6 +240,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/schedule.png
   AssetGenImage get schedule =>
       const AssetGenImage('assets/icons/schedule.png');
+
+  /// File path: assets/icons/search_button.png
+  AssetGenImage get searchButton =>
+      const AssetGenImage('assets/icons/search_button.png');
 
   /// File path: assets/icons/secrets_fail.png
   AssetGenImage get secretsFail =>
@@ -251,6 +294,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/twitter.png
   AssetGenImage get twitter => const AssetGenImage('assets/icons/twitter.png');
 
+  /// File path: assets/icons/user_data.png
+  AssetGenImage get userData =>
+      const AssetGenImage('assets/icons/user_data.png');
+
   /// File path: assets/icons/validation_indicator_green_bottom.png
   AssetGenImage get validationIndicatorGreenBottom =>
       const AssetGenImage('assets/icons/validation_indicator_green_bottom.png');
@@ -282,6 +329,8 @@ class $AssetsIconsGen {
         notch,
         arrowBack,
         arrowBackIos,
+        arrowDropDown,
+        arrowDropUp,
         arrowForwardIos,
         barAddressField,
         binIcon,
@@ -307,14 +356,22 @@ class $AssetsIconsGen {
         edit,
         error,
         faceIdSettings,
+        facebook,
+        formkitUsdc,
         help,
         history,
         historyIcon,
+        identity,
         info,
+        instagram,
         iphoneTouchId,
+        linkedin,
         lock,
+        market,
         nfcIcon,
         notifications,
+        outbound,
+        outboundRed,
         pageInfo,
         password,
         plus,
@@ -325,6 +382,7 @@ class $AssetsIconsGen {
         reddit,
         savedWallet,
         schedule,
+        searchButton,
         secretsFail,
         send,
         sendReceive,
@@ -340,6 +398,7 @@ class $AssetsIconsGen {
         torch,
         trash,
         twitter,
+        userData,
         validationIndicatorGreenBottom,
         validationIndicatorGreenTop,
         verify,
