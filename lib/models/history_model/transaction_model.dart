@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'transaction_model.freezed.dart';
+
 part 'transaction_model.g.dart';
 
 @freezed
 abstract class TransactionModel with _$TransactionModel {
   factory TransactionModel({
     required List<TransactionItem> result,
+    required Meta meta,
   }) = _TransactionModel;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) => _$TransactionModelFromJson(json);
@@ -89,4 +91,14 @@ abstract class Coin with _$Coin {
   }) = _Coin;
 
   factory Coin.fromJson(Map<String, dynamic> json) => _$CoinFromJson(json);
+}
+
+@freezed
+abstract class Meta with _$Meta {
+  factory Meta({
+    required int page,
+    required int limit,
+  }) = _Meta;
+
+  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
 }

@@ -24,6 +24,7 @@ abstract class _WalletProtectState with Store {
     checkBiometricStatus();
     checkAvailableBiometrics();
     checkNotificationToggleStatus();
+    checkHideBalancesToggleStatus();
   }
 
   @observable
@@ -35,6 +36,8 @@ abstract class _WalletProtectState with Store {
   @observable
   bool isBiometricsEnabled = false;
 
+  @observable
+  bool isSwitchedHideBalancesToggle = false;
   @readonly
   bool _isNfcSessionStarted = false;
 
@@ -82,6 +85,11 @@ abstract class _WalletProtectState with Store {
   }
 
   @action
+  Future<void> checkHideBalancesToggleStatus() async {
+    isSwitchedHideBalancesToggle = await getHideBalancesToggleStatus();
+  }
+
+  @action
   Future<void> updateNfcSessionStatus({required bool isStarted}) async {
     _isNfcSessionStarted = isStarted;
   }
@@ -110,6 +118,18 @@ abstract class _WalletProtectState with Store {
   Future<void> enableNotification() async {
     await enableNotificationToggle();
     isSwitchedNotificationsToggle = true;
+  }
+
+  @action
+  Future<void> hideBalances() async {
+    await disableHideBalancesToggle();
+    isSwitchedHideBalancesToggle = false;
+  }
+
+  @action
+  Future<void> showBalances() async {
+    await enableHideBalancesToggle();
+    isSwitchedHideBalancesToggle = true;
   }
 
   @action

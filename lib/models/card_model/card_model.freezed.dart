@@ -38,14 +38,12 @@ mixin _$CardModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CardModelCopyWith<CardModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CardModelCopyWith<CardModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CardModelCopyWith<$Res> {
-  factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) =
-      _$CardModelCopyWithImpl<$Res, CardModel>;
+  factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) = _$CardModelCopyWithImpl<$Res, CardModel>;
   @useResult
   $Res call(
       {String address,
@@ -63,8 +61,7 @@ abstract class $CardModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
-    implements $CardModelCopyWith<$Res> {
+class _$CardModelCopyWithImpl<$Res, $Val extends CardModel> implements $CardModelCopyWith<$Res> {
   _$CardModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -142,10 +139,8 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
 }
 
 /// @nodoc
-abstract class _$$CardModelImplCopyWith<$Res>
-    implements $CardModelCopyWith<$Res> {
-  factory _$$CardModelImplCopyWith(
-          _$CardModelImpl value, $Res Function(_$CardModelImpl) then) =
+abstract class _$$CardModelImplCopyWith<$Res> implements $CardModelCopyWith<$Res> {
+  factory _$$CardModelImplCopyWith(_$CardModelImpl value, $Res Function(_$CardModelImpl) then) =
       __$$CardModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -165,12 +160,9 @@ abstract class _$$CardModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CardModelImplCopyWithImpl<$Res>
-    extends _$CardModelCopyWithImpl<$Res, _$CardModelImpl>
+class __$$CardModelImplCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res, _$CardModelImpl>
     implements _$$CardModelImplCopyWith<$Res> {
-  __$$CardModelImplCopyWithImpl(
-      _$CardModelImpl _value, $Res Function(_$CardModelImpl) _then)
-      : super(_value, _then);
+  __$$CardModelImplCopyWithImpl(_$CardModelImpl _value, $Res Function(_$CardModelImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -258,8 +250,7 @@ class _$CardModelImpl implements _CardModel {
       @JsonKey(name: 'chain_stats') this.data,
       @JsonKey(name: 'mempool_stats') this.mempoolStats});
 
-  factory _$CardModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CardModelImplFromJson(json);
+  factory _$CardModelImpl.fromJson(Map<String, dynamic> json) => _$$CardModelImplFromJson(json);
 
   @override
   final String address;
@@ -309,36 +300,19 @@ class _$CardModelImpl implements _CardModel {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.blockchain, blockchain) ||
-                other.blockchain == blockchain) &&
-            (identical(other.totalReceived, totalReceived) ||
-                other.totalReceived == totalReceived) &&
-            (identical(other.totalSent, totalSent) ||
-                other.totalSent == totalSent) &&
+            (identical(other.blockchain, blockchain) || other.blockchain == blockchain) &&
+            (identical(other.totalReceived, totalReceived) || other.totalReceived == totalReceived) &&
+            (identical(other.totalSent, totalSent) || other.totalSent == totalSent) &&
             (identical(other.balance, balance) || other.balance == balance) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.mempoolStats, mempoolStats) ||
-                other.mempoolStats == mempoolStats));
+            (identical(other.mempoolStats, mempoolStats) || other.mempoolStats == mempoolStats));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      address,
-      color,
-      type,
-      label,
-      name,
-      blockchain,
-      totalReceived,
-      totalSent,
-      balance,
-      createdAt,
-      data,
-      mempoolStats);
+  int get hashCode => Object.hash(runtimeType, address, color, type, label, name, blockchain, totalReceived, totalSent,
+      balance, createdAt, data, mempoolStats);
 
   @JsonKey(ignore: true)
   @override
@@ -356,22 +330,20 @@ class _$CardModelImpl implements _CardModel {
 
 abstract class _CardModel implements CardModel, AbstractCard {
   const factory _CardModel(
-          {required final String address,
-          final CardColor color,
-          final CardType type,
-          final WalletType label,
-          final String name,
-          final String blockchain,
-          final int? totalReceived,
-          final int? totalSent,
-          final int? balance,
-          @JsonKey(fromJson: timeFromJson) final String createdAt,
-          @JsonKey(name: 'chain_stats') final ChainStats? data,
-          @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) =
-      _$CardModelImpl;
+      {required final String address,
+      final CardColor color,
+      final CardType type,
+      final WalletType label,
+      final String name,
+      final String blockchain,
+      final int? totalReceived,
+      final int? totalSent,
+      final int? balance,
+      @JsonKey(fromJson: timeFromJson) final String createdAt,
+      @JsonKey(name: 'chain_stats') final ChainStats? data,
+      @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) = _$CardModelImpl;
 
-  factory _CardModel.fromJson(Map<String, dynamic> json) =
-      _$CardModelImpl.fromJson;
+  factory _CardModel.fromJson(Map<String, dynamic> json) = _$CardModelImpl.fromJson;
 
   @override
   String get address;
@@ -402,6 +374,5 @@ abstract class _CardModel implements CardModel, AbstractCard {
   MempoolStats? get mempoolStats;
   @override
   @JsonKey(ignore: true)
-  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith => throw _privateConstructorUsedError;
 }

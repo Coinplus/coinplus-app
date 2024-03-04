@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
-  animated_custom_dropdown:
-    dependency: "direct main"
-    description:
-      name: animated_custom_dropdown
-      sha256: "9e286defa42f2e774285015d7ff29523a24260888d53f79a3635328fad5bdad7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   animated_segmented_tab_control:
     dependency: "direct main"
     description:
@@ -513,14 +505,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
-  dropdown_button2:
-    dependency: "direct main"
-    description:
-      name: dropdown_button2
-      sha256: b0fe8d49a030315e9eef6c7ac84ca964250155a6224d491c1365061bc974a9e1
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.9"
   easy_localization:
     dependency: "direct main"
     description:
@@ -1431,6 +1415,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.5"
+  sensors_plus:
+    dependency: "direct main"
+    description:
+      name: sensors_plus
+      sha256: "8e7fa79b4940442bb595bfc0ee9da4af5a22a0fe6ebacc74998245ee9496a82d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.2"
+  sensors_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: sensors_plus_platform_interface
+      sha256: bc472d6cfd622acb4f020e726433ee31788b038056691ba433fec80e448a094f
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   shake_animation_widget:
     dependency: "direct main"
     description:
@@ -1604,6 +1604,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  spoiler_widget:
+    dependency: "direct main"
+    description:
+      name: spoiler_widget
+      sha256: "5b96da87f0c2c0da2d2da433d8f58522ae968cda654a137a8e96b78bfa55a2a9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   sprintf:
     dependency: transitive
     description:

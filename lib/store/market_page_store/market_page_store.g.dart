@@ -13,8 +13,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   List<CoinResultModel> get searchedList => (_$searchedListComputed ??=
-          Computed<List<CoinResultModel>>(() => super.searchedList,
-              name: '_MarketPageStore.searchedList'))
+          Computed<List<CoinResultModel>>(() => super.searchedList, name: '_MarketPageStore.searchedList'))
       .value;
 
   late final _$qAtom = Atom(name: '_MarketPageStore.q', context: context);
@@ -32,8 +31,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$filteredDataAtom =
-      Atom(name: '_MarketPageStore.filteredData', context: context);
+  late final _$filteredDataAtom = Atom(name: '_MarketPageStore.filteredData', context: context);
 
   @override
   List<CoinResultModel> get filteredData {
@@ -48,8 +46,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$currentPageAtom =
-      Atom(name: '_MarketPageStore.currentPage', context: context);
+  late final _$currentPageAtom = Atom(name: '_MarketPageStore.currentPage', context: context);
 
   @override
   int get currentPage {
@@ -64,8 +61,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$displayedItemCountAtom =
-      Atom(name: '_MarketPageStore.displayedItemCount', context: context);
+  late final _$displayedItemCountAtom = Atom(name: '_MarketPageStore.displayedItemCount', context: context);
 
   @override
   int get displayedItemCount {
@@ -80,8 +76,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$totalItemCountAtom =
-      Atom(name: '_MarketPageStore.totalItemCount', context: context);
+  late final _$totalItemCountAtom = Atom(name: '_MarketPageStore.totalItemCount', context: context);
 
   @override
   int get totalItemCount {
@@ -96,8 +91,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$hasErrorAtom =
-      Atom(name: '_MarketPageStore.hasError', context: context);
+  late final _$hasErrorAtom = Atom(name: '_MarketPageStore.hasError', context: context);
 
   @override
   bool get hasError {
@@ -112,8 +106,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$shouldShowUpButtonAtom =
-      Atom(name: '_MarketPageStore.shouldShowUpButton', context: context);
+  late final _$shouldShowUpButtonAtom = Atom(name: '_MarketPageStore.shouldShowUpButton', context: context);
 
   @override
   bool get shouldShowUpButton {
@@ -128,8 +121,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isSearchVisibleAtom =
-      Atom(name: '_MarketPageStore.isSearchVisible', context: context);
+  late final _$isSearchVisibleAtom = Atom(name: '_MarketPageStore.isSearchVisible', context: context);
 
   @override
   bool get isSearchVisible {
@@ -144,8 +136,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isTextFieldVisibleAtom =
-      Atom(name: '_MarketPageStore.isTextFieldVisible', context: context);
+  late final _$isTextFieldVisibleAtom = Atom(name: '_MarketPageStore.isTextFieldVisible', context: context);
 
   @override
   bool get isTextFieldVisible {
@@ -160,8 +151,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: '_MarketPageStore.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(name: '_MarketPageStore.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -176,8 +166,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isSearchedAtom =
-      Atom(name: '_MarketPageStore.isSearched', context: context);
+  late final _$isSearchedAtom = Atom(name: '_MarketPageStore.isSearched', context: context);
 
   @override
   bool get isSearched {
@@ -192,8 +181,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$allCoinsAtom =
-      Atom(name: '_MarketPageStore.allCoins', context: context);
+  late final _$allCoinsAtom = Atom(name: '_MarketPageStore.allCoins', context: context);
 
   @override
   CoinModel? get allCoins {
@@ -208,8 +196,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$singleCoinAtom =
-      Atom(name: '_MarketPageStore.singleCoin', context: context);
+  late final _$singleCoinAtom = Atom(name: '_MarketPageStore.singleCoin', context: context);
 
   @override
   CoinModel? get singleCoin {
@@ -224,64 +211,56 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$makeInvisibleAsyncAction =
-      AsyncAction('_MarketPageStore.makeInvisible', context: context);
+  late final _$makeInvisibleAsyncAction = AsyncAction('_MarketPageStore.makeInvisible', context: context);
 
   @override
   Future<void> makeInvisible() {
     return _$makeInvisibleAsyncAction.run(() => super.makeInvisible());
   }
 
-  late final _$setSearchTextAsyncAction =
-      AsyncAction('_MarketPageStore.setSearchText', context: context);
+  late final _$setSearchTextAsyncAction = AsyncAction('_MarketPageStore.setSearchText', context: context);
 
   @override
   Future<void> setSearchText(String val) {
     return _$setSearchTextAsyncAction.run(() => super.setSearchText(val));
   }
 
-  late final _$resetSearchAsyncAction =
-      AsyncAction('_MarketPageStore.resetSearch', context: context);
+  late final _$resetSearchAsyncAction = AsyncAction('_MarketPageStore.resetSearch', context: context);
 
   @override
   Future<void> resetSearch() {
     return _$resetSearchAsyncAction.run(() => super.resetSearch());
   }
 
-  late final _$loadCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.loadCoins', context: context);
+  late final _$loadCoinsAsyncAction = AsyncAction('_MarketPageStore.loadCoins', context: context);
 
   @override
   Future<void> loadCoins({bool resetPage = false}) {
-    return _$loadCoinsAsyncAction
-        .run(() => super.loadCoins(resetPage: resetPage));
+    return _$loadCoinsAsyncAction.run(() => super.loadCoins(resetPage: resetPage));
   }
 
-  late final _$loadMoreCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.loadMoreCoins', context: context);
+  late final _$loadMoreCoinsAsyncAction = AsyncAction('_MarketPageStore.loadMoreCoins', context: context);
 
   @override
   Future<void> loadMoreCoins() {
     return _$loadMoreCoinsAsyncAction.run(() => super.loadMoreCoins());
   }
 
-  late final _$toggleShouldShowUpButtonAsyncAction = AsyncAction(
-      '_MarketPageStore.toggleShouldShowUpButton',
-      context: context);
+  late final _$toggleShouldShowUpButtonAsyncAction =
+      AsyncAction('_MarketPageStore.toggleShouldShowUpButton', context: context);
 
   @override
   Future<void> toggleShouldShowUpButton({bool shouldShowUpButton = false}) {
-    return _$toggleShouldShowUpButtonAsyncAction.run(() =>
-        super.toggleShouldShowUpButton(shouldShowUpButton: shouldShowUpButton));
+    return _$toggleShouldShowUpButtonAsyncAction
+        .run(() => super.toggleShouldShowUpButton(shouldShowUpButton: shouldShowUpButton));
   }
 
-  late final _$_MarketPageStoreActionController =
-      ActionController(name: '_MarketPageStore', context: context);
+  late final _$_MarketPageStoreActionController = ActionController(name: '_MarketPageStore', context: context);
 
   @override
   void initAnimationController(TickerProvider vsync) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.initAnimationController');
+    final _$actionInfo =
+        _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.initAnimationController');
     try {
       return super.initAnimationController(vsync);
     } finally {
@@ -291,8 +270,8 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void toggleTextFieldVisibility() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.toggleTextFieldVisibility');
+    final _$actionInfo =
+        _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.toggleTextFieldVisibility');
     try {
       return super.toggleTextFieldVisibility();
     } finally {
@@ -302,8 +281,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void handleError(String errorMessage) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.handleError');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.handleError');
     try {
       return super.handleError(errorMessage);
     } finally {

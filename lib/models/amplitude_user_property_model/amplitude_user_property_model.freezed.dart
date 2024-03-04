@@ -38,8 +38,8 @@ IdentifyModel _$IdentifyModelFromJson(Map<String, dynamic> json) {
       return NotificationsOn.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'IdentifyModel',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'runtimeType', 'IdentifyModel', 'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -136,14 +136,12 @@ mixin _$IdentifyModel {
 
 /// @nodoc
 abstract class $IdentifyModelCopyWith<$Res> {
-  factory $IdentifyModelCopyWith(
-          IdentifyModel value, $Res Function(IdentifyModel) then) =
+  factory $IdentifyModelCopyWith(IdentifyModel value, $Res Function(IdentifyModel) then) =
       _$IdentifyModelCopyWithImpl<$Res, IdentifyModel>;
 }
 
 /// @nodoc
-class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel>
-    implements $IdentifyModelCopyWith<$Res> {
+class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel> implements $IdentifyModelCopyWith<$Res> {
   _$IdentifyModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -154,20 +152,16 @@ class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel>
 
 /// @nodoc
 abstract class _$$CardTapImplCopyWith<$Res> {
-  factory _$$CardTapImplCopyWith(
-          _$CardTapImpl value, $Res Function(_$CardTapImpl) then) =
+  factory _$$CardTapImplCopyWith(_$CardTapImpl value, $Res Function(_$CardTapImpl) then) =
       __$$CardTapImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String cardTap});
 }
 
 /// @nodoc
-class __$$CardTapImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$CardTapImpl>
+class __$$CardTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardTapImpl>
     implements _$$CardTapImplCopyWith<$Res> {
-  __$$CardTapImplCopyWithImpl(
-      _$CardTapImpl _value, $Res Function(_$CardTapImpl) _then)
-      : super(_value, _then);
+  __$$CardTapImplCopyWithImpl(_$CardTapImpl _value, $Res Function(_$CardTapImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -186,11 +180,9 @@ class __$$CardTapImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
-  const _$CardTapImpl({this.cardTap = 'true', final String? $type})
-      : $type = $type ?? 'cardTap';
+  const _$CardTapImpl({this.cardTap = 'true', final String? $type}) : $type = $type ?? 'cardTap';
 
-  factory _$CardTapImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CardTapImplFromJson(json);
+  factory _$CardTapImpl.fromJson(Map<String, dynamic> json) => _$$CardTapImplFromJson(json);
 
   @override
   @JsonKey()
@@ -227,8 +219,7 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
-      __$$CardTapImplCopyWithImpl<_$CardTapImpl>(this, _$identity);
+  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith => __$$CardTapImplCopyWithImpl<_$CardTapImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -355,26 +346,21 @@ abstract class CardTap implements IdentifyModel {
 
   String get cardTap;
   @JsonKey(ignore: true)
-  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarTapImplCopyWith<$Res> {
-  factory _$$BarTapImplCopyWith(
-          _$BarTapImpl value, $Res Function(_$BarTapImpl) then) =
+  factory _$$BarTapImplCopyWith(_$BarTapImpl value, $Res Function(_$BarTapImpl) then) =
       __$$BarTapImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String barTap});
 }
 
 /// @nodoc
-class __$$BarTapImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$BarTapImpl>
+class __$$BarTapImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarTapImpl>
     implements _$$BarTapImplCopyWith<$Res> {
-  __$$BarTapImplCopyWithImpl(
-      _$BarTapImpl _value, $Res Function(_$BarTapImpl) _then)
-      : super(_value, _then);
+  __$$BarTapImplCopyWithImpl(_$BarTapImpl _value, $Res Function(_$BarTapImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -393,11 +379,9 @@ class __$$BarTapImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
-  const _$BarTapImpl({this.barTap = 'true', final String? $type})
-      : $type = $type ?? 'barTap';
+  const _$BarTapImpl({this.barTap = 'true', final String? $type}) : $type = $type ?? 'barTap';
 
-  factory _$BarTapImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BarTapImplFromJson(json);
+  factory _$BarTapImpl.fromJson(Map<String, dynamic> json) => _$$BarTapImplFromJson(json);
 
   @override
   @JsonKey()
@@ -434,8 +418,7 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
-      __$$BarTapImplCopyWithImpl<_$BarTapImpl>(this, _$identity);
+  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith => __$$BarTapImplCopyWithImpl<_$BarTapImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -562,26 +545,21 @@ abstract class BarTap implements IdentifyModel {
 
   String get barTap;
   @JsonKey(ignore: true)
-  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$CardManualImplCopyWith<$Res> {
-  factory _$$CardManualImplCopyWith(
-          _$CardManualImpl value, $Res Function(_$CardManualImpl) then) =
+  factory _$$CardManualImplCopyWith(_$CardManualImpl value, $Res Function(_$CardManualImpl) then) =
       __$$CardManualImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String cardManual});
 }
 
 /// @nodoc
-class __$$CardManualImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$CardManualImpl>
+class __$$CardManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardManualImpl>
     implements _$$CardManualImplCopyWith<$Res> {
-  __$$CardManualImplCopyWithImpl(
-      _$CardManualImpl _value, $Res Function(_$CardManualImpl) _then)
-      : super(_value, _then);
+  __$$CardManualImplCopyWithImpl(_$CardManualImpl _value, $Res Function(_$CardManualImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -600,11 +578,9 @@ class __$$CardManualImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
-  const _$CardManualImpl({this.cardManual = 'true', final String? $type})
-      : $type = $type ?? 'cardManual';
+  const _$CardManualImpl({this.cardManual = 'true', final String? $type}) : $type = $type ?? 'cardManual';
 
-  factory _$CardManualImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CardManualImplFromJson(json);
+  factory _$CardManualImpl.fromJson(Map<String, dynamic> json) => _$$CardManualImplFromJson(json);
 
   @override
   @JsonKey()
@@ -631,8 +607,7 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardManualImpl &&
-            (identical(other.cardManual, cardManual) ||
-                other.cardManual == cardManual));
+            (identical(other.cardManual, cardManual) || other.cardManual == cardManual));
   }
 
   @JsonKey(ignore: true)
@@ -766,31 +741,25 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
 abstract class CardManual implements IdentifyModel {
   const factory CardManual({final String cardManual}) = _$CardManualImpl;
 
-  factory CardManual.fromJson(Map<String, dynamic> json) =
-      _$CardManualImpl.fromJson;
+  factory CardManual.fromJson(Map<String, dynamic> json) = _$CardManualImpl.fromJson;
 
   String get cardManual;
   @JsonKey(ignore: true)
-  _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarManualImplCopyWith<$Res> {
-  factory _$$BarManualImplCopyWith(
-          _$BarManualImpl value, $Res Function(_$BarManualImpl) then) =
+  factory _$$BarManualImplCopyWith(_$BarManualImpl value, $Res Function(_$BarManualImpl) then) =
       __$$BarManualImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String barManual});
 }
 
 /// @nodoc
-class __$$BarManualImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$BarManualImpl>
+class __$$BarManualImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarManualImpl>
     implements _$$BarManualImplCopyWith<$Res> {
-  __$$BarManualImplCopyWithImpl(
-      _$BarManualImpl _value, $Res Function(_$BarManualImpl) _then)
-      : super(_value, _then);
+  __$$BarManualImplCopyWithImpl(_$BarManualImpl _value, $Res Function(_$BarManualImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -809,11 +778,9 @@ class __$$BarManualImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
-  const _$BarManualImpl({this.barManual = 'true', final String? $type})
-      : $type = $type ?? 'barManual';
+  const _$BarManualImpl({this.barManual = 'true', final String? $type}) : $type = $type ?? 'barManual';
 
-  factory _$BarManualImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BarManualImplFromJson(json);
+  factory _$BarManualImpl.fromJson(Map<String, dynamic> json) => _$$BarManualImplFromJson(json);
 
   @override
   @JsonKey()
@@ -840,8 +807,7 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarManualImpl &&
-            (identical(other.barManual, barManual) ||
-                other.barManual == barManual));
+            (identical(other.barManual, barManual) || other.barManual == barManual));
   }
 
   @JsonKey(ignore: true)
@@ -975,31 +941,25 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
 abstract class BarManual implements IdentifyModel {
   const factory BarManual({final String barManual}) = _$BarManualImpl;
 
-  factory BarManual.fromJson(Map<String, dynamic> json) =
-      _$BarManualImpl.fromJson;
+  factory BarManual.fromJson(Map<String, dynamic> json) = _$BarManualImpl.fromJson;
 
   String get barManual;
   @JsonKey(ignore: true)
-  _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TrackerImplCopyWith<$Res> {
-  factory _$$TrackerImplCopyWith(
-          _$TrackerImpl value, $Res Function(_$TrackerImpl) then) =
+  factory _$$TrackerImplCopyWith(_$TrackerImpl value, $Res Function(_$TrackerImpl) then) =
       __$$TrackerImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String tracker});
 }
 
 /// @nodoc
-class __$$TrackerImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$TrackerImpl>
+class __$$TrackerImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$TrackerImpl>
     implements _$$TrackerImplCopyWith<$Res> {
-  __$$TrackerImplCopyWithImpl(
-      _$TrackerImpl _value, $Res Function(_$TrackerImpl) _then)
-      : super(_value, _then);
+  __$$TrackerImplCopyWithImpl(_$TrackerImpl _value, $Res Function(_$TrackerImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1018,11 +978,9 @@ class __$$TrackerImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
-  const _$TrackerImpl({this.tracker = 'true', final String? $type})
-      : $type = $type ?? 'tracker';
+  const _$TrackerImpl({this.tracker = 'true', final String? $type}) : $type = $type ?? 'tracker';
 
-  factory _$TrackerImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TrackerImplFromJson(json);
+  factory _$TrackerImpl.fromJson(Map<String, dynamic> json) => _$$TrackerImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1059,8 +1017,7 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
-      __$$TrackerImplCopyWithImpl<_$TrackerImpl>(this, _$identity);
+  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith => __$$TrackerImplCopyWithImpl<_$TrackerImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1187,26 +1144,21 @@ abstract class Tracker implements IdentifyModel {
 
   String get tracker;
   @JsonKey(ignore: true)
-  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$CardHolderImplCopyWith<$Res> {
-  factory _$$CardHolderImplCopyWith(
-          _$CardHolderImpl value, $Res Function(_$CardHolderImpl) then) =
+  factory _$$CardHolderImplCopyWith(_$CardHolderImpl value, $Res Function(_$CardHolderImpl) then) =
       __$$CardHolderImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String cardHolder});
 }
 
 /// @nodoc
-class __$$CardHolderImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$CardHolderImpl>
+class __$$CardHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$CardHolderImpl>
     implements _$$CardHolderImplCopyWith<$Res> {
-  __$$CardHolderImplCopyWithImpl(
-      _$CardHolderImpl _value, $Res Function(_$CardHolderImpl) _then)
-      : super(_value, _then);
+  __$$CardHolderImplCopyWithImpl(_$CardHolderImpl _value, $Res Function(_$CardHolderImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1225,11 +1177,9 @@ class __$$CardHolderImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
-  const _$CardHolderImpl({this.cardHolder = 'true', final String? $type})
-      : $type = $type ?? 'cardHolder';
+  const _$CardHolderImpl({this.cardHolder = 'true', final String? $type}) : $type = $type ?? 'cardHolder';
 
-  factory _$CardHolderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CardHolderImplFromJson(json);
+  factory _$CardHolderImpl.fromJson(Map<String, dynamic> json) => _$$CardHolderImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1256,8 +1206,7 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardHolderImpl &&
-            (identical(other.cardHolder, cardHolder) ||
-                other.cardHolder == cardHolder));
+            (identical(other.cardHolder, cardHolder) || other.cardHolder == cardHolder));
   }
 
   @JsonKey(ignore: true)
@@ -1391,31 +1340,25 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
 abstract class CardHolder implements IdentifyModel {
   const factory CardHolder({final String cardHolder}) = _$CardHolderImpl;
 
-  factory CardHolder.fromJson(Map<String, dynamic> json) =
-      _$CardHolderImpl.fromJson;
+  factory CardHolder.fromJson(Map<String, dynamic> json) = _$CardHolderImpl.fromJson;
 
   String get cardHolder;
   @JsonKey(ignore: true)
-  _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$BarHolderImplCopyWith<$Res> {
-  factory _$$BarHolderImplCopyWith(
-          _$BarHolderImpl value, $Res Function(_$BarHolderImpl) then) =
+  factory _$$BarHolderImplCopyWith(_$BarHolderImpl value, $Res Function(_$BarHolderImpl) then) =
       __$$BarHolderImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String barHolder});
 }
 
 /// @nodoc
-class __$$BarHolderImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$BarHolderImpl>
+class __$$BarHolderImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$BarHolderImpl>
     implements _$$BarHolderImplCopyWith<$Res> {
-  __$$BarHolderImplCopyWithImpl(
-      _$BarHolderImpl _value, $Res Function(_$BarHolderImpl) _then)
-      : super(_value, _then);
+  __$$BarHolderImplCopyWithImpl(_$BarHolderImpl _value, $Res Function(_$BarHolderImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1434,11 +1377,9 @@ class __$$BarHolderImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
-  const _$BarHolderImpl({this.barHolder = 'true', final String? $type})
-      : $type = $type ?? 'barHolder';
+  const _$BarHolderImpl({this.barHolder = 'true', final String? $type}) : $type = $type ?? 'barHolder';
 
-  factory _$BarHolderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BarHolderImplFromJson(json);
+  factory _$BarHolderImpl.fromJson(Map<String, dynamic> json) => _$$BarHolderImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1465,8 +1406,7 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BarHolderImpl &&
-            (identical(other.barHolder, barHolder) ||
-                other.barHolder == barHolder));
+            (identical(other.barHolder, barHolder) || other.barHolder == barHolder));
   }
 
   @JsonKey(ignore: true)
@@ -1600,30 +1540,25 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
 abstract class BarHolder implements IdentifyModel {
   const factory BarHolder({final String barHolder}) = _$BarHolderImpl;
 
-  factory BarHolder.fromJson(Map<String, dynamic> json) =
-      _$BarHolderImpl.fromJson;
+  factory BarHolder.fromJson(Map<String, dynamic> json) = _$BarHolderImpl.fromJson;
 
   String get barHolder;
   @JsonKey(ignore: true)
-  _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FraudActivityImplCopyWith<$Res> {
-  factory _$$FraudActivityImplCopyWith(
-          _$FraudActivityImpl value, $Res Function(_$FraudActivityImpl) then) =
+  factory _$$FraudActivityImplCopyWith(_$FraudActivityImpl value, $Res Function(_$FraudActivityImpl) then) =
       __$$FraudActivityImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String fraudActivity});
 }
 
 /// @nodoc
-class __$$FraudActivityImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$FraudActivityImpl>
+class __$$FraudActivityImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$FraudActivityImpl>
     implements _$$FraudActivityImplCopyWith<$Res> {
-  __$$FraudActivityImplCopyWithImpl(
-      _$FraudActivityImpl _value, $Res Function(_$FraudActivityImpl) _then)
+  __$$FraudActivityImplCopyWithImpl(_$FraudActivityImpl _value, $Res Function(_$FraudActivityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1642,14 +1577,10 @@ class __$$FraudActivityImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FraudActivityImpl
-    with DiagnosticableTreeMixin
-    implements FraudActivity {
-  const _$FraudActivityImpl({this.fraudActivity = 'true', final String? $type})
-      : $type = $type ?? 'fraudActivity';
+class _$FraudActivityImpl with DiagnosticableTreeMixin implements FraudActivity {
+  const _$FraudActivityImpl({this.fraudActivity = 'true', final String? $type}) : $type = $type ?? 'fraudActivity';
 
-  factory _$FraudActivityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FraudActivityImplFromJson(json);
+  factory _$FraudActivityImpl.fromJson(Map<String, dynamic> json) => _$$FraudActivityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1676,8 +1607,7 @@ class _$FraudActivityImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FraudActivityImpl &&
-            (identical(other.fraudActivity, fraudActivity) ||
-                other.fraudActivity == fraudActivity));
+            (identical(other.fraudActivity, fraudActivity) || other.fraudActivity == fraudActivity));
   }
 
   @JsonKey(ignore: true)
@@ -1809,33 +1739,27 @@ class _$FraudActivityImpl
 }
 
 abstract class FraudActivity implements IdentifyModel {
-  const factory FraudActivity({final String fraudActivity}) =
-      _$FraudActivityImpl;
+  const factory FraudActivity({final String fraudActivity}) = _$FraudActivityImpl;
 
-  factory FraudActivity.fromJson(Map<String, dynamic> json) =
-      _$FraudActivityImpl.fromJson;
+  factory FraudActivity.fromJson(Map<String, dynamic> json) = _$FraudActivityImpl.fromJson;
 
   String get fraudActivity;
   @JsonKey(ignore: true)
-  _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ActivationFailedImplCopyWith<$Res> {
-  factory _$$ActivationFailedImplCopyWith(_$ActivationFailedImpl value,
-          $Res Function(_$ActivationFailedImpl) then) =
+  factory _$$ActivationFailedImplCopyWith(_$ActivationFailedImpl value, $Res Function(_$ActivationFailedImpl) then) =
       __$$ActivationFailedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String activationFailed});
 }
 
 /// @nodoc
-class __$$ActivationFailedImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$ActivationFailedImpl>
+class __$$ActivationFailedImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$ActivationFailedImpl>
     implements _$$ActivationFailedImplCopyWith<$Res> {
-  __$$ActivationFailedImplCopyWithImpl(_$ActivationFailedImpl _value,
-      $Res Function(_$ActivationFailedImpl) _then)
+  __$$ActivationFailedImplCopyWithImpl(_$ActivationFailedImpl _value, $Res Function(_$ActivationFailedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1854,15 +1778,11 @@ class __$$ActivationFailedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ActivationFailedImpl
-    with DiagnosticableTreeMixin
-    implements ActivationFailed {
-  const _$ActivationFailedImpl(
-      {this.activationFailed = 'true', final String? $type})
+class _$ActivationFailedImpl with DiagnosticableTreeMixin implements ActivationFailed {
+  const _$ActivationFailedImpl({this.activationFailed = 'true', final String? $type})
       : $type = $type ?? 'activationFailed';
 
-  factory _$ActivationFailedImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ActivationFailedImplFromJson(json);
+  factory _$ActivationFailedImpl.fromJson(Map<String, dynamic> json) => _$$ActivationFailedImplFromJson(json);
 
   @override
   @JsonKey()
@@ -1889,8 +1809,7 @@ class _$ActivationFailedImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ActivationFailedImpl &&
-            (identical(other.activationFailed, activationFailed) ||
-                other.activationFailed == activationFailed));
+            (identical(other.activationFailed, activationFailed) || other.activationFailed == activationFailed));
   }
 
   @JsonKey(ignore: true)
@@ -1901,8 +1820,7 @@ class _$ActivationFailedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
-      __$$ActivationFailedImplCopyWithImpl<_$ActivationFailedImpl>(
-          this, _$identity);
+      __$$ActivationFailedImplCopyWithImpl<_$ActivationFailedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2023,33 +1941,27 @@ class _$ActivationFailedImpl
 }
 
 abstract class ActivationFailed implements IdentifyModel {
-  const factory ActivationFailed({final String activationFailed}) =
-      _$ActivationFailedImpl;
+  const factory ActivationFailed({final String activationFailed}) = _$ActivationFailedImpl;
 
-  factory ActivationFailed.fromJson(Map<String, dynamic> json) =
-      _$ActivationFailedImpl.fromJson;
+  factory ActivationFailed.fromJson(Map<String, dynamic> json) = _$ActivationFailedImpl.fromJson;
 
   String get activationFailed;
   @JsonKey(ignore: true)
-  _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$NotificationsOnImplCopyWith<$Res> {
-  factory _$$NotificationsOnImplCopyWith(_$NotificationsOnImpl value,
-          $Res Function(_$NotificationsOnImpl) then) =
+  factory _$$NotificationsOnImplCopyWith(_$NotificationsOnImpl value, $Res Function(_$NotificationsOnImpl) then) =
       __$$NotificationsOnImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String notificationOn});
 }
 
 /// @nodoc
-class __$$NotificationsOnImplCopyWithImpl<$Res>
-    extends _$IdentifyModelCopyWithImpl<$Res, _$NotificationsOnImpl>
+class __$$NotificationsOnImplCopyWithImpl<$Res> extends _$IdentifyModelCopyWithImpl<$Res, _$NotificationsOnImpl>
     implements _$$NotificationsOnImplCopyWith<$Res> {
-  __$$NotificationsOnImplCopyWithImpl(
-      _$NotificationsOnImpl _value, $Res Function(_$NotificationsOnImpl) _then)
+  __$$NotificationsOnImplCopyWithImpl(_$NotificationsOnImpl _value, $Res Function(_$NotificationsOnImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2068,15 +1980,10 @@ class __$$NotificationsOnImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$NotificationsOnImpl
-    with DiagnosticableTreeMixin
-    implements NotificationsOn {
-  const _$NotificationsOnImpl(
-      {this.notificationOn = 'true', final String? $type})
-      : $type = $type ?? 'notificationsOn';
+class _$NotificationsOnImpl with DiagnosticableTreeMixin implements NotificationsOn {
+  const _$NotificationsOnImpl({this.notificationOn = 'true', final String? $type}) : $type = $type ?? 'notificationsOn';
 
-  factory _$NotificationsOnImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NotificationsOnImplFromJson(json);
+  factory _$NotificationsOnImpl.fromJson(Map<String, dynamic> json) => _$$NotificationsOnImplFromJson(json);
 
   @override
   @JsonKey()
@@ -2103,8 +2010,7 @@ class _$NotificationsOnImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationsOnImpl &&
-            (identical(other.notificationOn, notificationOn) ||
-                other.notificationOn == notificationOn));
+            (identical(other.notificationOn, notificationOn) || other.notificationOn == notificationOn));
   }
 
   @JsonKey(ignore: true)
@@ -2115,8 +2021,7 @@ class _$NotificationsOnImpl
   @override
   @pragma('vm:prefer-inline')
   _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
-      __$$NotificationsOnImplCopyWithImpl<_$NotificationsOnImpl>(
-          this, _$identity);
+      __$$NotificationsOnImplCopyWithImpl<_$NotificationsOnImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2237,14 +2142,11 @@ class _$NotificationsOnImpl
 }
 
 abstract class NotificationsOn implements IdentifyModel {
-  const factory NotificationsOn({final String notificationOn}) =
-      _$NotificationsOnImpl;
+  const factory NotificationsOn({final String notificationOn}) = _$NotificationsOnImpl;
 
-  factory NotificationsOn.fromJson(Map<String, dynamic> json) =
-      _$NotificationsOnImpl.fromJson;
+  factory NotificationsOn.fromJson(Map<String, dynamic> json) = _$NotificationsOnImpl.fromJson;
 
   String get notificationOn;
   @JsonKey(ignore: true)
-  _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith => throw _privateConstructorUsedError;
 }

@@ -12,20 +12,17 @@ mixin _$IpStore on _IpStore, Store {
   Computed<bool>? _$rampCountryStatusComputed;
 
   @override
-  bool get rampCountryStatus => (_$rampCountryStatusComputed ??= Computed<bool>(
-          () => super.rampCountryStatus,
-          name: '_IpStore.rampCountryStatus'))
+  bool get rampCountryStatus => (_$rampCountryStatusComputed ??=
+          Computed<bool>(() => super.rampCountryStatus, name: '_IpStore.rampCountryStatus'))
       .value;
   Computed<bool>? _$rampRegionStatusComputed;
 
   @override
-  bool get rampRegionStatus => (_$rampRegionStatusComputed ??= Computed<bool>(
-          () => super.rampRegionStatus,
-          name: '_IpStore.rampRegionStatus'))
-      .value;
+  bool get rampRegionStatus =>
+      (_$rampRegionStatusComputed ??= Computed<bool>(() => super.rampRegionStatus, name: '_IpStore.rampRegionStatus'))
+          .value;
 
-  late final _$myIpAddressAtom =
-      Atom(name: '_IpStore.myIpAddress', context: context);
+  late final _$myIpAddressAtom = Atom(name: '_IpStore.myIpAddress', context: context);
 
   @override
   String get myIpAddress {
@@ -40,8 +37,7 @@ mixin _$IpStore on _IpStore, Store {
     });
   }
 
-  late final _$countryStatusAtom =
-      Atom(name: '_IpStore.countryStatus', context: context);
+  late final _$countryStatusAtom = Atom(name: '_IpStore.countryStatus', context: context);
 
   @override
   bool get countryStatus {
@@ -56,8 +52,7 @@ mixin _$IpStore on _IpStore, Store {
     });
   }
 
-  late final _$regionStatusAtom =
-      Atom(name: '_IpStore.regionStatus', context: context);
+  late final _$regionStatusAtom = Atom(name: '_IpStore.regionStatus', context: context);
 
   @override
   bool get regionStatus {
@@ -72,50 +67,42 @@ mixin _$IpStore on _IpStore, Store {
     });
   }
 
-  late final _$getIpAsyncAction =
-      AsyncAction('_IpStore.getIp', context: context);
+  late final _$getIpAsyncAction = AsyncAction('_IpStore.getIp', context: context);
 
   @override
   Future<void> getIp() {
     return _$getIpAsyncAction.run(() => super.getIp());
   }
 
-  late final _$saveCountryStatusAsyncAction =
-      AsyncAction('_IpStore.saveCountryStatus', context: context);
+  late final _$saveCountryStatusAsyncAction = AsyncAction('_IpStore.saveCountryStatus', context: context);
 
   @override
   Future<void> saveCountryStatus({required bool value}) {
-    return _$saveCountryStatusAsyncAction
-        .run(() => super.saveCountryStatus(value: value));
+    return _$saveCountryStatusAsyncAction.run(() => super.saveCountryStatus(value: value));
   }
 
-  late final _$getCountryStatusAsyncAction =
-      AsyncAction('_IpStore.getCountryStatus', context: context);
+  late final _$getCountryStatusAsyncAction = AsyncAction('_IpStore.getCountryStatus', context: context);
 
   @override
   Future<bool> getCountryStatus() {
     return _$getCountryStatusAsyncAction.run(() => super.getCountryStatus());
   }
 
-  late final _$saveRegionStatusAsyncAction =
-      AsyncAction('_IpStore.saveRegionStatus', context: context);
+  late final _$saveRegionStatusAsyncAction = AsyncAction('_IpStore.saveRegionStatus', context: context);
 
   @override
   Future<void> saveRegionStatus({required bool value}) {
-    return _$saveRegionStatusAsyncAction
-        .run(() => super.saveRegionStatus(value: value));
+    return _$saveRegionStatusAsyncAction.run(() => super.saveRegionStatus(value: value));
   }
 
-  late final _$getRegionStatusAsyncAction =
-      AsyncAction('_IpStore.getRegionStatus', context: context);
+  late final _$getRegionStatusAsyncAction = AsyncAction('_IpStore.getRegionStatus', context: context);
 
   @override
   Future<bool> getRegionStatus() {
     return _$getRegionStatusAsyncAction.run(() => super.getRegionStatus());
   }
 
-  late final _$updateStatusAsyncAction =
-      AsyncAction('_IpStore.updateStatus', context: context);
+  late final _$updateStatusAsyncAction = AsyncAction('_IpStore.updateStatus', context: context);
 
   @override
   Future<void> updateStatus() {

@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/ramp_countries.dart';
+import '../../http/interceptors/api_keys.dart';
 
 part 'ip_store.g.dart';
 
@@ -58,7 +59,7 @@ abstract class _IpStore with Store {
 
   Future<void> patchTransactions({required String address}) async {
     final headers = {
-      'x-api-key': '7MupJP2wamYKNOhwk4niDhs2AppPTesddVGRHxpEKLU=',
+      'x-api-key': coinStatsApiKey,
       'Content-Type': 'application/json',
     };
 

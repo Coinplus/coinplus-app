@@ -20,6 +20,7 @@ import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
+import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/ip_store/ip_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
@@ -52,13 +53,15 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
-  IpStore get _ipStore => GetIt.instance<IpStore>();
+  IpStore get _ipStore => GetIt.I<IpStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   RampService get _rampService => GetIt.I<RampService>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   final _nfcStore = NfcStore();
   final carouselController = CarouselController();
@@ -109,8 +112,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                   if (bar != null) {
                     widget.onCardSelected(bar as AbstractCard);
                   }
+                  _historyPageStore.setBarHistoryIndex(length - 1);
                   _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 } else {
+                  carouselController.animateToPage(0);
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
                   _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
@@ -879,6 +884,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 await _settingsState.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
                   _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  await _historyPageStore.setCardHistoryIndex(index);
                 }
               },
               enlargeFactor: 0.35,

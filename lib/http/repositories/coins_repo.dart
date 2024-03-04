@@ -12,7 +12,7 @@ class _Paths {
   static const balance = '/api/address/{address}';
   static const allCoins = '/coins';
   static const marketCap = '/markets';
-  static const transactions = '/wallet/transactions?address={address}&connectionId=bitcoin';
+  static const transactions = '/wallet/transactions?page={page}&address={address}&connectionId=bitcoin';
 }
 
 @RestApi()
@@ -41,5 +41,6 @@ abstract class CoinsClient {
   @GET(_Paths.transactions)
   Future<TransactionModel> getTransactions({
     @Path() required String address,
+    @Path() required int page,
   });
 }

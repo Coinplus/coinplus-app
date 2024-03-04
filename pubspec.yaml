@@ -89,8 +89,8 @@ dependencies:
   blockchain_utils: ^1.6.0
   cached_network_image: ^3.3.1
   dio_interceptor_plus: ^0.0.2
-  dropdown_button2: ^2.3.9
-  animated_custom_dropdown: ^3.0.0
+  sensors_plus: ^4.0.2
+  spoiler_widget: ^1.0.1
 
 
 dev_dependencies:
@@ -181,6 +181,7 @@ flutter:
     - assets/images/bar/
     - assets/images/card/
     - assets/lottie_animations/
+    - assets/lottie_animations/animated_logo.json
     - assets/translations/en-US.json
 
 

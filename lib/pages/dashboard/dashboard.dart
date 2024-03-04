@@ -10,7 +10,6 @@ import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -343,7 +342,7 @@ class DashboardPage extends HookWidget {
                           ),
                           BottomNavigationBarItem(
                             icon: Padding(
-                              padding: const EdgeInsets.only(right: 30, top: 5),
+                              padding: const EdgeInsets.only(right: 30, top: 8),
                               child: Assets.icons.market.image(
                                 height: 23,
                                 color: _navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
@@ -353,7 +352,7 @@ class DashboardPage extends HookWidget {
                           ),
                           BottomNavigationBarItem(
                             icon: Padding(
-                              padding: const EdgeInsets.only(left: 30, top: 7, bottom: 2),
+                              padding: const EdgeInsets.only(left: 30, top: 5),
                               child: Assets.icons.history.image(
                                 height: 28,
                                 color: _navBarState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
@@ -519,6 +518,8 @@ class DashboardPage extends HookWidget {
                 currentCard: currentCard,
                 isModalOpened: isModalOpened,
                 ipStore: _ipStore,
+                pageController: _pageController,
+                navBarState: _navBarState,
               ).then((value) => isModalOpened.value = false);
               isModalOpened.value = false;
               await recordAmplitudeEvent(
@@ -610,6 +611,8 @@ class DashboardPage extends HookWidget {
     required ObjectRef<({AbstractCard? card, int index})> currentCard,
     required ValueNotifier<bool> isModalOpened,
     required IpStore ipStore,
+    required PageController pageController,
+    required NavBarState navBarState,
   }) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -1495,21 +1498,9 @@ class DashboardPage extends HookWidget {
                     ),
                   );
                   await router.pop();
-                  await FlutterWebBrowser.openWebPage(
-                    url: 'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
-                    customTabsOptions: const CustomTabsOptions(
-                      shareState: CustomTabsShareState.on,
-                      instantAppsEnabled: true,
-                      showTitle: true,
-                      urlBarHidingEnabled: true,
-                    ),
-                    safariVCOptions: const SafariViewControllerOptions(
-                      barCollapsingEnabled: true,
-                      modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                      modalPresentationCapturesStatusBarAppearance: true,
-                    ),
-                  );
+                  await Future.delayed(const Duration(milliseconds: 400));
+                  await navBarState.updateIndex(2);
+                  pageController.jumpToPage(2);
                 },
                 child: Row(
                   children: [

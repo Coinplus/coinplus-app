@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +21,9 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../services/ramp_service.dart';
+import '../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../store/balance_store/balance_store.dart';
+import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/ip_store/ip_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
@@ -52,13 +56,18 @@ class CardList extends StatefulWidget {
 class _CardListState extends State<CardList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<CardList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
+  SettingsState get _settingsState => GetIt.I<SettingsState>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
-  IpStore get _ipStore => GetIt.instance<IpStore>();
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
+  IpStore get _ipStore => GetIt.I<IpStore>();
+
   RampService get _rampService => GetIt.I<RampService>();
 
   final _nfcState = NfcStore();
@@ -111,11 +120,12 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                   if (card != null) {
                     widget.onCardSelected(card as AbstractCard);
                   }
-                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _historyPageStore.setCardHistoryIndex(length - 1);
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 } else {
-                  _settingsState.setCardCurrentIndex(length);
+                  carouselController.animateToPage(0);
                   widget.onCardSelected(null);
-                  //configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
             );
@@ -599,64 +609,70 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       ? context.height * 0.035
                                                       : context.height * 0.043,
                                                 ),
-                                                child: Container(
-                                                  height: 60,
-                                                  alignment: Alignment.center,
-                                                  padding: const EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                    top: 12,
-                                                    bottom: 12,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(6),
-                                                    color: Colors.black.withOpacity(
-                                                      0.3,
-                                                    ),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      const Row(
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(6),
+                                                  child: BackdropFilter(
+                                                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                                                    child: Container(
+                                                      height: 60,
+                                                      alignment: Alignment.center,
+                                                      padding: const EdgeInsets.only(
+                                                        left: 8,
+                                                        right: 8,
+                                                        top: 12,
+                                                        bottom: 12,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(6),
+                                                        color: Colors.black.withOpacity(
+                                                          0.3,
+                                                        ),
+                                                      ),
+                                                      child: Column(
                                                         children: [
-                                                          Text(
-                                                            'Address',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: Colors.white,
-                                                            ),
+                                                          const Row(
+                                                            children: [
+                                                              Text(
+                                                                'Address',
+                                                                style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Observer(
+                                                            builder: (context) {
+                                                              if (_balanceStore.loadings[card.address] ?? false) {
+                                                                return Text(
+                                                                  visibleAddress,
+                                                                  overflow: TextOverflow.ellipsis,
+                                                                  softWrap: true,
+                                                                  style: const TextStyle(
+                                                                    fontFamily: FontFamily.redHatMedium,
+                                                                    fontWeight: FontWeight.w700,
+                                                                    color: Colors.white,
+                                                                    fontSize: 12,
+                                                                  ),
+                                                                ).expandedHorizontally();
+                                                              }
+                                                              return Text(
+                                                                visibleAddress,
+                                                                overflow: TextOverflow.ellipsis,
+                                                                softWrap: true,
+                                                                style: const TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  fontWeight: FontWeight.w700,
+                                                                  color: Colors.white,
+                                                                  fontSize: 12,
+                                                                ),
+                                                              ).expandedHorizontally();
+                                                            },
                                                           ),
                                                         ],
                                                       ),
-                                                      Observer(
-                                                        builder: (context) {
-                                                          if (_balanceStore.loadings[card.address] ?? false) {
-                                                            return Text(
-                                                              visibleAddress,
-                                                              overflow: TextOverflow.ellipsis,
-                                                              softWrap: true,
-                                                              style: const TextStyle(
-                                                                fontFamily: FontFamily.redHatMedium,
-                                                                fontWeight: FontWeight.w700,
-                                                                color: Colors.white,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ).expandedHorizontally();
-                                                          }
-                                                          return Text(
-                                                            visibleAddress,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            softWrap: true,
-                                                            style: const TextStyle(
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              fontWeight: FontWeight.w700,
-                                                              color: Colors.white,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ).expandedHorizontally();
-                                                        },
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -693,78 +709,104 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                     ? context.height * 0.035
                                                                     : context.height * 0.043,
                                                               ),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(6),
-                                                                  color: Colors.black.withOpacity(
-                                                                    0.3,
-                                                                  ),
-                                                                ),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.all(
-                                                                        8,
-                                                                      ),
-                                                                      child: Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Balance',
-                                                                            style: TextStyle(
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              color: Colors.white,
-                                                                              fontSize: 12,
-                                                                            ),
-                                                                          ),
-                                                                          Observer(
-                                                                            builder: (context) {
-                                                                              final data = _marketPageStore
-                                                                                  .singleCoin?.result.first;
-
-                                                                              final myFormat =
-                                                                                  NumberFormat.decimalPatternDigits(
-                                                                                locale: 'en_us',
-                                                                                decimalDigits: 2,
-                                                                              );
-                                                                              if (data == null) {
-                                                                                return const Padding(
-                                                                                  padding: EdgeInsets.symmetric(
-                                                                                    vertical: 4,
-                                                                                    horizontal: 2,
-                                                                                  ),
-                                                                                  child: Row(
-                                                                                    children: [
-                                                                                      SizedBox(
-                                                                                        height: 10,
-                                                                                        width: 10,
-                                                                                        child:
-                                                                                            CircularProgressIndicator(
-                                                                                          strokeWidth: 2,
-                                                                                          color: Colors.white,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                              return Text(
-                                                                                '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
-                                                                                style: const TextStyle(
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                  fontWeight: FontWeight.w700,
-                                                                                  color: Colors.white,
-                                                                                  fontSize: 20,
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                          ),
-                                                                        ],
+                                                              child: ClipRRect(
+                                                                borderRadius: BorderRadius.circular(6),
+                                                                child: BackdropFilter(
+                                                                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                                                                  child: Container(
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(6),
+                                                                      color: Colors.black.withOpacity(
+                                                                        0.3,
                                                                       ),
                                                                     ),
-                                                                    Assets.icons.alternative.image(height: 50),
-                                                                  ],
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding: const EdgeInsets.all(
+                                                                            8,
+                                                                          ),
+                                                                          child: Column(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Balance',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  color: Colors.white,
+                                                                                  fontSize: 12,
+                                                                                ),
+                                                                              ),
+                                                                              Observer(
+                                                                                builder: (context) {
+                                                                                  final data = _marketPageStore
+                                                                                      .singleCoin?.result.first;
+
+                                                                                  final myFormat =
+                                                                                      NumberFormat.decimalPatternDigits(
+                                                                                    locale: 'en_us',
+                                                                                    decimalDigits: 2,
+                                                                                  );
+                                                                                  if (data == null) {
+                                                                                    return const Padding(
+                                                                                      padding: EdgeInsets.symmetric(
+                                                                                        vertical: 4,
+                                                                                        horizontal: 2,
+                                                                                      ),
+                                                                                      child: Row(
+                                                                                        children: [
+                                                                                          SizedBox(
+                                                                                            height: 10,
+                                                                                            width: 10,
+                                                                                            child:
+                                                                                                CircularProgressIndicator(
+                                                                                              strokeWidth: 2,
+                                                                                              color: Colors.white,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                  return Observer(
+                                                                                    builder: (_) {
+                                                                                      if (_accelerometerStore
+                                                                                          .hasPerformedAction) {
+                                                                                        return const Text(
+                                                                                          '****',
+                                                                                          style: TextStyle(
+                                                                                            fontFamily:
+                                                                                                FontFamily.redHatMedium,
+                                                                                            fontWeight: FontWeight.w500,
+                                                                                            color: Colors.white,
+                                                                                            fontSize: 20,
+                                                                                          ),
+                                                                                        );
+                                                                                      } else {
+                                                                                        return Text(
+                                                                                          '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                                                          style: const TextStyle(
+                                                                                            fontFamily:
+                                                                                                FontFamily.redHatMedium,
+                                                                                            fontWeight: FontWeight.w700,
+                                                                                            color: Colors.white,
+                                                                                            fontSize: 20,
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Assets.icons.alternative.image(height: 50),
+                                                                      ],
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -964,6 +1006,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                 await _settingsState.setCardCurrentIndex(index);
                 if (index != _balanceStore.cards.length) {
                   _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  await _historyPageStore.setCardHistoryIndex(index);
                 }
               },
               enlargeFactor: 0.35,

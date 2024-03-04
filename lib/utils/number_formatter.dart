@@ -114,6 +114,6 @@ String formatLargeNumber(int number) {
 
   return formattedNumber.replaceFirstMapped(
     RegExp(r'(\d+)([A-Za-z]+)'),
-        (match) => '${match.group(1)} ${match.group(2)}',
+    (match) => '${match.group(1)} ${match.group(2)}',
   );
 }

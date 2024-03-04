@@ -6,44 +6,33 @@ part of 'transaction_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TransactionModelImpl _$$TransactionModelImplFromJson(Map json) =>
-    _$TransactionModelImpl(
+_$TransactionModelImpl _$$TransactionModelImplFromJson(Map json) => _$TransactionModelImpl(
       result: (json['result'] as List<dynamic>)
-          .map((e) =>
-              TransactionItem.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) => TransactionItem.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
+      meta: Meta.fromJson(Map<String, dynamic>.from(json['meta'] as Map)),
     );
 
-Map<String, dynamic> _$$TransactionModelImplToJson(
-        _$TransactionModelImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$TransactionModelImplToJson(_$TransactionModelImpl instance) => <String, dynamic>{
       'result': instance.result.map((e) => e.toJson()).toList(),
+      'meta': instance.meta.toJson(),
     };
 
-_$TransactionItemImpl _$$TransactionItemImplFromJson(Map json) =>
-    _$TransactionItemImpl(
+_$TransactionItemImpl _$$TransactionItemImplFromJson(Map json) => _$TransactionItemImpl(
       type: json['type'] as String?,
       date: json['date'] as String?,
       mainContent: json['mainContent'] == null
           ? null
-          : MainContent.fromJson(
-              Map<String, dynamic>.from(json['mainContent'] as Map)),
-      coinData: json['coinData'] == null
-          ? null
-          : CoinData.fromJson(
-              Map<String, dynamic>.from(json['coinData'] as Map)),
-      profitLoss: json['profitLoss'] == null
-          ? null
-          : ProfitLoss.fromJson(
-              Map<String, dynamic>.from(json['profitLoss'] as Map)),
+          : MainContent.fromJson(Map<String, dynamic>.from(json['mainContent'] as Map)),
+      coinData: json['coinData'] == null ? null : CoinData.fromJson(Map<String, dynamic>.from(json['coinData'] as Map)),
+      profitLoss:
+          json['profitLoss'] == null ? null : ProfitLoss.fromJson(Map<String, dynamic>.from(json['profitLoss'] as Map)),
       transactions: (json['transactions'] as List<dynamic>?)
-          ?.map(
-              (e) => Transaction.fromJson(Map<String, dynamic>.from(e as Map)))
+          ?.map((e) => Transaction.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
     );
 
-Map<String, dynamic> _$$TransactionItemImplToJson(
-    _$TransactionItemImpl instance) {
+Map<String, dynamic> _$$TransactionItemImplToJson(_$TransactionItemImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -57,19 +46,16 @@ Map<String, dynamic> _$$TransactionItemImplToJson(
   writeNotNull('mainContent', instance.mainContent?.toJson());
   writeNotNull('coinData', instance.coinData?.toJson());
   writeNotNull('profitLoss', instance.profitLoss?.toJson());
-  writeNotNull(
-      'transactions', instance.transactions?.map((e) => e.toJson()).toList());
+  writeNotNull('transactions', instance.transactions?.map((e) => e.toJson()).toList());
   return val;
 }
 
 _$MainContentImpl _$$MainContentImplFromJson(Map json) => _$MainContentImpl(
-      coinIcons:
-          (json['coinIcons'] as List<dynamic>).map((e) => e as String).toList(),
+      coinIcons: (json['coinIcons'] as List<dynamic>).map((e) => e as String).toList(),
       coinAssets: json['coinAssets'] as List<dynamic>,
     );
 
-Map<String, dynamic> _$$MainContentImplToJson(_$MainContentImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$MainContentImplToJson(_$MainContentImpl instance) => <String, dynamic>{
       'coinIcons': instance.coinIcons,
       'coinAssets': instance.coinAssets,
     };
@@ -80,8 +66,7 @@ _$CoinDataImpl _$$CoinDataImplFromJson(Map json) => _$CoinDataImpl(
       currentValue: (json['currentValue'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$CoinDataImplToJson(_$CoinDataImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CoinDataImplToJson(_$CoinDataImpl instance) => <String, dynamic>{
       'count': instance.count,
       'symbol': instance.symbol,
       'currentValue': instance.currentValue,
@@ -93,8 +78,7 @@ _$ProfitLossImpl _$$ProfitLossImplFromJson(Map json) => _$ProfitLossImpl(
       currentValue: (json['currentValue'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$ProfitLossImplToJson(_$ProfitLossImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$ProfitLossImplToJson(_$ProfitLossImpl instance) => <String, dynamic>{
       'profit': instance.profit,
       'profitPercent': instance.profitPercent,
       'currentValue': instance.currentValue,
@@ -102,13 +86,10 @@ Map<String, dynamic> _$$ProfitLossImplToJson(_$ProfitLossImpl instance) =>
 
 _$TransactionImpl _$$TransactionImplFromJson(Map json) => _$TransactionImpl(
       action: json['action'] as String,
-      items: (json['items'] as List<dynamic>)
-          .map((e) => Item.fromJson(Map<String, dynamic>.from(e as Map)))
-          .toList(),
+      items: (json['items'] as List<dynamic>).map((e) => Item.fromJson(Map<String, dynamic>.from(e as Map))).toList(),
     );
 
-Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) => <String, dynamic>{
       'action': instance.action,
       'items': instance.items.map((e) => e.toJson()).toList(),
     };
@@ -120,8 +101,7 @@ _$ItemImpl _$$ItemImplFromJson(Map json) => _$ItemImpl(
       coin: Coin.fromJson(Map<String, dynamic>.from(json['coin'] as Map)),
     );
 
-Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) => <String, dynamic>{
       'id': instance.id,
       'count': instance.count,
       'totalWorth': instance.totalWorth,
@@ -134,9 +114,18 @@ _$CoinImpl _$$CoinImplFromJson(Map json) => _$CoinImpl(
       icon: json['icon'] as String,
     );
 
-Map<String, dynamic> _$$CoinImplToJson(_$CoinImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CoinImplToJson(_$CoinImpl instance) => <String, dynamic>{
       'name': instance.name,
       'symbol': instance.symbol,
       'icon': instance.icon,
+    };
+
+_$MetaImpl _$$MetaImplFromJson(Map json) => _$MetaImpl(
+      page: json['page'] as int,
+      limit: json['limit'] as int,
+    );
+
+Map<String, dynamic> _$$MetaImplToJson(_$MetaImpl instance) => <String, dynamic>{
+      'page': instance.page,
+      'limit': instance.limit,
     };

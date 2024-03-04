@@ -8,20 +8,17 @@ part of 'coin_model.dart';
 
 _$CoinModelImpl _$$CoinModelImplFromJson(Map json) => _$CoinModelImpl(
       result: (json['result'] as List<dynamic>)
-          .map((e) =>
-              CoinResultModel.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) => CoinResultModel.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
       meta: Meta.fromJson(Map<String, dynamic>.from(json['meta'] as Map)),
     );
 
-Map<String, dynamic> _$$CoinModelImplToJson(_$CoinModelImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CoinModelImplToJson(_$CoinModelImpl instance) => <String, dynamic>{
       'result': instance.result.map((e) => e.toJson()).toList(),
       'meta': instance.meta.toJson(),
     };
 
-_$CoinResultModelImpl _$$CoinResultModelImplFromJson(Map json) =>
-    _$CoinResultModelImpl(
+_$CoinResultModelImpl _$$CoinResultModelImplFromJson(Map json) => _$CoinResultModelImpl(
       id: json['id'] as String,
       symbol: json['symbol'] as String,
       name: json['name'] as String,
@@ -32,9 +29,7 @@ _$CoinResultModelImpl _$$CoinResultModelImplFromJson(Map json) =>
       rank: json['rank'] as num? ?? 0,
     );
 
-Map<String, dynamic> _$$CoinResultModelImplToJson(
-        _$CoinResultModelImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$CoinResultModelImplToJson(_$CoinResultModelImpl instance) => <String, dynamic>{
       'id': instance.id,
       'symbol': instance.symbol,
       'name': instance.name,
@@ -54,8 +49,7 @@ _$MetaImpl _$$MetaImplFromJson(Map json) => _$MetaImpl(
       hasNextPage: json['hasNextPage'] as bool,
     );
 
-Map<String, dynamic> _$$MetaImplToJson(_$MetaImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$MetaImplToJson(_$MetaImpl instance) => <String, dynamic>{
       'page': instance.page,
       'limit': instance.limit,
       'itemCount': instance.itemCount,
