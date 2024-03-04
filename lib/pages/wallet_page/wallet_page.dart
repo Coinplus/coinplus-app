@@ -20,6 +20,7 @@ import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
+import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
@@ -49,6 +50,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   int cardCarouselIndex = 0;
@@ -67,7 +70,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     _balanceStore
       ..getCardsInfo()
       ..getBarsInfo();
-    getHistory();
     _rampService.configureRamp(
       address: _balanceStore.cards.isNotEmpty
           ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
@@ -103,10 +105,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (_balanceStore.cards.isNotEmpty && _balanceStore.bars.isEmpty) {
       _tabController.animateTo(0);
     }
-  }
-
-  Future<void> getHistory() async {
-    await _balanceStore.getHistory();
   }
 
   void amplitudeEvent() {
@@ -202,38 +200,46 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             ),
             Positioned(
               bottom: 14,
-              left: 22,
+              left: 14,
               child: SizedBox(
                 height: 100,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Wallet',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatBold,
-                            fontSize: 28,
-                            color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'Wallet',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatBold,
+                                  fontSize: 28,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const Gap(14),
+                              Assets.icons.coinplusVector.image(
+                                height: 26,
+                              ),
+                            ],
                           ),
-                        ),
-                        const Gap(14),
-                        Assets.icons.coinplusVector.image(
-                          height: 26,
-                        ),
-                      ],
-                    ),
-                    const Text(
-                      'Total balance',
-                      style: TextStyle(
-                        fontFamily: FontFamily.redHatLight,
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                          const Text(
+                            'Total balance',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatLight,
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Gap(5),
+                        ],
                       ),
                     ),
-                    const Gap(5),
                     Observer(
                       builder: (context) {
                         final data = _marketPageStore.singleCoin?.result.first;
@@ -244,7 +250,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                         final balance = _balanceStore.allCardsBalances;
                         if (data == null) {
                           return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                             child: SizedBox(
                               height: 15,
                               width: 15,
@@ -254,13 +260,36 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                             ),
                           );
                         }
-                        return Text(
-                          '\$${myFormat.format(balance / 100000000 * data.price)}',
-                          style: const TextStyle(
-                            fontFamily: FontFamily.redHatBold,
-                            color: Colors.white,
-                            fontSize: 28,
-                          ),
+                        return Observer(
+                          builder: (_) {
+                            if (_accelerometerStore.hasPerformedAction) {
+                              return const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Center(
+                                  child: Text(
+                                    '*****',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatBold,
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                  style: const TextStyle(
+                                    fontFamily: FontFamily.redHatBold,
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                     ),

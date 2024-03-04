@@ -53,12 +53,25 @@ Future<bool> getNotificationToggleStatus() async {
   return value != null;
 }
 
+Future<bool> getHideBalancesToggleStatus() async {
+  final value = await secureStorage.read(key: 'hide_balances');
+  return value != null;
+}
+
 Future<void> enableNotificationToggle() async {
   await secureStorage.write(key: 'notification', value: 'ENABLED');
 }
 
 Future<void> disableNotificationToggle() async {
   await secureStorage.delete(key: 'notification');
+}
+
+Future<void> enableHideBalancesToggle() async {
+  await secureStorage.write(key: 'hide_balances', value: 'ENABLED');
+}
+
+Future<void> disableHideBalancesToggle() async {
+  await secureStorage.delete(key: 'hide_balances');
 }
 
 Future<void> isWalletActivated({

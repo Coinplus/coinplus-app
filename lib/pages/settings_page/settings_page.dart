@@ -21,12 +21,12 @@ import '../../models/amplitude_user_property_model/amplitude_user_property_model
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
+import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
-import '../../utils/send_from_wallet.dart';
 import '../../utils/storage_utils.dart';
 import 'please_enable_biometrics.dart';
 import 'remove_user_data/remove_user_data.dart';
@@ -38,6 +38,8 @@ class SettingsPage extends HookWidget {
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
   SettingsState get _settingsState => GetIt.I<SettingsState>();
 
@@ -99,6 +101,21 @@ class SettingsPage extends HookWidget {
         await _walletProtectState.checkNotificationToggleStatus();
       },
       [_walletProtectState.isSwitchedNotificationsToggle],
+    );
+
+    // ignore: avoid_positional_boolean_parameters
+    final onToggleHideBalances = useCallback<Future<void> Function(bool p1)>(
+      (isEnable) async {
+        if (!isEnable) {
+          await _walletProtectState.showBalances();
+          _accelerometerStore.hasPerformedAction = false;
+        } else {
+          await _walletProtectState.hideBalances();
+          _accelerometerStore.hasPerformedAction = false;
+        }
+        await _walletProtectState.checkHideBalancesToggleStatus();
+      },
+      [_walletProtectState.isSwitchedHideBalancesToggle],
     );
 
     return CupertinoPageScaffold(
@@ -164,6 +181,7 @@ class SettingsPage extends HookWidget {
                                     Assets.icons.lock.image(
                                       height: 22,
                                     ),
+                                    const Gap(3),
                                   ],
                                 ),
                                 trailing: Observer(
@@ -303,20 +321,19 @@ class SettingsPage extends HookWidget {
                             if (_nfcState.isNfcSupported)
                               InkWell(
                                 onTap: () async {
-                                  await sendBitcoinFromLegacyWallet();
-                                  // await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                                  // unawaited(recordAmplitudeEventPartTwo(const VerifyCardClicked()));
-                                  // Platform.isAndroid
-                                  //     ? checkNfcAndroid(
-                                  //         walletProtectState: _walletProtectState,
-                                  //         balanceStore: _balanceStore,
-                                  //         settingsState: _settingsState,
-                                  //       )
-                                  //     : await checkNfcIos(
-                                  //         walletProtectState: _walletProtectState,
-                                  //         balanceStore: _balanceStore,
-                                  //         settingsState: _settingsState,
-                                  //       );
+                                  await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                                  unawaited(recordAmplitudeEventPartTwo(const VerifyCardClicked()));
+                                  Platform.isAndroid
+                                      ? checkNfcAndroid(
+                                          walletProtectState: _walletProtectState,
+                                          balanceStore: _balanceStore,
+                                          settingsState: _settingsState,
+                                        )
+                                      : await checkNfcIos(
+                                          walletProtectState: _walletProtectState,
+                                          balanceStore: _balanceStore,
+                                          settingsState: _settingsState,
+                                        );
                                 },
                                 splashFactory: InkSparkle.splashFactory,
                                 highlightColor: Colors.transparent,
@@ -345,6 +362,43 @@ class SettingsPage extends HookWidget {
                               )
                             else
                               const SizedBox(),
+                            Divider(
+                              height: 1,
+                              indent: 5,
+                              endIndent: 5,
+                              thickness: 1,
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            InkWell(
+                              onTap: () => onToggleHideBalances(_walletProtectState.isSwitchedHideBalancesToggle),
+                              splashFactory: InkSparkle.splashFactory,
+                              highlightColor: Colors.transparent,
+                              child: ListTile(
+                                splashColor: Colors.transparent,
+                                minLeadingWidth: 10,
+                                trailing: Observer(
+                                  builder: (_) {
+                                    return CupertinoSwitch(
+                                      value: _walletProtectState.isSwitchedHideBalancesToggle,
+                                      onChanged: (val) =>
+                                          onToggleHideBalances(_walletProtectState.isSwitchedHideBalancesToggle),
+                                    );
+                                  },
+                                ),
+                                leading: Assets.icons.hide.image(
+                                  height: 24,
+                                ),
+                                title: const Text(
+                                  'Hide balances',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         );
                       },
@@ -393,14 +447,19 @@ class SettingsPage extends HookWidget {
                             leading: Assets.icons.notifications.image(
                               height: 22,
                             ),
-                            title: const Text(
-                              'Push notifications',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            title: const Row(
+                              children: [
+                                Gap(2),
+                                Text(
+                                  'Push notifications',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -559,7 +618,7 @@ class SettingsPage extends HookWidget {
                       onPressed: () async {
                         await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Instagram'));
                         await FlutterWebBrowser.openWebPage(
-                          url: 'https://www.instagram.com/coinplus_solo/',
+                          url: 'https://www.instagram.com/coinplus.inc',
                           customTabsOptions: const CustomTabsOptions(
                             shareState: CustomTabsShareState.on,
                             instantAppsEnabled: true,
@@ -739,14 +798,19 @@ class SettingsPage extends HookWidget {
                             leading: Assets.icons.privacy.image(
                               height: 22,
                             ),
-                            title: const Text(
-                              'Privacy policy',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            title: const Row(
+                              children: [
+                                Gap(4),
+                                Text(
+                                  'Privacy policy',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -784,14 +848,19 @@ class SettingsPage extends HookWidget {
                             leading: Assets.icons.terms.image(
                               height: 22,
                             ),
-                            title: const Text(
-                              'Terms of use',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            title: const Row(
+                              children: [
+                                Gap(3),
+                                Text(
+                                  'Terms of use',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 15,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -866,14 +935,8 @@ class SettingsPage extends HookWidget {
                           highlightColor: Colors.transparent,
                           child: ListTile(
                             minLeadingWidth: 10,
-                            leading: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Gap(3),
-                                Assets.icons.identity.image(
-                                  height: 22,
-                                ),
-                              ],
+                            leading: Assets.icons.identity.image(
+                              height: 22,
                             ),
                             title: const Text(
                               'Erase my data',

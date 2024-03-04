@@ -34,6 +34,7 @@ import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
@@ -92,6 +93,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   @override
   void initState() {
@@ -349,7 +352,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                             height: 10,
                                                             width: 10,
                                                             child: CircularProgressIndicator(
-                                                              color: Colors.grey,
+                                                              color: Colors.white,
+                                                              strokeWidth: 3,
                                                             ),
                                                           ),
                                                         ],
@@ -450,6 +454,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                               width: 10,
                                                               child: CircularProgressIndicator(
                                                                 color: Colors.white,
+                                                                strokeWidth: 3,
                                                               ),
                                                             ),
                                                           ],
@@ -1299,7 +1304,8 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               );
                             }
                           });
-                          await _marketPageStore.patchWithAddress(address: _balanceStore.selectedCard!.address);
+
+                          await _historyPageStore.refresh(_balanceStore.selectedCard!.address);
                           _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                         } else {
                           await HapticFeedback.vibrate();

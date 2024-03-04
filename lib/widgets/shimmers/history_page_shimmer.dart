@@ -7,82 +7,558 @@ class HistoryPageShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SizedBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(15),
                   color: Colors.grey,
                 ),
-                height: 15,
-                width: 75,
+                height: 16,
+                width: 60,
                 margin: const EdgeInsets.only(bottom: 8),
               ),
-              const Gap(25),
-              ListView.separated(
-                physics: const ScrollPhysics(parent: NeverScrollableScrollPhysics()),
-                separatorBuilder: (_, __) {
-                  return const SizedBox(
-                    height: 20,
-                  );
-                },
-                shrinkWrap: true,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      const Gap(15),
-                      const CircleAvatar(
+            ),
+            const Gap(15),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    color: Colors.grey.withOpacity(0.1),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Gap(5),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
                         backgroundColor: Colors.grey,
                         radius: 17,
                       ),
-                      const Gap(16.5),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.grey,
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
                         ),
-                        height: 15,
-                        width: 75,
-                        margin: const EdgeInsets.only(bottom: 8),
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.grey,
-                            ),
-                            height: 13,
-                            width: 95,
-                            margin: const EdgeInsets.only(bottom: 8),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.grey,
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
                             ),
-                            height: 13,
-                            width: 70,
-                            margin: const EdgeInsets.only(bottom: 8),
-                          ),
-                        ],
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 17,
                       ),
-                    ],
-                  );
-                },
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
+                          ),
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 17,
+                      ),
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
+                          ),
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const Gap(15),
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.grey,
+                ),
+                height: 16,
+                width: 60,
+                margin: const EdgeInsets.only(bottom: 8),
+              ),
+            ),
+            const Gap(15),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    color: Colors.grey.withOpacity(0.1),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Gap(3),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 17,
+                      ),
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
+                          ),
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Gap(15),
+            Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.grey,
+                ),
+                height: 16,
+                width: 60,
+                margin: const EdgeInsets.only(bottom: 8),
+              ),
+            ),
+            const Gap(15),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    color: Colors.grey.withOpacity(0.1),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Gap(5),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 17,
+                      ),
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
+                          ),
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    minLeadingWidth: 1,
+                    leading: Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 17,
+                      ),
+                    ),
+                    title: Row(
+                      children: [
+                        Column(
+                          children: [
+                            const Gap(8),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                ),
+                                height: 15,
+                                width: 75,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(5),
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            radius: 9,
+                          ),
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 133,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.grey,
+                                ),
+                                height: 16,
+                                width: 64,
+                                margin: const EdgeInsets.only(bottom: 8),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

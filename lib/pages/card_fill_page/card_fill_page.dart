@@ -35,6 +35,7 @@ import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_lines_state/secret_lines_state.dart';
@@ -85,6 +86,8 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   ValidationState get _validationStore => GetIt.I<ValidationState>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   @override
   void initState() {
@@ -1378,8 +1381,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                             unawaited(
                               recordAmplitudeEventPartTwo(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );
-                            _marketPageStore.patchWithAddress(address: _balanceStore.selectedCard!.address);
-
+                            _historyPageStore.refresh(_balanceStore.selectedCard!.address);
                             if (hasShown) {
                               router.pop();
                             } else {

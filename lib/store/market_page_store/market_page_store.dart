@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/coins_dto/coin_model.dart';
-import '../balance_store/balance_store.dart';
 
 part 'market_page_store.g.dart';
 
@@ -60,11 +57,7 @@ abstract class _MarketPageStore with Store {
 
   AnimationController? animationController;
 
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
   FocusNode focusNode = FocusNode();
-
-  final Dio _dio = Dio()..interceptors.add(LogInterceptor(responseBody: true));
 
   Future<void> getOtherCoins({required int pageNumber}) async {
     allCoins = await CoinsClient(dio).getAllCoins(page: pageNumber, limit: 1000);
@@ -72,31 +65,6 @@ abstract class _MarketPageStore with Store {
 
   Future<void> getSingleCoin() async {
     singleCoin = await CoinsClient(dio).getAllCoins(page: 1, limit: 1);
-  }
-
-  Future<void> patchTransactions({required String address}) async {
-    final headers = {
-      'x-api-key': '7MupJP2wamYKNOhwk4niDhs2AppPTesddVGRHxpEKLU=',
-      'Content-Type': 'application/json',
-    };
-    try {
-      await _dio.patch(
-        'https://openapiv1.coinstats.app/wallet/transactions?address=$address&connectionId=bitcoin',
-        options: Options(headers: headers),
-      );
-    } catch (e) {
-      log('Error occurred while making PATCH request: $e');
-    }
-  }
-
-  Future<void> patchHistory() async {
-    for (final element in _balanceStore.cards) {
-      await patchTransactions(address: element.address);
-    }
-  }
-
-  Future<void> patchWithAddress({required String address}) async {
-    await patchTransactions(address: address);
   }
 
   @action

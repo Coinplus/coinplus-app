@@ -19,10 +19,8 @@ Future<void> sendBitcoinFromLegacyWallet() async {
   }
 
   const network = BitcoinNetwork.mainnet;
-
-  // Replace the example private key with your own WIF private key
   final examplePrivateKey = ECPrivate.fromWif(
-    'KxudVxmUsE36sajfbZUamEehVY3Xn5UfnqgEhbBs9io7RmizWJtu',
+    '',
     netVersion: BitcoinNetwork.mainnet.wifNetVer,
   );
 
@@ -37,7 +35,7 @@ Future<void> sendBitcoinFromLegacyWallet() async {
     network: BitcoinNetwork.mainnet,
   );
 
-  const outAddress = '1ArypasnN7Lcj4QRNWGgspyJcRr9FM4RDB';
+  const outAddress = '';
 
   final out2 = P2shAddress.fromAddress(
     address: outAddress,
@@ -59,13 +57,13 @@ Future<void> sendBitcoinFromLegacyWallet() async {
     utxos: [
       UtxoWithAddress(
         utxo: BitcoinUtxo(
-          txHash: 'b316f4eccc6777126ff279996948133e7219459b84400d2c4885fa796412350f',
+          txHash: '',
           value: BtcUtils.toSatoshi('100000'),
           vout: 0,
           scriptType: examplePublicKey.toAddress().type,
         ),
         ownerDetails: UtxoAddressDetails(
-          publicKey: examplePublicKey.toHex(), // Use toHex() for public key
+          publicKey: examplePublicKey.toHex(),
           address: examplePublicKey.toAddress(),
         ),
       ),
@@ -98,4 +96,3 @@ Future<void> sendBitcoinFromLegacyWallet() async {
 
   await _broadcastTransaction(tr.serialize());
 }
-

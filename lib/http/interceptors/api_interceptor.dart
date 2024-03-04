@@ -4,13 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../providers/flavor_service.dart';
+import 'api_keys.dart';
 
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options
       ..baseUrl = GetIt.I<FlavorService>().config.apiUrl
-      ..headers = {'X-API-KEY': '7MupJP2wamYKNOhwk4niDhs2AppPTesddVGRHxpEKLU='};
+      ..headers = {'X-API-KEY': coinStatsApiKey};
 
     if (options.path.contains('/coins')) {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;

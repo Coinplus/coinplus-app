@@ -21,25 +21,25 @@ TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TransactionModel {
   List<TransactionItem> get result => throw _privateConstructorUsedError;
+  Meta get meta => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TransactionModelCopyWith<TransactionModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TransactionModelCopyWith<TransactionModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TransactionModelCopyWith<$Res> {
-  factory $TransactionModelCopyWith(
-          TransactionModel value, $Res Function(TransactionModel) then) =
+  factory $TransactionModelCopyWith(TransactionModel value, $Res Function(TransactionModel) then) =
       _$TransactionModelCopyWithImpl<$Res, TransactionModel>;
   @useResult
-  $Res call({List<TransactionItem> result});
+  $Res call({List<TransactionItem> result, Meta meta});
+
+  $MetaCopyWith<$Res> get meta;
 }
 
 /// @nodoc
-class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
-    implements $TransactionModelCopyWith<$Res> {
+class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel> implements $TransactionModelCopyWith<$Res> {
   _$TransactionModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -51,45 +51,62 @@ class _$TransactionModelCopyWithImpl<$Res, $Val extends TransactionModel>
   @override
   $Res call({
     Object? result = null,
+    Object? meta = null,
   }) {
     return _then(_value.copyWith(
       result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as List<TransactionItem>,
+      meta: null == meta
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as Meta,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MetaCopyWith<$Res> get meta {
+    return $MetaCopyWith<$Res>(_value.meta, (value) {
+      return _then(_value.copyWith(meta: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$TransactionModelImplCopyWith<$Res>
-    implements $TransactionModelCopyWith<$Res> {
-  factory _$$TransactionModelImplCopyWith(_$TransactionModelImpl value,
-          $Res Function(_$TransactionModelImpl) then) =
+abstract class _$$TransactionModelImplCopyWith<$Res> implements $TransactionModelCopyWith<$Res> {
+  factory _$$TransactionModelImplCopyWith(_$TransactionModelImpl value, $Res Function(_$TransactionModelImpl) then) =
       __$$TransactionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<TransactionItem> result});
+  $Res call({List<TransactionItem> result, Meta meta});
+
+  @override
+  $MetaCopyWith<$Res> get meta;
 }
 
 /// @nodoc
-class __$$TransactionModelImplCopyWithImpl<$Res>
-    extends _$TransactionModelCopyWithImpl<$Res, _$TransactionModelImpl>
+class __$$TransactionModelImplCopyWithImpl<$Res> extends _$TransactionModelCopyWithImpl<$Res, _$TransactionModelImpl>
     implements _$$TransactionModelImplCopyWith<$Res> {
-  __$$TransactionModelImplCopyWithImpl(_$TransactionModelImpl _value,
-      $Res Function(_$TransactionModelImpl) _then)
+  __$$TransactionModelImplCopyWithImpl(_$TransactionModelImpl _value, $Res Function(_$TransactionModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? result = null,
+    Object? meta = null,
   }) {
     return _then(_$TransactionModelImpl(
       result: null == result
           ? _value._result
           : result // ignore: cast_nullable_to_non_nullable
               as List<TransactionItem>,
+      meta: null == meta
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as Meta,
     ));
   }
 }
@@ -97,11 +114,9 @@ class __$$TransactionModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TransactionModelImpl implements _TransactionModel {
-  _$TransactionModelImpl({required final List<TransactionItem> result})
-      : _result = result;
+  _$TransactionModelImpl({required final List<TransactionItem> result, required this.meta}) : _result = result;
 
-  factory _$TransactionModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TransactionModelImplFromJson(json);
+  factory _$TransactionModelImpl.fromJson(Map<String, dynamic> json) => _$$TransactionModelImplFromJson(json);
 
   final List<TransactionItem> _result;
   @override
@@ -112,8 +127,11 @@ class _$TransactionModelImpl implements _TransactionModel {
   }
 
   @override
+  final Meta meta;
+
+  @override
   String toString() {
-    return 'TransactionModel(result: $result)';
+    return 'TransactionModel(result: $result, meta: $meta)';
   }
 
   @override
@@ -121,20 +139,19 @@ class _$TransactionModelImpl implements _TransactionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TransactionModelImpl &&
-            const DeepCollectionEquality().equals(other._result, _result));
+            const DeepCollectionEquality().equals(other._result, _result) &&
+            (identical(other.meta, meta) || other.meta == meta));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_result));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_result), meta);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith =>
-      __$$TransactionModelImplCopyWithImpl<_$TransactionModelImpl>(
-          this, _$identity);
+      __$$TransactionModelImplCopyWithImpl<_$TransactionModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -145,18 +162,18 @@ class _$TransactionModelImpl implements _TransactionModel {
 }
 
 abstract class _TransactionModel implements TransactionModel {
-  factory _TransactionModel({required final List<TransactionItem> result}) =
+  factory _TransactionModel({required final List<TransactionItem> result, required final Meta meta}) =
       _$TransactionModelImpl;
 
-  factory _TransactionModel.fromJson(Map<String, dynamic> json) =
-      _$TransactionModelImpl.fromJson;
+  factory _TransactionModel.fromJson(Map<String, dynamic> json) = _$TransactionModelImpl.fromJson;
 
   @override
   List<TransactionItem> get result;
   @override
+  Meta get meta;
+  @override
   @JsonKey(ignore: true)
-  _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TransactionModelImplCopyWith<_$TransactionModelImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 TransactionItem _$TransactionItemFromJson(Map<String, dynamic> json) {
@@ -174,14 +191,12 @@ mixin _$TransactionItem {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TransactionItemCopyWith<TransactionItem> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TransactionItemCopyWith<TransactionItem> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TransactionItemCopyWith<$Res> {
-  factory $TransactionItemCopyWith(
-          TransactionItem value, $Res Function(TransactionItem) then) =
+  factory $TransactionItemCopyWith(TransactionItem value, $Res Function(TransactionItem) then) =
       _$TransactionItemCopyWithImpl<$Res, TransactionItem>;
   @useResult
   $Res call(
@@ -198,8 +213,7 @@ abstract class $TransactionItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransactionItemCopyWithImpl<$Res, $Val extends TransactionItem>
-    implements $TransactionItemCopyWith<$Res> {
+class _$TransactionItemCopyWithImpl<$Res, $Val extends TransactionItem> implements $TransactionItemCopyWith<$Res> {
   _$TransactionItemCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -283,10 +297,8 @@ class _$TransactionItemCopyWithImpl<$Res, $Val extends TransactionItem>
 }
 
 /// @nodoc
-abstract class _$$TransactionItemImplCopyWith<$Res>
-    implements $TransactionItemCopyWith<$Res> {
-  factory _$$TransactionItemImplCopyWith(_$TransactionItemImpl value,
-          $Res Function(_$TransactionItemImpl) then) =
+abstract class _$$TransactionItemImplCopyWith<$Res> implements $TransactionItemCopyWith<$Res> {
+  factory _$$TransactionItemImplCopyWith(_$TransactionItemImpl value, $Res Function(_$TransactionItemImpl) then) =
       __$$TransactionItemImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -307,11 +319,9 @@ abstract class _$$TransactionItemImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TransactionItemImplCopyWithImpl<$Res>
-    extends _$TransactionItemCopyWithImpl<$Res, _$TransactionItemImpl>
+class __$$TransactionItemImplCopyWithImpl<$Res> extends _$TransactionItemCopyWithImpl<$Res, _$TransactionItemImpl>
     implements _$$TransactionItemImplCopyWith<$Res> {
-  __$$TransactionItemImplCopyWithImpl(
-      _$TransactionItemImpl _value, $Res Function(_$TransactionItemImpl) _then)
+  __$$TransactionItemImplCopyWithImpl(_$TransactionItemImpl _value, $Res Function(_$TransactionItemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -365,8 +375,7 @@ class _$TransactionItemImpl implements _TransactionItem {
       required final List<Transaction>? transactions})
       : _transactions = transactions;
 
-  factory _$TransactionItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TransactionItemImplFromJson(json);
+  factory _$TransactionItemImpl.fromJson(Map<String, dynamic> json) => _$$TransactionItemImplFromJson(json);
 
   @override
   final String? type;
@@ -400,27 +409,22 @@ class _$TransactionItemImpl implements _TransactionItem {
             other is _$TransactionItemImpl &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.mainContent, mainContent) ||
-                other.mainContent == mainContent) &&
-            (identical(other.coinData, coinData) ||
-                other.coinData == coinData) &&
-            (identical(other.profitLoss, profitLoss) ||
-                other.profitLoss == profitLoss) &&
-            const DeepCollectionEquality()
-                .equals(other._transactions, _transactions));
+            (identical(other.mainContent, mainContent) || other.mainContent == mainContent) &&
+            (identical(other.coinData, coinData) || other.coinData == coinData) &&
+            (identical(other.profitLoss, profitLoss) || other.profitLoss == profitLoss) &&
+            const DeepCollectionEquality().equals(other._transactions, _transactions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, type, date, mainContent,
-      coinData, profitLoss, const DeepCollectionEquality().hash(_transactions));
+  int get hashCode => Object.hash(
+      runtimeType, type, date, mainContent, coinData, profitLoss, const DeepCollectionEquality().hash(_transactions));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionItemImplCopyWith<_$TransactionItemImpl> get copyWith =>
-      __$$TransactionItemImplCopyWithImpl<_$TransactionItemImpl>(
-          this, _$identity);
+      __$$TransactionItemImplCopyWithImpl<_$TransactionItemImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -439,8 +443,7 @@ abstract class _TransactionItem implements TransactionItem {
       required final ProfitLoss? profitLoss,
       required final List<Transaction>? transactions}) = _$TransactionItemImpl;
 
-  factory _TransactionItem.fromJson(Map<String, dynamic> json) =
-      _$TransactionItemImpl.fromJson;
+  factory _TransactionItem.fromJson(Map<String, dynamic> json) = _$TransactionItemImpl.fromJson;
 
   @override
   String? get type;
@@ -456,8 +459,7 @@ abstract class _TransactionItem implements TransactionItem {
   List<Transaction>? get transactions;
   @override
   @JsonKey(ignore: true)
-  _$$TransactionItemImplCopyWith<_$TransactionItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TransactionItemImplCopyWith<_$TransactionItemImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 MainContent _$MainContentFromJson(Map<String, dynamic> json) {
@@ -471,22 +473,19 @@ mixin _$MainContent {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MainContentCopyWith<MainContent> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MainContentCopyWith<MainContent> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $MainContentCopyWith<$Res> {
-  factory $MainContentCopyWith(
-          MainContent value, $Res Function(MainContent) then) =
+  factory $MainContentCopyWith(MainContent value, $Res Function(MainContent) then) =
       _$MainContentCopyWithImpl<$Res, MainContent>;
   @useResult
   $Res call({List<String> coinIcons, List<dynamic> coinAssets});
 }
 
 /// @nodoc
-class _$MainContentCopyWithImpl<$Res, $Val extends MainContent>
-    implements $MainContentCopyWith<$Res> {
+class _$MainContentCopyWithImpl<$Res, $Val extends MainContent> implements $MainContentCopyWith<$Res> {
   _$MainContentCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -514,10 +513,8 @@ class _$MainContentCopyWithImpl<$Res, $Val extends MainContent>
 }
 
 /// @nodoc
-abstract class _$$MainContentImplCopyWith<$Res>
-    implements $MainContentCopyWith<$Res> {
-  factory _$$MainContentImplCopyWith(
-          _$MainContentImpl value, $Res Function(_$MainContentImpl) then) =
+abstract class _$$MainContentImplCopyWith<$Res> implements $MainContentCopyWith<$Res> {
+  factory _$$MainContentImplCopyWith(_$MainContentImpl value, $Res Function(_$MainContentImpl) then) =
       __$$MainContentImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -525,11 +522,9 @@ abstract class _$$MainContentImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MainContentImplCopyWithImpl<$Res>
-    extends _$MainContentCopyWithImpl<$Res, _$MainContentImpl>
+class __$$MainContentImplCopyWithImpl<$Res> extends _$MainContentCopyWithImpl<$Res, _$MainContentImpl>
     implements _$$MainContentImplCopyWith<$Res> {
-  __$$MainContentImplCopyWithImpl(
-      _$MainContentImpl _value, $Res Function(_$MainContentImpl) _then)
+  __$$MainContentImplCopyWithImpl(_$MainContentImpl _value, $Res Function(_$MainContentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -554,14 +549,11 @@ class __$$MainContentImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MainContentImpl implements _MainContent {
-  _$MainContentImpl(
-      {required final List<String> coinIcons,
-      required final List<dynamic> coinAssets})
+  _$MainContentImpl({required final List<String> coinIcons, required final List<dynamic> coinAssets})
       : _coinIcons = coinIcons,
         _coinAssets = coinAssets;
 
-  factory _$MainContentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MainContentImplFromJson(json);
+  factory _$MainContentImpl.fromJson(Map<String, dynamic> json) => _$$MainContentImplFromJson(json);
 
   final List<String> _coinIcons;
   @override
@@ -589,18 +581,14 @@ class _$MainContentImpl implements _MainContent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MainContentImpl &&
-            const DeepCollectionEquality()
-                .equals(other._coinIcons, _coinIcons) &&
-            const DeepCollectionEquality()
-                .equals(other._coinAssets, _coinAssets));
+            const DeepCollectionEquality().equals(other._coinIcons, _coinIcons) &&
+            const DeepCollectionEquality().equals(other._coinAssets, _coinAssets));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_coinIcons),
-      const DeepCollectionEquality().hash(_coinAssets));
+      runtimeType, const DeepCollectionEquality().hash(_coinIcons), const DeepCollectionEquality().hash(_coinAssets));
 
   @JsonKey(ignore: true)
   @override
@@ -617,12 +605,10 @@ class _$MainContentImpl implements _MainContent {
 }
 
 abstract class _MainContent implements MainContent {
-  factory _MainContent(
-      {required final List<String> coinIcons,
-      required final List<dynamic> coinAssets}) = _$MainContentImpl;
+  factory _MainContent({required final List<String> coinIcons, required final List<dynamic> coinAssets}) =
+      _$MainContentImpl;
 
-  factory _MainContent.fromJson(Map<String, dynamic> json) =
-      _$MainContentImpl.fromJson;
+  factory _MainContent.fromJson(Map<String, dynamic> json) = _$MainContentImpl.fromJson;
 
   @override
   List<String> get coinIcons;
@@ -630,8 +616,7 @@ abstract class _MainContent implements MainContent {
   List<dynamic> get coinAssets;
   @override
   @JsonKey(ignore: true)
-  _$$MainContentImplCopyWith<_$MainContentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MainContentImplCopyWith<_$MainContentImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 CoinData _$CoinDataFromJson(Map<String, dynamic> json) {
@@ -646,21 +631,18 @@ mixin _$CoinData {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CoinDataCopyWith<CoinData> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CoinDataCopyWith<CoinData> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CoinDataCopyWith<$Res> {
-  factory $CoinDataCopyWith(CoinData value, $Res Function(CoinData) then) =
-      _$CoinDataCopyWithImpl<$Res, CoinData>;
+  factory $CoinDataCopyWith(CoinData value, $Res Function(CoinData) then) = _$CoinDataCopyWithImpl<$Res, CoinData>;
   @useResult
   $Res call({double count, String symbol, double currentValue});
 }
 
 /// @nodoc
-class _$CoinDataCopyWithImpl<$Res, $Val extends CoinData>
-    implements $CoinDataCopyWith<$Res> {
+class _$CoinDataCopyWithImpl<$Res, $Val extends CoinData> implements $CoinDataCopyWith<$Res> {
   _$CoinDataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -693,10 +675,8 @@ class _$CoinDataCopyWithImpl<$Res, $Val extends CoinData>
 }
 
 /// @nodoc
-abstract class _$$CoinDataImplCopyWith<$Res>
-    implements $CoinDataCopyWith<$Res> {
-  factory _$$CoinDataImplCopyWith(
-          _$CoinDataImpl value, $Res Function(_$CoinDataImpl) then) =
+abstract class _$$CoinDataImplCopyWith<$Res> implements $CoinDataCopyWith<$Res> {
+  factory _$$CoinDataImplCopyWith(_$CoinDataImpl value, $Res Function(_$CoinDataImpl) then) =
       __$$CoinDataImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -704,12 +684,9 @@ abstract class _$$CoinDataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CoinDataImplCopyWithImpl<$Res>
-    extends _$CoinDataCopyWithImpl<$Res, _$CoinDataImpl>
+class __$$CoinDataImplCopyWithImpl<$Res> extends _$CoinDataCopyWithImpl<$Res, _$CoinDataImpl>
     implements _$$CoinDataImplCopyWith<$Res> {
-  __$$CoinDataImplCopyWithImpl(
-      _$CoinDataImpl _value, $Res Function(_$CoinDataImpl) _then)
-      : super(_value, _then);
+  __$$CoinDataImplCopyWithImpl(_$CoinDataImpl _value, $Res Function(_$CoinDataImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -738,11 +715,9 @@ class __$$CoinDataImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CoinDataImpl implements _CoinData {
-  _$CoinDataImpl(
-      {required this.count, required this.symbol, required this.currentValue});
+  _$CoinDataImpl({required this.count, required this.symbol, required this.currentValue});
 
-  factory _$CoinDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CoinDataImplFromJson(json);
+  factory _$CoinDataImpl.fromJson(Map<String, dynamic> json) => _$$CoinDataImplFromJson(json);
 
   @override
   final double count;
@@ -763,8 +738,7 @@ class _$CoinDataImpl implements _CoinData {
             other is _$CoinDataImpl &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
-            (identical(other.currentValue, currentValue) ||
-                other.currentValue == currentValue));
+            (identical(other.currentValue, currentValue) || other.currentValue == currentValue));
   }
 
   @JsonKey(ignore: true)
@@ -786,13 +760,10 @@ class _$CoinDataImpl implements _CoinData {
 }
 
 abstract class _CoinData implements CoinData {
-  factory _CoinData(
-      {required final double count,
-      required final String symbol,
-      required final double currentValue}) = _$CoinDataImpl;
+  factory _CoinData({required final double count, required final String symbol, required final double currentValue}) =
+      _$CoinDataImpl;
 
-  factory _CoinData.fromJson(Map<String, dynamic> json) =
-      _$CoinDataImpl.fromJson;
+  factory _CoinData.fromJson(Map<String, dynamic> json) = _$CoinDataImpl.fromJson;
 
   @override
   double get count;
@@ -802,8 +773,7 @@ abstract class _CoinData implements CoinData {
   double get currentValue;
   @override
   @JsonKey(ignore: true)
-  _$$CoinDataImplCopyWith<_$CoinDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CoinDataImplCopyWith<_$CoinDataImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 ProfitLoss _$ProfitLossFromJson(Map<String, dynamic> json) {
@@ -818,22 +788,19 @@ mixin _$ProfitLoss {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProfitLossCopyWith<ProfitLoss> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ProfitLossCopyWith<ProfitLoss> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ProfitLossCopyWith<$Res> {
-  factory $ProfitLossCopyWith(
-          ProfitLoss value, $Res Function(ProfitLoss) then) =
+  factory $ProfitLossCopyWith(ProfitLoss value, $Res Function(ProfitLoss) then) =
       _$ProfitLossCopyWithImpl<$Res, ProfitLoss>;
   @useResult
   $Res call({double profit, double profitPercent, double currentValue});
 }
 
 /// @nodoc
-class _$ProfitLossCopyWithImpl<$Res, $Val extends ProfitLoss>
-    implements $ProfitLossCopyWith<$Res> {
+class _$ProfitLossCopyWithImpl<$Res, $Val extends ProfitLoss> implements $ProfitLossCopyWith<$Res> {
   _$ProfitLossCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -866,10 +833,8 @@ class _$ProfitLossCopyWithImpl<$Res, $Val extends ProfitLoss>
 }
 
 /// @nodoc
-abstract class _$$ProfitLossImplCopyWith<$Res>
-    implements $ProfitLossCopyWith<$Res> {
-  factory _$$ProfitLossImplCopyWith(
-          _$ProfitLossImpl value, $Res Function(_$ProfitLossImpl) then) =
+abstract class _$$ProfitLossImplCopyWith<$Res> implements $ProfitLossCopyWith<$Res> {
+  factory _$$ProfitLossImplCopyWith(_$ProfitLossImpl value, $Res Function(_$ProfitLossImpl) then) =
       __$$ProfitLossImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -877,12 +842,9 @@ abstract class _$$ProfitLossImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ProfitLossImplCopyWithImpl<$Res>
-    extends _$ProfitLossCopyWithImpl<$Res, _$ProfitLossImpl>
+class __$$ProfitLossImplCopyWithImpl<$Res> extends _$ProfitLossCopyWithImpl<$Res, _$ProfitLossImpl>
     implements _$$ProfitLossImplCopyWith<$Res> {
-  __$$ProfitLossImplCopyWithImpl(
-      _$ProfitLossImpl _value, $Res Function(_$ProfitLossImpl) _then)
-      : super(_value, _then);
+  __$$ProfitLossImplCopyWithImpl(_$ProfitLossImpl _value, $Res Function(_$ProfitLossImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -911,13 +873,9 @@ class __$$ProfitLossImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProfitLossImpl implements _ProfitLoss {
-  _$ProfitLossImpl(
-      {required this.profit,
-      required this.profitPercent,
-      required this.currentValue});
+  _$ProfitLossImpl({required this.profit, required this.profitPercent, required this.currentValue});
 
-  factory _$ProfitLossImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProfitLossImplFromJson(json);
+  factory _$ProfitLossImpl.fromJson(Map<String, dynamic> json) => _$$ProfitLossImplFromJson(json);
 
   @override
   final double profit;
@@ -937,16 +895,13 @@ class _$ProfitLossImpl implements _ProfitLoss {
         (other.runtimeType == runtimeType &&
             other is _$ProfitLossImpl &&
             (identical(other.profit, profit) || other.profit == profit) &&
-            (identical(other.profitPercent, profitPercent) ||
-                other.profitPercent == profitPercent) &&
-            (identical(other.currentValue, currentValue) ||
-                other.currentValue == currentValue));
+            (identical(other.profitPercent, profitPercent) || other.profitPercent == profitPercent) &&
+            (identical(other.currentValue, currentValue) || other.currentValue == currentValue));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, profit, profitPercent, currentValue);
+  int get hashCode => Object.hash(runtimeType, profit, profitPercent, currentValue);
 
   @JsonKey(ignore: true)
   @override
@@ -968,8 +923,7 @@ abstract class _ProfitLoss implements ProfitLoss {
       required final double profitPercent,
       required final double currentValue}) = _$ProfitLossImpl;
 
-  factory _ProfitLoss.fromJson(Map<String, dynamic> json) =
-      _$ProfitLossImpl.fromJson;
+  factory _ProfitLoss.fromJson(Map<String, dynamic> json) = _$ProfitLossImpl.fromJson;
 
   @override
   double get profit;
@@ -979,8 +933,7 @@ abstract class _ProfitLoss implements ProfitLoss {
   double get currentValue;
   @override
   @JsonKey(ignore: true)
-  _$$ProfitLossImplCopyWith<_$ProfitLossImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ProfitLossImplCopyWith<_$ProfitLossImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) {
@@ -994,22 +947,19 @@ mixin _$Transaction {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TransactionCopyWith<Transaction> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TransactionCopyWith<Transaction> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TransactionCopyWith<$Res> {
-  factory $TransactionCopyWith(
-          Transaction value, $Res Function(Transaction) then) =
+  factory $TransactionCopyWith(Transaction value, $Res Function(Transaction) then) =
       _$TransactionCopyWithImpl<$Res, Transaction>;
   @useResult
   $Res call({String action, List<Item> items});
 }
 
 /// @nodoc
-class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
-    implements $TransactionCopyWith<$Res> {
+class _$TransactionCopyWithImpl<$Res, $Val extends Transaction> implements $TransactionCopyWith<$Res> {
   _$TransactionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -1037,10 +987,8 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
 }
 
 /// @nodoc
-abstract class _$$TransactionImplCopyWith<$Res>
-    implements $TransactionCopyWith<$Res> {
-  factory _$$TransactionImplCopyWith(
-          _$TransactionImpl value, $Res Function(_$TransactionImpl) then) =
+abstract class _$$TransactionImplCopyWith<$Res> implements $TransactionCopyWith<$Res> {
+  factory _$$TransactionImplCopyWith(_$TransactionImpl value, $Res Function(_$TransactionImpl) then) =
       __$$TransactionImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -1048,11 +996,9 @@ abstract class _$$TransactionImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TransactionImplCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$TransactionImpl>
+class __$$TransactionImplCopyWithImpl<$Res> extends _$TransactionCopyWithImpl<$Res, _$TransactionImpl>
     implements _$$TransactionImplCopyWith<$Res> {
-  __$$TransactionImplCopyWithImpl(
-      _$TransactionImpl _value, $Res Function(_$TransactionImpl) _then)
+  __$$TransactionImplCopyWithImpl(_$TransactionImpl _value, $Res Function(_$TransactionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1077,11 +1023,9 @@ class __$$TransactionImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TransactionImpl implements _Transaction {
-  _$TransactionImpl({required this.action, required final List<Item> items})
-      : _items = items;
+  _$TransactionImpl({required this.action, required final List<Item> items}) : _items = items;
 
-  factory _$TransactionImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TransactionImplFromJson(json);
+  factory _$TransactionImpl.fromJson(Map<String, dynamic> json) => _$$TransactionImplFromJson(json);
 
   @override
   final String action;
@@ -1109,8 +1053,7 @@ class _$TransactionImpl implements _Transaction {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, action, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(runtimeType, action, const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -1127,12 +1070,9 @@ class _$TransactionImpl implements _Transaction {
 }
 
 abstract class _Transaction implements Transaction {
-  factory _Transaction(
-      {required final String action,
-      required final List<Item> items}) = _$TransactionImpl;
+  factory _Transaction({required final String action, required final List<Item> items}) = _$TransactionImpl;
 
-  factory _Transaction.fromJson(Map<String, dynamic> json) =
-      _$TransactionImpl.fromJson;
+  factory _Transaction.fromJson(Map<String, dynamic> json) = _$TransactionImpl.fromJson;
 
   @override
   String get action;
@@ -1140,8 +1080,7 @@ abstract class _Transaction implements Transaction {
   List<Item> get items;
   @override
   @JsonKey(ignore: true)
-  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 Item _$ItemFromJson(Map<String, dynamic> json) {
@@ -1162,8 +1101,7 @@ mixin _$Item {
 
 /// @nodoc
 abstract class $ItemCopyWith<$Res> {
-  factory $ItemCopyWith(Item value, $Res Function(Item) then) =
-      _$ItemCopyWithImpl<$Res, Item>;
+  factory $ItemCopyWith(Item value, $Res Function(Item) then) = _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call({String id, double count, double totalWorth, Coin coin});
 
@@ -1171,8 +1109,7 @@ abstract class $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ItemCopyWithImpl<$Res, $Val extends Item>
-    implements $ItemCopyWith<$Res> {
+class _$ItemCopyWithImpl<$Res, $Val extends Item> implements $ItemCopyWith<$Res> {
   _$ItemCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -1219,9 +1156,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
 
 /// @nodoc
 abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
-  factory _$$ItemImplCopyWith(
-          _$ItemImpl value, $Res Function(_$ItemImpl) then) =
-      __$$ItemImplCopyWithImpl<$Res>;
+  factory _$$ItemImplCopyWith(_$ItemImpl value, $Res Function(_$ItemImpl) then) = __$$ItemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, double count, double totalWorth, Coin coin});
@@ -1231,11 +1166,8 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ItemImplCopyWithImpl<$Res>
-    extends _$ItemCopyWithImpl<$Res, _$ItemImpl>
-    implements _$$ItemImplCopyWith<$Res> {
-  __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
-      : super(_value, _then);
+class __$$ItemImplCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$ItemImpl> implements _$$ItemImplCopyWith<$Res> {
+  __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1269,14 +1201,9 @@ class __$$ItemImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ItemImpl implements _Item {
-  _$ItemImpl(
-      {required this.id,
-      required this.count,
-      required this.totalWorth,
-      required this.coin});
+  _$ItemImpl({required this.id, required this.count, required this.totalWorth, required this.coin});
 
-  factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ItemImplFromJson(json);
+  factory _$ItemImpl.fromJson(Map<String, dynamic> json) => _$$ItemImplFromJson(json);
 
   @override
   final String id;
@@ -1299,8 +1226,7 @@ class _$ItemImpl implements _Item {
             other is _$ItemImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.count, count) || other.count == count) &&
-            (identical(other.totalWorth, totalWorth) ||
-                other.totalWorth == totalWorth) &&
+            (identical(other.totalWorth, totalWorth) || other.totalWorth == totalWorth) &&
             (identical(other.coin, coin) || other.coin == coin));
   }
 
@@ -1311,8 +1237,7 @@ class _$ItemImpl implements _Item {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
-      __$$ItemImplCopyWithImpl<_$ItemImpl>(this, _$identity);
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith => __$$ItemImplCopyWithImpl<_$ItemImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1341,8 +1266,7 @@ abstract class _Item implements Item {
   Coin get coin;
   @override
   @JsonKey(ignore: true)
-  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 Coin _$CoinFromJson(Map<String, dynamic> json) {
@@ -1362,15 +1286,13 @@ mixin _$Coin {
 
 /// @nodoc
 abstract class $CoinCopyWith<$Res> {
-  factory $CoinCopyWith(Coin value, $Res Function(Coin) then) =
-      _$CoinCopyWithImpl<$Res, Coin>;
+  factory $CoinCopyWith(Coin value, $Res Function(Coin) then) = _$CoinCopyWithImpl<$Res, Coin>;
   @useResult
   $Res call({String name, String symbol, String icon});
 }
 
 /// @nodoc
-class _$CoinCopyWithImpl<$Res, $Val extends Coin>
-    implements $CoinCopyWith<$Res> {
+class _$CoinCopyWithImpl<$Res, $Val extends Coin> implements $CoinCopyWith<$Res> {
   _$CoinCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -1404,20 +1326,15 @@ class _$CoinCopyWithImpl<$Res, $Val extends Coin>
 
 /// @nodoc
 abstract class _$$CoinImplCopyWith<$Res> implements $CoinCopyWith<$Res> {
-  factory _$$CoinImplCopyWith(
-          _$CoinImpl value, $Res Function(_$CoinImpl) then) =
-      __$$CoinImplCopyWithImpl<$Res>;
+  factory _$$CoinImplCopyWith(_$CoinImpl value, $Res Function(_$CoinImpl) then) = __$$CoinImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String symbol, String icon});
 }
 
 /// @nodoc
-class __$$CoinImplCopyWithImpl<$Res>
-    extends _$CoinCopyWithImpl<$Res, _$CoinImpl>
-    implements _$$CoinImplCopyWith<$Res> {
-  __$$CoinImplCopyWithImpl(_$CoinImpl _value, $Res Function(_$CoinImpl) _then)
-      : super(_value, _then);
+class __$$CoinImplCopyWithImpl<$Res> extends _$CoinCopyWithImpl<$Res, _$CoinImpl> implements _$$CoinImplCopyWith<$Res> {
+  __$$CoinImplCopyWithImpl(_$CoinImpl _value, $Res Function(_$CoinImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1448,8 +1365,7 @@ class __$$CoinImplCopyWithImpl<$Res>
 class _$CoinImpl implements _Coin {
   _$CoinImpl({required this.name, required this.symbol, required this.icon});
 
-  factory _$CoinImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CoinImplFromJson(json);
+  factory _$CoinImpl.fromJson(Map<String, dynamic> json) => _$$CoinImplFromJson(json);
 
   @override
   final String name;
@@ -1480,8 +1396,7 @@ class _$CoinImpl implements _Coin {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CoinImplCopyWith<_$CoinImpl> get copyWith =>
-      __$$CoinImplCopyWithImpl<_$CoinImpl>(this, _$identity);
+  _$$CoinImplCopyWith<_$CoinImpl> get copyWith => __$$CoinImplCopyWithImpl<_$CoinImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1492,10 +1407,7 @@ class _$CoinImpl implements _Coin {
 }
 
 abstract class _Coin implements Coin {
-  factory _Coin(
-      {required final String name,
-      required final String symbol,
-      required final String icon}) = _$CoinImpl;
+  factory _Coin({required final String name, required final String symbol, required final String icon}) = _$CoinImpl;
 
   factory _Coin.fromJson(Map<String, dynamic> json) = _$CoinImpl.fromJson;
 
@@ -1507,6 +1419,142 @@ abstract class _Coin implements Coin {
   String get icon;
   @override
   @JsonKey(ignore: true)
-  _$$CoinImplCopyWith<_$CoinImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CoinImplCopyWith<_$CoinImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+Meta _$MetaFromJson(Map<String, dynamic> json) {
+  return _Meta.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Meta {
+  int get page => throw _privateConstructorUsedError;
+  int get limit => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MetaCopyWith<Meta> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MetaCopyWith<$Res> {
+  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) = _$MetaCopyWithImpl<$Res, Meta>;
+  @useResult
+  $Res call({int page, int limit});
+}
+
+/// @nodoc
+class _$MetaCopyWithImpl<$Res, $Val extends Meta> implements $MetaCopyWith<$Res> {
+  _$MetaCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? page = null,
+    Object? limit = null,
+  }) {
+    return _then(_value.copyWith(
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$MetaImplCopyWith<$Res> implements $MetaCopyWith<$Res> {
+  factory _$$MetaImplCopyWith(_$MetaImpl value, $Res Function(_$MetaImpl) then) = __$$MetaImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int page, int limit});
+}
+
+/// @nodoc
+class __$$MetaImplCopyWithImpl<$Res> extends _$MetaCopyWithImpl<$Res, _$MetaImpl> implements _$$MetaImplCopyWith<$Res> {
+  __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then) : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? page = null,
+    Object? limit = null,
+  }) {
+    return _then(_$MetaImpl(
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      limit: null == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MetaImpl implements _Meta {
+  _$MetaImpl({required this.page, required this.limit});
+
+  factory _$MetaImpl.fromJson(Map<String, dynamic> json) => _$$MetaImplFromJson(json);
+
+  @override
+  final int page;
+  @override
+  final int limit;
+
+  @override
+  String toString() {
+    return 'Meta(page: $page, limit: $limit)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MetaImpl &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.limit, limit) || other.limit == limit));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, page, limit);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => __$$MetaImplCopyWithImpl<_$MetaImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MetaImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Meta implements Meta {
+  factory _Meta({required final int page, required final int limit}) = _$MetaImpl;
+
+  factory _Meta.fromJson(Map<String, dynamic> json) = _$MetaImpl.fromJson;
+
+  @override
+  int get page;
+  @override
+  int get limit;
+  @override
+  @JsonKey(ignore: true)
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => throw _privateConstructorUsedError;
 }

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/card_color.dart';
@@ -12,12 +11,10 @@ import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
-import '../../models/history_model/transaction_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
-import '../qr_detect_state/qr_detect_state.dart';
 
 part 'balance_store.g.dart';
 
@@ -26,10 +23,6 @@ class BalanceStore = _BalanceStore with _$BalanceStore;
 abstract class _BalanceStore with Store {
   @readonly
   MarketCapDto? _marketCap;
-  @observable
-  TransactionModel? transactions;
-  @readonly
-  int _currentPage = 1;
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
@@ -40,33 +33,11 @@ abstract class _BalanceStore with Store {
   BarModel? _selectedBar;
   @observable
   ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
-  @observable
-  ObservableMap<String, TransactionModel?> cardHistories = ObservableMap<String, TransactionModel?>();
-  @observable
-  bool historyLoading = false;
-
-  late void Function(String addr) onCardAdded = _defaultOnCardAdded;
-  late void Function(String addr) onBarAdded = _defaultOnBarAdded;
-
-  void _defaultOnCardAdded(String addr) {}
-
-  void _defaultOnBarAdded(String addr) {}
-
-  ValidationState get _validationStore => GetIt.I<ValidationState>();
 
   _BalanceStore() {
     getCardsFromStorage();
     getBarsFromStorage();
     getMarketCap();
-    getHistory();
-  }
-
-  Future<void> setOnCardAddedCallback(void Function(String addr) onCardAdded) async {
-    this.onCardAdded = onCardAdded;
-  }
-
-  Future<void> setOnBarAddedCallback(void Function(String addr) onBarAdded) async {
-    this.onBarAdded = onBarAdded;
   }
 
   Future<void> getMarketCap() async {
@@ -81,20 +52,6 @@ abstract class _BalanceStore with Store {
   Future<void> getBarsFromStorage() async {
     final allCards = await StorageUtils.getBars();
     _bars = allCards.where((element) => element.type == CardType.BAR).toList().asObservable();
-  }
-
-  Future<void> getHistory() async {
-    try {
-      historyLoading = true;
-      for (final element in _cards) {
-        transactions = await CoinsClient(dio).getTransactions(address: element.address);
-        cardHistories[element.address] = transactions;
-      }
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      historyLoading = false;
-    }
   }
 
   @computed
@@ -204,7 +161,6 @@ abstract class _BalanceStore with Store {
       );
       return card;
     } on DioException {
-      _validationStore.invalidAddress();
       log('Its not valid btc address');
     } finally {
       loadings[address] = false;
@@ -411,5 +367,20 @@ abstract class _BalanceStore with Store {
       return card?.activated;
     }
     return null;
+  }
+
+  late void Function(String addr) onCardAdded = _defaultOnCardAdded;
+  late void Function(String addr) onBarAdded = _defaultOnBarAdded;
+
+  void _defaultOnCardAdded(String addr) {}
+
+  void _defaultOnBarAdded(String addr) {}
+
+  Future<void> setOnCardAddedCallback(void Function(String addr) onCardAdded) async {
+    this.onCardAdded = onCardAdded;
+  }
+
+  Future<void> setOnBarAddedCallback(void Function(String addr) onBarAdded) async {
+    this.onBarAdded = onBarAdded;
   }
 }
