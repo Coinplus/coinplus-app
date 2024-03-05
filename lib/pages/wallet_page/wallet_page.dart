@@ -267,7 +267,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Center(
                                   child: Text(
-                                    '*****',
+                                    r'$*****',
                                     style: TextStyle(
                                       fontFamily: FontFamily.redHatBold,
                                       color: Colors.white,
