@@ -775,7 +775,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                       if (_accelerometerStore
                                                                                           .hasPerformedAction) {
                                                                                         return const Text(
-                                                                                          '****',
+                                                                                          r'$*****',
                                                                                           style: TextStyle(
                                                                                             fontFamily:
                                                                                                 FontFamily.redHatMedium,
