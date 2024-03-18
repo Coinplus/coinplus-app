@@ -11,7 +11,6 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../store/balance_store/balance_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/number_formatter.dart';
 import '../../widgets/loading_button/loading_button.dart';
@@ -24,8 +23,6 @@ class MarketPage extends StatefulWidget {
 }
 
 class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateMixin {
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   final _textController = TextEditingController();
@@ -258,7 +255,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
             CupertinoSliverRefreshControl(
               onRefresh: () async {
                 await HapticFeedback.mediumImpact();
-                await _balanceStore.getMarketCap();
+                await _marketPageStore.getMarketCap();
                 await _marketPageStore.onRefresh();
               },
             ),
@@ -275,7 +272,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
               ),
               title: Observer(
                 builder: (context) {
-                  final marketData = _balanceStore.marketCap;
+                  final marketData = _marketPageStore.marketCap;
                   if (marketData != null) {
                     final formattedNumber = formatLargeNumber(marketData.marketCap.toInt());
                     final formattedVolume = formatLargeNumber(marketData.volume.toInt());

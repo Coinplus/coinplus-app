@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/coins_dto/coin_model.dart';
+import '../../models/market_cap_dto/market_cap_dto.dart';
 
 part 'market_page_store.g.dart';
 
@@ -15,7 +16,11 @@ abstract class _MarketPageStore with Store {
   _MarketPageStore() {
     getSingleCoin();
     loadCoins();
+    getMarketCap();
   }
+
+  @readonly
+  MarketCapDto? _marketCap;
 
   @observable
   String q = '';
@@ -58,6 +63,10 @@ abstract class _MarketPageStore with Store {
   AnimationController? animationController;
 
   FocusNode focusNode = FocusNode();
+
+  Future<void> getMarketCap() async {
+    _marketCap = await CoinsClient(dio).getMarketCap();
+  }
 
   Future<void> getOtherCoins({required int pageNumber}) async {
     allCoins = await CoinsClient(dio).getAllCoins(page: pageNumber, limit: 1000);

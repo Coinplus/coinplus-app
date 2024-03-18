@@ -24,10 +24,10 @@ class CardIssueOptionsSheet extends StatelessWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
+    final _settingsState = SettingsState();
+
     final card = _balanceStore.cards[_settingsState.cardCurrentIndex];
     final walletAddress = card.address;
     final isActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);

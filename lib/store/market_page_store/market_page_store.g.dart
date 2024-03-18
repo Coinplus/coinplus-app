@@ -16,6 +16,23 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
           Computed<List<CoinResultModel>>(() => super.searchedList, name: '_MarketPageStore.searchedList'))
       .value;
 
+  late final _$_marketCapAtom = Atom(name: '_MarketPageStore._marketCap', context: context);
+
+  MarketCapDto? get marketCap {
+    _$_marketCapAtom.reportRead();
+    return super._marketCap;
+  }
+
+  @override
+  MarketCapDto? get _marketCap => marketCap;
+
+  @override
+  set _marketCap(MarketCapDto? value) {
+    _$_marketCapAtom.reportWrite(value, super._marketCap, () {
+      super._marketCap = value;
+    });
+  }
+
   late final _$qAtom = Atom(name: '_MarketPageStore.q', context: context);
 
   @override

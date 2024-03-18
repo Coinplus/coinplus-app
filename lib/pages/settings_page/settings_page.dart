@@ -41,11 +41,10 @@ class SettingsPage extends HookWidget {
 
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    final _settingsState = SettingsState();
     final _auth = LocalAuthentication();
     final _nfcState = useMemoized(NfcStore.new);
     useEffect(() {
@@ -79,7 +78,7 @@ class SettingsPage extends HookWidget {
             await StorageUtils.setString(key: 'biometricsToken', value: currentToken);
             await recordAmplitudeEventPartTwo(const FaceIdEnabled());
           } else {
-            await pleaseEnableBiometrics(context);
+            await pleaseEnableBiometrics();
           }
         }
         await _walletProtectState.checkBiometricStatus();
@@ -111,6 +110,7 @@ class SettingsPage extends HookWidget {
           _accelerometerStore.hasPerformedAction = false;
         } else {
           await _walletProtectState.hideBalances();
+          await _accelerometerStore.disableAccelerometerFunction();
           _accelerometerStore.hasPerformedAction = false;
         }
         await _walletProtectState.checkHideBalancesToggleStatus();
@@ -389,7 +389,7 @@ class SettingsPage extends HookWidget {
                                   height: 24,
                                 ),
                                 title: const Text(
-                                  'Hide balances',
+                                  'Flip Phone to Hide Balance',
                                   style: TextStyle(
                                     fontFamily: FontFamily.redHatMedium,
                                     fontSize: 15,

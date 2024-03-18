@@ -29,15 +29,13 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
-import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../utils/card_color_detecting.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
@@ -76,11 +74,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
 
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   final _flipCardController = FlipCardController();
-  final _lineStore = LinesStore();
   final _focusNode = FocusNode();
   final _addressState = AddressState(CardType.CARD);
-  final _acceptState = AcceptState();
-  final _checkboxState = CheckboxState();
+  final _allSettingsState = AllSettingsState();
   late String btcAddress = '';
   late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
@@ -159,13 +155,14 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
               child: IconButton(
                 onPressed: () async {
                   unawaited(
-                    _flipCardController.controller!.value == 1 && _lineStore.isLineVisible
+                    _flipCardController.controller!.value == 1 && _allSettingsState.isLineVisible
                         ? makeLineInvisible()
                         : router.pop(),
                   );
                   await Future.delayed(const Duration(milliseconds: 500));
-                  _checkboxState.isActive = false;
-                  _acceptState.isAccepted = true;
+                  _allSettingsState
+                    ..isActive = false
+                    ..isAccepted = true;
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -440,11 +437,9 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                   if (_balanceStore.selectedCard != null &&
                                                       _balanceStore.selectedCard!.data != null &&
                                                       data != null) {
-                                                    final cardBalance = _balanceStore.selectedCard!.data!.balance;
-                                                    final cardTxoSum = _balanceStore.selectedCard!.data!.spentTxoSum;
-                                                    final currentBalance = cardBalance - cardTxoSum;
+                                                    final cardBalance = _balanceStore.selectedCard!.data!.netTxoCount;
 
-                                                    if (currentBalance.isNaN) {
+                                                    if (cardBalance.isNaN) {
                                                       return const Padding(
                                                         padding: EdgeInsets.all(4),
                                                         child: Row(
@@ -465,7 +460,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                     return Row(
                                                       children: [
                                                         Text(
-                                                          '\$${myFormat.format(currentBalance / 100000000 * data.price)}',
+                                                          '\$${myFormat.format(cardBalance / 100000000 * data.price)}',
                                                           style: const TextStyle(
                                                             fontFamily: FontFamily.redHatMedium,
                                                             fontWeight: FontWeight.w700,
@@ -580,7 +575,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                                 Observer(
                                                   builder: (context) {
                                                     return Opacity(
-                                                      opacity: _lineStore.isLineVisible ? 1 : 0,
+                                                      opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
                                                           context.height > 852
@@ -650,7 +645,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               else
                                 Gap(context.height * 0.049),
                               Opacity(
-                                opacity: _lineStore.isLineVisible ? 0 : 1,
+                                opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -1030,18 +1025,18 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                         }
                                       },
                                     );
-                                    _checkboxState.makeActiveCheckbox();
+                                    _allSettingsState.makeActiveCheckbox();
                                     HapticFeedback.heavyImpact();
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: _checkboxState.isActivatedCheckBox
+                                        color: _allSettingsState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
                                             : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
-                                      color: _checkboxState.isActivatedCheckBox
+                                      color: _allSettingsState.isActivatedCheckBox
                                           ? const Color(0xFF73C3A6).withOpacity(0.1)
                                           : const Color(0xFFFF2E00).withOpacity(0.05),
                                     ),
@@ -1085,22 +1080,22 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                   const WarningCheckboxClicked(),
                                 ),
                               );
-                              _checkboxState.makeActive();
+                              _allSettingsState.makeActive();
                               HapticFeedback.heavyImpact();
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: _checkboxState.isActive
+                                  color: _allSettingsState.isActive
                                       ? const Color(0xFF73C3A6)
-                                      : _acceptState.isAccepted
+                                      : _allSettingsState.isAccepted
                                           ? Colors.grey.withOpacity(0.3)
                                           : const Color(0xFFFF2E00).withOpacity(0.6),
                                 ),
-                                color: _checkboxState.isActive
+                                color: _allSettingsState.isActive
                                     ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                    : _acceptState.isAccepted
+                                    : _allSettingsState.isAccepted
                                         ? Colors.white.withOpacity(0.7)
                                         : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
@@ -1132,13 +1127,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             ),
                           ),
                           crossFadeState:
-                              !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                              !_allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ),
                       ],
                     ).paddingHorizontal(16),
                     Visibility(
-                      visible: !_lineStore.isLineVisible,
+                      visible: !_allSettingsState.isLineVisible,
                       child: Visibility(
                         visible: widget.isActivated == true,
                         child: Positioned(
@@ -1162,7 +1157,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                     side: BorderSide(
                                       color: const Color(0xFFFF2E00).withOpacity(0.6),
                                     ),
-                                    value: _checkboxState.isActivatedCheckBox,
+                                    value: _allSettingsState.isActivatedCheckBox,
                                     onChanged: (_) {
                                       hasShownWallet().then(
                                         (hasShown) async {
@@ -1189,7 +1184,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                           }
                                         },
                                       );
-                                      _checkboxState.makeActiveCheckbox();
+                                      _allSettingsState.makeActiveCheckbox();
                                     },
                                     splashRadius: 15,
                                   );
@@ -1203,7 +1198,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                     Observer(
                       builder: (context) {
                         return Visibility(
-                          visible: _lineStore.isLineVisible,
+                          visible: _allSettingsState.isLineVisible,
                           child: Positioned(
                             right: 16,
                             child: Transform.scale(
@@ -1223,16 +1218,16 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                         ),
                                       ),
                                       side: BorderSide(
-                                        color: _acceptState.isAccepted
+                                        color: _allSettingsState.isAccepted
                                             ? Colors.grey.withOpacity(0.5)
                                             : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
-                                      value: _checkboxState.isActive,
+                                      value: _allSettingsState.isActive,
                                       onChanged: (_) {
                                         recordAmplitudeEvent(
                                           const WarningCheckboxClicked(),
                                         );
-                                        _checkboxState.makeActive();
+                                        _allSettingsState.makeActive();
                                       },
                                       splashRadius: 15,
                                     );
@@ -1252,10 +1247,10 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
           const Spacer(),
           Observer(
             builder: (_) {
-              return _lineStore.isLineVisible
+              return _allSettingsState.isLineVisible
                   ? LoadingButton(
                       onPressed: () async {
-                        if (_checkboxState.isActive) {
+                        if (_allSettingsState.isActive) {
                           if (widget.isOriginalCard == true) {
                             unawaited(connectedCount(widget.receivedData!));
                             if (widget.cardColor == '0') {
@@ -1309,7 +1304,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                         } else {
                           await HapticFeedback.vibrate();
-                          _acceptState.accept();
+                          _allSettingsState.accept();
                           _shakeAnimationController.start();
                           await Future.delayed(
                             const Duration(
@@ -1357,7 +1352,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                           onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
                               ? null
                               : _addressState.isAddressVisible
-                                  ? _checkboxState.isActivatedCheckBox
+                                  ? _allSettingsState.isActivatedCheckBox
                                       ? () async {
                                           await hasShownWallet().then(
                                             (hasShown) async {
@@ -1397,7 +1392,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             await Future.delayed(
                                               const Duration(milliseconds: 300),
                                             );
-                                            _lineStore.makeVisible();
+                                            _allSettingsState.makeVisible();
                                           }
                                         }
                                       : () async {
@@ -1424,7 +1419,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                           );
                                           if (widget.isActivated == true) {
                                             await HapticFeedback.vibrate();
-                                            _acceptState.checkboxAccept();
+                                            _allSettingsState.checkboxAccept();
                                             _shakeAnimationController.start();
                                             await Future.delayed(
                                               const Duration(
@@ -1449,7 +1444,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                             } else {
                                               if (_flipCardController.state!.isFront) {
                                                 await _toggleCard();
-                                                _lineStore.makeVisible();
+                                                _allSettingsState.makeVisible();
                                               }
                                             }
                                           }
@@ -1481,6 +1476,6 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
   Future<void> makeLineInvisible() async {
     await _toggleCard();
     await Future.delayed(const Duration(milliseconds: 350));
-    _lineStore.makeInvisible();
+    _allSettingsState.makeInvisible();
   }
 }

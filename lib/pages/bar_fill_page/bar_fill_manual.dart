@@ -27,14 +27,12 @@ import '../../models/amplitude_user_property_model/amplitude_user_property_model
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
-import '../../store/accept_state/accept_state.dart';
 import '../../store/address_and_balance_state/address_and_balance_state.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/checkbox_state/checkbox_state.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
-import '../../store/secret_lines_state/secret_lines_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines_bar.dart';
@@ -62,13 +60,11 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   late AnimationController _textFieldAnimationController;
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
+  final _allSettingsState = AllSettingsState();
   final _addressState = AddressState(CardType.BAR);
   final _connectivityStore = ConnectivityStore();
   late String btcAddress = '';
   final _focusNode = FocusNode();
-  final _lineStore = LinesStore();
-  final _acceptState = AcceptState();
-  final _checkboxState = CheckboxState();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -133,7 +129,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
               ),
               child: IconButton(
                 onPressed: () {
-                  _lineStore.isLineVisible ? makeLineInvisible() : router.pop();
+                  _allSettingsState.isLineVisible ? makeLineInvisible() : router.pop();
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -188,7 +184,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: _lineStore.isLineVisible
+                                  image: _allSettingsState.isLineVisible
                                       ? Assets.images.bar.filledBar.image().image
                                       : Assets.images.bar.barFill.image().image,
                                 ),
@@ -198,7 +194,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                 child: Row(
                                   children: [
                                     Opacity(
-                                      opacity: _lineStore.isLineVisible ? 1 : 0,
+                                      opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                       child: CustomPaint(
                                         size: Size(61, context.height > 667 ? 245 : 280),
                                         painter: BarLinesCustomPaint(),
@@ -229,7 +225,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             ),
                                             const Gap(10),
                                             Opacity(
-                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
@@ -263,7 +259,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                           }
                                                           return Text(
                                                             (_balanceStore.selectedBar != null
-                                                                    ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data!.price)}'
+                                                                    ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.netTxoCount) / 100000000 * data!.price)}'
                                                                     : '')
                                                                 .toString(),
                                                             style: TextStyle(
@@ -282,10 +278,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             ),
                                             if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
-                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                               child: ScaleTap(
                                                 enableFeedback: false,
-                                                onPressed: _lineStore.isLineVisible
+                                                onPressed: _allSettingsState.isLineVisible
                                                     ? null
                                                     : () async {
                                                         await recordAmplitudeEvent(
@@ -359,7 +355,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             ),
                                             if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
-                                              opacity: _lineStore.isLineVisible ? 0 : 1,
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                               child: Assets.images.bar.barCoinplusLogo.image(
                                                 height: 40,
                                               ),
@@ -428,7 +424,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                   }
                                                   return Text(
                                                     (_balanceStore.selectedBar != null
-                                                            ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.balance - _balanceStore.selectedBar!.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                            ? '\$${myFormat.format((_balanceStore.selectedBar!.data!.netTxoCount) / 100000000 * data.price)}'
                                                             : '')
                                                         .toString(),
                                                     style: TextStyle(
@@ -523,7 +519,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               ),
                             ),
                             crossFadeState:
-                                _lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                _allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                             duration: const Duration(milliseconds: 600),
                           ),
                           secondChild: Container(
@@ -735,18 +731,18 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                 }
                                               },
                                             );
-                                            _checkboxState.makeActiveCheckbox();
+                                            _allSettingsState.makeActiveCheckbox();
                                             HapticFeedback.heavyImpact();
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(8),
                                               border: Border.all(
-                                                color: _checkboxState.isActivatedCheckBox
+                                                color: _allSettingsState.isActivatedCheckBox
                                                     ? const Color(0xFF73C3A6)
                                                     : const Color(0xFFFF2E00).withOpacity(0.6),
                                               ),
-                                              color: _checkboxState.isActivatedCheckBox
+                                              color: _allSettingsState.isActivatedCheckBox
                                                   ? const Color(0xFF73C3A6).withOpacity(0.1)
                                                   : const Color(0xFFFF2E00).withOpacity(0.05),
                                             ),
@@ -859,22 +855,22 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                       const WarningCheckboxClicked(),
                                     ),
                                   );
-                                  _checkboxState.makeActive();
+                                  _allSettingsState.makeActive();
                                   HapticFeedback.heavyImpact();
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
-                                      color: _checkboxState.isActive
+                                      color: _allSettingsState.isActive
                                           ? const Color(0xFF73C3A6)
-                                          : _acceptState.isAccepted
+                                          : _allSettingsState.isAccepted
                                               ? Colors.grey.withOpacity(0.3)
                                               : const Color(0xFFFF2E00).withOpacity(0.6),
                                     ),
-                                    color: _checkboxState.isActive
+                                    color: _allSettingsState.isActive
                                         ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                        : _acceptState.isAccepted
+                                        : _allSettingsState.isAccepted
                                             ? Colors.white.withOpacity(0.7)
                                             : const Color(0xFFFF2E00).withOpacity(0.05),
                                   ),
@@ -905,12 +901,13 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                   ),
                                 ),
                               ),
-                              crossFadeState:
-                                  !_lineStore.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                              crossFadeState: !_allSettingsState.isLineVisible
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
                               duration: const Duration(milliseconds: 400),
                             ).paddingHorizontal(16),
                             Visibility(
-                              visible: !_lineStore.isLineVisible,
+                              visible: !_allSettingsState.isLineVisible,
                               child: FutureBuilder<bool?>(
                                 future: _balanceStore.getCard(
                                   receivedData: widget.receivedData,
@@ -941,7 +938,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                 side: BorderSide(
                                                   color: const Color(0xFFFF2E00).withOpacity(0.6),
                                                 ),
-                                                value: _checkboxState.isActivatedCheckBox,
+                                                value: _allSettingsState.isActivatedCheckBox,
                                                 onChanged: (_) {
                                                   hasShownWallet().then(
                                                     (hasShown) async {
@@ -969,7 +966,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                     },
                                                   );
 
-                                                  _checkboxState.makeActiveCheckbox();
+                                                  _allSettingsState.makeActiveCheckbox();
                                                 },
                                                 splashRadius: 15,
                                               );
@@ -983,7 +980,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               ),
                             ),
                             Visibility(
-                              visible: _lineStore.isLineVisible,
+                              visible: _allSettingsState.isLineVisible,
                               child: Positioned(
                                 right: 16,
                                 child: Transform.scale(
@@ -1003,18 +1000,18 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                             ),
                                           ),
                                           side: BorderSide(
-                                            color: _acceptState.isAccepted
+                                            color: _allSettingsState.isAccepted
                                                 ? Colors.grey.withOpacity(0.5)
                                                 : const Color(0xFFFF2E00).withOpacity(0.6),
                                           ),
-                                          value: _checkboxState.isActive,
+                                          value: _allSettingsState.isActive,
                                           onChanged: (_) {
                                             unawaited(
                                               recordAmplitudeEvent(
                                                 const WarningCheckboxClicked(),
                                               ),
                                             );
-                                            _checkboxState.makeActive();
+                                            _allSettingsState.makeActive();
                                           },
                                           splashRadius: 15,
                                         );
@@ -1034,10 +1031,10 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
               if (context.height > 667) const Gap(20) else const Gap(5),
               Observer(
                 builder: (_) {
-                  return _lineStore.isLineVisible
+                  return _allSettingsState.isLineVisible
                       ? LoadingButton(
                           onPressed: () async {
-                            if (_checkboxState.isActive) {
+                            if (_allSettingsState.isActive) {
                               _balanceStore.saveSelectedBar(color: CardColor.SILVER);
                               _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               await hasShownWallet().then((hasShown) {
@@ -1057,7 +1054,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                               });
                             } else {
                               await HapticFeedback.vibrate();
-                              _acceptState.accept();
+                              _allSettingsState.accept();
                               _shakeAnimationController.start();
                               await Future.delayed(
                                 const Duration(
@@ -1109,7 +1106,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                   onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
                                       ? null
                                       : _addressState.isAddressVisible
-                                          ? _checkboxState.isActivatedCheckBox
+                                          ? _allSettingsState.isActivatedCheckBox
                                               ? () async {
                                                   await hasShownWallet().then(
                                                     (hasShown) async {
@@ -1146,7 +1143,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                     );
                                                     _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                                                   } else {
-                                                    _lineStore.makeVisible();
+                                                    _allSettingsState.makeVisible();
                                                   }
                                                 }
                                               : () async {
@@ -1173,7 +1170,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                   );
                                                   if (isActivated == true) {
                                                     await HapticFeedback.vibrate();
-                                                    _acceptState.checkboxAccept();
+                                                    _allSettingsState.checkboxAccept();
                                                     _shakeAnimationController.start();
                                                     await Future.delayed(
                                                       const Duration(
@@ -1197,7 +1194,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                                                       );
                                                       _balanceStore.onCardAdded(_balanceStore.selectedBar!.address);
                                                     } else {
-                                                      _lineStore.makeVisible();
+                                                      _allSettingsState.makeVisible();
                                                     }
                                                   }
                                                 }
@@ -1225,6 +1222,6 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
 
   Future<void> makeLineInvisible() async {
     await Future.delayed(const Duration(milliseconds: 350));
-    _lineStore.makeInvisible();
+    _allSettingsState.makeInvisible();
   }
 }

@@ -254,7 +254,7 @@ class HistoryPage extends HookWidget {
                                                                             ],
                                                                           ),
                                                                           Text(
-                                                                            '\$${myFormat.format((card.data!.balance - card.data!.spentTxoSum) / 100000000 * data!.price)}',
+                                                                            '\$${myFormat.format((card.data!.netTxoCount) / 100000000 * data!.price)}',
                                                                             style: const TextStyle(
                                                                               fontSize: 16,
                                                                               fontFamily: FontFamily.redHatMedium,
@@ -340,9 +340,10 @@ class HistoryPage extends HookWidget {
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '\$${myFormat.format((singleCard.data!.balance - singleCard.data!.spentTxoSum) / 100000000 * data!.price)}',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
+                                                  '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        singleCard.data!.netTxoCount.toString().length > 8 ? 17 : 20,
                                                     fontFamily: FontFamily.redHatMedium,
                                                     color: AppColors.textHintsColor,
                                                     fontWeight: FontWeight.w700,
@@ -479,7 +480,7 @@ class HistoryPage extends HookWidget {
                                                                             ],
                                                                           ),
                                                                           Text(
-                                                                            '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data!.price)}',
+                                                                            '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data!.price)}',
                                                                             style: const TextStyle(
                                                                               fontSize: 16,
                                                                               fontFamily: FontFamily.redHatMedium,
@@ -565,7 +566,7 @@ class HistoryPage extends HookWidget {
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '\$${myFormat.format((singleCard.data!.balance - singleCard.data!.spentTxoSum) / 100000000 * data!.price)}',
+                                                  '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
                                                   style: const TextStyle(
                                                     fontSize: 20,
                                                     fontFamily: FontFamily.redHatMedium,

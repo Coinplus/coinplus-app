@@ -26,15 +26,10 @@ mixin _$CardModel {
   WalletType get label => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get blockchain => throw _privateConstructorUsedError;
-  int? get totalReceived => throw _privateConstructorUsedError;
-  int? get totalSent => throw _privateConstructorUsedError;
-  int? get balance => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'chain_stats')
   ChainStats? get data => throw _privateConstructorUsedError;
-  @JsonKey(name: 'mempool_stats')
-  MempoolStats? get mempoolStats => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,12 +47,8 @@ abstract class $CardModelCopyWith<$Res> {
       WalletType label,
       String name,
       String blockchain,
-      int? totalReceived,
-      int? totalSent,
-      int? balance,
       @JsonKey(fromJson: timeFromJson) String createdAt,
-      @JsonKey(name: 'chain_stats') ChainStats? data,
-      @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
+      @JsonKey(name: 'chain_stats') ChainStats? data});
 }
 
 /// @nodoc
@@ -78,12 +69,8 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel> implements $CardMode
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
-    Object? totalReceived = freezed,
-    Object? totalSent = freezed,
-    Object? balance = freezed,
     Object? createdAt = null,
     Object? data = freezed,
-    Object? mempoolStats = freezed,
   }) {
     return _then(_value.copyWith(
       address: null == address
@@ -110,18 +97,6 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel> implements $CardMode
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
-      totalReceived: freezed == totalReceived
-          ? _value.totalReceived
-          : totalReceived // ignore: cast_nullable_to_non_nullable
-              as int?,
-      totalSent: freezed == totalSent
-          ? _value.totalSent
-          : totalSent // ignore: cast_nullable_to_non_nullable
-              as int?,
-      balance: freezed == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -130,10 +105,6 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel> implements $CardMode
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as ChainStats?,
-      mempoolStats: freezed == mempoolStats
-          ? _value.mempoolStats
-          : mempoolStats // ignore: cast_nullable_to_non_nullable
-              as MempoolStats?,
     ) as $Val);
   }
 }
@@ -151,12 +122,8 @@ abstract class _$$CardModelImplCopyWith<$Res> implements $CardModelCopyWith<$Res
       WalletType label,
       String name,
       String blockchain,
-      int? totalReceived,
-      int? totalSent,
-      int? balance,
       @JsonKey(fromJson: timeFromJson) String createdAt,
-      @JsonKey(name: 'chain_stats') ChainStats? data,
-      @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats});
+      @JsonKey(name: 'chain_stats') ChainStats? data});
 }
 
 /// @nodoc
@@ -173,12 +140,8 @@ class __$$CardModelImplCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res, 
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
-    Object? totalReceived = freezed,
-    Object? totalSent = freezed,
-    Object? balance = freezed,
     Object? createdAt = null,
     Object? data = freezed,
-    Object? mempoolStats = freezed,
   }) {
     return _then(_$CardModelImpl(
       address: null == address
@@ -205,18 +168,6 @@ class __$$CardModelImplCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res, 
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
-      totalReceived: freezed == totalReceived
-          ? _value.totalReceived
-          : totalReceived // ignore: cast_nullable_to_non_nullable
-              as int?,
-      totalSent: freezed == totalSent
-          ? _value.totalSent
-          : totalSent // ignore: cast_nullable_to_non_nullable
-              as int?,
-      balance: freezed == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -225,10 +176,6 @@ class __$$CardModelImplCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res, 
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as ChainStats?,
-      mempoolStats: freezed == mempoolStats
-          ? _value.mempoolStats
-          : mempoolStats // ignore: cast_nullable_to_non_nullable
-              as MempoolStats?,
     ));
   }
 }
@@ -243,12 +190,8 @@ class _$CardModelImpl implements _CardModel {
       this.label = WalletType.COINPLUS_WALLET,
       this.name = 'Coinplus Bitcoin Card',
       this.blockchain = 'BTC',
-      this.totalReceived,
-      this.totalSent,
-      this.balance,
       @JsonKey(fromJson: timeFromJson) this.createdAt = '',
-      @JsonKey(name: 'chain_stats') this.data,
-      @JsonKey(name: 'mempool_stats') this.mempoolStats});
+      @JsonKey(name: 'chain_stats') this.data});
 
   factory _$CardModelImpl.fromJson(Map<String, dynamic> json) => _$$CardModelImplFromJson(json);
 
@@ -270,24 +213,15 @@ class _$CardModelImpl implements _CardModel {
   @JsonKey()
   final String blockchain;
   @override
-  final int? totalReceived;
-  @override
-  final int? totalSent;
-  @override
-  final int? balance;
-  @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
   @override
   @JsonKey(name: 'chain_stats')
   final ChainStats? data;
-  @override
-  @JsonKey(name: 'mempool_stats')
-  final MempoolStats? mempoolStats;
 
   @override
   String toString() {
-    return 'CardModel(address: $address, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, totalReceived: $totalReceived, totalSent: $totalSent, balance: $balance, createdAt: $createdAt, data: $data, mempoolStats: $mempoolStats)';
+    return 'CardModel(address: $address, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, createdAt: $createdAt, data: $data)';
   }
 
   @override
@@ -301,18 +235,13 @@ class _$CardModelImpl implements _CardModel {
             (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.blockchain, blockchain) || other.blockchain == blockchain) &&
-            (identical(other.totalReceived, totalReceived) || other.totalReceived == totalReceived) &&
-            (identical(other.totalSent, totalSent) || other.totalSent == totalSent) &&
-            (identical(other.balance, balance) || other.balance == balance) &&
             (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
-            (identical(other.data, data) || other.data == data) &&
-            (identical(other.mempoolStats, mempoolStats) || other.mempoolStats == mempoolStats));
+            (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, color, type, label, name, blockchain, totalReceived, totalSent,
-      balance, createdAt, data, mempoolStats);
+  int get hashCode => Object.hash(runtimeType, address, color, type, label, name, blockchain, createdAt, data);
 
   @JsonKey(ignore: true)
   @override
@@ -336,12 +265,8 @@ abstract class _CardModel implements CardModel, AbstractCard {
       final WalletType label,
       final String name,
       final String blockchain,
-      final int? totalReceived,
-      final int? totalSent,
-      final int? balance,
       @JsonKey(fromJson: timeFromJson) final String createdAt,
-      @JsonKey(name: 'chain_stats') final ChainStats? data,
-      @JsonKey(name: 'mempool_stats') final MempoolStats? mempoolStats}) = _$CardModelImpl;
+      @JsonKey(name: 'chain_stats') final ChainStats? data}) = _$CardModelImpl;
 
   factory _CardModel.fromJson(Map<String, dynamic> json) = _$CardModelImpl.fromJson;
 
@@ -358,20 +283,11 @@ abstract class _CardModel implements CardModel, AbstractCard {
   @override
   String get blockchain;
   @override
-  int? get totalReceived;
-  @override
-  int? get totalSent;
-  @override
-  int? get balance;
-  @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;
   @override
   @JsonKey(name: 'chain_stats')
   ChainStats? get data;
-  @override
-  @JsonKey(name: 'mempool_stats')
-  MempoolStats? get mempoolStats;
   @override
   @JsonKey(ignore: true)
   _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith => throw _privateConstructorUsedError;

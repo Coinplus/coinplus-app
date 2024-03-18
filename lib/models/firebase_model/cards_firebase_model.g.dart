@@ -12,7 +12,7 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       activationFailureCount: json['activationFailureCount'] as int?,
       address: json['address'] as String?,
       approved: json['approved'] as bool?,
-      barcodeId: json['barcodeId'] as int?,
+      barcodeId: json['barcodeId'] as String?,
       color: json['color'] as String?,
       connected: json['connected'] as int?,
       deleted: json['deleted'] as int?,

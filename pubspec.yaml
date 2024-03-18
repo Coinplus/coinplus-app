@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.2+2
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -61,7 +61,6 @@ dependencies:
   share_plus: ^7.2.1
   qr_flutter: ^4.1.0
   bs58: ^1.0.2
-  flutter_bitcoin: ^1.0.1
   elliptic: ^0.3.10
   ecdsa: ^0.1.0
   hashlib: ^1.12.0
@@ -80,17 +79,16 @@ dependencies:
   package_info_plus: ^5.0.1
   cloud_firestore: ^4.13.3
   cloud_firestore_odm: ^1.0.0-dev.78
-  ramp_flutter: ^2.0.2
+  #ramp_flutter: ^2.0.2
   action_slider: ^0.7.0
   did_change_authlocal: ^0.0.6
   shimmer: ^3.0.0
-  restart_app: ^1.2.1
-  bitcoin_base: ^4.0.0
-  blockchain_utils: ^1.6.0
   cached_network_image: ^3.3.1
   dio_interceptor_plus: ^0.0.2
   sensors_plus: ^4.0.2
-  spoiler_widget: ^1.0.1
+  bitcoin_flutter:
+    git:
+      url: https://github.com/Coinplus/coinplus_bitcoin_flutter.git
 
 
 dev_dependencies:

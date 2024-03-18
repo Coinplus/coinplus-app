@@ -49,18 +49,15 @@ class CardSettingsPage extends HookWidget {
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
 
     final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
-
+    final _settingsState = SettingsState();
     final _isPinSet = getIsPinCodeSet();
     final _auth = LocalAuthentication();
-
     final isInactive = useState(false);
     final appLocked = useState(false);
     final isPaused = useState(false);

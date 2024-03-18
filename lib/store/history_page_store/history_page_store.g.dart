@@ -234,11 +234,34 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
+  late final _$currentPageAtom = Atom(name: '_HistoryPageStore.currentPage', context: context);
+
+  @override
+  int get currentPage {
+    _$currentPageAtom.reportRead();
+    return super.currentPage;
+  }
+
+  @override
+  set currentPage(int value) {
+    _$currentPageAtom.reportWrite(value, super.currentPage, () {
+      super.currentPage = value;
+    });
+  }
+
   late final _$setRefreshingAsyncAction = AsyncAction('_HistoryPageStore.setRefreshing', context: context);
 
   @override
   Future<void> setRefreshing({required bool value}) {
     return _$setRefreshingAsyncAction.run(() => super.setRefreshing(value: value));
+  }
+
+  late final _$fetchNextPageTransactionsAsyncAction =
+      AsyncAction('_HistoryPageStore.fetchNextPageTransactions', context: context);
+
+  @override
+  Future<void> fetchNextPageTransactions({required String address}) {
+    return _$fetchNextPageTransactionsAsyncAction.run(() => super.fetchNextPageTransactions(address: address));
   }
 
   late final _$setCardHistoryIndexAsyncAction = AsyncAction('_HistoryPageStore.setCardHistoryIndex', context: context);
@@ -336,7 +359,8 @@ cardTransactions: ${cardTransactions},
 barTransactions: ${barTransactions},
 lastRefreshedMap: ${lastRefreshedMap},
 isButtonDisabled: ${isButtonDisabled},
-isRefreshing: ${isRefreshing}
+isRefreshing: ${isRefreshing},
+currentPage: ${currentPage}
     ''';
   }
 }

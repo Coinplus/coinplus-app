@@ -24,10 +24,9 @@ class BarIssueOptionsSheet extends StatelessWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
+    final _settingsState = SettingsState();
     final bar = _balanceStore.bars[_settingsState.barCurrentIndex];
     final walletAddress = bar.address;
     final isActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);

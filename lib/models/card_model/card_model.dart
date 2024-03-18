@@ -5,7 +5,6 @@ import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../abstract_card/abstract_card.dart';
 import '../chain_stats/chain_stats.dart';
-import '../mempool_stats/mempool_stats.dart';
 
 part 'card_model.freezed.dart';
 
@@ -21,12 +20,8 @@ class CardModel with _$CardModel {
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Card') String name,
     @Default('BTC') String blockchain,
-    int? totalReceived,
-    int? totalSent,
-    int? balance,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
     @JsonKey(name: 'chain_stats') ChainStats? data,
-    @JsonKey(name: 'mempool_stats') MempoolStats? mempoolStats,
   }) = _CardModel;
 
   factory CardModel.fromJson(Map<String, dynamic> json) => _$CardModelFromJson(json);

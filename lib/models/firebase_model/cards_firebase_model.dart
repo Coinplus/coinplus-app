@@ -9,7 +9,7 @@ class CardsModel {
   late int? activationFailureCount;
   final String? address;
   final bool? approved;
-  final int? barcodeId;
+  final String? barcodeId;
   final String? color;
   late int? connected;
   late int? deleted;

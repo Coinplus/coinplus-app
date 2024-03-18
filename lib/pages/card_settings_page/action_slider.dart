@@ -30,10 +30,9 @@ class ActionSliderForCardDelete extends StatelessWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
+    final _settingsState = SettingsState();
     return ActionSlider.standard(
       direction: TextDirection.rtl,
       height: 60,
