@@ -1,9 +1,9 @@
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:bitcoin_flutter/bitcoin_flutter.dart';
 import 'package:bs58/bs58.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter_bitcoin/flutter_bitcoin.dart';
 import 'package:hashlib/hashlib.dart';
 
 import 'data_utils.dart';

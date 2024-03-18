@@ -49,8 +49,6 @@ class BarSettingsPage extends HookWidget {
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
@@ -59,7 +57,7 @@ class BarSettingsPage extends HookWidget {
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _isPinSet = getIsPinCodeSet();
     final _auth = LocalAuthentication();
-
+    final _settingsState = SettingsState();
     final isInactive = useState(false);
     final appLocked = useState(false);
     final isPaused = useState(false);
@@ -729,7 +727,7 @@ class BarSettingsPage extends HookWidget {
                                   );
                                 }
                                 await router.pop();
-                                await _balanceStore.getCardsInfo();
+                                await _balanceStore.getBarsInfo();
                               }
                             : null,
                         child: const Text(

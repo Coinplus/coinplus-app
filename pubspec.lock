@@ -137,22 +137,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  bitcoin_base:
+  bitcoin_flutter:
     dependency: "direct main"
     description:
-      name: bitcoin_base
-      sha256: fb1bed34137616b4203684fbfdf34b6b6bfc6bb1a2089e0646f966869edc4b13
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
-  blockchain_utils:
-    dependency: "direct main"
-    description:
-      name: blockchain_utils
-      sha256: "9701dfaa74caad4daae1785f1ec4445cf7fb94e45620bc3a4aca1b9b281dc6c9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.6.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "7df15bf92b36743381f344c59f7d527e7efec7b1"
+      url: "https://github.com/Coinplus/coinplus_bitcoin_flutter.git"
+    source: git
+    version: "2.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -638,14 +631,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bitcoin:
-    dependency: "direct main"
-    description:
-      name: flutter_bitcoin
-      sha256: "1a783c4d80f83b1ba5dedb4f18ebf522c90dd99e6fa0224b5228f68aa29b3442"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   flutter_branch_sdk:
     dependency: "direct main"
     description:
@@ -1367,22 +1352,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
-  ramp_flutter:
-    dependency: "direct main"
-    description:
-      name: ramp_flutter
-      sha256: "7ef189f4e84882ad3c1cb4fd4553fc1a5ccde30ab71a8c0cf5b31659471e2374"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
-  restart_app:
-    dependency: "direct main"
-    description:
-      name: restart_app
-      sha256: b37daeb1c02fcab30e19d9e30b6fdd215bd53577efd927042eb77cf6f09daadb
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   retrofit:
     dependency: "direct main"
     description:
@@ -1604,14 +1573,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  spoiler_widget:
-    dependency: "direct main"
-    description:
-      name: spoiler_widget
-      sha256: "5b96da87f0c2c0da2d2da433d8f58522ae968cda654a137a8e96b78bfa55a2a9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   sprintf:
     dependency: transitive
     description:

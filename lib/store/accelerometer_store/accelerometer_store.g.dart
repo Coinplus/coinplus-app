@@ -38,6 +38,14 @@ mixin _$AccelerometerStore on _AccelerometerStore, Store {
     return _$saveActionStateAsyncAction.run(() => super.saveActionState());
   }
 
+  late final _$disableAccelerometerFunctionAsyncAction =
+      AsyncAction('_AccelerometerStore.disableAccelerometerFunction', context: context);
+
+  @override
+  Future<void> disableAccelerometerFunction() {
+    return _$disableAccelerometerFunctionAsyncAction.run(() => super.disableAccelerometerFunction());
+  }
+
   @override
   String toString() {
     return '''

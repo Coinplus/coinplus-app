@@ -6,9 +6,9 @@ import '../../providers/screen_service.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
 
-Future<void> pleaseEnableBiometrics(BuildContext context) {
+Future<void> pleaseEnableBiometrics() {
   return showDialogBox(
-    context,
+    router.navigatorKey.currentContext!,
     DialogBoxWithAction(
       text: 'Please enable biometrics option in your device settings',
       title: const Text(

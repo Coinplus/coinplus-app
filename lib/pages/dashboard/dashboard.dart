@@ -10,6 +10,7 @@ import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -33,11 +34,12 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-import '../../services/ramp_service.dart';
+
+//import '../../services/ramp_service.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/ip_store/ip_store.dart';
-import '../../store/market_page_store/market_page_store.dart';
-import '../../store/nav_bar_state/nav_bar_state.dart';
+//import '../../store/market_page_store/market_page_store.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -58,8 +60,8 @@ import '../../widgets/all_alert_dialogs/trouble_tapping_card/trouble_tapping_car
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 import '../../widgets/wallet_connect_methods/card_connect_methods.dart';
-import '../history_page/history_page.dart';
-import '../market_page/market_page.dart';
+//import '../history_page/history_page.dart';
+//import '../market_page/market_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
@@ -70,22 +72,21 @@ class DashboardPage extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  RampService get _rampService => GetIt.I<RampService>();
-
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
+  //RampService get _rampService => GetIt.I<RampService>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+  //MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   IpStore get _ipStore => GetIt.I<IpStore>();
 
   @override
   Widget build(BuildContext context) {
-    final _navBarState = useMemoized(NavBarState.new);
     final deepLinkRes = useRef<String?>(null);
+    final _settingsState = SettingsState();
     final isModalOpened = useState(false);
     final _nfcStore = useMemoized(NfcStore.new);
+    final _allSettingsState = useMemoized(AllSettingsState.new);
     final _pageController = useMemoized(PageController.new);
     final isPaused = useState(false);
     final isInactive = useState(false);
@@ -97,7 +98,7 @@ class DashboardPage extends HookWidget {
         index: 0,
       ),
     );
-    Timer? _timer;
+    //Timer? _timer;
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -240,14 +241,14 @@ class DashboardPage extends HookWidget {
               builder: (context) {
                 return reaction((_) => _balanceStore.cards.length, (length) {
                   _pageController.jumpToPage(0);
-                  _navBarState.updateIndex(0);
+                  _allSettingsState.updateIndex(0);
                 });
               },
               child: ReactionBuilder(
                 builder: (context) {
                   return reaction((_) => _balanceStore.bars.length, (length) {
                     _pageController.jumpToPage(0);
-                    _navBarState.updateIndex(0);
+                    _allSettingsState.updateIndex(0);
                   });
                 },
                 child: PageView(
@@ -257,13 +258,13 @@ class DashboardPage extends HookWidget {
                     WalletPage(
                       onChangeCard: (val) {
                         currentCard.value = val;
-                        _navBarState
+                        _allSettingsState
                           ..updateAddCardPosition(tabIndex: val.index, card: val.card)
                           ..updateTabIndex(val.index);
                       },
                     ),
-                    const MarketPage(),
-                    const HistoryPage(),
+                    // const MarketPage(),
+                    // const HistoryPage(),
                     const SettingsPage(),
                   ],
                 ),
@@ -301,32 +302,32 @@ class DashboardPage extends HookWidget {
                           _pageController.jumpToPage(
                             index,
                           ),
-                          _navBarState.updateIndex(index),
+                          _allSettingsState.updateIndex(index),
                           if (index == 0)
                             {
                               recordAmplitudeEvent(
                                 const WalletTabClicked(),
                               ),
                             }
+                          // else if (index == 1)
+                          //   {
+                          //     if (_timer == null || !_timer!.isActive)
+                          //       {
+                          //         _timer = Timer(const Duration(seconds: 5), () {
+                          //           _marketPageStore.onRefresh();
+                          //         }),
+                          //       },
+                          //   }
+                          // else if (index == 2)
+                          //   {}
                           else if (index == 1)
-                            {
-                              if (_timer == null || !_timer!.isActive)
-                                {
-                                  _timer = Timer(const Duration(seconds: 5), () {
-                                    _marketPageStore.onRefresh();
-                                  }),
-                                },
-                            }
-                          else if (index == 2)
-                            {}
-                          else if (index == 3)
                             {
                               recordAmplitudeEvent(
                                 const SettingsTabClicked(),
                               ),
                             },
                         ],
-                        currentIndex: _navBarState.currentIndex,
+                        currentIndex: _allSettingsState.currentIndex,
                         backgroundColor: Colors.white,
                         elevation: 0,
                         type: BottomNavigationBarType.fixed,
@@ -336,34 +337,34 @@ class DashboardPage extends HookWidget {
                           BottomNavigationBarItem(
                             icon: Assets.icons.walletIcon.image(
                               height: 32,
-                              color: _navBarState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
+                              color: _allSettingsState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
                             ),
                             label: 'Wallet',
                           ),
-                          BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 30, top: 8),
-                              child: Assets.icons.market.image(
-                                height: 23,
-                                color: _navBarState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
-                              ),
-                            ),
-                            label: 'Markets            ',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 30, top: 5),
-                              child: Assets.icons.history.image(
-                                height: 28,
-                                color: _navBarState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
-                              ),
-                            ),
-                            label: '             History',
-                          ),
+                          // BottomNavigationBarItem(
+                          //   icon: Padding(
+                          //     padding: const EdgeInsets.only(right: 30, top: 8),
+                          //     child: Assets.icons.market.image(
+                          //       height: 23,
+                          //       color: _allSettingsState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                          //     ),
+                          //   ),
+                          //   label: 'Markets            ',
+                          // ),
+                          // BottomNavigationBarItem(
+                          //   icon: Padding(
+                          //     padding: const EdgeInsets.only(left: 30, top: 5),
+                          //     child: Assets.icons.history.image(
+                          //       height: 28,
+                          //       color: _allSettingsState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
+                          //     ),
+                          //   ),
+                          //   label: '             History',
+                          // ),
                           BottomNavigationBarItem(
                             icon: Assets.icons.pageInfo.image(
                               height: 32,
-                              color: _navBarState.currentIndex == 3 ? Colors.black : const Color(0xFfB8BEC5),
+                              color: _allSettingsState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
                             ),
                             label: 'Settings',
                           ),
@@ -519,7 +520,7 @@ class DashboardPage extends HookWidget {
                 isModalOpened: isModalOpened,
                 ipStore: _ipStore,
                 pageController: _pageController,
-                navBarState: _navBarState,
+                settingsState: _settingsState,
               ).then((value) => isModalOpened.value = false);
               isModalOpened.value = false;
               await recordAmplitudeEvent(
@@ -540,14 +541,15 @@ class DashboardPage extends HookWidget {
                   child: AnimatedCrossFade(
                     duration: const Duration(milliseconds: 1),
                     crossFadeState:
-                        _navBarState.tabCurrentIndex == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                        _allSettingsState.tabCurrentIndex == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                     firstChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
                       crossFadeState:
-                          _navBarState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                          _allSettingsState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: AnimatedCrossFade(
                         duration: const Duration(milliseconds: 1),
-                        crossFadeState: _navBarState.isInAddCard ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                        crossFadeState:
+                            _allSettingsState.isInAddCard ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                         firstChild: _balanceStore.cards.isEmpty
                             ? Assets.icons.plus.image(
                                 color: Colors.white,
@@ -570,10 +572,11 @@ class DashboardPage extends HookWidget {
                     secondChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
                       crossFadeState:
-                          _navBarState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                          _allSettingsState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: AnimatedCrossFade(
                         duration: const Duration(milliseconds: 1),
-                        crossFadeState: _navBarState.isInAddBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                        crossFadeState:
+                            _allSettingsState.isInAddBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                         firstChild: _balanceStore.bars.isEmpty
                             ? Assets.icons.plus.image(
                                 color: Colors.white,
@@ -612,7 +615,7 @@ class DashboardPage extends HookWidget {
     required ValueNotifier<bool> isModalOpened,
     required IpStore ipStore,
     required PageController pageController,
-    required NavBarState navBarState,
+    required SettingsState settingsState,
   }) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -674,6 +677,7 @@ class DashboardPage extends HookWidget {
                     isBarActivated: isBarActivated,
                     currentCard: currentCard,
                     isModalOpened: isModalOpened,
+                    settingsState: settingsState,
                   );
                   isModalOpened.value = false;
                 },
@@ -721,9 +725,9 @@ class DashboardPage extends HookWidget {
                 Observer(
                   builder: (context) {
                     final isCardActivated =
-                        isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                        isCardWalletActivated(balanceStore: _balanceStore, settingsState: settingsState);
                     final isBarActivated =
-                        isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                        isBarWalletActivated(balanceStore: _balanceStore, settingsState: settingsState);
 
                     return LoadingButton(
                       style: context.theme
@@ -1426,7 +1430,7 @@ class DashboardPage extends HookWidget {
                                   ),
                                 );
                                 await router.pop();
-                                _rampService.presentRamp();
+                                //_rampService.presentRamp();
                               },
                               child: Row(
                                 children: [
@@ -1497,10 +1501,26 @@ class DashboardPage extends HookWidget {
                       activated: isBarList ? await isBarActivated : await isCardActivated,
                     ),
                   );
+                  // await router.pop();
+                  // await Future.delayed(const Duration(milliseconds: 400));
+                  // await navBarState.updateIndex(2);
+                  // pageController.jumpToPage(2);
                   await router.pop();
-                  await Future.delayed(const Duration(milliseconds: 400));
-                  await navBarState.updateIndex(2);
-                  pageController.jumpToPage(2);
+                  await FlutterWebBrowser.openWebPage(
+                    url: 'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
+                    customTabsOptions: const CustomTabsOptions(
+                      shareState: CustomTabsShareState.on,
+                      instantAppsEnabled: true,
+                      showTitle: true,
+                      urlBarHidingEnabled: true,
+                    ),
+                    safariVCOptions: const SafariViewControllerOptions(
+                      barCollapsingEnabled: true,
+                      modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                      modalPresentationCapturesStatusBarAppearance: true,
+                    ),
+                  );
                 },
                 child: Row(
                   children: [
@@ -1556,6 +1576,7 @@ class DashboardPage extends HookWidget {
     required Future<bool> isBarActivated,
     required ObjectRef<({AbstractCard? card, int index})> currentCard,
     required ValueNotifier<bool> isModalOpened,
+    required SettingsState settingsState,
   }) async {
     isModalOpened.value = true;
     await showModalBottomSheet(
@@ -1654,7 +1675,7 @@ class DashboardPage extends HookWidget {
                           ).then(
                             (_) {
                               HapticFeedback.mediumImpact();
-                              _settingsState.copyAddress();
+                              settingsState.copyAddress();
                             },
                           );
                         },
@@ -1735,7 +1756,7 @@ class DashboardPage extends HookWidget {
                                                       ),
                                                     ),
                                                   ),
-                                            crossFadeState: _settingsState.isAddressCopied
+                                            crossFadeState: settingsState.isAddressCopied
                                                 ? CrossFadeState.showFirst
                                                 : CrossFadeState.showSecond,
                                             duration: const Duration(

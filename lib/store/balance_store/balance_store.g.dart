@@ -16,23 +16,6 @@ mixin _$BalanceStore on _BalanceStore, Store {
           Computed<int>(() => super.allCardsBalances, name: '_BalanceStore.allCardsBalances'))
       .value;
 
-  late final _$_marketCapAtom = Atom(name: '_BalanceStore._marketCap', context: context);
-
-  MarketCapDto? get marketCap {
-    _$_marketCapAtom.reportRead();
-    return super._marketCap;
-  }
-
-  @override
-  MarketCapDto? get _marketCap => marketCap;
-
-  @override
-  set _marketCap(MarketCapDto? value) {
-    _$_marketCapAtom.reportWrite(value, super._marketCap, () {
-      super._marketCap = value;
-    });
-  }
-
   late final _$_cardsAtom = Atom(name: '_BalanceStore._cards', context: context);
 
   ObservableList<CardModel> get cards {

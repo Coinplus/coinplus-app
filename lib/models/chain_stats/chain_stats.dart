@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'chain_stats.g.dart';
 
@@ -8,7 +9,7 @@ class ChainStats {
   final int fundedTxoCount;
 
   @JsonKey(name: 'funded_txo_sum')
-  final int balance;
+  final int fundedTxoSum;
 
   @JsonKey(name: 'spent_txo_count')
   final int spentTxoCount;
@@ -20,7 +21,7 @@ class ChainStats {
   final int txCount;
 
   ChainStats({
-    required this.balance,
+    required this.fundedTxoSum,
     required this.fundedTxoCount,
     required this.spentTxoCount,
     required this.spentTxoSum,
@@ -30,4 +31,7 @@ class ChainStats {
   factory ChainStats.fromJson(Map<String, dynamic> json) => _$ChainStatsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChainStatsToJson(this);
+
+  @computed
+  int get netTxoCount => fundedTxoSum - spentTxoSum;
 }

@@ -18,7 +18,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../services/ramp_service.dart';
+//import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/ip_store/ip_store.dart';
@@ -53,17 +53,18 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
-
   IpStore get _ipStore => GetIt.I<IpStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
-  RampService get _rampService => GetIt.I<RampService>();
+  //RampService get _rampService => GetIt.I<RampService>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   final _nfcStore = NfcStore();
+
+  final _settingsState = SettingsState();
+
   final carouselController = CarouselController();
 
   @override
@@ -71,7 +72,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
       final index = _balanceStore.bars.indexWhere((element) => element.address == address);
@@ -113,12 +114,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                     widget.onCardSelected(bar as AbstractCard);
                   }
                   _historyPageStore.setBarHistoryIndex(length - 1);
-                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 } else {
                   carouselController.animateToPage(0);
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
-                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
             );
@@ -457,7 +458,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                                 );
                                                                               }
                                                                               return Text(
-                                                                                '\$${myFormat.format((item.data!.balance - item.data!.spentTxoSum) / 100000000 * data.price)}',
+                                                                                '\$${myFormat.format((item.data!.netTxoCount) / 100000000 * data.price)}',
                                                                                 style: const TextStyle(
                                                                                   fontSize: 13,
                                                                                   fontFamily: FontFamily.redHatMedium,
@@ -559,7 +560,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   activated: await isActivated,
                                                                 ),
                                                               );
-                                                              _rampService.presentRamp();
+                                                              //_rampService.presentRamp();
                                                             }
                                                           : null,
                                                       child: Container(
@@ -617,8 +618,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                         );
                                                                       }
                                                                       return Text(
-                                                                        (bar.data?.balance != null
-                                                                                ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                        (bar.data?.fundedTxoSum != null
+                                                                                ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
                                                                                 : '')
                                                                             .toString(),
                                                                         style: const TextStyle(
@@ -692,8 +693,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                       );
                                                                     }
                                                                     return Text(
-                                                                      (bar.data?.balance != null
-                                                                              ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                      (bar.data?.fundedTxoSum != null
+                                                                              ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
                                                                               : '')
                                                                           .toString(),
                                                                       style: const TextStyle(
@@ -766,8 +767,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   );
                                                                 }
                                                                 return Text(
-                                                                  (bar.data?.balance != null
-                                                                          ? '\$${myFormat.format((bar.data!.balance - bar.data!.spentTxoSum) / 100000000 * data.price)}'
+                                                                  (bar.data?.fundedTxoSum != null
+                                                                          ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
                                                                           : '')
                                                                       .toString(),
                                                                   style: const TextStyle(
@@ -883,7 +884,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 );
                 await _settingsState.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                   await _historyPageStore.setCardHistoryIndex(index);
                 }
               },

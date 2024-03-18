@@ -10,7 +10,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../extensions/elevated_button_extensions.dart';
+//import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -18,7 +18,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../utils/date_formatter.dart';
-import '../../../widgets/loading_button/loading_button.dart';
+//import '../../../widgets/loading_button/loading_button.dart';
 import '../../../widgets/shimmers/history_page_shimmer.dart';
 
 class CardsHistoryPage extends HookWidget {
@@ -159,37 +159,42 @@ class CardsHistoryPage extends HookWidget {
                                       if (transactions.length <= 19) {
                                         return const SizedBox(height: 100);
                                       }
-                                      return Center(
+                                      return const Center(
                                         child: Column(
                                           children: [
-                                            const Gap(10),
-                                            LoadingButton(
-                                              style: context.theme
-                                                  .buttonStyle(
-                                                    textStyle: const TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
-                                                      color: AppColors.primaryTextColor,
-                                                      fontSize: 15,
-                                                    ),
-                                                  )
-                                                  .copyWith(
-                                                    backgroundColor: MaterialStateProperty.all(
-                                                      Colors.grey.withOpacity(0.1),
-                                                    ),
-                                                    padding: MaterialStateProperty.all(
-                                                      const EdgeInsets.symmetric(vertical: 5),
-                                                    ),
-                                                  ),
-                                              onPressed: () {},
-                                              child: const Text(
-                                                'Load More',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ).paddingHorizontal(150),
-                                            const Gap(100),
+                                            Gap(10),
+                                            // LoadingButton(
+                                            //   style: context.theme
+                                            //       .buttonStyle(
+                                            //         textStyle: const TextStyle(
+                                            //           fontFamily: FontFamily.redHatMedium,
+                                            //           color: AppColors.primaryTextColor,
+                                            //           fontSize: 15,
+                                            //         ),
+                                            //       )
+                                            //       .copyWith(
+                                            //         backgroundColor: MaterialStateProperty.all(
+                                            //           Colors.grey.withOpacity(0.1),
+                                            //         ),
+                                            //         padding: MaterialStateProperty.all(
+                                            //           const EdgeInsets.symmetric(vertical: 5),
+                                            //         ),
+                                            //       ),
+                                            //   onPressed: () {
+                                            //     historyPageStore.fetchNextPageTransactions(
+                                            //       address:
+                                            //           balanceStore.cards[historyPageStore.cardHistoryIndex].address,
+                                            //     );
+                                            //   },
+                                            //   child: const Text(
+                                            //     'Load More',
+                                            //     style: TextStyle(
+                                            //       fontFamily: FontFamily.redHatMedium,
+                                            //       fontSize: 12,
+                                            //     ),
+                                            //   ),
+                                            // ).paddingHorizontal(150),
+                                            Gap(100),
                                           ],
                                         ),
                                       );

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
@@ -17,6 +19,8 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
+BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
 class _SplashPageState extends State<SplashPage> {
   final isPinCodeSet = getIsPinCodeSet();
 
@@ -26,6 +30,8 @@ class _SplashPageState extends State<SplashPage> {
     hasShownWallet().then(
       (hasShown) async {
         if (hasShown) {
+          unawaited(_balanceStore.getCardsInfo());
+          unawaited(_balanceStore.getCardsInfo());
           unawaited(
             await isPinCodeSet ? showPinCode() : openWallet(),
           );
@@ -34,11 +40,6 @@ class _SplashPageState extends State<SplashPage> {
         }
       },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

@@ -11,7 +11,6 @@ import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
-import '../../models/market_cap_dto/market_cap_dto.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
@@ -21,8 +20,6 @@ part 'balance_store.g.dart';
 class BalanceStore = _BalanceStore with _$BalanceStore;
 
 abstract class _BalanceStore with Store {
-  @readonly
-  MarketCapDto? _marketCap;
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
@@ -35,13 +32,15 @@ abstract class _BalanceStore with Store {
   ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
 
   _BalanceStore() {
+    getCardsInfo();
     getCardsFromStorage();
     getBarsFromStorage();
-    getMarketCap();
-  }
-
-  Future<void> getMarketCap() async {
-    _marketCap = await CoinsClient(dio).getMarketCap();
+    if (_cards.isNotEmpty) {
+      getCardsInfo();
+    }
+    if (_bars.isNotEmpty) {
+      getBarsInfo();
+    }
   }
 
   Future<void> getCardsFromStorage() async {
@@ -60,10 +59,10 @@ abstract class _BalanceStore with Store {
     var barTotalBalance = 0;
 
     for (final card in _cards) {
-      cardTotalBalance += (card.data!.balance - card.data!.spentTxoSum).toInt();
+      cardTotalBalance += card.data!.netTxoCount.toInt();
     }
     for (final bar in _bars) {
-      barTotalBalance += (bar.data!.balance - bar.data!.spentTxoSum).toInt();
+      barTotalBalance += bar.data!.netTxoCount.toInt();
     }
     final totalBalance = cardTotalBalance + barTotalBalance;
     return totalBalance;

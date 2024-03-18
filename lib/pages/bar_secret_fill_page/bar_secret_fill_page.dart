@@ -50,8 +50,6 @@ class BarSecretFillPage extends StatefulWidget {
 }
 
 class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProviderStateMixin {
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
-
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   late String secret1B58 = '';
@@ -68,6 +66,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
   late AnimationController _secretTwoLottieController;
   final _validationStore = ValidationState();
   final _secretState = SecretState();
+  final _settingsState = SettingsState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
 

@@ -60,6 +60,8 @@ abstract class _HistoryPageStore with Store {
   bool isButtonDisabled = false;
   @observable
   bool isRefreshing = false;
+  @observable
+  int currentPage = 1;
 
   @action
   Future<void> setRefreshing({required bool value}) async {
@@ -103,6 +105,18 @@ abstract class _HistoryPageStore with Store {
       log(e.toString());
     } finally {
       historyLoading = false;
+    }
+  }
+
+  @action
+  Future<void> fetchNextPageTransactions({required String address}) async {
+    try {
+      final nextPageTransactions = await CoinsClient(dio).getTransactions(address: address, page: currentPage + 1);
+      currentPage++;
+      cacheCardsTransaction(address, nextPageTransactions);
+      cardHistories[address] = nextPageTransactions;
+    } catch (e) {
+      log(e.toString());
     }
   }
 

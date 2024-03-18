@@ -30,7 +30,7 @@ class RemoveBar extends StatefulWidget {
 class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  SettingsState get _settingsState => GetIt.I<SettingsState>();
+  final _settingsState = SettingsState();
 
   @override
   Widget build(BuildContext context) {

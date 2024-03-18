@@ -7,7 +7,7 @@ part of 'chain_stats.dart';
 // **************************************************************************
 
 ChainStats _$ChainStatsFromJson(Map json) => ChainStats(
-      balance: json['funded_txo_sum'] as int,
+      fundedTxoSum: json['funded_txo_sum'] as int,
       fundedTxoCount: json['funded_txo_count'] as int,
       spentTxoCount: json['spent_txo_count'] as int,
       spentTxoSum: json['spent_txo_sum'] as int,
@@ -16,7 +16,7 @@ ChainStats _$ChainStatsFromJson(Map json) => ChainStats(
 
 Map<String, dynamic> _$ChainStatsToJson(ChainStats instance) => <String, dynamic>{
       'funded_txo_count': instance.fundedTxoCount,
-      'funded_txo_sum': instance.balance,
+      'funded_txo_sum': instance.fundedTxoSum,
       'spent_txo_count': instance.spentTxoCount,
       'spent_txo_sum': instance.spentTxoSum,
       'tx_count': instance.txCount,
