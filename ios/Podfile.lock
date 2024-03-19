@@ -877,6 +877,9 @@ PODS:
     - Flutter
     - MTBBarcodeScanner
   - Ramp (4.0.1)
+  - ramp_flutter (1.0.1):
+    - Flutter
+    - Ramp
   - ReachabilitySwift (5.0.0)
   - RecaptchaInterop (100.0.0)
   - sensors_plus (0.0.1):
@@ -916,6 +919,7 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - Ramp (from `https://github.com/RampNetwork/ramp-sdk-ios`, tag `4.0.1`)
+  - ramp_flutter (from `.symlinks/plugins/ramp_flutter/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -1005,6 +1009,8 @@ EXTERNAL SOURCES:
   Ramp:
     :git: https://github.com/RampNetwork/ramp-sdk-ios
     :tag: 4.0.1
+  ramp_flutter:
+    :path: ".symlinks/plugins/ramp_flutter/ios"
   sensors_plus:
     :path: ".symlinks/plugins/sensors_plus/ios"
   share_plus:
@@ -1078,6 +1084,7 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   Ramp: 3f843fb75cac12ad40842afa3226bae36dc93521
+  ramp_flutter: aac85dee8bc93b5f7563c909ba15a37727fe3fe8
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   sensors_plus: 42b9de1b8237675fa8d8121e4bb93be0f79fa61d

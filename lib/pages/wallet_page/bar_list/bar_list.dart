@@ -18,7 +18,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-//import '../../../services/ramp_service.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/ip_store/ip_store.dart';
@@ -57,7 +57,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
-  //RampService get _rampService => GetIt.I<RampService>();
+  RampService get _rampService => GetIt.I<RampService>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
@@ -72,7 +72,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
       final index = _balanceStore.bars.indexWhere((element) => element.address == address);
@@ -114,12 +114,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                     widget.onCardSelected(bar as AbstractCard);
                   }
                   _historyPageStore.setBarHistoryIndex(length - 1);
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 } else {
                   carouselController.animateToPage(0);
                   _settingsState.setBarCurrentIndex(length);
                   widget.onCardSelected(null);
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                 }
               },
             );
@@ -560,7 +560,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   activated: await isActivated,
                                                                 ),
                                                               );
-                                                              //_rampService.presentRamp();
+                                                              _rampService.presentRamp();
                                                             }
                                                           : null,
                                                       child: Container(
@@ -884,7 +884,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 );
                 await _settingsState.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
                   await _historyPageStore.setCardHistoryIndex(index);
                 }
               },

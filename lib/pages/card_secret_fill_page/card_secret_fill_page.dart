@@ -52,7 +52,6 @@ class CardSecretFillPage extends StatefulWidget {
 }
 
 class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProviderStateMixin {
-  SettingsState get _settingsState => GetIt.instance<SettingsState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -71,6 +70,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   late AnimationController _secretTwoLottieController;
   final _validationStore = ValidationState();
   final _secretState = SecretState();
+  final _settingsState = SettingsState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
 

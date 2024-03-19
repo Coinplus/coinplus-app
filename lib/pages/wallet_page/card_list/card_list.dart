@@ -21,7 +21,7 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 
-//import '../../../services/ramp_service.dart';
+import '../../../services/ramp_service.dart';
 import '../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
@@ -67,7 +67,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
 
   IpStore get _ipStore => GetIt.I<IpStore>();
 
-  //RampService get _rampService => GetIt.I<RampService>();
+  RampService get _rampService => GetIt.I<RampService>();
 
   final _nfcState = NfcStore();
 
@@ -79,7 +79,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     if (_balanceStore.cards.isNotEmpty) {
-      // _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+       _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
     }
     _balanceStore.setOnCardAddedCallback((address) {
       final index = _balanceStore.cards.indexWhere((element) => element.address == address);
@@ -123,11 +123,11 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                     widget.onCardSelected(card as AbstractCard);
                   }
                   _historyPageStore.setCardHistoryIndex(length - 1);
-                  //_rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 } else {
                   _settingsState.setCardCurrentIndex(length);
                   widget.onCardSelected(null);
-                  //_rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                 }
               },
             );
@@ -522,8 +522,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       onReorderEnd: (val) {
                                                         _settingsState.isReorderingStart = false;
                                                         if (index != _balanceStore.cards.length) {
-                                                          // _rampService.configuration.userAddress = _balanceStore
-                                                          //     .cards[_settingsState.cardCurrentIndex].address;
+                                                          _rampService.configuration.userAddress = _balanceStore
+                                                              .cards[_settingsState.cardCurrentIndex].address;
                                                         }
                                                       },
                                                     ),
@@ -710,7 +710,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                             activated: await isActivated,
                                                                           ),
                                                                         );
-                                                                        //_rampService.presentRamp();
+                                                                        _rampService.presentRamp();
                                                                       }
                                                                     : null,
                                                                 enableFeedback: false,
@@ -1039,7 +1039,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                 );
                 await _settingsState.setCardCurrentIndex(index);
                 if (index != _balanceStore.cards.length) {
-                  //_rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
                   await _historyPageStore.setCardHistoryIndex(index);
                 }
               },

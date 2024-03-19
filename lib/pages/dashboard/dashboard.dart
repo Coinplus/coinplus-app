@@ -34,8 +34,7 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-
-//import '../../services/ramp_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/ip_store/ip_store.dart';
@@ -60,8 +59,8 @@ import '../../widgets/all_alert_dialogs/trouble_tapping_card/trouble_tapping_car
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 import '../../widgets/wallet_connect_methods/card_connect_methods.dart';
-//import '../history_page/history_page.dart';
-//import '../market_page/market_page.dart';
+// import '../history_page/history_page.dart';
+// import '../market_page/market_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
@@ -72,7 +71,7 @@ class DashboardPage extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  //RampService get _rampService => GetIt.I<RampService>();
+  RampService get _rampService => GetIt.I<RampService>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
@@ -1430,7 +1429,7 @@ class DashboardPage extends HookWidget {
                                   ),
                                 );
                                 await router.pop();
-                                //_rampService.presentRamp();
+                                _rampService.presentRamp();
                               },
                               child: Row(
                                 children: [

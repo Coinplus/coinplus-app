@@ -111,10 +111,13 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> fetchNextPageTransactions({required String address}) async {
     try {
-      final nextPageTransactions = await CoinsClient(dio).getTransactions(address: address, page: currentPage + 1);
-      currentPage++;
-      cacheCardsTransaction(address, nextPageTransactions);
-      cardHistories[address] = nextPageTransactions;
+      // final nextPageTransactions = await CoinsClient(dio).getTransactions(address: address, page: 2);
+      final existingTransactions = cardHistories[address];
+      if (existingTransactions != null) {
+        // cardHistories[address] = existingTransactions.addAll(nextPageTransactions);
+      } else {
+        log('No existing transactions found for address $address');
+      }
     } catch (e) {
       log(e.toString());
     }

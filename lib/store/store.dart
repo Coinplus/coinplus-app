@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 
-//import '../services/ramp_service.dart';
+import '../services/ramp_service.dart';
 import 'accelerometer_store/accelerometer_store.dart';
 import 'balance_store/balance_store.dart';
 import 'contact_us_state/contact_us_state.dart';
@@ -11,7 +11,7 @@ import 'qr_detect_state/qr_detect_state.dart';
 import 'wallet_protect_state/wallet_protect_state.dart';
 
 void registerStoreGetIt() {
-  //GetIt.I.registerSingleton(RampService());
+  GetIt.I.registerSingleton(RampService());
   GetIt.I.registerSingleton(BalanceStore());
   GetIt.I.registerSingleton(IpStore());
   GetIt.I.registerSingleton(HistoryPageStore());
@@ -23,7 +23,7 @@ void registerStoreGetIt() {
 }
 
 void reRegisterStoreGetIt() {
-  //final rampService = GetIt.I<RampService>();
+  final rampService = GetIt.I<RampService>();
   final balancesStore = GetIt.I<BalanceStore>();
   final _historyPageStore = GetIt.I<HistoryPageStore>();
   final _ipStore = GetIt.I<IpStore>();
@@ -33,7 +33,7 @@ void reRegisterStoreGetIt() {
   final _marketStore = GetIt.I<MarketPageStore>();
   final _sensorsStore = GetIt.I<AccelerometerStore>();
 
-  //GetIt.I.unregister(instance: rampService);
+  GetIt.I.unregister(instance: rampService);
   GetIt.I.unregister(instance: balancesStore);
   GetIt.I.unregister(instance: _historyPageStore);
   GetIt.I.unregister(instance: _ipStore);
