@@ -79,7 +79,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     if (_balanceStore.cards.isNotEmpty) {
-       _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
     }
     _balanceStore.setOnCardAddedCallback((address) {
       final index = _balanceStore.cards.indexWhere((element) => element.address == address);
@@ -115,19 +115,20 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
             return reaction(
               (_) => _balanceStore.cards.length,
               (length) {
-                if (length > _settingsState.cardCurrentIndex) {
+                if (length > _balanceStore.cardCurrentIndex) {
                   widget.onCarouselScroll(length - 1);
-                  _settingsState.setCardCurrentIndex(length - 1);
+                  _balanceStore.setCardCurrentIndex(length - 1);
                   final card = _balanceStore.cards.lastOrNull;
                   if (card != null) {
                     widget.onCardSelected(card as AbstractCard);
                   }
                   _historyPageStore.setCardHistoryIndex(length - 1);
-                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
                 } else {
-                  _settingsState.setCardCurrentIndex(length);
+                  _balanceStore.setCardCurrentIndex(length);
+                  _historyPageStore.setCardHistoryIndex(length - 1);
                   widget.onCardSelected(null);
-                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
                 }
               },
             );
@@ -142,7 +143,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                     builder: (context) {
                       return ScaleTap(
                         enableFeedback: false,
-                        onPressed: _settingsState.cardCurrentIndex == _balanceStore.cards.length
+                        onPressed: _balanceStore.cardCurrentIndex == _balanceStore.cards.length
                             ? () async {
                                 await _walletProtectState.updateModalStatus(isOpened: true);
                                 await recordAmplitudeEvent(
@@ -214,7 +215,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                           builder: (context) {
                             return AnimatedSwitcher(
                               duration: const Duration(milliseconds: 600),
-                              child: _settingsState.cardCurrentIndex == index
+                              child: _balanceStore.cardCurrentIndex == index
                                   ? Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -266,7 +267,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                               enableFeedback: false,
                               opacityMinValue: .99,
                               scaleMinValue: .99,
-                              onLongPress: _settingsState.cardCurrentIndex == index
+                              onLongPress: _balanceStore.cardCurrentIndex == index
                                   ? _balanceStore.cards.length > 1
                                       ? () async {
                                           await _walletProtectState.updateModalStatus(isOpened: true);
@@ -468,12 +469,31 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                   ),
                                                                                 );
                                                                               }
-                                                                              return Text(
-                                                                                '\$${myFormat.format((item.data!.netTxoCount) / 100000000 * data.price)}',
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 13,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                ),
+                                                                              return Observer(
+                                                                                builder: (_) {
+                                                                                  final balance =
+                                                                                      card.data!.netTxoCount;
+                                                                                  if (_accelerometerStore
+                                                                                      .hasPerformedAction) {
+                                                                                    return const Text(
+                                                                                      r'$*****',
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 13,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return Text(
+                                                                                      '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                                                                      style: const TextStyle(
+                                                                                        fontSize: 13,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                },
                                                                               );
                                                                             },
                                                                           ),
@@ -512,7 +532,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                         widget.onCardSelected(
                                                           _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
                                                         );
-                                                        _settingsState.setCardCurrentIndex(index);
+                                                        _balanceStore.setCardCurrentIndex(index);
                                                         _historyPageStore.setCardHistoryIndex(index);
                                                       },
                                                       onReorderStart: (val) {
@@ -523,7 +543,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                         _settingsState.isReorderingStart = false;
                                                         if (index != _balanceStore.cards.length) {
                                                           _rampService.configuration.userAddress = _balanceStore
-                                                              .cards[_settingsState.cardCurrentIndex].address;
+                                                              .cards[_balanceStore.cardCurrentIndex].address;
                                                         }
                                                       },
                                                     ),
@@ -574,11 +594,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                 ),
                                                 ScaleTap(
                                                   enableFeedback: false,
-                                                  onPressed: _settingsState.cardCurrentIndex == index
+                                                  onPressed: _balanceStore.cardCurrentIndex == index
                                                       ? () async {
                                                           final isCardActivated = isCardWalletActivated(
                                                             balanceStore: _balanceStore,
-                                                            settingsState: _settingsState,
                                                           );
                                                           await recordAmplitudeEvent(
                                                             AddressCopied(
@@ -697,11 +716,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                     return countryStatus
                                                         ? !regionStatus
                                                             ? ScaleTap(
-                                                                onPressed: _settingsState.cardCurrentIndex == index
+                                                                onPressed: _balanceStore.cardCurrentIndex == index
                                                                     ? () async {
                                                                         final isActivated = isCardWalletActivated(
                                                                           balanceStore: _balanceStore,
-                                                                          settingsState: _settingsState,
                                                                         );
                                                                         await recordAmplitudeEvent(
                                                                           TopUpButtonClicked(
@@ -764,7 +782,9 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                         decimalDigits: 2,
                                                                                       );
 
-                                                                                      if (data == null) {
+                                                                                      if (data == null ||
+                                                                                          _balanceStore
+                                                                                              .balanceLoading) {
                                                                                         return const Padding(
                                                                                           padding: EdgeInsets.symmetric(
                                                                                             vertical: 4,
@@ -777,7 +797,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                                 width: 10,
                                                                                                 child:
                                                                                                     CircularProgressIndicator(
-                                                                                                  strokeWidth: 2,
+                                                                                                  strokeWidth: 3,
                                                                                                   color: Colors.white,
                                                                                                 ),
                                                                                               ),
@@ -849,14 +869,16 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                         ),
                                                                       ),
                                                                       child: Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
                                                                         children: [
                                                                           Padding(
                                                                             padding: const EdgeInsets.all(
                                                                               8,
                                                                             ),
                                                                             child: Column(
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.start,
                                                                               children: [
                                                                                 const Text(
                                                                                   'Balance',
@@ -871,8 +893,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                     final data = _marketPageStore
                                                                                         .singleCoin?.result.first;
 
-                                                                                    final myFormat =
-                                                                                        NumberFormat.decimalPatternDigits(
+                                                                                    final myFormat = NumberFormat
+                                                                                        .decimalPatternDigits(
                                                                                       locale: 'en_us',
                                                                                       decimalDigits: 2,
                                                                                     );
@@ -900,7 +922,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                     return Text(
                                                                                       '\$${myFormat.format((card.data!.netTxoCount) / 100000000 * data.price)}',
                                                                                       style: const TextStyle(
-                                                                                        fontFamily: FontFamily.redHatMedium,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
                                                                                         fontWeight: FontWeight.w700,
                                                                                         color: Colors.white,
                                                                                         fontSize: 20,
@@ -978,7 +1001,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                         SizedBox(
                                                                                           height: 10,
                                                                                           width: 10,
-                                                                                          child: CircularProgressIndicator(
+                                                                                          child:
+                                                                                              CircularProgressIndicator(
                                                                                             strokeWidth: 2,
                                                                                             color: Colors.white,
                                                                                           ),
@@ -1037,9 +1061,9 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                 widget.onCardSelected(
                   _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
                 );
-                await _settingsState.setCardCurrentIndex(index);
+                await _balanceStore.setCardCurrentIndex(index);
                 if (index != _balanceStore.cards.length) {
-                  _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
                   await _historyPageStore.setCardHistoryIndex(index);
                 }
               },

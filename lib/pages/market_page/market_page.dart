@@ -11,6 +11,8 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../services/amplitude_service.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/number_formatter.dart';
 import '../../widgets/loading_button/loading_button.dart';
@@ -79,6 +81,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.fastOutSlowIn,
                   );
+                  recordAmplitudeEventPartTwo(const GoUpClicked());
                 },
                 backgroundColor: Colors.grey.withOpacity(0.5),
                 child: const Icon(
@@ -118,6 +121,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                         focusNode: _marketPageStore.focusNode,
                         onChanged: (val) {
                           _marketPageStore.setSearchText(val);
+                        },
+                        onEditingComplete: () {
+                          recordAmplitudeEventPartTwo(CoinSearched(coinName: _textController.text));
+                          _marketPageStore.focusNode.unfocus();
                         },
                         decoration: InputDecoration(
                           filled: true,
@@ -190,27 +197,32 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                 child: !_marketPageStore.isTextFieldVisible
                     ? Row(
                         children: [
-                          Container(
-                            height: 26,
-                            width: 57,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              color: const Color(0xFF007AFF),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Assets.icons.formkitUsdc.image(height: 16),
-                                const Gap(2),
-                                const Text(
-                                  'USD',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: Colors.white,
+                          GestureDetector(
+                            onTap: () {
+                              recordAmplitudeEventPartTwo(const FiatCliked());
+                            },
+                            child: Container(
+                              height: 26,
+                              width: 57,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                color: const Color(0xFF007AFF),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Assets.icons.formkitUsdc.image(height: 16),
+                                  const Gap(2),
+                                  const Text(
+                                    'USD',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: FontFamily.redHatMedium,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           const Gap(5),
@@ -218,7 +230,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                             icon: Assets.icons.searchButton.image(
                               height: 20,
                             ),
-                            onPressed: _marketPageStore.toggleTextFieldVisibility,
+                            onPressed: () {
+                              _marketPageStore.toggleTextFieldVisibility();
+                              recordAmplitudeEventPartTwo(const CoinSearchClicked());
+                            },
                           ),
                         ],
                       )
@@ -257,6 +272,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                 await HapticFeedback.mediumImpact();
                 await _marketPageStore.getMarketCap();
                 await _marketPageStore.onRefresh();
+                await recordAmplitudeEventPartTwo(const PullToRefresh(source: 'market'));
               },
             ),
             SliverAppBar(
@@ -608,7 +624,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                             child: SizedBox(
                               height: 35,
                               child: LoadingButton(
-                                onPressed: _marketPageStore.loadMoreCoins,
+                                onPressed: () {
+                                  _marketPageStore.loadMoreCoins();
+                                  recordAmplitudeEventPartTwo(const LoadCoinsClicked());
+                                },
                                 style: context.theme
                                     .buttonStyle(
                                       textStyle: const TextStyle(
@@ -619,9 +638,16 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                     )
                                     .copyWith(
                                       backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey.withOpacity(0.2),
+                                        Colors.grey.withOpacity(0.1),
                                       ),
-                                      padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 5)),
+                                      shape: const MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                                        ),
+                                      ),
+                                      padding: MaterialStateProperty.all(
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                      ),
                                     ),
                                 child: const Text(
                                   'Load more',
@@ -634,101 +660,106 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                       } else {
                         final data = _marketPageStore.searchedList[index];
                         final formattedMarketCap = formatLargeNumber(data.marketCap.toInt());
-                        return Padding(
-                          key: ValueKey(data.rank),
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  child: Text(
-                                    data.rank.toString(),
-                                    style: const TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                        return GestureDetector(
+                          onTap: () {
+                            recordAmplitudeEventPartTwo(CoinClicked(coinName: data.symbol));
+                          },
+                          child: Padding(
+                            key: ValueKey(data.rank),
+                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
+                                      data.rank.toString(),
+                                      style: const TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 15),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width - 174,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 26,
-                                        child: CachedNetworkImage(
-                                          imageUrl: data.icon,
-                                          placeholder: (context, url) => Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              color: Colors.grey.withOpacity(0.5),
-                                            ),
-                                            height: 26,
-                                            width: 26,
-                                            child: CircleAvatar(
-                                              backgroundColor: Colors.grey.withOpacity(0.3),
-                                              child: Center(
-                                                child: Text(
-                                                  data.symbol,
-                                                  style: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    fontSize: 7,
-                                                    color: Colors.black,
+                                  const SizedBox(width: 15),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width - 174,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 26,
+                                          child: CachedNetworkImage(
+                                            imageUrl: data.icon,
+                                            placeholder: (context, url) => Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(20),
+                                                color: Colors.grey.withOpacity(0.5),
+                                              ),
+                                              height: 26,
+                                              width: 26,
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.grey.withOpacity(0.3),
+                                                child: Center(
+                                                  child: Text(
+                                                    data.symbol,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 7,
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
+                                            errorWidget: (context, url, error) => const Icon(Icons.error),
                                           ),
-                                          errorWidget: (context, url, error) => const Icon(Icons.error),
                                         ),
-                                      ),
-                                      const SizedBox(width: 15),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.symbol,
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: FontFamily.redHatMedium,
-                                              fontWeight: FontWeight.bold,
+                                        const SizedBox(width: 15),
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.symbol,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            '\$$formattedMarketCap',
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: FontFamily.redHatMedium,
-                                              color: AppColors.secondaryTextColor,
+                                            Text(
+                                              '\$$formattedMarketCap',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: FontFamily.redHatMedium,
+                                                color: AppColors.secondaryTextColor,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      if (data.priceChange1d > 0)
-                                        Assets.icons.arrowDropUp.image(height: 30)
-                                      else
-                                        Assets.icons.arrowDropDown.image(height: 30),
-                                      Text(
-                                        '${data.priceChange1d.toStringAsFixed(2)}%',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: data.priceChange1d > 0 ? Colors.green : Colors.red,
-                                          fontWeight: FontWeight.bold,
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                        const Spacer(),
+                                        if (data.priceChange1d > 0)
+                                          Assets.icons.arrowDropUp.image(height: 30)
+                                        else
+                                          Assets.icons.arrowDropDown.image(height: 30),
+                                        Text(
+                                          '${data.priceChange1d.toStringAsFixed(2)}%',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const Spacer(),
-                                CryptoPriceFormatter(price: data.price),
-                              ],
+                                  const Spacer(),
+                                  CryptoPriceFormatter(price: data.price),
+                                ],
+                              ),
                             ),
                           ),
                         );

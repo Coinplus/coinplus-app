@@ -13,7 +13,6 @@ import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import 'action_slider_bar.dart';
@@ -29,8 +28,6 @@ class RemoveBar extends StatefulWidget {
 
 class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  final _settingsState = SettingsState();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +71,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
         const Gap(15),
         LoadingButton(
           onPressed: () async {
-            final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+            final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
             await recordAmplitudeEventPartTwo(
               NotSureClicked(
                 walletAddress: widget.bar.address,

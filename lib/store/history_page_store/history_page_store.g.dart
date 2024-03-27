@@ -9,6 +9,46 @@ part of 'history_page_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HistoryPageStore on _HistoryPageStore, Store {
+  Computed<List<TransactionItem>?>? _$cardsTransactionsComputed;
+
+  @override
+  List<TransactionItem>? get cardsTransactions => (_$cardsTransactionsComputed ??=
+          Computed<List<TransactionItem>?>(() => super.cardsTransactions, name: '_HistoryPageStore.cardsTransactions'))
+      .value;
+  Computed<List<TransactionItem>?>? _$barsTransactionsComputed;
+
+  @override
+  List<TransactionItem>? get barsTransactions => (_$barsTransactionsComputed ??=
+          Computed<List<TransactionItem>?>(() => super.barsTransactions, name: '_HistoryPageStore.barsTransactions'))
+      .value;
+  Computed<List<String>?>? _$cardUniqueDatesComputed;
+
+  @override
+  List<String>? get cardUniqueDates => (_$cardUniqueDatesComputed ??=
+          Computed<List<String>?>(() => super.cardUniqueDates, name: '_HistoryPageStore.cardUniqueDates'))
+      .value;
+  Computed<List<String>?>? _$barUniqueDatesComputed;
+
+  @override
+  List<String>? get barUniqueDates => (_$barUniqueDatesComputed ??=
+          Computed<List<String>?>(() => super.barUniqueDates, name: '_HistoryPageStore.barUniqueDates'))
+      .value;
+
+  late final _$walletStatusAtom = Atom(name: '_HistoryPageStore.walletStatus', context: context);
+
+  @override
+  WalletStatusModel? get walletStatus {
+    _$walletStatusAtom.reportRead();
+    return super.walletStatus;
+  }
+
+  @override
+  set walletStatus(WalletStatusModel? value) {
+    _$walletStatusAtom.reportWrite(value, super.walletStatus, () {
+      super.walletStatus = value;
+    });
+  }
+
   late final _$cardHistoryIndexAtom = Atom(name: '_HistoryPageStore.cardHistoryIndex', context: context);
 
   @override
@@ -39,46 +79,61 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
-  late final _$cardSelectedAddressAtom = Atom(name: '_HistoryPageStore.cardSelectedAddress', context: context);
+  late final _$isLoadingAtom = Atom(name: '_HistoryPageStore.isLoading', context: context);
 
   @override
-  String get cardSelectedAddress {
-    _$cardSelectedAddressAtom.reportRead();
-    return super.cardSelectedAddress;
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
   }
 
   @override
-  set cardSelectedAddress(String value) {
-    _$cardSelectedAddressAtom.reportWrite(value, super.cardSelectedAddress, () {
-      super.cardSelectedAddress = value;
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
     });
   }
 
-  late final _$barSelectedAddressAtom = Atom(name: '_HistoryPageStore.barSelectedAddress', context: context);
+  late final _$selectedCardAddressAtom = Atom(name: '_HistoryPageStore.selectedCardAddress', context: context);
 
   @override
-  String get barSelectedAddress {
-    _$barSelectedAddressAtom.reportRead();
-    return super.barSelectedAddress;
+  String get selectedCardAddress {
+    _$selectedCardAddressAtom.reportRead();
+    return super.selectedCardAddress;
   }
 
   @override
-  set barSelectedAddress(String value) {
-    _$barSelectedAddressAtom.reportWrite(value, super.barSelectedAddress, () {
-      super.barSelectedAddress = value;
+  set selectedCardAddress(String value) {
+    _$selectedCardAddressAtom.reportWrite(value, super.selectedCardAddress, () {
+      super.selectedCardAddress = value;
+    });
+  }
+
+  late final _$selectedBarAddressAtom = Atom(name: '_HistoryPageStore.selectedBarAddress', context: context);
+
+  @override
+  String get selectedBarAddress {
+    _$selectedBarAddressAtom.reportRead();
+    return super.selectedBarAddress;
+  }
+
+  @override
+  set selectedBarAddress(String value) {
+    _$selectedBarAddressAtom.reportWrite(value, super.selectedBarAddress, () {
+      super.selectedBarAddress = value;
     });
   }
 
   late final _$cardHistoriesAtom = Atom(name: '_HistoryPageStore.cardHistories', context: context);
 
   @override
-  ObservableMap<String, TransactionModel?> get cardHistories {
+  ObservableMap<String, List<TransactionModel>> get cardHistories {
     _$cardHistoriesAtom.reportRead();
     return super.cardHistories;
   }
 
   @override
-  set cardHistories(ObservableMap<String, TransactionModel?> value) {
+  set cardHistories(ObservableMap<String, List<TransactionModel>> value) {
     _$cardHistoriesAtom.reportWrite(value, super.cardHistories, () {
       super.cardHistories = value;
     });
@@ -87,15 +142,45 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   late final _$barHistoriesAtom = Atom(name: '_HistoryPageStore.barHistories', context: context);
 
   @override
-  ObservableMap<String, TransactionModel?> get barHistories {
+  ObservableMap<String, List<TransactionModel>> get barHistories {
     _$barHistoriesAtom.reportRead();
     return super.barHistories;
   }
 
   @override
-  set barHistories(ObservableMap<String, TransactionModel?> value) {
+  set barHistories(ObservableMap<String, List<TransactionModel>> value) {
     _$barHistoriesAtom.reportWrite(value, super.barHistories, () {
       super.barHistories = value;
+    });
+  }
+
+  late final _$cardTransactionCacheAtom = Atom(name: '_HistoryPageStore.cardTransactionCache', context: context);
+
+  @override
+  ObservableMap<String, List<TransactionModel>> get cardTransactionCache {
+    _$cardTransactionCacheAtom.reportRead();
+    return super.cardTransactionCache;
+  }
+
+  @override
+  set cardTransactionCache(ObservableMap<String, List<TransactionModel>> value) {
+    _$cardTransactionCacheAtom.reportWrite(value, super.cardTransactionCache, () {
+      super.cardTransactionCache = value;
+    });
+  }
+
+  late final _$barTransactionCacheAtom = Atom(name: '_HistoryPageStore.barTransactionCache', context: context);
+
+  @override
+  ObservableMap<String, List<TransactionModel>> get barTransactionCache {
+    _$barTransactionCacheAtom.reportRead();
+    return super.barTransactionCache;
+  }
+
+  @override
+  set barTransactionCache(ObservableMap<String, List<TransactionModel>> value) {
+    _$barTransactionCacheAtom.reportWrite(value, super.barTransactionCache, () {
+      super.barTransactionCache = value;
     });
   }
 
@@ -111,36 +196,6 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   set historyLoading(bool value) {
     _$historyLoadingAtom.reportWrite(value, super.historyLoading, () {
       super.historyLoading = value;
-    });
-  }
-
-  late final _$cardsTransactionCacheAtom = Atom(name: '_HistoryPageStore.cardsTransactionCache', context: context);
-
-  @override
-  ObservableMap<String, TransactionModel?> get cardsTransactionCache {
-    _$cardsTransactionCacheAtom.reportRead();
-    return super.cardsTransactionCache;
-  }
-
-  @override
-  set cardsTransactionCache(ObservableMap<String, TransactionModel?> value) {
-    _$cardsTransactionCacheAtom.reportWrite(value, super.cardsTransactionCache, () {
-      super.cardsTransactionCache = value;
-    });
-  }
-
-  late final _$barsTransactionCacheAtom = Atom(name: '_HistoryPageStore.barsTransactionCache', context: context);
-
-  @override
-  ObservableMap<String, TransactionModel?> get barsTransactionCache {
-    _$barsTransactionCacheAtom.reportRead();
-    return super.barsTransactionCache;
-  }
-
-  @override
-  set barsTransactionCache(ObservableMap<String, TransactionModel?> value) {
-    _$barsTransactionCacheAtom.reportWrite(value, super.barsTransactionCache, () {
-      super.barsTransactionCache = value;
     });
   }
 
@@ -162,28 +217,58 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   late final _$cardTransactionsAtom = Atom(name: '_HistoryPageStore.cardTransactions', context: context);
 
   @override
-  TransactionModel? get cardTransactions {
+  List<TransactionModel> get cardTransactions {
     _$cardTransactionsAtom.reportRead();
     return super.cardTransactions;
   }
 
   @override
-  set cardTransactions(TransactionModel? value) {
+  set cardTransactions(List<TransactionModel> value) {
     _$cardTransactionsAtom.reportWrite(value, super.cardTransactions, () {
       super.cardTransactions = value;
+    });
+  }
+
+  late final _$newFetchedDataAtom = Atom(name: '_HistoryPageStore.newFetchedData', context: context);
+
+  @override
+  List<TransactionModel> get newFetchedData {
+    _$newFetchedDataAtom.reportRead();
+    return super.newFetchedData;
+  }
+
+  @override
+  set newFetchedData(List<TransactionModel> value) {
+    _$newFetchedDataAtom.reportWrite(value, super.newFetchedData, () {
+      super.newFetchedData = value;
+    });
+  }
+
+  late final _$newFetchedBarDataAtom = Atom(name: '_HistoryPageStore.newFetchedBarData', context: context);
+
+  @override
+  List<TransactionModel> get newFetchedBarData {
+    _$newFetchedBarDataAtom.reportRead();
+    return super.newFetchedBarData;
+  }
+
+  @override
+  set newFetchedBarData(List<TransactionModel> value) {
+    _$newFetchedBarDataAtom.reportWrite(value, super.newFetchedBarData, () {
+      super.newFetchedBarData = value;
     });
   }
 
   late final _$barTransactionsAtom = Atom(name: '_HistoryPageStore.barTransactions', context: context);
 
   @override
-  TransactionModel? get barTransactions {
+  List<TransactionModel> get barTransactions {
     _$barTransactionsAtom.reportRead();
     return super.barTransactions;
   }
 
   @override
-  set barTransactions(TransactionModel? value) {
+  set barTransactions(List<TransactionModel> value) {
     _$barTransactionsAtom.reportWrite(value, super.barTransactions, () {
       super.barTransactions = value;
     });
@@ -234,19 +319,86 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
-  late final _$currentPageAtom = Atom(name: '_HistoryPageStore.currentPage', context: context);
+  late final _$cardCurrentPageAtom = Atom(name: '_HistoryPageStore.cardCurrentPage', context: context);
 
   @override
-  int get currentPage {
-    _$currentPageAtom.reportRead();
-    return super.currentPage;
+  int get cardCurrentPage {
+    _$cardCurrentPageAtom.reportRead();
+    return super.cardCurrentPage;
   }
 
   @override
-  set currentPage(int value) {
-    _$currentPageAtom.reportWrite(value, super.currentPage, () {
-      super.currentPage = value;
+  set cardCurrentPage(int value) {
+    _$cardCurrentPageAtom.reportWrite(value, super.cardCurrentPage, () {
+      super.cardCurrentPage = value;
     });
+  }
+
+  late final _$barCurrentPageAtom = Atom(name: '_HistoryPageStore.barCurrentPage', context: context);
+
+  @override
+  int get barCurrentPage {
+    _$barCurrentPageAtom.reportRead();
+    return super.barCurrentPage;
+  }
+
+  @override
+  set barCurrentPage(int value) {
+    _$barCurrentPageAtom.reportWrite(value, super.barCurrentPage, () {
+      super.barCurrentPage = value;
+    });
+  }
+
+  late final _$tabIndexAtom = Atom(name: '_HistoryPageStore.tabIndex', context: context);
+
+  @override
+  int get tabIndex {
+    _$tabIndexAtom.reportRead();
+    return super.tabIndex;
+  }
+
+  @override
+  set tabIndex(int value) {
+    _$tabIndexAtom.reportWrite(value, super.tabIndex, () {
+      super.tabIndex = value;
+    });
+  }
+
+  late final _$isCardRefreshingAtom = Atom(name: '_HistoryPageStore.isCardRefreshing', context: context);
+
+  @override
+  bool get isCardRefreshing {
+    _$isCardRefreshingAtom.reportRead();
+    return super.isCardRefreshing;
+  }
+
+  @override
+  set isCardRefreshing(bool value) {
+    _$isCardRefreshingAtom.reportWrite(value, super.isCardRefreshing, () {
+      super.isCardRefreshing = value;
+    });
+  }
+
+  late final _$isBarRefreshingAtom = Atom(name: '_HistoryPageStore.isBarRefreshing', context: context);
+
+  @override
+  bool get isBarRefreshing {
+    _$isBarRefreshingAtom.reportRead();
+    return super.isBarRefreshing;
+  }
+
+  @override
+  set isBarRefreshing(bool value) {
+    _$isBarRefreshingAtom.reportWrite(value, super.isBarRefreshing, () {
+      super.isBarRefreshing = value;
+    });
+  }
+
+  late final _$setTabIndexAsyncAction = AsyncAction('_HistoryPageStore.setTabIndex', context: context);
+
+  @override
+  Future<void> setTabIndex(int value) {
+    return _$setTabIndexAsyncAction.run(() => super.setTabIndex(value));
   }
 
   late final _$setRefreshingAsyncAction = AsyncAction('_HistoryPageStore.setRefreshing', context: context);
@@ -256,12 +408,58 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     return _$setRefreshingAsyncAction.run(() => super.setRefreshing(value: value));
   }
 
-  late final _$fetchNextPageTransactionsAsyncAction =
-      AsyncAction('_HistoryPageStore.fetchNextPageTransactions', context: context);
+  late final _$getSingleCardHistoryAsyncAction =
+      AsyncAction('_HistoryPageStore.getSingleCardHistory', context: context);
 
   @override
-  Future<void> fetchNextPageTransactions({required String address}) {
-    return _$fetchNextPageTransactionsAsyncAction.run(() => super.fetchNextPageTransactions(address: address));
+  Future<void> getSingleCardHistory({required String address}) {
+    return _$getSingleCardHistoryAsyncAction.run(() => super.getSingleCardHistory(address: address));
+  }
+
+  late final _$isCachedCardTransactionsAsyncAction =
+      AsyncAction('_HistoryPageStore.isCachedCardTransactions', context: context);
+
+  @override
+  Future<void> isCachedCardTransactions(String address) {
+    return _$isCachedCardTransactionsAsyncAction.run(() => super.isCachedCardTransactions(address));
+  }
+
+  late final _$isCachedBarTransactionsAsyncAction =
+      AsyncAction('_HistoryPageStore.isCachedBarTransactions', context: context);
+
+  @override
+  Future<void> isCachedBarTransactions(String address) {
+    return _$isCachedBarTransactionsAsyncAction.run(() => super.isCachedBarTransactions(address));
+  }
+
+  late final _$getSingleBarHistoryAsyncAction = AsyncAction('_HistoryPageStore.getSingleBarHistory', context: context);
+
+  @override
+  Future<void> getSingleBarHistory({required String address}) {
+    return _$getSingleBarHistoryAsyncAction.run(() => super.getSingleBarHistory(address: address));
+  }
+
+  late final _$getWalletStatusAsyncAction = AsyncAction('_HistoryPageStore.getWalletStatus', context: context);
+
+  @override
+  Future<void> getWalletStatus({required String address}) {
+    return _$getWalletStatusAsyncAction.run(() => super.getWalletStatus(address: address));
+  }
+
+  late final _$fetchCardNextPageTransactionsAsyncAction =
+      AsyncAction('_HistoryPageStore.fetchCardNextPageTransactions', context: context);
+
+  @override
+  Future<void> fetchCardNextPageTransactions({required String address}) {
+    return _$fetchCardNextPageTransactionsAsyncAction.run(() => super.fetchCardNextPageTransactions(address: address));
+  }
+
+  late final _$fetchBarNextPageTransactionsAsyncAction =
+      AsyncAction('_HistoryPageStore.fetchBarNextPageTransactions', context: context);
+
+  @override
+  Future<void> fetchBarNextPageTransactions({required String address}) {
+    return _$fetchBarNextPageTransactionsAsyncAction.run(() => super.fetchBarNextPageTransactions(address: address));
   }
 
   late final _$setCardHistoryIndexAsyncAction = AsyncAction('_HistoryPageStore.setCardHistoryIndex', context: context);
@@ -294,11 +492,34 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     return _$setBarSelectedAddressAsyncAction.run(() => super.setBarSelectedAddress(value));
   }
 
-  late final _$refreshAsyncAction = AsyncAction('_HistoryPageStore.refresh', context: context);
+  late final _$cardRefreshAsyncAction = AsyncAction('_HistoryPageStore.cardRefresh', context: context);
 
   @override
-  Future<void> refresh(String cardAddress) {
-    return _$refreshAsyncAction.run(() => super.refresh(cardAddress));
+  Future<void> cardRefresh(String cardAddress) {
+    return _$cardRefreshAsyncAction.run(() => super.cardRefresh(cardAddress));
+  }
+
+  late final _$saveAndPatchCardAddressAsyncAction =
+      AsyncAction('_HistoryPageStore.saveAndPatchCardAddress', context: context);
+
+  @override
+  Future<void> saveAndPatchCardAddress(String address) {
+    return _$saveAndPatchCardAddressAsyncAction.run(() => super.saveAndPatchCardAddress(address));
+  }
+
+  late final _$saveAndPatchBarAddressAsyncAction =
+      AsyncAction('_HistoryPageStore.saveAndPatchBarAddress', context: context);
+
+  @override
+  Future<void> saveAndPatchBarAddress(String address) {
+    return _$saveAndPatchBarAddressAsyncAction.run(() => super.saveAndPatchBarAddress(address));
+  }
+
+  late final _$barRefreshAsyncAction = AsyncAction('_HistoryPageStore.barRefresh', context: context);
+
+  @override
+  Future<void> barRefresh(String cardAddress) {
+    return _$barRefreshAsyncAction.run(() => super.barRefresh(cardAddress));
   }
 
   late final _$loadLastRefreshedAsyncAction = AsyncAction('_HistoryPageStore.loadLastRefreshed', context: context);
@@ -311,22 +532,43 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   late final _$_HistoryPageStoreActionController = ActionController(name: '_HistoryPageStore', context: context);
 
   @override
-  void cacheCardsTransaction(String address, TransactionModel? transactions) {
+  void cacheCardTransaction(String address, List<TransactionModel> transactions) {
     final _$actionInfo =
-        _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.cacheCardsTransaction');
+        _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.cacheCardTransaction');
     try {
-      return super.cacheCardsTransaction(address, transactions);
+      return super.cacheCardTransaction(address, transactions);
     } finally {
       _$_HistoryPageStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void cacheBarsTransaction(String address, TransactionModel? transactions) {
-    final _$actionInfo =
-        _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.cacheBarsTransaction');
+  void cacheBarTransaction(String address, List<TransactionModel> transactions) {
+    final _$actionInfo = _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.cacheBarTransaction');
     try {
-      return super.cacheBarsTransaction(address, transactions);
+      return super.cacheBarTransaction(address, transactions);
+    } finally {
+      _$_HistoryPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<TransactionModel>? getCardCachedTransaction(String address) {
+    final _$actionInfo =
+        _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.getCardCachedTransaction');
+    try {
+      return super.getCardCachedTransaction(address);
+    } finally {
+      _$_HistoryPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  List<TransactionModel>? getBarCachedTransaction(String address) {
+    final _$actionInfo =
+        _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.getBarCachedTransaction');
+    try {
+      return super.getBarCachedTransaction(address);
     } finally {
       _$_HistoryPageStoreActionController.endAction(_$actionInfo);
     }
@@ -343,24 +585,46 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   }
 
   @override
+  void makeActive() {
+    final _$actionInfo = _$_HistoryPageStoreActionController.startAction(name: '_HistoryPageStore.makeActive');
+    try {
+      return super.makeActive();
+    } finally {
+      _$_HistoryPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+walletStatus: ${walletStatus},
 cardHistoryIndex: ${cardHistoryIndex},
 barHistoryIndex: ${barHistoryIndex},
-cardSelectedAddress: ${cardSelectedAddress},
-barSelectedAddress: ${barSelectedAddress},
+isLoading: ${isLoading},
+selectedCardAddress: ${selectedCardAddress},
+selectedBarAddress: ${selectedBarAddress},
 cardHistories: ${cardHistories},
 barHistories: ${barHistories},
+cardTransactionCache: ${cardTransactionCache},
+barTransactionCache: ${barTransactionCache},
 historyLoading: ${historyLoading},
-cardsTransactionCache: ${cardsTransactionCache},
-barsTransactionCache: ${barsTransactionCache},
 disabledButtons: ${disabledButtons},
 cardTransactions: ${cardTransactions},
+newFetchedData: ${newFetchedData},
+newFetchedBarData: ${newFetchedBarData},
 barTransactions: ${barTransactions},
 lastRefreshedMap: ${lastRefreshedMap},
 isButtonDisabled: ${isButtonDisabled},
 isRefreshing: ${isRefreshing},
-currentPage: ${currentPage}
+cardCurrentPage: ${cardCurrentPage},
+barCurrentPage: ${barCurrentPage},
+tabIndex: ${tabIndex},
+isCardRefreshing: ${isCardRefreshing},
+isBarRefreshing: ${isBarRefreshing},
+cardsTransactions: ${cardsTransactions},
+barsTransactions: ${barsTransactions},
+cardUniqueDates: ${cardUniqueDates},
+barUniqueDates: ${barUniqueDates}
     ''';
   }
 }

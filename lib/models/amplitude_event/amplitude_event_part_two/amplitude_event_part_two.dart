@@ -243,5 +243,68 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     @Default('ERASE_MY_DATA_CONFIRMED') String eventType,
   }) = EraseMyDataConfirmed;
 
+  const factory AmplitudeEventPartTwo.coinSearchClicked({
+    @Default('COIN_SEARCH_CLICKED') String eventType,
+  }) = CoinSearchClicked;
+
+  const factory AmplitudeEventPartTwo.coinSearched({
+    @Default('COIN_SEARCHED') String eventType,
+    required String coinName,
+  }) = CoinSearched;
+
+  const factory AmplitudeEventPartTwo.fiatClicked({
+    @Default('FIAT_CLICKED') String eventType,
+  }) = FiatCliked;
+
+  const factory AmplitudeEventPartTwo.coinClicked({
+    @Default('COIN_CLICKED') String eventType,
+    required String coinName,
+  }) = CoinClicked;
+
+  const factory AmplitudeEventPartTwo.loadCoinsClicked({
+    @Default('LOAD_COINS_CLICKED') String eventType,
+  }) = LoadCoinsClicked;
+
+  const factory AmplitudeEventPartTwo.goUpClicked({
+    @Default('GO_UP_CLICKED') String eventType,
+  }) = GoUpClicked;
+
+  const factory AmplitudeEventPartTwo.cardTabHistoryClicked({
+    @Default('CARD_TAB_HISTORY_CLICKED') String eventType,
+  }) = CardTabHistoryClicked;
+
+  const factory AmplitudeEventPartTwo.barTabHistoryClicked({
+    @Default('BAR_TAB_HISTORY_CLICKED') String eventType,
+  }) = BarTabHistoryClicked;
+
+  const factory AmplitudeEventPartTwo.selectWalletClicked({
+    @Default('SELECT_WALLET_CLICKED') String eventType,
+    required String walletType,
+  }) = SelectWalletClicked;
+
+  const factory AmplitudeEventPartTwo.walletSelected({
+    @Default('WALLET_SELECTED') String eventType,
+    required String walletType,
+    required String address,
+  }) = WalletSelected;
+
+  const factory AmplitudeEventPartTwo.pullToRefresh({
+    @Default('PULL_TO_REFRESH') String eventType,
+    required String source,
+  }) = PullToRefresh;
+
+  const factory AmplitudeEventPartTwo.transactionClicked({
+    @Default('TRANSACTION_CLICKED') String eventType,
+  }) = TransactionClicked;
+
+  const factory AmplitudeEventPartTwo.loadTransactionClicked({
+    @Default('LOAD_TRANSACTION_CLICKED') String eventType,
+  }) = LoadTransactionClicked;
+
+  const factory AmplitudeEventPartTwo.refreshClicked({
+    @Default('REFRESH_CLICKED') String eventType,
+    required String address,
+  }) = RefreshClicked;
+
   factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) => _$AmplitudeEventPartTwoFromJson(json);
 }

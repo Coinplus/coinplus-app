@@ -17,11 +17,18 @@ class ApiInterceptor extends Interceptor {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }
 
+    if (options.method == 'PATCH') {
+      options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
+    }
+
     if (options.path.contains('/markets')) {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }
 
     if (options.path.contains('/wallet')) {
+      options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
+    }
+    if (options.path.contains('/wallet/status')) {
       options.baseUrl = GetIt.I<FlavorService>().config.coinsUrl;
     }
     if (options.data is Map) {

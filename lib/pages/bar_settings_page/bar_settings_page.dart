@@ -30,7 +30,6 @@ import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/bar_color_state/bar_setting_state.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
@@ -57,7 +56,6 @@ class BarSettingsPage extends HookWidget {
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _isPinSet = getIsPinCodeSet();
     final _auth = LocalAuthentication();
-    final _settingsState = SettingsState();
     final isInactive = useState(false);
     final appLocked = useState(false);
     final isPaused = useState(false);
@@ -231,8 +229,7 @@ class BarSettingsPage extends HookWidget {
                           },
                         );
                       }
-                      final isCardActivated =
-                          isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                      final isCardActivated = isBarWalletActivated(balanceStore: _balanceStore);
                       unawaited(
                         recordAmplitudeEvent(
                           AddressCopied(
@@ -638,8 +635,7 @@ class BarSettingsPage extends HookWidget {
                   const Gap(10),
                   ListTile(
                     onTap: () async {
-                      final isBarActivated =
-                          isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+                      final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
                       await recordAmplitudeEventPartTwo(
                         RemoveCardClicked(
                           walletAddress: bar.address,

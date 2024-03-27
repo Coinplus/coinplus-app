@@ -12,7 +12,7 @@ import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -30,9 +30,10 @@ class ActionSliderForCardDelete extends StatelessWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
   @override
   Widget build(BuildContext context) {
-    final _settingsState = SettingsState();
     return ActionSlider.standard(
       direction: TextDirection.rtl,
       height: 60,
@@ -54,7 +55,8 @@ class ActionSliderForCardDelete extends StatelessWidget {
         unawaited(deleteCount(card.address));
         await router.pop();
         unawaited(balanceStore.removeSelectedCard());
-        final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+        _historyPageStore.cardHistories[card.address]?.clear();
+        final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
         await recordAmplitudeEventPartTwo(
           CardDeleted(walletAddress: card.address, walletType: 'Card', activated: await isCardActivated),
         );

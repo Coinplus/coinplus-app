@@ -13,8 +13,8 @@ import 'wallet_protect_state/wallet_protect_state.dart';
 void registerStoreGetIt() {
   GetIt.I.registerSingleton(RampService());
   GetIt.I.registerSingleton(BalanceStore());
-  GetIt.I.registerSingleton(IpStore());
   GetIt.I.registerSingleton(HistoryPageStore());
+  GetIt.I.registerSingleton(IpStore());
   GetIt.I.registerSingleton(ContactUsStore());
   GetIt.I.registerSingleton(WalletProtectState());
   GetIt.I.registerSingleton(ValidationState());

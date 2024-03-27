@@ -22,8 +22,8 @@ import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/header_custom_paint.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
@@ -46,11 +46,11 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   RampService get _rampService => GetIt.I<RampService>();
 
-  final _settingsState = SettingsState();
-
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -72,9 +72,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       ..getBarsInfo();
     _rampService.configureRamp(
       address: _balanceStore.cards.isNotEmpty
-          ? _balanceStore.cards[_settingsState.cardCurrentIndex].address
+          ? _balanceStore.cards[_balanceStore.cardCurrentIndex].address
           : _balanceStore.bars.isNotEmpty
-              ? _balanceStore.bars[_settingsState.barCurrentIndex].address
+              ? _balanceStore.bars[_balanceStore.barCurrentIndex].address
               : '',
     );
     _tabController.addListener(() {
@@ -83,13 +83,19 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
           : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
-          _settingsState.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+          _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
+        _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
-          _settingsState.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress = _balanceStore.cards[_settingsState.cardCurrentIndex].address;
+          _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
+        _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
+      }
+      if (_tabController.index == 0) {
+        _historyPageStore.setTabIndex(0);
+      }
+      if (_tabController.index == 1) {
+        _historyPageStore.setTabIndex(1);
       }
       widget.onChangeCard(
         (
@@ -248,7 +254,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                           decimalDigits: 2,
                         );
                         final balance = _balanceStore.allCardsBalances;
-                        if (data == null) {
+                        if (data == null || _balanceStore.balanceLoading == true) {
                           return const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                             child: SizedBox(
@@ -281,10 +287,10 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: Text(
                                   '\$${myFormat.format(balance / 100000000 * data.price)}',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontFamily: FontFamily.redHatBold,
                                     color: Colors.white,
-                                    fontSize: 28,
+                                    fontSize: balance > 1000000000 ? (balance > 100000000 ? 24 : 26) : 28,
                                   ),
                                 ),
                               );
@@ -312,7 +318,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
           return reaction(
             (_) => _balanceStore.bars.length,
             (length) {
-              if (length > _settingsState.barCurrentIndex) {
+              if (length > _balanceStore.barCurrentIndex) {
                 _tabController.animateTo(1);
               }
             },
@@ -323,7 +329,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             return reaction(
               (_) => _balanceStore.cards.length,
               (length) {
-                if (length > _settingsState.cardCurrentIndex) {
+                if (length > _balanceStore.cardCurrentIndex) {
                   _tabController.animateTo(0);
                 }
               },

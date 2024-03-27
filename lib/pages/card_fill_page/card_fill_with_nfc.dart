@@ -1300,7 +1300,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                             }
                           });
 
-                          await _historyPageStore.refresh(_balanceStore.selectedCard!.address);
+                          await _historyPageStore.saveAndPatchCardAddress(_balanceStore.selectedCard!.address);
                           _balanceStore.onCardAdded(_balanceStore.selectedCard!.address);
                         } else {
                           await HapticFeedback.vibrate();

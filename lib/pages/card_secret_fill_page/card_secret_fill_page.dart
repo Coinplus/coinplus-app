@@ -29,7 +29,6 @@ import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
@@ -52,7 +51,6 @@ class CardSecretFillPage extends StatefulWidget {
 }
 
 class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProviderStateMixin {
-
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   late String secret1B58 = '';
@@ -70,7 +68,6 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
   late AnimationController _secretTwoLottieController;
   final _validationStore = ValidationState();
   final _secretState = SecretState();
-  final _settingsState = SettingsState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
 
@@ -161,7 +158,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
 
   @override
   Widget build(BuildContext context) {
-    final card = _balanceStore.cards[_settingsState.cardCurrentIndex];
+    final card = _balanceStore.cards[_balanceStore.cardCurrentIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -755,7 +752,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage> with TickerProv
                           setState(() {
                             walletAddress = publicKey!;
                           });
-                          if (card.address.hashCode == publicKey.hashCode) {
+                          if (card.address == publicKey) {
                             unawaited(toggleActivation(card.address));
                             unawaited(incrementActivationCount(card.address));
                             await savePrivateKeyInSecureStorage(

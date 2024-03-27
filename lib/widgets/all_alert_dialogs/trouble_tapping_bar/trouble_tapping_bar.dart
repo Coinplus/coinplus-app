@@ -13,7 +13,6 @@ import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
-import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../utils/wallet_activation_status.dart';
 import '../../loading_button/loading_button.dart';
 import '../recommended_by_tap_bar/recommended_by_tap.dart';
@@ -26,10 +25,9 @@ class BarIssueOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _settingsState = SettingsState();
-    final bar = _balanceStore.bars[_settingsState.barCurrentIndex];
+    final bar = _balanceStore.bars[_balanceStore.barCurrentIndex];
     final walletAddress = bar.address;
-    final isActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+    final isActivated = isBarWalletActivated(balanceStore: _balanceStore);
 
     return Padding(
       padding: const EdgeInsets.symmetric(

@@ -350,7 +350,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                                                             height: 10,
                                                             width: 10,
                                                             child: CircularProgressIndicator(
-                                                              color: Colors.grey,
+                                                              color: Colors.white,
                                                             ),
                                                           ),
                                                         ],
@@ -1376,7 +1376,7 @@ class _CardFillPageState extends State<CardFillPage> with TickerProviderStateMix
                             unawaited(
                               recordAmplitudeEventPartTwo(CardAddedEvent(address: _balanceStore.selectedCard!.address)),
                             );
-                            _historyPageStore.refresh(_balanceStore.selectedCard!.address);
+                            _historyPageStore.saveAndPatchCardAddress(_balanceStore.selectedCard!.address);
                             if (hasShown) {
                               router.pop();
                             } else {
