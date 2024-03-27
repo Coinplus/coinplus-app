@@ -286,6 +286,26 @@ Map<String, dynamic> _$$WalletTabClickedImplToJson(_$WalletTabClickedImpl instan
       'runtimeType': instance.$type,
     };
 
+_$MarketTabClickedImpl _$$MarketTabClickedImplFromJson(Map json) => _$MarketTabClickedImpl(
+      eventType: json['eventType'] as String? ?? 'MARKET_TAB_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$MarketTabClickedImplToJson(_$MarketTabClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$HistoryTabClickedImpl _$$HistoryTabClickedImplFromJson(Map json) => _$HistoryTabClickedImpl(
+      eventType: json['eventType'] as String? ?? 'HISTORY_TAB_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$HistoryTabClickedImplToJson(_$HistoryTabClickedImpl instance) => <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
 _$SettingsTabClickedImpl _$$SettingsTabClickedImplFromJson(Map json) => _$SettingsTabClickedImpl(
       eventType: json['eventType'] as String? ?? 'SETTINGS_TAB_CLICKED',
       $type: json['runtimeType'] as String?,

@@ -58,6 +58,10 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return NotNowLockClicked.fromJson(json);
     case 'walletTabClicked':
       return WalletTabClicked.fromJson(json);
+    case 'marketTabClicked':
+      return MarketTabClicked.fromJson(json);
+    case 'historyTabClicked':
+      return HistoryTabClicked.fromJson(json);
     case 'settingsTabClicked':
       return SettingsTabClicked.fromJson(json);
     case 'transactionsButtonClicked':
@@ -127,6 +131,8 @@ mixin _$AmplitudeEvent {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -175,6 +181,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -220,6 +228,8 @@ mixin _$AmplitudeEvent {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -265,6 +275,8 @@ mixin _$AmplitudeEvent {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -307,6 +319,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -349,6 +363,8 @@ mixin _$AmplitudeEvent {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -509,6 +525,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -560,6 +578,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -608,6 +628,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -659,6 +681,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -704,6 +728,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -749,6 +775,8 @@ class _$ConnectWalletClickedImpl with DiagnosticableTreeMixin implements Connect
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -909,6 +937,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -960,6 +990,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1008,6 +1040,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1059,6 +1093,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -1104,6 +1140,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -1149,6 +1187,8 @@ class _$ConnectManuallyClickedImpl with DiagnosticableTreeMixin implements Conne
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -1311,6 +1351,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -1362,6 +1404,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1410,6 +1454,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1461,6 +1507,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -1506,6 +1554,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -1551,6 +1601,8 @@ class _$ConnectWitchQrClickedImpl with DiagnosticableTreeMixin implements Connec
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -1718,6 +1770,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -1769,6 +1823,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1817,6 +1873,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -1868,6 +1926,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -1913,6 +1973,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -1958,6 +2020,8 @@ class _$QrButtonClickedImpl with DiagnosticableTreeMixin implements QrButtonClic
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -2125,6 +2189,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -2176,6 +2242,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -2224,6 +2292,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -2275,6 +2345,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -2320,6 +2392,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -2365,6 +2439,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -2523,6 +2599,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -2574,6 +2652,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -2622,6 +2702,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -2673,6 +2755,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -2718,6 +2802,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -2763,6 +2849,8 @@ class _$BuyNewCardClickedImpl with DiagnosticableTreeMixin implements BuyNewCard
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -2935,6 +3023,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -2986,6 +3076,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3034,6 +3126,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3085,6 +3179,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -3130,6 +3226,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -3175,6 +3273,8 @@ class _$ConnectOptionSelectedImpl with DiagnosticableTreeMixin implements Connec
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -3344,6 +3444,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -3395,6 +3497,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3443,6 +3547,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3494,6 +3600,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -3539,6 +3647,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -3584,6 +3694,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -3741,6 +3853,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -3792,6 +3906,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3840,6 +3956,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -3891,6 +4009,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -3936,6 +4056,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -3981,6 +4103,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -4160,6 +4284,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -4211,6 +4337,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -4259,6 +4387,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -4310,6 +4440,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -4355,6 +4487,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -4400,6 +4534,8 @@ class _$AddressFilledImpl with DiagnosticableTreeMixin implements AddressFilled 
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -4585,6 +4721,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -4636,6 +4774,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -4684,6 +4824,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -4735,6 +4877,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -4780,6 +4924,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -4825,6 +4971,8 @@ class _$DeeplinkClickedImpl with DiagnosticableTreeMixin implements DeeplinkClic
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -4997,6 +5145,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -5048,6 +5198,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5096,6 +5248,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5147,6 +5301,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -5192,6 +5348,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -5237,6 +5395,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -5421,6 +5581,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -5472,6 +5634,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5520,6 +5684,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5571,6 +5737,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -5616,6 +5784,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -5661,6 +5831,8 @@ class _$SaveToWalletClickedImpl with DiagnosticableTreeMixin implements SaveToWa
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -5840,6 +6012,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -5891,6 +6065,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5939,6 +6115,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -5990,6 +6168,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -6035,6 +6215,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -6080,6 +6262,8 @@ class _$AlreadySavedGotItClickedImpl with DiagnosticableTreeMixin implements Alr
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -6268,6 +6452,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -6319,6 +6505,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -6367,6 +6555,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -6418,6 +6608,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -6463,6 +6655,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -6508,6 +6702,8 @@ class _$ActivatedCheckboxClickedImpl with DiagnosticableTreeMixin implements Act
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -6694,6 +6890,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -6745,6 +6943,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -6793,6 +6993,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -6844,6 +7046,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -6889,6 +7093,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -6934,6 +7140,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -7118,6 +7326,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -7169,6 +7379,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -7217,6 +7429,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -7268,6 +7482,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -7313,6 +7529,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -7358,6 +7576,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -7515,6 +7735,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -7566,6 +7788,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -7614,6 +7838,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -7665,6 +7891,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -7710,6 +7938,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -7755,6 +7985,8 @@ class _$WarningCheckboxClickedImpl with DiagnosticableTreeMixin implements Warni
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -7902,6 +8134,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -7953,6 +8187,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8001,6 +8237,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8052,6 +8290,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -8097,6 +8337,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -8142,6 +8384,8 @@ class _$AppLockEnabledImpl with DiagnosticableTreeMixin implements AppLockEnable
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -8288,6 +8532,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -8339,6 +8585,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8387,6 +8635,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8438,6 +8688,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -8483,6 +8735,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -8528,6 +8782,8 @@ class _$NotNowLockClickedImpl with DiagnosticableTreeMixin implements NotNowLock
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -8674,6 +8930,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -8725,6 +8983,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8773,6 +9033,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -8824,6 +9086,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -8869,6 +9133,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -8914,6 +9180,8 @@ class _$WalletTabClickedImpl with DiagnosticableTreeMixin implements WalletTabCl
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -8957,6 +9225,802 @@ abstract class WalletTabClicked implements AmplitudeEvent {
   @override
   @JsonKey(ignore: true)
   _$$WalletTabClickedImplCopyWith<_$WalletTabClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$MarketTabClickedImplCopyWith<$Res> implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$MarketTabClickedImplCopyWith(_$MarketTabClickedImpl value, $Res Function(_$MarketTabClickedImpl) then) =
+      __$$MarketTabClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$MarketTabClickedImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<$Res, _$MarketTabClickedImpl>
+    implements _$$MarketTabClickedImplCopyWith<$Res> {
+  __$$MarketTabClickedImplCopyWithImpl(_$MarketTabClickedImpl _value, $Res Function(_$MarketTabClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$MarketTabClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MarketTabClickedImpl with DiagnosticableTreeMixin implements MarketTabClicked {
+  const _$MarketTabClickedImpl({this.eventType = 'MARKET_TAB_CLICKED', final String? $type})
+      : $type = $type ?? 'marketTabClicked';
+
+  factory _$MarketTabClickedImpl.fromJson(Map<String, dynamic> json) => _$$MarketTabClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.marketTabClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.marketTabClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MarketTabClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MarketTabClickedImplCopyWith<_$MarketTabClickedImpl> get copyWith =>
+      __$$MarketTabClickedImplCopyWithImpl<_$MarketTabClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source) connectManuallyClicked,
+    required TResult Function(String eventType, String source) connectWithQrClicked,
+    required TResult Function(String eventType, String walletType, String source) qrButtonClicked,
+    required TResult Function(String eventType, String source, String walletAddress) qrScanned,
+    required TResult Function(String eventType, String source) buyNewCardClicked,
+    required TResult Function(String eventType, String source, String connectOption) connectOptionSelected,
+    required TResult Function(String eventType, String source, String walletAddress) nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) addressFilled,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) deepLinkClicked,
+    required TResult Function(String eventType, String source, String walletType) typeSelected,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress) alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) gotItClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source) addNewPlusClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) walletSettingsClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) receiveClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) sendClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) historyClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType, String source) backButtonClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) secret1Validated,
+    required TResult Function(String eventType, String walletAddress, String walletType) secret2Validated,
+  }) {
+    return marketTabClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)? qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)? qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)? connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)? nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? addressFilled,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)? typeSelected,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? saveToWalletClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress)? alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? gotItClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? historyClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? secret1Validated,
+    TResult? Function(String eventType, String walletAddress, String walletType)? secret2Validated,
+  }) {
+    return marketTabClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)? qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)? qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)? connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)? nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? addressFilled,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)? typeSelected,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)? alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? gotItClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? historyClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)? secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (marketTabClicked != null) {
+      return marketTabClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value) connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value) connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value) alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value) activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value) warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value) walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+  }) {
+    return marketTabClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+  }) {
+    return marketTabClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (marketTabClicked != null) {
+      return marketTabClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MarketTabClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class MarketTabClicked implements AmplitudeEvent {
+  const factory MarketTabClicked({final String eventType}) = _$MarketTabClickedImpl;
+
+  factory MarketTabClicked.fromJson(Map<String, dynamic> json) = _$MarketTabClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$MarketTabClickedImplCopyWith<_$MarketTabClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$HistoryTabClickedImplCopyWith<$Res> implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$HistoryTabClickedImplCopyWith(_$HistoryTabClickedImpl value, $Res Function(_$HistoryTabClickedImpl) then) =
+      __$$HistoryTabClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$HistoryTabClickedImplCopyWithImpl<$Res> extends _$AmplitudeEventCopyWithImpl<$Res, _$HistoryTabClickedImpl>
+    implements _$$HistoryTabClickedImplCopyWith<$Res> {
+  __$$HistoryTabClickedImplCopyWithImpl(_$HistoryTabClickedImpl _value, $Res Function(_$HistoryTabClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$HistoryTabClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$HistoryTabClickedImpl with DiagnosticableTreeMixin implements HistoryTabClicked {
+  const _$HistoryTabClickedImpl({this.eventType = 'HISTORY_TAB_CLICKED', final String? $type})
+      : $type = $type ?? 'historyTabClicked';
+
+  factory _$HistoryTabClickedImpl.fromJson(Map<String, dynamic> json) => _$$HistoryTabClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.historyTabClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.historyTabClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HistoryTabClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HistoryTabClickedImplCopyWith<_$HistoryTabClickedImpl> get copyWith =>
+      __$$HistoryTabClickedImplCopyWithImpl<_$HistoryTabClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source) connectManuallyClicked,
+    required TResult Function(String eventType, String source) connectWithQrClicked,
+    required TResult Function(String eventType, String walletType, String source) qrButtonClicked,
+    required TResult Function(String eventType, String source, String walletAddress) qrScanned,
+    required TResult Function(String eventType, String source) buyNewCardClicked,
+    required TResult Function(String eventType, String source, String connectOption) connectOptionSelected,
+    required TResult Function(String eventType, String source, String walletAddress) nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) addressFilled,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) deepLinkClicked,
+    required TResult Function(String eventType, String source, String walletType) typeSelected,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress) alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) gotItClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress) fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source) addNewPlusClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) walletSettingsClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) receiveClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) sendClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated) historyClicked,
+    required TResult Function(String eventType, String source, String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType, String source) backButtonClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) secret1Validated,
+    required TResult Function(String eventType, String walletAddress, String walletType) secret2Validated,
+  }) {
+    return historyTabClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)? qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)? qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)? connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)? nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? addressFilled,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)? typeSelected,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? saveToWalletClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress)? alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? gotItClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress)? fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? historyClicked,
+    TResult? Function(String eventType, String source, String walletType, String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress, bool activated)? shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? secret1Validated,
+    TResult? Function(String eventType, String walletAddress, String walletType)? secret2Validated,
+  }) {
+    return historyTabClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)? qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)? qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)? connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)? nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? addressFilled,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)? typeSelected,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)? alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? gotItClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress)? fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? historyClicked,
+    TResult Function(String eventType, String source, String walletType, String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress, bool activated)? shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)? secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (historyTabClicked != null) {
+      return historyTabClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value) connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value) connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value) alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value) activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value) warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value) walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+  }) {
+    return historyTabClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+  }) {
+    return historyTabClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (historyTabClicked != null) {
+      return historyTabClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$HistoryTabClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class HistoryTabClicked implements AmplitudeEvent {
+  const factory HistoryTabClicked({final String eventType}) = _$HistoryTabClickedImpl;
+
+  factory HistoryTabClicked.fromJson(Map<String, dynamic> json) = _$HistoryTabClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$HistoryTabClickedImplCopyWith<_$HistoryTabClickedImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -9061,6 +10125,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -9112,6 +10178,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -9160,6 +10228,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -9211,6 +10281,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -9256,6 +10328,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -9301,6 +10375,8 @@ class _$SettingsTabClickedImpl with DiagnosticableTreeMixin implements SettingsT
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -9483,6 +10559,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -9534,6 +10612,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -9582,6 +10662,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -9633,6 +10715,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -9678,6 +10762,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -9723,6 +10809,8 @@ class _$TransactionsButtonClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -9886,6 +10974,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -9937,6 +11027,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -9985,6 +11077,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -10036,6 +11130,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -10081,6 +11177,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -10126,6 +11224,8 @@ class _$AddNewClickedImpl with DiagnosticableTreeMixin implements AddNewClicked 
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -10282,6 +11382,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -10333,6 +11435,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -10381,6 +11485,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -10432,6 +11538,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -10477,6 +11585,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -10522,6 +11632,8 @@ class _$AddNewPlusClickedImpl with DiagnosticableTreeMixin implements AddNewPlus
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -10694,6 +11806,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -10745,6 +11859,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -10793,6 +11909,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -10844,6 +11962,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -10889,6 +12009,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -10934,6 +12056,8 @@ class _$WalletSettingsClickedImpl with DiagnosticableTreeMixin implements Wallet
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -11118,6 +12242,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -11169,6 +12295,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -11217,6 +12345,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -11268,6 +12398,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -11313,6 +12445,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -11358,6 +12492,8 @@ class _$TopUpButtonClickedImpl with DiagnosticableTreeMixin implements TopUpButt
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -11543,6 +12679,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -11594,6 +12732,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -11642,6 +12782,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -11693,6 +12835,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -11738,6 +12882,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -11783,6 +12929,8 @@ class _$ReceiveClickedImpl with DiagnosticableTreeMixin implements ReceiveClicke
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -11968,6 +13116,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -12019,6 +13169,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12067,6 +13219,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12118,6 +13272,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -12163,6 +13319,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -12208,6 +13366,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -12394,6 +13554,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -12445,6 +13607,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12493,6 +13657,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12544,6 +13710,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -12589,6 +13757,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -12634,6 +13804,8 @@ class _$BuyWithCardClickedImpl with DiagnosticableTreeMixin implements BuyWithCa
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -12819,6 +13991,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -12870,6 +14044,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12918,6 +14094,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -12969,6 +14147,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -13014,6 +14194,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -13059,6 +14241,8 @@ class _$HistoryClickedImpl with DiagnosticableTreeMixin implements HistoryClicke
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -13254,6 +14438,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -13305,6 +14491,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -13353,6 +14541,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -13404,6 +14594,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -13449,6 +14641,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -13494,6 +14688,8 @@ class _$AddressCopiedImpl with DiagnosticableTreeMixin implements AddressCopied 
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -13684,6 +14880,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -13735,6 +14933,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -13783,6 +14983,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -13834,6 +15036,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -13879,6 +15083,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -13924,6 +15130,8 @@ class _$ShareAddressClickedImpl with DiagnosticableTreeMixin implements ShareAdd
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -14077,6 +15285,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -14128,6 +15338,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -14176,6 +15388,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -14227,6 +15441,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -14272,6 +15488,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -14317,6 +15535,8 @@ class _$GotItSendClickedImpl with DiagnosticableTreeMixin implements GotItSendCl
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -14463,6 +15683,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -14514,6 +15736,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -14562,6 +15786,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -14613,6 +15839,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -14658,6 +15886,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -14703,6 +15933,8 @@ class _$SendAnywayClickedImpl with DiagnosticableTreeMixin implements SendAnyway
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -14858,6 +16090,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -14909,6 +16143,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -14957,6 +16193,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -15008,6 +16246,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -15053,6 +16293,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -15098,6 +16340,8 @@ class _$BackButtonClickedImpl with DiagnosticableTreeMixin implements BackButton
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -15267,6 +16511,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -15318,6 +16564,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -15366,6 +16614,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -15417,6 +16667,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -15462,6 +16714,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -15507,6 +16761,8 @@ class _$Secret1ValidatedImpl with DiagnosticableTreeMixin implements Secret1Vali
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,
@@ -15680,6 +16936,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     required TResult Function(String eventType) appLockEnabled,
     required TResult Function(String eventType) notNowLockClicked,
     required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
     required TResult Function(String eventType) settingsTabClicked,
     required TResult Function(String eventType, String walletType, String walletAddress, bool activated)
         transactionsButtonClicked,
@@ -15731,6 +16989,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     TResult? Function(String eventType)? appLockEnabled,
     TResult? Function(String eventType)? notNowLockClicked,
     TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
     TResult? Function(String eventType)? settingsTabClicked,
     TResult? Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -15779,6 +17039,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     TResult Function(String eventType)? appLockEnabled,
     TResult Function(String eventType)? notNowLockClicked,
     TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
     TResult Function(String eventType)? settingsTabClicked,
     TResult Function(String eventType, String walletType, String walletAddress, bool activated)?
         transactionsButtonClicked,
@@ -15830,6 +17092,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     required TResult Function(AppLockEnabled value) appLockEnabled,
     required TResult Function(NotNowLockClicked value) notNowLockClicked,
     required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
     required TResult Function(SettingsTabClicked value) settingsTabClicked,
     required TResult Function(TransactionsButtonClicked value) transactionsButtonClicked,
     required TResult Function(AddNewClicked value) addNewClicked,
@@ -15875,6 +17139,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     TResult? Function(AppLockEnabled value)? appLockEnabled,
     TResult? Function(NotNowLockClicked value)? notNowLockClicked,
     TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
     TResult? Function(SettingsTabClicked value)? settingsTabClicked,
     TResult? Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult? Function(AddNewClicked value)? addNewClicked,
@@ -15920,6 +17186,8 @@ class _$Secret2ValidatedImpl with DiagnosticableTreeMixin implements Secret2Vali
     TResult Function(AppLockEnabled value)? appLockEnabled,
     TResult Function(NotNowLockClicked value)? notNowLockClicked,
     TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
     TResult Function(SettingsTabClicked value)? settingsTabClicked,
     TResult Function(TransactionsButtonClicked value)? transactionsButtonClicked,
     TResult Function(AddNewClicked value)? addNewClicked,

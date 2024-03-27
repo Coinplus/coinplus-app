@@ -145,7 +145,7 @@ class _CoinsClient implements CoinsClient {
     )
         .compose(
           _dio.options,
-          '/wallet/transactions?page=${page}&address=${address}&connectionId=bitcoin',
+          '/wallet/transactions?page=${page}&limit=20&address=${address}&connectionId=bitcoin',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -155,6 +155,58 @@ class _CoinsClient implements CoinsClient {
           baseUrl,
         ))));
     final value = TransactionModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<WalletStatusModel> getWalletStatus({required String address}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<WalletStatusModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/wallet/status?address=${address}&connectionId=bitcoin',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = WalletStatusModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<PatchTransactionsModel> patchTransactions({required String address}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<PatchTransactionsModel>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/wallet/transactions?address=${address}&connectionId=bitcoin',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = PatchTransactionsModel.fromJson(_result.data!);
     return value;
   }
 

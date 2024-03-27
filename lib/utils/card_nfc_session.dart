@@ -471,7 +471,6 @@ Future<void> checkNfcIos({
       }
       final isCardActivated = isCardWalletActivated(
         balanceStore: balanceStore,
-        settingsState: settingsState,
       );
       await recordAmplitudeEventPartTwo(
         VerifyCardTapped(
@@ -648,7 +647,7 @@ Future<void> checkNfcAndroid({
       } catch (e) {
         signature = null;
       }
-      final isCardActivated = isCardWalletActivated(balanceStore: balanceStore, settingsState: settingsState);
+      final isCardActivated = isCardWalletActivated(balanceStore: balanceStore);
       await recordAmplitudeEventPartTwo(
         VerifyCardTapped(
           walletAddress: walletAddress,

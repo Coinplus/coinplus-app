@@ -13,7 +13,6 @@ import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import 'action_slider.dart';
@@ -29,8 +28,6 @@ class RemoveCard extends StatefulWidget {
 
 class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  final _settingsState = SettingsState();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +78,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           const Gap(15),
           LoadingButton(
             onPressed: () async {
-              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
               await recordAmplitudeEventPartTwo(
                 NotSureClicked(
                   walletAddress: widget.card.address,

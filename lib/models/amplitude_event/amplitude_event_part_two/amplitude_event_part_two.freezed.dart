@@ -104,6 +104,34 @@ AmplitudeEventPartTwo _$AmplitudeEventPartTwoFromJson(Map<String, dynamic> json)
       return EraseMyDataClicked.fromJson(json);
     case 'eraseMyDataConfirmed':
       return EraseMyDataConfirmed.fromJson(json);
+    case 'coinSearchClicked':
+      return CoinSearchClicked.fromJson(json);
+    case 'coinSearched':
+      return CoinSearched.fromJson(json);
+    case 'fiatClicked':
+      return FiatCliked.fromJson(json);
+    case 'coinClicked':
+      return CoinClicked.fromJson(json);
+    case 'loadCoinsClicked':
+      return LoadCoinsClicked.fromJson(json);
+    case 'goUpClicked':
+      return GoUpClicked.fromJson(json);
+    case 'cardTabHistoryClicked':
+      return CardTabHistoryClicked.fromJson(json);
+    case 'barTabHistoryClicked':
+      return BarTabHistoryClicked.fromJson(json);
+    case 'selectWalletClicked':
+      return SelectWalletClicked.fromJson(json);
+    case 'walletSelected':
+      return WalletSelected.fromJson(json);
+    case 'pullToRefresh':
+      return PullToRefresh.fromJson(json);
+    case 'transactionClicked':
+      return TransactionClicked.fromJson(json);
+    case 'loadTransactionClicked':
+      return LoadTransactionClicked.fromJson(json);
+    case 'refreshClicked':
+      return RefreshClicked.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -170,6 +198,20 @@ mixin _$AmplitudeEventPartTwo {
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -220,6 +262,20 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -269,6 +325,20 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -318,6 +388,20 @@ mixin _$AmplitudeEventPartTwo {
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -366,6 +450,20 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -414,6 +512,20 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -605,6 +717,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return continueClicked(eventType, walletAddress, walletType);
   }
@@ -658,6 +784,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return continueClicked?.call(eventType, walletAddress, walletType);
   }
@@ -710,6 +850,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (continueClicked != null) {
@@ -765,6 +919,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return continueClicked(this);
   }
@@ -816,6 +984,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return continueClicked?.call(this);
   }
@@ -867,6 +1049,20 @@ class _$ContinueCLickedImpl with DiagnosticableTreeMixin implements ContinueCLic
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (continueClicked != null) {
@@ -1056,6 +1252,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return editSecretsClicked(eventType, walletAddress, walletType);
   }
@@ -1109,6 +1319,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return editSecretsClicked?.call(eventType, walletAddress, walletType);
   }
@@ -1161,6 +1385,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (editSecretsClicked != null) {
@@ -1216,6 +1454,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return editSecretsClicked(this);
   }
@@ -1267,6 +1519,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return editSecretsClicked?.call(this);
   }
@@ -1318,6 +1584,20 @@ class _$EditSecretsClickedImpl with DiagnosticableTreeMixin implements EditSecre
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (editSecretsClicked != null) {
@@ -1508,6 +1788,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return validationSuccessful(eventType, walletAddress, walletType);
   }
@@ -1561,6 +1855,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return validationSuccessful?.call(eventType, walletAddress, walletType);
   }
@@ -1613,6 +1921,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (validationSuccessful != null) {
@@ -1668,6 +1990,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return validationSuccessful(this);
   }
@@ -1719,6 +2055,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return validationSuccessful?.call(this);
   }
@@ -1770,6 +2120,20 @@ class _$ValidationSuccessfulImpl with DiagnosticableTreeMixin implements Validat
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (validationSuccessful != null) {
@@ -1958,6 +2322,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return validationFailed(eventType, walletAddress, walletType);
   }
@@ -2011,6 +2389,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return validationFailed?.call(eventType, walletAddress, walletType);
   }
@@ -2063,6 +2455,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (validationFailed != null) {
@@ -2118,6 +2524,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return validationFailed(this);
   }
@@ -2169,6 +2589,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return validationFailed?.call(this);
   }
@@ -2220,6 +2654,20 @@ class _$ValidationFailedImpl with DiagnosticableTreeMixin implements ValidationF
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (validationFailed != null) {
@@ -2404,6 +2852,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return guideMeClicked(eventType, walletAddress, walletType);
   }
@@ -2457,6 +2919,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return guideMeClicked?.call(eventType, walletAddress, walletType);
   }
@@ -2509,6 +2985,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (guideMeClicked != null) {
@@ -2564,6 +3054,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return guideMeClicked(this);
   }
@@ -2615,6 +3119,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return guideMeClicked?.call(this);
   }
@@ -2666,6 +3184,20 @@ class _$GuideMeClickedImpl with DiagnosticableTreeMixin implements GuideMeClicke
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (guideMeClicked != null) {
@@ -2851,6 +3383,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardColorChanged(eventType, walletAddress, color);
   }
@@ -2904,6 +3450,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardColorChanged?.call(eventType, walletAddress, color);
   }
@@ -2956,6 +3516,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardColorChanged != null) {
@@ -3011,6 +3585,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardColorChanged(this);
   }
@@ -3062,6 +3650,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardColorChanged?.call(this);
   }
@@ -3113,6 +3715,20 @@ class _$CardColorCHangedImpl with DiagnosticableTreeMixin implements CardColorCH
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardColorChanged != null) {
@@ -3303,6 +3919,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return clickedOnPrivateKey(eventType, walletAddress, walletType);
   }
@@ -3356,6 +3986,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return clickedOnPrivateKey?.call(eventType, walletAddress, walletType);
   }
@@ -3408,6 +4052,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (clickedOnPrivateKey != null) {
@@ -3463,6 +4121,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return clickedOnPrivateKey(this);
   }
@@ -3514,6 +4186,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return clickedOnPrivateKey?.call(this);
   }
@@ -3565,6 +4251,20 @@ class _$ClickedOnPrivateKeyImpl with DiagnosticableTreeMixin implements ClickedO
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (clickedOnPrivateKey != null) {
@@ -3754,6 +4454,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return privateKeyRevealed(eventType, walletAddress, walletType);
   }
@@ -3807,6 +4521,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return privateKeyRevealed?.call(eventType, walletAddress, walletType);
   }
@@ -3859,6 +4587,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privateKeyRevealed != null) {
@@ -3914,6 +4656,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return privateKeyRevealed(this);
   }
@@ -3965,6 +4721,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return privateKeyRevealed?.call(this);
   }
@@ -4016,6 +4786,20 @@ class _$PrivateKeyRevealedImpl with DiagnosticableTreeMixin implements PrivateKe
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privateKeyRevealed != null) {
@@ -4204,6 +4988,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return privateKeyCopied(eventType, walletAddress, walletType);
   }
@@ -4257,6 +5055,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return privateKeyCopied?.call(eventType, walletAddress, walletType);
   }
@@ -4309,6 +5121,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privateKeyCopied != null) {
@@ -4364,6 +5190,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return privateKeyCopied(this);
   }
@@ -4415,6 +5255,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return privateKeyCopied?.call(this);
   }
@@ -4466,6 +5320,20 @@ class _$PrivateKeyCopiedImpl with DiagnosticableTreeMixin implements PrivateKeyC
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privateKeyCopied != null) {
@@ -4640,6 +5508,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardNameChanged(eventType, walletType);
   }
@@ -4693,6 +5575,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardNameChanged?.call(eventType, walletType);
   }
@@ -4745,6 +5641,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardNameChanged != null) {
@@ -4800,6 +5710,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardNameChanged(this);
   }
@@ -4851,6 +5775,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardNameChanged?.call(this);
   }
@@ -4902,6 +5840,20 @@ class _$CardNameChangedImpl with DiagnosticableTreeMixin implements CardNameChan
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardNameChanged != null) {
@@ -5073,6 +6025,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return helpCenterClicked(eventType, source);
   }
@@ -5126,6 +6092,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return helpCenterClicked?.call(eventType, source);
   }
@@ -5178,6 +6158,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (helpCenterClicked != null) {
@@ -5233,6 +6227,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return helpCenterClicked(this);
   }
@@ -5284,6 +6292,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return helpCenterClicked?.call(this);
   }
@@ -5335,6 +6357,20 @@ class _$HelpCenterClickedImpl with DiagnosticableTreeMixin implements HelpCenter
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (helpCenterClicked != null) {
@@ -5529,6 +6565,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return removeCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -5582,6 +6632,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return removeCardClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -5634,6 +6698,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (removeCardClicked != null) {
@@ -5689,6 +6767,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return removeCardClicked(this);
   }
@@ -5740,6 +6832,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return removeCardClicked?.call(this);
   }
@@ -5791,6 +6897,20 @@ class _$RemoveCardClickedImpl with DiagnosticableTreeMixin implements RemoveCard
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (removeCardClicked != null) {
@@ -5990,6 +7110,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardDeleted(eventType, walletAddress, walletType, activated);
   }
@@ -6043,6 +7177,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardDeleted?.call(eventType, walletAddress, walletType, activated);
   }
@@ -6095,6 +7243,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardDeleted != null) {
@@ -6150,6 +7312,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardDeleted(this);
   }
@@ -6201,6 +7377,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardDeleted?.call(this);
   }
@@ -6252,6 +7442,20 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardDeleted != null) {
@@ -6451,6 +7655,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return notSureClicked(eventType, walletAddress, walletType, activated);
   }
@@ -6504,6 +7722,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return notSureClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -6556,6 +7788,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (notSureClicked != null) {
@@ -6611,6 +7857,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return notSureClicked(this);
   }
@@ -6662,6 +7922,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return notSureClicked?.call(this);
   }
@@ -6713,6 +7987,20 @@ class _$NotSureClickedImpl with DiagnosticableTreeMixin implements NotSureClicke
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (notSureClicked != null) {
@@ -6881,6 +8169,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return contactUsClicked(eventType);
   }
@@ -6934,6 +8236,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return contactUsClicked?.call(eventType);
   }
@@ -6986,6 +8302,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (contactUsClicked != null) {
@@ -7041,6 +8371,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return contactUsClicked(this);
   }
@@ -7092,6 +8436,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return contactUsClicked?.call(this);
   }
@@ -7143,6 +8501,20 @@ class _$ContactUsClickedImpl with DiagnosticableTreeMixin implements ContactUsCl
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (contactUsClicked != null) {
@@ -7303,6 +8675,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return appLockClicked(eventType);
   }
@@ -7356,6 +8742,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return appLockClicked?.call(eventType);
   }
@@ -7408,6 +8808,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (appLockClicked != null) {
@@ -7463,6 +8877,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return appLockClicked(this);
   }
@@ -7514,6 +8942,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return appLockClicked?.call(this);
   }
@@ -7565,6 +9007,20 @@ class _$AppLockClickedImpl with DiagnosticableTreeMixin implements AppLockClicke
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (appLockClicked != null) {
@@ -7725,6 +9181,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return appLockDisabled(eventType);
   }
@@ -7778,6 +9248,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return appLockDisabled?.call(eventType);
   }
@@ -7830,6 +9314,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (appLockDisabled != null) {
@@ -7885,6 +9383,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return appLockDisabled(this);
   }
@@ -7936,6 +9448,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return appLockDisabled?.call(this);
   }
@@ -7987,6 +9513,20 @@ class _$AppLockDisabledImpl with DiagnosticableTreeMixin implements AppLockDisab
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (appLockDisabled != null) {
@@ -8150,6 +9690,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return changePasscodeClicked(eventType);
   }
@@ -8203,6 +9757,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return changePasscodeClicked?.call(eventType);
   }
@@ -8255,6 +9823,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (changePasscodeClicked != null) {
@@ -8310,6 +9892,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return changePasscodeClicked(this);
   }
@@ -8361,6 +9957,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return changePasscodeClicked?.call(this);
   }
@@ -8412,6 +10022,20 @@ class _$ChangePasscodeClickedImpl with DiagnosticableTreeMixin implements Change
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (changePasscodeClicked != null) {
@@ -8572,6 +10196,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return passcodeChanged(eventType);
   }
@@ -8625,6 +10263,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return passcodeChanged?.call(eventType);
   }
@@ -8677,6 +10329,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (passcodeChanged != null) {
@@ -8732,6 +10398,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return passcodeChanged(this);
   }
@@ -8783,6 +10463,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return passcodeChanged?.call(this);
   }
@@ -8834,6 +10528,20 @@ class _$PasscodeChangedImpl with DiagnosticableTreeMixin implements PasscodeChan
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (passcodeChanged != null) {
@@ -8994,6 +10702,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return faceIdEnabled(eventType);
   }
@@ -9047,6 +10769,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return faceIdEnabled?.call(eventType);
   }
@@ -9099,6 +10835,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (faceIdEnabled != null) {
@@ -9154,6 +10904,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return faceIdEnabled(this);
   }
@@ -9205,6 +10969,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return faceIdEnabled?.call(this);
   }
@@ -9256,6 +11034,20 @@ class _$FaceIdEnabledImpl with DiagnosticableTreeMixin implements FaceIdEnabled 
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (faceIdEnabled != null) {
@@ -9416,6 +11208,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return faceIdDisabled(eventType);
   }
@@ -9469,6 +11275,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return faceIdDisabled?.call(eventType);
   }
@@ -9521,6 +11341,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (faceIdDisabled != null) {
@@ -9576,6 +11410,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return faceIdDisabled(this);
   }
@@ -9627,6 +11475,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return faceIdDisabled?.call(this);
   }
@@ -9678,6 +11540,20 @@ class _$FaceIdDisabledImpl with DiagnosticableTreeMixin implements FaceIdDisable
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (faceIdDisabled != null) {
@@ -9841,6 +11717,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return pushNotificationsOn(eventType);
   }
@@ -9894,6 +11784,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return pushNotificationsOn?.call(eventType);
   }
@@ -9946,6 +11850,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOn != null) {
@@ -10001,6 +11919,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return pushNotificationsOn(this);
   }
@@ -10052,6 +11984,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return pushNotificationsOn?.call(this);
   }
@@ -10103,6 +12049,20 @@ class _$PushNotificationsOnImpl with DiagnosticableTreeMixin implements PushNoti
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOn != null) {
@@ -10266,6 +12226,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return pushNotificationsOff(eventType);
   }
@@ -10319,6 +12293,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return pushNotificationsOff?.call(eventType);
   }
@@ -10371,6 +12359,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOff != null) {
@@ -10426,6 +12428,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return pushNotificationsOff(this);
   }
@@ -10477,6 +12493,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return pushNotificationsOff?.call(this);
   }
@@ -10528,6 +12558,20 @@ class _$PushNotificationsOffImpl with DiagnosticableTreeMixin implements PushNot
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOff != null) {
@@ -10701,6 +12745,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return joinCommunityClicked(eventType, social);
   }
@@ -10754,6 +12812,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return joinCommunityClicked?.call(eventType, social);
   }
@@ -10806,6 +12878,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (joinCommunityClicked != null) {
@@ -10861,6 +12947,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return joinCommunityClicked(this);
   }
@@ -10912,6 +13012,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return joinCommunityClicked?.call(this);
   }
@@ -10963,6 +13077,20 @@ class _$JoinCommunityClickedImpl with DiagnosticableTreeMixin implements JoinCom
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (joinCommunityClicked != null) {
@@ -11128,6 +13256,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return privacyPolicyClicked(eventType);
   }
@@ -11181,6 +13323,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return privacyPolicyClicked?.call(eventType);
   }
@@ -11233,6 +13389,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privacyPolicyClicked != null) {
@@ -11288,6 +13458,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return privacyPolicyClicked(this);
   }
@@ -11339,6 +13523,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return privacyPolicyClicked?.call(this);
   }
@@ -11390,6 +13588,20 @@ class _$PrivacyPolicyClickedImpl with DiagnosticableTreeMixin implements Privacy
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (privacyPolicyClicked != null) {
@@ -11551,6 +13763,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return termsOfUseClicked(eventType);
   }
@@ -11604,6 +13830,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return termsOfUseClicked?.call(eventType);
   }
@@ -11656,6 +13896,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (termsOfUseClicked != null) {
@@ -11711,6 +13965,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return termsOfUseClicked(this);
   }
@@ -11762,6 +14030,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return termsOfUseClicked?.call(this);
   }
@@ -11813,6 +14095,20 @@ class _$TermsOfUseClickedImpl with DiagnosticableTreeMixin implements TermsOfUse
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (termsOfUseClicked != null) {
@@ -11974,6 +14270,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return verifyCardClicked(eventType);
   }
@@ -12027,6 +14337,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return verifyCardClicked?.call(eventType);
   }
@@ -12079,6 +14403,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (verifyCardClicked != null) {
@@ -12134,6 +14472,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return verifyCardClicked(this);
   }
@@ -12185,6 +14537,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return verifyCardClicked?.call(this);
   }
@@ -12236,6 +14602,20 @@ class _$VerifyCardClickedImpl with DiagnosticableTreeMixin implements VerifyCard
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (verifyCardClicked != null) {
@@ -12429,6 +14809,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return verifyCardTapped(eventType, walletAddress, walletType, activated);
   }
@@ -12482,6 +14876,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return verifyCardTapped?.call(eventType, walletAddress, walletType, activated);
   }
@@ -12534,6 +14942,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (verifyCardTapped != null) {
@@ -12589,6 +15011,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return verifyCardTapped(this);
   }
@@ -12640,6 +15076,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return verifyCardTapped?.call(this);
   }
@@ -12691,6 +15141,20 @@ class _$VerifyCardTappedImpl with DiagnosticableTreeMixin implements VerifyCardT
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (verifyCardTapped != null) {
@@ -12860,6 +15324,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return sendMessageClicked(eventType);
   }
@@ -12913,6 +15391,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return sendMessageClicked?.call(eventType);
   }
@@ -12965,6 +15457,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (sendMessageClicked != null) {
@@ -13020,6 +15526,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return sendMessageClicked(this);
   }
@@ -13071,6 +15591,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return sendMessageClicked?.call(this);
   }
@@ -13122,6 +15656,20 @@ class _$SendMessageClickedImpl with DiagnosticableTreeMixin implements SendMessa
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (sendMessageClicked != null) {
@@ -13282,6 +15830,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardTabClicked(eventType);
   }
@@ -13335,6 +15897,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardTabClicked?.call(eventType);
   }
@@ -13387,6 +15963,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardTabClicked != null) {
@@ -13442,6 +16032,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardTabClicked(this);
   }
@@ -13493,6 +16097,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardTabClicked?.call(this);
   }
@@ -13544,6 +16162,20 @@ class _$CardTabClickedImpl with DiagnosticableTreeMixin implements CardTabClicke
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardTabClicked != null) {
@@ -13704,6 +16336,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return barTabClicked(eventType);
   }
@@ -13757,6 +16403,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return barTabClicked?.call(eventType);
   }
@@ -13809,6 +16469,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (barTabClicked != null) {
@@ -13864,6 +16538,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return barTabClicked(this);
   }
@@ -13915,6 +16603,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return barTabClicked?.call(this);
   }
@@ -13966,6 +16668,20 @@ class _$BarTabClickedImpl with DiagnosticableTreeMixin implements BarTabClicked 
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (barTabClicked != null) {
@@ -14138,6 +16854,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return tapToConnectClicked(eventType, tab);
   }
@@ -14191,6 +16921,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return tapToConnectClicked?.call(eventType, tab);
   }
@@ -14243,6 +16987,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (tapToConnectClicked != null) {
@@ -14298,6 +17056,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return tapToConnectClicked(this);
   }
@@ -14349,6 +17121,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return tapToConnectClicked?.call(this);
   }
@@ -14400,6 +17186,20 @@ class _$TapToConnectClickedImpl with DiagnosticableTreeMixin implements TapToCon
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (tapToConnectClicked != null) {
@@ -14595,6 +17395,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardDamagedClicked(eventType, walletAddress, walletType, activated);
   }
@@ -14648,6 +17462,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardDamagedClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -14700,6 +17528,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardDamagedClicked != null) {
@@ -14755,6 +17597,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardDamagedClicked(this);
   }
@@ -14806,6 +17662,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardDamagedClicked?.call(this);
   }
@@ -14857,6 +17727,20 @@ class _$CardDamagedClickedImpl with DiagnosticableTreeMixin implements CardDamag
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardDamagedClicked != null) {
@@ -15059,6 +17943,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return nfcNotWorkingClicked(eventType, walletAddress, walletType, activated);
   }
@@ -15112,6 +18010,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return nfcNotWorkingClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -15164,6 +18076,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (nfcNotWorkingClicked != null) {
@@ -15219,6 +18145,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return nfcNotWorkingClicked(this);
   }
@@ -15270,6 +18210,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return nfcNotWorkingClicked?.call(this);
   }
@@ -15321,6 +18275,20 @@ class _$NfcNotWorkingCLickedImpl with DiagnosticableTreeMixin implements NfcNotW
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (nfcNotWorkingClicked != null) {
@@ -15523,6 +18491,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return dontHaveCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -15576,6 +18558,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return dontHaveCardClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -15628,6 +18624,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (dontHaveCardClicked != null) {
@@ -15683,6 +18693,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return dontHaveCardClicked(this);
   }
@@ -15734,6 +18758,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return dontHaveCardClicked?.call(this);
   }
@@ -15785,6 +18823,20 @@ class _$DontHaveCardClickedImpl with DiagnosticableTreeMixin implements DontHave
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (dontHaveCardClicked != null) {
@@ -15984,6 +19036,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return lostCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -16037,6 +19103,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return lostCardClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -16089,6 +19169,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (lostCardClicked != null) {
@@ -16144,6 +19238,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return lostCardClicked(this);
   }
@@ -16195,6 +19303,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return lostCardClicked?.call(this);
   }
@@ -16246,6 +19368,20 @@ class _$LostCardClickedImpl with DiagnosticableTreeMixin implements LostCardClic
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (lostCardClicked != null) {
@@ -16449,6 +19585,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return troubleActivateClicked(eventType, walletAddress, walletType, activated);
   }
@@ -16502,6 +19652,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return troubleActivateClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -16554,6 +19718,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateClicked != null) {
@@ -16609,6 +19787,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return troubleActivateClicked(this);
   }
@@ -16660,6 +19852,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return troubleActivateClicked?.call(this);
   }
@@ -16711,6 +19917,20 @@ class _$TroubleActivateClickedImpl with DiagnosticableTreeMixin implements Troub
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateClicked != null) {
@@ -16914,6 +20134,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return troubleCloseClicked(eventType, walletAddress, walletType, activated);
   }
@@ -16967,6 +20201,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return troubleCloseClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -17019,6 +20267,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleCloseClicked != null) {
@@ -17074,6 +20336,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return troubleCloseClicked(this);
   }
@@ -17125,6 +20401,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return troubleCloseClicked?.call(this);
   }
@@ -17176,6 +20466,20 @@ class _$TroubleCloseClickedImpl with DiagnosticableTreeMixin implements TroubleC
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleCloseClicked != null) {
@@ -17378,6 +20682,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return troubleGotItClicked(eventType, walletAddress, walletType, activated);
   }
@@ -17431,6 +20749,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return troubleGotItClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -17483,6 +20815,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleGotItClicked != null) {
@@ -17538,6 +20884,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return troubleGotItClicked(this);
   }
@@ -17589,6 +20949,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return troubleGotItClicked?.call(this);
   }
@@ -17640,6 +21014,20 @@ class _$TroubleGotItClickedImpl with DiagnosticableTreeMixin implements TroubleG
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleGotItClicked != null) {
@@ -17843,6 +21231,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return troubleActivateNowClicked(eventType, walletAddress, walletType, activated);
   }
@@ -17896,6 +21298,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return troubleActivateNowClicked?.call(eventType, walletAddress, walletType, activated);
   }
@@ -17948,6 +21364,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateNowClicked != null) {
@@ -18003,6 +21433,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return troubleActivateNowClicked(this);
   }
@@ -18054,6 +21498,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return troubleActivateNowClicked?.call(this);
   }
@@ -18105,6 +21563,20 @@ class _$TroubleActivateNowClickedImpl with DiagnosticableTreeMixin implements Tr
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateNowClicked != null) {
@@ -18282,6 +21754,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return cardAdded(eventType, address);
   }
@@ -18335,6 +21821,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return cardAdded?.call(eventType, address);
   }
@@ -18387,6 +21887,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardAdded != null) {
@@ -18442,6 +21956,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return cardAdded(this);
   }
@@ -18493,6 +22021,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return cardAdded?.call(this);
   }
@@ -18544,6 +22086,20 @@ class _$CardAddedEventImpl with DiagnosticableTreeMixin implements CardAddedEven
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (cardAdded != null) {
@@ -18714,6 +22270,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return barAdded(eventType, address);
   }
@@ -18767,6 +22337,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return barAdded?.call(eventType, address);
   }
@@ -18819,6 +22403,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (barAdded != null) {
@@ -18874,6 +22472,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return barAdded(this);
   }
@@ -18925,6 +22537,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return barAdded?.call(this);
   }
@@ -18976,6 +22602,20 @@ class _$BarAddedEventImpl with DiagnosticableTreeMixin implements BarAddedEvent 
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (barAdded != null) {
@@ -19139,6 +22779,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return eraseMyDataClicked(eventType);
   }
@@ -19192,6 +22846,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return eraseMyDataClicked?.call(eventType);
   }
@@ -19244,6 +22912,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataClicked != null) {
@@ -19299,6 +22981,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return eraseMyDataClicked(this);
   }
@@ -19350,6 +23046,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return eraseMyDataClicked?.call(this);
   }
@@ -19401,6 +23111,20 @@ class _$EraseMyDataClickedImpl with DiagnosticableTreeMixin implements EraseMyDa
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataClicked != null) {
@@ -19564,6 +23288,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     required TResult Function(String eventType, String address) barAdded,
     required TResult Function(String eventType) eraseMyDataClicked,
     required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
   }) {
     return eraseMyDataConfirmed(eventType);
   }
@@ -19617,6 +23355,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     TResult? Function(String eventType, String address)? barAdded,
     TResult? Function(String eventType)? eraseMyDataClicked,
     TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
   }) {
     return eraseMyDataConfirmed?.call(eventType);
   }
@@ -19669,6 +23421,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     TResult Function(String eventType, String address)? barAdded,
     TResult Function(String eventType)? eraseMyDataClicked,
     TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataConfirmed != null) {
@@ -19724,6 +23490,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     required TResult Function(BarAddedEvent value) barAdded,
     required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
     required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
   }) {
     return eraseMyDataConfirmed(this);
   }
@@ -19775,6 +23555,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     TResult? Function(BarAddedEvent value)? barAdded,
     TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
   }) {
     return eraseMyDataConfirmed?.call(this);
   }
@@ -19826,6 +23620,20 @@ class _$EraseMyDataConfirmedImpl with DiagnosticableTreeMixin implements EraseMy
     TResult Function(BarAddedEvent value)? barAdded,
     TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
     TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataConfirmed != null) {
@@ -19852,4 +23660,7177 @@ abstract class EraseMyDataConfirmed implements AmplitudeEventPartTwo {
   @override
   @JsonKey(ignore: true)
   _$$EraseMyDataConfirmedImplCopyWith<_$EraseMyDataConfirmedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CoinSearchClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$CoinSearchClickedImplCopyWith(_$CoinSearchClickedImpl value, $Res Function(_$CoinSearchClickedImpl) then) =
+      __$$CoinSearchClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$CoinSearchClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$CoinSearchClickedImpl>
+    implements _$$CoinSearchClickedImplCopyWith<$Res> {
+  __$$CoinSearchClickedImplCopyWithImpl(_$CoinSearchClickedImpl _value, $Res Function(_$CoinSearchClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$CoinSearchClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CoinSearchClickedImpl with DiagnosticableTreeMixin implements CoinSearchClicked {
+  const _$CoinSearchClickedImpl({this.eventType = 'COIN_SEARCH_CLICKED', final String? $type})
+      : $type = $type ?? 'coinSearchClicked';
+
+  factory _$CoinSearchClickedImpl.fromJson(Map<String, dynamic> json) => _$$CoinSearchClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.coinSearchClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.coinSearchClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CoinSearchClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CoinSearchClickedImplCopyWith<_$CoinSearchClickedImpl> get copyWith =>
+      __$$CoinSearchClickedImplCopyWithImpl<_$CoinSearchClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return coinSearchClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return coinSearchClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinSearchClicked != null) {
+      return coinSearchClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return coinSearchClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return coinSearchClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinSearchClicked != null) {
+      return coinSearchClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CoinSearchClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CoinSearchClicked implements AmplitudeEventPartTwo {
+  const factory CoinSearchClicked({final String eventType}) = _$CoinSearchClickedImpl;
+
+  factory CoinSearchClicked.fromJson(Map<String, dynamic> json) = _$CoinSearchClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$CoinSearchClickedImplCopyWith<_$CoinSearchClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CoinSearchedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$CoinSearchedImplCopyWith(_$CoinSearchedImpl value, $Res Function(_$CoinSearchedImpl) then) =
+      __$$CoinSearchedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String coinName});
+}
+
+/// @nodoc
+class __$$CoinSearchedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$CoinSearchedImpl>
+    implements _$$CoinSearchedImplCopyWith<$Res> {
+  __$$CoinSearchedImplCopyWithImpl(_$CoinSearchedImpl _value, $Res Function(_$CoinSearchedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? coinName = null,
+  }) {
+    return _then(_$CoinSearchedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      coinName: null == coinName
+          ? _value.coinName
+          : coinName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
+  const _$CoinSearchedImpl({this.eventType = 'COIN_SEARCHED', required this.coinName, final String? $type})
+      : $type = $type ?? 'coinSearched';
+
+  factory _$CoinSearchedImpl.fromJson(Map<String, dynamic> json) => _$$CoinSearchedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String coinName;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.coinSearched(eventType: $eventType, coinName: $coinName)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.coinSearched'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('coinName', coinName));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CoinSearchedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.coinName, coinName) || other.coinName == coinName));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, coinName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CoinSearchedImplCopyWith<_$CoinSearchedImpl> get copyWith =>
+      __$$CoinSearchedImplCopyWithImpl<_$CoinSearchedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return coinSearched(eventType, coinName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return coinSearched?.call(eventType, coinName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinSearched != null) {
+      return coinSearched(eventType, coinName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return coinSearched(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return coinSearched?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinSearched != null) {
+      return coinSearched(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CoinSearchedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CoinSearched implements AmplitudeEventPartTwo {
+  const factory CoinSearched({final String eventType, required final String coinName}) = _$CoinSearchedImpl;
+
+  factory CoinSearched.fromJson(Map<String, dynamic> json) = _$CoinSearchedImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get coinName;
+  @override
+  @JsonKey(ignore: true)
+  _$$CoinSearchedImplCopyWith<_$CoinSearchedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FiatClikedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$FiatClikedImplCopyWith(_$FiatClikedImpl value, $Res Function(_$FiatClikedImpl) then) =
+      __$$FiatClikedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$FiatClikedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$FiatClikedImpl>
+    implements _$$FiatClikedImplCopyWith<$Res> {
+  __$$FiatClikedImplCopyWithImpl(_$FiatClikedImpl _value, $Res Function(_$FiatClikedImpl) _then) : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$FiatClikedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
+  const _$FiatClikedImpl({this.eventType = 'FIAT_CLICKED', final String? $type}) : $type = $type ?? 'fiatClicked';
+
+  factory _$FiatClikedImpl.fromJson(Map<String, dynamic> json) => _$$FiatClikedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.fiatClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.fiatClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FiatClikedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FiatClikedImplCopyWith<_$FiatClikedImpl> get copyWith =>
+      __$$FiatClikedImplCopyWithImpl<_$FiatClikedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return fiatClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return fiatClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (fiatClicked != null) {
+      return fiatClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return fiatClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return fiatClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (fiatClicked != null) {
+      return fiatClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FiatClikedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class FiatCliked implements AmplitudeEventPartTwo {
+  const factory FiatCliked({final String eventType}) = _$FiatClikedImpl;
+
+  factory FiatCliked.fromJson(Map<String, dynamic> json) = _$FiatClikedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$FiatClikedImplCopyWith<_$FiatClikedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CoinClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$CoinClickedImplCopyWith(_$CoinClickedImpl value, $Res Function(_$CoinClickedImpl) then) =
+      __$$CoinClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String coinName});
+}
+
+/// @nodoc
+class __$$CoinClickedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$CoinClickedImpl>
+    implements _$$CoinClickedImplCopyWith<$Res> {
+  __$$CoinClickedImplCopyWithImpl(_$CoinClickedImpl _value, $Res Function(_$CoinClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? coinName = null,
+  }) {
+    return _then(_$CoinClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      coinName: null == coinName
+          ? _value.coinName
+          : coinName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
+  const _$CoinClickedImpl({this.eventType = 'COIN_CLICKED', required this.coinName, final String? $type})
+      : $type = $type ?? 'coinClicked';
+
+  factory _$CoinClickedImpl.fromJson(Map<String, dynamic> json) => _$$CoinClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String coinName;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.coinClicked(eventType: $eventType, coinName: $coinName)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.coinClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('coinName', coinName));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CoinClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.coinName, coinName) || other.coinName == coinName));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, coinName);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CoinClickedImplCopyWith<_$CoinClickedImpl> get copyWith =>
+      __$$CoinClickedImplCopyWithImpl<_$CoinClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return coinClicked(eventType, coinName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return coinClicked?.call(eventType, coinName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinClicked != null) {
+      return coinClicked(eventType, coinName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return coinClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return coinClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (coinClicked != null) {
+      return coinClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CoinClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CoinClicked implements AmplitudeEventPartTwo {
+  const factory CoinClicked({final String eventType, required final String coinName}) = _$CoinClickedImpl;
+
+  factory CoinClicked.fromJson(Map<String, dynamic> json) = _$CoinClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get coinName;
+  @override
+  @JsonKey(ignore: true)
+  _$$CoinClickedImplCopyWith<_$CoinClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadCoinsClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$LoadCoinsClickedImplCopyWith(_$LoadCoinsClickedImpl value, $Res Function(_$LoadCoinsClickedImpl) then) =
+      __$$LoadCoinsClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$LoadCoinsClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$LoadCoinsClickedImpl>
+    implements _$$LoadCoinsClickedImplCopyWith<$Res> {
+  __$$LoadCoinsClickedImplCopyWithImpl(_$LoadCoinsClickedImpl _value, $Res Function(_$LoadCoinsClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$LoadCoinsClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LoadCoinsClickedImpl with DiagnosticableTreeMixin implements LoadCoinsClicked {
+  const _$LoadCoinsClickedImpl({this.eventType = 'LOAD_COINS_CLICKED', final String? $type})
+      : $type = $type ?? 'loadCoinsClicked';
+
+  factory _$LoadCoinsClickedImpl.fromJson(Map<String, dynamic> json) => _$$LoadCoinsClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.loadCoinsClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.loadCoinsClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadCoinsClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadCoinsClickedImplCopyWith<_$LoadCoinsClickedImpl> get copyWith =>
+      __$$LoadCoinsClickedImplCopyWithImpl<_$LoadCoinsClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return loadCoinsClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return loadCoinsClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (loadCoinsClicked != null) {
+      return loadCoinsClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return loadCoinsClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return loadCoinsClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (loadCoinsClicked != null) {
+      return loadCoinsClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LoadCoinsClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class LoadCoinsClicked implements AmplitudeEventPartTwo {
+  const factory LoadCoinsClicked({final String eventType}) = _$LoadCoinsClickedImpl;
+
+  factory LoadCoinsClicked.fromJson(Map<String, dynamic> json) = _$LoadCoinsClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$LoadCoinsClickedImplCopyWith<_$LoadCoinsClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GoUpClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$GoUpClickedImplCopyWith(_$GoUpClickedImpl value, $Res Function(_$GoUpClickedImpl) then) =
+      __$$GoUpClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$GoUpClickedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$GoUpClickedImpl>
+    implements _$$GoUpClickedImplCopyWith<$Res> {
+  __$$GoUpClickedImplCopyWithImpl(_$GoUpClickedImpl _value, $Res Function(_$GoUpClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$GoUpClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
+  const _$GoUpClickedImpl({this.eventType = 'GO_UP_CLICKED', final String? $type}) : $type = $type ?? 'goUpClicked';
+
+  factory _$GoUpClickedImpl.fromJson(Map<String, dynamic> json) => _$$GoUpClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.goUpClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.goUpClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GoUpClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GoUpClickedImplCopyWith<_$GoUpClickedImpl> get copyWith =>
+      __$$GoUpClickedImplCopyWithImpl<_$GoUpClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return goUpClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return goUpClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (goUpClicked != null) {
+      return goUpClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return goUpClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return goUpClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (goUpClicked != null) {
+      return goUpClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GoUpClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class GoUpClicked implements AmplitudeEventPartTwo {
+  const factory GoUpClicked({final String eventType}) = _$GoUpClickedImpl;
+
+  factory GoUpClicked.fromJson(Map<String, dynamic> json) = _$GoUpClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$GoUpClickedImplCopyWith<_$GoUpClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$CardTabHistoryClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$CardTabHistoryClickedImplCopyWith(
+          _$CardTabHistoryClickedImpl value, $Res Function(_$CardTabHistoryClickedImpl) then) =
+      __$$CardTabHistoryClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$CardTabHistoryClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$CardTabHistoryClickedImpl>
+    implements _$$CardTabHistoryClickedImplCopyWith<$Res> {
+  __$$CardTabHistoryClickedImplCopyWithImpl(
+      _$CardTabHistoryClickedImpl _value, $Res Function(_$CardTabHistoryClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$CardTabHistoryClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CardTabHistoryClickedImpl with DiagnosticableTreeMixin implements CardTabHistoryClicked {
+  const _$CardTabHistoryClickedImpl({this.eventType = 'CARD_TAB_HISTORY_CLICKED', final String? $type})
+      : $type = $type ?? 'cardTabHistoryClicked';
+
+  factory _$CardTabHistoryClickedImpl.fromJson(Map<String, dynamic> json) => _$$CardTabHistoryClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.cardTabHistoryClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.cardTabHistoryClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CardTabHistoryClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CardTabHistoryClickedImplCopyWith<_$CardTabHistoryClickedImpl> get copyWith =>
+      __$$CardTabHistoryClickedImplCopyWithImpl<_$CardTabHistoryClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return cardTabHistoryClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return cardTabHistoryClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (cardTabHistoryClicked != null) {
+      return cardTabHistoryClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return cardTabHistoryClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return cardTabHistoryClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (cardTabHistoryClicked != null) {
+      return cardTabHistoryClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CardTabHistoryClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class CardTabHistoryClicked implements AmplitudeEventPartTwo {
+  const factory CardTabHistoryClicked({final String eventType}) = _$CardTabHistoryClickedImpl;
+
+  factory CardTabHistoryClicked.fromJson(Map<String, dynamic> json) = _$CardTabHistoryClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$CardTabHistoryClickedImplCopyWith<_$CardTabHistoryClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BarTabHistoryClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$BarTabHistoryClickedImplCopyWith(
+          _$BarTabHistoryClickedImpl value, $Res Function(_$BarTabHistoryClickedImpl) then) =
+      __$$BarTabHistoryClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$BarTabHistoryClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$BarTabHistoryClickedImpl>
+    implements _$$BarTabHistoryClickedImplCopyWith<$Res> {
+  __$$BarTabHistoryClickedImplCopyWithImpl(
+      _$BarTabHistoryClickedImpl _value, $Res Function(_$BarTabHistoryClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$BarTabHistoryClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BarTabHistoryClickedImpl with DiagnosticableTreeMixin implements BarTabHistoryClicked {
+  const _$BarTabHistoryClickedImpl({this.eventType = 'BAR_TAB_HISTORY_CLICKED', final String? $type})
+      : $type = $type ?? 'barTabHistoryClicked';
+
+  factory _$BarTabHistoryClickedImpl.fromJson(Map<String, dynamic> json) => _$$BarTabHistoryClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.barTabHistoryClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.barTabHistoryClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BarTabHistoryClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BarTabHistoryClickedImplCopyWith<_$BarTabHistoryClickedImpl> get copyWith =>
+      __$$BarTabHistoryClickedImplCopyWithImpl<_$BarTabHistoryClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return barTabHistoryClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return barTabHistoryClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (barTabHistoryClicked != null) {
+      return barTabHistoryClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return barTabHistoryClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return barTabHistoryClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (barTabHistoryClicked != null) {
+      return barTabHistoryClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BarTabHistoryClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class BarTabHistoryClicked implements AmplitudeEventPartTwo {
+  const factory BarTabHistoryClicked({final String eventType}) = _$BarTabHistoryClickedImpl;
+
+  factory BarTabHistoryClicked.fromJson(Map<String, dynamic> json) = _$BarTabHistoryClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$BarTabHistoryClickedImplCopyWith<_$BarTabHistoryClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SelectWalletClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$SelectWalletClickedImplCopyWith(
+          _$SelectWalletClickedImpl value, $Res Function(_$SelectWalletClickedImpl) then) =
+      __$$SelectWalletClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String walletType});
+}
+
+/// @nodoc
+class __$$SelectWalletClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$SelectWalletClickedImpl>
+    implements _$$SelectWalletClickedImplCopyWith<$Res> {
+  __$$SelectWalletClickedImplCopyWithImpl(
+      _$SelectWalletClickedImpl _value, $Res Function(_$SelectWalletClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? walletType = null,
+  }) {
+    return _then(_$SelectWalletClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      walletType: null == walletType
+          ? _value.walletType
+          : walletType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SelectWalletClickedImpl with DiagnosticableTreeMixin implements SelectWalletClicked {
+  const _$SelectWalletClickedImpl(
+      {this.eventType = 'SELECT_WALLET_CLICKED', required this.walletType, final String? $type})
+      : $type = $type ?? 'selectWalletClicked';
+
+  factory _$SelectWalletClickedImpl.fromJson(Map<String, dynamic> json) => _$$SelectWalletClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String walletType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.selectWalletClicked(eventType: $eventType, walletType: $walletType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.selectWalletClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('walletType', walletType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SelectWalletClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.walletType, walletType) || other.walletType == walletType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, walletType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SelectWalletClickedImplCopyWith<_$SelectWalletClickedImpl> get copyWith =>
+      __$$SelectWalletClickedImplCopyWithImpl<_$SelectWalletClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return selectWalletClicked(eventType, walletType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return selectWalletClicked?.call(eventType, walletType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (selectWalletClicked != null) {
+      return selectWalletClicked(eventType, walletType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return selectWalletClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return selectWalletClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (selectWalletClicked != null) {
+      return selectWalletClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SelectWalletClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class SelectWalletClicked implements AmplitudeEventPartTwo {
+  const factory SelectWalletClicked({final String eventType, required final String walletType}) =
+      _$SelectWalletClickedImpl;
+
+  factory SelectWalletClicked.fromJson(Map<String, dynamic> json) = _$SelectWalletClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get walletType;
+  @override
+  @JsonKey(ignore: true)
+  _$$SelectWalletClickedImplCopyWith<_$SelectWalletClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$WalletSelectedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$WalletSelectedImplCopyWith(_$WalletSelectedImpl value, $Res Function(_$WalletSelectedImpl) then) =
+      __$$WalletSelectedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String walletType, String address});
+}
+
+/// @nodoc
+class __$$WalletSelectedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$WalletSelectedImpl>
+    implements _$$WalletSelectedImplCopyWith<$Res> {
+  __$$WalletSelectedImplCopyWithImpl(_$WalletSelectedImpl _value, $Res Function(_$WalletSelectedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? walletType = null,
+    Object? address = null,
+  }) {
+    return _then(_$WalletSelectedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      walletType: null == walletType
+          ? _value.walletType
+          : walletType // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$WalletSelectedImpl with DiagnosticableTreeMixin implements WalletSelected {
+  const _$WalletSelectedImpl(
+      {this.eventType = 'WALLET_SELECTED', required this.walletType, required this.address, final String? $type})
+      : $type = $type ?? 'walletSelected';
+
+  factory _$WalletSelectedImpl.fromJson(Map<String, dynamic> json) => _$$WalletSelectedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String walletType;
+  @override
+  final String address;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.walletSelected(eventType: $eventType, walletType: $walletType, address: $address)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.walletSelected'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('walletType', walletType))
+      ..add(DiagnosticsProperty('address', address));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletSelectedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.walletType, walletType) || other.walletType == walletType) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, walletType, address);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WalletSelectedImplCopyWith<_$WalletSelectedImpl> get copyWith =>
+      __$$WalletSelectedImplCopyWithImpl<_$WalletSelectedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return walletSelected(eventType, walletType, address);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return walletSelected?.call(eventType, walletType, address);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (walletSelected != null) {
+      return walletSelected(eventType, walletType, address);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return walletSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return walletSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (walletSelected != null) {
+      return walletSelected(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WalletSelectedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class WalletSelected implements AmplitudeEventPartTwo {
+  const factory WalletSelected(
+      {final String eventType, required final String walletType, required final String address}) = _$WalletSelectedImpl;
+
+  factory WalletSelected.fromJson(Map<String, dynamic> json) = _$WalletSelectedImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get walletType;
+  String get address;
+  @override
+  @JsonKey(ignore: true)
+  _$$WalletSelectedImplCopyWith<_$WalletSelectedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PullToRefreshImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$PullToRefreshImplCopyWith(_$PullToRefreshImpl value, $Res Function(_$PullToRefreshImpl) then) =
+      __$$PullToRefreshImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String source});
+}
+
+/// @nodoc
+class __$$PullToRefreshImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$PullToRefreshImpl>
+    implements _$$PullToRefreshImplCopyWith<$Res> {
+  __$$PullToRefreshImplCopyWithImpl(_$PullToRefreshImpl _value, $Res Function(_$PullToRefreshImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? source = null,
+  }) {
+    return _then(_$PullToRefreshImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PullToRefreshImpl with DiagnosticableTreeMixin implements PullToRefresh {
+  const _$PullToRefreshImpl({this.eventType = 'PULL_TO_REFRESH', required this.source, final String? $type})
+      : $type = $type ?? 'pullToRefresh';
+
+  factory _$PullToRefreshImpl.fromJson(Map<String, dynamic> json) => _$$PullToRefreshImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String source;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.pullToRefresh(eventType: $eventType, source: $source)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.pullToRefresh'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('source', source));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PullToRefreshImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.source, source) || other.source == source));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, source);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PullToRefreshImplCopyWith<_$PullToRefreshImpl> get copyWith =>
+      __$$PullToRefreshImplCopyWithImpl<_$PullToRefreshImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return pullToRefresh(eventType, source);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return pullToRefresh?.call(eventType, source);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (pullToRefresh != null) {
+      return pullToRefresh(eventType, source);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return pullToRefresh(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return pullToRefresh?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (pullToRefresh != null) {
+      return pullToRefresh(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PullToRefreshImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class PullToRefresh implements AmplitudeEventPartTwo {
+  const factory PullToRefresh({final String eventType, required final String source}) = _$PullToRefreshImpl;
+
+  factory PullToRefresh.fromJson(Map<String, dynamic> json) = _$PullToRefreshImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get source;
+  @override
+  @JsonKey(ignore: true)
+  _$$PullToRefreshImplCopyWith<_$PullToRefreshImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TransactionClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$TransactionClickedImplCopyWith(
+          _$TransactionClickedImpl value, $Res Function(_$TransactionClickedImpl) then) =
+      __$$TransactionClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$TransactionClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$TransactionClickedImpl>
+    implements _$$TransactionClickedImplCopyWith<$Res> {
+  __$$TransactionClickedImplCopyWithImpl(_$TransactionClickedImpl _value, $Res Function(_$TransactionClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$TransactionClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TransactionClickedImpl with DiagnosticableTreeMixin implements TransactionClicked {
+  const _$TransactionClickedImpl({this.eventType = 'TRANSACTION_CLICKED', final String? $type})
+      : $type = $type ?? 'transactionClicked';
+
+  factory _$TransactionClickedImpl.fromJson(Map<String, dynamic> json) => _$$TransactionClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.transactionClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.transactionClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TransactionClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TransactionClickedImplCopyWith<_$TransactionClickedImpl> get copyWith =>
+      __$$TransactionClickedImplCopyWithImpl<_$TransactionClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return transactionClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return transactionClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (transactionClicked != null) {
+      return transactionClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return transactionClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return transactionClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (transactionClicked != null) {
+      return transactionClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TransactionClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class TransactionClicked implements AmplitudeEventPartTwo {
+  const factory TransactionClicked({final String eventType}) = _$TransactionClickedImpl;
+
+  factory TransactionClicked.fromJson(Map<String, dynamic> json) = _$TransactionClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$TransactionClickedImplCopyWith<_$TransactionClickedImpl> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LoadTransactionClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$LoadTransactionClickedImplCopyWith(
+          _$LoadTransactionClickedImpl value, $Res Function(_$LoadTransactionClickedImpl) then) =
+      __$$LoadTransactionClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$LoadTransactionClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$LoadTransactionClickedImpl>
+    implements _$$LoadTransactionClickedImplCopyWith<$Res> {
+  __$$LoadTransactionClickedImplCopyWithImpl(
+      _$LoadTransactionClickedImpl _value, $Res Function(_$LoadTransactionClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$LoadTransactionClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LoadTransactionClickedImpl with DiagnosticableTreeMixin implements LoadTransactionClicked {
+  const _$LoadTransactionClickedImpl({this.eventType = 'LOAD_TRANSACTION_CLICKED', final String? $type})
+      : $type = $type ?? 'loadTransactionClicked';
+
+  factory _$LoadTransactionClickedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoadTransactionClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.loadTransactionClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.loadTransactionClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadTransactionClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadTransactionClickedImplCopyWith<_$LoadTransactionClickedImpl> get copyWith =>
+      __$$LoadTransactionClickedImplCopyWithImpl<_$LoadTransactionClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return loadTransactionClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return loadTransactionClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (loadTransactionClicked != null) {
+      return loadTransactionClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return loadTransactionClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return loadTransactionClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (loadTransactionClicked != null) {
+      return loadTransactionClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LoadTransactionClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class LoadTransactionClicked implements AmplitudeEventPartTwo {
+  const factory LoadTransactionClicked({final String eventType}) = _$LoadTransactionClickedImpl;
+
+  factory LoadTransactionClicked.fromJson(Map<String, dynamic> json) = _$LoadTransactionClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$LoadTransactionClickedImplCopyWith<_$LoadTransactionClickedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RefreshClickedImplCopyWith<$Res> implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$RefreshClickedImplCopyWith(_$RefreshClickedImpl value, $Res Function(_$RefreshClickedImpl) then) =
+      __$$RefreshClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String address});
+}
+
+/// @nodoc
+class __$$RefreshClickedImplCopyWithImpl<$Res> extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$RefreshClickedImpl>
+    implements _$$RefreshClickedImplCopyWith<$Res> {
+  __$$RefreshClickedImplCopyWithImpl(_$RefreshClickedImpl _value, $Res Function(_$RefreshClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? address = null,
+  }) {
+    return _then(_$RefreshClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RefreshClickedImpl with DiagnosticableTreeMixin implements RefreshClicked {
+  const _$RefreshClickedImpl({this.eventType = 'REFRESH_CLICKED', required this.address, final String? $type})
+      : $type = $type ?? 'refreshClicked';
+
+  factory _$RefreshClickedImpl.fromJson(Map<String, dynamic> json) => _$$RefreshClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+  @override
+  final String address;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.refreshClicked(eventType: $eventType, address: $address)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.refreshClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType))
+      ..add(DiagnosticsProperty('address', address));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefreshClickedImpl &&
+            (identical(other.eventType, eventType) || other.eventType == eventType) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, address);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefreshClickedImplCopyWith<_$RefreshClickedImpl> get copyWith =>
+      __$$RefreshClickedImplCopyWithImpl<_$RefreshClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType, String walletAddress, String walletType) continueClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) editSecretsClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationSuccessful,
+    required TResult Function(String eventType, String walletAddress, String walletType) validationFailed,
+    required TResult Function(String eventType, String walletAddress, String walletType) guideMeClicked,
+    required TResult Function(String eventType, String walletAddress, String color) cardColorChanged,
+    required TResult Function(String eventType, String walletAddress, String walletType) clickedOnPrivateKey,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyRevealed,
+    required TResult Function(String eventType, String walletAddress, String walletType) privateKeyCopied,
+    required TResult Function(String eventType, String walletType) cardNameChanged,
+    required TResult Function(String eventType, String source) helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) cardDeleted,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated) notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social) joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress, String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType) selectWalletClicked,
+    required TResult Function(String eventType, String walletType, String address) walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+  }) {
+    return refreshClicked(eventType, address);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult? Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult? Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult? Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)? walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+  }) {
+    return refreshClicked?.call(eventType, address);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)? continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)? validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)? guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)? cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)? clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)? privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)? troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType, bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)? walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (refreshClicked != null) {
+      return refreshClicked(eventType, address);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value) changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value) troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value) troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value) cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value) loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+  }) {
+    return refreshClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+  }) {
+    return refreshClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)? troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    required TResult orElse(),
+  }) {
+    if (refreshClicked != null) {
+      return refreshClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RefreshClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class RefreshClicked implements AmplitudeEventPartTwo {
+  const factory RefreshClicked({final String eventType, required final String address}) = _$RefreshClickedImpl;
+
+  factory RefreshClicked.fromJson(Map<String, dynamic> json) = _$RefreshClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  String get address;
+  @override
+  @JsonKey(ignore: true)
+  _$$RefreshClickedImplCopyWith<_$RefreshClickedImpl> get copyWith => throw _privateConstructorUsedError;
 }

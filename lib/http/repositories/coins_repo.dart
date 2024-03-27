@@ -5,6 +5,8 @@ import '../../models/card_model/card_model.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/history_model/transaction_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
+import '../../models/patch_transactions_model/patch_transactions_model.dart';
+import '../../models/wallet_status_model/wallet_status_model.dart';
 
 part 'coins_repo.g.dart';
 
@@ -12,7 +14,9 @@ class _Paths {
   static const balance = '/api/address/{address}';
   static const allCoins = '/coins';
   static const marketCap = '/markets';
-  static const transactions = '/wallet/transactions?page={page}&address={address}&connectionId=bitcoin';
+  static const transactions = '/wallet/transactions?page={page}&limit=20&address={address}&connectionId=bitcoin';
+  static const walletStatus = '/wallet/status?address={address}&connectionId=bitcoin';
+  static const patchTransactions = '/wallet/transactions?address={address}&connectionId=bitcoin';
 }
 
 @RestApi()
@@ -42,5 +46,15 @@ abstract class CoinsClient {
   Future<TransactionModel> getTransactions({
     @Path() required String address,
     @Path() required int page,
+  });
+
+  @GET(_Paths.walletStatus)
+  Future<WalletStatusModel> getWalletStatus({
+    @Path() required String address,
+  });
+
+  @PATCH(_Paths.patchTransactions)
+  Future<PatchTransactionsModel> patchTransactions({
+    @Path() required String address,
   });
 }

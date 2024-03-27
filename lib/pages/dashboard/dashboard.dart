@@ -10,7 +10,6 @@ import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -34,12 +33,11 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
-
-//import '../../services/ramp_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/ip_store/ip_store.dart';
-//import '../../store/market_page_store/market_page_store.dart';
+import '../../store/market_page_store/market_page_store.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -60,8 +58,8 @@ import '../../widgets/all_alert_dialogs/trouble_tapping_card/trouble_tapping_car
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 import '../../widgets/wallet_connect_methods/card_connect_methods.dart';
-//import '../history_page/history_page.dart';
-//import '../market_page/market_page.dart';
+import '../history_page/history_page.dart';
+import '../market_page/market_page.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
@@ -72,11 +70,11 @@ class DashboardPage extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  //RampService get _rampService => GetIt.I<RampService>();
+  RampService get _rampService => GetIt.I<RampService>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  //MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   IpStore get _ipStore => GetIt.I<IpStore>();
 
@@ -98,7 +96,7 @@ class DashboardPage extends HookWidget {
         index: 0,
       ),
     );
-    //Timer? _timer;
+    Timer? _timer;
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -263,8 +261,13 @@ class DashboardPage extends HookWidget {
                           ..updateTabIndex(val.index);
                       },
                     ),
-                    // const MarketPage(),
-                    // const HistoryPage(),
+                    const MarketPage(),
+                    HistoryPage(
+                      onChangeCard: (val) {
+                        currentCard.value = val;
+                        _allSettingsState.updateTabIndex(val.index);
+                      },
+                    ),
                     const SettingsPage(),
                   ],
                 ),
@@ -309,18 +312,25 @@ class DashboardPage extends HookWidget {
                                 const WalletTabClicked(),
                               ),
                             }
-                          // else if (index == 1)
-                          //   {
-                          //     if (_timer == null || !_timer!.isActive)
-                          //       {
-                          //         _timer = Timer(const Duration(seconds: 5), () {
-                          //           _marketPageStore.onRefresh();
-                          //         }),
-                          //       },
-                          //   }
-                          // else if (index == 2)
-                          //   {}
                           else if (index == 1)
+                            {
+                              recordAmplitudeEvent(
+                                const MarketTabClicked(),
+                              ),
+                              if (_timer == null || !_timer!.isActive)
+                                {
+                                  _timer = Timer(const Duration(seconds: 5), () {
+                                    _marketPageStore.onRefresh();
+                                  }),
+                                },
+                            }
+                          else if (index == 2)
+                            {
+                              recordAmplitudeEvent(
+                                const HistoryTabClicked(),
+                              ),
+                            }
+                          else if (index == 3)
                             {
                               recordAmplitudeEvent(
                                 const SettingsTabClicked(),
@@ -341,30 +351,30 @@ class DashboardPage extends HookWidget {
                             ),
                             label: 'Wallet',
                           ),
-                          // BottomNavigationBarItem(
-                          //   icon: Padding(
-                          //     padding: const EdgeInsets.only(right: 30, top: 8),
-                          //     child: Assets.icons.market.image(
-                          //       height: 23,
-                          //       color: _allSettingsState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
-                          //     ),
-                          //   ),
-                          //   label: 'Markets            ',
-                          // ),
-                          // BottomNavigationBarItem(
-                          //   icon: Padding(
-                          //     padding: const EdgeInsets.only(left: 30, top: 5),
-                          //     child: Assets.icons.history.image(
-                          //       height: 28,
-                          //       color: _allSettingsState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
-                          //     ),
-                          //   ),
-                          //   label: '             History',
-                          // ),
+                          BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(right: 30, top: 8),
+                              child: Assets.icons.market.image(
+                                height: 23,
+                                color: _allSettingsState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                              ),
+                            ),
+                            label: 'Markets            ',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Padding(
+                              padding: const EdgeInsets.only(left: 30, top: 5),
+                              child: Assets.icons.history.image(
+                                height: 28,
+                                color: _allSettingsState.currentIndex == 2 ? Colors.black : const Color(0xFfB8BEC5),
+                              ),
+                            ),
+                            label: '             History',
+                          ),
                           BottomNavigationBarItem(
                             icon: Assets.icons.pageInfo.image(
                               height: 32,
-                              color: _allSettingsState.currentIndex == 1 ? Colors.black : const Color(0xFfB8BEC5),
+                              color: _allSettingsState.currentIndex == 3 ? Colors.black : const Color(0xFfB8BEC5),
                             ),
                             label: 'Settings',
                           ),
@@ -401,12 +411,20 @@ class DashboardPage extends HookWidget {
             onPressed: () async {
               final selectedCard = currentCard.value.card;
               final isBarList = currentCard.value.index == 1;
-              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
-              final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+              final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
               if (selectedCard == null || _pageController.page != 0) {
                 if (isBarList) {
                   await recordAmplitudeEvent(
-                    AddNewPlusClicked(source: _pageController.page == 0 ? 'Wallet' : 'Settings'),
+                    AddNewPlusClicked(
+                      source: _pageController.page == 0
+                          ? 'Wallet'
+                          : _pageController.page == 1
+                              ? 'Market'
+                              : _pageController.page == 2
+                                  ? 'History'
+                                  : 'Settings',
+                    ),
                   );
                   isModalOpened.value = true;
                   await showModalBottomSheet(
@@ -521,6 +539,7 @@ class DashboardPage extends HookWidget {
                 ipStore: _ipStore,
                 pageController: _pageController,
                 settingsState: _settingsState,
+                allSettingsState: _allSettingsState,
               ).then((value) => isModalOpened.value = false);
               isModalOpened.value = false;
               await recordAmplitudeEvent(
@@ -616,6 +635,7 @@ class DashboardPage extends HookWidget {
     required IpStore ipStore,
     required PageController pageController,
     required SettingsState settingsState,
+    required AllSettingsState allSettingsState,
   }) async {
     await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
@@ -724,10 +744,8 @@ class DashboardPage extends HookWidget {
               if (card.label != WalletType.TRACKER)
                 Observer(
                   builder: (context) {
-                    final isCardActivated =
-                        isCardWalletActivated(balanceStore: _balanceStore, settingsState: settingsState);
-                    final isBarActivated =
-                        isBarWalletActivated(balanceStore: _balanceStore, settingsState: settingsState);
+                    final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+                    final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
 
                     return LoadingButton(
                       style: context.theme
@@ -1430,7 +1448,7 @@ class DashboardPage extends HookWidget {
                                   ),
                                 );
                                 await router.pop();
-                                //_rampService.presentRamp();
+                                _rampService.presentRamp();
                               },
                               child: Row(
                                 children: [
@@ -1501,26 +1519,10 @@ class DashboardPage extends HookWidget {
                       activated: isBarList ? await isBarActivated : await isCardActivated,
                     ),
                   );
-                  // await router.pop();
-                  // await Future.delayed(const Duration(milliseconds: 400));
-                  // await navBarState.updateIndex(2);
-                  // pageController.jumpToPage(2);
                   await router.pop();
-                  await FlutterWebBrowser.openWebPage(
-                    url: 'https://www.blockchain.com/explorer/addresses/btc/${card.address}',
-                    customTabsOptions: const CustomTabsOptions(
-                      shareState: CustomTabsShareState.on,
-                      instantAppsEnabled: true,
-                      showTitle: true,
-                      urlBarHidingEnabled: true,
-                    ),
-                    safariVCOptions: const SafariViewControllerOptions(
-                      barCollapsingEnabled: true,
-                      modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                      modalPresentationCapturesStatusBarAppearance: true,
-                    ),
-                  );
+                  await Future.delayed(const Duration(milliseconds: 400));
+                  await allSettingsState.updateIndex(2);
+                  pageController.jumpToPage(2);
                 },
                 child: Row(
                   children: [

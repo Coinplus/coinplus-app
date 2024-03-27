@@ -28,7 +28,6 @@ import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/secret_state/secret_state.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -66,7 +65,6 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
   late AnimationController _secretTwoLottieController;
   final _validationStore = ValidationState();
   final _secretState = SecretState();
-  final _settingsState = SettingsState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
 
@@ -159,7 +157,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    final bar = _balanceStore.bars[_settingsState.barCurrentIndex];
+    final bar = _balanceStore.bars[_balanceStore.barCurrentIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,

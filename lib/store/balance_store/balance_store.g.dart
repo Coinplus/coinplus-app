@@ -99,6 +99,51 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$balanceLoadingAtom = Atom(name: '_BalanceStore.balanceLoading', context: context);
+
+  @override
+  bool get balanceLoading {
+    _$balanceLoadingAtom.reportRead();
+    return super.balanceLoading;
+  }
+
+  @override
+  set balanceLoading(bool value) {
+    _$balanceLoadingAtom.reportWrite(value, super.balanceLoading, () {
+      super.balanceLoading = value;
+    });
+  }
+
+  late final _$cardCurrentIndexAtom = Atom(name: '_BalanceStore.cardCurrentIndex', context: context);
+
+  @override
+  int get cardCurrentIndex {
+    _$cardCurrentIndexAtom.reportRead();
+    return super.cardCurrentIndex;
+  }
+
+  @override
+  set cardCurrentIndex(int value) {
+    _$cardCurrentIndexAtom.reportWrite(value, super.cardCurrentIndex, () {
+      super.cardCurrentIndex = value;
+    });
+  }
+
+  late final _$barCurrentIndexAtom = Atom(name: '_BalanceStore.barCurrentIndex', context: context);
+
+  @override
+  int get barCurrentIndex {
+    _$barCurrentIndexAtom.reportRead();
+    return super.barCurrentIndex;
+  }
+
+  @override
+  set barCurrentIndex(int value) {
+    _$barCurrentIndexAtom.reportWrite(value, super.barCurrentIndex, () {
+      super.barCurrentIndex = value;
+    });
+  }
+
   late final _$getCardsInfoAsyncAction = AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
   @override
@@ -147,6 +192,20 @@ mixin _$BalanceStore on _BalanceStore, Store {
   Future<bool?> getCard({required String? receivedData, required TextEditingController textEditingController}) {
     return _$getCardAsyncAction
         .run(() => super.getCard(receivedData: receivedData, textEditingController: textEditingController));
+  }
+
+  late final _$setCardCurrentIndexAsyncAction = AsyncAction('_BalanceStore.setCardCurrentIndex', context: context);
+
+  @override
+  Future<void> setCardCurrentIndex(int index) {
+    return _$setCardCurrentIndexAsyncAction.run(() => super.setCardCurrentIndex(index));
+  }
+
+  late final _$setBarCurrentIndexAsyncAction = AsyncAction('_BalanceStore.setBarCurrentIndex', context: context);
+
+  @override
+  Future<void> setBarCurrentIndex(int index) {
+    return _$setBarCurrentIndexAsyncAction.run(() => super.setBarCurrentIndex(index));
   }
 
   late final _$_BalanceStoreActionController = ActionController(name: '_BalanceStore', context: context);
@@ -205,6 +264,9 @@ mixin _$BalanceStore on _BalanceStore, Store {
   String toString() {
     return '''
 loadings: ${loadings},
+balanceLoading: ${balanceLoading},
+cardCurrentIndex: ${cardCurrentIndex},
+barCurrentIndex: ${barCurrentIndex},
 allCardsBalances: ${allCardsBalances}
     ''';
   }

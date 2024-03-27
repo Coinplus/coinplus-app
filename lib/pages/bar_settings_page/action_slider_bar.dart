@@ -12,7 +12,6 @@ import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -32,7 +31,6 @@ class ActionSliderForBarDelete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _settingsState = SettingsState();
     return ActionSlider.standard(
       direction: TextDirection.rtl,
       height: 60,
@@ -54,7 +52,8 @@ class ActionSliderForBarDelete extends StatelessWidget {
         unawaited(deleteCount(bar.address));
         await router.pop();
         unawaited(_balanceStore.removeSelectedBar());
-        final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore, settingsState: _settingsState);
+
+        final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
         await recordAmplitudeEventPartTwo(
           CardDeleted(walletAddress: bar.address, walletType: 'Bar', activated: await isBarActivated),
         );

@@ -18,13 +18,13 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-//import '../../../services/ramp_service.dart';
+import '../../../services/ramp_service.dart';
+import '../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/ip_store/ip_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
-import '../../../store/settings_button_state/settings_button_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/data_utils.dart';
 import '../../../utils/wallet_activation_status.dart';
@@ -57,13 +57,13 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
-  //RampService get _rampService => GetIt.I<RampService>();
+  RampService get _rampService => GetIt.I<RampService>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
-  final _nfcStore = NfcStore();
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
-  final _settingsState = SettingsState();
+  final _nfcStore = NfcStore();
 
   final carouselController = CarouselController();
 
@@ -72,7 +72,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
       final index = _balanceStore.bars.indexWhere((element) => element.address == address);
@@ -107,19 +107,19 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
             return reaction(
               (_) => _balanceStore.bars.length,
               (length) {
-                if (length > _settingsState.barCurrentIndex) {
+                if (length > _balanceStore.barCurrentIndex) {
                   widget.onCarouselScroll(length - 1);
                   final bar = _balanceStore.bars.lastOrNull;
                   if (bar != null) {
                     widget.onCardSelected(bar as AbstractCard);
                   }
                   _historyPageStore.setBarHistoryIndex(length - 1);
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 } else {
-                  carouselController.animateToPage(0);
-                  _settingsState.setBarCurrentIndex(length);
+                  _balanceStore.setBarCurrentIndex(length);
+                  _historyPageStore.setBarHistoryIndex(length - 1);
                   widget.onCardSelected(null);
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 }
               },
             );
@@ -132,7 +132,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                   builder: (context) {
                     return ScaleTap(
                       enableFeedback: false,
-                      onPressed: _settingsState.barCurrentIndex == _balanceStore.bars.length
+                      onPressed: _balanceStore.barCurrentIndex == _balanceStore.bars.length
                           ? () async {
                               await _walletProtectState.updateModalStatus(isOpened: true);
                               await recordAmplitudeEvent(
@@ -204,7 +204,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                           builder: (context) {
                             return AnimatedSwitcher(
                               duration: const Duration(milliseconds: 400),
-                              child: _settingsState.barCurrentIndex == index
+                              child: _balanceStore.barCurrentIndex == index
                                   ? Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -256,7 +256,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                               enableFeedback: false,
                               opacityMinValue: .993,
                               scaleMinValue: .993,
-                              onLongPress: _settingsState.barCurrentIndex == index
+                              onLongPress: _balanceStore.barCurrentIndex == index
                                   ? _balanceStore.bars.length > 1
                                       ? () async {
                                           await _walletProtectState.updateModalStatus(isOpened: true);
@@ -457,12 +457,30 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                                   ),
                                                                                 );
                                                                               }
-                                                                              return Text(
-                                                                                '\$${myFormat.format((item.data!.netTxoCount) / 100000000 * data.price)}',
-                                                                                style: const TextStyle(
-                                                                                  fontSize: 13,
-                                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                                ),
+                                                                              return Observer(
+                                                                                builder: (_) {
+                                                                                  final balance = bar.data!.netTxoCount;
+                                                                                  if (_accelerometerStore
+                                                                                      .hasPerformedAction) {
+                                                                                    return const Text(
+                                                                                      r'$*****',
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 13,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return Text(
+                                                                                      '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                                                                      style: const TextStyle(
+                                                                                        fontSize: 13,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                },
                                                                               );
                                                                             },
                                                                           ),
@@ -501,7 +519,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                         widget.onCardSelected(
                                                           _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
                                                         );
-                                                        _settingsState.setBarCurrentIndex(index);
+                                                        _balanceStore.setBarCurrentIndex(index);
                                                       },
                                                       onReorderStart: (val) {
                                                         HapticFeedback.heavyImpact();
@@ -547,11 +565,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                       enableFeedback: false,
                                                       opacityMinValue: .98,
                                                       scaleMinValue: .98,
-                                                      onPressed: _settingsState.barCurrentIndex == index
+                                                      onPressed: _balanceStore.barCurrentIndex == index
                                                           ? () async {
                                                               final isActivated = isBarWalletActivated(
                                                                 balanceStore: _balanceStore,
-                                                                settingsState: _settingsState,
                                                               );
                                                               await recordAmplitudeEvent(
                                                                 TopUpButtonClicked(
@@ -560,7 +577,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   activated: await isActivated,
                                                                 ),
                                                               );
-                                                              //_rampService.presentRamp();
+                                                              _rampService.presentRamp();
                                                             }
                                                           : null,
                                                       child: Container(
@@ -617,17 +634,31 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                           ),
                                                                         );
                                                                       }
-                                                                      return Text(
-                                                                        (bar.data?.fundedTxoSum != null
-                                                                                ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
-                                                                                : '')
-                                                                            .toString(),
-                                                                        style: const TextStyle(
-                                                                          fontFamily: FontFamily.redHatMedium,
-                                                                          fontWeight: FontWeight.w700,
-                                                                          color: Colors.white,
-                                                                          fontSize: 20,
-                                                                        ),
+                                                                      final balance = bar.data!.netTxoCount;
+                                                                      return Observer(
+                                                                        builder: (_) {
+                                                                          if (_accelerometerStore.hasPerformedAction) {
+                                                                            return const Text(
+                                                                              r'$*****',
+                                                                              style: TextStyle(
+                                                                                fontFamily: FontFamily.redHatMedium,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                color: Colors.white,
+                                                                                fontSize: 18,
+                                                                              ),
+                                                                            );
+                                                                          } else {
+                                                                            return Text(
+                                                                              '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                                                              style: const TextStyle(
+                                                                                fontFamily: FontFamily.redHatMedium,
+                                                                                fontWeight: FontWeight.w700,
+                                                                                color: Colors.white,
+                                                                                fontSize: 20,
+                                                                              ),
+                                                                            );
+                                                                          }
+                                                                        },
                                                                       );
                                                                     },
                                                                   ),
@@ -792,11 +823,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       const Gap(10),
                                       ScaleTap(
                                         enableFeedback: false,
-                                        onPressed: _settingsState.barCurrentIndex == index
+                                        onPressed: _balanceStore.barCurrentIndex == index
                                             ? () async {
                                                 final isBarActivated = isBarWalletActivated(
                                                   balanceStore: _balanceStore,
-                                                  settingsState: _settingsState,
                                                 );
                                                 await recordAmplitudeEvent(
                                                   AddressCopied(
@@ -882,10 +912,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 widget.onCardSelected(
                   _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
                 );
-                await _settingsState.setBarCurrentIndex(index);
+                await _balanceStore.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  //_rampService.configuration.userAddress = _balanceStore.bars[_settingsState.barCurrentIndex].address;
-                  await _historyPageStore.setCardHistoryIndex(index);
+                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  await _historyPageStore.setBarHistoryIndex(index);
                 }
               },
               enlargeFactor: 0.35,

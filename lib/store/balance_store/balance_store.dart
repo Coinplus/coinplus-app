@@ -30,17 +30,22 @@ abstract class _BalanceStore with Store {
   BarModel? _selectedBar;
   @observable
   ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
+  @observable
+  bool balanceLoading = false;
+  @observable
+  int cardCurrentIndex = 0;
+  @observable
+  int barCurrentIndex = 0;
 
   _BalanceStore() {
-    getCardsInfo();
-    getCardsFromStorage();
-    getBarsFromStorage();
     if (_cards.isNotEmpty) {
       getCardsInfo();
     }
     if (_bars.isNotEmpty) {
       getBarsInfo();
     }
+    getCardsFromStorage();
+    getBarsFromStorage();
   }
 
   Future<void> getCardsFromStorage() async {
@@ -55,17 +60,9 @@ abstract class _BalanceStore with Store {
 
   @computed
   int get allCardsBalances {
-    var cardTotalBalance = 0;
-    var barTotalBalance = 0;
-
-    for (final card in _cards) {
-      cardTotalBalance += card.data!.netTxoCount.toInt();
-    }
-    for (final bar in _bars) {
-      barTotalBalance += bar.data!.netTxoCount.toInt();
-    }
-    final totalBalance = cardTotalBalance + barTotalBalance;
-    return totalBalance;
+    final cardTotalBalance = _cards.fold<int>(0, (acc, card) => acc + (card.data?.netTxoCount.toInt() ?? 0));
+    final barTotalBalance = _bars.fold<int>(0, (acc, bar) => acc + (bar.data?.netTxoCount.toInt() ?? 0));
+    return cardTotalBalance + barTotalBalance;
   }
 
   @action
@@ -73,20 +70,20 @@ abstract class _BalanceStore with Store {
     if (_cards.isEmpty) {
       return;
     }
-    for (final element in _cards) {
-      final card = await _getSingleCardInfo(element.address);
-      if (card != null) {
-        final index = _cards.indexOf(element);
-        _cards.replaceRange(
-          index,
-          index + 1,
-          [
-            element.copyWith(
-              data: card.data,
-            ),
-          ],
-        );
+    try {
+      balanceLoading = true;
+      final futures = _cards.map((element) => _getSingleCardInfo(element.address)).toList();
+      final results = await Future.wait(futures);
+      for (var i = 0; i < results.length; i++) {
+        final card = results[i];
+        if (card != null) {
+          _cards[i] = _cards[i].copyWith(data: card.data);
+        }
       }
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      balanceLoading = false;
     }
   }
 
@@ -95,20 +92,20 @@ abstract class _BalanceStore with Store {
     if (_bars.isEmpty) {
       return;
     }
-    for (final element in _bars) {
-      final card = await _getSingleBarInfo(element.address);
-      if (card != null) {
-        final index = _bars.indexOf(element);
-        _bars.replaceRange(
-          index,
-          index + 1,
-          [
-            element.copyWith(
-              data: card.data,
-            ),
-          ],
-        );
+    try {
+      balanceLoading = true;
+      final futures = _bars.map((element) => _getSingleBarInfo(element.address)).toList();
+      final results = await Future.wait(futures);
+      for (var i = 0; i < results.length; i++) {
+        final bar = results[i];
+        if (bar != null) {
+          _bars[i] = _bars[i].copyWith(data: bar.data);
+        }
       }
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      balanceLoading = false;
     }
   }
 
@@ -366,6 +363,16 @@ abstract class _BalanceStore with Store {
       return card?.activated;
     }
     return null;
+  }
+
+  @action
+  Future<void> setCardCurrentIndex(int index) async {
+    cardCurrentIndex = index;
+  }
+
+  @action
+  Future<void> setBarCurrentIndex(int index) async {
+    barCurrentIndex = index;
   }
 
   late void Function(String addr) onCardAdded = _defaultOnCardAdded;

@@ -31,6 +31,7 @@ import '../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/connectivity_store/connectivity_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -71,6 +72,8 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   @override
   void initState() {
@@ -1036,6 +1039,7 @@ class _BarFillPageState extends State<BarFillPage> with TickerProviderStateMixin
                           onPressed: () async {
                             if (_allSettingsState.isActive) {
                               _balanceStore.saveSelectedBar(color: CardColor.SILVER);
+                              unawaited(_historyPageStore.saveAndPatchBarAddress(_balanceStore.selectedBar!.address));
                               _balanceStore.onBarAdded(_balanceStore.selectedBar!.address);
                               await hasShownWallet().then((hasShown) {
                                 recordUserProperty(const BarManual());

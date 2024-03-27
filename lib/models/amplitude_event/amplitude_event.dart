@@ -125,6 +125,14 @@ class AmplitudeEvent with _$AmplitudeEvent {
     @Default('WALLET_TAB_CLICKED') String eventType,
   }) = WalletTabClicked;
 
+  const factory AmplitudeEvent.marketTabClicked({
+    @Default('MARKET_TAB_CLICKED') String eventType,
+  }) = MarketTabClicked;
+
+  const factory AmplitudeEvent.historyTabClicked({
+    @Default('HISTORY_TAB_CLICKED') String eventType,
+  }) = HistoryTabClicked;
+
   const factory AmplitudeEvent.settingsTabClicked({
     @Default('SETTINGS_TAB_CLICKED') String eventType,
   }) = SettingsTabClicked;

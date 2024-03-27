@@ -1,17 +1,22 @@
 import 'package:animated_segmented_tab_control/animated_segmented_tab_control.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../constants/card_color.dart';
+import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
+import '../../services/ramp_service.dart';
+import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
@@ -20,48 +25,78 @@ import '../../widgets/shimmers/history_dropdown_shimmer.dart';
 import 'bars_history_page/bars_history_page.dart';
 import 'cards_history_page/cards_history_page.dart';
 
-class HistoryPage extends HookWidget {
-  const HistoryPage({super.key});
+class HistoryPage extends StatefulWidget {
+  const HistoryPage({
+    super.key,
+    required this.onChangeCard,
+  });
 
+  final CardChangeCallBack onChangeCard;
+
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
+  RampService get _rampService => GetIt.I<RampService>();
+
+  final _scrollController = ScrollController();
+  final cardCarouselIndex = 0;
+  final barCarouselIndex = 0;
+  late final _tabController = TabController(
+    length: 2,
+    initialIndex: _historyPageStore.tabIndex == 0 ? 0 : 1,
+    vsync: this,
+  );
+
   @override
-  Widget build(BuildContext context) {
-    final _scrollController = useScrollController();
-
-    late final _tabController = useTabController(
-      initialLength: 2,
-    );
-
-    useEffect(() {
-      if (_balanceStore.cards.isNotEmpty) {
-        _historyPageStore
-          ..cardSelectedAddress = _balanceStore.cards.first.address
-          ..setCardSelectedAddress(_balanceStore.cards[_historyPageStore.cardHistoryIndex].address)
-          ..getSingleCardHistory(
-            address: _balanceStore.cards[_historyPageStore.cardHistoryIndex].address,
-          );
+  void initState() {
+    super.initState();
+    _tabController.addListener(() {
+      final card = _tabController.index == 0
+          ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
+          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
+      if (_tabController.index == 1 &&
+          _balanceStore.bars.isNotEmpty &&
+          _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
+        _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
       }
-
-      if (_balanceStore.bars.isNotEmpty) {
-        _historyPageStore
-          ..barSelectedAddress = _balanceStore.bars.first.address
-          ..setBarSelectedAddress(_balanceStore.bars[_historyPageStore.barHistoryIndex].address)
-          ..getSingleBarHistory(
-            address: _balanceStore.bars[_historyPageStore.barHistoryIndex].address,
-          );
+      if (_tabController.index == 0 &&
+          _balanceStore.cards.isNotEmpty &&
+          _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
+        _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
       }
-
-      if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
-        _tabController.animateTo(1);
+      if (_tabController.index == 0) {
+        _historyPageStore.setTabIndex(0);
+        recordAmplitudeEventPartTwo(const CardTabHistoryClicked());
       }
-      return null;
+      if (_tabController.index == 1) {
+        _historyPageStore.setTabIndex(1);
+        recordAmplitudeEventPartTwo(const BarTabHistoryClicked());
+      }
+      widget.onChangeCard(
+        (
+          card: card as AbstractCard?,
+          index: _tabController.index,
+        ),
+      );
     });
 
+    if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
+      _tabController.animateTo(1);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 140,
@@ -147,8 +182,12 @@ class HistoryPage extends HookWidget {
                       child: Observer(
                         builder: (_) {
                           return _marketPageStore.singleCoin?.result == null
-                              ? const HistoryDropdownShimmer()
+                              ? const Padding(
+                                  padding: EdgeInsets.only(top: 14),
+                                  child: HistoryDropdownShimmer(),
+                                )
                               : ScaleTap(
+                                  enableFeedback: false,
                                   onPressed: _balanceStore.cards.length > 1
                                       ? () {
                                           showModalBottomSheet(
@@ -194,10 +233,14 @@ class HistoryPage extends HookWidget {
                                                                             .address,
                                                                       )
                                                                       ..getSingleCardHistory(
-                                                                        address: _balanceStore
-                                                                            .cards[_historyPageStore.cardHistoryIndex]
-                                                                            .address,
+                                                                        address: _historyPageStore.selectedCardAddress,
                                                                       );
+                                                                    recordAmplitudeEventPartTwo(
+                                                                      WalletSelected(
+                                                                        walletType: 'card',
+                                                                        address: _historyPageStore.selectedCardAddress,
+                                                                      ),
+                                                                    );
                                                                     router.pop();
                                                                   },
                                                                   child: Container(
@@ -278,6 +321,7 @@ class HistoryPage extends HookWidget {
                                               );
                                             },
                                           );
+                                          recordAmplitudeEventPartTwo(const SelectWalletClicked(walletType: 'card'));
                                         }
                                       : null,
                                   child: Container(
@@ -339,15 +383,34 @@ class HistoryPage extends HookWidget {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        singleCard.data!.netTxoCount.toString().length > 8 ? 17 : 20,
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    color: AppColors.textHintsColor,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
+                                                Observer(
+                                                  builder: (context) {
+                                                    return _accelerometerStore.hasPerformedAction
+                                                        ? Text(
+                                                            r'$*****',
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  singleCard.data!.netTxoCount.toString().length > 9
+                                                                      ? 17
+                                                                      : 20,
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              color: AppColors.textHintsColor,
+                                                              fontWeight: FontWeight.w700,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  singleCard.data!.netTxoCount.toString().length > 9
+                                                                      ? 17
+                                                                      : 20,
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              color: AppColors.textHintsColor,
+                                                              fontWeight: FontWeight.w700,
+                                                            ),
+                                                          );
+                                                  },
                                                 ),
                                                 if (_balanceStore.cards.length > 1)
                                                   const Icon(
@@ -424,6 +487,12 @@ class HistoryPage extends HookWidget {
                                                                             .bars[_historyPageStore.barHistoryIndex]
                                                                             .address,
                                                                       );
+                                                                    recordAmplitudeEventPartTwo(
+                                                                      WalletSelected(
+                                                                        walletType: 'bar',
+                                                                        address: _historyPageStore.selectedBarAddress,
+                                                                      ),
+                                                                    );
                                                                     router.pop();
                                                                   },
                                                                   child: Container(
@@ -504,6 +573,7 @@ class HistoryPage extends HookWidget {
                                               );
                                             },
                                           );
+                                          recordAmplitudeEventPartTwo(const SelectWalletClicked(walletType: 'bar'));
                                         }
                                       : null,
                                   child: Container(
@@ -565,14 +635,34 @@ class HistoryPage extends HookWidget {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    color: AppColors.textHintsColor,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
+                                                Observer(
+                                                  builder: (context) {
+                                                    return _accelerometerStore.hasPerformedAction
+                                                        ? Text(
+                                                            r'$*****',
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  singleCard.data!.netTxoCount.toString().length > 9
+                                                                      ? 17
+                                                                      : 20,
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              color: AppColors.textHintsColor,
+                                                              fontWeight: FontWeight.w700,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  singleCard.data!.netTxoCount.toString().length > 9
+                                                                      ? 17
+                                                                      : 20,
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              color: AppColors.textHintsColor,
+                                                              fontWeight: FontWeight.w700,
+                                                            ),
+                                                          );
+                                                  },
                                                 ),
                                                 if (_balanceStore.bars.length > 1)
                                                   const Icon(
@@ -603,12 +693,10 @@ class HistoryPage extends HookWidget {
         children: [
           CardsHistoryPage(
             balanceStore: _balanceStore,
-            historyPageStore: _historyPageStore,
             scrollController: _scrollController,
           ),
           BarsHistoryPage(
             balanceStore: _balanceStore,
-            historyPageStore: _historyPageStore,
             scrollController: _scrollController,
           ),
         ],

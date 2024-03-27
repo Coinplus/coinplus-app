@@ -1,60 +1,97 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../utils/date_formatter.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 import '../../../widgets/shimmers/history_page_shimmer.dart';
 
-class BarsHistoryPage extends HookWidget {
+class BarsHistoryPage extends StatefulWidget {
   const BarsHistoryPage({
     super.key,
     required this.balanceStore,
-    required this.historyPageStore,
     required this.scrollController,
   });
 
   final BalanceStore balanceStore;
-  final HistoryPageStore historyPageStore;
   final ScrollController scrollController;
 
   @override
-  Widget build(BuildContext context) {
-    late var _controller = useAnimationController();
+  State<BarsHistoryPage> createState() => _BarsHistoryPageState();
+}
 
-    useEffect(() {
-      _controller = useAnimationController(
-        duration: const Duration(seconds: 2),
+class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderStateMixin {
+  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
+  late var _controller = AnimationController(vsync: this);
+
+  Future<void> loadBarWalletStatusFromStorage(String address) async {
+    if (!_historyPageStore.isBarRefreshing) {
+      await _historyPageStore
+          .setBarSelectedAddress(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+      await _historyPageStore.getSingleBarHistory(
+        address: widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
       );
-      historyPageStore.loadLastRefreshed();
-      return null;
-    });
+    }
+  }
 
-    return RefreshIndicator(
-      triggerMode: RefreshIndicatorTriggerMode.anywhere,
-      color: Colors.black,
-      onRefresh: () async {
-        await HapticFeedback.mediumImpact();
-        await historyPageStore.onBarRefresh(
-          address: balanceStore.bars[historyPageStore.barHistoryIndex].address,
-        );
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    if (_historyPageStore.isBarRefreshing) {
+      _controller.repeat();
+    }
+    if (widget.balanceStore.bars.isNotEmpty) {
+      loadBarWalletStatusFromStorage(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+    }
+    _historyPageStore
+      ..loadLastRefreshed()
+      ..barCurrentPage = 1;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ReactionBuilder(
+      builder: (context) {
+        return reaction((p0) => _historyPageStore.isBarRefreshing, (isBarRefreshing) async {
+          if (!isBarRefreshing) {
+            _controller
+              ..stop()
+              ..reset();
+            await loadBarWalletStatusFromStorage(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+          }
+        });
       },
-      child: balanceStore.bars.isEmpty
+      child: widget.balanceStore.bars.isEmpty
           ? Align(
               alignment: Alignment.bottomCenter,
               child: Column(
@@ -79,33 +116,28 @@ class BarsHistoryPage extends HookWidget {
               ),
             )
           : SingleChildScrollView(
-              controller: scrollController,
+              controller: widget.scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               child: Stack(
                 children: [
                   Observer(
                     builder: (context) {
-                      return historyPageStore.historyLoading == true
+                      return (_historyPageStore
+                                  .barHistories[widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] ==
+                              null
                           ? const Padding(
                               padding: EdgeInsets.all(8),
                               child: HistoryPageShimmer(),
                             )
                           : Observer(
                               builder: (context) {
-                                final transactions =
-                                    historyPageStore.barHistories[historyPageStore.barSelectedAddress]?.result;
-                                if (transactions == null) {
+                                if (_historyPageStore.historyLoading == true) {
                                   return const Padding(
                                     padding: EdgeInsets.all(8),
                                     child: HistoryPageShimmer(),
                                   );
                                 }
-
-                                final uniqueDates = transactions
-                                    .map((transaction) => formatDate(transaction.date.toString()))
-                                    .toSet()
-                                    .toList();
-                                if (transactions.isEmpty) {
+                                if (_historyPageStore.barsTransactions!.isEmpty) {
                                   return Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Column(
@@ -152,52 +184,73 @@ class BarsHistoryPage extends HookWidget {
                                 }
                                 return ListView.builder(
                                   shrinkWrap: true,
-                                  controller: scrollController,
-                                  itemCount: uniqueDates.length + 1,
+                                  controller: widget.scrollController,
+                                  itemCount: _historyPageStore.barUniqueDates!.length + 1,
                                   itemBuilder: (context, dateIndex) {
-                                    if (dateIndex == uniqueDates.length) {
-                                      if (transactions.length <= 19) {
+                                    if (dateIndex == _historyPageStore.barUniqueDates?.length) {
+                                      if (_historyPageStore.barsTransactions!.length <= 19) {
                                         return const SizedBox(height: 100);
                                       }
-                                      return Center(
-                                        child: Column(
-                                          children: [
-                                            const Gap(10),
-                                            LoadingButton(
-                                              style: context.theme
-                                                  .buttonStyle(
-                                                    textStyle: const TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
-                                                      color: AppColors.primaryTextColor,
-                                                      fontSize: 15,
-                                                    ),
-                                                  )
-                                                  .copyWith(
-                                                    backgroundColor: MaterialStateProperty.all(
-                                                      Colors.grey.withOpacity(0.1),
-                                                    ),
-                                                    padding: MaterialStateProperty.all(
-                                                      const EdgeInsets.symmetric(vertical: 5),
-                                                    ),
+                                      return Observer(
+                                        builder: (context) {
+                                          return _historyPageStore.isLoading
+                                              ? const Padding(
+                                                  padding: EdgeInsets.all(8),
+                                                  child: HistoryPageShimmer(),
+                                                )
+                                              : Center(
+                                                  child: Column(
+                                                    children: [
+                                                      const Gap(10),
+                                                      LoadingButton(
+                                                        style: context.theme
+                                                            .buttonStyle(
+                                                              textStyle: const TextStyle(
+                                                                fontFamily: FontFamily.redHatMedium,
+                                                                color: AppColors.primaryTextColor,
+                                                                fontSize: 15,
+                                                              ),
+                                                            )
+                                                            .copyWith(
+                                                              backgroundColor: MaterialStateProperty.all(
+                                                                Colors.grey.withOpacity(0.1),
+                                                              ),
+                                                              shape: const MaterialStatePropertyAll(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                                                ),
+                                                              ),
+                                                              padding: MaterialStateProperty.all(
+                                                                const EdgeInsets.symmetric(vertical: 5),
+                                                              ),
+                                                            ),
+                                                        onPressed: () {
+                                                          _historyPageStore.fetchBarNextPageTransactions(
+                                                            address: _historyPageStore.selectedBarAddress,
+                                                          );
+                                                          recordAmplitudeEventPartTwo(const LoadTransactionClicked());
+                                                        },
+                                                        child: const Text(
+                                                          'Load More',
+                                                          style: TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontSize: 12,
+                                                            fontWeight: FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ).paddingHorizontal(150),
+                                                      const Gap(100),
+                                                    ],
                                                   ),
-                                              onPressed: () {},
-                                              child: const Text(
-                                                'Load More',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontSize: 12,
-                                                ),
-                                              ),
-                                            ).paddingHorizontal(150),
-                                            const Gap(100),
-                                          ],
-                                        ),
+                                                );
+                                        },
                                       );
                                     }
-
-                                    final currentDate = uniqueDates[dateIndex];
-                                    final transactionsOfDay = transactions
-                                        .where((transaction) => formatDate(transaction.date.toString()) == currentDate)
+                                    final currentDate = _historyPageStore.barUniqueDates?[dateIndex];
+                                    final transactionsOfDay = _historyPageStore.barsTransactions
+                                        ?.where(
+                                          (transaction) => formatDate(transaction.date.toString()) == currentDate,
+                                        )
                                         .toList();
 
                                     return Column(
@@ -206,7 +259,7 @@ class BarsHistoryPage extends HookWidget {
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 10),
                                           child: Text(
-                                            currentDate,
+                                            currentDate!,
                                             style: const TextStyle(
                                               fontFamily: FontFamily.redHatMedium,
                                               fontSize: 13,
@@ -241,7 +294,7 @@ class BarsHistoryPage extends HookWidget {
                                                 ),
                                                 shrinkWrap: true,
                                                 physics: const NeverScrollableScrollPhysics(),
-                                                itemCount: transactionsOfDay.length,
+                                                itemCount: transactionsOfDay!.length,
                                                 itemBuilder: (context, index) {
                                                   final transaction = transactionsOfDay[index];
                                                   final totalWorth = transaction.transactions?[0].items.fold<double>(
@@ -252,297 +305,340 @@ class BarsHistoryPage extends HookWidget {
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
-                                                  return Padding(
-                                                    padding: const EdgeInsets.symmetric(vertical: 7),
-                                                    child: ScaleTap(
-                                                      enableFeedback: false,
-                                                      scaleMinValue: 0.99,
-                                                      onPressed: () {
-                                                        showModalBottomSheet(
-                                                          isScrollControlled: true,
-                                                          backgroundColor: Colors.white,
-                                                          shape: const RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.only(
-                                                              topLeft: Radius.circular(20),
-                                                              topRight: Radius.circular(20),
-                                                            ),
-                                                          ),
-                                                          context: context,
-                                                          builder: (_) {
-                                                            final formattedDate = formatDateString(transaction.date!);
-                                                            return Padding(
-                                                              padding: const EdgeInsets.symmetric(
-                                                                vertical: 12,
-                                                                horizontal: 20,
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      recordAmplitudeEventPartTwo(const TransactionClicked());
+                                                    },
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(vertical: 7),
+                                                      child: ScaleTap(
+                                                        enableFeedback: false,
+                                                        scaleMinValue: 0.99,
+                                                        onPressed: () {
+                                                          showModalBottomSheet(
+                                                            isScrollControlled: true,
+                                                            backgroundColor: Colors.white,
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
                                                               ),
-                                                              child: Column(
-                                                                mainAxisSize: MainAxisSize.min,
-                                                                children: [
-                                                                  Assets.icons.notch.image(height: 4),
-                                                                  const Gap(28),
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                                    child: Text(
-                                                                      transaction.type.toString(),
-                                                                      style: const TextStyle(
-                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                        fontSize: 17,
-                                                                        fontWeight: FontWeight.w600,
-                                                                        color: AppColors.primary,
-                                                                      ),
-                                                                    ).expandedHorizontally(),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                                    child: Text(
-                                                                      formattedDate,
-                                                                      style: const TextStyle(
-                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                        color: Color(0xFF838995),
-                                                                        fontSize: 12,
-                                                                      ),
-                                                                    ).expandedHorizontally(),
-                                                                  ),
-                                                                  const Gap(17),
-                                                                  Container(
-                                                                    decoration: BoxDecoration(
-                                                                      color: Colors.white,
-                                                                      borderRadius: BorderRadius.circular(20),
-                                                                      boxShadow: [
-                                                                        BoxShadow(
-                                                                          spreadRadius: 5,
-                                                                          blurRadius: 10,
-                                                                          color: Colors.grey.withOpacity(0.1),
+                                                            ),
+                                                            context: context,
+                                                            builder: (_) {
+                                                              final formattedDate = formatDateString(transaction.date!);
+                                                              return Padding(
+                                                                padding: const EdgeInsets.symmetric(
+                                                                  vertical: 12,
+                                                                  horizontal: 20,
+                                                                ),
+                                                                child: Column(
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: [
+                                                                    Assets.icons.notch.image(height: 4),
+                                                                    const Gap(28),
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.symmetric(horizontal: 10),
+                                                                      child: Text(
+                                                                        transaction.type.toString(),
+                                                                        style: const TextStyle(
+                                                                          fontFamily: FontFamily.redHatMedium,
+                                                                          fontSize: 17,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          color: AppColors.primary,
                                                                         ),
-                                                                      ],
+                                                                      ).expandedHorizontally(),
                                                                     ),
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.symmetric(
-                                                                        horizontal: 12,
-                                                                        vertical: 16,
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.symmetric(horizontal: 10),
+                                                                      child: Text(
+                                                                        formattedDate,
+                                                                        style: const TextStyle(
+                                                                          fontFamily: FontFamily.redHatMedium,
+                                                                          color: Color(0xFF838995),
+                                                                          fontSize: 12,
+                                                                        ),
+                                                                      ).expandedHorizontally(),
+                                                                    ),
+                                                                    const Gap(17),
+                                                                    Container(
+                                                                      decoration: BoxDecoration(
+                                                                        color: Colors.white,
+                                                                        borderRadius: BorderRadius.circular(20),
+                                                                        boxShadow: [
+                                                                          BoxShadow(
+                                                                            spreadRadius: 5,
+                                                                            blurRadius: 10,
+                                                                            color: Colors.grey.withOpacity(0.1),
+                                                                          ),
+                                                                        ],
                                                                       ),
-                                                                      child: Row(
-                                                                        children: [
-                                                                          SizedBox(
-                                                                            height: 32,
-                                                                            width: 32,
-                                                                            child: CachedNetworkImage(
-                                                                              imageUrl: transaction
-                                                                                  .mainContent!.coinIcons.first,
-                                                                              placeholder: (context, url) => Container(
-                                                                                decoration: BoxDecoration(
-                                                                                  borderRadius:
-                                                                                      BorderRadius.circular(20),
-                                                                                  color: Colors.transparent,
-                                                                                ),
-                                                                                child: SizedBox(
-                                                                                  height: 30,
-                                                                                  width: 30,
-                                                                                  child: CircularProgressIndicator(
-                                                                                    color: Colors.grey.withOpacity(0.5),
-                                                                                    strokeWidth: 2,
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsets.symmetric(
+                                                                          horizontal: 12,
+                                                                          vertical: 16,
+                                                                        ),
+                                                                        child: Row(
+                                                                          children: [
+                                                                            SizedBox(
+                                                                              height: 32,
+                                                                              width: 32,
+                                                                              child: CachedNetworkImage(
+                                                                                imageUrl: transaction
+                                                                                    .mainContent!.coinIcons.first,
+                                                                                placeholder: (context, url) =>
+                                                                                    Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    borderRadius:
+                                                                                        BorderRadius.circular(20),
+                                                                                    color: Colors.transparent,
+                                                                                  ),
+                                                                                  child: SizedBox(
+                                                                                    height: 30,
+                                                                                    width: 30,
+                                                                                    child: CircularProgressIndicator(
+                                                                                      color:
+                                                                                          Colors.grey.withOpacity(0.5),
+                                                                                      strokeWidth: 2,
+                                                                                    ),
                                                                                   ),
                                                                                 ),
+                                                                                errorWidget: (context, url, error) =>
+                                                                                    const Icon(Icons.error),
                                                                               ),
-                                                                              errorWidget: (context, url, error) =>
-                                                                                  const Icon(Icons.error),
                                                                             ),
-                                                                          ),
-                                                                          const Gap(10),
-                                                                          Column(
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
+                                                                            const Gap(10),
+                                                                            Column(
+                                                                              crossAxisAlignment:
+                                                                                  CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Text(
+                                                                                  transaction.type != 'Sent'
+                                                                                      ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
+                                                                                      : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
+                                                                                  style: TextStyle(
+                                                                                    fontFamily: FontFamily.redHatMedium,
+                                                                                    fontSize: 16,
+                                                                                    color: transaction.type != 'Sent'
+                                                                                        ? Colors.green
+                                                                                        : Colors.red,
+                                                                                    fontWeight: FontWeight.w700,
+                                                                                  ),
+                                                                                ),
+                                                                                Row(
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      '\$${myFormat.format(totalWorth)}',
+                                                                                      style: const TextStyle(
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                        fontSize: 16,
+                                                                                        color: Color(0xFF838995),
+                                                                                      ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      ' (1 BTC = \$${myFormat.format(
+                                                                                        (totalWorth! /
+                                                                                                transaction
+                                                                                                    .coinData!.count)
+                                                                                            .abs(),
+                                                                                      )})',
+                                                                                      style: const TextStyle(
+                                                                                        fontWeight: FontWeight.w500,
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                        fontSize: 16,
+                                                                                        color: Color(0xFF838995),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const Gap(24),
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.symmetric(horizontal: 10),
+                                                                      child: Column(
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
                                                                             children: [
-                                                                              Text(
-                                                                                transaction.type != 'Sent'
-                                                                                    ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
-                                                                                    : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
+                                                                              const Text(
+                                                                                'Total worth',
                                                                                 style: TextStyle(
                                                                                   fontFamily: FontFamily.redHatMedium,
-                                                                                  fontSize: 16,
-                                                                                  color: transaction.type != 'Sent'
-                                                                                      ? Colors.green
-                                                                                      : Colors.red,
-                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontSize: 14,
+                                                                                  color: AppColors.primary,
                                                                                 ),
                                                                               ),
-                                                                              Row(
-                                                                                children: [
-                                                                                  Text(
-                                                                                    '\$${myFormat.format(totalWorth)}',
-                                                                                    style: const TextStyle(
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 16,
-                                                                                      color: Color(0xFF838995),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    ' (1 BTC = \$${myFormat.format(
-                                                                                      (totalWorth! /
-                                                                                              transaction
-                                                                                                  .coinData!.count)
-                                                                                          .abs(),
-                                                                                    )})',
-                                                                                    style: const TextStyle(
-                                                                                      fontWeight: FontWeight.w500,
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 16,
-                                                                                      color: Color(0xFF838995),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
+                                                                              Text(
+                                                                                '\$${myFormat.format(totalWorth)}',
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontSize: 16,
+                                                                                  color: AppColors.primary,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          const Divider(
+                                                                            height: 30,
+                                                                            thickness: 1,
+                                                                            color: Color(0xFFEEEFF4),
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              const Text(
+                                                                                'Current value',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontSize: 14,
+                                                                                  color: AppColors.primary,
+                                                                                ),
+                                                                              ),
+                                                                              Text(
+                                                                                '\$${myFormat.format(
+                                                                                  transaction.profitLoss?.currentValue,
+                                                                                )}',
+                                                                                style: const TextStyle(
+                                                                                  fontWeight: FontWeight.w700,
+                                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                                  fontSize: 16,
+                                                                                  color: AppColors.primary,
+                                                                                ),
                                                                               ),
                                                                             ],
                                                                           ),
                                                                         ],
                                                                       ),
                                                                     ),
+                                                                    const Gap(50),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: ListTile(
+                                                          minLeadingWidth: 5,
+                                                          leading: Padding(
+                                                            padding: const EdgeInsets.only(top: 12, bottom: 12),
+                                                            child: CachedNetworkImage(
+                                                              imageUrl: transaction.mainContent!.coinIcons.first,
+                                                              placeholder: (context, url) => Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(20),
+                                                                  color: Colors.transparent,
+                                                                ),
+                                                                child: SizedBox(
+                                                                  height: 30,
+                                                                  width: 30,
+                                                                  child: CircularProgressIndicator(
+                                                                    color: Colors.grey.withOpacity(0.5),
+                                                                    strokeWidth: 2,
                                                                   ),
-                                                                  const Gap(24),
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                                                    child: Column(
-                                                                      children: [
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
+                                                                ),
+                                                              ),
+                                                              errorWidget: (context, url, error) =>
+                                                                  const Icon(Icons.error),
+                                                            ),
+                                                          ),
+                                                          title: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    transaction.type.toString(),
+                                                                    style: const TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      fontSize: 15,
+                                                                      color: AppColors.primaryTextColor,
+                                                                      fontWeight: FontWeight.w700,
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(width: 2),
+                                                                  if (transaction.type != 'Sent')
+                                                                    Assets.icons.outbound.image(height: 20)
+                                                                  else
+                                                                    Assets.icons.outboundRed.image(height: 20),
+                                                                ],
+                                                              ),
+                                                              Observer(
+                                                                builder: (context) {
+                                                                  return _accelerometerStore.hasPerformedAction
+                                                                      ? Column(
+                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          crossAxisAlignment: CrossAxisAlignment.end,
                                                                           children: [
-                                                                            const Text(
-                                                                              'Total worth',
+                                                                            Text(
+                                                                              transaction.type != 'Sent'
+                                                                                  ? '***** BTC'
+                                                                                  : '***** BTC',
                                                                               style: TextStyle(
                                                                                 fontFamily: FontFamily.redHatMedium,
-                                                                                fontSize: 14,
-                                                                                color: AppColors.primary,
+                                                                                fontSize: 16,
+                                                                                color: transaction.type != 'Sent'
+                                                                                    ? Colors.green
+                                                                                    : Colors.red,
+                                                                                fontWeight: FontWeight.w700,
+                                                                              ),
+                                                                            ),
+                                                                            const Text(
+                                                                              r'$*****',
+                                                                              style: TextStyle(
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontFamily: FontFamily.redHatMedium,
+                                                                                fontSize: 16,
+                                                                                color: Color(0xFF838995),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      : Column(
+                                                                          mainAxisSize: MainAxisSize.min,
+                                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                                          children: [
+                                                                            Text(
+                                                                              transaction.type != 'Sent'
+                                                                                  ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
+                                                                                  : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
+                                                                              style: TextStyle(
+                                                                                fontFamily: FontFamily.redHatMedium,
+                                                                                fontSize: 16,
+                                                                                color: transaction.type != 'Sent'
+                                                                                    ? Colors.green
+                                                                                    : Colors.red,
+                                                                                fontWeight: FontWeight.w700,
                                                                               ),
                                                                             ),
                                                                             Text(
                                                                               '\$${myFormat.format(totalWorth)}',
                                                                               style: const TextStyle(
-                                                                                fontWeight: FontWeight.w700,
+                                                                                fontWeight: FontWeight.w500,
                                                                                 fontFamily: FontFamily.redHatMedium,
                                                                                 fontSize: 16,
-                                                                                color: AppColors.primary,
+                                                                                color: Color(0xFF838995),
                                                                               ),
                                                                             ),
                                                                           ],
-                                                                        ),
-                                                                        const Divider(
-                                                                          height: 30,
-                                                                          thickness: 1,
-                                                                          color: Color(0xFFEEEFF4),
-                                                                        ),
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            const Text(
-                                                                              'Current value',
-                                                                              style: TextStyle(
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontSize: 14,
-                                                                                color: AppColors.primary,
-                                                                              ),
-                                                                            ),
-                                                                            Text(
-                                                                              '\$${myFormat.format(
-                                                                                transaction.profitLoss?.currentValue,
-                                                                              )}',
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w700,
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontSize: 16,
-                                                                                color: AppColors.primary,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  const Gap(50),
-                                                                ],
+                                                                        );
+                                                                },
                                                               ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                      child: ListTile(
-                                                        minLeadingWidth: 5,
-                                                        leading: Padding(
-                                                          padding: const EdgeInsets.only(top: 12, bottom: 12),
-                                                          child: CachedNetworkImage(
-                                                            imageUrl: transaction.mainContent!.coinIcons.first,
-                                                            placeholder: (context, url) => Container(
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(20),
-                                                                color: Colors.transparent,
-                                                              ),
-                                                              child: SizedBox(
-                                                                height: 30,
-                                                                width: 30,
-                                                                child: CircularProgressIndicator(
-                                                                  color: Colors.grey.withOpacity(0.5),
-                                                                  strokeWidth: 2,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            errorWidget: (context, url, error) =>
-                                                                const Icon(Icons.error),
+                                                            ],
                                                           ),
-                                                        ),
-                                                        title: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  transaction.type.toString(),
-                                                                  style: const TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 15,
-                                                                    color: AppColors.primaryTextColor,
-                                                                    fontWeight: FontWeight.w700,
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(width: 2),
-                                                                if (transaction.type != 'Sent')
-                                                                  Assets.icons.outbound.image(height: 20)
-                                                                else
-                                                                  Assets.icons.outboundRed.image(height: 20),
-                                                              ],
-                                                            ),
-                                                            Column(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                                              children: [
-                                                                Text(
-                                                                  transaction.type != 'Sent'
-                                                                      ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
-                                                                      : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
-                                                                  style: TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 16,
-                                                                    color: transaction.type != 'Sent'
-                                                                        ? Colors.green
-                                                                        : Colors.red,
-                                                                    fontWeight: FontWeight.w700,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  '\$${myFormat.format(totalWorth)}',
-                                                                  style: const TextStyle(
-                                                                    fontWeight: FontWeight.w500,
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 16,
-                                                                    color: Color(0xFF838995),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
                                                         ),
                                                       ),
                                                     ),
@@ -557,7 +653,7 @@ class BarsHistoryPage extends HookWidget {
                                   },
                                 );
                               },
-                            );
+                            ));
                     },
                   ),
                   Observer(
@@ -566,31 +662,36 @@ class BarsHistoryPage extends HookWidget {
                         right: 16,
                         child: ScaleTap(
                           enableFeedback: false,
-                          onPressed: historyPageStore
-                                      .disabledButtons[balanceStore.bars[historyPageStore.barHistoryIndex].address] ??
+                          onPressed: _historyPageStore.disabledButtons[
+                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] ??
                                   false
                               ? () async {
                                   unawaited(_controller.forward());
-                                  await historyPageStore.onBarRefresh(
-                                    address: balanceStore.bars[historyPageStore.barHistoryIndex].address,
+                                  await _historyPageStore.getSingleBarHistory(
+                                    address: widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
                                   );
                                   _controller.reset();
                                 }
                               : () async {
                                   unawaited(_controller.repeat());
-                                  historyPageStore.disabledButtons[
-                                      balanceStore.bars[historyPageStore.barHistoryIndex].address] = true;
-                                  await historyPageStore.setRefreshing(value: true);
-                                  await refresh();
+                                  _historyPageStore.disabledButtons[
+                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] = true;
+                                  await _historyPageStore.setRefreshing(value: true);
+                                  await _historyPageStore.barRefresh(
+                                    widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+                                  );
                                   _controller
                                     ..stop()
                                     ..reset();
-                                  await historyPageStore.setRefreshing(value: false);
-                                  historyPageStore.makeInactive();
+                                  await _historyPageStore.setRefreshing(value: false);
+                                  _historyPageStore.makeInactive();
                                   await Future.delayed(const Duration(minutes: 1));
-                                  historyPageStore.disabledButtons[
-                                      balanceStore.bars[historyPageStore.barHistoryIndex].address] = false;
-                                  historyPageStore.makeActive();
+                                  _historyPageStore.disabledButtons[
+                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] = false;
+                                  _historyPageStore.makeActive();
+                                  await recordAmplitudeEventPartTwo(
+                                    RefreshClicked(address: _historyPageStore.selectedBarAddress),
+                                  );
                                 },
                           child: Row(
                             children: [
@@ -609,7 +710,7 @@ class BarsHistoryPage extends HookWidget {
                                   ),
                                   Observer(
                                     builder: (_) => Text(
-                                      historyPageStore.getLastRefreshed(historyPageStore.barSelectedAddress),
+                                      _historyPageStore.getLastRefreshed(_historyPageStore.selectedBarAddress),
                                       style: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
                                         fontSize: 10,
@@ -646,18 +747,5 @@ class BarsHistoryPage extends HookWidget {
               ),
             ),
     );
-  }
-
-  Future<void> refresh() async {
-    try {
-      await historyPageStore.refresh(balanceStore.bars[historyPageStore.barHistoryIndex].address);
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      await Future.delayed(const Duration(seconds: 3));
-      await historyPageStore.onBarRefresh(
-        address: balanceStore.bars[historyPageStore.barHistoryIndex].address,
-      );
-    }
   }
 }
