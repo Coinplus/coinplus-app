@@ -572,19 +572,18 @@ class BarSettingsPage extends HookWidget {
 
                             final colors = <CardColor>[
                               CardColor.SILVER,
-                              CardColor.GOLD,
                             ];
 
                             for (var index = 0; index < colors.length; index++) {
                               colorWidgets.add(
                                 ScaleTap(
                                   enableFeedback: false,
-                                  onPressed: () {
-                                    HapticFeedback.selectionClick();
-                                    _cardSettingsState
-                                      ..changeBarColor(colors[index])
-                                      ..colorState();
-                                  },
+                                  // onPressed: () {
+                                  //   HapticFeedback.selectionClick();
+                                  //   _cardSettingsState
+                                  //     ..changeBarColor(colors[index])
+                                  //     ..colorState();
+                                  // },
                                   child: Column(
                                     children: [
                                       Container(
@@ -751,8 +750,6 @@ class BarSettingsPage extends HookWidget {
 Widget getColorImage(CardColor color) {
   switch (color) {
     case CardColor.SILVER:
-      return Assets.images.bar.silverBar.image(height: 130);
-    case CardColor.GOLD:
       return Assets.images.bar.silverBar.image(height: 130);
     default:
       throw Exception('color can be used only for card');

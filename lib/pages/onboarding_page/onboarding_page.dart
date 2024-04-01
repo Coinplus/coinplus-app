@@ -96,9 +96,7 @@ class OnboardingPage extends HookWidget {
         builder: (context) {
           return Column(
             children: [
-              const Spacer(
-                flex: 4,
-              ),
+              const Spacer(flex: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -109,9 +107,7 @@ class OnboardingPage extends HookWidget {
                   ),
                 ],
               ),
-              const Spacer(
-                flex: 2,
-              ),
+              const Spacer(flex: 2),
               const Text(
                 'Hey there,\nlet’s connect your new wallet',
                 textAlign: TextAlign.center,
@@ -121,9 +117,7 @@ class OnboardingPage extends HookWidget {
                   color: AppColors.primaryTextColor,
                 ),
               ),
-              const Spacer(
-                flex: 3,
-              ),
+              const Spacer(flex: 3),
               if (_nfcState.isNfcSupported)
                 LoadingButton(
                   onPressed: Platform.isIOS
@@ -504,9 +498,7 @@ class OnboardingPage extends HookWidget {
                 const SizedBox(),
               const Gap(10),
               const ConnectManuallyButton(),
-              const Spacer(
-                flex: 3,
-              ),
+              const Spacer(flex: 3),
               LoadingButton(
                 onPressed: () async {
                   unawaited(recordAmplitudeEvent(const BuyNewCardClicked(source: 'Onboarding')));

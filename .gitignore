@@ -50,5 +50,6 @@ app.*.map.json
 # Firebase related
 lib/firebase_options.dart
 lib/http/interceptors/api_keys.dart
+lib/constants/constant_strings.dart
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist

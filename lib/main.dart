@@ -11,7 +11,7 @@ import 'firebase_options.dart';
 import 'providers/get_it.dart';
 import 'services/amplitude_service.dart';
 import 'utils/secure_storage_utils.dart';
-import 'utils/send_from_wallet.dart';
+//import 'utils/send_from_wallet.dart';
 
 Future<void> run({Flavor env = Flavor.DEV}) async {
   BackgroundIsolateBinaryMessenger.ensureInitialized(RootIsolateToken.instance!);
@@ -28,7 +28,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   await EasyLocalization.ensureInitialized();
   unawaited(localStorage());
   registerGetIt(env);
-  createTransaction();
+  //createTransaction();
   //await StorageUtils.clear();
 
   runApp(

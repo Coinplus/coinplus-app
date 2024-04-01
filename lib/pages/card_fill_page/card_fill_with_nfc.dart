@@ -541,13 +541,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                                               if (context.height < 932)
                                                 if (context.height < 867.4)
                                                   if (context.height > 844)
-                                                    Gap(context.width * 0.085)
+                                                    Gap(context.width * 0.08)
                                                   else if (context.height > 667)
                                                     Gap(context.width * 0.075)
                                                   else
                                                     Gap(context.width * 0.125) //iPhone 13 Pro
                                                 else
-                                                  Gap(context.width * 0.115) //Samsung large display
+                                                  Gap(context.width * 0.103) //Samsung large display
                                               else
                                                 Gap(context.width * 0.115), //iPhone 13 Pro Max
                                               Column(
@@ -635,13 +635,13 @@ class _CardFillWithNfcState extends State<CardFillWithNfc> with TickerProviderSt
                               if (context.height < 932)
                                 if (context.height < 867.4)
                                   if (context.height > 844)
-                                    Gap(context.width * 0.109)
+                                    Gap(context.width * 0.114)
                                   else if (context.height > 667)
                                     Gap(context.width * 0.1175)
                                   else
                                     Gap(context.width * 0.065)
                                 else
-                                  Gap(context.height * 0.048)
+                                  Gap(context.height * 0.05)
                               else
                                 Gap(context.height * 0.049),
                               Opacity(

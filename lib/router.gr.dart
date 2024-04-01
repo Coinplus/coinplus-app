@@ -29,7 +29,7 @@ import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i18;
 import 'package:coinplus/pages/custom_pin_code/remove_pin_code.dart' as _i19;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i13;
 import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i14;
-import 'package:coinplus/pages/qr_page/qr_page.dart' as _i20;
+import 'package:coinplus/pages/qr_scanner/qr_scanner.dart' as _i20;
 import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart' as _i1;
 import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i11;
 import 'package:coinplus/pages/settings_page/settings_page.dart' as _i21;
