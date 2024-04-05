@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
@@ -59,6 +60,9 @@ abstract class _MarketPageStore with Store {
 
   @observable
   CoinModel? singleCoin;
+
+  @observable
+  String? selectedCoin;
 
   AnimationController? animationController;
 
@@ -181,6 +185,19 @@ abstract class _MarketPageStore with Store {
   void handleError(String errorMessage) {
     hasError = true;
     log('Error: $errorMessage');
+  }
+
+  @action
+  Future<void> setSelectedCoin(String coinName) async {
+    selectedCoin = coinName;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedCoin', coinName);
+  }
+
+  @action
+  Future<void> loadSelectedCoin() async {
+    final prefs = await SharedPreferences.getInstance();
+    selectedCoin = prefs.getString('selectedCoin') ?? 'bitcoin';
   }
 
   @action
