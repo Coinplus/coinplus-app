@@ -9,7 +9,8 @@ part of 'bar_setting_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BarSettingState on _BarSettingState, Store {
-  late final _$selectedBarColorAtom = Atom(name: '_BarSettingState.selectedBarColor', context: context);
+  late final _$selectedBarColorAtom =
+      Atom(name: '_BarSettingState.selectedBarColor', context: context);
 
   @override
   CardColor get selectedBarColor {
@@ -24,7 +25,8 @@ mixin _$BarSettingState on _BarSettingState, Store {
     });
   }
 
-  late final _$isPrivateKeyVisibleAtom = Atom(name: '_BarSettingState.isPrivateKeyVisible', context: context);
+  late final _$isPrivateKeyVisibleAtom =
+      Atom(name: '_BarSettingState.isPrivateKeyVisible', context: context);
 
   @override
   bool get isPrivateKeyVisible {
@@ -39,7 +41,8 @@ mixin _$BarSettingState on _BarSettingState, Store {
     });
   }
 
-  late final _$isColorChangedAtom = Atom(name: '_BarSettingState.isColorChanged', context: context);
+  late final _$isColorChangedAtom =
+      Atom(name: '_BarSettingState.isColorChanged', context: context);
 
   @override
   bool get isColorChanged {
@@ -54,18 +57,21 @@ mixin _$BarSettingState on _BarSettingState, Store {
     });
   }
 
-  late final _$changeBarColorAsyncAction = AsyncAction('_BarSettingState.changeBarColor', context: context);
+  late final _$changeBarColorAsyncAction =
+      AsyncAction('_BarSettingState.changeBarColor', context: context);
 
   @override
   Future<void> changeBarColor(CardColor color) {
     return _$changeBarColorAsyncAction.run(() => super.changeBarColor(color));
   }
 
-  late final _$_BarSettingStateActionController = ActionController(name: '_BarSettingState', context: context);
+  late final _$_BarSettingStateActionController =
+      ActionController(name: '_BarSettingState', context: context);
 
   @override
   void makePrivateVisible() {
-    final _$actionInfo = _$_BarSettingStateActionController.startAction(name: '_BarSettingState.makePrivateVisible');
+    final _$actionInfo = _$_BarSettingStateActionController.startAction(
+        name: '_BarSettingState.makePrivateVisible');
     try {
       return super.makePrivateVisible();
     } finally {
@@ -75,7 +81,8 @@ mixin _$BarSettingState on _BarSettingState, Store {
 
   @override
   void colorState() {
-    final _$actionInfo = _$_BarSettingStateActionController.startAction(name: '_BarSettingState.colorState');
+    final _$actionInfo = _$_BarSettingStateActionController.startAction(
+        name: '_BarSettingState.colorState');
     try {
       return super.colorState();
     } finally {

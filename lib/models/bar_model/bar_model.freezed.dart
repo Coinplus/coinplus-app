@@ -33,12 +33,14 @@ mixin _$BarModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BarModelCopyWith<BarModel> get copyWith => throw _privateConstructorUsedError;
+  $BarModelCopyWith<BarModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $BarModelCopyWith<$Res> {
-  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) = _$BarModelCopyWithImpl<$Res, BarModel>;
+  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) =
+      _$BarModelCopyWithImpl<$Res, BarModel>;
   @useResult
   $Res call(
       {String address,
@@ -52,7 +54,8 @@ abstract class $BarModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCopyWith<$Res> {
+class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
+    implements $BarModelCopyWith<$Res> {
   _$BarModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -110,8 +113,10 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCo
 }
 
 /// @nodoc
-abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> {
-  factory _$$BarModelImplCopyWith(_$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
+abstract class _$$BarModelImplCopyWith<$Res>
+    implements $BarModelCopyWith<$Res> {
+  factory _$$BarModelImplCopyWith(
+          _$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
       __$$BarModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -127,9 +132,12 @@ abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> 
 }
 
 /// @nodoc
-class __$$BarModelImplCopyWithImpl<$Res> extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
+class __$$BarModelImplCopyWithImpl<$Res>
+    extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
     implements _$$BarModelImplCopyWith<$Res> {
-  __$$BarModelImplCopyWithImpl(_$BarModelImpl _value, $Res Function(_$BarModelImpl) _then) : super(_value, _then);
+  __$$BarModelImplCopyWithImpl(
+      _$BarModelImpl _value, $Res Function(_$BarModelImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -193,7 +201,8 @@ class _$BarModelImpl implements _BarModel {
       @JsonKey(fromJson: timeFromJson) this.createdAt = '',
       @JsonKey(name: 'chain_stats') this.data});
 
-  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) => _$$BarModelImplFromJson(json);
+  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BarModelImplFromJson(json);
 
   @override
   final String address;
@@ -234,14 +243,17 @@ class _$BarModelImpl implements _BarModel {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.blockchain, blockchain) || other.blockchain == blockchain) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
+            (identical(other.blockchain, blockchain) ||
+                other.blockchain == blockchain) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, color, type, label, name, blockchain, createdAt, data);
+  int get hashCode => Object.hash(runtimeType, address, color, type, label,
+      name, blockchain, createdAt, data);
 
   @JsonKey(ignore: true)
   @override
@@ -268,7 +280,8 @@ abstract class _BarModel implements BarModel, AbstractCard {
       @JsonKey(fromJson: timeFromJson) final String createdAt,
       @JsonKey(name: 'chain_stats') final ChainStats? data}) = _$BarModelImpl;
 
-  factory _BarModel.fromJson(Map<String, dynamic> json) = _$BarModelImpl.fromJson;
+  factory _BarModel.fromJson(Map<String, dynamic> json) =
+      _$BarModelImpl.fromJson;
 
   @override
   String get address;
@@ -290,5 +303,6 @@ abstract class _BarModel implements BarModel, AbstractCard {
   ChainStats? get data;
   @override
   @JsonKey(ignore: true)
-  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
