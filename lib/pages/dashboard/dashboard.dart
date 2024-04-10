@@ -260,6 +260,8 @@ class DashboardPage extends HookWidget {
                           ..updateAddCardPosition(tabIndex: val.index, card: val.card)
                           ..updateTabIndex(val.index);
                       },
+                      pageController: _pageController,
+                      allSettingsState: _allSettingsState,
                     ),
                     const MarketPage(),
                     HistoryPage(

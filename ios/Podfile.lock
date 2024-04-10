@@ -636,6 +636,8 @@ PODS:
   - AnalyticsConnector (1.0.3)
   - app_settings (5.1.1):
     - Flutter
+  - bdk_flutter (0.30.0):
+    - Flutter
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
     - BoringSSL-GRPC/Interface (= 0.0.24)
@@ -900,6 +902,7 @@ PODS:
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
+  - bdk_flutter (from `.symlinks/plugins/bdk_flutter/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -970,6 +973,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
+  bdk_flutter:
+    :path: ".symlinks/plugins/bdk_flutter/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_functions:
@@ -1035,6 +1040,7 @@ SPEC CHECKSUMS:
   amplitude_flutter: 6216e64320d2dbe4e5be2764381d93280499211f
   AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
+  bdk_flutter: 5d2579914d90aaaf964b24b1344946c7668915ea
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BranchSDK: 324f47ce8568005684cf024a47980bb713f47648
   cloud_firestore: 73eece22ce25a0565238c283ee9990f1618d8063

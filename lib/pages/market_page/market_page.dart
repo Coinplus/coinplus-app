@@ -514,7 +514,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: context.width - 155,
+                      width: context.width - 185,
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -527,7 +527,7 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          Gap(12.5),
+                          Gap(20),
                           Text(
                             'Market cap',
                             style: TextStyle(
@@ -675,18 +675,18 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   SizedBox(
+                                    width: 30,
                                     child: Text(
                                       data.rank.toString(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 12,
+                                        fontSize: data.rank < 2000 ? 12 : 10,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 15),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width - 174,
+                                    width: MediaQuery.of(context).size.width * 0.55,
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -718,39 +718,45 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                           ),
                                         ),
                                         const SizedBox(width: 15),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data.symbol,
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.bold,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                data.symbol,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              '\$$formattedMarketCap',
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontFamily: FontFamily.redHatMedium,
-                                                color: AppColors.secondaryTextColor,
+                                              Text(
+                                                '\$$formattedMarketCap',
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  color: AppColors.secondaryTextColor,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                        const Spacer(),
-                                        if (data.priceChange1d > 0)
-                                          Assets.icons.arrowDropUp.image(height: 30)
-                                        else
-                                          Assets.icons.arrowDropDown.image(height: 30),
-                                        Text(
-                                          '${data.priceChange1d.toStringAsFixed(2)}%',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: data.priceChange1d > 0 ? Colors.green : Colors.red,
-                                            fontWeight: FontWeight.bold,
+                                        Flexible(
+                                          child: Row(
+                                            children: [
+                                              if (data.priceChange1d > 0)
+                                                Assets.icons.arrowDropUp.image(height: 30)
+                                              else
+                                                Assets.icons.arrowDropDown.image(height: 30),
+                                              Text(
+                                                '${data.priceChange1d.toStringAsFixed(2)}%',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],

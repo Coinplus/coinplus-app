@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,13 +12,18 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../providers/screen_service.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../store/market_page_store/market_page_store.dart';
-import '../../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../../widgets/custom_snack_bar/top_snack.dart';
 
 class FavoriteCoin extends HookWidget {
-  const FavoriteCoin({super.key});
+  const FavoriteCoin({
+    super.key,
+    required this.pageController,
+    required this.allSettingsState,
+  });
+
+  final PageController pageController;
+  final AllSettingsState allSettingsState;
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
@@ -33,8 +37,7 @@ class FavoriteCoin extends HookWidget {
             padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
             child: Observer(
               builder: (_) {
-                final data = _marketPageStore.allCoins?.result
-                    .firstWhereOrNull((coin) => coin.id == _marketPageStore.selectedCoin);
+                final data = _marketPageStore.singleCoin?.result.first;
                 if (data == null) {
                   return Row(
                     children: [
@@ -147,127 +150,10 @@ class FavoriteCoin extends HookWidget {
                   return ScaleTap(
                     scaleMinValue: 0.98,
                     enableFeedback: false,
-                    onPressed: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        context: context,
-                        builder: (_) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Assets.icons.notch.image(height: 4),
-                                const Gap(20),
-                                const Text(
-                                  'Select Favorite Coin',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.primary,
-                                  ),
-                                ).expandedHorizontally(),
-                                const Gap(10),
-                                Observer(
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        for (int index = 0; index < 4; index++)
-                                          ScaleTap(
-                                            enableFeedback: false,
-                                            onPressed: () {
-                                              _marketPageStore.setSelectedCoin(
-                                                _marketPageStore.allCoins!.result[index].id,
-                                              );
-                                              router.pop();
-                                              showTopSnackBar(
-                                                displayDuration: const Duration(
-                                                  milliseconds: 600,
-                                                ),
-                                                Overlay.of(context),
-                                                CustomSnackBar.success(
-                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                  message: 'Favorite coin was changed',
-                                                  textStyle: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                    fontSize: 14,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: _marketPageStore.selectedCoin ==
-                                                        _marketPageStore.allCoins!.result[index].id
-                                                    ? Colors.grey.withOpacity(0.1) // Selected color
-                                                    : Colors.transparent, // Transparent color
-                                              ),
-                                              child: ListTile(
-                                                leading: SizedBox(
-                                                  height: 35,
-                                                  width: 35,
-                                                  child: Image.network(
-                                                    _marketPageStore.allCoins!.result[index].icon,
-                                                  ),
-                                                ),
-                                                title: Text(
-                                                  _marketPageStore.allCoins!.result[index].name,
-                                                  style: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                  ),
-                                                ),
-                                                subtitle: Text(
-                                                  _marketPageStore.allCoins!.result[index].symbol.toUpperCase(),
-                                                  style: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
-                                                  ),
-                                                ),
-                                                trailing: Radio<String>(
-                                                  value: _marketPageStore.allCoins!.result[index].id,
-                                                  groupValue: _marketPageStore.selectedCoin,
-                                                  onChanged: (value) {
-                                                    _marketPageStore.setSelectedCoin(value!);
-                                                    router.pop();
-                                                    showTopSnackBar(
-                                                      displayDuration: const Duration(
-                                                        milliseconds: 600,
-                                                      ),
-                                                      Overlay.of(context),
-                                                      CustomSnackBar.success(
-                                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                        message: 'Favorite coin was changed',
-                                                        textStyle: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                                const Gap(30),
-                              ],
-                            ),
-                          );
-                        },
+                    onPressed: () async {
+                      await allSettingsState.updateIndex(1);
+                      pageController.jumpToPage(
+                        1,
                       );
                     },
                     child: Container(

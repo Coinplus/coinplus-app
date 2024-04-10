@@ -8,15 +8,21 @@ part of 'bar_model.dart';
 
 _$BarModelImpl _$$BarModelImplFromJson(Map json) => _$BarModelImpl(
       address: json['address'] as String,
-      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ?? CardColor.SILVER,
-      type: $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.BAR,
-      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ?? WalletType.COINPLUS_WALLET,
+      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
+          CardColor.SILVER,
+      type:
+          $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.BAR,
+      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ??
+          WalletType.COINPLUS_WALLET,
       name: json['name'] as String? ?? 'Coinplus Bitcoin Bar',
       blockchain: json['blockchain'] as String? ?? 'BTC',
-      createdAt: json['createdAt'] == null ? '' : timeFromJson(json['createdAt'] as String),
+      createdAt: json['createdAt'] == null
+          ? ''
+          : timeFromJson(json['createdAt'] as String),
       data: json['chain_stats'] == null
           ? null
-          : ChainStats.fromJson(Map<String, dynamic>.from(json['chain_stats'] as Map)),
+          : ChainStats.fromJson(
+              Map<String, dynamic>.from(json['chain_stats'] as Map)),
     );
 
 Map<String, dynamic> _$$BarModelImplToJson(_$BarModelImpl instance) {

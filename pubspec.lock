@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  bdk_flutter:
+    dependency: "direct main"
+    description:
+      name: bdk_flutter
+      sha256: "94283cb9ffd95c98f5d8b1eebd223a179565a56d0c3f2265f1feacf6d4c5825e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.30.0"
   bech32:
     dependency: transitive
     description:
@@ -170,6 +178,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  buffer:
+    dependency: transitive
+    description:
+      name: buffer
+      sha256: "389da2ec2c16283c8787e0adaede82b1842102f8c8aae2f49003a766c5c6b3d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.3"
   build:
     dependency: transitive
     description:
@@ -178,6 +194,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  build_cli_annotations:
+    dependency: transitive
+    description:
+      name: build_cli_annotations
+      sha256: b59d2769769efd6c9ff6d4c4cede0be115a566afc591705c2040b707534b1172
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   build_config:
     dependency: transitive
     description:
@@ -442,94 +466,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  dart_base_x:
-    dependency: transitive
-    description:
-      name: dart_base_x
-      sha256: c8af4f6a6518daab4aa85bb27ee148221644e80446bb44117052b6f4674cdb23
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
-  dart_bech32:
-    dependency: transitive
-    description:
-      name: dart_bech32
-      sha256: "0e1dc1ff39c9669c9ffeafd5d675104918f7b50799692491badfea7e1fb40888"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  dart_bip32:
-    dependency: transitive
-    description:
-      name: dart_bip32
-      sha256: "8af0b1efa72ea50e506036492516b326e25193cdbc15b0bd867c3042e70c6168"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
-  dart_bip66:
-    dependency: transitive
-    description:
-      name: dart_bip66
-      sha256: b8123a66cb906e3da0a87bb2c98eca90aff5d451011aba4c9db39d132bd38a9e
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
-  dart_bitcoin:
-    dependency: "direct main"
-    description:
-      name: dart_bitcoin
-      sha256: "4acc0cde21f333103ed0ca83477855437b5255205f2c08b97ffd527aded502a6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.0-dev"
-  dart_bitcoin_ops:
-    dependency: transitive
-    description:
-      name: dart_bitcoin_ops
-      sha256: dca96913de7bbf46c9d357049f07277bce6816103f112516d7b1cd2e728cb32c
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
-  dart_bitcoin_pushdata:
-    dependency: transitive
-    description:
-      name: dart_bitcoin_pushdata
-      sha256: "2b1339c692e4382c91f2ad114194fb9e94221357892c21f56142b8bf434bfd82"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  dart_bs58:
-    dependency: transitive
-    description:
-      name: dart_bs58
-      sha256: e2fff08fca810d5215f6fca3ea713d8a4a9728aaf1b1658472863b2de7377234
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-  dart_bs58check:
-    dependency: transitive
-    description:
-      name: dart_bs58check
-      sha256: "4284e606795a18c1df5a955928bdc4e1b6f908da7ab0e87f49db51b3774e9e6c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
-  dart_buffer:
-    dependency: transitive
-    description:
-      name: dart_buffer
-      sha256: b6aff66710d41c433a1f9d9a8bbf3aeb546b414363ca939e51969d7af8cf5f44
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
-  dart_ecpair:
-    dependency: transitive
-    description:
-      name: dart_ecpair
-      sha256: "4e34e29ab3e0c2ec3a05c87985e4347c87ad088a85ebfa93fa7599b454ee4004"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   dart_jsonwebtoken:
     dependency: "direct main"
     description:
@@ -538,22 +474,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.12.2"
-  dart_merkle_lib:
-    dependency: transitive
-    description:
-      name: dart_merkle_lib
-      sha256: d5eff37dac7d836219ff8f6ac22fd80bd701c24ebe1839566d4359ead12d42a4
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-  dart_minimaldata:
-    dependency: transitive
-    description:
-      name: dart_minimaldata
-      sha256: "5c8dc5cf616f47bf9d3b7274b44e4582193df9d7363862188b3bbea74017f78b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -562,22 +482,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.4"
-  dart_varuint_bitcoin:
-    dependency: transitive
+  dartsv:
+    dependency: "direct main"
     description:
-      name: dart_varuint_bitcoin
-      sha256: "4f0ccc9733fb54148b9d3688eea822b7aaabf5cc00025998f8c09a1d45b31b4b"
+      name: dartsv
+      sha256: "30d168db968545f1bfbfd4e5cf160e5db4e9272b5994e986ab1c18dfb8ee9d54"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
-  dart_wif:
-    dependency: transitive
-    description:
-      name: dart_wif
-      sha256: "30654dec66b6b1a5d493a8eb80bb10a4b2bcfaaae794ad7bd680bd78123df963"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
+    version: "2.0.2"
   dartx:
     dependency: transitive
     description:
@@ -594,6 +506,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.10"
+  decimal:
+    dependency: transitive
+    description:
+      name: decimal
+      sha256: "24a261d5d5c87e86c7651c417a5dbdf8bcd7080dd592533910e8d0505a279f21"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
   did_change_authlocal:
     dependency: "direct main"
     description:
@@ -833,6 +753,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_rust_bridge:
+    dependency: transitive
+    description:
+      name: flutter_rust_bridge
+      sha256: "02720226035257ad0b571c1256f43df3e1556a499f6bcb004849a0faaa0e87f0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.82.6"
   flutter_scale_tap:
     dependency: "direct main"
     description:
@@ -1224,6 +1152,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0+1"
+  mockito:
+    dependency: transitive
+    description:
+      name: mockito
+      sha256: "6841eed20a7befac0ce07df8116c8b8233ed1f4486a7647c7fc5a02ae6163917"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.4"
   nested:
     dependency: transitive
     description:
@@ -1448,6 +1384,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  puppeteer:
+    dependency: transitive
+    description:
+      name: puppeteer
+      sha256: "6833edca01b1e9dcdd9a6e41bad84b706dfba4366d095c4edff64b00c02ac472"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.0"
   qr:
     dependency: transitive
     description:
@@ -1480,6 +1424,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  rational:
+    dependency: transitive
+    description:
+      name: rational
+      sha256: ba58e9e18df9abde280e8b10051e4bce85091e41e8e7e411b6cde2e738d357cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
+  resource_portable:
+    dependency: transitive
+    description:
+      name: resource_portable
+      sha256: "76af61ea5af4719f0a5a9776dddb7bc61e0a85fa5b7978423cc20566f2f97b53"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   retrofit:
     dependency: "direct main"
     description:
@@ -1893,6 +1853,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.0"
+  unorm_dart:
+    dependency: transitive
+    description:
+      name: unorm_dart
+      sha256: "5b35bff83fce4d76467641438f9e867dc9bcfdb8c1694854f230579d68cd8f4b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -2070,5 +2038,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.2.3 <4.0.0"
+  dart: ">=3.3.0 <4.0.0"
   flutter: ">=3.16.0"

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,11 @@ import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/header_custom_paint.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
@@ -29,9 +32,13 @@ class WalletPage extends StatefulWidget {
   const WalletPage({
     super.key,
     required this.onChangeCard,
+    required this.pageController,
+    required this.allSettingsState,
   });
 
   final CardChangeCallBack onChangeCard;
+  final PageController pageController;
+  final AllSettingsState allSettingsState;
 
   @override
   State<WalletPage> createState() => _WalletPageState();
@@ -105,6 +112,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     }
     if (_balanceStore.cards.isNotEmpty && _balanceStore.bars.isEmpty) {
       _tabController.animateTo(0);
+    }
+    if (Platform.isAndroid) {
+      nfcStop();
     }
   }
 
@@ -232,7 +242,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                         ),
                       ),
                       // Current price(btc)
-                      if (context.height > 667) const FavoriteCoin() else const SizedBox(),
+                      if (context.height > 667)
+                        FavoriteCoin(
+                          pageController: widget.pageController,
+                          allSettingsState: widget.allSettingsState,
+                        )
+                      else
+                        const SizedBox(),
                       const Spacer(),
                       const Gap(30),
                     ],

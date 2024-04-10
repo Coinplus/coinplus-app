@@ -392,7 +392,7 @@ abstract class _HistoryPageStore with Store {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 10), (_) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) async {
       final prefs = await SharedPreferences.getInstance();
       final map = prefs.getString('lastRefreshedMap');
       if (map != null) {
