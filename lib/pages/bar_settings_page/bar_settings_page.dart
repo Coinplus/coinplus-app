@@ -81,8 +81,10 @@ class BarSettingsPage extends HookWidget {
       if (isInactive.value) {
         _cardSettingsState.isPrivateKeyVisible = false;
       }
-      if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened) {
-        await router.pop();
+      if (appLocked.value &&
+          isInactive.value == true &&
+          _walletProtectState.isModalOpened) {
+        await router.maybePop();
       }
       isPaused.value = [AppLifecycleState.paused].contains(current);
       if (isPaused.value &&
@@ -143,7 +145,9 @@ class BarSettingsPage extends HookWidget {
                 children: [
                   ListTile(
                     onTap: () async {
-                      await _walletProtectState.updateModalStatus(isOpened: true);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: true,
+                      );
                       await showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
@@ -160,7 +164,9 @@ class BarSettingsPage extends HookWidget {
                           );
                         },
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: false);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: false,
+                      );
                     },
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +213,8 @@ class BarSettingsPage extends HookWidget {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor:
+                                    const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Address was copied',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
@@ -229,7 +236,8 @@ class BarSettingsPage extends HookWidget {
                           },
                         );
                       }
-                      final isCardActivated = isBarWalletActivated(balanceStore: _balanceStore);
+                      final isCardActivated =
+                          isBarWalletActivated(balanceStore: _balanceStore);
                       unawaited(
                         recordAmplitudeEvent(
                           AddressCopied(
@@ -283,7 +291,8 @@ class BarSettingsPage extends HookWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Gap(13),
-                                      if (_cardSettingsState.isPrivateKeyVisible)
+                                      if (_cardSettingsState
+                                          .isPrivateKeyVisible)
                                         Assets.icons.contentCopy.image(
                                           height: 24,
                                         )
@@ -296,52 +305,87 @@ class BarSettingsPage extends HookWidget {
                                   ),
                                   onLongPress: () async {
                                     await recordAmplitudeEventPartTwo(
-                                      PrivateKeyRevealed(walletAddress: bar.address, walletType: 'Bar'),
+                                      PrivateKeyRevealed(
+                                        walletAddress: bar.address,
+                                        walletType: 'Bar',
+                                      ),
                                     );
                                     await HapticFeedback.selectionClick();
-                                    if (!_cardSettingsState.isPrivateKeyVisible) {
-                                      if (_walletProtectState.isBiometricsEnabled) {
+                                    if (!_cardSettingsState
+                                        .isPrivateKeyVisible) {
+                                      if (_walletProtectState
+                                          .isBiometricsEnabled) {
                                         if (await _isPinSet) {
                                           try {
                                             isBiometricsRunning.value = true;
-                                            final isAuthorized = await _auth.authenticate(
-                                              localizedReason: 'Authenticate using Face ID',
-                                              options: const AuthenticationOptions(biometricOnly: true),
+                                            final isAuthorized =
+                                                await _auth.authenticate(
+                                              localizedReason:
+                                                  'Authenticate using Face ID',
+                                              options:
+                                                  const AuthenticationOptions(
+                                                biometricOnly: true,
+                                              ),
                                             );
                                             if (isAuthorized) {
-                                              _cardSettingsState.makePrivateVisible();
-                                              await Future.delayed(const Duration(milliseconds: 1200));
+                                              _cardSettingsState
+                                                  .makePrivateVisible();
+                                              await Future.delayed(
+                                                const Duration(
+                                                  milliseconds: 1200,
+                                                ),
+                                              );
                                               isBiometricsRunning.value = false;
                                             }
                                           } catch (e) {
-                                            if (e is PlatformException && e.code == 'NotAvailable') {
-                                            } else if (e is PlatformException && e.code == 'NotEnrolled') {
-                                              log('Biometrics not enrolled' as num);
-                                            } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
-                                              log('Biometrics authentication failed or canceled' as num);
+                                            if (e is PlatformException &&
+                                                e.code == 'NotAvailable') {
+                                            } else if (e is PlatformException &&
+                                                e.code == 'NotEnrolled') {
+                                              log(
+                                                'Biometrics not enrolled'
+                                                    as num,
+                                              );
+                                            } else if (e is PlatformException &&
+                                                e.code ==
+                                                    'AuthenticationFailed') {
+                                              log(
+                                                'Biometrics authentication failed or canceled'
+                                                    as num,
+                                              );
                                             } else {}
                                             return;
                                           }
                                         } else {
                                           isBiometricsRunning.value = false;
-                                          _cardSettingsState.makePrivateVisible();
+                                          _cardSettingsState
+                                              .makePrivateVisible();
                                         }
                                       } else {
                                         if (await _isPinSet) {
-                                          await router
-                                              .push(PinCodeForPrivateKey(bar: bar, isKeyVisible: _cardSettingsState));
+                                          await router.push(
+                                            PinCodeForPrivateKey(
+                                              bar: bar,
+                                              isKeyVisible: _cardSettingsState,
+                                            ),
+                                          );
                                         } else {
-                                          _cardSettingsState.makePrivateVisible();
+                                          _cardSettingsState
+                                              .makePrivateVisible();
                                         }
                                       }
                                     } else {
-                                      _cardSettingsState.isPrivateKeyVisible = false;
+                                      _cardSettingsState.isPrivateKeyVisible =
+                                          false;
                                     }
                                   },
                                   onTap: _cardSettingsState.isPrivateKeyVisible
                                       ? () {
                                           recordAmplitudeEventPartTwo(
-                                            PrivateKeyCopied(walletAddress: bar.address, walletType: 'Bar'),
+                                            PrivateKeyCopied(
+                                              walletAddress: bar.address,
+                                              walletType: 'Bar',
+                                            ),
                                           );
                                           Clipboard.setData(
                                             ClipboardData(
@@ -356,10 +400,14 @@ class BarSettingsPage extends HookWidget {
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                  message: 'Private key was copied',
+                                                  backgroundColor:
+                                                      const Color(0xFF4A4A4A)
+                                                          .withOpacity(0.9),
+                                                  message:
+                                                      'Private key was copied',
                                                   textStyle: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Colors.white,
                                                   ),
@@ -370,7 +418,10 @@ class BarSettingsPage extends HookWidget {
                                         }
                                       : () {
                                           recordAmplitudeEventPartTwo(
-                                            ClickedOnPrivateKey(walletAddress: bar.address, walletType: 'Bar'),
+                                            ClickedOnPrivateKey(
+                                              walletAddress: bar.address,
+                                              walletType: 'Bar',
+                                            ),
                                           );
                                           showTopSnackBar(
                                             displayDuration: const Duration(
@@ -378,10 +429,14 @@ class BarSettingsPage extends HookWidget {
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                              message: 'Hold to reveal your Private key',
+                                              backgroundColor:
+                                                  const Color(0xFF4A4A4A)
+                                                      .withOpacity(0.9),
+                                              message:
+                                                  'Hold to reveal your Private key',
                                               textStyle: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
                                                 fontSize: 14,
                                                 color: Colors.white,
                                               ),
@@ -391,62 +446,76 @@ class BarSettingsPage extends HookWidget {
                                   title: Observer(
                                     builder: (context) {
                                       return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           const Text(
                                             'Private key',
                                             style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.primaryTextColor,
                                             ),
                                           ),
                                           const Gap(6),
-                                          if (_cardSettingsState.isPrivateKeyVisible)
+                                          if (_cardSettingsState
+                                              .isPrivateKeyVisible)
                                             Container(
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
                                                 ),
-                                                borderRadius: BorderRadius.circular(10),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
                                               child: Text(
                                                 privateKey.value.toString(),
                                                 style: const TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color: AppColors.primaryTextColor,
+                                                  color: AppColors
+                                                      .primaryTextColor,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                               ),
                                             )
                                           else
                                             ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                               child: ImageFiltered(
                                                 imageFilter: ImageFilter.blur(
                                                   sigmaX: 5,
                                                   sigmaY: 5,
                                                 ),
                                                 child: Container(
-                                                  padding: const EdgeInsets.all(5),
+                                                  padding:
+                                                      const EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
                                                       10,
                                                     ),
                                                     border: Border.all(
-                                                      color: Colors.grey.withOpacity(0.1),
+                                                      color: Colors.grey
+                                                          .withOpacity(0.1),
                                                     ),
                                                   ),
                                                   child: const Text(
                                                     'L24hTctc4WlPBJwyP8EzBogNhm2y7EUjkHpVBFD9rhYT5PLoTuY6',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors.textHintsColor,
-                                                      fontWeight: FontWeight.w300,
+                                                      color: AppColors
+                                                          .textHintsColor,
+                                                      fontWeight:
+                                                          FontWeight.w300,
                                                     ),
                                                   ),
                                                 ),
@@ -465,7 +534,11 @@ class BarSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
-                              await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Wallet Settings'));
+                              await recordAmplitudeEventPartTwo(
+                                const HelpCenterClicked(
+                                  source: 'Wallet Settings',
+                                ),
+                              );
                               await FlutterWebBrowser.openWebPage(
                                 url:
                                     'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
@@ -475,11 +548,16 @@ class BarSettingsPage extends HookWidget {
                                   showTitle: true,
                                   urlBarHidingEnabled: true,
                                 ),
-                                safariVCOptions: const SafariViewControllerOptions(
+                                safariVCOptions:
+                                    const SafariViewControllerOptions(
                                   barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
+                                  modalPresentationStyle:
+                                      UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle:
+                                      SafariViewControllerDismissButtonStyle
+                                          .done,
+                                  modalPresentationCapturesStatusBarAppearance:
+                                      true,
                                 ),
                               );
                             },
@@ -574,7 +652,9 @@ class BarSettingsPage extends HookWidget {
                               CardColor.SILVER,
                             ];
 
-                            for (var index = 0; index < colors.length; index++) {
+                            for (var index = 0;
+                                index < colors.length;
+                                index++) {
                               colorWidgets.add(
                                 ScaleTap(
                                   enableFeedback: false,
@@ -588,10 +668,13 @@ class BarSettingsPage extends HookWidget {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           border: Border.all(
                                             width: 2,
-                                            color: _cardSettingsState.selectedBarColor == colors[index]
+                                            color: _cardSettingsState
+                                                        .selectedBarColor ==
+                                                    colors[index]
                                                 ? Colors.blue
                                                 : Colors.transparent,
                                           ),
@@ -634,7 +717,8 @@ class BarSettingsPage extends HookWidget {
                   const Gap(10),
                   ListTile(
                     onTap: () async {
-                      final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+                      final isBarActivated =
+                          isBarWalletActivated(balanceStore: _balanceStore);
                       await recordAmplitudeEventPartTwo(
                         RemoveCardClicked(
                           walletAddress: bar.address,
@@ -642,7 +726,9 @@ class BarSettingsPage extends HookWidget {
                           activated: await isBarActivated,
                         ),
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: true);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: true,
+                      );
                       await showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
@@ -659,7 +745,9 @@ class BarSettingsPage extends HookWidget {
                           );
                         },
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: false);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: false,
+                      );
                     },
                     trailing: Assets.icons.trash.image(
                       height: 24,
@@ -680,7 +768,8 @@ class BarSettingsPage extends HookWidget {
                       return LoadingButton(
                         onPressed: _cardSettingsState.isColorChanged
                             ? () async {
-                                if (_cardSettingsState.selectedBarColor == CardColor.SILVER) {
+                                if (_cardSettingsState.selectedBarColor ==
+                                    CardColor.SILVER) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: bar.address,
                                     color: CardColor.SILVER,
@@ -691,7 +780,8 @@ class BarSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A)
+                                          .withOpacity(0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -700,7 +790,9 @@ class BarSettingsPage extends HookWidget {
                                       ),
                                     ),
                                   );
-                                } else if (_cardSettingsState.selectedBarColor == CardColor.SILVER) {
+                                } else if (_cardSettingsState
+                                        .selectedBarColor ==
+                                    CardColor.SILVER) {
                                   _balanceStore.changeCardColorAndSave(
                                     cardAddress: bar.address,
                                     color: CardColor.SILVER,
@@ -711,7 +803,8 @@ class BarSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A)
+                                          .withOpacity(0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -721,7 +814,7 @@ class BarSettingsPage extends HookWidget {
                                     ),
                                   );
                                 }
-                                await router.pop();
+                                await router.maybePop();
                                 await _balanceStore.getBarsInfo();
                               }
                             : null,
@@ -740,7 +833,9 @@ class BarSettingsPage extends HookWidget {
         ),
         Visibility(
           visible: isInactive.value && appLocked.value,
-          child: !isBiometricsRunning.value ? const Background() : const SizedBox(),
+          child: !isBiometricsRunning.value
+              ? const Background()
+              : const SizedBox(),
         ),
       ],
     );

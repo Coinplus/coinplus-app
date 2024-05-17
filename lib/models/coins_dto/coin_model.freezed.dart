@@ -25,12 +25,14 @@ mixin _$CoinModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CoinModelCopyWith<CoinModel> get copyWith => throw _privateConstructorUsedError;
+  $CoinModelCopyWith<CoinModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CoinModelCopyWith<$Res> {
-  factory $CoinModelCopyWith(CoinModel value, $Res Function(CoinModel) then) = _$CoinModelCopyWithImpl<$Res, CoinModel>;
+  factory $CoinModelCopyWith(CoinModel value, $Res Function(CoinModel) then) =
+      _$CoinModelCopyWithImpl<$Res, CoinModel>;
   @useResult
   $Res call({List<CoinResultModel> result, Meta meta});
 
@@ -38,7 +40,8 @@ abstract class $CoinModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel> implements $CoinModelCopyWith<$Res> {
+class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel>
+    implements $CoinModelCopyWith<$Res> {
   _$CoinModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -74,8 +77,10 @@ class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel> implements $CoinMode
 }
 
 /// @nodoc
-abstract class _$$CoinModelImplCopyWith<$Res> implements $CoinModelCopyWith<$Res> {
-  factory _$$CoinModelImplCopyWith(_$CoinModelImpl value, $Res Function(_$CoinModelImpl) then) =
+abstract class _$$CoinModelImplCopyWith<$Res>
+    implements $CoinModelCopyWith<$Res> {
+  factory _$$CoinModelImplCopyWith(
+          _$CoinModelImpl value, $Res Function(_$CoinModelImpl) then) =
       __$$CoinModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -86,9 +91,12 @@ abstract class _$$CoinModelImplCopyWith<$Res> implements $CoinModelCopyWith<$Res
 }
 
 /// @nodoc
-class __$$CoinModelImplCopyWithImpl<$Res> extends _$CoinModelCopyWithImpl<$Res, _$CoinModelImpl>
+class __$$CoinModelImplCopyWithImpl<$Res>
+    extends _$CoinModelCopyWithImpl<$Res, _$CoinModelImpl>
     implements _$$CoinModelImplCopyWith<$Res> {
-  __$$CoinModelImplCopyWithImpl(_$CoinModelImpl _value, $Res Function(_$CoinModelImpl) _then) : super(_value, _then);
+  __$$CoinModelImplCopyWithImpl(
+      _$CoinModelImpl _value, $Res Function(_$CoinModelImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -112,9 +120,12 @@ class __$$CoinModelImplCopyWithImpl<$Res> extends _$CoinModelCopyWithImpl<$Res, 
 /// @nodoc
 @JsonSerializable()
 class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
-  const _$CoinModelImpl({required final List<CoinResultModel> result, required this.meta}) : _result = result;
+  const _$CoinModelImpl(
+      {required final List<CoinResultModel> result, required this.meta})
+      : _result = result;
 
-  factory _$CoinModelImpl.fromJson(Map<String, dynamic> json) => _$$CoinModelImplFromJson(json);
+  factory _$CoinModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinModelImplFromJson(json);
 
   final List<CoinResultModel> _result;
   @override
@@ -152,7 +163,8 @@ class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_result), meta);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_result), meta);
 
   @JsonKey(ignore: true)
   @override
@@ -169,9 +181,12 @@ class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
 }
 
 abstract class _CoinModel implements CoinModel {
-  const factory _CoinModel({required final List<CoinResultModel> result, required final Meta meta}) = _$CoinModelImpl;
+  const factory _CoinModel(
+      {required final List<CoinResultModel> result,
+      required final Meta meta}) = _$CoinModelImpl;
 
-  factory _CoinModel.fromJson(Map<String, dynamic> json) = _$CoinModelImpl.fromJson;
+  factory _CoinModel.fromJson(Map<String, dynamic> json) =
+      _$CoinModelImpl.fromJson;
 
   @override
   List<CoinResultModel> get result;
@@ -179,7 +194,8 @@ abstract class _CoinModel implements CoinModel {
   Meta get meta;
   @override
   @JsonKey(ignore: true)
-  _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 CoinResultModel _$CoinResultModelFromJson(Map<String, dynamic> json) {
@@ -203,12 +219,14 @@ mixin _$CoinResultModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CoinResultModelCopyWith<CoinResultModel> get copyWith => throw _privateConstructorUsedError;
+  $CoinResultModelCopyWith<CoinResultModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CoinResultModelCopyWith<$Res> {
-  factory $CoinResultModelCopyWith(CoinResultModel value, $Res Function(CoinResultModel) then) =
+  factory $CoinResultModelCopyWith(
+          CoinResultModel value, $Res Function(CoinResultModel) then) =
       _$CoinResultModelCopyWithImpl<$Res, CoinResultModel>;
   @useResult
   $Res call(
@@ -223,7 +241,8 @@ abstract class $CoinResultModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel> implements $CoinResultModelCopyWith<$Res> {
+class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
+    implements $CoinResultModelCopyWith<$Res> {
   _$CoinResultModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -281,8 +300,10 @@ class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel> implemen
 }
 
 /// @nodoc
-abstract class _$$CoinResultModelImplCopyWith<$Res> implements $CoinResultModelCopyWith<$Res> {
-  factory _$$CoinResultModelImplCopyWith(_$CoinResultModelImpl value, $Res Function(_$CoinResultModelImpl) then) =
+abstract class _$$CoinResultModelImplCopyWith<$Res>
+    implements $CoinResultModelCopyWith<$Res> {
+  factory _$$CoinResultModelImplCopyWith(_$CoinResultModelImpl value,
+          $Res Function(_$CoinResultModelImpl) then) =
       __$$CoinResultModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -298,9 +319,11 @@ abstract class _$$CoinResultModelImplCopyWith<$Res> implements $CoinResultModelC
 }
 
 /// @nodoc
-class __$$CoinResultModelImplCopyWithImpl<$Res> extends _$CoinResultModelCopyWithImpl<$Res, _$CoinResultModelImpl>
+class __$$CoinResultModelImplCopyWithImpl<$Res>
+    extends _$CoinResultModelCopyWithImpl<$Res, _$CoinResultModelImpl>
     implements _$$CoinResultModelImplCopyWith<$Res> {
-  __$$CoinResultModelImplCopyWithImpl(_$CoinResultModelImpl _value, $Res Function(_$CoinResultModelImpl) _then)
+  __$$CoinResultModelImplCopyWithImpl(
+      _$CoinResultModelImpl _value, $Res Function(_$CoinResultModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -354,18 +377,22 @@ class __$$CoinResultModelImplCopyWithImpl<$Res> extends _$CoinResultModelCopyWit
 
 /// @nodoc
 @JsonSerializable()
-class _$CoinResultModelImpl with DiagnosticableTreeMixin implements _CoinResultModel {
+class _$CoinResultModelImpl
+    with DiagnosticableTreeMixin
+    implements _CoinResultModel {
   const _$CoinResultModelImpl(
       {required this.id,
       required this.symbol,
       required this.name,
       required this.icon,
       @JsonKey(name: 'price', defaultValue: 0) required this.price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0) required this.priceChange1d,
+      @JsonKey(name: 'priceChange1d', defaultValue: 0)
+      required this.priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required this.marketCap,
       @JsonKey(name: 'rank', defaultValue: 0) required this.rank});
 
-  factory _$CoinResultModelImpl.fromJson(Map<String, dynamic> json) => _$$CoinResultModelImplFromJson(json);
+  factory _$CoinResultModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinResultModelImplFromJson(json);
 
   @override
   final String id;
@@ -418,20 +445,24 @@ class _$CoinResultModelImpl with DiagnosticableTreeMixin implements _CoinResultM
             (identical(other.name, name) || other.name == name) &&
             (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.priceChange1d, priceChange1d) || other.priceChange1d == priceChange1d) &&
-            (identical(other.marketCap, marketCap) || other.marketCap == marketCap) &&
+            (identical(other.priceChange1d, priceChange1d) ||
+                other.priceChange1d == priceChange1d) &&
+            (identical(other.marketCap, marketCap) ||
+                other.marketCap == marketCap) &&
             (identical(other.rank, rank) || other.rank == rank));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price, priceChange1d, marketCap, rank);
+  int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price,
+      priceChange1d, marketCap, rank);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
-      __$$CoinResultModelImplCopyWithImpl<_$CoinResultModelImpl>(this, _$identity);
+      __$$CoinResultModelImplCopyWithImpl<_$CoinResultModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -448,11 +479,14 @@ abstract class _CoinResultModel implements CoinResultModel {
       required final String name,
       required final String icon,
       @JsonKey(name: 'price', defaultValue: 0) required final num price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0) required final num priceChange1d,
+      @JsonKey(name: 'priceChange1d', defaultValue: 0)
+      required final num priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required final num marketCap,
-      @JsonKey(name: 'rank', defaultValue: 0) required final num rank}) = _$CoinResultModelImpl;
+      @JsonKey(name: 'rank', defaultValue: 0)
+      required final num rank}) = _$CoinResultModelImpl;
 
-  factory _CoinResultModel.fromJson(Map<String, dynamic> json) = _$CoinResultModelImpl.fromJson;
+  factory _CoinResultModel.fromJson(Map<String, dynamic> json) =
+      _$CoinResultModelImpl.fromJson;
 
   @override
   String get id;
@@ -476,7 +510,8 @@ abstract class _CoinResultModel implements CoinResultModel {
   num get rank;
   @override
   @JsonKey(ignore: true)
-  _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Meta _$MetaFromJson(Map<String, dynamic> json) {
@@ -499,13 +534,21 @@ mixin _$Meta {
 
 /// @nodoc
 abstract class $MetaCopyWith<$Res> {
-  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) = _$MetaCopyWithImpl<$Res, Meta>;
+  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) =
+      _$MetaCopyWithImpl<$Res, Meta>;
   @useResult
-  $Res call({int page, int limit, int itemCount, int pageCount, bool hasPreviousPage, bool hasNextPage});
+  $Res call(
+      {int page,
+      int limit,
+      int itemCount,
+      int pageCount,
+      bool hasPreviousPage,
+      bool hasNextPage});
 }
 
 /// @nodoc
-class _$MetaCopyWithImpl<$Res, $Val extends Meta> implements $MetaCopyWith<$Res> {
+class _$MetaCopyWithImpl<$Res, $Val extends Meta>
+    implements $MetaCopyWith<$Res> {
   _$MetaCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -554,15 +597,26 @@ class _$MetaCopyWithImpl<$Res, $Val extends Meta> implements $MetaCopyWith<$Res>
 
 /// @nodoc
 abstract class _$$MetaImplCopyWith<$Res> implements $MetaCopyWith<$Res> {
-  factory _$$MetaImplCopyWith(_$MetaImpl value, $Res Function(_$MetaImpl) then) = __$$MetaImplCopyWithImpl<$Res>;
+  factory _$$MetaImplCopyWith(
+          _$MetaImpl value, $Res Function(_$MetaImpl) then) =
+      __$$MetaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int page, int limit, int itemCount, int pageCount, bool hasPreviousPage, bool hasNextPage});
+  $Res call(
+      {int page,
+      int limit,
+      int itemCount,
+      int pageCount,
+      bool hasPreviousPage,
+      bool hasNextPage});
 }
 
 /// @nodoc
-class __$$MetaImplCopyWithImpl<$Res> extends _$MetaCopyWithImpl<$Res, _$MetaImpl> implements _$$MetaImplCopyWith<$Res> {
-  __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then) : super(_value, _then);
+class __$$MetaImplCopyWithImpl<$Res>
+    extends _$MetaCopyWithImpl<$Res, _$MetaImpl>
+    implements _$$MetaImplCopyWith<$Res> {
+  __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -614,7 +668,8 @@ class _$MetaImpl with DiagnosticableTreeMixin implements _Meta {
       required this.hasPreviousPage,
       required this.hasNextPage});
 
-  factory _$MetaImpl.fromJson(Map<String, dynamic> json) => _$$MetaImplFromJson(json);
+  factory _$MetaImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MetaImplFromJson(json);
 
   @override
   final int page;
@@ -654,20 +709,26 @@ class _$MetaImpl with DiagnosticableTreeMixin implements _Meta {
             other is _$MetaImpl &&
             (identical(other.page, page) || other.page == page) &&
             (identical(other.limit, limit) || other.limit == limit) &&
-            (identical(other.itemCount, itemCount) || other.itemCount == itemCount) &&
-            (identical(other.pageCount, pageCount) || other.pageCount == pageCount) &&
-            (identical(other.hasPreviousPage, hasPreviousPage) || other.hasPreviousPage == hasPreviousPage) &&
-            (identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage));
+            (identical(other.itemCount, itemCount) ||
+                other.itemCount == itemCount) &&
+            (identical(other.pageCount, pageCount) ||
+                other.pageCount == pageCount) &&
+            (identical(other.hasPreviousPage, hasPreviousPage) ||
+                other.hasPreviousPage == hasPreviousPage) &&
+            (identical(other.hasNextPage, hasNextPage) ||
+                other.hasNextPage == hasNextPage));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, page, limit, itemCount, pageCount, hasPreviousPage, hasNextPage);
+  int get hashCode => Object.hash(runtimeType, page, limit, itemCount,
+      pageCount, hasPreviousPage, hasNextPage);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => __$$MetaImplCopyWithImpl<_$MetaImpl>(this, _$identity);
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
+      __$$MetaImplCopyWithImpl<_$MetaImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -702,5 +763,6 @@ abstract class _Meta implements Meta {
   bool get hasNextPage;
   @override
   @JsonKey(ignore: true)
-  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

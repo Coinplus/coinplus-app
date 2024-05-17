@@ -1,23 +1,26 @@
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
-import '../../http/dio.dart';
-import '../../http/repositories/coins_repo.dart';
+import '../../http/repositories/block_stream_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
+import '../../models/coins_dto/coin_model.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
+import '../market_page_store/market_page_store.dart';
 
 part 'balance_store.g.dart';
 
 class BalanceStore = _BalanceStore with _$BalanceStore;
+
+MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
 abstract class _BalanceStore with Store {
   @readonly
@@ -50,19 +53,51 @@ abstract class _BalanceStore with Store {
 
   Future<void> getCardsFromStorage() async {
     final allCards = await StorageUtils.getCards();
-    _cards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
+    _cards = allCards
+        .where((element) => element.type == CardType.CARD)
+        .toList()
+        .asObservable();
   }
 
   Future<void> getBarsFromStorage() async {
     final allCards = await StorageUtils.getBars();
-    _bars = allCards.where((element) => element.type == CardType.BAR).toList().asObservable();
+    _bars = allCards
+        .where((element) => element.type == CardType.BAR)
+        .toList()
+        .asObservable();
   }
 
   @computed
   int get allCardsBalances {
-    final cardTotalBalance = _cards.fold<int>(0, (acc, card) => acc + (card.data?.netTxoCount.toInt() ?? 0));
-    final barTotalBalance = _bars.fold<int>(0, (acc, bar) => acc + (bar.data?.netTxoCount.toInt() ?? 0));
+    final cardTotalBalance = _cards.fold<int>(
+      0,
+      (acc, card) => acc + (card.finalBalance ?? 0),
+    );
+    final barTotalBalance = _bars.fold<int>(
+      0,
+      (acc, bar) => acc + (bar.finalBalance ?? 0),
+    );
     return cardTotalBalance + barTotalBalance;
+  }
+
+  @computed
+  num? get btcPrice => _marketPageStore.singleCoin?.result.first.price;
+
+  @computed
+  CoinModel? get singleCoin => _marketPageStore.singleCoin;
+
+  @computed
+  num get cardBalance {
+    return cardCurrentIndex != _cards.length
+        ? (_cards[cardCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice!
+        : 0;
+  }
+
+  @computed
+  num get barBalance {
+    return barCurrentIndex != _bars.length
+        ? (_bars[barCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice!
+        : 0;
   }
 
   @action
@@ -72,13 +107,26 @@ abstract class _BalanceStore with Store {
     }
     try {
       balanceLoading = true;
-      final futures = _cards.map((element) => _getSingleCardInfo(element.address)).toList();
-      final results = await Future.wait(futures);
-      for (var i = 0; i < results.length; i++) {
-        final card = results[i];
-        if (card != null) {
-          _cards[i] = _cards[i].copyWith(data: card.data);
-        }
+      final res = await balanceRepo.getCards(
+        addresses: _cards.map((e) => e.address).join('|'),
+      );
+      final data = res.data.entries.map((e) {
+        final resJson = {
+          'address': e.key,
+          'final_balance': (e.value as Map)['final_balance'],
+          'total_received': (e.value as Map)['total_received'],
+        };
+
+        return CardModel.fromJson(resJson);
+      }).toList();
+
+      for (var i = 0; i < _cards.length; i++) {
+        final card = _cards[i];
+        final balanceCard = data.firstWhere((e) => e.address == card.address);
+        _cards[i] = card.copyWith(
+          finalBalance: balanceCard.finalBalance,
+          totalReceived: balanceCard.totalReceived,
+        );
       }
     } catch (e) {
       log(e.toString());
@@ -94,13 +142,26 @@ abstract class _BalanceStore with Store {
     }
     try {
       balanceLoading = true;
-      final futures = _bars.map((element) => _getSingleBarInfo(element.address)).toList();
-      final results = await Future.wait(futures);
-      for (var i = 0; i < results.length; i++) {
-        final bar = results[i];
-        if (bar != null) {
-          _bars[i] = _bars[i].copyWith(data: bar.data);
-        }
+      final res = await balanceRepo.getBars(
+        addresses: _bars.map((e) => e.address).join('|'),
+      );
+      final data = res.data.entries.map((e) {
+        final resJson = {
+          'address': e.key,
+          'final_balance': (e.value as Map)['final_balance'],
+          'total_received': (e.value as Map)['total_received'],
+        };
+
+        return BarModel.fromJson(resJson);
+      }).toList();
+
+      for (var i = 0; i < _bars.length; i++) {
+        final bar = _bars[i];
+        final balanceBar = data.firstWhere((e) => e.address == bar.address);
+        _bars[i] = bar.copyWith(
+          finalBalance: balanceBar.finalBalance,
+          totalReceived: balanceBar.totalReceived,
+        );
       }
     } catch (e) {
       log(e.toString());
@@ -115,7 +176,14 @@ abstract class _BalanceStore with Store {
       address: address,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
-    _selectedCard = await _getSingleCardInfo(address);
+    final res =
+        (await balanceRepo.getCards(addresses: address)).data.entries.first;
+    final cardJson = {
+      'address': res.key,
+      'final_balance': (res.value as Map)['final_balance'],
+      'total_received': (res.value as Map)['total_received'],
+    };
+    _selectedCard = CardModel.fromJson(cardJson);
   }
 
   @action
@@ -124,7 +192,15 @@ abstract class _BalanceStore with Store {
       address: address,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
-    _selectedBar = await _getSingleBarInfo(address);
+
+    final res =
+        (await balanceRepo.getBars(addresses: address)).data.entries.first;
+    final barJson = {
+      'address': res.key,
+      'final_balance': (res.value as Map)['final_balance'],
+      'total_received': (res.value as Map)['total_received'],
+    };
+    _selectedBar = BarModel.fromJson(barJson);
   }
 
   @action
@@ -132,7 +208,8 @@ abstract class _BalanceStore with Store {
     if (_selectedCard == null) {
       return;
     }
-    final index = _cards.indexWhere((element) => element.address == _selectedCard!.address);
+    final index = _cards
+        .indexWhere((element) => element.address == _selectedCard!.address);
     _cards.removeAt(index);
     await StorageUtils.removeCard(_selectedCard!.address);
     await secureStorage.delete(key: _selectedCard!.address);
@@ -143,41 +220,11 @@ abstract class _BalanceStore with Store {
     if (_selectedBar == null) {
       return;
     }
-    final index = _bars.indexWhere((element) => element.address == _selectedBar!.address);
+    final index =
+        _bars.indexWhere((element) => element.address == _selectedBar!.address);
     _bars.removeAt(index);
     await StorageUtils.removeBar(_selectedBar!.address);
     await secureStorage.delete(key: _selectedBar!.address);
-  }
-
-  Future<CardModel?> _getSingleCardInfo(String address) async {
-    try {
-      loadings[address] = true;
-      final card = await CoinsClient(dio).getCard(
-        address: address,
-      );
-      return card;
-    } on DioException {
-      log('Its not valid btc address');
-    } finally {
-      loadings[address] = false;
-    }
-
-    return null;
-  }
-
-  Future<BarModel?> _getSingleBarInfo(String address) async {
-    try {
-      loadings[address] = true;
-      final bar = await CoinsClient(dio).getBar(
-        address: address,
-      );
-      return bar;
-    } on DioException catch (e, stc) {
-      log(e.message.toString(), stackTrace: stc);
-    } finally {
-      loadings[address] = false;
-    }
-    return null;
   }
 
   void saveSelectedCard({required CardColor color}) {
@@ -185,8 +232,12 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isCardNotExist = _cards
+        .indexWhere((element) => element.address == _selectedCard?.address)
+        .isNegative;
+    final isBarNotExist = _bars
+        .indexWhere((element) => element.address == _selectedCard?.address)
+        .isNegative;
 
     if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
@@ -204,13 +255,21 @@ abstract class _BalanceStore with Store {
     }
   }
 
-  void saveSelectedCardAsTracker({required CardColor color, required WalletType label, required String name}) {
+  void saveSelectedCardAsTracker({
+    required CardColor color,
+    required WalletType label,
+    required String name,
+  }) {
     if (_selectedCard == null) {
       return;
     }
 
-    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isCardNotExist = _cards
+        .indexWhere((element) => element.address == _selectedCard?.address)
+        .isNegative;
+    final isBarNotExist = _bars
+        .indexWhere((element) => element.address == _selectedCard?.address)
+        .isNegative;
 
     if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
@@ -235,7 +294,9 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedBar?.address).isNegative;
+    final isBarNotExist = _bars
+        .indexWhere((element) => element.address == _selectedBar?.address)
+        .isNegative;
 
     if (isBarNotExist) {
       _selectedBar = _selectedBar!.copyWith(
@@ -290,7 +351,8 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required CardColor color,
   }) {
-    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex =
+        _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _cards[cardIndex].copyWith(color: color);
@@ -307,7 +369,8 @@ abstract class _BalanceStore with Store {
     required String barAddress,
     required CardColor color,
   }) {
-    final barIndex = _bars.indexWhere((element) => element.address == barAddress);
+    final barIndex =
+        _bars.indexWhere((element) => element.address == barAddress);
 
     if (barIndex != -1) {
       final updatedCard = _bars[barIndex].copyWith(color: color);
@@ -324,7 +387,8 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required String newName,
   }) {
-    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex =
+        _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _cards[cardIndex].copyWith(name: newName);
@@ -341,7 +405,8 @@ abstract class _BalanceStore with Store {
     required String barAddress,
     required String newName,
   }) {
-    final cardIndex = _bars.indexWhere((element) => element.address == barAddress);
+    final cardIndex =
+        _bars.indexWhere((element) => element.address == barAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _bars[cardIndex].copyWith(name: newName);
@@ -354,7 +419,10 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<bool?> getCard({required String? receivedData, required TextEditingController textEditingController}) async {
+  Future<bool?> getCard({
+    required String? receivedData,
+    required TextEditingController textEditingController,
+  }) async {
     if (receivedData != null) {
       final card = await getCardData(receivedData);
       return card?.activated;
@@ -382,11 +450,15 @@ abstract class _BalanceStore with Store {
 
   void _defaultOnBarAdded(String addr) {}
 
-  Future<void> setOnCardAddedCallback(void Function(String addr) onCardAdded) async {
+  Future<void> setOnCardAddedCallback(
+    void Function(String addr) onCardAdded,
+  ) async {
     this.onCardAdded = onCardAdded;
   }
 
-  Future<void> setOnBarAddedCallback(void Function(String addr) onBarAdded) async {
+  Future<void> setOnBarAddedCallback(
+    void Function(String addr) onBarAdded,
+  ) async {
     this.onBarAdded = onBarAdded;
   }
 }

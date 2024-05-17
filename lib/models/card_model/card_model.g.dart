@@ -8,6 +8,8 @@ part of 'card_model.dart';
 
 _$CardModelImpl _$$CardModelImplFromJson(Map json) => _$CardModelImpl(
       address: json['address'] as String,
+      finalBalance: json['final_balance'] as int?,
+      totalReceived: json['total_received'] as int?,
       color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
           CardColor.ORANGE,
       type:
@@ -19,21 +21,11 @@ _$CardModelImpl _$$CardModelImplFromJson(Map json) => _$CardModelImpl(
       createdAt: json['createdAt'] == null
           ? ''
           : timeFromJson(json['createdAt'] as String),
-      data: json['chain_stats'] == null
-          ? null
-          : ChainStats.fromJson(
-              Map<String, dynamic>.from(json['chain_stats'] as Map)),
     );
 
 Map<String, dynamic> _$$CardModelImplToJson(_$CardModelImpl instance) {
   final val = <String, dynamic>{
     'address': instance.address,
-    'color': _$CardColorEnumMap[instance.color]!,
-    'type': _$CardTypeEnumMap[instance.type]!,
-    'label': _$WalletTypeEnumMap[instance.label]!,
-    'name': instance.name,
-    'blockchain': instance.blockchain,
-    'createdAt': instance.createdAt,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -42,7 +34,14 @@ Map<String, dynamic> _$$CardModelImplToJson(_$CardModelImpl instance) {
     }
   }
 
-  writeNotNull('chain_stats', instance.data?.toJson());
+  writeNotNull('final_balance', instance.finalBalance);
+  writeNotNull('total_received', instance.totalReceived);
+  val['color'] = _$CardColorEnumMap[instance.color]!;
+  val['type'] = _$CardTypeEnumMap[instance.type]!;
+  val['label'] = _$WalletTypeEnumMap[instance.label]!;
+  val['name'] = instance.name;
+  val['blockchain'] = instance.blockchain;
+  val['createdAt'] = instance.createdAt;
   return val;
 }
 

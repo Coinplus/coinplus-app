@@ -74,8 +74,12 @@ class SettingsPage extends HookWidget {
         } else {
           if (_walletProtectState.canCheckBiometrics) {
             await _walletProtectState.authenticateWithBiometrics();
-            final currentToken = await DidChangeAuthLocal.instance.getTokenBiometric();
-            await StorageUtils.setString(key: 'biometricsToken', value: currentToken);
+            final currentToken =
+                await DidChangeAuthLocal.instance.getTokenBiometric();
+            await StorageUtils.setString(
+              key: 'biometricsToken',
+              value: currentToken,
+            );
             await recordAmplitudeEventPartTwo(const FaceIdEnabled());
           } else {
             await pleaseEnableBiometrics();
@@ -169,7 +173,9 @@ class SettingsPage extends HookWidget {
                         return Column(
                           children: [
                             InkWell(
-                              onTap: () => onToggleAppLock(!_walletProtectState.isSetPinCode),
+                              onTap: () => onToggleAppLock(
+                                !_walletProtectState.isSetPinCode,
+                              ),
                               splashFactory: InkSparkle.splashFactory,
                               highlightColor: Colors.transparent,
                               child: ListTile(
@@ -220,12 +226,15 @@ class SettingsPage extends HookWidget {
                                     InkWell(
                                       onTap: () {
                                         router.push(const ChangePinCode());
-                                        recordAmplitudeEventPartTwo(const ChangePasscodeClicked());
+                                        recordAmplitudeEventPartTwo(
+                                          const ChangePasscodeClicked(),
+                                        );
                                       },
                                       splashFactory: InkSparkle.splashFactory,
                                       highlightColor: Colors.transparent,
                                       child: ListTile(
-                                        trailing: Assets.icons.arrowForwardIos.image(
+                                        trailing:
+                                            Assets.icons.arrowForwardIos.image(
                                           height: 20,
                                         ),
                                         splashColor: Colors.transparent,
@@ -255,47 +264,69 @@ class SettingsPage extends HookWidget {
                                                 indent: 0,
                                                 endIndent: 0,
                                                 thickness: 1,
-                                                color: Colors.grey.withOpacity(0.1),
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
                                               ),
                                               InkWell(
-                                                onTap: () => onToggleFaceId(!_walletProtectState.isBiometricsEnabled),
-                                                splashFactory: InkSparkle.splashFactory,
-                                                highlightColor: Colors.transparent,
+                                                onTap: () => onToggleFaceId(
+                                                  !_walletProtectState
+                                                      .isBiometricsEnabled,
+                                                ),
+                                                splashFactory:
+                                                    InkSparkle.splashFactory,
+                                                highlightColor:
+                                                    Colors.transparent,
                                                 child: ListTile(
-                                                  splashColor: Colors.transparent,
+                                                  splashColor:
+                                                      Colors.transparent,
                                                   minLeadingWidth: 10,
                                                   trailing: Observer(
                                                     builder: (_) {
                                                       return CupertinoSwitch(
-                                                        value: _walletProtectState.isBiometricsEnabled,
-                                                        onChanged: onToggleFaceId,
+                                                        value: _walletProtectState
+                                                            .isBiometricsEnabled,
+                                                        onChanged:
+                                                            onToggleFaceId,
                                                       );
                                                     },
                                                   ),
                                                   leading: Platform.isAndroid
-                                                      ? Assets.icons.faceIdSettings.image(
+                                                      ? Assets
+                                                          .icons.faceIdSettings
+                                                          .image(
                                                           height: 22,
                                                         )
-                                                      : _walletProtectState.availableBiometric ==
-                                                              BiometricType.fingerprint
-                                                          ? Assets.icons.iphoneTouchId.image(
+                                                      : _walletProtectState
+                                                                  .availableBiometric ==
+                                                              BiometricType
+                                                                  .fingerprint
+                                                          ? Assets.icons
+                                                              .iphoneTouchId
+                                                              .image(
                                                               height: 22,
                                                             )
-                                                          : Assets.icons.faceIdSettings.image(
+                                                          : Assets.icons
+                                                              .faceIdSettings
+                                                              .image(
                                                               height: 22,
                                                             ),
                                                   title: Text(
                                                     Platform.isAndroid
                                                         ? 'Biometrics'
-                                                        : _walletProtectState.availableBiometric ==
-                                                                BiometricType.fingerprint
+                                                        : _walletProtectState
+                                                                    .availableBiometric ==
+                                                                BiometricType
+                                                                    .fingerprint
                                                             ? 'Touch ID'
                                                             : 'Face ID',
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       fontSize: 15,
-                                                      color: AppColors.primaryTextColor,
-                                                      fontWeight: FontWeight.w500,
+                                                      color: AppColors
+                                                          .primaryTextColor,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ),
@@ -321,16 +352,23 @@ class SettingsPage extends HookWidget {
                             if (_nfcState.isNfcSupported)
                               InkWell(
                                 onTap: () async {
-                                  await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                                  unawaited(recordAmplitudeEventPartTwo(const VerifyCardClicked()));
+                                  await _walletProtectState
+                                      .updateNfcSessionStatus(isStarted: true);
+                                  unawaited(
+                                    recordAmplitudeEventPartTwo(
+                                      const VerifyCardClicked(),
+                                    ),
+                                  );
                                   Platform.isAndroid
                                       ? checkNfcAndroid(
-                                          walletProtectState: _walletProtectState,
+                                          walletProtectState:
+                                              _walletProtectState,
                                           balanceStore: _balanceStore,
                                           settingsState: _settingsState,
                                         )
                                       : await checkNfcIos(
-                                          walletProtectState: _walletProtectState,
+                                          walletProtectState:
+                                              _walletProtectState,
                                           balanceStore: _balanceStore,
                                           settingsState: _settingsState,
                                         );
@@ -348,7 +386,8 @@ class SettingsPage extends HookWidget {
                                       ),
                                     ],
                                   ),
-                                  trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                                  trailing: Assets.icons.arrowForwardIos
+                                      .image(height: 20),
                                   title: const Text(
                                     'Verify Card Authenticity',
                                     style: TextStyle(
@@ -370,7 +409,10 @@ class SettingsPage extends HookWidget {
                               color: Colors.grey.withOpacity(0.1),
                             ),
                             InkWell(
-                              onTap: () => onToggleHideBalances(_walletProtectState.isSwitchedHideBalancesToggle),
+                              onTap: () => onToggleHideBalances(
+                                _walletProtectState
+                                    .isSwitchedHideBalancesToggle,
+                              ),
                               splashFactory: InkSparkle.splashFactory,
                               highlightColor: Colors.transparent,
                               child: ListTile(
@@ -379,9 +421,12 @@ class SettingsPage extends HookWidget {
                                 trailing: Observer(
                                   builder: (_) {
                                     return CupertinoSwitch(
-                                      value: _walletProtectState.isSwitchedHideBalancesToggle,
-                                      onChanged: (val) =>
-                                          onToggleHideBalances(_walletProtectState.isSwitchedHideBalancesToggle),
+                                      value: _walletProtectState
+                                          .isSwitchedHideBalancesToggle,
+                                      onChanged: (val) => onToggleHideBalances(
+                                        _walletProtectState
+                                            .isSwitchedHideBalancesToggle,
+                                      ),
                                     );
                                   },
                                 ),
@@ -432,16 +477,22 @@ class SettingsPage extends HookWidget {
                       builder: (context) {
                         return InkWell(
                           onTap: () {
-                            onToggleNotifications(_walletProtectState.isSwitchedNotificationsToggle);
+                            onToggleNotifications(
+                              _walletProtectState.isSwitchedNotificationsToggle,
+                            );
                           },
                           splashFactory: InkSplash.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
                             minLeadingWidth: 10,
                             trailing: CupertinoSwitch(
-                              value: _walletProtectState.isSwitchedNotificationsToggle,
+                              value: _walletProtectState
+                                  .isSwitchedNotificationsToggle,
                               onChanged: (_) {
-                                onToggleNotifications(_walletProtectState.isSwitchedNotificationsToggle);
+                                onToggleNotifications(
+                                  _walletProtectState
+                                      .isSwitchedNotificationsToggle,
+                                );
                               },
                             ),
                             leading: Assets.icons.notifications.image(
@@ -494,7 +545,9 @@ class SettingsPage extends HookWidget {
                       children: [
                         InkWell(
                           onTap: () async {
-                            await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Settings'));
+                            await recordAmplitudeEventPartTwo(
+                              const HelpCenterClicked(source: 'Settings'),
+                            );
                             await FlutterWebBrowser.openWebPage(
                               url: 'https://coinplus.gitbook.io/help-center',
                               customTabsOptions: const CustomTabsOptions(
@@ -503,18 +556,23 @@ class SettingsPage extends HookWidget {
                                 showTitle: true,
                                 urlBarHidingEnabled: true,
                               ),
-                              safariVCOptions: const SafariViewControllerOptions(
+                              safariVCOptions:
+                                  const SafariViewControllerOptions(
                                 barCollapsingEnabled: true,
-                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance: true,
+                                modalPresentationStyle:
+                                    UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle:
+                                    SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance:
+                                    true,
                               ),
                             );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing:
+                                Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.help.image(
                               height: 22,
@@ -540,12 +598,15 @@ class SettingsPage extends HookWidget {
                         InkWell(
                           onTap: () {
                             router.push(const ContactUs());
-                            recordAmplitudeEventPartTwo(const ContactUsClicked());
+                            recordAmplitudeEventPartTwo(
+                              const ContactUsClicked(),
+                            );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing:
+                                Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.contactUs.image(
                               height: 22,
@@ -584,7 +645,9 @@ class SettingsPage extends HookWidget {
                   children: [
                     ScaleTap(
                       onPressed: () async {
-                        await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Twitter'));
+                        await recordAmplitudeEventPartTwo(
+                          const JoinCommunityClicked(social: 'Twitter'),
+                        );
                         await FlutterWebBrowser.openWebPage(
                           url: 'https://twitter.com/coinplus',
                           customTabsOptions: const CustomTabsOptions(
@@ -595,8 +658,10 @@ class SettingsPage extends HookWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle:
+                                UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -616,7 +681,9 @@ class SettingsPage extends HookWidget {
                     const Gap(12),
                     ScaleTap(
                       onPressed: () async {
-                        await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Instagram'));
+                        await recordAmplitudeEventPartTwo(
+                          const JoinCommunityClicked(social: 'Instagram'),
+                        );
                         await FlutterWebBrowser.openWebPage(
                           url: 'https://www.instagram.com/coinplus.inc',
                           customTabsOptions: const CustomTabsOptions(
@@ -627,8 +694,10 @@ class SettingsPage extends HookWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle:
+                                UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -648,7 +717,9 @@ class SettingsPage extends HookWidget {
                     const Gap(12),
                     ScaleTap(
                       onPressed: () async {
-                        await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Facebook'));
+                        await recordAmplitudeEventPartTwo(
+                          const JoinCommunityClicked(social: 'Facebook'),
+                        );
                         await FlutterWebBrowser.openWebPage(
                           url: 'https://www.facebook.com/coin.plus',
                           customTabsOptions: const CustomTabsOptions(
@@ -659,8 +730,10 @@ class SettingsPage extends HookWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle:
+                                UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -680,7 +753,9 @@ class SettingsPage extends HookWidget {
                     const Gap(12),
                     ScaleTap(
                       onPressed: () async {
-                        await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Linkedin'));
+                        await recordAmplitudeEventPartTwo(
+                          const JoinCommunityClicked(social: 'Linkedin'),
+                        );
                         await FlutterWebBrowser.openWebPage(
                           url: 'https://www.linkedin.com/company/coinplus/',
                           customTabsOptions: const CustomTabsOptions(
@@ -691,8 +766,10 @@ class SettingsPage extends HookWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle:
+                                UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -715,7 +792,9 @@ class SettingsPage extends HookWidget {
                     const Gap(12),
                     ScaleTap(
                       onPressed: () async {
-                        await recordAmplitudeEventPartTwo(const JoinCommunityClicked(social: 'Trust pilot'));
+                        await recordAmplitudeEventPartTwo(
+                          const JoinCommunityClicked(social: 'Trust pilot'),
+                        );
                         await FlutterWebBrowser.openWebPage(
                           url: 'https://www.trustpilot.com/review/coinplus.com',
                           customTabsOptions: const CustomTabsOptions(
@@ -726,8 +805,10 @@ class SettingsPage extends HookWidget {
                           ),
                           safariVCOptions: const SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                            modalPresentationStyle:
+                                UIModalPresentationStyle.formSheet,
+                            dismissButtonStyle:
+                                SafariViewControllerDismissButtonStyle.done,
                             modalPresentationCapturesStatusBarAppearance: true,
                           ),
                         );
@@ -781,19 +862,26 @@ class SettingsPage extends HookWidget {
                                 showTitle: true,
                                 urlBarHidingEnabled: true,
                               ),
-                              safariVCOptions: const SafariViewControllerOptions(
+                              safariVCOptions:
+                                  const SafariViewControllerOptions(
                                 barCollapsingEnabled: true,
-                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance: true,
+                                modalPresentationStyle:
+                                    UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle:
+                                    SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance:
+                                    true,
                               ),
                             );
-                            await recordAmplitudeEventPartTwo(const PrivacyPolicyClicked());
+                            await recordAmplitudeEventPartTwo(
+                              const PrivacyPolicyClicked(),
+                            );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing:
+                                Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.privacy.image(
                               height: 22,
@@ -831,19 +919,26 @@ class SettingsPage extends HookWidget {
                                 showTitle: true,
                                 urlBarHidingEnabled: true,
                               ),
-                              safariVCOptions: const SafariViewControllerOptions(
+                              safariVCOptions:
+                                  const SafariViewControllerOptions(
                                 barCollapsingEnabled: true,
-                                modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance: true,
+                                modalPresentationStyle:
+                                    UIModalPresentationStyle.formSheet,
+                                dismissButtonStyle:
+                                    SafariViewControllerDismissButtonStyle.done,
+                                modalPresentationCapturesStatusBarAppearance:
+                                    true,
                               ),
                             );
-                            await recordAmplitudeEventPartTwo(const TermsOfUseClicked());
+                            await recordAmplitudeEventPartTwo(
+                              const TermsOfUseClicked(),
+                            );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing:
+                                Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.terms.image(
                               height: 22,
@@ -878,7 +973,8 @@ class SettingsPage extends HookWidget {
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,
                           child: ListTile(
-                            trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                            trailing:
+                                Assets.icons.arrowForwardIos.image(height: 20),
                             minLeadingWidth: 10,
                             leading: Assets.icons.info.image(
                               height: 22,
@@ -913,8 +1009,12 @@ class SettingsPage extends HookWidget {
                       children: [
                         InkWell(
                           onTap: () async {
-                            await _walletProtectState.updateModalStatus(isOpened: true);
-                            await recordAmplitudeEventPartTwo(const EraseMyDataClicked());
+                            await _walletProtectState.updateModalStatus(
+                              isOpened: true,
+                            );
+                            await recordAmplitudeEventPartTwo(
+                              const EraseMyDataClicked(),
+                            );
                             await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
@@ -929,7 +1029,9 @@ class SettingsPage extends HookWidget {
                                 return const RemoveUserData();
                               },
                             );
-                            await _walletProtectState.updateModalStatus(isOpened: false);
+                            await _walletProtectState.updateModalStatus(
+                              isOpened: false,
+                            );
                           },
                           splashFactory: InkSparkle.splashFactory,
                           highlightColor: Colors.transparent,

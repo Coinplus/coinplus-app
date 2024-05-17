@@ -306,5 +306,6 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String address,
   }) = RefreshClicked;
 
-  factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) => _$AmplitudeEventPartTwoFromJson(json);
+  factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) =>
+      _$AmplitudeEventPartTwoFromJson(json);
 }

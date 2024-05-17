@@ -35,6 +35,7 @@ class _ContactUsState extends State<ContactUs> {
   final _nameFocusNode = FocusNode();
 
   ContactUsStore get store => GetIt.I<ContactUsStore>();
+
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   @override
@@ -124,7 +125,8 @@ class _ContactUsState extends State<ContactUs> {
                   },
                   controller: store.nameController,
                   onTapOutside: (_) {
-                    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                    WidgetsBinding.instance.focusManager.primaryFocus
+                        ?.unfocus();
                   },
                   onEditingComplete: _nameFocusNode.nextFocus,
                   cursorColor: AppColors.secondaryButtons,
@@ -190,7 +192,8 @@ class _ContactUsState extends State<ContactUs> {
                       keyboardType: TextInputType.emailAddress,
                       controller: store.mailController,
                       onEditingComplete: () {
-                        if (!_mailFocusNode.hasFocus && store.mailController.text.isNotEmpty) {
+                        if (!_mailFocusNode.hasFocus &&
+                            store.mailController.text.isNotEmpty) {
                           store.validateEmail(store.mailController.text);
                         }
                       },
@@ -209,12 +212,14 @@ class _ContactUsState extends State<ContactUs> {
                         if (store.mailController.text.isNotEmpty) {
                           store.validateEmail(store.mailController.text);
                         }
-                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus
+                            ?.unfocus();
                       },
                       cursorColor: AppColors.secondaryButtons,
                       decoration: InputDecoration(
                         filled: true,
-                        errorText: store.isEmailValid ? null : 'Invalid email address',
+                        errorText:
+                            store.isEmailValid ? null : 'Invalid email address',
                         errorStyle: const TextStyle(color: Colors.red),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -291,7 +296,8 @@ class _ContactUsState extends State<ContactUs> {
                   minLines: 10,
                   maxLines: 20,
                   onTapOutside: (_) {
-                    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                    WidgetsBinding.instance.focusManager.primaryFocus
+                        ?.unfocus();
                   },
                   cursorColor: AppColors.secondaryButtons,
                   decoration: InputDecoration(
@@ -332,7 +338,11 @@ class _ContactUsState extends State<ContactUs> {
                 child: LoadingButton(
                   onPressed: store.isButtonEnabled && store.isEmailValid
                       ? () async {
-                          unawaited(recordAmplitudeEventPartTwo(const SendMessageClicked()));
+                          unawaited(
+                            recordAmplitudeEventPartTwo(
+                              const SendMessageClicked(),
+                            ),
+                          );
                           await sendEmail();
                           store.mailController.text = '';
                           store.nameController.text = '';
@@ -406,14 +416,14 @@ class _ContactUsState extends State<ContactUs> {
         }),
       );
       if (response.statusCode == 200) {
-        await router.pop();
+        await router.maybePop();
         await emailSendAlert(context, _walletProtectState);
       } else {
-        await router.pop();
+        await router.maybePop();
         await emailSendFailAlert(context);
       }
     } catch (error) {
-      await router.pop();
+      await router.maybePop();
       await emailSendFailAlert(context);
     }
   }

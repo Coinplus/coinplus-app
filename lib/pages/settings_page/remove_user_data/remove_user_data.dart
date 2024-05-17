@@ -86,12 +86,14 @@ class RemoveUserData extends StatelessWidget {
                 controller.loading();
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();
-                unawaited(recordAmplitudeEventPartTwo(const EraseMyDataConfirmed()));
+                unawaited(
+                  recordAmplitudeEventPartTwo(const EraseMyDataConfirmed()),
+                );
                 await StorageUtils.clear();
                 await secureStorage.deleteAll();
                 reRegisterStoreGetIt();
                 await router.pushAndPopAll(const OnboardingRoute());
-                await router.pop();
+                await router.maybePop();
               },
               boxShadow: [
                 BoxShadow(
@@ -114,7 +116,7 @@ class RemoveUserData extends StatelessWidget {
           const Gap(15),
           LoadingButton(
             onPressed: () async {
-              await router.pop();
+              await router.maybePop();
             },
             style: context.theme
                 .buttonStyle(
@@ -126,7 +128,7 @@ class RemoveUserData extends StatelessWidget {
                   ),
                 )
                 .copyWith(
-                  padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                  padding: const WidgetStatePropertyAll(EdgeInsets.zero),
                 ),
             child: const Text(
               'Not now',

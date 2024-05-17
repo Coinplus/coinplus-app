@@ -48,14 +48,17 @@ class BarSecretFillPage extends StatefulWidget {
   State<BarSecretFillPage> createState() => _BarSecretFillPageState();
 }
 
-class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProviderStateMixin {
+class _BarSecretFillPageState extends State<BarSecretFillPage>
+    with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   late String secret1B58 = '';
   late String secret2B58 = '';
   late String walletAddress = '';
-  late final TextEditingController _secretOneController = TextEditingController();
-  late final TextEditingController _secretTwoController = TextEditingController();
+  late final TextEditingController _secretOneController =
+      TextEditingController();
+  late final TextEditingController _secretTwoController =
+      TextEditingController();
   late AnimationController _lottieController;
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
@@ -178,8 +181,10 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
               ),
               child: IconButton(
                 onPressed: () {
-                  recordAmplitudeEvent(const BackButtonClicked(source: 'Bar Secrets Screen'));
-                  router.pop();
+                  recordAmplitudeEvent(
+                    const BackButtonClicked(source: 'Bar Secrets Screen'),
+                  );
+                  router.maybePop();
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -226,7 +231,8 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                 ),
                               ],
                               image: DecorationImage(
-                                image: getBackImageForCardColor(bar.color).image,
+                                image:
+                                    getBackImageForCardColor(bar.color).image,
                               ),
                             ),
                             child: Row(
@@ -241,26 +247,31 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                       sigmaY: 8,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Observer(
                                           builder: (context) {
                                             return Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
                                               children: [
                                                 ScaleTransition(
-                                                  scale: _secretOneAnimationController,
+                                                  scale:
+                                                      _secretOneAnimationController,
                                                   child: AnimatedCrossFade(
                                                     secondChild: Stack(
                                                       children: [
                                                         Container(
                                                           height: 160,
                                                           width: 160,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             color: Colors.white,
                                                             border: Border.all(
-                                                              color: _secretOneFocusNode.hasFocus
+                                                              color: _secretOneFocusNode
+                                                                      .hasFocus
                                                                   ? Colors.blue
                                                                   : const Color(
                                                                       0xFFB5B5B5,
@@ -268,83 +279,143 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                       0.6,
                                                                     ),
                                                             ),
-                                                            borderRadius: BorderRadius.circular(100),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              100,
+                                                            ),
                                                           ),
                                                           child: Center(
                                                             child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.end,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
                                                               children: [
                                                                 SizedBox(
                                                                   width: 85,
                                                                   height: 100,
-                                                                  child: TextField(
+                                                                  child:
+                                                                      TextField(
                                                                     inputFormatters: [
                                                                       LengthLimitingTextInputFormatter(
                                                                         30,
                                                                       ),
                                                                     ],
-                                                                    textAlignVertical: TextAlignVertical.top,
-                                                                    autocorrect: false,
-                                                                    keyboardType: TextInputType.text,
-                                                                    textAlign: TextAlign.center,
+                                                                    textAlignVertical:
+                                                                        TextAlignVertical
+                                                                            .top,
+                                                                    autocorrect:
+                                                                        false,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .text,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
                                                                     onChanged: (
                                                                       value,
                                                                     ) {
-                                                                      if (value.length == 30) {
+                                                                      if (value
+                                                                              .length ==
+                                                                          30) {
                                                                         _validateSecretOne();
-                                                                      } else if (value.length < 30) {
-                                                                        _validationStore.invalidSecretOne();
-                                                                        _secretOneLottieController.reset();
+                                                                      } else if (value
+                                                                              .length <
+                                                                          30) {
+                                                                        _validationStore
+                                                                            .invalidSecretOne();
+                                                                        _secretOneLottieController
+                                                                            .reset();
                                                                       }
 
-                                                                      secret1B58 = value;
+                                                                      secret1B58 =
+                                                                          value;
                                                                     },
-                                                                    controller: _secretOneController,
-                                                                    maxLines: 15,
-                                                                    focusNode: _secretOneFocusNode,
-                                                                    cursorColor: AppColors.primary,
-                                                                    cursorWidth: 1,
-                                                                    style: const TextStyle(
-                                                                      fontSize: 12,
-                                                                      color: AppColors.primaryTextColor,
-                                                                      fontFamily: FontFamily.redHatLight,
+                                                                    controller:
+                                                                        _secretOneController,
+                                                                    maxLines:
+                                                                        15,
+                                                                    focusNode:
+                                                                        _secretOneFocusNode,
+                                                                    cursorColor:
+                                                                        AppColors
+                                                                            .primary,
+                                                                    cursorWidth:
+                                                                        1,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: AppColors
+                                                                          .primaryTextColor,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .redHatLight,
                                                                     ),
-                                                                    onTapOutside: (
+                                                                    onTapOutside:
+                                                                        (
                                                                       _,
                                                                     ) {
-                                                                      WidgetsBinding.instance.focusManager.primaryFocus
+                                                                      WidgetsBinding
+                                                                          .instance
+                                                                          .focusManager
+                                                                          .primaryFocus
                                                                           ?.unfocus();
                                                                     },
-                                                                    decoration: InputDecoration(
-                                                                      hintText: 'Write here your \nsecret 1',
-                                                                      fillColor: Colors.white,
-                                                                      hintMaxLines: 10,
-                                                                      hintStyle: const TextStyle(
-                                                                        fontFamily: FontFamily.redHatLight,
-                                                                        fontSize: 13,
-                                                                        color: Colors.grey,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      hintText:
+                                                                          'Write here your \nsecret 1',
+                                                                      fillColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      hintMaxLines:
+                                                                          10,
+                                                                      hintStyle:
+                                                                          const TextStyle(
+                                                                        fontFamily:
+                                                                            FontFamily.redHatLight,
+                                                                        fontSize:
+                                                                            13,
+                                                                        color: Colors
+                                                                            .grey,
                                                                       ),
-                                                                      contentPadding: const EdgeInsets.symmetric(
-                                                                        horizontal: 10,
-                                                                        vertical: 16,
+                                                                      contentPadding:
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                        vertical:
+                                                                            16,
                                                                       ),
-                                                                      prefixIconConstraints: const BoxConstraints(
-                                                                        minWidth: 25,
-                                                                        minHeight: 25,
+                                                                      prefixIconConstraints:
+                                                                          const BoxConstraints(
+                                                                        minWidth:
+                                                                            25,
+                                                                        minHeight:
+                                                                            25,
                                                                       ),
-                                                                      focusedBorder: OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                          color: Colors.transparent,
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            const BorderSide(
+                                                                          color:
+                                                                              Colors.transparent,
                                                                         ),
-                                                                        borderRadius: BorderRadius.circular(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
                                                                           100,
                                                                         ),
                                                                       ),
-                                                                      enabledBorder: OutlineInputBorder(
-                                                                        borderSide: const BorderSide(
-                                                                          color: Colors.transparent,
+                                                                      enabledBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            const BorderSide(
+                                                                          color:
+                                                                              Colors.transparent,
                                                                         ),
-                                                                        borderRadius: BorderRadius.circular(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
                                                                           100,
                                                                         ),
                                                                       ),
@@ -361,40 +432,58 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                               top: 15,
                                                               left: 0,
                                                               right: 0,
-                                                              child: !_validationStore.isSecret1Valid
+                                                              child: !_validationStore
+                                                                      .isSecret1Valid
                                                                   ? ScaleTap(
-                                                                      onPressed: () async {
-                                                                        _secretOneFocusNode.unfocus();
-                                                                        await Future.delayed(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        _secretOneFocusNode
+                                                                            .unfocus();
+                                                                        await Future
+                                                                            .delayed(
                                                                           const Duration(
-                                                                            milliseconds: 300,
+                                                                            milliseconds:
+                                                                                300,
                                                                           ),
                                                                         );
-                                                                        final res = await context.pushRoute<String?>(
+                                                                        final res =
+                                                                            await context.pushRoute<String?>(
                                                                           const QrScannerRoute(),
                                                                         );
-                                                                        if (res == null) {
+                                                                        if (res ==
+                                                                            null) {
                                                                           return;
                                                                         }
 
-                                                                        secret1B58 = _secretOneController.text = res;
+                                                                        secret1B58 =
+                                                                            _secretOneController.text =
+                                                                                res;
                                                                         await _validateSecretOne();
                                                                       },
-                                                                      child: SizedBox(
-                                                                        height: 45,
-                                                                        child: Image.asset(
+                                                                      child:
+                                                                          SizedBox(
+                                                                        height:
+                                                                            45,
+                                                                        child: Image
+                                                                            .asset(
                                                                           'assets/icons/qr_code.png',
                                                                         ),
                                                                       ),
                                                                     )
-                                                                  : Lottie.asset(
+                                                                  : Lottie
+                                                                      .asset(
                                                                       'assets/lottie_animations/address_validation_success.json',
-                                                                      height: 40,
-                                                                      controller: _secretOneLottieController,
-                                                                      onLoaded: (composition) {
-                                                                        Future.delayed(
+                                                                      height:
+                                                                          40,
+                                                                      controller:
+                                                                          _secretOneLottieController,
+                                                                      onLoaded:
+                                                                          (composition) {
+                                                                        Future
+                                                                            .delayed(
                                                                           const Duration(
-                                                                            milliseconds: 1000,
+                                                                            milliseconds:
+                                                                                1000,
                                                                           ),
                                                                         );
                                                                         _secretOneLottieController.duration =
@@ -411,13 +500,22 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                         Container(
                                                           height: 160,
                                                           width: 160,
-                                                          decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                              image: Assets.images.bar.hologramWithFrame.image().image,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              image: Assets
+                                                                  .images
+                                                                  .bar
+                                                                  .hologramWithFrame
+                                                                  .image()
+                                                                  .image,
                                                             ),
                                                           ),
                                                           child: Center(
-                                                            child: Assets.images.bar.barSecret1.image(
+                                                            child: Assets.images
+                                                                .bar.barSecret1
+                                                                .image(
                                                               height: 44,
                                                             ),
                                                           ),
@@ -427,38 +525,49 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                     duration: const Duration(
                                                       milliseconds: 500,
                                                     ),
-                                                    crossFadeState: !_secretState.secretOneVisibility
-                                                        ? CrossFadeState.showFirst
-                                                        : CrossFadeState.showSecond,
+                                                    crossFadeState: !_secretState
+                                                            .secretOneVisibility
+                                                        ? CrossFadeState
+                                                            .showFirst
+                                                        : CrossFadeState
+                                                            .showSecond,
                                                   ),
                                                 ),
                                                 Container(
                                                   height: 33,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: Assets.images.bar.barAddress.image().image,
+                                                      image: Assets
+                                                          .images.bar.barAddress
+                                                          .image()
+                                                          .image,
                                                     ),
                                                   ),
                                                 ),
                                                 const Gap(55),
                                                 Opacity(
                                                   opacity: 0,
-                                                  child: Assets.images.bar.barCoinplusLogo.image(
+                                                  child: Assets.images.bar
+                                                      .barCoinplusLogo
+                                                      .image(
                                                     height: 40,
                                                   ),
                                                 ),
                                                 const Gap(15),
                                                 ScaleTransition(
-                                                  scale: _secretTwoAnimationController,
+                                                  scale:
+                                                      _secretTwoAnimationController,
                                                   child: AnimatedCrossFade(
                                                     secondChild: Stack(
                                                       children: [
                                                         Container(
                                                           width: 180,
-                                                          decoration: BoxDecoration(
+                                                          decoration:
+                                                              BoxDecoration(
                                                             color: Colors.white,
                                                             border: Border.all(
-                                                              color: _secretTwoFocusNode.hasFocus
+                                                              color: _secretTwoFocusNode
+                                                                      .hasFocus
                                                                   ? Colors.blue
                                                                   : const Color(
                                                                       0xFFB5B5B5,
@@ -466,88 +575,149 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                       0.6,
                                                                     ),
                                                             ),
-                                                            borderRadius: BorderRadius.circular(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
                                                               10,
                                                             ),
                                                           ),
                                                           child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
                                                             children: [
                                                               SizedBox(
                                                                 height: 44,
-                                                                child: TextField(
+                                                                child:
+                                                                    TextField(
                                                                   inputFormatters: [
                                                                     LengthLimitingTextInputFormatter(
                                                                       30,
                                                                     ),
                                                                   ],
-                                                                  textAlignVertical: TextAlignVertical.top,
-                                                                  autocorrect: false,
-                                                                  keyboardType: TextInputType.text,
+                                                                  textAlignVertical:
+                                                                      TextAlignVertical
+                                                                          .top,
+                                                                  autocorrect:
+                                                                      false,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .text,
                                                                   onChanged: (
                                                                     value,
                                                                   ) {
-                                                                    if (value.length == 30) {
+                                                                    if (value
+                                                                            .length ==
+                                                                        30) {
                                                                       _validateSecretTwo();
-                                                                    } else if (value.length < 30) {
-                                                                      _validationStore.invalidSecretTwo();
-                                                                      _secretTwoLottieController.reset();
+                                                                    } else if (value
+                                                                            .length <
+                                                                        30) {
+                                                                      _validationStore
+                                                                          .invalidSecretTwo();
+                                                                      _secretTwoLottieController
+                                                                          .reset();
                                                                     }
 
-                                                                    secret2B58 = value;
+                                                                    secret2B58 =
+                                                                        value;
                                                                   },
-                                                                  controller: _secretTwoController,
+                                                                  controller:
+                                                                      _secretTwoController,
                                                                   maxLines: 2,
                                                                   minLines: 1,
-                                                                  focusNode: _secretTwoFocusNode,
-                                                                  cursorColor: AppColors.primary,
-                                                                  cursorWidth: 1,
-                                                                  style: const TextStyle(
-                                                                    fontSize: 12,
-                                                                    color: AppColors.primaryTextColor,
-                                                                    fontFamily: FontFamily.redHatLight,
+                                                                  focusNode:
+                                                                      _secretTwoFocusNode,
+                                                                  cursorColor:
+                                                                      AppColors
+                                                                          .primary,
+                                                                  cursorWidth:
+                                                                      1,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: AppColors
+                                                                        .primaryTextColor,
+                                                                    fontFamily:
+                                                                        FontFamily
+                                                                            .redHatLight,
                                                                   ),
-                                                                  onTapOutside: (_) {
-                                                                    WidgetsBinding.instance.focusManager.primaryFocus
+                                                                  onTapOutside:
+                                                                      (_) {
+                                                                    WidgetsBinding
+                                                                        .instance
+                                                                        .focusManager
+                                                                        .primaryFocus
                                                                         ?.unfocus();
                                                                   },
-                                                                  decoration: InputDecoration(
-                                                                    hintText: 'Write here your \nsecret 2',
-                                                                    fillColor: Colors.white,
-                                                                    hintMaxLines: 2,
-                                                                    hintStyle: TextStyle(
-                                                                      fontFamily: FontFamily.redHatLight,
-                                                                      fontSize: 13,
-                                                                      color: AppColors.primaryTextColor.withOpacity(
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    hintText:
+                                                                        'Write here your \nsecret 2',
+                                                                    fillColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    hintMaxLines:
+                                                                        2,
+                                                                    hintStyle:
+                                                                        TextStyle(
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .redHatLight,
+                                                                      fontSize:
+                                                                          13,
+                                                                      color: AppColors
+                                                                          .primaryTextColor
+                                                                          .withOpacity(
                                                                         0.4,
                                                                       ),
                                                                     ),
-                                                                    contentPadding: const EdgeInsets.symmetric(
-                                                                      horizontal: 10,
-                                                                      vertical: 5,
+                                                                    contentPadding:
+                                                                        const EdgeInsets
+                                                                            .symmetric(
+                                                                      horizontal:
+                                                                          10,
+                                                                      vertical:
+                                                                          5,
                                                                     ),
-                                                                    prefixIconConstraints: const BoxConstraints(
-                                                                      minWidth: 25,
-                                                                      minHeight: 25,
+                                                                    prefixIconConstraints:
+                                                                        const BoxConstraints(
+                                                                      minWidth:
+                                                                          25,
+                                                                      minHeight:
+                                                                          25,
                                                                     ),
-                                                                    focusedBorder: OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                        color: Colors.transparent,
+                                                                    focusedBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          const BorderSide(
+                                                                        color: Colors
+                                                                            .transparent,
                                                                       ),
-                                                                      borderRadius: BorderRadius.circular(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
                                                                         24,
                                                                       ),
                                                                     ),
-                                                                    enabledBorder: OutlineInputBorder(
-                                                                      borderSide: const BorderSide(
-                                                                        color: Colors.transparent,
+                                                                    enabledBorder:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          const BorderSide(
+                                                                        color: Colors
+                                                                            .transparent,
                                                                       ),
-                                                                      borderRadius: BorderRadius.circular(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .circular(
                                                                         24,
                                                                       ),
                                                                     ),
-                                                                    prefixIcon: Observer(
-                                                                      builder: (context) {
+                                                                    prefixIcon:
+                                                                        Observer(
+                                                                      builder:
+                                                                          (context) {
                                                                         return !_validationStore.isSecret2Valid
                                                                             ? Padding(
                                                                                 padding: const EdgeInsets.all(8),
@@ -559,16 +729,14 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                                         milliseconds: 300,
                                                                                       ),
                                                                                     );
-                                                                                    final res = await context
-                                                                                        .pushRoute<String?>(
+                                                                                    final res = await context.pushRoute<String?>(
                                                                                       const QrScannerRoute(),
                                                                                     );
                                                                                     if (res == null) {
                                                                                       return;
                                                                                     }
 
-                                                                                    secret2B58 =
-                                                                                        _secretTwoController.text = res;
+                                                                                    secret2B58 = _secretTwoController.text = res;
                                                                                     await _validateSecretTwo();
                                                                                   },
                                                                                   child: SizedBox(
@@ -589,8 +757,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                                                       milliseconds: 1000,
                                                                                     ),
                                                                                   );
-                                                                                  _secretTwoLottieController.duration =
-                                                                                      composition.duration;
+                                                                                  _secretTwoLottieController.duration = composition.duration;
                                                                                 },
                                                                               );
                                                                       },
@@ -603,15 +770,20 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                                                         ),
                                                       ],
                                                     ),
-                                                    firstChild: Assets.images.bar.barSecret2.image(
+                                                    firstChild: Assets
+                                                        .images.bar.barSecret2
+                                                        .image(
                                                       height: 44,
                                                     ),
                                                     duration: const Duration(
                                                       milliseconds: 500,
                                                     ),
-                                                    crossFadeState: !_secretState.secretTwoVisibility
-                                                        ? CrossFadeState.showFirst
-                                                        : CrossFadeState.showSecond,
+                                                    crossFadeState: !_secretState
+                                                            .secretTwoVisibility
+                                                        ? CrossFadeState
+                                                            .showFirst
+                                                        : CrossFadeState
+                                                            .showSecond,
                                                   ),
                                                 ),
                                                 const Gap(20),
@@ -714,7 +886,10 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                     ? null
                     : () async {
                         await recordAmplitudeEventPartTwo(
-                          ContinueCLicked(walletAddress: walletAddress, walletType: 'Bar'),
+                          ContinueCLicked(
+                            walletAddress: walletAddress,
+                            walletType: 'Bar',
+                          ),
                         );
                         unawaited(
                           showDialog(
@@ -746,14 +921,17 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                               key: bar.address,
                               value: wif,
                             );
-                            await router.pop();
+                            await router.maybePop();
                             await isWalletActivated(
                               isSet: true,
                               address: bar.address,
                             );
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEventPartTwo(
-                              ValidationSuccessful(walletAddress: walletAddress, walletType: 'Bar'),
+                              ValidationSuccessful(
+                                walletAddress: walletAddress,
+                                walletType: 'Bar',
+                              ),
                             );
                             await secretsSuccessAlert(
                               context: context,
@@ -762,9 +940,12 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
                             );
                             await recordUserProperty(const BarHolder());
                           } else {
-                            await router.pop();
+                            await router.maybePop();
                             await recordAmplitudeEventPartTwo(
-                              ValidationFailed(walletAddress: walletAddress, walletType: 'Bar'),
+                              ValidationFailed(
+                                walletAddress: walletAddress,
+                                walletType: 'Bar',
+                              ),
                             );
                             await recordUserProperty(const ActivationFailed());
                             unawaited(activationFailureCount(bar.address));
@@ -824,13 +1005,17 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
   DecorationImage getBackImageForCardColor(CardColor color) {
     switch (color) {
       case CardColor.SILVER:
-        return DecorationImage(image: Assets.images.bar.filledBar.image().image);
+        return DecorationImage(
+          image: Assets.images.bar.filledBar.image().image,
+        );
       case CardColor.GOLD:
         return DecorationImage(
           image: Assets.images.bar.filledBar.image().image,
         );
       default:
-        return DecorationImage(image: Assets.images.card.filledBack.image().image);
+        return DecorationImage(
+          image: Assets.images.card.filledBack.image().image,
+        );
     }
   }
 
@@ -846,7 +1031,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
         const Duration(milliseconds: 200),
         _secretState.makeSecretTwoVisible,
       );
-      await recordAmplitudeEvent(Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'));
+      await recordAmplitudeEvent(
+        Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'),
+      );
 
       await _secretOneLottieController.forward(from: 0);
     }
@@ -860,7 +1047,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage> with TickerProvid
         const Duration(milliseconds: 400),
       );
       _secretTwoFocusNode.unfocus();
-      await recordAmplitudeEvent(Secret2Validated(walletAddress: walletAddress, walletType: 'Bar'));
+      await recordAmplitudeEvent(
+        Secret2Validated(walletAddress: walletAddress, walletType: 'Bar'),
+      );
 
       await _secretTwoLottieController.forward(from: 0);
     }

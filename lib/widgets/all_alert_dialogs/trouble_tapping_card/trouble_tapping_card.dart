@@ -72,10 +72,14 @@ class CardIssueOptionsSheet extends StatelessWidget {
               height: 24,
             ),
             onPressed: () async {
-              await router.pop();
+              await router.maybePop();
               unawaited(
                 recordAmplitudeEventPartTwo(
-                  CardDamagedClicked(walletAddress: walletAddress, walletType: 'Card', activated: await isActivated),
+                  CardDamagedClicked(
+                    walletAddress: walletAddress,
+                    walletType: 'Card',
+                    activated: await isActivated,
+                  ),
                 ),
               );
               unawaited(
@@ -94,7 +98,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
             "NFC on my phone doesn't work",
             Assets.icons.contactlessOff.image(height: 24),
             onPressed: () async {
-              await router.pop();
+              await router.maybePop();
               unawaited(
                 recordAmplitudeEventPartTwo(
                   NfcNotWorkingCLicked(
@@ -120,7 +124,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
             'Don’t have the card with me now',
             Assets.icons.dontHaveCardWithMeNow.image(height: 24),
             onPressed: () async {
-              await router.pop();
+              await router.maybePop();
               unawaited(
                 recordAmplitudeEventPartTwo(
                   DontHaveCardClicked(
@@ -144,7 +148,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
             'Lost the card',
             Assets.icons.creditCardOff.image(height: 24),
             onPressed: () async {
-              await router.pop();
+              await router.maybePop();
               unawaited(
                 recordAmplitudeEventPartTwo(
                   LostCardClicked(
@@ -187,10 +191,10 @@ class CardIssueOptionsSheet extends StatelessWidget {
             ),
           )
           .copyWith(
-            padding: const MaterialStatePropertyAll(
+            padding: const WidgetStatePropertyAll(
               EdgeInsets.all(10),
             ),
-            backgroundColor: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(
               Colors.grey.withOpacity(0.1),
             ),
           ),

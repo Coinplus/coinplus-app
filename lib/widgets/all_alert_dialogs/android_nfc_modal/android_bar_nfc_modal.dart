@@ -68,7 +68,7 @@ class AndroidBarNfcModal extends StatelessWidget {
             const Gap(20),
             LoadingButton(
               onPressed: () async {
-                await router.pop();
+                await router.maybePop();
                 await NfcManager.instance.stopSession();
                 await Future.delayed(const Duration(milliseconds: 1000));
                 await showModalBottomSheet(
@@ -98,7 +98,8 @@ class AndroidBarNfcModal extends StatelessWidget {
                     ),
                   )
                   .copyWith(
-                    backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                    backgroundColor:
+                        WidgetStateProperty.all(Colors.grey.withOpacity(0.3)),
                   ),
               child: const Text('Cancel'),
             ).paddingHorizontal(60),

@@ -1,6 +1,5 @@
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
-import '../chain_stats/chain_stats.dart';
 
 abstract class AbstractCard {
   String get address;
@@ -17,5 +16,7 @@ abstract class AbstractCard {
 
   String get createdAt;
 
-  ChainStats? get data;
+  int? get finalBalance;
+
+  int? get totalReceived;
 }

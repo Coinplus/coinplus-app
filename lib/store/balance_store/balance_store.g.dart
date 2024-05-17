@@ -16,6 +16,19 @@ mixin _$BalanceStore on _BalanceStore, Store {
           () => super.allCardsBalances,
           name: '_BalanceStore.allCardsBalances'))
       .value;
+  Computed<num?>? _$btcPriceComputed;
+
+  @override
+  num? get btcPrice => (_$btcPriceComputed ??=
+          Computed<num?>(() => super.btcPrice, name: '_BalanceStore.btcPrice'))
+      .value;
+  Computed<num>? _$cardBalanceComputed;
+
+  @override
+  num get cardBalance =>
+      (_$cardBalanceComputed ??= Computed<num>(() => super.cardBalance,
+              name: '_BalanceStore.cardBalance'))
+          .value;
 
   late final _$_cardsAtom =
       Atom(name: '_BalanceStore._cards', context: context);
@@ -308,7 +321,9 @@ loadings: ${loadings},
 balanceLoading: ${balanceLoading},
 cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
-allCardsBalances: ${allCardsBalances}
+allCardsBalances: ${allCardsBalances},
+btcPrice: ${btcPrice},
+cardBalance: ${cardBalance}
     ''';
   }
 }

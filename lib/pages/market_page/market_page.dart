@@ -24,7 +24,8 @@ class MarketPage extends StatefulWidget {
   State<MarketPage> createState() => _MarketPageState();
 }
 
-class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateMixin {
+class _MarketPageState extends State<MarketPage>
+    with SingleTickerProviderStateMixin {
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   final _textController = TextEditingController();
@@ -38,7 +39,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
     super.initState();
     _marketPageStore
       ..isSearchVisible = false
-      ..isTextFieldVisible = false;
+      ..isTextFieldVisible = false
+    ..getMarketCap()
+    ..loadCoins();
     _scrollController.addListener(() {
       _marketPageStore.toggleShouldShowUpButton(
         shouldShowUpButton: _scrollController.offset > _showOffset,
@@ -107,7 +110,8 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                       builder: (context, child) {
                         return Transform(
                           transform: Matrix4.translationValues(
-                            _animation.value * MediaQuery.of(context).size.width,
+                            _animation.value *
+                                MediaQuery.of(context).size.width,
                             0,
                             0,
                           ),
@@ -123,7 +127,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                           _marketPageStore.setSearchText(val);
                         },
                         onEditingComplete: () {
-                          recordAmplitudeEventPartTwo(CoinSearched(coinName: _textController.text));
+                          recordAmplitudeEventPartTwo(
+                            CoinSearched(coinName: _textController.text),
+                          );
                           _marketPageStore.focusNode.unfocus();
                         },
                         decoration: InputDecoration(
@@ -138,11 +144,13 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.transparent),
+                            borderSide:
+                                const BorderSide(color: Colors.transparent),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           contentPadding: EdgeInsets.zero,
-                          hintText: 'Search among Top ${_marketPageStore.searchedList.length} coins',
+                          hintText:
+                              'Search among Top ${_marketPageStore.searchedList.length} coins',
                           hintStyle: TextStyle(
                             fontFamily: FontFamily.redHatLight,
                             color: AppColors.primaryTextColor.withOpacity(0.5),
@@ -232,7 +240,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                             ),
                             onPressed: () {
                               _marketPageStore.toggleTextFieldVisibility();
-                              recordAmplitudeEventPartTwo(const CoinSearchClicked());
+                              recordAmplitudeEventPartTwo(
+                                const CoinSearchClicked(),
+                              );
                             },
                           ),
                         ],
@@ -272,7 +282,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                 await HapticFeedback.mediumImpact();
                 await _marketPageStore.getMarketCap();
                 await _marketPageStore.onRefresh();
-                await recordAmplitudeEventPartTwo(const PullToRefresh(source: 'market'));
+                await recordAmplitudeEventPartTwo(
+                  const PullToRefresh(source: 'market'),
+                );
               },
             ),
             SliverAppBar(
@@ -290,8 +302,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                 builder: (context) {
                   final marketData = _marketPageStore.marketCap;
                   if (marketData != null) {
-                    final formattedNumber = formatLargeNumber(marketData.marketCap.toInt());
-                    final formattedVolume = formatLargeNumber(marketData.volume.toInt());
+                    final formattedNumber =
+                        formatLargeNumber(marketData.marketCap.toInt());
+                    final formattedVolume =
+                        formatLargeNumber(marketData.volume.toInt());
                     return Container(
                       height: 75,
                       decoration: BoxDecoration(
@@ -314,7 +328,8 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                           SizedBox(
                             width: (context.width / 3) - 32,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,7 +367,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                         '${marketData.marketCapChange.toStringAsFixed(2)}%',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: marketData.marketCapChange > 0 ? Colors.green : Colors.red,
+                                          color: marketData.marketCapChange > 0
+                                              ? Colors.green
+                                              : Colors.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -412,7 +429,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                         '${marketData.volumeChange.toStringAsFixed(2)}%',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: marketData.volumeChange > 0 ? Colors.green : Colors.red,
+                                          color: marketData.volumeChange > 0
+                                              ? Colors.green
+                                              : Colors.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -472,7 +491,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                         '${marketData.btcDominanceChange.toStringAsFixed(2)}%',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: marketData.btcDominanceChange > 0 ? Colors.green : Colors.red,
+                                          color:
+                                              marketData.btcDominanceChange > 0
+                                                  ? Colors.green
+                                                  : Colors.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -577,7 +599,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                     itemCount: 200,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 26,
+                          vertical: 15,
+                        ),
                         child: _buildShimmerItem(),
                       );
                     },
@@ -586,8 +611,11 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                   return SliverList.separated(
                     itemCount: _marketPageStore.searchedList.isNotEmpty
                         ? _marketPageStore.searchedList.length +
-                            (_marketPageStore.isLoading ? 1 : (_marketPageStore.isSearched ? 0 : 1))
-                        : (_marketPageStore.filteredData.length <= _marketPageStore.searchedList.length
+                            (_marketPageStore.isLoading
+                                ? 1
+                                : (_marketPageStore.isSearched ? 0 : 1))
+                        : (_marketPageStore.filteredData.length <=
+                                _marketPageStore.searchedList.length
                             ? _marketPageStore.searchedList.length
                             : _marketPageStore.searchedList.length + 1),
                     separatorBuilder: (_, __) {
@@ -600,7 +628,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                     itemBuilder: (context, index) {
                       if (_marketPageStore.searchedList.isEmpty) {
                         return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 26, vertical: 20),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 26,
+                            vertical: 20,
+                          ),
                           child: Center(
                             child: Text(
                               'No coins found',
@@ -612,7 +643,8 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                             ),
                           ),
                         );
-                      } else if (index == _marketPageStore.searchedList.length) {
+                      } else if (index ==
+                          _marketPageStore.searchedList.length) {
                         if (_marketPageStore.isLoading) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -626,7 +658,9 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                               child: LoadingButton(
                                 onPressed: () {
                                   _marketPageStore.loadMoreCoins();
-                                  recordAmplitudeEventPartTwo(const LoadCoinsClicked());
+                                  recordAmplitudeEventPartTwo(
+                                    const LoadCoinsClicked(),
+                                  );
                                 },
                                 style: context.theme
                                     .buttonStyle(
@@ -637,21 +671,26 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                       ),
                                     )
                                     .copyWith(
-                                      backgroundColor: MaterialStateProperty.all(
+                                      backgroundColor: WidgetStateProperty.all(
                                         Colors.grey.withOpacity(0.1),
                                       ),
-                                      shape: const MaterialStatePropertyAll(
+                                      shape: const WidgetStatePropertyAll(
                                         RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(15),
+                                          ),
                                         ),
                                       ),
-                                      padding: MaterialStateProperty.all(
+                                      padding: WidgetStateProperty.all(
                                         const EdgeInsets.symmetric(vertical: 5),
                                       ),
                                     ),
                                 child: const Text(
                                   'Load more',
-                                  style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 14),
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ).paddingHorizontal(120),
                             ),
@@ -659,14 +698,20 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                         }
                       } else {
                         final data = _marketPageStore.searchedList[index];
-                        final formattedMarketCap = formatLargeNumber(data.marketCap.toInt());
+                        final formattedMarketCap =
+                            formatLargeNumber(data.marketCap.toInt());
                         return GestureDetector(
                           onTap: () {
-                            recordAmplitudeEventPartTwo(CoinClicked(coinName: data.symbol));
+                            recordAmplitudeEventPartTwo(
+                              CoinClicked(coinName: data.symbol),
+                            );
                           },
                           child: Padding(
                             key: ValueKey(data.rank),
-                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                              vertical: 5,
+                            ),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
@@ -686,27 +731,33 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                     ),
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.55,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.55,
                                     child: Row(
                                       children: [
                                         SizedBox(
                                           height: 26,
                                           child: CachedNetworkImage(
                                             imageUrl: data.icon,
-                                            placeholder: (context, url) => Container(
+                                            placeholder: (context, url) =>
+                                                Container(
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
-                                                color: Colors.grey.withOpacity(0.5),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
                                               ),
                                               height: 26,
                                               width: 26,
                                               child: CircleAvatar(
-                                                backgroundColor: Colors.grey.withOpacity(0.3),
+                                                backgroundColor: Colors.grey
+                                                    .withOpacity(0.3),
                                                 child: Center(
                                                   child: Text(
                                                     data.symbol,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       fontSize: 7,
                                                       color: Colors.black,
                                                     ),
@@ -714,19 +765,23 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                                 ),
                                               ),
                                             ),
-                                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
                                           ),
                                         ),
                                         const SizedBox(width: 15),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 data.symbol,
                                                 style: const TextStyle(
                                                   fontSize: 16,
-                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -734,8 +789,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                                 '\$$formattedMarketCap',
                                                 style: const TextStyle(
                                                   fontSize: 12,
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  color: AppColors.secondaryTextColor,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
+                                                  color: AppColors
+                                                      .secondaryTextColor,
                                                 ),
                                               ),
                                             ],
@@ -745,14 +802,18 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
                                           child: Row(
                                             children: [
                                               if (data.priceChange1d > 0)
-                                                Assets.icons.arrowDropUp.image(height: 30)
+                                                Assets.icons.arrowDropUp
+                                                    .image(height: 30)
                                               else
-                                                Assets.icons.arrowDropDown.image(height: 30),
+                                                Assets.icons.arrowDropDown
+                                                    .image(height: 30),
                                               Text(
                                                 '${data.priceChange1d.toStringAsFixed(2)}%',
                                                 style: TextStyle(
                                                   fontSize: 15,
-                                                  color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                  color: data.priceChange1d > 0
+                                                      ? Colors.green
+                                                      : Colors.red,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -794,7 +855,10 @@ class _MarketPageState extends State<MarketPage> with SingleTickerProviderStateM
             Container(
               height: 13,
               width: 28,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: Colors.grey),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Colors.grey,
+              ),
             ),
             const Gap(10),
             const CircleAvatar(

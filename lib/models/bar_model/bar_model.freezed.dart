@@ -21,6 +21,10 @@ BarModel _$BarModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BarModel {
   String get address => throw _privateConstructorUsedError;
+  @JsonKey(name: 'final_balance')
+  int? get finalBalance => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_received')
+  int? get totalReceived => throw _privateConstructorUsedError;
   CardColor get color => throw _privateConstructorUsedError;
   CardType get type => throw _privateConstructorUsedError;
   WalletType get label => throw _privateConstructorUsedError;
@@ -28,8 +32,6 @@ mixin _$BarModel {
   String get blockchain => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'chain_stats')
-  ChainStats? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,13 +46,14 @@ abstract class $BarModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String address,
+      @JsonKey(name: 'final_balance') int? finalBalance,
+      @JsonKey(name: 'total_received') int? totalReceived,
       CardColor color,
       CardType type,
       WalletType label,
       String name,
       String blockchain,
-      @JsonKey(fromJson: timeFromJson) String createdAt,
-      @JsonKey(name: 'chain_stats') ChainStats? data});
+      @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
@@ -67,19 +70,28 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
   @override
   $Res call({
     Object? address = null,
+    Object? finalBalance = freezed,
+    Object? totalReceived = freezed,
     Object? color = null,
     Object? type = null,
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
     Object? createdAt = null,
-    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
+      finalBalance: freezed == finalBalance
+          ? _value.finalBalance
+          : finalBalance // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalReceived: freezed == totalReceived
+          ? _value.totalReceived
+          : totalReceived // ignore: cast_nullable_to_non_nullable
+              as int?,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -104,10 +116,6 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ChainStats?,
     ) as $Val);
   }
 }
@@ -122,13 +130,14 @@ abstract class _$$BarModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String address,
+      @JsonKey(name: 'final_balance') int? finalBalance,
+      @JsonKey(name: 'total_received') int? totalReceived,
       CardColor color,
       CardType type,
       WalletType label,
       String name,
       String blockchain,
-      @JsonKey(fromJson: timeFromJson) String createdAt,
-      @JsonKey(name: 'chain_stats') ChainStats? data});
+      @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
@@ -143,19 +152,28 @@ class __$$BarModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? address = null,
+    Object? finalBalance = freezed,
+    Object? totalReceived = freezed,
     Object? color = null,
     Object? type = null,
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
     Object? createdAt = null,
-    Object? data = freezed,
   }) {
     return _then(_$BarModelImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
+      finalBalance: freezed == finalBalance
+          ? _value.finalBalance
+          : finalBalance // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalReceived: freezed == totalReceived
+          ? _value.totalReceived
+          : totalReceived // ignore: cast_nullable_to_non_nullable
+              as int?,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -180,10 +198,6 @@ class __$$BarModelImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ChainStats?,
     ));
   }
 }
@@ -193,19 +207,26 @@ class __$$BarModelImplCopyWithImpl<$Res>
 class _$BarModelImpl implements _BarModel {
   const _$BarModelImpl(
       {required this.address,
+      @JsonKey(name: 'final_balance') this.finalBalance,
+      @JsonKey(name: 'total_received') this.totalReceived,
       this.color = CardColor.SILVER,
       this.type = CardType.BAR,
       this.label = WalletType.COINPLUS_WALLET,
       this.name = 'Coinplus Bitcoin Bar',
       this.blockchain = 'BTC',
-      @JsonKey(fromJson: timeFromJson) this.createdAt = '',
-      @JsonKey(name: 'chain_stats') this.data});
+      @JsonKey(fromJson: timeFromJson) this.createdAt = ''});
 
   factory _$BarModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BarModelImplFromJson(json);
 
   @override
   final String address;
+  @override
+  @JsonKey(name: 'final_balance')
+  final int? finalBalance;
+  @override
+  @JsonKey(name: 'total_received')
+  final int? totalReceived;
   @override
   @JsonKey()
   final CardColor color;
@@ -224,13 +245,10 @@ class _$BarModelImpl implements _BarModel {
   @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
-  @override
-  @JsonKey(name: 'chain_stats')
-  final ChainStats? data;
 
   @override
   String toString() {
-    return 'BarModel(address: $address, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, createdAt: $createdAt, data: $data)';
+    return 'BarModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, createdAt: $createdAt)';
   }
 
   @override
@@ -239,6 +257,10 @@ class _$BarModelImpl implements _BarModel {
         (other.runtimeType == runtimeType &&
             other is _$BarModelImpl &&
             (identical(other.address, address) || other.address == address) &&
+            (identical(other.finalBalance, finalBalance) ||
+                other.finalBalance == finalBalance) &&
+            (identical(other.totalReceived, totalReceived) ||
+                other.totalReceived == totalReceived) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.label, label) || other.label == label) &&
@@ -246,14 +268,13 @@ class _$BarModelImpl implements _BarModel {
             (identical(other.blockchain, blockchain) ||
                 other.blockchain == blockchain) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.data, data) || other.data == data));
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, address, color, type, label,
-      name, blockchain, createdAt, data);
+  int get hashCode => Object.hash(runtimeType, address, finalBalance,
+      totalReceived, color, type, label, name, blockchain, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -271,20 +292,28 @@ class _$BarModelImpl implements _BarModel {
 
 abstract class _BarModel implements BarModel, AbstractCard {
   const factory _BarModel(
-      {required final String address,
-      final CardColor color,
-      final CardType type,
-      final WalletType label,
-      final String name,
-      final String blockchain,
-      @JsonKey(fromJson: timeFromJson) final String createdAt,
-      @JsonKey(name: 'chain_stats') final ChainStats? data}) = _$BarModelImpl;
+          {required final String address,
+          @JsonKey(name: 'final_balance') final int? finalBalance,
+          @JsonKey(name: 'total_received') final int? totalReceived,
+          final CardColor color,
+          final CardType type,
+          final WalletType label,
+          final String name,
+          final String blockchain,
+          @JsonKey(fromJson: timeFromJson) final String createdAt}) =
+      _$BarModelImpl;
 
   factory _BarModel.fromJson(Map<String, dynamic> json) =
       _$BarModelImpl.fromJson;
 
   @override
   String get address;
+  @override
+  @JsonKey(name: 'final_balance')
+  int? get finalBalance;
+  @override
+  @JsonKey(name: 'total_received')
+  int? get totalReceived;
   @override
   CardColor get color;
   @override
@@ -298,9 +327,6 @@ abstract class _BarModel implements BarModel, AbstractCard {
   @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;
-  @override
-  @JsonKey(name: 'chain_stats')
-  ChainStats? get data;
   @override
   @JsonKey(ignore: true)
   _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>

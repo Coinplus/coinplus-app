@@ -10,7 +10,8 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text: 'Check out our detailed guide on how to send crypto from your wallet.',
+      text:
+          'Check out our detailed guide on how to send crypto from your wallet.',
       title: const Text(
         'Your wallet is \nalready activated!',
         textAlign: TextAlign.center,
@@ -22,7 +23,7 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
       lottieAsset: 'assets/lottie_animations/info.json',
       primaryActionText: 'Help center',
       primaryAction: () async {
-        await router.pop();
+        await router.maybePop();
         await FlutterWebBrowser.openWebPage(
           url: 'https://coinplus.com/',
           customTabsOptions: const CustomTabsOptions(
@@ -40,7 +41,7 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
         );
       },
       secondaryActionText: 'Close',
-      secondaryAction: router.pop,
+      secondaryAction: router.maybePop,
     ),
     isDismissible: true,
   );

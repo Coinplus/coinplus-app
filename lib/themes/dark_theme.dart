@@ -180,15 +180,15 @@ final darkTheme = base.copyWith(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
-      padding: MaterialStateProperty.all(
+      padding: WidgetStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 16,
         ),
       ),
-      textStyle: MaterialStateProperty.resolveWith(
+      textStyle: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled)
+          return states.contains(WidgetState.disabled)
               ? TextStyle(
                   color: Colors.white.withOpacity(0.4),
                   fontFamily: FontFamily.CeraPro,
@@ -205,20 +205,24 @@ final darkTheme = base.copyWith(
                 );
         },
       ),
-      shape: MaterialStateProperty.resolveWith((state) {
+      shape: WidgetStateProperty.resolveWith((state) {
         return const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30)),
         );
       }),
-      foregroundColor: MaterialStateProperty.resolveWith((states) {
-        return states.contains(MaterialState.disabled) ? Colors.redAccent.withOpacity(0.4) : Colors.redAccent;
+      foregroundColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.disabled)
+            ? Colors.redAccent.withOpacity(0.4)
+            : Colors.redAccent;
       }),
-      backgroundColor: MaterialStateProperty.resolveWith(
+      backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled) ? Colors.grey.withOpacity(0.4) : Colors.grey;
+          return states.contains(WidgetState.disabled)
+              ? Colors.grey.withOpacity(0.4)
+              : Colors.grey;
         },
       ),
-      overlayColor: MaterialStateProperty.all(
+      overlayColor: WidgetStateProperty.all(
         Colors.grey.withOpacity(.5),
       ),
     ),
@@ -232,15 +236,15 @@ final darkTheme = base.copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: MaterialStateProperty.all(Colors.grey),
-      padding: MaterialStateProperty.all(
+      shadowColor: WidgetStateProperty.all(Colors.grey),
+      padding: WidgetStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 16,
         ),
       ),
-      elevation: MaterialStateProperty.all(0),
-      textStyle: MaterialStateProperty.resolveWith(
+      elevation: WidgetStateProperty.all(0),
+      textStyle: WidgetStateProperty.resolveWith(
         (states) {
           return const TextStyle(
             color: Colors.white,
@@ -251,18 +255,20 @@ final darkTheme = base.copyWith(
           );
         },
       ),
-      shape: MaterialStateProperty.all(
+      shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(22),
         ),
       ),
-      foregroundColor: MaterialStateProperty.all(Colors.white),
-      backgroundColor: MaterialStateProperty.resolveWith(
+      foregroundColor: WidgetStateProperty.all(Colors.white),
+      backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled) ? Colors.grey.withOpacity(0.5) : Colors.grey;
+          return states.contains(WidgetState.disabled)
+              ? Colors.grey.withOpacity(0.5)
+              : Colors.grey;
         },
       ),
-      overlayColor: MaterialStateProperty.all(
+      overlayColor: WidgetStateProperty.all(
         Colors.grey.withOpacity(.5),
       ),
     ),
@@ -372,42 +378,42 @@ final darkTheme = base.copyWith(
     ),
   ),
   checkboxTheme: CheckboxThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(MaterialState.disabled)) {
+    fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.disabled)) {
         return null;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.red;
       }
       return null;
     }),
   ),
   radioTheme: RadioThemeData(
-    fillColor: MaterialStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(MaterialState.disabled)) {
+    fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.disabled)) {
         return null;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.red;
       }
       return null;
     }),
   ),
   switchTheme: SwitchThemeData(
-    thumbColor: MaterialStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(MaterialState.disabled)) {
+    thumbColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.disabled)) {
         return null;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.red;
       }
       return null;
     }),
-    trackColor: MaterialStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(MaterialState.disabled)) {
+    trackColor: WidgetStateProperty.resolveWith<Color?>((states) {
+      if (states.contains(WidgetState.disabled)) {
         return null;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return Colors.red;
       }
       return null;

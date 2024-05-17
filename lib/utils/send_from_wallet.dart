@@ -1,30 +1,47 @@
 import 'package:bitcoin_flutter/bitcoin_flutter.dart';
 import 'package:flutter/foundation.dart';
 
-import '../constants/constant_strings.dart';
+import 'secure_storage_utils.dart';
 
-Future<void> createTransaction() async {
+Future<void> createTransaction({
+  required List<({String hash, int amount, int vout})> inputs,
+  required ({String address, int amount}) output,
+  required int fee,
+  required String refundAddress,
+}) async {
   final network = bitcoin;
-  final alice = ECPair.fromWIF(
+  final privateKey = await secureStorage.read(key: refundAddress);
+  if (privateKey == null) {
+    return;
+  }
+
+  final decrypter = ECPair.fromWIF(
     privateKey,
     network: network,
   );
+  final txb = TransactionBuilder(network: network)..setVersion(1);
 
-  final txb = TransactionBuilder(network: network)
-    ..setVersion(1)
-    ..addInput(
-      '232729771f142c4d1e2022314789f625c131e490cccb54e28e8cab5b4f6a4aac',
-      0,
-    )
-    ..addOutput('1PGkYEjjUy49PrUHpkHGXAAw9Tf3teDJNh', 1900)
-    ..sign(vin: 0, keyPair: alice)
-    ..build();
+  final totalAmount = inputs.fold(
+    0,
+    (previousValue, element) => previousValue + element.amount,
+  );
+  final refundAmount = totalAmount - output.amount - fee;
 
-  final txHash = txb.build().getHash();
+  final canRefund = refundAmount > 500;
 
-  final hash = txHash.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+  for (final input in inputs) {
+    txb.addInput(input.hash, input.vout);
+  }
+
+  txb.addOutput(output.address, output.amount);
+  if (canRefund) {
+    txb.addOutput(refundAddress, refundAmount);
+  }
+  txb.sign(vin: 0, keyPair: decrypter);
+
+  final tx = txb.build().toHex();
 
   if (kDebugMode) {
-    print(hash);
+    print(tx);
   }
 }

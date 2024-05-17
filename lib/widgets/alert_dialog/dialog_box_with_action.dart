@@ -20,8 +20,10 @@ class DialogBoxWithAction extends HookWidget {
     this.secondaryActionText,
     this.secondaryAction,
     this.lottieAsset,
+    this.underTitleWidget,
     this.titlePadding = const EdgeInsets.only(top: 32, left: 32, right: 32),
     this.lottieHeight = 120,
+    this.repeatLottie = false,
     this.widget,
     super.key,
   });
@@ -36,6 +38,8 @@ class DialogBoxWithAction extends HookWidget {
   final EdgeInsets? titlePadding;
   final double lottieHeight;
   final String? lottieAsset;
+  final Widget? underTitleWidget;
+  final bool? repeatLottie;
   final Widget? widget;
 
   @override
@@ -48,7 +52,7 @@ class DialogBoxWithAction extends HookWidget {
       actionsPadding: const EdgeInsets.only(bottom: 16, right: 24, left: 24),
       alignment: Alignment.center,
       titlePadding: titlePadding,
-      contentPadding: const EdgeInsets.only(bottom: 24, right: 24, left: 24, top: 16),
+      contentPadding: const EdgeInsets.only(bottom: 24, top: 16),
       title: title,
       backgroundColor: Colors.white,
       elevation: 0,
@@ -59,18 +63,22 @@ class DialogBoxWithAction extends HookWidget {
             Lottie.asset(
               lottieAsset!,
               height: lottieHeight,
-              repeat: false,
+              repeat: repeatLottie,
             ),
+          if (underTitleWidget != null) underTitleWidget!,
           const Gap(20),
           widget ?? const SizedBox(),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            maxLines: 4,
-            style: const TextStyle(
-              fontFamily: FontFamily.redHatLight,
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              maxLines: 4,
+              style: const TextStyle(
+                fontFamily: FontFamily.redHatLight,
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
             ),
           ),
         ],
@@ -86,7 +94,7 @@ class DialogBoxWithAction extends HookWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-        ).paddingHorizontal(),
+        ).paddingHorizontal(44),
         const SizedBox(
           height: 10,
         ),
@@ -102,8 +110,11 @@ class DialogBoxWithAction extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                     Colors.grey.withOpacity(0.2),
+                  ),
+                  padding: WidgetStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 12),
                   ),
                 ),
             child: Text(
@@ -114,7 +125,7 @@ class DialogBoxWithAction extends HookWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-          ).paddingHorizontal(),
+          ).paddingHorizontal(44),
       ],
     );
   }

@@ -23,21 +23,19 @@ import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart'
     as _i8;
 import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
     as _i9;
-import 'package:coinplus/pages/custom_pin_code/change_pin_code_page.dart'
-    as _i10;
-import 'package:coinplus/pages/custom_pin_code/create_pin_code_page.dart'
-    as _i12;
-import 'package:coinplus/pages/custom_pin_code/pin_code_after_splash.dart'
-    as _i15;
-import 'package:coinplus/pages/custom_pin_code/pin_code_for_all_pages.dart'
-    as _i16;
-import 'package:coinplus/pages/custom_pin_code/pin_code_for_private_key.dart'
-    as _i17;
-import 'package:coinplus/pages/custom_pin_code/pin_code_page.dart' as _i18;
-import 'package:coinplus/pages/custom_pin_code/remove_pin_code.dart' as _i19;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i13;
 import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i14;
-import 'package:coinplus/pages/qr_scanner/qr_scanner.dart' as _i20;
+import 'package:coinplus/pages/pin_code_page/change_pin_code_page.dart' as _i10;
+import 'package:coinplus/pages/pin_code_page/create_pin_code_page.dart' as _i12;
+import 'package:coinplus/pages/pin_code_page/pin_code_after_splash.dart'
+    as _i15;
+import 'package:coinplus/pages/pin_code_page/pin_code_for_all_pages.dart'
+    as _i16;
+import 'package:coinplus/pages/pin_code_page/pin_code_for_private_key.dart'
+    as _i17;
+import 'package:coinplus/pages/pin_code_page/pin_code_page.dart' as _i18;
+import 'package:coinplus/pages/pin_code_page/remove_pin_code.dart' as _i19;
+import 'package:coinplus/pages/qr_scanner_page/qr_scanner.dart' as _i20;
 import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart'
     as _i1;
 import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart'

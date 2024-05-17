@@ -53,13 +53,20 @@ class BarScanMethodsPage extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                  backgroundColor:
+                      WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
                 ),
             onPressed: Platform.isIOS
                 ? () async {
-                    unawaited(recordAmplitudeEventPartTwo(const TapToConnectClicked(tab: 'Bar')));
-                    await _walletProtectState.updateNfcSessionStatus(isStarted: true);
-                    await router.pop();
+                    unawaited(
+                      recordAmplitudeEventPartTwo(
+                        const TapToConnectClicked(tab: 'Bar'),
+                      ),
+                    );
+                    await _walletProtectState.updateNfcSessionStatus(
+                      isStarted: true,
+                    );
+                    await router.maybePop();
                     await nfcSessionIos(
                       isMifareUltralight: isMifareUltralight.value,
                       walletProtectState: _walletProtectState,
@@ -67,13 +74,19 @@ class BarScanMethodsPage extends HookWidget {
                     );
                   }
                 : () async {
-                    unawaited(recordAmplitudeEventPartTwo(const TapToConnectClicked(tab: 'Bar')));
-                    await _walletProtectState.updateNfcSessionStatus(isStarted: true);
+                    unawaited(
+                      recordAmplitudeEventPartTwo(
+                        const TapToConnectClicked(tab: 'Bar'),
+                      ),
+                    );
+                    await _walletProtectState.updateNfcSessionStatus(
+                      isStarted: true,
+                    );
                     await nfcSessionAndroid(
                       isMifareUltralight: isMifareUltralight.value,
                       walletProtectState: _walletProtectState,
                     );
-                    await router.pop();
+                    await router.maybePop();
                     await showModalBottomSheet(
                       context: context,
                       shape: const RoundedRectangleBorder(
@@ -135,7 +148,7 @@ class BarScanMethodsPage extends HookWidget {
                                 const Gap(20),
                                 LoadingButton(
                                   onPressed: () async {
-                                    await router.pop();
+                                    await router.maybePop();
                                   },
                                   style: context.theme
                                       .buttonStyle(
@@ -146,7 +159,10 @@ class BarScanMethodsPage extends HookWidget {
                                         ),
                                       )
                                       .copyWith(
-                                        backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                          Colors.grey.withOpacity(0.3),
+                                        ),
                                       ),
                                   child: const Text('Cancel'),
                                 ).paddingHorizontal(60),
@@ -188,16 +204,25 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor:
+                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
-            unawaited(recordAmplitudeEvent(const ConnectWitchQrClicked(source: 'Bar')));
-            await router.pop(context);
+            unawaited(
+              recordAmplitudeEvent(
+                const ConnectWitchQrClicked(source: 'Bar'),
+              ),
+            );
+            await router.maybePop(context);
             final res = await context.pushRoute<String?>(
               const QrScannerRoute(),
             );
             if (res != null) {
-              unawaited(recordAmplitudeEvent(QrScanned(source: 'Wallet', walletAddress: res)));
+              unawaited(
+                recordAmplitudeEvent(
+                  QrScanned(source: 'Wallet', walletAddress: res),
+                ),
+              );
               await router.push(
                 BarFillRoute(receivedData: res),
               );
@@ -234,13 +259,18 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor:
+                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () {
             router
-              ..pop()
+              ..maybePop()
               ..push(BarFillRoute());
-            unawaited(recordAmplitudeEvent(const ConnectManuallyClicked(source: 'Wallet')));
+            unawaited(
+              recordAmplitudeEvent(
+                const ConnectManuallyClicked(source: 'Wallet'),
+              ),
+            );
           },
           child: Row(
             children: [
@@ -273,10 +303,15 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor:
+                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
-            unawaited(recordAmplitudeEvent(const BuyNewCardClicked(source: 'Wallet')));
+            unawaited(
+              recordAmplitudeEvent(
+                const BuyNewCardClicked(source: 'Wallet'),
+              ),
+            );
             await FlutterWebBrowser.openWebPage(
               url: 'https://coinplus.com/shop/',
               customTabsOptions: const CustomTabsOptions(

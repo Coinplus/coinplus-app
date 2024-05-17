@@ -30,10 +30,14 @@ Future<void> recommendedActivateByTap({
       lottieAsset: 'assets/lottie_animations/warning.json',
       primaryActionText: 'Activate',
       primaryAction: () async {
-        await router.pop();
+        await router.maybePop();
         unawaited(
           recordAmplitudeEventPartTwo(
-            TroubleActivateClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+            TroubleActivateClicked(
+              walletAddress: walletAddress,
+              walletType: walletType,
+              activated: activated,
+            ),
           ),
         );
         await router.push(CardSecretFillRoute());
@@ -44,10 +48,14 @@ Future<void> recommendedActivateByTap({
       secondaryAction: () async {
         unawaited(
           recordAmplitudeEventPartTwo(
-            TroubleCloseClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+            TroubleCloseClicked(
+              walletAddress: walletAddress,
+              walletType: walletType,
+              activated: activated,
+            ),
           ),
         );
-        await router.pop();
+        await router.maybePop();
       },
     ),
     isDismissible: true,

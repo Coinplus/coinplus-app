@@ -32,9 +32,14 @@ Future<void> secretsFailDialog({
       primaryActionText: 'Edit',
       primaryAction: () async {
         unawaited(
-          recordAmplitudeEventPartTwo(EditSecretsClicked(walletAddress: walletAddress, walletType: walletType)),
+          recordAmplitudeEventPartTwo(
+            EditSecretsClicked(
+              walletAddress: walletAddress,
+              walletType: walletType,
+            ),
+          ),
         );
-        await router.pop();
+        await router.maybePop();
       },
     ),
     isDismissible: true,

@@ -30,7 +30,8 @@ class DialogBox extends HookWidget {
       actionsPadding: const EdgeInsets.only(bottom: 16, right: 24, left: 24),
       alignment: Alignment.center,
       titlePadding: const EdgeInsets.only(top: 32, left: 32, right: 32),
-      contentPadding: const EdgeInsets.only(bottom: 24, right: 24, left: 24, top: 16),
+      contentPadding:
+          const EdgeInsets.only(bottom: 24, right: 24, left: 24, top: 16),
       title: title,
       backgroundColor: Colors.white,
       elevation: 0,
@@ -42,7 +43,7 @@ class DialogBox extends HookWidget {
       ),
       actions: [
         LoadingButton(
-          onPressed: router.pop,
+          onPressed: router.maybePop,
           child: Text(buttonText),
         ),
       ],

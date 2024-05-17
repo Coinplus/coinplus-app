@@ -5,6 +5,8 @@ final options = BaseOptions(
   receiveTimeout: const Duration(milliseconds: 240000),
 );
 
-final dio = Dio(options)..transformer = BackgroundTransformer();
+final mempoolDio = Dio(options)..transformer = BackgroundTransformer();
+final utxoDio = Dio(options)..transformer = BackgroundTransformer();
+final coinStatsDio = Dio(options)..transformer = BackgroundTransformer();
 
 CancelToken cancelToken = CancelToken();

@@ -104,7 +104,9 @@ class TotalBalance extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: FontFamily.redHatBold,
                           color: Colors.white,
-                          fontSize: balance > 1000000000 ? (balance > 100000000 ? 24 : 26) : 28,
+                          fontSize: balance > 1000000000
+                              ? (balance > 100000000 ? 24 : 26)
+                              : 28,
                         ),
                       ),
                     );
