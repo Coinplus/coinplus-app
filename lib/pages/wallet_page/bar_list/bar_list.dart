@@ -48,7 +48,8 @@ class BarList extends StatefulWidget {
   State<BarList> createState() => _BarListState();
 }
 
-class _BarListState extends State<BarList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
+class _BarListState extends State<BarList>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
@@ -72,10 +73,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+      _rampService.configuration.userAddress =
+          _balanceStore.bars[_balanceStore.barCurrentIndex].address;
     }
     _balanceStore.setOnBarAddedCallback((address) {
-      final index = _balanceStore.bars.indexWhere((element) => element.address == address);
+      final index = _balanceStore.bars
+          .indexWhere((element) => element.address == address);
       if (index.isNegative) {
         return;
       }
@@ -114,12 +117,14 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                     widget.onCardSelected(bar as AbstractCard);
                   }
                   _historyPageStore.setBarHistoryIndex(length - 1);
-                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  _rampService.configuration.userAddress =
+                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 } else {
                   _balanceStore.setBarCurrentIndex(length);
                   _historyPageStore.setBarHistoryIndex(length - 1);
                   widget.onCardSelected(null);
-                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  _rampService.configuration.userAddress =
+                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 }
               },
             );
@@ -132,9 +137,12 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                   builder: (context) {
                     return ScaleTap(
                       enableFeedback: false,
-                      onPressed: _balanceStore.barCurrentIndex == _balanceStore.bars.length
+                      onPressed: _balanceStore.barCurrentIndex ==
+                              _balanceStore.bars.length
                           ? () async {
-                              await _walletProtectState.updateModalStatus(isOpened: true);
+                              await _walletProtectState.updateModalStatus(
+                                isOpened: true,
+                              );
                               await recordAmplitudeEvent(
                                 const AddNewClicked(tab: 'Bar'),
                               );
@@ -159,14 +167,19 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       const Row(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(left: 20, top: 10),
+                                            padding: EdgeInsets.only(
+                                              left: 20,
+                                              top: 10,
+                                            ),
                                             child: Text(
                                               'Add new wallet',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontFamily: FontFamily.redHatBold,
+                                                fontFamily:
+                                                    FontFamily.redHatBold,
                                                 fontSize: 17,
-                                                color: AppColors.primaryTextColor,
+                                                color:
+                                                    AppColors.primaryTextColor,
                                               ),
                                             ),
                                           ),
@@ -181,7 +194,9 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                   );
                                 },
                               );
-                              await _walletProtectState.updateModalStatus(isOpened: false);
+                              await _walletProtectState.updateModalStatus(
+                                isOpened: false,
+                              );
                             }
                           : null,
                       child: Assets.images.addCard.image(),
@@ -206,14 +221,17 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                               duration: const Duration(milliseconds: 400),
                               child: _balanceStore.barCurrentIndex == index
                                   ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 30),
+                                          padding:
+                                              const EdgeInsets.only(left: 30),
                                           child: Text(
                                             bar.name,
                                             style: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -251,18 +269,23 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                       return Expanded(
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.only(bottom: context.height > 844 ? 30 : 10),
+                            padding: EdgeInsets.only(
+                              bottom: context.height > 844 ? 30 : 10,
+                            ),
                             child: ScaleTap(
                               enableFeedback: false,
                               opacityMinValue: .993,
                               scaleMinValue: .993,
-                              onLongPress: _balanceStore.barCurrentIndex == index
+                              onLongPress: _balanceStore.barCurrentIndex ==
+                                      index
                                   ? _balanceStore.bars.length > 1
                                       ? () async {
-                                          await _walletProtectState.updateModalStatus(isOpened: true);
+                                          await _walletProtectState
+                                              .updateModalStatus(
+                                            isOpened: true,
+                                          );
                                           await HapticFeedback.mediumImpact();
                                           await showModalBottomSheet(
-                                            useSafeArea: false,
                                             isScrollControlled: true,
                                             context: context,
                                             shape: const RoundedRectangleBorder(
@@ -277,43 +300,75 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                 child: Scaffold(
                                                   appBar: AppBar(
                                                     toolbarHeight: 130,
-                                                    automaticallyImplyLeading: false,
+                                                    automaticallyImplyLeading:
+                                                        false,
                                                     elevation: 0,
-                                                    backgroundColor: Colors.transparent,
+                                                    backgroundColor:
+                                                        Colors.transparent,
                                                     flexibleSpace: Column(
                                                       children: <Widget>[
                                                         const Gap(15),
-                                                        Assets.icons.notch.image(height: 4),
+                                                        Assets.icons.notch
+                                                            .image(height: 4),
                                                         const Gap(10),
                                                         Padding(
-                                                          padding: const EdgeInsets.only(left: 10, right: 10),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            left: 10,
+                                                            right: 10,
+                                                          ),
                                                           child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
                                                               const Text(
                                                                 'Re-order bars',
-                                                                style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      FontFamily
+                                                                          .redHatMedium,
                                                                   fontSize: 30,
                                                                 ),
                                                               ),
                                                               const Gap(10),
                                                               Container(
-                                                                padding: const EdgeInsets.symmetric(
-                                                                  horizontal: 15,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                  horizontal:
+                                                                      15,
                                                                   vertical: 10,
                                                                 ),
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(10),
-                                                                  color: Colors.grey.withOpacity(0.1),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                    10,
+                                                                  ),
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .withOpacity(
+                                                                    0.1,
+                                                                  ),
                                                                 ),
-                                                                child: const Text(
+                                                                child:
+                                                                    const Text(
                                                                   'Hold and slide the wallet across the list to re-order',
-                                                                  style: TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontSize: 14,
-                                                                    color: Colors.black,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontFamily:
+                                                                        FontFamily
+                                                                            .redHatMedium,
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
                                                                   ),
                                                                 ),
                                                               ),
@@ -323,51 +378,87 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                       ],
                                                     ),
                                                   ),
-                                                  backgroundColor: Colors.transparent,
+                                                  backgroundColor:
+                                                      Colors.transparent,
                                                   body: SizedBox(
                                                     height: 700,
-                                                    child: ReorderableListView.builder(
-                                                      padding: const EdgeInsets.only(bottom: 30),
-                                                      proxyDecorator: proxyDecorator,
-                                                      itemCount: _balanceStore.bars.length,
+                                                    child: ReorderableListView
+                                                        .builder(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        bottom: 30,
+                                                      ),
+                                                      proxyDecorator:
+                                                          proxyDecorator,
+                                                      itemCount: _balanceStore
+                                                          .bars.length,
                                                       itemBuilder: (_, index) {
-                                                        final item = _balanceStore.bars[index];
+                                                        final item =
+                                                            _balanceStore
+                                                                .bars[index];
 
                                                         return Container(
-                                                          key: ValueKey(item.address),
+                                                          key: ValueKey(
+                                                            item.address,
+                                                          ),
                                                           child: Padding(
-                                                            padding: const EdgeInsets.symmetric(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
                                                               vertical: 7,
                                                               horizontal: 20,
                                                             ),
                                                             child: Container(
-                                                              padding: const EdgeInsets.all(15),
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                color: Colors.grey.withOpacity(0.2),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(15),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  10,
+                                                                ),
+                                                                color: Colors
+                                                                    .grey
+                                                                    .withOpacity(
+                                                                  0.2,
+                                                                ),
                                                               ),
                                                               child: Row(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
-                                                                  item.color.image.image(height: 80),
+                                                                  item.color
+                                                                      .image
+                                                                      .image(
+                                                                    height: 80,
+                                                                  ),
                                                                   const Gap(20),
                                                                   Column(
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
                                                                       Row(
                                                                         children: [
                                                                           const Text(
                                                                             'Name:',
-                                                                            style: TextStyle(
+                                                                            style:
+                                                                                TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontWeight: FontWeight.w700,
                                                                             ),
                                                                           ),
-                                                                          const Gap(5),
+                                                                          const Gap(
+                                                                            5,
+                                                                          ),
                                                                           Text(
                                                                             item.name,
-                                                                            style: const TextStyle(
+                                                                            style:
+                                                                                const TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontWeight: FontWeight.w600,
@@ -379,16 +470,20 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                         children: [
                                                                           const Text(
                                                                             'Address:',
-                                                                            style: TextStyle(
+                                                                            style:
+                                                                                TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontWeight: FontWeight.w700,
                                                                             ),
                                                                           ),
-                                                                          const Gap(5),
+                                                                          const Gap(
+                                                                            5,
+                                                                          ),
                                                                           Text(
                                                                             getSplitAddress(item.address),
-                                                                            style: const TextStyle(
+                                                                            style:
+                                                                                const TextStyle(
                                                                               fontSize: 12,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                             ),
@@ -399,16 +494,20 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                         children: [
                                                                           const Text(
                                                                             'Date added:',
-                                                                            style: TextStyle(
+                                                                            style:
+                                                                                TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontWeight: FontWeight.w700,
                                                                             ),
                                                                           ),
-                                                                          const Gap(5),
+                                                                          const Gap(
+                                                                            5,
+                                                                          ),
                                                                           Text(
                                                                             item.createdAt,
-                                                                            style: const TextStyle(
+                                                                            style:
+                                                                                const TextStyle(
                                                                               fontSize: 12,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                             ),
@@ -416,24 +515,27 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                         ],
                                                                       ),
                                                                       Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
                                                                         children: [
                                                                           const Text(
                                                                             'Balance:',
-                                                                            style: TextStyle(
+                                                                            style:
+                                                                                TextStyle(
                                                                               fontSize: 14,
                                                                               fontFamily: FontFamily.redHatMedium,
                                                                               fontWeight: FontWeight.w700,
                                                                             ),
                                                                           ),
-                                                                          const Gap(5),
+                                                                          const Gap(
+                                                                            5,
+                                                                          ),
                                                                           Builder(
-                                                                            builder: (context) {
-                                                                              final data = _marketPageStore
-                                                                                  .singleCoin?.result.first;
+                                                                            builder:
+                                                                                (context) {
+                                                                              final data = _marketPageStore.singleCoin?.result.first;
 
-                                                                              final myFormat =
-                                                                                  NumberFormat.decimalPatternDigits(
+                                                                              final myFormat = NumberFormat.decimalPatternDigits(
                                                                                 locale: 'en_us',
                                                                                 decimalDigits: 2,
                                                                               );
@@ -447,8 +549,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                                       SizedBox(
                                                                                         height: 10,
                                                                                         width: 10,
-                                                                                        child:
-                                                                                            CircularProgressIndicator(
+                                                                                        child: CircularProgressIndicator(
                                                                                           strokeWidth: 1,
                                                                                           color: Colors.black,
                                                                                         ),
@@ -459,24 +560,21 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                               }
                                                                               return Observer(
                                                                                 builder: (_) {
-                                                                                  final balance = bar.data!.netTxoCount;
-                                                                                  if (_accelerometerStore
-                                                                                      .hasPerformedAction) {
+                                                                                  final balance = bar.finalBalance;
+                                                                                  if (_accelerometerStore.hasPerformedAction) {
                                                                                     return const Text(
                                                                                       r'$*****',
                                                                                       style: TextStyle(
                                                                                         fontSize: 13,
-                                                                                        fontFamily:
-                                                                                            FontFamily.redHatMedium,
+                                                                                        fontFamily: FontFamily.redHatMedium,
                                                                                       ),
                                                                                     );
                                                                                   } else {
                                                                                     return Text(
-                                                                                      '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                                                                      '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
                                                                                       style: const TextStyle(
                                                                                         fontSize: 13,
-                                                                                        fontFamily:
-                                                                                            FontFamily.redHatMedium,
+                                                                                        fontFamily: FontFamily.redHatMedium,
                                                                                       ),
                                                                                     );
                                                                                   }
@@ -490,17 +588,28 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   ),
                                                                   const Spacer(),
                                                                   Column(
-                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
                                                                     children: [
-                                                                      const Gap(25),
+                                                                      const Gap(
+                                                                        25,
+                                                                      ),
                                                                       Center(
-                                                                        child: Icon(
-                                                                          Icons.drag_handle,
-                                                                          color: Colors.grey.withOpacity(0.5),
-                                                                          size: 30,
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .drag_handle,
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .withOpacity(0.5),
+                                                                          size:
+                                                                              30,
                                                                         ),
                                                                       ),
-                                                                      const Gap(25),
+                                                                      const Gap(
+                                                                        25,
+                                                                      ),
                                                                     ],
                                                                   ),
                                                                 ],
@@ -509,20 +618,35 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                           ),
                                                         );
                                                       },
-                                                      onReorder: (oldIndex, newIndex) {
-                                                        _balanceStore.changeBarIndexAndSave(
+                                                      onReorder:
+                                                          (oldIndex, newIndex) {
+                                                        _balanceStore
+                                                            .changeBarIndexAndSave(
                                                           oldIndex: oldIndex,
                                                           newIndex: newIndex,
-                                                          cardAddress: _balanceStore.bars[oldIndex].address,
+                                                          cardAddress:
+                                                              _balanceStore
+                                                                  .bars[
+                                                                      oldIndex]
+                                                                  .address,
                                                         );
-                                                        widget.onCarouselScroll(index);
+                                                        widget.onCarouselScroll(
+                                                          index,
+                                                        );
                                                         widget.onCardSelected(
-                                                          _balanceStore.bars.elementAtOrNull(index) as AbstractCard?,
+                                                          _balanceStore.bars
+                                                              .elementAtOrNull(
+                                                            index,
+                                                          ) as AbstractCard?,
                                                         );
-                                                        _balanceStore.setBarCurrentIndex(index);
+                                                        _balanceStore
+                                                            .setBarCurrentIndex(
+                                                          index,
+                                                        );
                                                       },
                                                       onReorderStart: (val) {
-                                                        HapticFeedback.heavyImpact();
+                                                        HapticFeedback
+                                                            .heavyImpact();
                                                       },
                                                     ),
                                                   ),
@@ -530,7 +654,10 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                               );
                                             },
                                           );
-                                          await _walletProtectState.updateModalStatus(isOpened: false);
+                                          await _walletProtectState
+                                              .updateModalStatus(
+                                            isOpened: false,
+                                          );
                                         }
                                       : () async {
                                           Gaimon.error();
@@ -557,70 +684,106 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       Gap(context.height * 0.045),
                                       Observer(
                                         builder: (_) {
-                                          final countryStatus = _ipStore.rampCountryStatus;
-                                          final regionStatus = _ipStore.rampRegionStatus;
+                                          final countryStatus =
+                                              _ipStore.rampCountryStatus;
+                                          final regionStatus =
+                                              _ipStore.rampRegionStatus;
                                           return countryStatus
                                               ? !regionStatus
                                                   ? ScaleTap(
                                                       enableFeedback: false,
                                                       opacityMinValue: .98,
                                                       scaleMinValue: .98,
-                                                      onPressed: _balanceStore.barCurrentIndex == index
+                                                      onPressed: _balanceStore
+                                                                  .barCurrentIndex ==
+                                                              index
                                                           ? () async {
-                                                              final isActivated = isBarWalletActivated(
-                                                                balanceStore: _balanceStore,
+                                                              final isActivated =
+                                                                  isBarWalletActivated(
+                                                                balanceStore:
+                                                                    _balanceStore,
                                                               );
                                                               await recordAmplitudeEvent(
                                                                 TopUpButtonClicked(
-                                                                  walletType: 'Bar',
-                                                                  walletAddress: bar.address,
-                                                                  activated: await isActivated,
+                                                                  walletType:
+                                                                      'Bar',
+                                                                  walletAddress:
+                                                                      bar.address,
+                                                                  activated:
+                                                                      await isActivated,
                                                                 ),
                                                               );
-                                                              _rampService.presentRamp();
+                                                              _rampService
+                                                                  .presentRamp();
                                                             }
                                                           : null,
                                                       child: Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(8),
-                                                          color: Colors.black.withOpacity(0.3),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          color: Colors.black
+                                                              .withOpacity(0.3),
                                                         ),
                                                         child: Padding(
-                                                          padding: const EdgeInsets.only(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
                                                             top: 2,
                                                             bottom: 2,
                                                             left: 8,
                                                           ),
                                                           child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
                                                                   const Text(
                                                                     'Balance',
-                                                                    style: TextStyle(
-                                                                      fontSize: 12,
-                                                                      fontFamily: FontFamily.redHatMedium,
-                                                                      color: Colors.white,
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .redHatMedium,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                   ),
                                                                   Observer(
-                                                                    builder: (context) {
-                                                                      final data =
-                                                                          _marketPageStore.singleCoin?.result.first;
+                                                                    builder:
+                                                                        (context) {
+                                                                      final data = _marketPageStore
+                                                                          .singleCoin
+                                                                          ?.result
+                                                                          .first;
                                                                       final myFormat =
-                                                                          NumberFormat.decimalPatternDigits(
-                                                                        locale: 'en_us',
-                                                                        decimalDigits: 2,
+                                                                          NumberFormat
+                                                                              .decimalPatternDigits(
+                                                                        locale:
+                                                                            'en_us',
+                                                                        decimalDigits:
+                                                                            2,
                                                                       );
-                                                                      if (data == null) {
+                                                                      if (data ==
+                                                                          null) {
                                                                         return const Padding(
-                                                                          padding: EdgeInsets.symmetric(
-                                                                            vertical: 4,
-                                                                            horizontal: 2,
+                                                                          padding:
+                                                                              EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                4,
+                                                                            horizontal:
+                                                                                2,
                                                                           ),
-                                                                          child: Row(
+                                                                          child:
+                                                                              Row(
                                                                             children: [
                                                                               SizedBox(
                                                                                 height: 10,
@@ -634,10 +797,13 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                           ),
                                                                         );
                                                                       }
-                                                                      final balance = bar.data!.netTxoCount;
+                                                                      final balance =
+                                                                          bar.finalBalance;
                                                                       return Observer(
-                                                                        builder: (_) {
-                                                                          if (_accelerometerStore.hasPerformedAction) {
+                                                                        builder:
+                                                                            (_) {
+                                                                          if (_accelerometerStore
+                                                                              .hasPerformedAction) {
                                                                             return const Text(
                                                                               r'$*****',
                                                                               style: TextStyle(
@@ -649,7 +815,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                             );
                                                                           } else {
                                                                             return Text(
-                                                                              '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                                                              '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
                                                                               style: const TextStyle(
                                                                                 fontFamily: FontFamily.redHatMedium,
                                                                                 fontWeight: FontWeight.w700,
@@ -664,7 +830,11 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   ),
                                                                 ],
                                                               ),
-                                                              Assets.icons.alternative.image(height: 48),
+                                                              Assets.icons
+                                                                  .alternative
+                                                                  .image(
+                                                                height: 48,
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
@@ -672,44 +842,72 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                     )
                                                   : Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        color: Colors.black.withOpacity(0.3),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        color: Colors.black
+                                                            .withOpacity(0.3),
                                                       ),
                                                       child: Padding(
-                                                        padding: const EdgeInsets.only(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
                                                           top: 2,
                                                           bottom: 2,
                                                           left: 8,
                                                         ),
                                                         child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 const Text(
                                                                   'Balance',
-                                                                  style: TextStyle(
-                                                                    fontSize: 12,
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    color: Colors.white,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    fontFamily:
+                                                                        FontFamily
+                                                                            .redHatMedium,
+                                                                    color: Colors
+                                                                        .white,
                                                                   ),
                                                                 ),
                                                                 Observer(
-                                                                  builder: (context) {
-                                                                    final data =
-                                                                        _marketPageStore.singleCoin?.result.first;
-                                                                    final myFormat = NumberFormat.decimalPatternDigits(
-                                                                      locale: 'en_us',
-                                                                      decimalDigits: 2,
+                                                                  builder:
+                                                                      (context) {
+                                                                    final data = _marketPageStore
+                                                                        .singleCoin
+                                                                        ?.result
+                                                                        .first;
+                                                                    final myFormat =
+                                                                        NumberFormat
+                                                                            .decimalPatternDigits(
+                                                                      locale:
+                                                                          'en_us',
+                                                                      decimalDigits:
+                                                                          2,
                                                                     );
-                                                                    if (data == null) {
+                                                                    if (bar.finalBalance ==
+                                                                            null ||
+                                                                        data ==
+                                                                            null) {
                                                                       return const Padding(
-                                                                        padding: EdgeInsets.symmetric(
-                                                                          vertical: 4,
-                                                                          horizontal: 2,
+                                                                        padding:
+                                                                            EdgeInsets.symmetric(
+                                                                          vertical:
+                                                                              4,
+                                                                          horizontal:
+                                                                              2,
                                                                         ),
-                                                                        child: Row(
+                                                                        child:
+                                                                            Row(
                                                                           children: [
                                                                             SizedBox(
                                                                               height: 10,
@@ -724,22 +922,29 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                       );
                                                                     }
                                                                     return Text(
-                                                                      (bar.data?.fundedTxoSum != null
-                                                                              ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
+                                                                      (bar.finalBalance != null
+                                                                              ? '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data.price)}'
                                                                               : '')
                                                                           .toString(),
-                                                                      style: const TextStyle(
-                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                        fontWeight: FontWeight.w700,
-                                                                        color: Colors.white,
-                                                                        fontSize: 20,
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontFamily:
+                                                                            FontFamily.redHatMedium,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            20,
                                                                       ),
                                                                     );
                                                                   },
                                                                 ),
                                                               ],
                                                             ),
-                                                            const SizedBox(height: 48),
+                                                            const SizedBox(
+                                                              height: 48,
+                                                            ),
                                                             //Assets.icons.alternative.image(height: 48),
                                                           ],
                                                         ),
@@ -747,50 +952,81 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                     ).paddingHorizontal(37)
                                               : Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    color: Colors.black.withOpacity(0.3),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      8,
+                                                    ),
+                                                    color: Colors.black
+                                                        .withOpacity(0.3),
                                                   ),
                                                   child: Padding(
-                                                    padding: const EdgeInsets.only(
+                                                    padding:
+                                                        const EdgeInsets.only(
                                                       top: 2,
                                                       bottom: 2,
                                                       left: 8,
                                                     ),
                                                     child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
                                                         Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
                                                             const Text(
                                                               'Balance',
                                                               style: TextStyle(
                                                                 fontSize: 12,
-                                                                fontFamily: FontFamily.redHatMedium,
-                                                                color: Colors.white,
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .redHatMedium,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                             Observer(
-                                                              builder: (context) {
-                                                                final data = _marketPageStore.singleCoin?.result.first;
-                                                                final myFormat = NumberFormat.decimalPatternDigits(
-                                                                  locale: 'en_us',
-                                                                  decimalDigits: 2,
+                                                              builder:
+                                                                  (context) {
+                                                                final data =
+                                                                    _marketPageStore
+                                                                        .singleCoin
+                                                                        ?.result
+                                                                        .first;
+                                                                final myFormat =
+                                                                    NumberFormat
+                                                                        .decimalPatternDigits(
+                                                                  locale:
+                                                                      'en_us',
+                                                                  decimalDigits:
+                                                                      2,
                                                                 );
-                                                                if (data == null) {
+                                                                if (data ==
+                                                                    null) {
                                                                   return const Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                      vertical: 4,
-                                                                      horizontal: 2,
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .symmetric(
+                                                                      vertical:
+                                                                          4,
+                                                                      horizontal:
+                                                                          2,
                                                                     ),
                                                                     child: Row(
                                                                       children: [
                                                                         SizedBox(
-                                                                          height: 10,
-                                                                          width: 10,
-                                                                          child: CircularProgressIndicator(
-                                                                            strokeWidth: 3,
-                                                                            color: Colors.white,
+                                                                          height:
+                                                                              10,
+                                                                          width:
+                                                                              10,
+                                                                          child:
+                                                                              CircularProgressIndicator(
+                                                                            strokeWidth:
+                                                                                3,
+                                                                            color:
+                                                                                Colors.white,
                                                                           ),
                                                                         ),
                                                                       ],
@@ -798,22 +1034,32 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                                   );
                                                                 }
                                                                 return Text(
-                                                                  (bar.data?.fundedTxoSum != null
-                                                                          ? '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data.price)}'
+                                                                  (bar.finalBalance !=
+                                                                              null
+                                                                          ? '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data.price)}'
                                                                           : '')
                                                                       .toString(),
-                                                                  style: const TextStyle(
-                                                                    fontFamily: FontFamily.redHatMedium,
-                                                                    fontWeight: FontWeight.w700,
-                                                                    color: Colors.white,
-                                                                    fontSize: 20,
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontFamily:
+                                                                        FontFamily
+                                                                            .redHatMedium,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20,
                                                                   ),
                                                                 );
                                                               },
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(height: 48),
+                                                        const SizedBox(
+                                                          height: 48,
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -823,36 +1069,51 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                       const Gap(10),
                                       ScaleTap(
                                         enableFeedback: false,
-                                        onPressed: _balanceStore.barCurrentIndex == index
+                                        onPressed: _balanceStore
+                                                    .barCurrentIndex ==
+                                                index
                                             ? () async {
-                                                final isBarActivated = isBarWalletActivated(
+                                                final isBarActivated =
+                                                    isBarWalletActivated(
                                                   balanceStore: _balanceStore,
                                                 );
                                                 await recordAmplitudeEvent(
                                                   AddressCopied(
                                                     walletType: 'Bar',
                                                     walletAddress: bar.address,
-                                                    activated: await isBarActivated,
+                                                    activated:
+                                                        await isBarActivated,
                                                     source: 'Wallet',
                                                   ),
                                                 );
                                                 await Clipboard.setData(
                                                   ClipboardData(
-                                                    text: bar.address.toString(),
+                                                    text:
+                                                        bar.address.toString(),
                                                   ),
                                                 ).then(
                                                   (_) {
-                                                    HapticFeedback.mediumImpact();
+                                                    HapticFeedback
+                                                        .mediumImpact();
                                                     showTopSnackBar(
-                                                      displayDuration: const Duration(
+                                                      displayDuration:
+                                                          const Duration(
                                                         milliseconds: 400,
                                                       ),
                                                       Overlay.of(context),
                                                       CustomSnackBar.success(
-                                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                        message: 'Address was copied',
-                                                        textStyle: const TextStyle(
-                                                          fontFamily: FontFamily.redHatMedium,
+                                                        backgroundColor:
+                                                            const Color(
+                                                          0xFF4A4A4A,
+                                                        ).withOpacity(
+                                                          0.9,
+                                                        ),
+                                                        message:
+                                                            'Address was copied',
+                                                        textStyle:
+                                                            const TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
                                                           fontSize: 14,
                                                           color: Colors.white,
                                                         ),
@@ -865,16 +1126,24 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                         child: Container(
                                           height: 33,
                                           decoration: BoxDecoration(
-                                            image: DecorationImage(image: Assets.images.bar.barAddress.image().image),
+                                            image: DecorationImage(
+                                              image: Assets
+                                                  .images.bar.barAddress
+                                                  .image()
+                                                  .image,
+                                            ),
                                           ),
                                           child: Center(
                                             child: Observer(
                                               builder: (context) {
-                                                if (_balanceStore.loadings[bar.address] ?? false) {
+                                                if (_balanceStore.loadings[
+                                                        bar.address] ??
+                                                    false) {
                                                   return Text(
                                                     visibleAddress,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       color: Colors.black,
                                                       fontSize: 13,
                                                     ),
@@ -883,7 +1152,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                                 return Text(
                                                   visibleAddress,
                                                   style: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     color: Colors.black,
                                                     fontSize: 13,
                                                   ),
@@ -914,7 +1184,8 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                 );
                 await _balanceStore.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  _rampService.configuration.userAddress =
+                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                   await _historyPageStore.setBarHistoryIndex(index);
                 }
               },

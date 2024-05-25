@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/ramp_countries.dart';
-import '../../http/interceptors/api_keys.dart';
 
 part 'ip_store.g.dart';
 
@@ -24,7 +23,7 @@ abstract class _IpStore with Store {
   @observable
   bool regionStatus = false;
 
-  final Dio _dio = Dio()..interceptors.add(LogInterceptor(responseBody: true));
+  final Dio _dio = Dio()..interceptors;
 
   @action
   Future<void> getIp() async {
@@ -34,9 +33,11 @@ abstract class _IpStore with Store {
         final responseDataIp = responseIp.data;
         myIpAddress = responseDataIp.toString();
 
-        final responseLocation = await _dio.get('http://ip-api.com/json/$myIpAddress');
+        final responseLocation =
+            await _dio.get('http://ip-api.com/json/$myIpAddress');
         if (responseLocation.statusCode == 200) {
-          final Map<String, dynamic> responseDataLocation = responseLocation.data;
+          final Map<String, dynamic> responseDataLocation =
+              responseLocation.data;
           final currentCountry = responseDataLocation['country'];
 
           countryStatus = rampRegions.contains(currentCountry);
@@ -54,22 +55,6 @@ abstract class _IpStore with Store {
       }
     } catch (error) {
       log('Error during HTTP request: $error');
-    }
-  }
-
-  Future<void> patchTransactions({required String address}) async {
-    final headers = {
-      'x-api-key': coinStatsApiKey,
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      await _dio.patch(
-        'https://openapiv1.coinstats.app/wallet/transactions?address=$address&connectionId=bitcoin',
-        options: Options(headers: headers),
-      );
-    } catch (e) {
-      log('Error: $e');
     }
   }
 

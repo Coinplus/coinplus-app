@@ -18,7 +18,13 @@ Future<void> notCoinplusCardAlert({
   required String walletType,
   required String source,
 }) {
-  recordAmplitudeEvent(FakeWallet(source: source, walletType: walletType, walletAddress: walletAddress));
+  recordAmplitudeEvent(
+    FakeWallet(
+      source: source,
+      walletType: walletType,
+      walletAddress: walletAddress,
+    ),
+  );
   recordUserProperty(const FraudActivity());
   return showDialogBox(
     context,
@@ -33,12 +39,12 @@ Future<void> notCoinplusCardAlert({
       ),
       lottieAsset: 'assets/lottie_animations/fake_card.json',
       primaryActionText: 'Got it',
-      primaryAction: router.pop,
+      primaryAction: router.maybePop,
       lottieHeight: 140,
       widget: ScaleTap(
         enableFeedback: false,
         onPressed: () async {
-          await router.pop();
+          await router.maybePop();
           final email = Uri.encodeComponent('support@coinplus.com');
           final mail = Uri.parse('mailto:$email');
           if (await launchUrl(mail)) {

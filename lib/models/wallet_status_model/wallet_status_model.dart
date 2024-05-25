@@ -11,7 +11,8 @@ class WalletStatusModel {
     required this.status,
   });
 
-  factory WalletStatusModel.fromJson(Map<String, dynamic> json) => _$WalletStatusModelFromJson(json);
+  factory WalletStatusModel.fromJson(Map<String, dynamic> json) =>
+      _$WalletStatusModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$WalletStatusModelToJson(this);
 }

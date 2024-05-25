@@ -244,7 +244,9 @@ class FavoriteCoin extends HookWidget {
                                       '${data.priceChange1d.toStringAsFixed(2)} %',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                        color: data.priceChange1d > 0
+                                            ? Colors.green
+                                            : Colors.red,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

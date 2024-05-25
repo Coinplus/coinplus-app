@@ -15,10 +15,10 @@ void registerStoreGetIt() {
   GetIt.I.registerSingleton(BalanceStore());
   GetIt.I.registerSingleton(HistoryPageStore());
   GetIt.I.registerSingleton(IpStore());
+  GetIt.I.registerSingleton(MarketPageStore());
   GetIt.I.registerSingleton(ContactUsStore());
   GetIt.I.registerSingleton(WalletProtectState());
   GetIt.I.registerSingleton(ValidationState());
-  GetIt.I.registerSingleton(MarketPageStore());
   GetIt.I.registerSingleton(AccelerometerStore());
 }
 
@@ -27,20 +27,20 @@ void reRegisterStoreGetIt() {
   final balancesStore = GetIt.I<BalanceStore>();
   final _historyPageStore = GetIt.I<HistoryPageStore>();
   final _ipStore = GetIt.I<IpStore>();
+  final _marketStore = GetIt.I<MarketPageStore>();
   final _contactUsStore = GetIt.I<ContactUsStore>();
   final _walletProtectState = GetIt.I<WalletProtectState>();
   final _validationStore = GetIt.I<ValidationState>();
-  final _marketStore = GetIt.I<MarketPageStore>();
   final _sensorsStore = GetIt.I<AccelerometerStore>();
 
   GetIt.I.unregister(instance: rampService);
   GetIt.I.unregister(instance: balancesStore);
   GetIt.I.unregister(instance: _historyPageStore);
   GetIt.I.unregister(instance: _ipStore);
+  GetIt.I.unregister(instance: _marketStore);
   GetIt.I.unregister(instance: _contactUsStore);
   GetIt.I.unregister(instance: _walletProtectState);
   GetIt.I.unregister(instance: _validationStore);
-  GetIt.I.unregister(instance: _marketStore);
   GetIt.I.unregister(instance: _sensorsStore);
   registerStoreGetIt();
 }

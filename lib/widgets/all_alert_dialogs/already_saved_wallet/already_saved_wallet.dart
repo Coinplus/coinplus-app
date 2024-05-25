@@ -31,8 +31,15 @@ Future<void> alreadySavedWallet(BuildContext context, String walletAddress) {
       primaryAction: () async {
         await hasShownWallet().then((hasShown) {
           if (hasShown) {
-            router.pop();
-            unawaited(recordAmplitudeEvent(AlreadySavedGotItClicked(walletType: 'Card', walletAddress: walletAddress)));
+            router.maybePop();
+            unawaited(
+              recordAmplitudeEvent(
+                AlreadySavedGotItClicked(
+                  walletType: 'Card',
+                  walletAddress: walletAddress,
+                ),
+              ),
+            );
           }
         });
       },

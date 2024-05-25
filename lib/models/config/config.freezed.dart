@@ -24,7 +24,9 @@ mixin _$Config {
   bool get production => throw _privateConstructorUsedError;
   String get apiUrl => throw _privateConstructorUsedError;
   String get coinsUrl => throw _privateConstructorUsedError;
+  String get mempool => throw _privateConstructorUsedError;
   String get ipUrl => throw _privateConstructorUsedError;
+  String get utxoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,13 +35,22 @@ mixin _$Config {
 
 /// @nodoc
 abstract class $ConfigCopyWith<$Res> {
-  factory $ConfigCopyWith(Config value, $Res Function(Config) then) = _$ConfigCopyWithImpl<$Res, Config>;
+  factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
+      _$ConfigCopyWithImpl<$Res, Config>;
   @useResult
-  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl, String ipUrl});
+  $Res call(
+      {Flavor env,
+      bool production,
+      String apiUrl,
+      String coinsUrl,
+      String mempool,
+      String ipUrl,
+      String utxoUrl});
 }
 
 /// @nodoc
-class _$ConfigCopyWithImpl<$Res, $Val extends Config> implements $ConfigCopyWith<$Res> {
+class _$ConfigCopyWithImpl<$Res, $Val extends Config>
+    implements $ConfigCopyWith<$Res> {
   _$ConfigCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -54,7 +65,9 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config> implements $ConfigCopyWith
     Object? production = null,
     Object? apiUrl = null,
     Object? coinsUrl = null,
+    Object? mempool = null,
     Object? ipUrl = null,
+    Object? utxoUrl = null,
   }) {
     return _then(_value.copyWith(
       env: null == env
@@ -73,9 +86,17 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config> implements $ConfigCopyWith
           ? _value.coinsUrl
           : coinsUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      mempool: null == mempool
+          ? _value.mempool
+          : mempool // ignore: cast_nullable_to_non_nullable
+              as String,
       ipUrl: null == ipUrl
           ? _value.ipUrl
           : ipUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      utxoUrl: null == utxoUrl
+          ? _value.utxoUrl
+          : utxoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -83,17 +104,28 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config> implements $ConfigCopyWith
 
 /// @nodoc
 abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
-  factory _$$ConfigImplCopyWith(_$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
+  factory _$$ConfigImplCopyWith(
+          _$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
       __$$ConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl, String ipUrl});
+  $Res call(
+      {Flavor env,
+      bool production,
+      String apiUrl,
+      String coinsUrl,
+      String mempool,
+      String ipUrl,
+      String utxoUrl});
 }
 
 /// @nodoc
-class __$$ConfigImplCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
+class __$$ConfigImplCopyWithImpl<$Res>
+    extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
     implements _$$ConfigImplCopyWith<$Res> {
-  __$$ConfigImplCopyWithImpl(_$ConfigImpl _value, $Res Function(_$ConfigImpl) _then) : super(_value, _then);
+  __$$ConfigImplCopyWithImpl(
+      _$ConfigImpl _value, $Res Function(_$ConfigImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -102,7 +134,9 @@ class __$$ConfigImplCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res, _$Conf
     Object? production = null,
     Object? apiUrl = null,
     Object? coinsUrl = null,
+    Object? mempool = null,
     Object? ipUrl = null,
+    Object? utxoUrl = null,
   }) {
     return _then(_$ConfigImpl(
       env: null == env
@@ -121,9 +155,17 @@ class __$$ConfigImplCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res, _$Conf
           ? _value.coinsUrl
           : coinsUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      mempool: null == mempool
+          ? _value.mempool
+          : mempool // ignore: cast_nullable_to_non_nullable
+              as String,
       ipUrl: null == ipUrl
           ? _value.ipUrl
           : ipUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      utxoUrl: null == utxoUrl
+          ? _value.utxoUrl
+          : utxoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -133,9 +175,16 @@ class __$$ConfigImplCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res, _$Conf
 @JsonSerializable()
 class _$ConfigImpl implements _Config {
   _$ConfigImpl(
-      {required this.env, required this.production, required this.apiUrl, required this.coinsUrl, required this.ipUrl});
+      {required this.env,
+      required this.production,
+      required this.apiUrl,
+      required this.coinsUrl,
+      required this.mempool,
+      required this.ipUrl,
+      required this.utxoUrl});
 
-  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) => _$$ConfigImplFromJson(json);
+  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ConfigImplFromJson(json);
 
   @override
   final Flavor env;
@@ -146,11 +195,15 @@ class _$ConfigImpl implements _Config {
   @override
   final String coinsUrl;
   @override
+  final String mempool;
+  @override
   final String ipUrl;
+  @override
+  final String utxoUrl;
 
   @override
   String toString() {
-    return 'Config(env: $env, production: $production, apiUrl: $apiUrl, coinsUrl: $coinsUrl, ipUrl: $ipUrl)';
+    return 'Config(env: $env, production: $production, apiUrl: $apiUrl, coinsUrl: $coinsUrl, mempool: $mempool, ipUrl: $ipUrl, utxoUrl: $utxoUrl)';
   }
 
   @override
@@ -159,20 +212,26 @@ class _$ConfigImpl implements _Config {
         (other.runtimeType == runtimeType &&
             other is _$ConfigImpl &&
             (identical(other.env, env) || other.env == env) &&
-            (identical(other.production, production) || other.production == production) &&
+            (identical(other.production, production) ||
+                other.production == production) &&
             (identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl) &&
-            (identical(other.coinsUrl, coinsUrl) || other.coinsUrl == coinsUrl) &&
-            (identical(other.ipUrl, ipUrl) || other.ipUrl == ipUrl));
+            (identical(other.coinsUrl, coinsUrl) ||
+                other.coinsUrl == coinsUrl) &&
+            (identical(other.mempool, mempool) || other.mempool == mempool) &&
+            (identical(other.ipUrl, ipUrl) || other.ipUrl == ipUrl) &&
+            (identical(other.utxoUrl, utxoUrl) || other.utxoUrl == utxoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, env, production, apiUrl, coinsUrl, ipUrl);
+  int get hashCode => Object.hash(
+      runtimeType, env, production, apiUrl, coinsUrl, mempool, ipUrl, utxoUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith => __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
+      __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -188,7 +247,9 @@ abstract class _Config implements Config {
       required final bool production,
       required final String apiUrl,
       required final String coinsUrl,
-      required final String ipUrl}) = _$ConfigImpl;
+      required final String mempool,
+      required final String ipUrl,
+      required final String utxoUrl}) = _$ConfigImpl;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
@@ -201,8 +262,13 @@ abstract class _Config implements Config {
   @override
   String get coinsUrl;
   @override
+  String get mempool;
+  @override
   String get ipUrl;
   @override
+  String get utxoUrl;
+  @override
   @JsonKey(ignore: true)
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

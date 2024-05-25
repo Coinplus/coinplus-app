@@ -19,7 +19,11 @@ String bytesToHex(Uint8List bytes) {
 }
 
 String getSplitAddress(String fullAddress) {
+  if (fullAddress.length < 27) {
+    return fullAddress;
+  }
+
   final start = fullAddress.substring(0, 5);
   final end = fullAddress.substring(fullAddress.length - 5);
-  return '$start ... $end';
+  return '$start...$end';
 }

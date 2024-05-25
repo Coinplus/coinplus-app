@@ -75,16 +75,27 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       ),
                     )
                     .copyWith(
-                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.1),
+                      ),
                     ),
                 onPressed: () async {
-                  await recordAmplitudeEvent(const ConnectOptionSelected(source: 'Onboarding', connectOption: 'QR'));
-                  await router.pop(context);
+                  await recordAmplitudeEvent(
+                    const ConnectOptionSelected(
+                      source: 'Onboarding',
+                      connectOption: 'QR',
+                    ),
+                  );
+                  await router.maybePop(context);
                   final res = await context.pushRoute<String?>(
                     const QrScannerRoute(),
                   );
                   if (res != null) {
-                    unawaited(recordAmplitudeEvent(QrScanned(source: 'Onboarding', walletAddress: res)));
+                    unawaited(
+                      recordAmplitudeEvent(
+                        QrScanned(source: 'Onboarding', walletAddress: res),
+                      ),
+                    );
                     await router.push(
                       CardFillRoute(receivedData: res),
                     );
@@ -121,11 +132,16 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       ),
                     )
                     .copyWith(
-                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.1),
+                      ),
                     ),
                 onPressed: () async {
                   await recordAmplitudeEvent(
-                    const ConnectOptionSelected(source: 'Onboarding', connectOption: 'Manual'),
+                    const ConnectOptionSelected(
+                      source: 'Onboarding',
+                      connectOption: 'Manual',
+                    ),
                   );
                   pageIndexNotifier.value = pageIndexNotifier.value + 1;
                 },
@@ -168,7 +184,8 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                 IconButton(
                   padding: const EdgeInsets.all(16),
                   icon: const Icon(Icons.arrow_back_rounded),
-                  onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+                  onPressed: () =>
+                      pageIndexNotifier.value = pageIndexNotifier.value - 1,
                 ),
               ],
             ),
@@ -219,16 +236,20 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     ),
                   )
                   .copyWith(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStateProperty.all(
                       Colors.grey.withOpacity(0.1),
                     ),
-                    padding: const MaterialStatePropertyAll(
+                    padding: const WidgetStatePropertyAll(
                       EdgeInsets.all(13),
                     ),
                   )
               : null,
           onPressed: () async {
-            unawaited(recordAmplitudeEvent(const ConnectManuallyClicked(source: 'Onboarding')));
+            unawaited(
+              recordAmplitudeEvent(
+                const ConnectManuallyClicked(source: 'Onboarding'),
+              ),
+            );
             await WoltModalSheet.show<void>(
               pageIndexNotifier: pageIndexNotifier,
               context: context,
@@ -247,7 +268,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                 }
               },
               onModalDismissedWithBarrierTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).maybePop();
                 pageIndexNotifier.value = 0;
               },
             );

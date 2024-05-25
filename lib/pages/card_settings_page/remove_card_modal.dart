@@ -78,7 +78,8 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           const Gap(15),
           LoadingButton(
             onPressed: () async {
-              final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+              final isCardActivated =
+                  isCardWalletActivated(balanceStore: _balanceStore);
               await recordAmplitudeEventPartTwo(
                 NotSureClicked(
                   walletAddress: widget.card.address,
@@ -86,7 +87,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   activated: await isCardActivated,
                 ),
               );
-              await router.pop();
+              await router.maybePop();
             },
             style: context.theme
                 .buttonStyle(
@@ -98,7 +99,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   ),
                 )
                 .copyWith(
-                  padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                  padding: const WidgetStatePropertyAll(EdgeInsets.zero),
                 ),
             child: const Text(
               'Not now',

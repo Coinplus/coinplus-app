@@ -50,12 +50,17 @@ class ActionSliderForBarDelete extends StatelessWidget {
         unawaited(_balanceStore.getSelectedBar(bar.address));
         await secureStorage.delete(key: 'card${bar.address}');
         unawaited(deleteCount(bar.address));
-        await router.pop();
+        await router.maybePop();
         unawaited(_balanceStore.removeSelectedBar());
 
-        final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+        final isBarActivated =
+            isBarWalletActivated(balanceStore: _balanceStore);
         await recordAmplitudeEventPartTwo(
-          CardDeleted(walletAddress: bar.address, walletType: 'Bar', activated: await isBarActivated),
+          CardDeleted(
+            walletAddress: bar.address,
+            walletType: 'Bar',
+            activated: await isBarActivated,
+          ),
         );
         showTopSnackBar(
           displayDuration: const Duration(
@@ -72,7 +77,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
             ),
           ),
         );
-        await router.pop();
+        await router.maybePop();
       },
       boxShadow: [
         BoxShadow(

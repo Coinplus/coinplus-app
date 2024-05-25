@@ -52,8 +52,9 @@ abstract class _AddressState with Store {
         ? await _balanceStore.getSelectedCard(btcAddress)
         : await _balanceStore.getSelectedBar(btcAddress);
 
-    final isAddressExist =
-        addressType == CardType.CARD ? _balanceStore.selectedCard != null : _balanceStore.selectedBar != null;
+    final isAddressExist = addressType == CardType.CARD
+        ? _balanceStore.selectedCard != null
+        : _balanceStore.selectedBar != null;
 
     if (isAddressExist) {
       setValidationPassed();

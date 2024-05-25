@@ -68,7 +68,9 @@ class TotalBalance extends StatelessWidget {
                 decimalDigits: 2,
               );
               final balance = _balanceStore.allCardsBalances;
-              if (data == null || _balanceStore.balanceLoading == true) {
+              if (data == null ||
+                  _balanceStore.balanceLoading == true ||
+                  balance == null) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                   child: SizedBox(
@@ -104,7 +106,9 @@ class TotalBalance extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: FontFamily.redHatBold,
                           color: Colors.white,
-                          fontSize: balance > 1000000000 ? (balance > 100000000 ? 24 : 26) : 28,
+                          fontSize: balance > 1000000000
+                              ? (balance > 100000000 ? 24 : 26)
+                              : 28,
                         ),
                       ),
                     );

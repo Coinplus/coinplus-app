@@ -23,11 +23,11 @@ Future<void> pleaseEnableBiometrics() {
       lottieHeight: 100,
       primaryActionText: 'Go to settings',
       primaryAction: () async {
-        await router.pop();
+        await router.maybePop();
         await AppSettings.openAppSettings(type: AppSettingsType.security);
       },
       secondaryActionText: 'Close',
-      secondaryAction: router.pop,
+      secondaryAction: router.maybePop,
     ),
     isDismissible: true,
   );

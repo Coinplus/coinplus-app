@@ -15,7 +15,8 @@ _$MarketCapDtoImpl _$$MarketCapDtoImplFromJson(Map json) => _$MarketCapDtoImpl(
       btcDominanceChange: (json['btcDominanceChange'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$MarketCapDtoImplToJson(_$MarketCapDtoImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$MarketCapDtoImplToJson(_$MarketCapDtoImpl instance) =>
+    <String, dynamic>{
       'marketCap': instance.marketCap,
       'volume': instance.volume,
       'btcDominance': instance.btcDominance,

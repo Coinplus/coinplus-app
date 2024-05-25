@@ -15,6 +15,14 @@ abstract class _ValidationState with Store {
   bool _isSecret2Valid = false;
   @observable
   bool isInvalidAddress = false;
+  @observable
+  bool secretOneVisibility = false;
+
+  @observable
+  bool secretTwoVisibility = false;
+
+  @observable
+  String walletAddress = '';
 
   @action
   void validate() {
@@ -49,5 +57,20 @@ abstract class _ValidationState with Store {
   @action
   void detectQr() {
     _isDetected = true;
+  }
+
+  @action
+  void setWalletAddress({required String publicKey}) {
+    walletAddress = publicKey;
+  }
+
+  @action
+  void makeSecretOneVisible() {
+    secretOneVisibility = true;
+  }
+
+  @action
+  void makeSecretTwoVisible() {
+    secretTwoVisibility = true;
   }
 }

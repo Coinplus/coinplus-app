@@ -1,21 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
-import '../../../services/amplitude_service.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../send_button_widget/send_button_widget.dart';
 
 Future<void> secretsSuccessAlert({
   required BuildContext context,
   required String walletAddress,
   required String walletType,
+  required bool isBarList,
 }) {
+  final allSettingsState = AllSettingsState();
   return showDialogBox(
     context,
     DialogBoxWithAction(
@@ -27,28 +28,20 @@ Future<void> secretsSuccessAlert({
           fontSize: 17,
         ),
       ),
-      lottieAsset: 'assets/lottie_animations/secrets_success.json',
+      lottieAsset: 'assets/lottie_animations/card_hovering_transaction.json',
       text:
-          'Your wallet activation is successful. \nTo proceed, please check out our informative guide for detailed instructions.',
-      primaryActionText: 'Guide Me',
+          'Your wallet activation is successful. You can find your private key in the card (bar) settings.',
+      primaryActionText: 'Next',
       primaryAction: () async {
-        await recordAmplitudeEventPartTwo(GuideMeClicked(walletAddress: walletAddress, walletType: walletType));
         router.popUntilRouteWithName(DashboardRoute.name);
-        await FlutterWebBrowser.openWebPage(
-          url: 'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
-          customTabsOptions: const CustomTabsOptions(
-            shareState: CustomTabsShareState.on,
-            instantAppsEnabled: true,
-            showTitle: true,
-            urlBarHidingEnabled: true,
-          ),
-          safariVCOptions: const SafariViewControllerOptions(
-            barCollapsingEnabled: true,
-            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-            modalPresentationCapturesStatusBarAppearance: true,
-          ),
+        await showSendFromWalletModal(
+          allSettingsState: allSettingsState,
+          isBarList: isBarList,
         );
+      },
+      secondaryActionText: 'Close',
+      secondaryAction: () {
+        router.popUntilRouteWithName(DashboardRoute.name);
       },
     ),
     isDismissible: true,

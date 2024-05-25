@@ -8,7 +8,8 @@ import '../models/old_card_model/old_card_model.dart';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 Future<CardsModel?> getCardData(String documentId) async {
-  final DocumentSnapshot documentSnapshot = await _firestore.collection('cards').doc(documentId).get();
+  final DocumentSnapshot documentSnapshot =
+      await _firestore.collection('cards').doc(documentId).get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
@@ -27,7 +28,8 @@ Future<void> setCardsData({
   required String type,
 }) async {
   final firestore = FirebaseFirestore.instance;
-  final CollectionReference collectionReference = firestore.collection('authenticity_check');
+  final CollectionReference collectionReference =
+      firestore.collection('authenticity_check');
 
   final customDocumentId = documentID;
 

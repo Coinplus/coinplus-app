@@ -81,8 +81,10 @@ class CardSettingsPage extends HookWidget {
       if (isInactive.value) {
         _cardSettingsState.isPrivateKeyVisible = false;
       }
-      if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened) {
-        await router.pop();
+      if (appLocked.value &&
+          isInactive.value == true &&
+          _walletProtectState.isModalOpened) {
+        await router.maybePop();
       }
       isPaused.value = [AppLifecycleState.paused].contains(current);
       if (isPaused.value &&
@@ -136,7 +138,10 @@ class CardSettingsPage extends HookWidget {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       width: 2,
-                      color: _cardSettingsState.selectedCardColor == colors[index] ? Colors.blue : Colors.transparent,
+                      color:
+                          _cardSettingsState.selectedCardColor == colors[index]
+                              ? Colors.blue
+                              : Colors.transparent,
                     ),
                   ),
                   child: getColorImage(colors[index]),
@@ -144,7 +149,8 @@ class CardSettingsPage extends HookWidget {
                 Radio(
                   activeColor: Colors.blue,
                   value: index,
-                  groupValue: colors.indexOf(_cardSettingsState.selectedCardColor),
+                  groupValue:
+                      colors.indexOf(_cardSettingsState.selectedCardColor),
                   onChanged: (selectedIndex) {
                     _cardSettingsState.changeCardColor(colors[selectedIndex!]);
                   },
@@ -188,7 +194,9 @@ class CardSettingsPage extends HookWidget {
                 children: [
                   ListTile(
                     onTap: () async {
-                      await _walletProtectState.updateModalStatus(isOpened: true);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: true,
+                      );
                       await showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
@@ -205,7 +213,9 @@ class CardSettingsPage extends HookWidget {
                           );
                         },
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: false);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: false,
+                      );
                     },
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +262,8 @@ class CardSettingsPage extends HookWidget {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor:
+                                    const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Address was copied',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
@@ -274,7 +285,8 @@ class CardSettingsPage extends HookWidget {
                           },
                         );
                       }
-                      final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+                      final isCardActivated =
+                          isCardWalletActivated(balanceStore: _balanceStore);
                       unawaited(
                         recordAmplitudeEvent(
                           AddressCopied(
@@ -328,7 +340,8 @@ class CardSettingsPage extends HookWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Gap(13),
-                                      if (_cardSettingsState.isPrivateKeyVisible)
+                                      if (_cardSettingsState
+                                          .isPrivateKeyVisible)
                                         Assets.icons.contentCopy.image(
                                           height: 24,
                                         )
@@ -341,54 +354,92 @@ class CardSettingsPage extends HookWidget {
                                   ),
                                   onLongPress: () async {
                                     await recordAmplitudeEventPartTwo(
-                                      PrivateKeyRevealed(walletAddress: card.address, walletType: 'Card'),
+                                      PrivateKeyRevealed(
+                                        walletAddress: card.address,
+                                        walletType: 'Card',
+                                      ),
                                     );
                                     await HapticFeedback.selectionClick();
-                                    if (!_cardSettingsState.isPrivateKeyVisible) {
-                                      if (_walletProtectState.isBiometricsEnabled) {
+                                    if (!_cardSettingsState
+                                        .isPrivateKeyVisible) {
+                                      if (_walletProtectState
+                                          .isBiometricsEnabled) {
                                         if (await _isPinSet) {
                                           try {
                                             isBiometricsRunning.value = true;
-                                            final isAuthorized = await _auth.authenticate(
-                                              localizedReason: 'Authenticate using Face ID',
-                                              options: const AuthenticationOptions(biometricOnly: true),
+                                            final isAuthorized =
+                                                await _auth.authenticate(
+                                              localizedReason:
+                                                  'Authenticate using Face ID',
+                                              options:
+                                                  const AuthenticationOptions(
+                                                biometricOnly: true,
+                                              ),
                                             );
                                             if (isAuthorized) {
-                                              _cardSettingsState.makePrivateVisible();
-                                              await Future.delayed(const Duration(milliseconds: 1200));
+                                              _cardSettingsState
+                                                  .makePrivateVisible();
+                                              await Future.delayed(
+                                                const Duration(
+                                                  milliseconds: 1200,
+                                                ),
+                                              );
                                               isBiometricsRunning.value = false;
                                             }
                                           } catch (e) {
-                                            if (e is PlatformException && e.code == 'NotAvailable') {
-                                            } else if (e is PlatformException && e.code == 'NotEnrolled') {
-                                              log('Biometrics not enrolled' as num);
-                                            } else if (e is PlatformException && e.code == 'AuthenticationFailed') {
-                                              log('Biometrics authentication failed or canceled' as num);
+                                            if (e is PlatformException &&
+                                                e.code == 'NotAvailable') {
+                                            } else if (e is PlatformException &&
+                                                e.code == 'NotEnrolled') {
+                                              log(
+                                                'Biometrics not enrolled'
+                                                    as num,
+                                              );
+                                            } else if (e is PlatformException &&
+                                                e.code ==
+                                                    'AuthenticationFailed') {
+                                              log(
+                                                'Biometrics authentication failed or canceled'
+                                                    as num,
+                                              );
                                             } else {
-                                              log('Unhandled exception: $e' as num);
+                                              log(
+                                                'Unhandled exception: $e'
+                                                    as num,
+                                              );
                                             }
                                             return;
                                           }
                                         } else {
                                           isBiometricsRunning.value = false;
-                                          _cardSettingsState.makePrivateVisible();
+                                          _cardSettingsState
+                                              .makePrivateVisible();
                                         }
                                       } else {
                                         if (await _isPinSet) {
-                                          await router
-                                              .push(PinCodeForPrivateKey(card: card, isVisible: _cardSettingsState));
+                                          await router.push(
+                                            PinCodeForPrivateKey(
+                                              card: card,
+                                              isVisible: _cardSettingsState,
+                                            ),
+                                          );
                                         } else {
-                                          _cardSettingsState.makePrivateVisible();
+                                          _cardSettingsState
+                                              .makePrivateVisible();
                                         }
                                       }
                                     } else {
-                                      _cardSettingsState.isPrivateKeyVisible = false;
+                                      _cardSettingsState.isPrivateKeyVisible =
+                                          false;
                                     }
                                   },
                                   onTap: _cardSettingsState.isPrivateKeyVisible
                                       ? () {
                                           recordAmplitudeEventPartTwo(
-                                            PrivateKeyCopied(walletAddress: card.address, walletType: 'Card'),
+                                            PrivateKeyCopied(
+                                              walletAddress: card.address,
+                                              walletType: 'Card',
+                                            ),
                                           );
                                           Clipboard.setData(
                                             ClipboardData(
@@ -403,10 +454,14 @@ class CardSettingsPage extends HookWidget {
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                                  message: 'Private key was copied',
+                                                  backgroundColor:
+                                                      const Color(0xFF4A4A4A)
+                                                          .withOpacity(0.9),
+                                                  message:
+                                                      'Private key was copied',
                                                   textStyle: const TextStyle(
-                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Colors.white,
                                                   ),
@@ -417,7 +472,10 @@ class CardSettingsPage extends HookWidget {
                                         }
                                       : () {
                                           recordAmplitudeEventPartTwo(
-                                            ClickedOnPrivateKey(walletAddress: card.address, walletType: 'Card'),
+                                            ClickedOnPrivateKey(
+                                              walletAddress: card.address,
+                                              walletType: 'Card',
+                                            ),
                                           );
                                           showTopSnackBar(
                                             displayDuration: const Duration(
@@ -425,10 +483,14 @@ class CardSettingsPage extends HookWidget {
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                                              message: 'Hold to reveal your Private key',
+                                              backgroundColor:
+                                                  const Color(0xFF4A4A4A)
+                                                      .withOpacity(0.9),
+                                              message:
+                                                  'Hold to reveal your Private key',
                                               textStyle: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
                                                 fontSize: 14,
                                                 color: Colors.white,
                                               ),
@@ -438,62 +500,76 @@ class CardSettingsPage extends HookWidget {
                                   title: Observer(
                                     builder: (context) {
                                       return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           const Text(
                                             'Private key',
                                             style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.primaryTextColor,
                                             ),
                                           ),
                                           const Gap(6),
-                                          if (_cardSettingsState.isPrivateKeyVisible)
+                                          if (_cardSettingsState
+                                              .isPrivateKeyVisible)
                                             Container(
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
                                                 ),
-                                                borderRadius: BorderRadius.circular(10),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
                                               child: Text(
                                                 privateKey.value.toString(),
                                                 style: const TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color: AppColors.primaryTextColor,
+                                                  color: AppColors
+                                                      .primaryTextColor,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                               ),
                                             )
                                           else
                                             ClipRRect(
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                               child: ImageFiltered(
                                                 imageFilter: ImageFilter.blur(
                                                   sigmaX: 5,
                                                   sigmaY: 5,
                                                 ),
                                                 child: Container(
-                                                  padding: const EdgeInsets.all(5),
+                                                  padding:
+                                                      const EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
                                                       10,
                                                     ),
                                                     border: Border.all(
-                                                      color: Colors.grey.withOpacity(0.1),
+                                                      color: Colors.grey
+                                                          .withOpacity(0.1),
                                                     ),
                                                   ),
                                                   child: const Text(
                                                     'L24hTctc4WlPBJwyP8EzBogNhm2y7EUjkHpVBFD9rhYT5PLoTuY6',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors.textHintsColor,
-                                                      fontWeight: FontWeight.w300,
+                                                      color: AppColors
+                                                          .textHintsColor,
+                                                      fontWeight:
+                                                          FontWeight.w300,
                                                     ),
                                                   ),
                                                 ),
@@ -512,7 +588,11 @@ class CardSettingsPage extends HookWidget {
                           title: ScaleTap(
                             enableFeedback: false,
                             onPressed: () async {
-                              await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Wallet Settings'));
+                              await recordAmplitudeEventPartTwo(
+                                const HelpCenterClicked(
+                                  source: 'Wallet Settings',
+                                ),
+                              );
                               await FlutterWebBrowser.openWebPage(
                                 url:
                                     'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
@@ -522,11 +602,16 @@ class CardSettingsPage extends HookWidget {
                                   showTitle: true,
                                   urlBarHidingEnabled: true,
                                 ),
-                                safariVCOptions: const SafariViewControllerOptions(
+                                safariVCOptions:
+                                    const SafariViewControllerOptions(
                                   barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
+                                  modalPresentationStyle:
+                                      UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle:
+                                      SafariViewControllerDismissButtonStyle
+                                          .done,
+                                  modalPresentationCapturesStatusBarAppearance:
+                                      true,
                                 ),
                               );
                             },
@@ -619,7 +704,8 @@ class CardSettingsPage extends HookWidget {
                               Observer(
                                 builder: (_) {
                                   return Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: getColorWidgets(),
                                   );
                                 },
@@ -638,7 +724,8 @@ class CardSettingsPage extends HookWidget {
                     ),
                   ListTile(
                     onTap: () async {
-                      final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+                      final isCardActivated =
+                          isCardWalletActivated(balanceStore: _balanceStore);
                       await recordAmplitudeEventPartTwo(
                         RemoveCardClicked(
                           walletAddress: card.address,
@@ -646,7 +733,9 @@ class CardSettingsPage extends HookWidget {
                           activated: await isCardActivated,
                         ),
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: true);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: true,
+                      );
                       await showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
@@ -663,7 +752,9 @@ class CardSettingsPage extends HookWidget {
                           );
                         },
                       );
-                      await _walletProtectState.updateModalStatus(isOpened: false);
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: false,
+                      );
                     },
                     trailing: Assets.icons.trash.image(
                       height: 24,
@@ -685,9 +776,13 @@ class CardSettingsPage extends HookWidget {
                         return LoadingButton(
                           onPressed: _cardSettingsState.isColorChanged
                               ? () async {
-                                  if (_cardSettingsState.selectedCardColor == CardColor.ORANGE) {
+                                  if (_cardSettingsState.selectedCardColor ==
+                                      CardColor.ORANGE) {
                                     await recordAmplitudeEventPartTwo(
-                                      CardColorCHanged(walletAddress: card.address, color: 'ORANGE'),
+                                      CardColorCHanged(
+                                        walletAddress: card.address,
+                                        color: 'ORANGE',
+                                      ),
                                     );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
@@ -699,7 +794,8 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
@@ -708,9 +804,14 @@ class CardSettingsPage extends HookWidget {
                                         ),
                                       ),
                                     );
-                                  } else if (_cardSettingsState.selectedCardColor == CardColor.WHITE) {
+                                  } else if (_cardSettingsState
+                                          .selectedCardColor ==
+                                      CardColor.WHITE) {
                                     await recordAmplitudeEventPartTwo(
-                                      CardColorCHanged(walletAddress: card.address, color: 'WHITE'),
+                                      CardColorCHanged(
+                                        walletAddress: card.address,
+                                        color: 'WHITE',
+                                      ),
                                     );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
@@ -722,7 +823,8 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
@@ -731,9 +833,14 @@ class CardSettingsPage extends HookWidget {
                                         ),
                                       ),
                                     );
-                                  } else if (_cardSettingsState.selectedCardColor == CardColor.BLACK) {
+                                  } else if (_cardSettingsState
+                                          .selectedCardColor ==
+                                      CardColor.BLACK) {
                                     await recordAmplitudeEventPartTwo(
-                                      CardColorCHanged(walletAddress: card.address, color: 'BLACK'),
+                                      CardColorCHanged(
+                                        walletAddress: card.address,
+                                        color: 'BLACK',
+                                      ),
                                     );
                                     _balanceStore.changeCardColorAndSave(
                                       cardAddress: card.address,
@@ -745,7 +852,8 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
@@ -755,13 +863,14 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                     );
                                   }
-                                  await router.pop();
+                                  await router.maybePop();
                                   await _balanceStore.getCardsInfo();
                                 }
                               : null,
                           child: const Text(
                             'Save',
-                            style: TextStyle(fontFamily: FontFamily.redHatMedium),
+                            style:
+                                TextStyle(fontFamily: FontFamily.redHatMedium),
                           ),
                         ).paddingHorizontal(64);
                       },
@@ -774,7 +883,9 @@ class CardSettingsPage extends HookWidget {
         ),
         Visibility(
           visible: isInactive.value && appLocked.value,
-          child: !isBiometricsRunning.value ? const Background() : const SizedBox(),
+          child: !isBiometricsRunning.value
+              ? const Background()
+              : const SizedBox(),
         ),
       ],
     );

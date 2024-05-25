@@ -14,7 +14,8 @@ class OldCardModel {
     this.type,
   });
 
-  factory OldCardModel.fromJson(Map<String, dynamic> json) => _$OldCardModelFromJson(json);
+  factory OldCardModel.fromJson(Map<String, dynamic> json) =>
+      _$OldCardModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$OldCardModelToJson(this);
 }

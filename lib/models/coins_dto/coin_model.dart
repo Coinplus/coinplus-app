@@ -12,7 +12,8 @@ class CoinModel with _$CoinModel {
     required Meta meta,
   }) = _CoinModel;
 
-  factory CoinModel.fromJson(Map<String, dynamic> json) => _$CoinModelFromJson(json);
+  factory CoinModel.fromJson(Map<String, dynamic> json) =>
+      _$CoinModelFromJson(json);
 }
 
 @freezed
@@ -44,7 +45,8 @@ class CoinResultModel with _$CoinResultModel {
     required num rank,
   }) = _CoinResultModel;
 
-  factory CoinResultModel.fromJson(Map<String, dynamic> json) => _$CoinResultModelFromJson(json);
+  factory CoinResultModel.fromJson(Map<String, dynamic> json) =>
+      _$CoinResultModelFromJson(json);
 }
 
 @freezed

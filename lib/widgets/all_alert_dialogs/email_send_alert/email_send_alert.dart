@@ -13,11 +13,15 @@ import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 
-Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProtectState) {
+Future<void> emailSendAlert(
+  BuildContext context,
+  WalletProtectState walletProtectState,
+) {
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text: 'You’ll get the reply shortly, before that you can check out our Help Center.',
+      text:
+          'You’ll get the reply shortly, before that you can check out our Help Center.',
       title: const Text(
         'Success!',
         textAlign: TextAlign.center,
@@ -29,9 +33,11 @@ Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProte
       lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Help Center',
       primaryAction: () async {
-        await router.pop();
-        await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Contact Us'));
-        await router.pop(const SettingsRoute());
+        await router.maybePop();
+        await recordAmplitudeEventPartTwo(
+          const HelpCenterClicked(source: 'Contact Us'),
+        );
+        await router.maybePop(const SettingsRoute());
         await FlutterWebBrowser.openWebPage(
           url: 'https://coinplus.gitbook.io/help-center',
           customTabsOptions: const CustomTabsOptions(
@@ -50,8 +56,8 @@ Future<void> emailSendAlert(BuildContext context, WalletProtectState walletProte
       },
       secondaryActionText: 'Close',
       secondaryAction: () async {
-        await router.pop();
-        await router.pop(const SettingsRoute());
+        await router.maybePop();
+        await router.maybePop(const SettingsRoute());
       },
     ),
     isDismissible: true,
@@ -62,7 +68,8 @@ Future<void> emailSendFailAlert(BuildContext context) {
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text: 'You’ll get the reply shortly, before that you can check out our Help Center.',
+      text:
+          'You’ll get the reply shortly, before that you can check out our Help Center.',
       title: const Text(
         'Oops…',
         textAlign: TextAlign.center,
@@ -74,9 +81,11 @@ Future<void> emailSendFailAlert(BuildContext context) {
       lottieAsset: 'assets/lottie_animations/sad_emoji.json',
       primaryActionText: 'Help Center',
       primaryAction: () async {
-        await router.pop();
-        await recordAmplitudeEventPartTwo(const HelpCenterClicked(source: 'Contact Us'));
-        await router.pop(const SettingsRoute());
+        await router.maybePop();
+        await recordAmplitudeEventPartTwo(
+          const HelpCenterClicked(source: 'Contact Us'),
+        );
+        await router.maybePop(const SettingsRoute());
         await FlutterWebBrowser.openWebPage(
           url: 'https://coinplus.gitbook.io/help-center',
           customTabsOptions: const CustomTabsOptions(
@@ -128,8 +137,8 @@ Future<void> emailSendFailAlert(BuildContext context) {
       ),
       secondaryActionText: 'Close',
       secondaryAction: () async {
-        await router.pop();
-        await router.pop(const SettingsRoute());
+        await router.maybePop();
+        await router.maybePop(const SettingsRoute());
       },
     ),
     isDismissible: true,

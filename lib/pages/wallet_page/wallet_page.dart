@@ -66,12 +66,15 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     setWalletShown();
+    if (_balanceStore.cards.isNotEmpty) {
+      _balanceStore.getCardsInfo();
+    }
+    if (_balanceStore.bars.isNotEmpty) {
+      _balanceStore.getBarsInfo();
+    }
     _marketPageStore
       ..selectedCoin = _marketPageStore.allCoins?.result.first.id
       ..loadSelectedCoin();
-    _balanceStore
-      ..getCardsInfo()
-      ..getBarsInfo();
     _rampService.configureRamp(
       address: _balanceStore.cards.isNotEmpty
           ? _balanceStore.cards[_balanceStore.cardCurrentIndex].address
@@ -86,12 +89,14 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+        _rampService.configuration.userAddress =
+            _balanceStore.bars[_balanceStore.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
           _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
+        _rampService.configuration.userAddress =
+            _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
       }
       if (_tabController.index == 0) {
         _historyPageStore.setTabIndex(0);
@@ -155,13 +160,18 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             CustomPaint(
               size: Size(
                 context.height,
-                (context.height > 667 ? context.height * 0.205 : context.height * 0.2).toDouble(),
+                (context.height > 667
+                        ? context.height * 0.205
+                        : context.height * 0.2)
+                    .toDouble(),
               ),
               painter: HeaderCustomPainter(),
             ),
             Positioned(
               bottom: context.height > 667 ? 6 : 0,
-              right: context.height < 932 ? context.height * 0.017 : context.height * 0.025,
+              right: context.height < 932
+                  ? context.height * 0.017
+                  : context.height * 0.025,
               child: CardAndBarTab(tabController: _tabController),
             ),
             const Positioned(
@@ -216,8 +226,10 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 SliverFillRemaining(
                   child: Column(
                     children: [
-                      if (context.height > 667) const Gap(15) else const SizedBox(),
-                      //Cards Slider
+                      if (context.height > 667)
+                        const Gap(15)
+                      else
+                        const SizedBox(),
                       Expanded(
                         flex: context.height > 667 ? 7 : 10,
                         child: TabBarView(
@@ -228,7 +240,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                               onCardSelected: (card) => widget.onChangeCard(
                                 (card: card, index: 0),
                               ),
-                              onCarouselScroll: (val) => cardCarouselIndex = val,
+                              onCarouselScroll: (val) =>
+                                  cardCarouselIndex = val,
                               tabController: _tabController,
                             ),
                             BarList(

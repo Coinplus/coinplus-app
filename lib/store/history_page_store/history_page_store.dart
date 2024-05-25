@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/history_model/transaction_model.dart';
 import '../../models/wallet_status_model/wallet_status_model.dart';
@@ -50,16 +49,20 @@ abstract class _HistoryPageStore with Store {
   String selectedBarAddress = '';
 
   @observable
-  ObservableMap<String, List<TransactionModel>> cardHistories = ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> cardHistories =
+      ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> barHistories = ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> barHistories =
+      ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> cardTransactionCache = ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> cardTransactionCache =
+      ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> barTransactionCache = ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> barTransactionCache =
+      ObservableMap<String, List<TransactionModel>>();
 
   @observable
   bool historyLoading = false;
@@ -114,12 +117,18 @@ abstract class _HistoryPageStore with Store {
   }
 
   @action
-  void cacheCardTransaction(String address, List<TransactionModel> transactions) {
+  void cacheCardTransaction(
+    String address,
+    List<TransactionModel> transactions,
+  ) {
     cardTransactionCache[address] = transactions;
   }
 
   @action
-  void cacheBarTransaction(String address, List<TransactionModel> transactions) {
+  void cacheBarTransaction(
+    String address,
+    List<TransactionModel> transactions,
+  ) {
     barTransactionCache[address] = transactions;
   }
 
@@ -141,7 +150,8 @@ abstract class _HistoryPageStore with Store {
       if (cachedTransactions != null) {
         await isCachedCardTransactions(address);
       } else {
-        final fetchedTransactions = await CoinsClient(dio).getTransactions(address: address, page: 1);
+        final fetchedTransactions =
+            await coinStatsRepo.getTransactions(address: address, page: 1);
         cardTransactions.add(fetchedTransactions);
         cardHistories[address] = [fetchedTransactions];
         cacheCardTransaction(address, [fetchedTransactions]);
@@ -175,7 +185,8 @@ abstract class _HistoryPageStore with Store {
       if (cachedTransactions != null) {
         await isCachedBarTransactions(address);
       } else {
-        final fetchedTransactions = await CoinsClient(dio).getTransactions(address: address, page: 1);
+        final fetchedTransactions =
+            await coinStatsRepo.getTransactions(address: address, page: 1);
         barTransactions.add(fetchedTransactions);
         barHistories[address] = [fetchedTransactions];
         cacheBarTransaction(address, [fetchedTransactions]);
@@ -190,7 +201,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> getWalletStatus({required String address}) async {
     try {
-      walletStatus = await CoinsClient(dio).getWalletStatus(address: address);
+      walletStatus = await coinStatsRepo.getWalletStatus(address: address);
     } catch (e) {
       debugPrint('Error fetching wallet status: $e');
     }
@@ -201,7 +212,10 @@ abstract class _HistoryPageStore with Store {
     try {
       isLoading = true;
       cardCurrentPage++;
-      final newData = await CoinsClient(dio).getTransactions(address: address, page: cardCurrentPage);
+      final newData = await coinStatsRepo.getTransactions(
+        address: address,
+        page: cardCurrentPage,
+      );
       newFetchedData = [];
       newFetchedData.add(newData);
       final existingTransactions = cardHistories[address];
@@ -222,7 +236,10 @@ abstract class _HistoryPageStore with Store {
     try {
       isLoading = true;
       barCurrentPage++;
-      final newData = await CoinsClient(dio).getTransactions(address: address, page: barCurrentPage);
+      final newData = await coinStatsRepo.getTransactions(
+        address: address,
+        page: barCurrentPage,
+      );
       newFetchedBarData = [];
       newFetchedBarData.add(newData);
       final existingTransactions = barHistories[address];
@@ -241,7 +258,9 @@ abstract class _HistoryPageStore with Store {
   @computed
   List<TransactionItem>? get cardsTransactions {
     if (cardHistories[_balanceStore.cards[cardHistoryIndex].address] != null) {
-      return cardHistories[_balanceStore.cards[cardHistoryIndex].address]?.expand((item) => item.result).toList();
+      return cardHistories[_balanceStore.cards[cardHistoryIndex].address]
+          ?.expand((item) => item.result)
+          .toList();
     }
     return null;
   }
@@ -249,19 +268,27 @@ abstract class _HistoryPageStore with Store {
   @computed
   List<TransactionItem>? get barsTransactions {
     if (barHistories[selectedBarAddress] != null) {
-      return barHistories[selectedBarAddress]?.expand((item) => item.result).toList();
+      return barHistories[selectedBarAddress]
+          ?.expand((item) => item.result)
+          .toList();
     }
     return null;
   }
 
   @computed
   List<String>? get cardUniqueDates {
-    return cardsTransactions?.map((transaction) => formatDate(transaction.date.toString())).toSet().toList();
+    return cardsTransactions
+        ?.map((transaction) => formatDate(transaction.date.toString()))
+        .toSet()
+        .toList();
   }
 
   @computed
   List<String>? get barUniqueDates {
-    return barsTransactions?.map((transaction) => formatDate(transaction.date.toString())).toSet().toList();
+    return barsTransactions
+        ?.map((transaction) => formatDate(transaction.date.toString()))
+        .toSet()
+        .toList();
   }
 
   @action
@@ -290,7 +317,7 @@ abstract class _HistoryPageStore with Store {
   Future<void> cardRefresh(String cardAddress) async {
     isCardRefreshing = true;
     historyLoading = true;
-    await CoinsClient(dio).patchTransactions(address: cardAddress);
+    await coinStatsRepo.patchTransactions(address: cardAddress);
     final now = DateTime.now();
     await _saveLastRefreshed(cardAddress, now.toString());
     var synced = false;
@@ -308,7 +335,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> saveAndPatchCardAddress(String address) async {
     isCardRefreshing = true;
-    await CoinsClient(dio).patchTransactions(address: address);
+    await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
       await Future.delayed(const Duration(milliseconds: 2000));
@@ -325,7 +352,7 @@ abstract class _HistoryPageStore with Store {
   Future<void> saveAndPatchBarAddress(String address) async {
     isBarRefreshing = true;
     historyLoading = true;
-    await CoinsClient(dio).patchTransactions(address: address);
+    await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
       await Future.delayed(const Duration(milliseconds: 2000));
@@ -347,7 +374,7 @@ abstract class _HistoryPageStore with Store {
     final now = DateTime.now();
     await _saveLastRefreshed(cardAddress, now.toString());
     var synced = false;
-    await CoinsClient(dio).patchTransactions(address: cardAddress);
+    await coinStatsRepo.patchTransactions(address: cardAddress);
     while (!synced) {
       await Future.delayed(const Duration(milliseconds: 2000));
       await getWalletStatus(address: cardAddress);
@@ -375,10 +402,15 @@ abstract class _HistoryPageStore with Store {
     isButtonDisabled = false;
   }
 
-  Future<void> _saveLastRefreshed(String cardAddress, String lastRefreshed) async {
+  Future<void> _saveLastRefreshed(
+    String cardAddress,
+    String lastRefreshed,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final map = prefs.getString('lastRefreshedMap') != null
-        ? Map<String, String>.from(json.decode(prefs.getString('lastRefreshedMap')!))
+        ? Map<String, String>.from(
+            json.decode(prefs.getString('lastRefreshedMap')!),
+          )
         : {};
     map[cardAddress] = lastRefreshed;
     await prefs.setString('lastRefreshedMap', json.encode(map));
@@ -387,7 +419,9 @@ abstract class _HistoryPageStore with Store {
   Future<Map<String, String>> _loadLastRefreshedMap() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('lastRefreshedMap') != null
-        ? Map<String, String>.from(json.decode(prefs.getString('lastRefreshedMap')!))
+        ? Map<String, String>.from(
+            json.decode(prefs.getString('lastRefreshedMap')!),
+          )
         : {};
   }
 

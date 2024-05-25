@@ -2,7 +2,8 @@ import '../store/balance_store/balance_store.dart';
 import 'secure_storage_utils.dart';
 
 Future<bool> isCardWalletActivated({required BalanceStore balanceStore}) async {
-  if (balanceStore.cards.isNotEmpty && balanceStore.cards.length != balanceStore.cardCurrentIndex) {
+  if (balanceStore.cards.isNotEmpty &&
+      balanceStore.cards.length != balanceStore.cardCurrentIndex) {
     return checkWalletStatus(
       balanceStore.cards[balanceStore.cardCurrentIndex].address,
     );
@@ -12,7 +13,8 @@ Future<bool> isCardWalletActivated({required BalanceStore balanceStore}) async {
 }
 
 Future<bool> isBarWalletActivated({required BalanceStore balanceStore}) async {
-  if (balanceStore.bars.isNotEmpty && balanceStore.bars.length != balanceStore.barCurrentIndex) {
+  if (balanceStore.bars.isNotEmpty &&
+      balanceStore.bars.length != balanceStore.barCurrentIndex) {
     return checkWalletStatus(
       balanceStore.bars[balanceStore.barCurrentIndex].address,
     );

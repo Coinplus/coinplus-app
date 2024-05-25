@@ -49,7 +49,8 @@ class OnboardingPage extends HookWidget {
     final isMifareUltralight = useRef<bool?>(false);
 
     useOnAppLifecycleStateChange(
-      (previous, current) => resumed.value = [AppLifecycleState.resumed].contains(current),
+      (previous, current) =>
+          resumed.value = [AppLifecycleState.resumed].contains(current),
     );
 
     useEffect(
@@ -122,8 +123,10 @@ class OnboardingPage extends HookWidget {
                 LoadingButton(
                   onPressed: Platform.isIOS
                       ? () async {
-                          await recordAmplitudeEvent(const ConnectWalletClicked());
-                          await router.pop();
+                          await recordAmplitudeEvent(
+                            const ConnectWalletClicked(),
+                          );
+                          await router.maybePop();
                           await NfcManager.instance.startSession(
                             alertMessage:
                                 'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
@@ -136,23 +139,36 @@ class OnboardingPage extends HookWidget {
                               dynamic isOriginalTag = false;
                               if (records.length >= 2) {
                                 final hasJson = records[1].payload;
-                                final payloadString = String.fromCharCodes(hasJson);
-                                final Map payloadData = await json.decode(payloadString);
+                                final payloadString =
+                                    String.fromCharCodes(hasJson);
+                                final Map payloadData =
+                                    await json.decode(payloadString);
                                 walletAddress = payloadData['a'];
                                 cardColor = payloadData['c'];
                                 formFactor = payloadData['t'];
                               } else {
                                 final hasUrl = records[0].payload;
-                                final payloadString = String.fromCharCodes(hasUrl);
-                                final parts = payloadString.split('air.coinplus.com/btc/');
+                                final payloadString =
+                                    String.fromCharCodes(hasUrl);
+                                final parts = payloadString
+                                    .split('air.coinplus.com/btc/');
                                 walletAddress = parts[1];
                               }
-                              await recordAmplitudeEvent(NfcTapped(source: 'Onboarding', walletAddress: walletAddress));
+                              await recordAmplitudeEvent(
+                                NfcTapped(
+                                  source: 'Onboarding',
+                                  walletAddress: walletAddress,
+                                ),
+                              );
                               final card = await getCardData(walletAddress);
                               final mifare = MiFare.from(tag);
                               final tagId = mifare!.identifier;
-                              final formattedTagId =
-                                  tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+                              final formattedTagId = tagId
+                                  .map(
+                                    (e) => e.toRadixString(16).padLeft(2, '0'),
+                                  )
+                                  .join(':')
+                                  .toUpperCase();
                               Uint8List? signature;
                               try {
                                 final response = await mifare.sendMiFareCommand(
@@ -173,7 +189,9 @@ class OnboardingPage extends HookWidget {
                               if (isOriginalTag && card != null) {
                                 await NfcManager.instance.stopSession();
                                 if (card.nfcId == formattedTagId) {
-                                  await Future.delayed(const Duration(milliseconds: 2700));
+                                  await Future.delayed(
+                                    const Duration(milliseconds: 2700),
+                                  );
                                   if (formFactor == 'c') {
                                     await router.push(
                                       CardFillWithNfc(
@@ -195,9 +213,12 @@ class OnboardingPage extends HookWidget {
                                   }
                                 } else {
                                   await NfcManager.instance.stopSession();
-                                  await Future.delayed(const Duration(milliseconds: 2700));
+                                  await Future.delayed(
+                                    const Duration(milliseconds: 2700),
+                                  );
                                   await notCoinplusCardAlert(
-                                    context: router.navigatorKey.currentContext!,
+                                    context:
+                                        router.navigatorKey.currentContext!,
                                     walletAddress: walletAddress,
                                     walletType: 'Card',
                                     source: 'Onboarding',
@@ -205,16 +226,20 @@ class OnboardingPage extends HookWidget {
                                 }
                               } else {
                                 await NfcManager.instance.stopSession();
-                                await Future.delayed(const Duration(milliseconds: 2700));
+                                await Future.delayed(
+                                  const Duration(milliseconds: 2700),
+                                );
                                 if (tag.data.containsKey('mifare')) {
                                   isMifareUltralight.value = true;
-                                  if (card != null && card.possibleOldCard == true) {
+                                  if (card != null &&
+                                      card.possibleOldCard == true) {
                                     if (card.nfcId == formattedTagId) {
                                       //Connect as Coinplus Bitcoin Wallet
                                       await router.push(
                                         CardFillWithNfc(
                                           isOldCard: card.possibleOldCard,
-                                          isMiFareUltralight: isMifareUltralight.value,
+                                          isMiFareUltralight:
+                                              isMifareUltralight.value,
                                           isOriginalCard: false,
                                           receivedData: walletAddress,
                                           isActivated: card.activated,
@@ -223,9 +248,12 @@ class OnboardingPage extends HookWidget {
                                     } else {
                                       //Fake card
                                       await NfcManager.instance.stopSession();
-                                      await Future.delayed(const Duration(milliseconds: 2700));
+                                      await Future.delayed(
+                                        const Duration(milliseconds: 2700),
+                                      );
                                       await notCoinplusCardAlert(
-                                        context: router.navigatorKey.currentContext!,
+                                        context:
+                                            router.navigatorKey.currentContext!,
                                         walletAddress: walletAddress,
                                         walletType: 'Card',
                                         source: 'Onboarding',
@@ -236,7 +264,8 @@ class OnboardingPage extends HookWidget {
                                     await router.push(
                                       CardFillWithNfc(
                                         isOldCard: card?.possibleOldCard,
-                                        isMiFareUltralight: isMifareUltralight.value,
+                                        isMiFareUltralight:
+                                            isMifareUltralight.value,
                                         isOriginalCard: false,
                                         receivedData: walletAddress,
                                         isActivated: card?.activated,
@@ -254,17 +283,25 @@ class OnboardingPage extends HookWidget {
                                   );
                                 }
                               }
-                              await _walletProtectState.updateNfcSessionStatus(isStarted: false);
+                              await _walletProtectState.updateNfcSessionStatus(
+                                isStarted: false,
+                              );
                             },
                             onError: (_) => Future(() async {
-                              await recordAmplitudeEvent(const NfcClosed(source: 'Onboarding'));
-                              await _walletProtectState.updateNfcSessionStatus(isStarted: false);
+                              await recordAmplitudeEvent(
+                                const NfcClosed(source: 'Onboarding'),
+                              );
+                              await _walletProtectState.updateNfcSessionStatus(
+                                isStarted: false,
+                              );
                             }),
                           );
                         }
                       : () async {
-                          await recordAmplitudeEvent(const ConnectWalletClicked());
-                          await router.pop();
+                          await recordAmplitudeEvent(
+                            const ConnectWalletClicked(),
+                          );
+                          await router.maybePop();
                           await NfcManager.instance.startSession(
                             onDiscovered: (tag) async {
                               final ndef = Ndef.from(tag);
@@ -275,19 +312,26 @@ class OnboardingPage extends HookWidget {
 
                               if (records.length >= 2) {
                                 final hasJson = records[1].payload;
-                                final payloadString = String.fromCharCodes(hasJson);
-                                final Map payloadData = await json.decode(payloadString);
+                                final payloadString =
+                                    String.fromCharCodes(hasJson);
+                                final Map payloadData =
+                                    await json.decode(payloadString);
                                 walletAddress = payloadData['a'];
                                 cardColor = payloadData['c'];
                                 formFactor = payloadData['t'];
                               } else {
                                 final hasUrl = records[0].payload;
-                                final payloadString = String.fromCharCodes(hasUrl);
-                                final parts = payloadString.split('air.coinplus.com/btc/');
+                                final payloadString =
+                                    String.fromCharCodes(hasUrl);
+                                final parts = payloadString
+                                    .split('air.coinplus.com/btc/');
                                 walletAddress = parts[1];
                               }
                               await recordAmplitudeEvent(
-                                NfcTapped(source: 'Onboarding', walletAddress: walletAddress),
+                                NfcTapped(
+                                  source: 'Onboarding',
+                                  walletAddress: walletAddress,
+                                ),
                               );
                               final nfcA = NfcA.from(tag);
                               final uid = nfcA!.identifier;
@@ -309,14 +353,20 @@ class OnboardingPage extends HookWidget {
                               } catch (e) {
                                 signature = null;
                               }
-                              await router.pop();
+                              await router.maybePop();
                               final card = await getCardData(walletAddress);
-                              final formattedTagId =
-                                  uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+                              final formattedTagId = uid
+                                  .map(
+                                    (e) => e.toRadixString(16).padLeft(2, '0'),
+                                  )
+                                  .join(':')
+                                  .toUpperCase();
                               if (isOriginalTag && card != null) {
                                 await NfcManager.instance.stopSession();
                                 if (card.nfcId == formattedTagId) {
-                                  await Future.delayed(const Duration(milliseconds: 2700));
+                                  await Future.delayed(
+                                    const Duration(milliseconds: 2700),
+                                  );
                                   if (formFactor == 'c') {
                                     await router.push(
                                       CardFillWithNfc(
@@ -337,7 +387,8 @@ class OnboardingPage extends HookWidget {
                                   }
                                 } else {
                                   await notCoinplusCardAlert(
-                                    context: router.navigatorKey.currentContext!,
+                                    context:
+                                        router.navigatorKey.currentContext!,
                                     walletAddress: walletAddress,
                                     walletType: 'Card',
                                     source: 'Onboarding',
@@ -346,19 +397,22 @@ class OnboardingPage extends HookWidget {
                               } else {
                                 if (tag.data.containsKey('mifareultralight')) {
                                   isMifareUltralight.value = true;
-                                  if (card != null && card.possibleOldCard == true) {
+                                  if (card != null &&
+                                      card.possibleOldCard == true) {
                                     if (card.nfcId == formattedTagId) {
                                       await router.push(
                                         CardFillWithNfc(
                                           isOldCard: card.possibleOldCard,
-                                          isMiFareUltralight: isMifareUltralight.value,
+                                          isMiFareUltralight:
+                                              isMifareUltralight.value,
                                           isOriginalCard: false,
                                           receivedData: walletAddress,
                                         ),
                                       );
                                     } else {
                                       await notCoinplusCardAlert(
-                                        context: router.navigatorKey.currentContext!,
+                                        context:
+                                            router.navigatorKey.currentContext!,
                                         walletAddress: walletAddress,
                                         walletType: 'Card',
                                         source: 'Onboarding',
@@ -368,7 +422,8 @@ class OnboardingPage extends HookWidget {
                                     await router.push(
                                       CardFillWithNfc(
                                         isOldCard: card?.possibleOldCard,
-                                        isMiFareUltralight: isMifareUltralight.value,
+                                        isMiFareUltralight:
+                                            isMifareUltralight.value,
                                         isOriginalCard: false,
                                         receivedData: walletAddress,
                                       ),
@@ -384,11 +439,17 @@ class OnboardingPage extends HookWidget {
                                   );
                                 }
                               }
-                              await _walletProtectState.updateNfcSessionStatus(isStarted: false);
+                              await _walletProtectState.updateNfcSessionStatus(
+                                isStarted: false,
+                              );
                             },
                             onError: (_) => Future(() async {
-                              await recordAmplitudeEvent(const NfcClosed(source: 'Onboarding'));
-                              await _walletProtectState.updateNfcSessionStatus(isStarted: false);
+                              await recordAmplitudeEvent(
+                                const NfcClosed(source: 'Onboarding'),
+                              );
+                              await _walletProtectState.updateNfcSessionStatus(
+                                isStarted: false,
+                              );
                             }),
                           );
 
@@ -453,18 +514,23 @@ class OnboardingPage extends HookWidget {
                                       const Gap(20),
                                       LoadingButton(
                                         onPressed: () async {
-                                          await router.pop();
+                                          await router.maybePop();
                                         },
                                         style: context.theme
                                             .buttonStyle(
                                               textStyle: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                color: AppColors.primaryTextColor,
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                color:
+                                                    AppColors.primaryTextColor,
                                                 fontSize: 15,
                                               ),
                                             )
                                             .copyWith(
-                                              backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(
+                                                Colors.grey.withOpacity(0.3),
+                                              ),
                                             ),
                                         child: const Text('Cancel'),
                                       ).paddingHorizontal(60),
@@ -501,7 +567,11 @@ class OnboardingPage extends HookWidget {
               const Spacer(flex: 3),
               LoadingButton(
                 onPressed: () async {
-                  unawaited(recordAmplitudeEvent(const BuyNewCardClicked(source: 'Onboarding')));
+                  unawaited(
+                    recordAmplitudeEvent(
+                      const BuyNewCardClicked(source: 'Onboarding'),
+                    ),
+                  );
                   await FlutterWebBrowser.openWebPage(
                     url: 'https://coinplus.com/shop/',
                     customTabsOptions: const CustomTabsOptions(
@@ -512,8 +582,10 @@ class OnboardingPage extends HookWidget {
                     ),
                     safariVCOptions: const SafariViewControllerOptions(
                       barCollapsingEnabled: true,
-                      modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                      dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
+                      modalPresentationStyle:
+                          UIModalPresentationStyle.formSheet,
+                      dismissButtonStyle:
+                          SafariViewControllerDismissButtonStyle.done,
                       modalPresentationCapturesStatusBarAppearance: true,
                     ),
                   );
@@ -528,7 +600,9 @@ class OnboardingPage extends HookWidget {
                       ),
                     )
                     .copyWith(
-                      overlayColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.1)),
+                      overlayColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.1),
+                      ),
                     ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

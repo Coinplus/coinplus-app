@@ -18,7 +18,8 @@ class RampService {
     configuration = Configuration()
       ..hostApiKey = rampApiKey
       ..hostAppName = 'Coinplus'
-      ..hostLogoUrl = 'https://coinplus.com/wp-content/uploads/original-logo.png'
+      ..hostLogoUrl =
+          'https://coinplus.com/wp-content/uploads/original-logo.png'
       ..userAddress = address
       ..defaultAsset = 'BTC_BTC'
       ..defaultFlow = 'ONRAMP'
