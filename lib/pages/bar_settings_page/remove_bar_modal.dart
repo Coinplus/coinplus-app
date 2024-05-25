@@ -71,7 +71,8 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
         const Gap(15),
         LoadingButton(
           onPressed: () async {
-            final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+            final isBarActivated =
+                isBarWalletActivated(balanceStore: _balanceStore);
             await recordAmplitudeEventPartTwo(
               NotSureClicked(
                 walletAddress: widget.bar.address,
@@ -79,7 +80,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
                 activated: await isBarActivated,
               ),
             );
-            await router.pop();
+            await router.maybePop();
           },
           style: context.theme
               .buttonStyle(
@@ -91,7 +92,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
                 ),
               )
               .copyWith(
-                padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                padding: const WidgetStatePropertyAll(EdgeInsets.zero),
               ),
           child: const Text(
             'Not now',

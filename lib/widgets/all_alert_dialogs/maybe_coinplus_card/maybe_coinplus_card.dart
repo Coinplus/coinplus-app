@@ -27,12 +27,12 @@ Future<void> maybeCoinplusCard(BuildContext context) {
       lottieAsset: 'assets/lottie_animations/please_wait.json',
       primaryActionText: 'Contact Us',
       primaryAction: () async {
-        await router.pop();
+        await router.maybePop();
         unawaited(recordAmplitudeEventPartTwo(const ContactUsClicked()));
         await router.push(const ContactUs());
       },
       secondaryActionText: 'Close',
-      secondaryAction: router.pop,
+      secondaryAction: router.maybePop,
     ),
     isDismissible: true,
   );

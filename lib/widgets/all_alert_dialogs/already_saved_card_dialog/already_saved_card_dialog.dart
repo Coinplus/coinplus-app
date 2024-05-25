@@ -34,7 +34,14 @@ Future<void> alreadySavedCard(BuildContext context, String walletAddress) {
         await hasShownWallet().then((hasShown) {
           if (hasShown) {
             router.pushAndPopAll(const DashboardRoute());
-            unawaited(recordAmplitudeEvent(AlreadySavedGotItClicked(walletType: 'Card', walletAddress: walletAddress)));
+            unawaited(
+              recordAmplitudeEvent(
+                AlreadySavedGotItClicked(
+                  walletType: 'Card',
+                  walletAddress: walletAddress,
+                ),
+              ),
+            );
           }
         });
       },
@@ -60,7 +67,11 @@ Future<void> alreadySavedCard(BuildContext context, String walletAddress) {
   );
 }
 
-Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProtectState, String walletAddress) {
+Future<void> alreadySavedBar(
+  BuildContext context,
+  WalletProtectState walletProtectState,
+  String walletAddress,
+) {
   return showDialogBox(
     context,
     DialogBoxWithAction(
@@ -79,7 +90,14 @@ Future<void> alreadySavedBar(BuildContext context, WalletProtectState walletProt
         await hasShownWallet().then((hasShown) {
           if (hasShown) {
             router.pushAndPopAll(const DashboardRoute());
-            unawaited(recordAmplitudeEvent(AlreadySavedGotItClicked(walletType: 'Card', walletAddress: walletAddress)));
+            unawaited(
+              recordAmplitudeEvent(
+                AlreadySavedGotItClicked(
+                  walletType: 'Card',
+                  walletAddress: walletAddress,
+                ),
+              ),
+            );
           }
         });
       },

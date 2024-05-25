@@ -52,9 +52,9 @@ final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
     fontWeight: FontWeight.w500,
   ),
 ).copyWith(
-  side: MaterialStateProperty.resolveWith<BorderSide>(
+  side: WidgetStateProperty.resolveWith<BorderSide>(
     (states) {
-      if (states.contains(MaterialState.pressed)) {
+      if (states.contains(WidgetState.pressed)) {
         return const BorderSide(color: Colors.red);
       }
       return const BorderSide();

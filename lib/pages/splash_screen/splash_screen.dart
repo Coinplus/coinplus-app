@@ -2,48 +2,35 @@ import 'dart:async';
 
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
-import '../../store/balance_store/balance_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
 @RoutePage()
-class SplashPage extends StatefulWidget {
+class SplashPage extends HookWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-class _SplashPageState extends State<SplashPage> {
-  final isPinCodeSet = getIsPinCodeSet();
-
-  @override
-  void initState() {
-    super.initState();
-    hasShownWallet().then(
-      (hasShown) async {
-        if (hasShown) {
-          unawaited(_balanceStore.getCardsInfo());
-          unawaited(_balanceStore.getCardsInfo());
-          unawaited(
-            await isPinCodeSet ? showPinCode() : openWallet(),
-          );
-        } else {
-          await openOnboardingPage();
-        }
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isPinCodeSet = getIsPinCodeSet();
+    useEffect(() {
+      hasShownWallet().then(
+        (hasShown) async {
+          if (hasShown) {
+            unawaited(
+              await isPinCodeSet ? showPinCode() : openWallet(),
+            );
+          } else {
+            await openOnboardingPage();
+          }
+        },
+      );
+      return null;
+    });
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackgroundColor,
       body: Center(

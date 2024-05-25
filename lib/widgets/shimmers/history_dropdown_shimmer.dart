@@ -16,7 +16,10 @@ class HistoryDropdownShimmer extends StatelessWidget {
           Container(
             height: 35,
             width: 25,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(2), color: Colors.grey),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              color: Colors.grey,
+            ),
           ),
           const Gap(16.5),
           Column(

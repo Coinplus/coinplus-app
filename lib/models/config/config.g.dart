@@ -11,15 +11,20 @@ _$ConfigImpl _$$ConfigImplFromJson(Map json) => _$ConfigImpl(
       production: json['production'] as bool,
       apiUrl: json['apiUrl'] as String,
       coinsUrl: json['coinsUrl'] as String,
+      mempool: json['mempool'] as String,
       ipUrl: json['ipUrl'] as String,
+      utxoUrl: json['utxoUrl'] as String,
     );
 
-Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
+    <String, dynamic>{
       'env': _$FlavorEnumMap[instance.env]!,
       'production': instance.production,
       'apiUrl': instance.apiUrl,
       'coinsUrl': instance.coinsUrl,
+      'mempool': instance.mempool,
       'ipUrl': instance.ipUrl,
+      'utxoUrl': instance.utxoUrl,
     };
 
 const _$FlavorEnumMap = {

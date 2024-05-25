@@ -11,7 +11,8 @@ abstract class TransactionModel with _$TransactionModel {
     required Meta meta,
   }) = _TransactionModel;
 
-  factory TransactionModel.fromJson(Map<String, dynamic> json) => _$TransactionModelFromJson(json);
+  factory TransactionModel.fromJson(Map<String, dynamic> json) =>
+      _$TransactionModelFromJson(json);
 }
 
 @freezed
@@ -25,7 +26,8 @@ abstract class TransactionItem with _$TransactionItem {
     required List<Transaction>? transactions,
   }) = _TransactionItem;
 
-  factory TransactionItem.fromJson(Map<String, dynamic> json) => _$TransactionItemFromJson(json);
+  factory TransactionItem.fromJson(Map<String, dynamic> json) =>
+      _$TransactionItemFromJson(json);
 }
 
 @freezed
@@ -35,7 +37,8 @@ abstract class MainContent with _$MainContent {
     required List<dynamic> coinAssets,
   }) = _MainContent;
 
-  factory MainContent.fromJson(Map<String, dynamic> json) => _$MainContentFromJson(json);
+  factory MainContent.fromJson(Map<String, dynamic> json) =>
+      _$MainContentFromJson(json);
 }
 
 @freezed
@@ -46,7 +49,8 @@ abstract class CoinData with _$CoinData {
     required double currentValue,
   }) = _CoinData;
 
-  factory CoinData.fromJson(Map<String, dynamic> json) => _$CoinDataFromJson(json);
+  factory CoinData.fromJson(Map<String, dynamic> json) =>
+      _$CoinDataFromJson(json);
 }
 
 @freezed
@@ -57,7 +61,8 @@ abstract class ProfitLoss with _$ProfitLoss {
     required double currentValue,
   }) = _ProfitLoss;
 
-  factory ProfitLoss.fromJson(Map<String, dynamic> json) => _$ProfitLossFromJson(json);
+  factory ProfitLoss.fromJson(Map<String, dynamic> json) =>
+      _$ProfitLossFromJson(json);
 }
 
 @freezed
@@ -67,7 +72,8 @@ abstract class Transaction with _$Transaction {
     required List<Item> items,
   }) = _Transaction;
 
-  factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
+  factory Transaction.fromJson(Map<String, dynamic> json) =>
+      _$TransactionFromJson(json);
 }
 
 @freezed

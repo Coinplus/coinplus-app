@@ -36,27 +36,31 @@ extension ElevatedButtonExtensions on ThemeData {
     }
 
     return ButtonStyle(
-      foregroundColor: MaterialStateProperty.resolveWith(
+      foregroundColor: WidgetStateProperty.resolveWith(
         (states) {
           return textStyle?.color ??
-              (states.contains(MaterialState.disabled) ? foregroundColor.withOpacity(0.5) : foregroundColor);
+              (states.contains(WidgetState.disabled)
+                  ? foregroundColor.withOpacity(0.5)
+                  : foregroundColor);
         },
       ),
-      shadowColor: const MaterialStatePropertyAll(Colors.transparent),
-      padding: MaterialStateProperty.all(contentPadding),
-      shape: MaterialStateProperty.resolveWith(
+      shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+      padding: WidgetStateProperty.all(contentPadding),
+      shape: WidgetStateProperty.resolveWith(
         (states) {
           return RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(
               Radius.circular(8),
             ),
             side: BorderSide(
-              color: states.contains(MaterialState.disabled) ? Colors.transparent : borderColor,
+              color: states.contains(WidgetState.disabled)
+                  ? Colors.transparent
+                  : borderColor,
             ),
           );
         },
       ),
-      textStyle: MaterialStateProperty.all(
+      textStyle: WidgetStateProperty.all(
         textStyle ??
             const TextStyle(
               fontWeight: FontWeight.w700,
@@ -65,10 +69,12 @@ extension ElevatedButtonExtensions on ThemeData {
             ),
       ),
       enableFeedback: true,
-      overlayColor: MaterialStateProperty.all(overlayColor),
-      backgroundColor: MaterialStateProperty.resolveWith(
+      overlayColor: WidgetStateProperty.all(overlayColor),
+      backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(MaterialState.disabled) ? backgroundColor.withOpacity(0.5) : backgroundColor;
+          return states.contains(WidgetState.disabled)
+              ? backgroundColor.withOpacity(0.5)
+              : backgroundColor;
         },
       ),
     );

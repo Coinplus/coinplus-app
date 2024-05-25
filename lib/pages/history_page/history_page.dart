@@ -7,12 +7,12 @@ import 'package:get_it/get_it.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/bar_selection_modal/bar_selection_modal.dart';
+import '../../modals/card_selection_modal/card_selection_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
@@ -37,7 +37,8 @@ class HistoryPage extends StatefulWidget {
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin {
+class _HistoryPageState extends State<HistoryPage>
+    with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
@@ -67,12 +68,14 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+        _rampService.configuration.userAddress =
+            _balanceStore.bars[_balanceStore.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
           _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
+        _rampService.configuration.userAddress =
+            _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
       }
       if (_tabController.index == 0) {
         _historyPageStore.setTabIndex(0);
@@ -159,143 +162,43 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                             ),
                                             context: context,
                                             builder: (_) {
-                                              return Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Assets.icons.notch.image(height: 4),
-                                                    const Gap(20),
-                                                    Observer(
-                                                      builder: (context) {
-                                                        return ListView.builder(
-                                                          shrinkWrap: true,
-                                                          itemCount: _balanceStore.cards.length,
-                                                          itemBuilder: (context, index) {
-                                                            final card = _balanceStore.cards[index];
-                                                            final formattedAddress = getSplitAddress(card.address);
-                                                            final data = _marketPageStore.singleCoin?.result.first;
-                                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                                              locale: 'en_us',
-                                                              decimalDigits: 2,
-                                                            );
-                                                            return Observer(
-                                                              builder: (context) {
-                                                                return InkWell(
-                                                                  onTap: () {
-                                                                    _historyPageStore
-                                                                      ..setCardHistoryIndex(index)
-                                                                      ..setCardSelectedAddress(
-                                                                        _balanceStore
-                                                                            .cards[_historyPageStore.cardHistoryIndex]
-                                                                            .address,
-                                                                      )
-                                                                      ..getSingleCardHistory(
-                                                                        address: _historyPageStore.selectedCardAddress,
-                                                                      );
-                                                                    recordAmplitudeEventPartTwo(
-                                                                      WalletSelected(
-                                                                        walletType: 'card',
-                                                                        address: _historyPageStore.selectedCardAddress,
-                                                                      ),
-                                                                    );
-                                                                    router.pop();
-                                                                  },
-                                                                  child: Container(
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(8),
-                                                                      color: _historyPageStore.cardHistoryIndex == index
-                                                                          ? const Color(0xFFF7F7FA)
-                                                                          : Colors.transparent,
-                                                                    ),
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.all(10),
-                                                                      child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Row(
-                                                                            children: [
-                                                                              Container(
-                                                                                height: 50,
-                                                                                width: 30,
-                                                                                decoration: BoxDecoration(
-                                                                                  image: DecorationImage(
-                                                                                    image:
-                                                                                        card.color.image.image().image,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(12),
-                                                                              Column(
-                                                                                mainAxisSize: MainAxisSize.min,
-                                                                                crossAxisAlignment:
-                                                                                    CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    card.name,
-                                                                                    style: const TextStyle(
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 15,
-                                                                                      color: AppColors.primary,
-                                                                                    ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    formattedAddress,
-                                                                                    style: const TextStyle(
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 14,
-                                                                                      color: AppColors.textHintsColor,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          Text(
-                                                                            '\$${myFormat.format((card.data!.netTxoCount) / 100000000 * data!.price)}',
-                                                                            style: const TextStyle(
-                                                                              fontSize: 16,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              color: AppColors.textHintsColor,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
+                                              return CardSelectionModal(
+                                                balanceStore: _balanceStore,
+                                                marketPageStore:
+                                                    _marketPageStore,
+                                                historyPageStore:
+                                                    _historyPageStore,
                                               );
                                             },
                                           );
-                                          recordAmplitudeEventPartTwo(const SelectWalletClicked(walletType: 'card'));
+                                          recordAmplitudeEventPartTwo(
+                                            const SelectWalletClicked(
+                                              walletType: 'card',
+                                            ),
+                                          );
                                         }
                                       : null,
                                   child: Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     child: Observer(
                                       builder: (_) {
-                                        final data = _marketPageStore.singleCoin?.result.first;
-                                        final myFormat = NumberFormat.decimalPatternDigits(
+                                        final data = _marketPageStore
+                                            .singleCoin?.result.first;
+                                        final myFormat =
+                                            NumberFormat.decimalPatternDigits(
                                           locale: 'en_us',
                                           decimalDigits: 2,
                                         );
-                                        final singleCard = _balanceStore.cards[_historyPageStore.cardHistoryIndex];
-                                        final formattedAddress = getSplitAddress(singleCard.address);
+                                        final singleCard = _balanceStore.cards[
+                                            _historyPageStore.cardHistoryIndex];
+                                        final formattedAddress =
+                                            getSplitAddress(singleCard.address);
 
                                         return Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
@@ -303,35 +206,47 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                                   height: 40,
                                                   width: 25,
                                                   decoration: BoxDecoration(
-                                                    image: DecorationImage(image: singleCard.color.image.image().image),
+                                                    image: DecorationImage(
+                                                      image: singleCard
+                                                          .color.image
+                                                          .image()
+                                                          .image,
+                                                    ),
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 10,
                                                         spreadRadius: 5,
-                                                        color: Colors.grey.withOpacity(0.2),
+                                                        color: Colors.grey
+                                                            .withOpacity(0.2),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 const Gap(10),
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     Text(
                                                       singleCard.name,
                                                       style: const TextStyle(
                                                         fontSize: 15,
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        color: AppColors.primary,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        color:
+                                                            AppColors.primary,
                                                       ),
                                                     ),
                                                     Text(
                                                       formattedAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
                                                         fontSize: 14,
-                                                        color: AppColors.textHintsColor,
+                                                        color: AppColors
+                                                            .textHintsColor,
                                                       ),
                                                     ),
                                                   ],
@@ -339,41 +254,59 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                               ],
                                             ),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 Observer(
                                                   builder: (context) {
-                                                    return _accelerometerStore.hasPerformedAction
+                                                    return _accelerometerStore
+                                                            .hasPerformedAction
                                                         ? Text(
                                                             r'$*****',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  singleCard.data!.netTxoCount.toString().length > 9
-                                                                      ? 17
-                                                                      : 20,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: AppColors.textHintsColor,
-                                                              fontWeight: FontWeight.w700,
+                                                              fontSize: singleCard
+                                                                          .finalBalance
+                                                                          .toString()
+                                                                          .length >
+                                                                      9
+                                                                  ? 17
+                                                                  : 20,
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              color: AppColors
+                                                                  .textHintsColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                             ),
                                                           )
                                                         : Text(
-                                                            '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
+                                                            '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  singleCard.data!.netTxoCount.toString().length > 9
-                                                                      ? 17
-                                                                      : 20,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: AppColors.textHintsColor,
-                                                              fontWeight: FontWeight.w700,
+                                                              fontSize: singleCard
+                                                                          .finalBalance
+                                                                          .toString()
+                                                                          .length >
+                                                                      9
+                                                                  ? 17
+                                                                  : 20,
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              color: AppColors
+                                                                  .textHintsColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                             ),
                                                           );
                                                   },
                                                 ),
-                                                if (_balanceStore.cards.length > 1)
+                                                if (_balanceStore.cards.length >
+                                                    1)
                                                   const Icon(
                                                     Icons.keyboard_arrow_down,
-                                                    color: AppColors.textHintsColor,
+                                                    color: AppColors
+                                                        .textHintsColor,
                                                   ),
                                               ],
                                             ),
@@ -409,145 +342,43 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                             ),
                                             context: context,
                                             builder: (_) {
-                                              return Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Assets.icons.notch.image(height: 4),
-                                                    const Gap(20),
-                                                    Observer(
-                                                      builder: (context) {
-                                                        return ListView.builder(
-                                                          shrinkWrap: true,
-                                                          itemCount: _balanceStore.bars.length,
-                                                          itemBuilder: (context, index) {
-                                                            final bar = _balanceStore.bars[index];
-                                                            final formattedAddress = getSplitAddress(bar.address);
-                                                            final data = _marketPageStore.singleCoin?.result.first;
-                                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                                              locale: 'en_us',
-                                                              decimalDigits: 2,
-                                                            );
-                                                            return Observer(
-                                                              builder: (context) {
-                                                                return InkWell(
-                                                                  onTap: () {
-                                                                    _historyPageStore
-                                                                      ..setBarHistoryIndex(index)
-                                                                      ..setBarSelectedAddress(
-                                                                        _balanceStore
-                                                                            .bars[_historyPageStore.barHistoryIndex]
-                                                                            .address,
-                                                                      )
-                                                                      ..getSingleBarHistory(
-                                                                        address: _balanceStore
-                                                                            .bars[_historyPageStore.barHistoryIndex]
-                                                                            .address,
-                                                                      );
-                                                                    recordAmplitudeEventPartTwo(
-                                                                      WalletSelected(
-                                                                        walletType: 'bar',
-                                                                        address: _historyPageStore.selectedBarAddress,
-                                                                      ),
-                                                                    );
-                                                                    router.pop();
-                                                                  },
-                                                                  child: Container(
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(8),
-                                                                      color: _historyPageStore.barHistoryIndex == index
-                                                                          ? const Color(0xFFF7F7FA)
-                                                                          : Colors.transparent,
-                                                                    ),
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.all(10),
-                                                                      child: Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Row(
-                                                                            children: [
-                                                                              Container(
-                                                                                height: 50,
-                                                                                width: 30,
-                                                                                decoration: BoxDecoration(
-                                                                                  image: DecorationImage(
-                                                                                    image:
-                                                                                        bar.color.image.image().image,
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              const Gap(12),
-                                                                              Column(
-                                                                                mainAxisSize: MainAxisSize.min,
-                                                                                crossAxisAlignment:
-                                                                                    CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    bar.name,
-                                                                                    style: const TextStyle(
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 15,
-                                                                                      color: AppColors.primary,
-                                                                                    ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    formattedAddress,
-                                                                                    style: const TextStyle(
-                                                                                      fontFamily:
-                                                                                          FontFamily.redHatMedium,
-                                                                                      fontSize: 14,
-                                                                                      color: AppColors.textHintsColor,
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          Text(
-                                                                            '\$${myFormat.format((bar.data!.netTxoCount) / 100000000 * data!.price)}',
-                                                                            style: const TextStyle(
-                                                                              fontSize: 16,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              color: AppColors.textHintsColor,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
+                                              return BarSelectionModal(
+                                                balanceStore: _balanceStore,
+                                                marketPageStore:
+                                                    _marketPageStore,
+                                                historyPageStore:
+                                                    _historyPageStore,
                                               );
                                             },
                                           );
-                                          recordAmplitudeEventPartTwo(const SelectWalletClicked(walletType: 'bar'));
+                                          recordAmplitudeEventPartTwo(
+                                            const SelectWalletClicked(
+                                              walletType: 'bar',
+                                            ),
+                                          );
                                         }
                                       : null,
                                   child: Container(
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                     child: Observer(
                                       builder: (_) {
-                                        final data = _marketPageStore.singleCoin?.result.first;
-                                        final myFormat = NumberFormat.decimalPatternDigits(
+                                        final data = _marketPageStore
+                                            .singleCoin?.result.first;
+                                        final myFormat =
+                                            NumberFormat.decimalPatternDigits(
                                           locale: 'en_us',
                                           decimalDigits: 2,
                                         );
-                                        final singleCard = _balanceStore.bars[_historyPageStore.barHistoryIndex];
-                                        final formattedAddress = getSplitAddress(singleCard.address);
+                                        final singleCard = _balanceStore.bars[
+                                            _historyPageStore.barHistoryIndex];
+                                        final formattedAddress =
+                                            getSplitAddress(singleCard.address);
 
                                         return Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
@@ -555,35 +386,47 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                                   height: 40,
                                                   width: 25,
                                                   decoration: BoxDecoration(
-                                                    image: DecorationImage(image: singleCard.color.image.image().image),
+                                                    image: DecorationImage(
+                                                      image: singleCard
+                                                          .color.image
+                                                          .image()
+                                                          .image,
+                                                    ),
                                                     boxShadow: [
                                                       BoxShadow(
                                                         blurRadius: 10,
                                                         spreadRadius: 5,
-                                                        color: Colors.grey.withOpacity(0.2),
+                                                        color: Colors.grey
+                                                            .withOpacity(0.2),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 const Gap(10),
                                                 Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     Text(
                                                       singleCard.name,
                                                       style: const TextStyle(
                                                         fontSize: 15,
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        color: AppColors.primary,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        color:
+                                                            AppColors.primary,
                                                       ),
                                                     ),
                                                     Text(
                                                       formattedAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
                                                         fontSize: 14,
-                                                        color: AppColors.textHintsColor,
+                                                        color: AppColors
+                                                            .textHintsColor,
                                                       ),
                                                     ),
                                                   ],
@@ -591,41 +434,59 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                               ],
                                             ),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 Observer(
                                                   builder: (context) {
-                                                    return _accelerometerStore.hasPerformedAction
+                                                    return _accelerometerStore
+                                                            .hasPerformedAction
                                                         ? Text(
                                                             r'$*****',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  singleCard.data!.netTxoCount.toString().length > 9
-                                                                      ? 17
-                                                                      : 20,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: AppColors.textHintsColor,
-                                                              fontWeight: FontWeight.w700,
+                                                              fontSize: singleCard
+                                                                          .finalBalance
+                                                                          .toString()
+                                                                          .length >
+                                                                      9
+                                                                  ? 17
+                                                                  : 20,
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              color: AppColors
+                                                                  .textHintsColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                             ),
                                                           )
                                                         : Text(
-                                                            '\$${myFormat.format((singleCard.data!.netTxoCount) / 100000000 * data!.price)}',
+                                                            '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
                                                             style: TextStyle(
-                                                              fontSize:
-                                                                  singleCard.data!.netTxoCount.toString().length > 9
-                                                                      ? 17
-                                                                      : 20,
-                                                              fontFamily: FontFamily.redHatMedium,
-                                                              color: AppColors.textHintsColor,
-                                                              fontWeight: FontWeight.w700,
+                                                              fontSize: singleCard
+                                                                          .finalBalance
+                                                                          .toString()
+                                                                          .length >
+                                                                      9
+                                                                  ? 17
+                                                                  : 20,
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              color: AppColors
+                                                                  .textHintsColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
                                                             ),
                                                           );
                                                   },
                                                 ),
-                                                if (_balanceStore.bars.length > 1)
+                                                if (_balanceStore.bars.length >
+                                                    1)
                                                   const Icon(
                                                     Icons.keyboard_arrow_down,
-                                                    color: AppColors.textHintsColor,
+                                                    color: AppColors
+                                                        .textHintsColor,
                                                   ),
                                               ],
                                             ),
@@ -650,7 +511,6 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
         physics: const NeverScrollableScrollPhysics(),
         children: [
           CardsHistoryPage(
-            balanceStore: _balanceStore,
             scrollController: _scrollController,
           ),
           BarsHistoryPage(

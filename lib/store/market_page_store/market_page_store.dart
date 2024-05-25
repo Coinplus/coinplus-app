@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../http/dio.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
@@ -16,8 +15,6 @@ class MarketPageStore = _MarketPageStore with _$MarketPageStore;
 abstract class _MarketPageStore with Store {
   _MarketPageStore() {
     getSingleCoin();
-    loadCoins();
-    getMarketCap();
   }
 
   @readonly
@@ -69,15 +66,15 @@ abstract class _MarketPageStore with Store {
   FocusNode focusNode = FocusNode();
 
   Future<void> getMarketCap() async {
-    _marketCap = await CoinsClient(dio).getMarketCap();
+    _marketCap = await coinStatsRepo.getMarketCap();
   }
 
   Future<void> getOtherCoins({required int pageNumber}) async {
-    allCoins = await CoinsClient(dio).getAllCoins(page: pageNumber, limit: 1000);
+    allCoins = await coinStatsRepo.getAllCoins(page: pageNumber, limit: 1000);
   }
 
   Future<void> getSingleCoin() async {
-    singleCoin = await CoinsClient(dio).getAllCoins(page: 1, limit: 1);
+    singleCoin = await coinStatsRepo.getAllCoins(page: 1, limit: 1);
   }
 
   @action
@@ -184,7 +181,9 @@ abstract class _MarketPageStore with Store {
   @action
   void handleError(String errorMessage) {
     hasError = true;
-    log('Error: $errorMessage');
+    if (kDebugMode) {
+      print('Error: $errorMessage');
+    }
   }
 
   @action
@@ -201,7 +200,9 @@ abstract class _MarketPageStore with Store {
   }
 
   @action
-  Future<void> toggleShouldShowUpButton({bool shouldShowUpButton = false}) async {
+  Future<void> toggleShouldShowUpButton({
+    bool shouldShowUpButton = false,
+  }) async {
     this.shouldShowUpButton = shouldShowUpButton;
   }
 }

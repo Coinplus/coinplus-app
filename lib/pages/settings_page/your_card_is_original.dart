@@ -20,7 +20,7 @@ Future<void> yourCardIsOriginal(BuildContext context) {
       ),
       lottieAsset: 'assets/lottie_animations/secrets_success.json',
       primaryActionText: 'Close',
-      primaryAction: router.pop,
+      primaryAction: router.maybePop,
     ),
     isDismissible: true,
   );

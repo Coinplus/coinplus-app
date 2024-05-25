@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/identify.dart';
 import 'package:get_it/get_it.dart';
@@ -13,7 +11,6 @@ Future<void> initializeAmplitude() async {
   if (GetIt.I<FlavorService>().isProduction) {
     final amplitude = Amplitude.getInstance();
     await amplitude.init('28670e3f0d1eee7f8f7188ef81e670a4');
-    log('Amplitude init');
   }
 }
 
@@ -34,7 +31,8 @@ Future<void> recordAmplitudeEventPartTwo(AmplitudeEventPartTwo event) async {
 Future<void> recordUserProperty(IdentifyModel identification) async {
   final identify = Identify();
   final properties = identification.toJson();
-  final filteredProperties = Map<String, dynamic>.from(properties)..removeWhere((key, value) => key == 'runtimeType');
+  final filteredProperties = Map<String, dynamic>.from(properties)
+    ..removeWhere((key, value) => key == 'runtimeType');
   for (final entry in filteredProperties.entries) {
     identify.set(entry.key, entry.value);
   }

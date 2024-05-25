@@ -33,6 +33,7 @@ import '../widgets/loading_button/loading_button.dart';
 import 'wallet_activation_status.dart';
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
 WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
 Future<void> nfcSessionIos({
@@ -67,16 +68,23 @@ Future<void> nfcSessionIos({
       await hasShownWallet().then(
         (hasShown) async {
           if (hasShown) {
-            await recordAmplitudeEvent(NfcTapped(source: 'Wallet', walletAddress: walletAddress));
+            await recordAmplitudeEvent(
+              NfcTapped(source: 'Wallet', walletAddress: walletAddress),
+            );
           } else {
-            await recordAmplitudeEvent(NfcTapped(source: 'Onboarding', walletAddress: walletAddress));
+            await recordAmplitudeEvent(
+              NfcTapped(source: 'Onboarding', walletAddress: walletAddress),
+            );
           }
         },
       );
       final card = await getCardData(walletAddress);
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
-      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+      final formattedTagId = tagId
+          .map((e) => e.toRadixString(16).padLeft(2, '0'))
+          .join(':')
+          .toUpperCase();
       Uint8List? signature;
       try {
         final response = await mifare.sendMiFareCommand(
@@ -104,7 +112,10 @@ Future<void> nfcSessionIos({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onCardAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -123,7 +134,10 @@ Future<void> nfcSessionIos({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onBarAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -139,7 +153,10 @@ Future<void> nfcSessionIos({
           }
         } else {
           await NfcManager.instance.stopSession();
-          Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+          Future.delayed(
+            Duration.zero,
+            () => _walletProtectState.updateModalStatus(isOpened: true),
+          );
           await Future.delayed(const Duration(milliseconds: 2700));
           await notCoinplusCardAlert(
             context: router.navigatorKey.currentContext!,
@@ -147,7 +164,10 @@ Future<void> nfcSessionIos({
             walletType: 'Card',
             source: 'Wallet',
           );
-          Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+          Future.delayed(
+            Duration.zero,
+            () => _walletProtectState.updateModalStatus(isOpened: false),
+          );
         }
       } else {
         await NfcManager.instance.stopSession();
@@ -162,7 +182,10 @@ Future<void> nfcSessionIos({
               );
               if (cardIndex != -1) {
                 await _walletProtectState.updateModalStatus(isOpened: true);
-                await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+                await alreadySavedWallet(
+                  router.navigatorKey.currentContext!,
+                  walletAddress,
+                );
                 _balanceStore.onCardAdded(walletAddress);
                 await _walletProtectState.updateModalStatus(isOpened: false);
               } else {
@@ -179,7 +202,10 @@ Future<void> nfcSessionIos({
             } else {
               //Fake card
               await NfcManager.instance.stopSession();
-              Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: true),
+              );
               await Future.delayed(const Duration(milliseconds: 2700));
               await notCoinplusCardAlert(
                 context: router.navigatorKey.currentContext!,
@@ -187,7 +213,10 @@ Future<void> nfcSessionIos({
                 walletType: 'Card',
                 source: 'Wallet',
               );
-              Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: false),
+              );
             }
           } else {
             //Connect as TrackerPlus
@@ -196,7 +225,10 @@ Future<void> nfcSessionIos({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onCardAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -218,7 +250,10 @@ Future<void> nfcSessionIos({
           );
           if (cardIndex != -1) {
             await _walletProtectState.updateModalStatus(isOpened: true);
-            await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+            await alreadySavedWallet(
+              router.navigatorKey.currentContext!,
+              walletAddress,
+            );
             _balanceStore.onCardAdded(walletAddress);
             await _walletProtectState.updateModalStatus(isOpened: false);
           } else {
@@ -234,7 +269,9 @@ Future<void> nfcSessionIos({
       }
       await walletProtectState.updateNfcSessionStatus(isStarted: false);
     },
-    onError: (_) => Future(() => walletProtectState.updateNfcSessionStatus(isStarted: false)),
+    onError: (_) => Future(
+      () => walletProtectState.updateNfcSessionStatus(isStarted: false),
+    ),
   );
 }
 
@@ -266,9 +303,13 @@ Future<void> nfcSessionAndroid({
       await hasShownWallet().then(
         (hasShown) async {
           if (hasShown) {
-            await recordAmplitudeEvent(NfcTapped(source: 'Wallet', walletAddress: walletAddress));
+            await recordAmplitudeEvent(
+              NfcTapped(source: 'Wallet', walletAddress: walletAddress),
+            );
           } else {
-            await recordAmplitudeEvent(NfcTapped(source: 'Onboarding', walletAddress: walletAddress));
+            await recordAmplitudeEvent(
+              NfcTapped(source: 'Onboarding', walletAddress: walletAddress),
+            );
           }
         },
       );
@@ -292,9 +333,12 @@ Future<void> nfcSessionAndroid({
       } catch (e) {
         signature = null;
       }
-      await router.pop();
+      await router.maybePop();
       final card = await getCardData(walletAddress);
-      final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+      final formattedTagId = uid
+          .map((e) => e.toRadixString(16).padLeft(2, '0'))
+          .join(':')
+          .toUpperCase();
       if (isOriginalTag && card != null) {
         await NfcManager.instance.stopSession();
         if (card.nfcId == formattedTagId) {
@@ -305,7 +349,10 @@ Future<void> nfcSessionAndroid({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onCardAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -324,7 +371,10 @@ Future<void> nfcSessionAndroid({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onBarAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -339,14 +389,20 @@ Future<void> nfcSessionAndroid({
             }
           }
         } else {
-          Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+          Future.delayed(
+            Duration.zero,
+            () => _walletProtectState.updateModalStatus(isOpened: true),
+          );
           await notCoinplusCardAlert(
             context: router.navigatorKey.currentContext!,
             walletAddress: walletAddress,
             walletType: 'Card',
             source: 'Wallet',
           );
-          Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+          Future.delayed(
+            Duration.zero,
+            () => _walletProtectState.updateModalStatus(isOpened: false),
+          );
         }
       } else {
         if (tag.data.containsKey('mifareultralight')) {
@@ -358,7 +414,10 @@ Future<void> nfcSessionAndroid({
               );
               if (cardIndex != -1) {
                 await _walletProtectState.updateModalStatus(isOpened: true);
-                await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+                await alreadySavedWallet(
+                  router.navigatorKey.currentContext!,
+                  walletAddress,
+                );
                 _balanceStore.onCardAdded(walletAddress);
                 await _walletProtectState.updateModalStatus(isOpened: false);
               } else {
@@ -373,14 +432,20 @@ Future<void> nfcSessionAndroid({
                 );
               }
             } else {
-              Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: true),
+              );
               await notCoinplusCardAlert(
                 context: router.navigatorKey.currentContext!,
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 source: 'Wallet',
               );
-              Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: false),
+              );
             }
           } else {
             final cardIndex = _balanceStore.cards.indexWhere(
@@ -388,7 +453,10 @@ Future<void> nfcSessionAndroid({
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
               _balanceStore.onCardAdded(walletAddress);
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
@@ -409,7 +477,10 @@ Future<void> nfcSessionAndroid({
           );
           if (cardIndex != -1) {
             await _walletProtectState.updateModalStatus(isOpened: true);
-            await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+            await alreadySavedWallet(
+              router.navigatorKey.currentContext!,
+              walletAddress,
+            );
             _balanceStore.onCardAdded(walletAddress);
             await _walletProtectState.updateModalStatus(isOpened: false);
           } else {
@@ -426,7 +497,9 @@ Future<void> nfcSessionAndroid({
       }
       await walletProtectState.updateNfcSessionStatus(isStarted: false);
     },
-    onError: (_) => Future(() => walletProtectState.updateNfcSessionStatus(isStarted: false)),
+    onError: (_) => Future(
+      () => walletProtectState.updateNfcSessionStatus(isStarted: false),
+    ),
   );
 }
 
@@ -457,7 +530,10 @@ Future<void> checkNfcIos({
       final card = await getCardData(walletAddress);
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
-      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+      final formattedTagId = tagId
+          .map((e) => e.toRadixString(16).padLeft(2, '0'))
+          .join(':')
+          .toUpperCase();
       final signature = await mifare.sendMiFareCommand(
         Uint8List.fromList(
           [0x3C, 0x00],
@@ -483,41 +559,69 @@ Future<void> checkNfcIos({
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
+      } else if (isOriginalTag &&
+          card != null &&
+          card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'FAKE');
-        Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'FAKE',
+        );
+        Future.delayed(
+          Duration.zero,
+          () => _walletProtectState.updateModalStatus(isOpened: true),
+        );
         await notCoinplusCardAlert(
           context: router.navigatorKey.currentContext!,
           walletAddress: walletAddress,
           walletType: 'Card',
           source: 'Wallet',
         );
-        Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+        Future.delayed(
+          Duration.zero,
+          () => _walletProtectState.updateModalStatus(isOpened: false),
+        );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'TRACKER');
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'TRACKER',
+        );
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag == false && card != null && card.nfcId == formattedTagId) {
+      } else if (isOriginalTag == false &&
+          card != null &&
+          card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
       } else if (isOriginalTag == false && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'UNKNOWN');
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'UNKNOWN',
+        );
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
       } else if (card == null && !isMifareUltralight!) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'TRACKER');
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'TRACKER',
+        );
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
       }
       await walletProtectState.updateNfcSessionStatus(isStarted: false);
     },
-    onError: (_) => Future(() => walletProtectState.updateNfcSessionStatus(isStarted: false)),
+    onError: (_) => Future(
+      () => walletProtectState.updateNfcSessionStatus(isStarted: false),
+    ),
   );
 }
 
@@ -547,7 +651,10 @@ Future<void> checkNfcAndroid({
       final nfcA = NfcA.from(tag);
       final uid = nfcA!.identifier;
       final card = await getCardData(walletAddress);
-      final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
+      final formattedTagId = uid
+          .map((e) => e.toRadixString(16).padLeft(2, '0'))
+          .join(':')
+          .toUpperCase();
 
       Uint8List? signature;
 
@@ -575,47 +682,75 @@ Future<void> checkNfcAndroid({
       );
       if (isOriginalTag && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await router.pop();
+        await router.maybePop();
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
+      } else if (isOriginalTag &&
+          card != null &&
+          card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'FAKE');
-        await router.pop();
-        Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: true));
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'FAKE',
+        );
+        await router.maybePop();
+        Future.delayed(
+          Duration.zero,
+          () => _walletProtectState.updateModalStatus(isOpened: true),
+        );
         await notCoinplusCardAlert(
           context: router.navigatorKey.currentContext!,
           walletAddress: walletAddress,
           walletType: 'Card',
           source: 'Wallet',
         );
-        Future.delayed(Duration.zero, () => _walletProtectState.updateModalStatus(isOpened: false));
+        Future.delayed(
+          Duration.zero,
+          () => _walletProtectState.updateModalStatus(isOpened: false),
+        );
       } else if (isOriginalTag && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'TRACKER');
-        await router.pop();
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'TRACKER',
+        );
+        await router.maybePop();
 
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag == false && card != null && card.nfcId == formattedTagId) {
+      } else if (isOriginalTag == false &&
+          card != null &&
+          card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await router.pop();
+        await router.maybePop();
 
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
       } else if (isOriginalTag == false && card == null) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'UNKNOWN');
-        await router.pop();
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'UNKNOWN',
+        );
+        await router.maybePop();
 
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
       } else if (card == null && !isMifareUltralight!) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
-        await setCardsData(documentID: walletAddress, tagId: formattedTagId, type: 'TRACKER');
-        await router.pop();
+        await setCardsData(
+          documentID: walletAddress,
+          tagId: formattedTagId,
+          type: 'TRACKER',
+        );
+        await router.maybePop();
 
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
       }
       await walletProtectState.updateNfcSessionStatus(isStarted: false);
     },
-    onError: (_) => Future(() => walletProtectState.updateNfcSessionStatus(isStarted: false)),
+    onError: (_) => Future(
+      () => walletProtectState.updateNfcSessionStatus(isStarted: false),
+    ),
   );
   await showModalBottomSheet(
     context: router.navigatorKey.currentContext!,
@@ -678,7 +813,7 @@ Future<void> checkNfcAndroid({
               const Gap(20),
               LoadingButton(
                 onPressed: () async {
-                  await router.pop();
+                  await router.maybePop();
                 },
                 style: context.theme
                     .buttonStyle(
@@ -689,7 +824,9 @@ Future<void> checkNfcAndroid({
                       ),
                     )
                     .copyWith(
-                      backgroundColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.3)),
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.3),
+                      ),
                     ),
                 child: const Text('Cancel'),
               ).paddingHorizontal(60),

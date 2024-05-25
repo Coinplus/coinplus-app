@@ -37,7 +37,8 @@ class BarsHistoryPage extends StatefulWidget {
   State<BarsHistoryPage> createState() => _BarsHistoryPageState();
 }
 
-class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderStateMixin {
+class _BarsHistoryPageState extends State<BarsHistoryPage>
+    with TickerProviderStateMixin {
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
@@ -46,10 +47,12 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
 
   Future<void> loadBarWalletStatusFromStorage(String address) async {
     if (!_historyPageStore.isBarRefreshing) {
-      await _historyPageStore
-          .setBarSelectedAddress(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+      await _historyPageStore.setBarSelectedAddress(
+        widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+      );
       await _historyPageStore.getSingleBarHistory(
-        address: widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+        address:
+            widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
       );
     }
   }
@@ -65,7 +68,9 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
       _controller.repeat();
     }
     if (widget.balanceStore.bars.isNotEmpty) {
-      loadBarWalletStatusFromStorage(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+      loadBarWalletStatusFromStorage(
+        widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+      );
     }
     _historyPageStore
       ..loadLastRefreshed()
@@ -82,12 +87,16 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
   Widget build(BuildContext context) {
     return ReactionBuilder(
       builder: (context) {
-        return reaction((p0) => _historyPageStore.isBarRefreshing, (isBarRefreshing) async {
+        return reaction((p0) => _historyPageStore.isBarRefreshing,
+            (isBarRefreshing) async {
           if (!isBarRefreshing) {
             _controller
               ..stop()
               ..reset();
-            await loadBarWalletStatusFromStorage(widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address);
+            await loadBarWalletStatusFromStorage(
+              widget
+                  .balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+            );
           }
         });
       },
@@ -122,8 +131,10 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                 children: [
                   Observer(
                     builder: (context) {
-                      return (_historyPageStore
-                                  .barHistories[widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] ==
+                      return (_historyPageStore.barHistories[widget
+                                  .balanceStore
+                                  .bars[_historyPageStore.barHistoryIndex]
+                                  .address] ==
                               null
                           ? const Padding(
                               padding: EdgeInsets.all(8),
@@ -137,7 +148,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                     child: HistoryPageShimmer(),
                                   );
                                 }
-                                if (_historyPageStore.barsTransactions!.isEmpty) {
+                                if (_historyPageStore
+                                    .barsTransactions!.isEmpty) {
                                   return Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Column(
@@ -155,7 +167,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                               child: Text(
                                                 'No Transactions Yet',
                                                 style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w600,
                                                   color: AppColors.primary,
@@ -167,7 +180,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                               child: Text(
                                                 'Make your first transaction to see your \nactivity here.',
                                                 style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
+                                                  fontFamily:
+                                                      FontFamily.redHatMedium,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: AppColors.primary,
@@ -185,10 +199,16 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   controller: widget.scrollController,
-                                  itemCount: _historyPageStore.barUniqueDates!.length + 1,
+                                  itemCount:
+                                      _historyPageStore.barUniqueDates!.length +
+                                          1,
                                   itemBuilder: (context, dateIndex) {
-                                    if (dateIndex == _historyPageStore.barUniqueDates?.length) {
-                                      if (_historyPageStore.barsTransactions!.length <= 19) {
+                                    if (dateIndex ==
+                                        _historyPageStore
+                                            .barUniqueDates?.length) {
+                                      if (_historyPageStore
+                                              .barsTransactions!.length <=
+                                          19) {
                                         return const SizedBox(height: 100);
                                       }
                                       return Observer(
@@ -205,37 +225,66 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                       LoadingButton(
                                                         style: context.theme
                                                             .buttonStyle(
-                                                              textStyle: const TextStyle(
-                                                                fontFamily: FontFamily.redHatMedium,
-                                                                color: AppColors.primaryTextColor,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .redHatMedium,
+                                                                color: AppColors
+                                                                    .primaryTextColor,
                                                                 fontSize: 15,
                                                               ),
                                                             )
                                                             .copyWith(
-                                                              backgroundColor: MaterialStateProperty.all(
-                                                                Colors.grey.withOpacity(0.1),
-                                                              ),
-                                                              shape: const MaterialStatePropertyAll(
-                                                                RoundedRectangleBorder(
-                                                                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                                                              backgroundColor:
+                                                                  WidgetStateProperty
+                                                                      .all(
+                                                                Colors.grey
+                                                                    .withOpacity(
+                                                                  0.1,
                                                                 ),
                                                               ),
-                                                              padding: MaterialStateProperty.all(
-                                                                const EdgeInsets.symmetric(vertical: 5),
+                                                              shape:
+                                                                  const WidgetStatePropertyAll(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                      15,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              padding:
+                                                                  WidgetStateProperty
+                                                                      .all(
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                  vertical: 5,
+                                                                ),
                                                               ),
                                                             ),
                                                         onPressed: () {
-                                                          _historyPageStore.fetchBarNextPageTransactions(
-                                                            address: _historyPageStore.selectedBarAddress,
+                                                          _historyPageStore
+                                                              .fetchBarNextPageTransactions(
+                                                            address:
+                                                                _historyPageStore
+                                                                    .selectedBarAddress,
                                                           );
-                                                          recordAmplitudeEventPartTwo(const LoadTransactionClicked());
+                                                          recordAmplitudeEventPartTwo(
+                                                            const LoadTransactionClicked(),
+                                                          );
                                                         },
                                                         child: const Text(
                                                           'Load More',
                                                           style: TextStyle(
-                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
                                                             fontSize: 12,
-                                                            fontWeight: FontWeight.w600,
+                                                            fontWeight:
+                                                                FontWeight.w600,
                                                           ),
                                                         ),
                                                       ).paddingHorizontal(150),
@@ -246,22 +295,33 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                         },
                                       );
                                     }
-                                    final currentDate = _historyPageStore.barUniqueDates?[dateIndex];
-                                    final transactionsOfDay = _historyPageStore.barsTransactions
-                                        ?.where(
-                                          (transaction) => formatDate(transaction.date.toString()) == currentDate,
-                                        )
-                                        .toList();
+                                    final currentDate = _historyPageStore
+                                        .barUniqueDates?[dateIndex];
+                                    final transactionsOfDay =
+                                        _historyPageStore.barsTransactions
+                                            ?.where(
+                                              (transaction) =>
+                                                  formatDate(
+                                                    transaction.date.toString(),
+                                                  ) ==
+                                                  currentDate,
+                                            )
+                                            .toList();
 
                                     return Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 10),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 29,
+                                            vertical: 10,
+                                          ),
                                           child: Text(
                                             currentDate!,
                                             style: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 13,
                                               color: AppColors.textHintsColor,
                                               fontWeight: FontWeight.bold,
@@ -269,161 +329,232 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 5,
+                                          ),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               boxShadow: [
                                                 BoxShadow(
                                                   spreadRadius: 2,
                                                   blurRadius: 10,
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
                                                 ),
                                               ],
                                             ),
                                             child: Card(
                                               elevation: 0,
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                               ),
                                               clipBehavior: Clip.hardEdge,
                                               child: ListView.separated(
-                                                separatorBuilder: (_, __) => Divider(
-                                                  color: Colors.grey.withOpacity(0.2),
+                                                separatorBuilder: (_, __) =>
+                                                    Divider(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.2),
                                                   height: 0,
                                                 ),
                                                 shrinkWrap: true,
-                                                physics: const NeverScrollableScrollPhysics(),
-                                                itemCount: transactionsOfDay!.length,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount:
+                                                    transactionsOfDay!.length,
                                                 itemBuilder: (context, index) {
-                                                  final transaction = transactionsOfDay[index];
-                                                  final totalWorth = transaction.transactions?[0].items.fold<double>(
+                                                  final transaction =
+                                                      transactionsOfDay[index];
+                                                  final totalWorth = transaction
+                                                      .transactions?[0].items
+                                                      .fold<double>(
                                                     0,
-                                                    (previousValue, item) => previousValue + item.totalWorth,
+                                                    (previousValue, item) =>
+                                                        previousValue +
+                                                        item.totalWorth,
                                                   );
-                                                  final myFormat = NumberFormat.decimalPatternDigits(
+                                                  final myFormat = NumberFormat
+                                                      .decimalPatternDigits(
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
                                                   return GestureDetector(
                                                     onTap: () {
-                                                      recordAmplitudeEventPartTwo(const TransactionClicked());
+                                                      recordAmplitudeEventPartTwo(
+                                                        const TransactionClicked(),
+                                                      );
                                                     },
                                                     child: Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 7),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 7,
+                                                      ),
                                                       child: ScaleTap(
                                                         enableFeedback: false,
                                                         scaleMinValue: 0.99,
                                                         onPressed: () {
                                                           showModalBottomSheet(
-                                                            isScrollControlled: true,
-                                                            backgroundColor: Colors.white,
-                                                            shape: const RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.only(
-                                                                topLeft: Radius.circular(20),
-                                                                topRight: Radius.circular(20),
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors.white,
+                                                            shape:
+                                                                const RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                  20,
+                                                                ),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                  20,
+                                                                ),
                                                               ),
                                                             ),
                                                             context: context,
                                                             builder: (_) {
-                                                              final formattedDate = formatDateString(transaction.date!);
+                                                              final formattedDate =
+                                                                  formatDateString(
+                                                                transaction
+                                                                    .date!,
+                                                              );
                                                               return Padding(
-                                                                padding: const EdgeInsets.symmetric(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
                                                                   vertical: 12,
-                                                                  horizontal: 20,
+                                                                  horizontal:
+                                                                      20,
                                                                 ),
                                                                 child: Column(
-                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
                                                                   children: [
-                                                                    Assets.icons.notch.image(height: 4),
-                                                                    const Gap(28),
+                                                                    Assets.icons
+                                                                        .notch
+                                                                        .image(
+                                                                      height: 4,
+                                                                    ),
+                                                                    const Gap(
+                                                                      28,
+                                                                    ),
                                                                     Padding(
                                                                       padding:
-                                                                          const EdgeInsets.symmetric(horizontal: 10),
-                                                                      child: Text(
-                                                                        transaction.type.toString(),
-                                                                        style: const TextStyle(
-                                                                          fontFamily: FontFamily.redHatMedium,
-                                                                          fontSize: 17,
-                                                                          fontWeight: FontWeight.w600,
-                                                                          color: AppColors.primary,
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                      ),
+                                                                      child:
+                                                                          Text(
+                                                                        transaction
+                                                                            .type
+                                                                            .toString(),
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontFamily:
+                                                                              FontFamily.redHatMedium,
+                                                                          fontSize:
+                                                                              17,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          color:
+                                                                              AppColors.primary,
                                                                         ),
                                                                       ).expandedHorizontally(),
                                                                     ),
                                                                     Padding(
                                                                       padding:
-                                                                          const EdgeInsets.symmetric(horizontal: 10),
-                                                                      child: Text(
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                      ),
+                                                                      child:
+                                                                          Text(
                                                                         formattedDate,
-                                                                        style: const TextStyle(
-                                                                          fontFamily: FontFamily.redHatMedium,
-                                                                          color: Color(0xFF838995),
-                                                                          fontSize: 12,
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontFamily:
+                                                                              FontFamily.redHatMedium,
+                                                                          color:
+                                                                              Color(0xFF838995),
+                                                                          fontSize:
+                                                                              12,
                                                                         ),
                                                                       ).expandedHorizontally(),
                                                                     ),
-                                                                    const Gap(17),
+                                                                    const Gap(
+                                                                      17,
+                                                                    ),
                                                                     Container(
-                                                                      decoration: BoxDecoration(
-                                                                        color: Colors.white,
-                                                                        borderRadius: BorderRadius.circular(20),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(20),
                                                                         boxShadow: [
                                                                           BoxShadow(
-                                                                            spreadRadius: 5,
-                                                                            blurRadius: 10,
-                                                                            color: Colors.grey.withOpacity(0.1),
+                                                                            spreadRadius:
+                                                                                5,
+                                                                            blurRadius:
+                                                                                10,
+                                                                            color:
+                                                                                Colors.grey.withOpacity(0.1),
                                                                           ),
                                                                         ],
                                                                       ),
-                                                                      child: Padding(
-                                                                        padding: const EdgeInsets.symmetric(
-                                                                          horizontal: 12,
-                                                                          vertical: 16,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.symmetric(
+                                                                          horizontal:
+                                                                              12,
+                                                                          vertical:
+                                                                              16,
                                                                         ),
-                                                                        child: Row(
+                                                                        child:
+                                                                            Row(
                                                                           children: [
                                                                             SizedBox(
                                                                               height: 32,
                                                                               width: 32,
                                                                               child: CachedNetworkImage(
-                                                                                imageUrl: transaction
-                                                                                    .mainContent!.coinIcons.first,
-                                                                                placeholder: (context, url) =>
-                                                                                    Container(
+                                                                                imageUrl: transaction.mainContent!.coinIcons.first,
+                                                                                placeholder: (context, url) => Container(
                                                                                   decoration: BoxDecoration(
-                                                                                    borderRadius:
-                                                                                        BorderRadius.circular(20),
+                                                                                    borderRadius: BorderRadius.circular(20),
                                                                                     color: Colors.transparent,
                                                                                   ),
                                                                                   child: SizedBox(
                                                                                     height: 30,
                                                                                     width: 30,
                                                                                     child: CircularProgressIndicator(
-                                                                                      color:
-                                                                                          Colors.grey.withOpacity(0.5),
+                                                                                      color: Colors.grey.withOpacity(0.5),
                                                                                       strokeWidth: 2,
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                                errorWidget: (context, url, error) =>
-                                                                                    const Icon(Icons.error),
+                                                                                errorWidget: (context, url, error) => const Icon(Icons.error),
                                                                               ),
                                                                             ),
                                                                             const Gap(10),
                                                                             Column(
-                                                                              crossAxisAlignment:
-                                                                                  CrossAxisAlignment.start,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Text(
-                                                                                  transaction.type != 'Sent'
-                                                                                      ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
-                                                                                      : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
+                                                                                  transaction.type != 'Sent' ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC' : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
                                                                                   style: TextStyle(
                                                                                     fontFamily: FontFamily.redHatMedium,
                                                                                     fontSize: 16,
-                                                                                    color: transaction.type != 'Sent'
-                                                                                        ? Colors.green
-                                                                                        : Colors.red,
+                                                                                    color: transaction.type != 'Sent' ? Colors.green : Colors.red,
                                                                                     fontWeight: FontWeight.w700,
                                                                                   ),
                                                                                 ),
@@ -433,23 +564,18 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                                       '\$${myFormat.format(totalWorth)}',
                                                                                       style: const TextStyle(
                                                                                         fontWeight: FontWeight.w500,
-                                                                                        fontFamily:
-                                                                                            FontFamily.redHatMedium,
+                                                                                        fontFamily: FontFamily.redHatMedium,
                                                                                         fontSize: 16,
                                                                                         color: Color(0xFF838995),
                                                                                       ),
                                                                                     ),
                                                                                     Text(
                                                                                       ' (1 BTC = \$${myFormat.format(
-                                                                                        (totalWorth! /
-                                                                                                transaction
-                                                                                                    .coinData!.count)
-                                                                                            .abs(),
+                                                                                        (totalWorth! / transaction.coinData!.count).abs(),
                                                                                       )})',
                                                                                       style: const TextStyle(
                                                                                         fontWeight: FontWeight.w500,
-                                                                                        fontFamily:
-                                                                                            FontFamily.redHatMedium,
+                                                                                        fontFamily: FontFamily.redHatMedium,
                                                                                         fontSize: 16,
                                                                                         color: Color(0xFF838995),
                                                                                       ),
@@ -462,11 +588,18 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                    const Gap(24),
+                                                                    const Gap(
+                                                                      24,
+                                                                    ),
                                                                     Padding(
                                                                       padding:
-                                                                          const EdgeInsets.symmetric(horizontal: 10),
-                                                                      child: Column(
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            10,
+                                                                      ),
+                                                                      child:
+                                                                          Column(
                                                                         children: [
                                                                           Row(
                                                                             mainAxisAlignment:
@@ -492,9 +625,12 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                             ],
                                                                           ),
                                                                           const Divider(
-                                                                            height: 30,
-                                                                            thickness: 1,
-                                                                            color: Color(0xFFEEEFF4),
+                                                                            height:
+                                                                                30,
+                                                                            thickness:
+                                                                                1,
+                                                                            color:
+                                                                                Color(0xFFEEEFF4),
                                                                           ),
                                                                           Row(
                                                                             mainAxisAlignment:
@@ -524,7 +660,9 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                         ],
                                                                       ),
                                                                     ),
-                                                                    const Gap(50),
+                                                                    const Gap(
+                                                                      50,
+                                                                    ),
                                                                   ],
                                                                 ),
                                                               );
@@ -534,65 +672,121 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                         child: ListTile(
                                                           minLeadingWidth: 5,
                                                           leading: Padding(
-                                                            padding: const EdgeInsets.only(top: 12, bottom: 12),
-                                                            child: CachedNetworkImage(
-                                                              imageUrl: transaction.mainContent!.coinIcons.first,
-                                                              placeholder: (context, url) => Container(
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(20),
-                                                                  color: Colors.transparent,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              top: 12,
+                                                              bottom: 12,
+                                                            ),
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              imageUrl: transaction
+                                                                  .mainContent!
+                                                                  .coinIcons
+                                                                  .first,
+                                                              placeholder: (
+                                                                context,
+                                                                url,
+                                                              ) =>
+                                                                  Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                    20,
+                                                                  ),
+                                                                  color: Colors
+                                                                      .transparent,
                                                                 ),
                                                                 child: SizedBox(
                                                                   height: 30,
                                                                   width: 30,
-                                                                  child: CircularProgressIndicator(
-                                                                    color: Colors.grey.withOpacity(0.5),
-                                                                    strokeWidth: 2,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .withOpacity(
+                                                                      0.5,
+                                                                    ),
+                                                                    strokeWidth:
+                                                                        2,
                                                                   ),
                                                                 ),
                                                               ),
-                                                              errorWidget: (context, url, error) =>
-                                                                  const Icon(Icons.error),
+                                                              errorWidget: (
+                                                                context,
+                                                                url,
+                                                                error,
+                                                              ) =>
+                                                                  const Icon(
+                                                                Icons.error,
+                                                              ),
                                                             ),
                                                           ),
                                                           title: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Row(
                                                                 children: [
                                                                   Text(
-                                                                    transaction.type.toString(),
-                                                                    style: const TextStyle(
-                                                                      fontFamily: FontFamily.redHatMedium,
-                                                                      fontSize: 15,
-                                                                      color: AppColors.primaryTextColor,
-                                                                      fontWeight: FontWeight.w700,
+                                                                    transaction
+                                                                        .type
+                                                                        .toString(),
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontFamily:
+                                                                          FontFamily
+                                                                              .redHatMedium,
+                                                                      fontSize:
+                                                                          15,
+                                                                      color: AppColors
+                                                                          .primaryTextColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
                                                                     ),
                                                                   ),
-                                                                  const SizedBox(width: 2),
-                                                                  if (transaction.type != 'Sent')
-                                                                    Assets.icons.outbound.image(height: 20)
+                                                                  const SizedBox(
+                                                                    width: 2,
+                                                                  ),
+                                                                  if (transaction
+                                                                          .type !=
+                                                                      'Sent')
+                                                                    Assets.icons
+                                                                        .outbound
+                                                                        .image(
+                                                                      height:
+                                                                          20,
+                                                                    )
                                                                   else
-                                                                    Assets.icons.outboundRed.image(height: 20),
+                                                                    Assets.icons
+                                                                        .outboundRed
+                                                                        .image(
+                                                                      height:
+                                                                          20,
+                                                                    ),
                                                                 ],
                                                               ),
                                                               Observer(
-                                                                builder: (context) {
-                                                                  return _accelerometerStore.hasPerformedAction
+                                                                builder:
+                                                                    (context) {
+                                                                  return _accelerometerStore
+                                                                          .hasPerformedAction
                                                                       ? Column(
-                                                                          mainAxisSize: MainAxisSize.min,
-                                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.end,
                                                                           children: [
                                                                             Text(
-                                                                              transaction.type != 'Sent'
-                                                                                  ? '***** BTC'
-                                                                                  : '***** BTC',
+                                                                              transaction.type != 'Sent' ? '***** BTC' : '***** BTC',
                                                                               style: TextStyle(
                                                                                 fontFamily: FontFamily.redHatMedium,
                                                                                 fontSize: 16,
-                                                                                color: transaction.type != 'Sent'
-                                                                                    ? Colors.green
-                                                                                    : Colors.red,
+                                                                                color: transaction.type != 'Sent' ? Colors.green : Colors.red,
                                                                                 fontWeight: FontWeight.w700,
                                                                               ),
                                                                             ),
@@ -608,19 +802,17 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                           ],
                                                                         )
                                                                       : Column(
-                                                                          mainAxisSize: MainAxisSize.min,
-                                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.end,
                                                                           children: [
                                                                             Text(
-                                                                              transaction.type != 'Sent'
-                                                                                  ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
-                                                                                  : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
+                                                                              transaction.type != 'Sent' ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC' : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
                                                                               style: TextStyle(
                                                                                 fontFamily: FontFamily.redHatMedium,
                                                                                 fontSize: 16,
-                                                                                color: transaction.type != 'Sent'
-                                                                                    ? Colors.green
-                                                                                    : Colors.red,
+                                                                                color: transaction.type != 'Sent' ? Colors.green : Colors.red,
                                                                                 fontWeight: FontWeight.w700,
                                                                               ),
                                                                             ),
@@ -662,35 +854,56 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                         right: 16,
                         child: ScaleTap(
                           enableFeedback: false,
-                          onPressed: _historyPageStore.disabledButtons[
-                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] ??
+                          onPressed: _historyPageStore.disabledButtons[widget
+                                      .balanceStore
+                                      .bars[_historyPageStore.barHistoryIndex]
+                                      .address] ??
                                   false
                               ? () async {
                                   unawaited(_controller.forward());
                                   await _historyPageStore.getSingleBarHistory(
-                                    address: widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+                                    address: widget
+                                        .balanceStore
+                                        .bars[_historyPageStore.barHistoryIndex]
+                                        .address,
                                   );
                                   _controller.reset();
                                 }
                               : () async {
                                   unawaited(_controller.repeat());
-                                  _historyPageStore.disabledButtons[
-                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] = true;
-                                  await _historyPageStore.setRefreshing(value: true);
+                                  _historyPageStore.disabledButtons[widget
+                                      .balanceStore
+                                      .bars[_historyPageStore.barHistoryIndex]
+                                      .address] = true;
+                                  await _historyPageStore.setRefreshing(
+                                    value: true,
+                                  );
                                   await _historyPageStore.barRefresh(
-                                    widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+                                    widget
+                                        .balanceStore
+                                        .bars[_historyPageStore.barHistoryIndex]
+                                        .address,
                                   );
                                   _controller
                                     ..stop()
                                     ..reset();
-                                  await _historyPageStore.setRefreshing(value: false);
+                                  await _historyPageStore.setRefreshing(
+                                    value: false,
+                                  );
                                   _historyPageStore.makeInactive();
-                                  await Future.delayed(const Duration(minutes: 1));
-                                  _historyPageStore.disabledButtons[
-                                      widget.balanceStore.bars[_historyPageStore.barHistoryIndex].address] = false;
+                                  await Future.delayed(
+                                    const Duration(minutes: 1),
+                                  );
+                                  _historyPageStore.disabledButtons[widget
+                                      .balanceStore
+                                      .bars[_historyPageStore.barHistoryIndex]
+                                      .address] = false;
                                   _historyPageStore.makeActive();
                                   await recordAmplitudeEventPartTwo(
-                                    RefreshClicked(address: _historyPageStore.selectedBarAddress),
+                                    RefreshClicked(
+                                      address:
+                                          _historyPageStore.selectedBarAddress,
+                                    ),
                                   );
                                 },
                           child: Row(
@@ -710,7 +923,9 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                   ),
                                   Observer(
                                     builder: (_) => Text(
-                                      _historyPageStore.getLastRefreshed(_historyPageStore.selectedBarAddress),
+                                      _historyPageStore.getLastRefreshed(
+                                        _historyPageStore.selectedBarAddress,
+                                      ),
                                       style: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
                                         fontSize: 10,

@@ -235,5 +235,6 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletType,
   }) = Secret2Validated;
 
-  factory AmplitudeEvent.fromJson(Map<String, dynamic> json) => _$AmplitudeEventFromJson(json);
+  factory AmplitudeEvent.fromJson(Map<String, dynamic> json) =>
+      _$AmplitudeEventFromJson(json);
 }

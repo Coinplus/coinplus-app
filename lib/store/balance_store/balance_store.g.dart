@@ -9,13 +9,40 @@ part of 'balance_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BalanceStore on _BalanceStore, Store {
-  Computed<int>? _$allCardsBalancesComputed;
+  Computed<int?>? _$allCardsBalancesComputed;
 
   @override
-  int get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<int>(
+  int? get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<int?>(
           () => super.allCardsBalances,
           name: '_BalanceStore.allCardsBalances'))
       .value;
+  Computed<num?>? _$btcPriceComputed;
+
+  @override
+  num? get btcPrice => (_$btcPriceComputed ??=
+          Computed<num?>(() => super.btcPrice, name: '_BalanceStore.btcPrice'))
+      .value;
+  Computed<CoinModel?>? _$singleCoinComputed;
+
+  @override
+  CoinModel? get singleCoin =>
+      (_$singleCoinComputed ??= Computed<CoinModel?>(() => super.singleCoin,
+              name: '_BalanceStore.singleCoin'))
+          .value;
+  Computed<num>? _$cardBalanceComputed;
+
+  @override
+  num get cardBalance =>
+      (_$cardBalanceComputed ??= Computed<num>(() => super.cardBalance,
+              name: '_BalanceStore.cardBalance'))
+          .value;
+  Computed<num?>? _$barBalanceComputed;
+
+  @override
+  num? get barBalance =>
+      (_$barBalanceComputed ??= Computed<num?>(() => super.barBalance,
+              name: '_BalanceStore.barBalance'))
+          .value;
 
   late final _$_cardsAtom =
       Atom(name: '_BalanceStore._cards', context: context);
@@ -49,6 +76,38 @@ mixin _$BalanceStore on _BalanceStore, Store {
   set _bars(ObservableList<BarModel> value) {
     _$_barsAtom.reportWrite(value, super._bars, () {
       super._bars = value;
+    });
+  }
+
+  late final _$cardMapResultAtom =
+      Atom(name: '_BalanceStore.cardMapResult', context: context);
+
+  @override
+  MapResult? get cardMapResult {
+    _$cardMapResultAtom.reportRead();
+    return super.cardMapResult;
+  }
+
+  @override
+  set cardMapResult(MapResult? value) {
+    _$cardMapResultAtom.reportWrite(value, super.cardMapResult, () {
+      super.cardMapResult = value;
+    });
+  }
+
+  late final _$barMapResultAtom =
+      Atom(name: '_BalanceStore.barMapResult', context: context);
+
+  @override
+  MapResult? get barMapResult {
+    _$barMapResultAtom.reportRead();
+    return super.barMapResult;
+  }
+
+  @override
+  set barMapResult(MapResult? value) {
+    _$barMapResultAtom.reportWrite(value, super.barMapResult, () {
+      super.barMapResult = value;
     });
   }
 
@@ -304,11 +363,17 @@ mixin _$BalanceStore on _BalanceStore, Store {
   @override
   String toString() {
     return '''
+cardMapResult: ${cardMapResult},
+barMapResult: ${barMapResult},
 loadings: ${loadings},
 balanceLoading: ${balanceLoading},
 cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
-allCardsBalances: ${allCardsBalances}
+allCardsBalances: ${allCardsBalances},
+btcPrice: ${btcPrice},
+singleCoin: ${singleCoin},
+cardBalance: ${cardBalance},
+barBalance: ${barBalance}
     ''';
   }
 }

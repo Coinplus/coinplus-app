@@ -61,7 +61,7 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                 children: [
                   const Gap(8),
                   IconButton(
-                    onPressed: router.pop,
+                    onPressed: router.maybePop,
                     icon: const Icon(
                       Icons.close_sharp,
                       size: 25,
@@ -163,19 +163,22 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                               cardAddress: widget.card.address,
                               newName: _nameState.nameController.text,
                             );
-                            await router.pop();
+                            await router.maybePop();
                             await Future.delayed(
                               const Duration(milliseconds: 100),
                             );
-                            await router.pop();
-                            await recordAmplitudeEventPartTwo(const CardNameChanged(walletType: 'Card'));
+                            await router.maybePop();
+                            await recordAmplitudeEventPartTwo(
+                              const CardNameChanged(walletType: 'Card'),
+                            );
                             showTopSnackBar(
                               displayDuration: const Duration(
                                 milliseconds: 600,
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor:
+                                    const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Your card name was changed',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,

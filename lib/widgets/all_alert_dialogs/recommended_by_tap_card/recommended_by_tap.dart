@@ -32,19 +32,27 @@ Future<void> recommendedByTapAlert({
       primaryAction: () {
         unawaited(
           recordAmplitudeEventPartTwo(
-            TroubleGotItClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+            TroubleGotItClicked(
+              walletAddress: walletAddress,
+              walletType: walletType,
+              activated: activated,
+            ),
           ),
         );
-        router.pop();
+        router.maybePop();
       },
       text:
           'To be able to validate that the card is legit we recommend you to activate wallet when you have your card with you.',
       secondaryActionText: 'Activate now',
       secondaryAction: () async {
-        await router.pop();
+        await router.maybePop();
         unawaited(
           recordAmplitudeEventPartTwo(
-            TroubleActivateNowClicked(walletAddress: walletAddress, walletType: walletType, activated: activated),
+            TroubleActivateNowClicked(
+              walletAddress: walletAddress,
+              walletType: walletType,
+              activated: activated,
+            ),
           ),
         );
         await router.push(CardSecretFillRoute());

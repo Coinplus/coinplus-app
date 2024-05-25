@@ -259,6 +259,9 @@ class $AssetsIconsGen {
   AssetGenImage get sendReceive =>
       const AssetGenImage('assets/icons/send_receive.png');
 
+  /// File path: assets/icons/send_to.png
+  AssetGenImage get sendTo => const AssetGenImage('assets/icons/send_to.png');
+
   /// File path: assets/icons/settings.png
   AssetGenImage get settings =>
       const AssetGenImage('assets/icons/settings.png');
@@ -282,6 +285,10 @@ class $AssetsIconsGen {
   AssetGenImage get successEmail =>
       const AssetGenImage('assets/icons/success_email.png');
 
+  /// File path: assets/icons/swap_button.png
+  AssetGenImage get swapButton =>
+      const AssetGenImage('assets/icons/swap_button.png');
+
   /// File path: assets/icons/sync.png
   AssetGenImage get sync => const AssetGenImage('assets/icons/sync.png');
 
@@ -299,6 +306,10 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/twitter.png
   AssetGenImage get twitter => const AssetGenImage('assets/icons/twitter.png');
+
+  /// File path: assets/icons/txFeeInfo.png
+  AssetGenImage get txFeeInfo =>
+      const AssetGenImage('assets/icons/txFeeInfo.png');
 
   /// File path: assets/icons/user_data.png
   AssetGenImage get userData =>
@@ -393,6 +404,7 @@ class $AssetsIconsGen {
         secretsFail,
         send,
         sendReceive,
+        sendTo,
         settings,
         share,
         shop,
@@ -400,12 +412,14 @@ class $AssetsIconsGen {
         star,
         stylus,
         successEmail,
+        swapButton,
         sync,
         taskAlt,
         terms,
         torch,
         trash,
         twitter,
+        txFeeInfo,
         userData,
         validationIndicatorGreenBottom,
         validationIndicatorGreenTop,
@@ -442,6 +456,9 @@ class $AssetsImagesGen {
   AssetGenImage get contactless =>
       const AssetGenImage('assets/images/contactless.png');
 
+  /// File path: assets/images/pending.png
+  AssetGenImage get pending => const AssetGenImage('assets/images/pending.png');
+
   /// File path: assets/images/wallet_protect_image.png
   AssetGenImage get walletProtectImage =>
       const AssetGenImage('assets/images/wallet_protect_image.png');
@@ -453,6 +470,7 @@ class $AssetsImagesGen {
         cardAndBarForms,
         coinpluslogo,
         contactless,
+        pending,
         walletProtectImage
       ];
 }
@@ -467,6 +485,13 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/animated_logo.json
   String get animatedLogo => 'assets/lottie_animations/animated_logo.json';
 
+  /// File path: assets/lottie_animations/arrow.json
+  String get arrow => 'assets/lottie_animations/arrow.json';
+
+  /// File path: assets/lottie_animations/card_hovering_transaction.json
+  String get cardHoveringTransaction =>
+      'assets/lottie_animations/card_hovering_transaction.json';
+
   /// File path: assets/lottie_animations/fake_card.json
   String get fakeCard => 'assets/lottie_animations/fake_card.json';
 
@@ -479,6 +504,13 @@ class $AssetsLottieAnimationsGen {
 
   /// File path: assets/lottie_animations/nfcanimation.json
   String get nfcanimation => 'assets/lottie_animations/nfcanimation.json';
+
+  /// File path: assets/lottie_animations/pending.json
+  String get pending => 'assets/lottie_animations/pending.json';
+
+  /// File path: assets/lottie_animations/phone_coin_splash.json
+  String get phoneCoinSplash =>
+      'assets/lottie_animations/phone_coin_splash.json';
 
   /// File path: assets/lottie_animations/please_wait.json
   String get pleaseWait => 'assets/lottie_animations/please_wait.json';
@@ -495,6 +527,9 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/secrets_success.json
   String get secretsSuccess => 'assets/lottie_animations/secrets_success.json';
 
+  /// File path: assets/lottie_animations/send_loading.json
+  String get sendLoading => 'assets/lottie_animations/send_loading.json';
+
   /// File path: assets/lottie_animations/warning.json
   String get warning => 'assets/lottie_animations/warning.json';
 
@@ -502,15 +537,20 @@ class $AssetsLottieAnimationsGen {
   List<String> get values => [
         addressValidationSuccess,
         animatedLogo,
+        arrow,
+        cardHoveringTransaction,
         fakeCard,
         info,
         loadingAnimation,
         nfcanimation,
+        pending,
+        phoneCoinSplash,
         pleaseWait,
         qrAnimation,
         sadEmoji,
         secretsFail,
         secretsSuccess,
+        sendLoading,
         warning
       ];
 }
@@ -627,6 +667,10 @@ class $AssetsImagesCardGen {
   AssetGenImage get cardForm =>
       const AssetGenImage('assets/images/card/card_form.png');
 
+  /// File path: assets/images/card/card_stickers.png
+  AssetGenImage get cardStickers =>
+      const AssetGenImage('assets/images/card/card_stickers.png');
+
   /// File path: assets/images/card/filled_back.png
   AssetGenImage get filledBack =>
       const AssetGenImage('assets/images/card/filled_back.png');
@@ -665,6 +709,7 @@ class $AssetsImagesCardGen {
         cardBackBlack,
         cardBackWhite,
         cardForm,
+        cardStickers,
         filledBack,
         filledBackBrown,
         filledBackWhite,
