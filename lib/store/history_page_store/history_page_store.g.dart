@@ -201,6 +201,39 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
+  late final _$cardActivationStatusAtom =
+      Atom(name: '_HistoryPageStore.cardActivationStatus', context: context);
+
+  @override
+  ObservableMap<String, bool> get cardActivationStatus {
+    _$cardActivationStatusAtom.reportRead();
+    return super.cardActivationStatus;
+  }
+
+  @override
+  set cardActivationStatus(ObservableMap<String, bool> value) {
+    _$cardActivationStatusAtom.reportWrite(value, super.cardActivationStatus,
+        () {
+      super.cardActivationStatus = value;
+    });
+  }
+
+  late final _$barActivationStatusAtom =
+      Atom(name: '_HistoryPageStore.barActivationStatus', context: context);
+
+  @override
+  ObservableMap<String, bool> get barActivationStatus {
+    _$barActivationStatusAtom.reportRead();
+    return super.barActivationStatus;
+  }
+
+  @override
+  set barActivationStatus(ObservableMap<String, bool> value) {
+    _$barActivationStatusAtom.reportWrite(value, super.barActivationStatus, () {
+      super.barActivationStatus = value;
+    });
+  }
+
   late final _$historyLoadingAtom =
       Atom(name: '_HistoryPageStore.historyLoading', context: context);
 
@@ -425,6 +458,38 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
+  late final _$cardActivationIndexAtom =
+      Atom(name: '_HistoryPageStore.cardActivationIndex', context: context);
+
+  @override
+  int get cardActivationIndex {
+    _$cardActivationIndexAtom.reportRead();
+    return super.cardActivationIndex;
+  }
+
+  @override
+  set cardActivationIndex(int value) {
+    _$cardActivationIndexAtom.reportWrite(value, super.cardActivationIndex, () {
+      super.cardActivationIndex = value;
+    });
+  }
+
+  late final _$barActivationIndexAtom =
+      Atom(name: '_HistoryPageStore.barActivationIndex', context: context);
+
+  @override
+  int get barActivationIndex {
+    _$barActivationIndexAtom.reportRead();
+    return super.barActivationIndex;
+  }
+
+  @override
+  set barActivationIndex(int value) {
+    _$barActivationIndexAtom.reportWrite(value, super.barActivationIndex, () {
+      super.barActivationIndex = value;
+    });
+  }
+
   late final _$setTabIndexAsyncAction =
       AsyncAction('_HistoryPageStore.setTabIndex', context: context);
 
@@ -440,6 +505,26 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   Future<void> setRefreshing({required bool value}) {
     return _$setRefreshingAsyncAction
         .run(() => super.setRefreshing(value: value));
+  }
+
+  late final _$loadCardActivationStatusAsyncAction = AsyncAction(
+      '_HistoryPageStore.loadCardActivationStatus',
+      context: context);
+
+  @override
+  Future<void> loadCardActivationStatus(List<CardModel> cards) {
+    return _$loadCardActivationStatusAsyncAction
+        .run(() => super.loadCardActivationStatus(cards));
+  }
+
+  late final _$loadBarActivationStatusAsyncAction = AsyncAction(
+      '_HistoryPageStore.loadBarActivationStatus',
+      context: context);
+
+  @override
+  Future<void> loadBarActivationStatus(List<BarModel> bars) {
+    return _$loadBarActivationStatusAsyncAction
+        .run(() => super.loadBarActivationStatus(bars));
   }
 
   late final _$getSingleCardHistoryAsyncAction =
@@ -469,6 +554,24 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   Future<void> isCachedBarTransactions(String address) {
     return _$isCachedBarTransactionsAsyncAction
         .run(() => super.isCachedBarTransactions(address));
+  }
+
+  late final _$setCardActivationIndexAsyncAction =
+      AsyncAction('_HistoryPageStore.setCardActivationIndex', context: context);
+
+  @override
+  Future<void> setCardActivationIndex({required int index}) {
+    return _$setCardActivationIndexAsyncAction
+        .run(() => super.setCardActivationIndex(index: index));
+  }
+
+  late final _$setBarActivationIndexAsyncAction =
+      AsyncAction('_HistoryPageStore.setBarActivationIndex', context: context);
+
+  @override
+  Future<void> setBarActivationIndex({required int index}) {
+    return _$setBarActivationIndexAsyncAction
+        .run(() => super.setBarActivationIndex(index: index));
   }
 
   late final _$getSingleBarHistoryAsyncAction =
@@ -638,6 +741,29 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   }
 
   @override
+  void setCardActivationStatus(
+      {required String address, required bool status}) {
+    final _$actionInfo = _$_HistoryPageStoreActionController.startAction(
+        name: '_HistoryPageStore.setCardActivationStatus');
+    try {
+      return super.setCardActivationStatus(address: address, status: status);
+    } finally {
+      _$_HistoryPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setBarActivationStatus({required String address, required bool status}) {
+    final _$actionInfo = _$_HistoryPageStoreActionController.startAction(
+        name: '_HistoryPageStore.setBarActivationStatus');
+    try {
+      return super.setBarActivationStatus(address: address, status: status);
+    } finally {
+      _$_HistoryPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void makeInactive() {
     final _$actionInfo = _$_HistoryPageStoreActionController.startAction(
         name: '_HistoryPageStore.makeInactive');
@@ -672,6 +798,8 @@ cardHistories: ${cardHistories},
 barHistories: ${barHistories},
 cardTransactionCache: ${cardTransactionCache},
 barTransactionCache: ${barTransactionCache},
+cardActivationStatus: ${cardActivationStatus},
+barActivationStatus: ${barActivationStatus},
 historyLoading: ${historyLoading},
 disabledButtons: ${disabledButtons},
 cardTransactions: ${cardTransactions},
@@ -686,6 +814,8 @@ barCurrentPage: ${barCurrentPage},
 tabIndex: ${tabIndex},
 isCardRefreshing: ${isCardRefreshing},
 isBarRefreshing: ${isBarRefreshing},
+cardActivationIndex: ${cardActivationIndex},
+barActivationIndex: ${barActivationIndex},
 cardsTransactions: ${cardsTransactions},
 barsTransactions: ${barsTransactions},
 cardUniqueDates: ${cardUniqueDates},

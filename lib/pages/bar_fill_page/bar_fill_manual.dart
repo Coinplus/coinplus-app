@@ -750,7 +750,7 @@ class _BarFillPageState extends State<BarFillPage>
                                                       );
                                                       final res = await context
                                                           .pushRoute<String?>(
-                                                        const QrScannerRoute(),
+                                                        QrScannerRoute(),
                                                       );
                                                       if (res == null) {
                                                         return;

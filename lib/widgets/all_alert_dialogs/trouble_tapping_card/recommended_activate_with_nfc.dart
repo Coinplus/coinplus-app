@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
@@ -15,6 +16,7 @@ Future<void> recommendedActivateByTap({
   required String walletAddress,
   required String walletType,
   required bool activated,
+  required SendToState state,
 }) {
   return showDialogBox(
     context,
@@ -40,7 +42,7 @@ Future<void> recommendedActivateByTap({
             ),
           ),
         );
-        await router.push(CardSecretFillRoute());
+        await router.push(CardSecretFillRoute(state: state));
       },
       text:
           'To be able to check the validity of the card we need you to tap the card. In case you can’t tap, we can’t validate that your card is authentic.',

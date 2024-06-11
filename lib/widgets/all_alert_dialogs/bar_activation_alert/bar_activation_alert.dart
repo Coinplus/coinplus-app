@@ -11,6 +11,7 @@ import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/bar_model/bar_model.dart';
 import '../../../providers/screen_service.dart';
@@ -29,6 +30,7 @@ Future<void> barActivationDialog({
   required ValueNotifier<bool> isModalOpened,
   required BarModel bar,
   required bool isBarList,
+  required SendToState state,
 }) async {
   await showDialogBox(
     context,
@@ -111,6 +113,7 @@ Future<void> barActivationDialog({
                       await router.push(
                         BarSecretFillRoute(
                           receivedData: walletAddress.toString(),
+                          state: state,
                         ),
                       );
                     } else {
@@ -154,6 +157,7 @@ Future<void> barActivationDialog({
                   return Future(
                     () => showBarTapIssueBottomSheet(
                       isModalOpened: isModalOpened,
+                      state: state,
                     ),
                   );
                 },
@@ -215,6 +219,7 @@ Future<void> barActivationDialog({
                       await router.push(
                         BarSecretFillRoute(
                           receivedData: walletAddress.toString(),
+                          state: state,
                         ),
                       );
                     } else {
@@ -255,13 +260,17 @@ Future<void> barActivationDialog({
                     return Future(
                       () => showBarTapIssueBottomSheet(
                         isModalOpened: isModalOpened,
+                        state: state,
                       ),
                     );
                   });
                 },
               );
               await router.maybePop();
-              await showAndroidBarNfcBottomSheet(isModalOpened: isModalOpened);
+              await showAndroidBarNfcBottomSheet(
+                isModalOpened: isModalOpened,
+                state: state,
+              );
             },
     ),
     isDismissible: true,

@@ -18,6 +18,7 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/send_to/send_to_state.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
@@ -40,9 +41,11 @@ class BarSecretFillPage extends StatefulWidget {
   const BarSecretFillPage({
     super.key,
     this.receivedData,
+    required this.state,
   });
 
   final String? receivedData;
+  final SendToState state;
 
   @override
   State<BarSecretFillPage> createState() => _BarSecretFillPageState();
@@ -450,7 +453,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                         );
                                                                         final res =
                                                                             await context.pushRoute<String?>(
-                                                                          const QrScannerRoute(),
+                                                                          QrScannerRoute(),
                                                                         );
                                                                         if (res ==
                                                                             null) {
@@ -733,7 +736,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                                       ),
                                                                                     );
                                                                                     final res = await context.pushRoute<String?>(
-                                                                                      const QrScannerRoute(),
+                                                                                      QrScannerRoute(),
                                                                                     );
                                                                                     if (res == null) {
                                                                                       return;
@@ -944,6 +947,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                               walletAddress: walletAddress,
                               walletType: 'Bar',
                               isBarList: true,
+                              state: widget.state,
                             );
                             await recordUserProperty(const BarHolder());
                           } else {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
@@ -15,6 +16,7 @@ Future<void> secretsSuccessAlert({
   required String walletAddress,
   required String walletType,
   required bool isBarList,
+  required SendToState state,
 }) {
   final allSettingsState = AllSettingsState();
   return showDialogBox(
@@ -37,6 +39,7 @@ Future<void> secretsSuccessAlert({
         await showSendFromWalletModal(
           allSettingsState: allSettingsState,
           isBarList: isBarList,
+          state: state,
         );
       },
       secondaryActionText: 'Close',

@@ -23,11 +23,11 @@ mixin _$SendToState on SendToStateBase, Store {
           Computed<String>(() => super.formattedAddress,
               name: 'SendToStateBase.formattedAddress'))
       .value;
-  Computed<String>? _$formattedSelectedCardAddressComputed;
+  Computed<String?>? _$formattedSelectedCardAddressComputed;
 
   @override
-  String get formattedSelectedCardAddress =>
-      (_$formattedSelectedCardAddressComputed ??= Computed<String>(
+  String? get formattedSelectedCardAddress =>
+      (_$formattedSelectedCardAddressComputed ??= Computed<String?>(
               () => super.formattedSelectedCardAddress,
               name: 'SendToStateBase.formattedSelectedCardAddress'))
           .value;
@@ -60,13 +60,6 @@ mixin _$SendToState on SendToStateBase, Store {
       (_$hasCardsComputed ??= Computed<bool>(() => super.hasCards,
               name: 'SendToStateBase.hasCards'))
           .value;
-  Computed<bool>? _$hasMoreThanOneCardsComputed;
-
-  @override
-  bool get hasMoreThanOneCards => (_$hasMoreThanOneCardsComputed ??=
-          Computed<bool>(() => super.hasMoreThanOneCards,
-              name: 'SendToStateBase.hasMoreThanOneCards'))
-      .value;
   Computed<bool>? _$hasMoreThanOneWalletsComputed;
 
   @override
@@ -74,18 +67,18 @@ mixin _$SendToState on SendToStateBase, Store {
           Computed<bool>(() => super.hasMoreThanOneWallets,
               name: 'SendToStateBase.hasMoreThanOneWallets'))
       .value;
-  Computed<CardModel>? _$selectedCardComputed;
+  Computed<CardModel?>? _$selectedCardComputed;
 
   @override
-  CardModel get selectedCard =>
-      (_$selectedCardComputed ??= Computed<CardModel>(() => super.selectedCard,
+  CardModel? get selectedCard =>
+      (_$selectedCardComputed ??= Computed<CardModel?>(() => super.selectedCard,
               name: 'SendToStateBase.selectedCard'))
           .value;
-  Computed<BarModel>? _$selectedBarComputed;
+  Computed<BarModel?>? _$selectedBarComputed;
 
   @override
-  BarModel get selectedBar =>
-      (_$selectedBarComputed ??= Computed<BarModel>(() => super.selectedBar,
+  BarModel? get selectedBar =>
+      (_$selectedBarComputed ??= Computed<BarModel?>(() => super.selectedBar,
               name: 'SendToStateBase.selectedBar'))
           .value;
   Computed<bool>? _$hasPerformedActionComputed;
@@ -116,18 +109,18 @@ mixin _$SendToState on SendToStateBase, Store {
           Computed<String>(() => super.receiverWalletAddress,
               name: 'SendToStateBase.receiverWalletAddress'))
       .value;
-  Computed<String>? _$selectedCardAddressComputed;
+  Computed<String?>? _$selectedCardAddressComputed;
 
   @override
-  String get selectedCardAddress => (_$selectedCardAddressComputed ??=
-          Computed<String>(() => super.selectedCardAddress,
+  String? get selectedCardAddress => (_$selectedCardAddressComputed ??=
+          Computed<String?>(() => super.selectedCardAddress,
               name: 'SendToStateBase.selectedCardAddress'))
       .value;
-  Computed<String>? _$selectedBarAddressComputed;
+  Computed<String?>? _$selectedBarAddressComputed;
 
   @override
-  String get selectedBarAddress => (_$selectedBarAddressComputed ??=
-          Computed<String>(() => super.selectedBarAddress,
+  String? get selectedBarAddress => (_$selectedBarAddressComputed ??=
+          Computed<String?>(() => super.selectedBarAddress,
               name: 'SendToStateBase.selectedBarAddress'))
       .value;
   Computed<num>? _$networkFeeComputed;
@@ -157,6 +150,20 @@ mixin _$SendToState on SendToStateBase, Store {
   bool get isCoverFee =>
       (_$isCoverFeeComputed ??= Computed<bool>(() => super.isCoverFee,
               name: 'SendToStateBase.isCoverFee'))
+          .value;
+  Computed<num>? _$usdToSatoshiComputed;
+
+  @override
+  num get usdToSatoshi =>
+      (_$usdToSatoshiComputed ??= Computed<num>(() => super.usdToSatoshi,
+              name: 'SendToStateBase.usdToSatoshi'))
+          .value;
+  Computed<bool>? _$isAmountToSmallComputed;
+
+  @override
+  bool get isAmountToSmall =>
+      (_$isAmountToSmallComputed ??= Computed<bool>(() => super.isAmountToSmall,
+              name: 'SendToStateBase.isAmountToSmall'))
           .value;
   Computed<bool>? _$isInputtedAmountBiggerTotalComputed;
 
@@ -255,21 +262,19 @@ mixin _$SendToState on SendToStateBase, Store {
     });
   }
 
-  late final _$_isUseMaxClickedAtom =
-      Atom(name: 'SendToStateBase._isUseMaxClicked', context: context);
+  late final _$isUseMaxClickedAtom =
+      Atom(name: 'SendToStateBase.isUseMaxClicked', context: context);
 
+  @override
   bool get isUseMaxClicked {
-    _$_isUseMaxClickedAtom.reportRead();
-    return super._isUseMaxClicked;
+    _$isUseMaxClickedAtom.reportRead();
+    return super.isUseMaxClicked;
   }
 
   @override
-  bool get _isUseMaxClicked => isUseMaxClicked;
-
-  @override
-  set _isUseMaxClicked(bool value) {
-    _$_isUseMaxClickedAtom.reportWrite(value, super._isUseMaxClicked, () {
-      super._isUseMaxClicked = value;
+  set isUseMaxClicked(bool value) {
+    _$isUseMaxClickedAtom.reportWrite(value, super.isUseMaxClicked, () {
+      super.isUseMaxClicked = value;
     });
   }
 
@@ -402,6 +407,61 @@ mixin _$SendToState on SendToStateBase, Store {
   }
 
   @override
+  void handleUsdAmountSelection() {
+    final _$actionInfo = _$SendToStateBaseActionController.startAction(
+        name: 'SendToStateBase.handleUsdAmountSelection');
+    try {
+      return super.handleUsdAmountSelection();
+    } finally {
+      _$SendToStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void handleBtcAmountSelection() {
+    final _$actionInfo = _$SendToStateBaseActionController.startAction(
+        name: 'SendToStateBase.handleBtcAmountSelection');
+    try {
+      return super.handleBtcAmountSelection();
+    } finally {
+      _$SendToStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void handleNextButtonStatus() {
+    final _$actionInfo = _$SendToStateBaseActionController.startAction(
+        name: 'SendToStateBase.handleNextButtonStatus');
+    try {
+      return super.handleNextButtonStatus();
+    } finally {
+      _$SendToStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearAddressController() {
+    final _$actionInfo = _$SendToStateBaseActionController.startAction(
+        name: 'SendToStateBase.clearAddressController');
+    try {
+      return super.clearAddressController();
+    } finally {
+      _$SendToStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearAmountControllers() {
+    final _$actionInfo = _$SendToStateBaseActionController.startAction(
+        name: 'SendToStateBase.clearAmountControllers');
+    try {
+      return super.clearAmountControllers();
+    } finally {
+      _$SendToStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   num onUseMax() {
     final _$actionInfo = _$SendToStateBaseActionController.startAction(
         name: 'SendToStateBase.onUseMax');
@@ -415,6 +475,7 @@ mixin _$SendToState on SendToStateBase, Store {
   @override
   String toString() {
     return '''
+isUseMaxClicked: ${isUseMaxClicked},
 shouldValidateReceiverAddress: ${shouldValidateReceiverAddress},
 nextButtonStatus: ${nextButtonStatus},
 isValidReceiverAddress: ${isValidReceiverAddress},
@@ -424,7 +485,6 @@ formattedSelectedBarAddress: ${formattedSelectedBarAddress},
 btc: ${btc},
 isConvertedAmountVisible: ${isConvertedAmountVisible},
 hasCards: ${hasCards},
-hasMoreThanOneCards: ${hasMoreThanOneCards},
 hasMoreThanOneWallets: ${hasMoreThanOneWallets},
 selectedCard: ${selectedCard},
 selectedBar: ${selectedBar},
@@ -438,6 +498,8 @@ networkFee: ${networkFee},
 sendAmountInUsd: ${sendAmountInUsd},
 networkFeeInBtc: ${networkFeeInBtc},
 isCoverFee: ${isCoverFee},
+usdToSatoshi: ${usdToSatoshi},
+isAmountToSmall: ${isAmountToSmall},
 isInputtedAmountBiggerTotal: ${isInputtedAmountBiggerTotal},
 historyPageStore: ${historyPageStore},
 accelerometerStore: ${accelerometerStore},

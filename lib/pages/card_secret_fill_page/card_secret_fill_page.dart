@@ -19,6 +19,7 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/send_to/send_to_state.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
@@ -42,9 +43,11 @@ class CardSecretFillPage extends StatefulWidget {
   const CardSecretFillPage({
     super.key,
     this.receivedData,
+    required this.state,
   });
 
   final String? receivedData;
+  final SendToState state;
 
   @override
   State<CardSecretFillPage> createState() => _CardSecretFillPageState();
@@ -161,7 +164,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
 
   @override
   Widget build(BuildContext context) {
-    final card = _balanceStore.cards[_historyPageStore.cardHistoryIndex];
+    final card = _balanceStore.cards[_historyPageStore.cardActivationIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -484,7 +487,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                           );
                                                                           final res =
                                                                               await context.pushRoute<String?>(
-                                                                            const QrScannerRoute(),
+                                                                            QrScannerRoute(),
                                                                           );
                                                                           if (res ==
                                                                               null) {
@@ -756,7 +759,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                                                                           );
                                                                           final res =
                                                                               await context.pushRoute<String?>(
-                                                                            const QrScannerRoute(),
+                                                                            QrScannerRoute(),
                                                                           );
                                                                           if (res ==
                                                                               null) {
@@ -986,6 +989,7 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                               walletAddress: _validationStore.walletAddress,
                               walletType: 'Card',
                               isBarList: false,
+                              state: widget.state,
                             );
                             await recordUserProperty(const CardHolder());
                           } else {

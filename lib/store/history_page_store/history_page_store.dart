@@ -8,9 +8,12 @@ import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../http/repositories/coins_repo.dart';
+import '../../models/bar_model/bar_model.dart';
+import '../../models/card_model/card_model.dart';
 import '../../models/history_model/transaction_model.dart';
 import '../../models/wallet_status_model/wallet_status_model.dart';
 import '../../utils/date_formatter.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../balance_store/balance_store.dart';
 
 part 'history_page_store.g.dart';
@@ -65,6 +68,14 @@ abstract class _HistoryPageStore with Store {
       ObservableMap<String, List<TransactionModel>>();
 
   @observable
+  ObservableMap<String, bool> cardActivationStatus =
+      ObservableMap<String, bool>();
+
+  @observable
+  ObservableMap<String, bool> barActivationStatus =
+      ObservableMap<String, bool>();
+
+  @observable
   bool historyLoading = false;
 
   @observable
@@ -106,6 +117,12 @@ abstract class _HistoryPageStore with Store {
   @observable
   bool isBarRefreshing = false;
 
+  @observable
+  int cardActivationIndex = 0;
+
+  @observable
+  int barActivationIndex = 0;
+
   @action
   Future<void> setTabIndex(int value) async {
     tabIndex = value;
@@ -143,6 +160,35 @@ abstract class _HistoryPageStore with Store {
   }
 
   @action
+  void setCardActivationStatus({
+    required String address,
+    required bool status,
+  }) {
+    cardActivationStatus[address] = status;
+  }
+
+  @action
+  void setBarActivationStatus({required String address, required bool status}) {
+    barActivationStatus[address] = status;
+  }
+
+  @action
+  Future<void> loadCardActivationStatus(List<CardModel> cards) async {
+    for (final card in cards) {
+      final status = await checkWalletStatus(card.address);
+      setCardActivationStatus(address: card.address, status: status);
+    }
+  }
+
+  @action
+  Future<void> loadBarActivationStatus(List<BarModel> bars) async {
+    for (final bar in bars) {
+      final status = await checkWalletStatus(bar.address);
+      setBarActivationStatus(address: bar.address, status: status);
+    }
+  }
+
+  @action
   Future<void> getSingleCardHistory({required String address}) async {
     try {
       historyLoading = true;
@@ -175,6 +221,16 @@ abstract class _HistoryPageStore with Store {
     final cachedTransactions = getBarCachedTransaction(address);
     barTransactions.addAll(cachedTransactions!);
     barHistories[address] = cachedTransactions;
+  }
+
+  @action
+  Future<void> setCardActivationIndex({required int index}) async {
+    cardActivationIndex = index;
+  }
+
+  @action
+  Future<void> setBarActivationIndex({required int index}) async {
+    barActivationIndex = index;
   }
 
   @action
@@ -257,20 +313,25 @@ abstract class _HistoryPageStore with Store {
 
   @computed
   List<TransactionItem>? get cardsTransactions {
-    if (cardHistories[_balanceStore.cards[cardHistoryIndex].address] != null) {
-      return cardHistories[_balanceStore.cards[cardHistoryIndex].address]
-          ?.expand((item) => item.result)
-          .toList();
+    if (_balanceStore.cards.isNotEmpty) {
+      if (cardHistories[_balanceStore.cards[cardHistoryIndex].address] !=
+          null) {
+        return cardHistories[_balanceStore.cards[cardHistoryIndex].address]
+            ?.expand((item) => item.result)
+            .toList();
+      }
     }
     return null;
   }
 
   @computed
   List<TransactionItem>? get barsTransactions {
-    if (barHistories[selectedBarAddress] != null) {
-      return barHistories[selectedBarAddress]
-          ?.expand((item) => item.result)
-          .toList();
+    if (_balanceStore.bars.isNotEmpty) {
+      if (barHistories[selectedBarAddress] != null) {
+        return barHistories[selectedBarAddress]
+            ?.expand((item) => item.result)
+            .toList();
+      }
     }
     return null;
   }

@@ -67,7 +67,7 @@ dependencies:
   amplitude_flutter: ^3.13.0
   pin_code_fields: ^8.0.1
   firebase_auth: ^4.14.0
-  firebase_core: ^2.19.0
+  firebase_core: ^2.31.1
   dart_jsonwebtoken: ^2.12.0
   cloud_functions: ^4.5.1
   wolt_modal_sheet: ^0.1.4

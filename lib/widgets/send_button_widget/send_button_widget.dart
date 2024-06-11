@@ -16,6 +16,7 @@ import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../constants/card_type.dart';
 import '../../modals/send_to/send_to_modal.dart';
+import '../../modals/send_to/send_to_state.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -34,6 +35,7 @@ class SendButtonWidget extends HookWidget {
     required this.tabController,
     required this.walletContext,
     required this.allSettingsState,
+    required this.state,
   });
 
   final bool isBarList;
@@ -42,6 +44,7 @@ class SendButtonWidget extends HookWidget {
   final TabController tabController;
   final BuildContext walletContext;
   final AllSettingsState allSettingsState;
+  final SendToState state;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -87,6 +90,7 @@ class SendButtonWidget extends HookWidget {
                         await showSendFromWalletModal(
                           allSettingsState: allSettingsState,
                           isBarList: isBarList,
+                          state: state,
                         );
                         isModalOpened.value = false;
                       } else {
@@ -107,6 +111,7 @@ class SendButtonWidget extends HookWidget {
                           isModalOpened: isModalOpened,
                           card: card,
                           context: context,
+                          state: state,
                         );
                         isModalOpened.value = false;
                       }
@@ -125,6 +130,7 @@ class SendButtonWidget extends HookWidget {
                         await showSendFromWalletModal(
                           allSettingsState: allSettingsState,
                           isBarList: isBarList,
+                          state: state,
                         );
                         isModalOpened.value = false;
                       } else {
@@ -145,6 +151,7 @@ class SendButtonWidget extends HookWidget {
                           isModalOpened: isModalOpened,
                           card: card,
                           context: context,
+                          state: state,
                         );
                         isModalOpened.value = false;
                       }
@@ -205,6 +212,7 @@ class SendButtonWidget extends HookWidget {
 Future<void> showSendFromWalletModal({
   required AllSettingsState allSettingsState,
   required bool isBarList,
+  required SendToState state,
 }) async {
   await showModalBottomSheet(
     isScrollControlled: true,
@@ -219,7 +227,13 @@ Future<void> showSendFromWalletModal({
       return SendToModal(
         allSettingsState: allSettingsState,
         isBarList: isBarList,
+        state: state,
       );
     },
   );
+  state
+    ..clearAddressController()
+    ..clearAmountControllers()
+    ..isUseMaxClicked = false
+    ..setAmount('0');
 }

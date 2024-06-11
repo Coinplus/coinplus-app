@@ -36,14 +36,16 @@ abstract class SendToStateBase with Store {
   String _outputAddress = '';
   @readonly
   num _amount = 0;
-  @readonly
-  bool _isUseMaxClicked = false;
+  @observable
+  bool isUseMaxClicked = false;
   @readonly
   Currency _currency = Currency.USD;
 
   TextEditingController usdController = TextEditingController(text: '0');
 
   TextEditingController btcController = TextEditingController(text: '0');
+
+  TextEditingController addressController = TextEditingController();
 
   @observable
   bool shouldValidateReceiverAddress = false;
@@ -82,13 +84,13 @@ abstract class SendToStateBase with Store {
   }
 
   @computed
-  String get formattedSelectedCardAddress {
-    return getSplitAddress(selectedCardAddress);
+  String? get formattedSelectedCardAddress {
+    return getSplitAddress(selectedCardAddress ?? '');
   }
 
   @computed
   String get formattedSelectedBarAddress {
-    return getSplitAddress(selectedBarAddress);
+    return getSplitAddress(selectedBarAddress ?? '');
   }
 
   @computed
@@ -102,19 +104,26 @@ abstract class SendToStateBase with Store {
   bool get hasCards => _balanceStore.cards.isNotEmpty;
 
   @computed
-  bool get hasMoreThanOneCards => _balanceStore.cards.length > 1;
-
-  @computed
   bool get hasMoreThanOneWallets =>
       _balanceStore.cards.length + _balanceStore.bars.length > 1;
 
   @computed
-  CardModel get selectedCard =>
-      _balanceStore.cards[_historyPageStore.cardHistoryIndex];
+  CardModel? get selectedCard {
+    if (_balanceStore.cards.isNotEmpty) {
+      return _balanceStore.cards[_historyPageStore.cardHistoryIndex];
+    } else {
+      return null;
+    }
+  }
 
   @computed
-  BarModel get selectedBar =>
-      _balanceStore.bars[_historyPageStore.barHistoryIndex];
+  BarModel? get selectedBar {
+    if (_balanceStore.bars.isNotEmpty) {
+      return _balanceStore.bars[_historyPageStore.barHistoryIndex];
+    } else {
+      return null;
+    }
+  }
 
   @computed
   bool get hasPerformedAction => _accelerometerStore.hasPerformedAction;
@@ -131,10 +140,10 @@ abstract class SendToStateBase with Store {
   String get receiverWalletAddress => transactionsStore.receiverWalletAddress;
 
   @computed
-  String get selectedCardAddress => selectedCard.address;
+  String? get selectedCardAddress => selectedCard?.address;
 
   @computed
-  String get selectedBarAddress => selectedBar.address;
+  String? get selectedBarAddress => selectedBar?.address;
 
   @computed
   num get networkFee =>
@@ -150,12 +159,33 @@ abstract class SendToStateBase with Store {
 
   @computed
   bool get isCoverFee {
+    if (transactionsStore.sendAmount == 0) {
+      return false;
+    }
+    if (transactionsStore.sendAmount < totalAmount &&
+        transactionsStore.sendAmount + transactionsStore.txFee > totalAmount) {}
     return transactionsStore.sendAmount < totalAmount &&
         transactionsStore.sendAmount + transactionsStore.txFee > totalAmount;
   }
 
   @computed
+  num get usdToSatoshi => _amount.usdToSatoshi(btcCurrentPrice: btcPrice);
+
+  @computed
+  bool get isAmountToSmall {
+    if (0 < usdToSatoshi && usdToSatoshi < 500) {}
+    return 0 < usdToSatoshi && usdToSatoshi < 500;
+  }
+
+  @computed
   bool get isInputtedAmountBiggerTotal {
+    if (!isUseMaxClicked) {
+      if (transactionsStore.sendAmount == 0) {
+        return false;
+      }
+    }
+    if ((transactionsStore.sendAmount + transactionsStore.txFee) >
+        totalAmount) {}
     return (transactionsStore.sendAmount + transactionsStore.txFee) >
         totalAmount;
   }
@@ -232,12 +262,54 @@ abstract class SendToStateBase with Store {
 
   @action
   void hideMaxValue() {
-    _isUseMaxClicked = false;
+    isUseMaxClicked = false;
+  }
+
+  @action
+  void handleUsdAmountSelection() {
+    final selection = usdController.selection;
+    final isAllTextSelected = selection.baseOffset == 0 &&
+        selection.extentOffset == usdController.text.length;
+    if (isAllTextSelected) {
+      isUseMaxClicked = false;
+    }
+  }
+
+  @action
+  void handleBtcAmountSelection() {
+    final selection = btcController.selection;
+    final isAllTextSelected = selection.baseOffset == 0 &&
+        selection.extentOffset == btcController.text.length;
+    if (isAllTextSelected) {
+      isUseMaxClicked = false;
+    }
+  }
+
+  @action
+  void handleNextButtonStatus() {
+    final selection = addressController.selection;
+    final isAllTextSelected = selection.baseOffset == 0 &&
+        selection.extentOffset == addressController.text.length;
+    if (isAllTextSelected) {
+      nextButtonStatus = false;
+    }
+  }
+
+  @action
+  void clearAddressController() {
+    nextButtonStatus = false;
+    addressController.clear();
+  }
+
+  @action
+  void clearAmountControllers() {
+    usdController.text = '0';
+    btcController.text = '0';
   }
 
   @action
   num onUseMax() {
-    _isUseMaxClicked = true;
+    isUseMaxClicked = true;
     final res = transactionsStore.findMaxUtxo().toDouble();
     final usdAmount = res.satoshiToUsd(btcCurrentPrice: btcPrice);
     _amount = usdAmount.toDouble();

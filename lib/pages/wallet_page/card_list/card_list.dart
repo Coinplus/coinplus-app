@@ -13,6 +13,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../modals/card_reorder_modal/card_reorder_modal.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
@@ -35,11 +36,13 @@ class CardList extends StatefulWidget {
     required this.onCardSelected,
     required this.onCarouselScroll,
     required this.tabController,
+    required this.state,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
   final TabController tabController;
+  final SendToState state;
 
   @override
   State<CardList> createState() => _CardListState();
@@ -66,15 +69,25 @@ class _CardListState extends State<CardList>
       _rampService.configuration.userAddress =
           _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
     }
-    _balanceStore.setOnCardAddedCallback((address) {
-      final index = _balanceStore.cards
-          .indexWhere((element) => element.address == address);
-      if (index.isNegative) {
-        return;
-      }
-      carouselController.animateToPage(index);
-      widget.tabController.animateTo(0);
-    });
+    _balanceStore
+      ..setOnCardAddedCallback((address) {
+        final index = _balanceStore.cards
+            .indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          return;
+        }
+        carouselController.animateToPage(index);
+        widget.tabController.animateTo(0);
+      })
+      ..setOnCardDeletedCallback((address) {
+        final index = _balanceStore.cards
+            .indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          carouselController.jumpToPage(0);
+          return;
+        }
+        carouselController.jumpToPage(0);
+      });
     _nfcState.checkNfcSupport();
   }
 
@@ -99,8 +112,6 @@ class _CardListState extends State<CardList>
                   _rampService.configuration.userAddress = _balanceStore
                       .cards[_balanceStore.cardCurrentIndex].address;
                 } else {
-                  //_balanceStore.setCardCurrentIndex(length);
-                  // _historyPageStore.setCardHistoryIndex(length - 1);
                   widget.onCardSelected(null);
                   _rampService.configuration.userAddress = _balanceStore
                       .cards[_balanceStore.cardCurrentIndex].address;
@@ -318,6 +329,8 @@ class _CardListState extends State<CardList>
                   _rampService.configuration.userAddress = _balanceStore
                       .cards[_balanceStore.cardCurrentIndex].address;
                   await _historyPageStore.setCardHistoryIndex(index);
+                  await _historyPageStore.setCardActivationIndex(index: index);
+                  widget.state.transactionsStore.onSelectCard(index);
                 }
               },
               enlargeFactor: 0.35,

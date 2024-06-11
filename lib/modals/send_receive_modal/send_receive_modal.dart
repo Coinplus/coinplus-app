@@ -24,6 +24,7 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 import '../receive_modal/receive_modal.dart';
+import '../send_to/send_to_state.dart';
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -42,6 +43,7 @@ Future<void> sendReceiveButtonModal({
   required AllSettingsState allSettingsState,
   required TabController tabController,
   required BuildContext context,
+  required SendToState state,
 }) async {
   await showModalBottomSheet(
     shape: const RoundedRectangleBorder(
@@ -157,6 +159,7 @@ Future<void> sendReceiveButtonModal({
                 tabController: tabController,
                 walletContext: context,
                 allSettingsState: allSettingsState,
+                state: state,
               ),
             const Gap(8),
             Observer(

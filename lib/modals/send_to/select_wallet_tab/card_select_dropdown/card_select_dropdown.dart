@@ -302,7 +302,7 @@ class CardSelectDropdown extends HookWidget {
                                   ),
                                 ],
                               ),
-                              if (state.hasMoreThanOneCards)
+                              if (state.hasMoreThanOneWallets)
                                 const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: AppColors.primary,
@@ -434,7 +434,7 @@ class CardSelectDropdown extends HookWidget {
                                   ),
                                 ],
                               ),
-                              if (state.hasMoreThanOneCards)
+                              if (state.hasMoreThanOneWallets)
                                 const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: AppColors.primary,

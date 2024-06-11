@@ -214,7 +214,7 @@ class CardScanMethodsPage extends HookWidget {
             );
             await router.maybePop(context);
             final res = await context.pushRoute<String?>(
-              const QrScannerRoute(),
+              QrScannerRoute(),
             );
             if (res != null) {
               unawaited(

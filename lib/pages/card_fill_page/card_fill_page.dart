@@ -1006,7 +1006,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                               await context
                                                                   .pushRoute<
                                                                       String?>(
-                                                            const QrScannerRoute(),
+                                                            QrScannerRoute(),
                                                           );
                                                           if (res == null) {
                                                             return;
@@ -1600,13 +1600,13 @@ class _CardFillPageState extends State<CardFillPage>
                               unawaited(
                                 connectedCount(_btcAddressController.text),
                               );
-                              _balanceStore.saveSelectedCardAsTracker(
+                              _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
                                 label: WalletType.COINPLUS_WALLET,
                                 name: 'Coinplus Bitcoin Wallet',
                               );
                             } else {
-                              _balanceStore.saveSelectedCardAsTracker(
+                              _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
                                 label: WalletType.TRACKER_PLUS,
                                 name: 'Bitcoin Wallet',
@@ -1617,13 +1617,13 @@ class _CardFillPageState extends State<CardFillPage>
                                 await getCardData(widget.receivedData!);
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
-                              _balanceStore.saveSelectedCardAsTracker(
+                              _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
                                 label: WalletType.COINPLUS_WALLET,
                                 name: 'Coinplus Bitcoin Wallet',
                               );
                             } else {
-                              _balanceStore.saveSelectedCardAsTracker(
+                              _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
                                 label: WalletType.TRACKER_PLUS,
                                 name: 'Bitcoin Wallet',
@@ -1731,8 +1731,7 @@ class _CardFillPageState extends State<CardFillPage>
                                                     _balanceStore
                                                         .selectedCard?.address,
                                               );
-
-                                              if (cardIndex != -1 &&
+                                              if (cardIndex != -1 ||
                                                   barIndex != -1) {
                                                 await alreadySavedCard(
                                                   context,
@@ -1754,33 +1753,6 @@ class _CardFillPageState extends State<CardFillPage>
                                               }
                                             }
                                           : () async {
-                                              await hasShownWallet().then(
-                                                (hasShown) async {
-                                                  if (hasShown) {
-                                                    await recordAmplitudeEvent(
-                                                      SaveToWalletClicked(
-                                                        source: 'Wallet',
-                                                        walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedCard!
-                                                                .address,
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    await recordAmplitudeEvent(
-                                                      SaveToWalletClicked(
-                                                        source: 'Onboarding',
-                                                        walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedCard!
-                                                                .address,
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              );
                                               if (isActivated == true) {
                                                 await HapticFeedback.vibrate();
                                                 _allSettingsState

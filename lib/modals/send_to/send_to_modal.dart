@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -18,22 +20,28 @@ class SendToModal extends HookWidget {
     super.key,
     required this.allSettingsState,
     required this.isBarList,
+    required this.state,
   });
 
   final AllSettingsState allSettingsState;
   final bool isBarList;
+  final SendToState state;
 
   @override
   Widget build(BuildContext context) {
     final tabController = useTabController(initialLength: 3);
-    final state = useMemoized(SendToState.new);
+    final usdFocusNode = useFocusNode();
+    final btcFocusNode = useFocusNode();
+    final sendFocusNode = useFocusNode();
 
     useEffect(
       () {
         tabController.addListener(() {
           state.setSelectedIndex(tabController.index);
         });
-
+        Timer.periodic(const Duration(minutes: 1), (timer) {
+          state.transactionsStore.getRecommendedFee();
+        });
         return state.dispose;
       },
       [],
@@ -65,7 +73,10 @@ class SendToModal extends HookWidget {
                           if (state.selectedIndex == 0) {
                             router.maybePop();
                           } else if (state.selectedIndex == 1) {
+                            usdFocusNode.unfocus();
+                            btcFocusNode.unfocus();
                             tabController.animateTo(0);
+                            sendFocusNode.requestFocus();
                           } else {
                             tabController.animateTo(1);
                           }
@@ -108,11 +119,14 @@ class SendToModal extends HookWidget {
                     state: state,
                     tabController: tabController,
                     isBarList: isBarList,
+                    sendFocusNode: sendFocusNode,
                   ),
                   ProvideAmountTab(
                     state: state,
                     tabController: tabController,
                     isBarList: isBarList,
+                    usdFocusNode: usdFocusNode,
+                    btcFocusNode: btcFocusNode,
                   ),
                   TransactionReviewTab(
                     state: state,

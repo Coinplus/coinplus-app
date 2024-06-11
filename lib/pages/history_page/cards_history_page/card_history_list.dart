@@ -14,7 +14,7 @@ import '../../../services/amplitude_service.dart';
 import '../../../utils/date_formatter.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 import '../../../widgets/shimmers/history_page_shimmer.dart';
-import '../pending_transaction_widget/pending_transaction_widget.dart';
+// import '../pending_transaction_widget/pending_transaction_widget.dart';
 import 'card_history_list_state.dart';
 import 'transaction_history_info_modal.dart';
 
@@ -28,7 +28,7 @@ class CardHistoryList extends StatelessWidget {
     final state = CardHistoryListState();
     return Column(
       children: [
-        const PendingTransactionWidget(),
+        // const PendingTransactionWidget(),
         ListView.builder(
           shrinkWrap: true,
           controller: scrollController,

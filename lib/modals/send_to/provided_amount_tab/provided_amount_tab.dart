@@ -19,11 +19,15 @@ class ProvideAmountTab extends HookWidget {
     required this.tabController,
     required this.state,
     required this.isBarList,
+    required this.usdFocusNode,
+    required this.btcFocusNode,
   });
 
   final SendToState state;
   final TabController tabController;
   final bool isBarList;
+  final FocusNode usdFocusNode;
+  final FocusNode btcFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -31,80 +35,163 @@ class ProvideAmountTab extends HookWidget {
       () => NumberFormat.decimalPattern(context.locale.toString()),
       [context.locale],
     );
-    final usdFocusNode = useFocusNode();
-    final btcFocusNode = useFocusNode();
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      child: SizedBox(
-        height: context.height * 0.8,
-        child: Column(
-          children: [
-            const Text(
-              'Amount',
-              style: TextStyle(
-                fontFamily: FontFamily.redHatMedium,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: AppColors.primaryTextColor,
-              ),
-            ),
-            AmountInputField(
-              usdFocusNode: usdFocusNode,
-              btcFocusNode: btcFocusNode,
-              state: state,
-            ),
-            SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: SizedBox(
-                height: context.height * 0.5,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Card(
-                        color: const Color(0xFFF7F7FA),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        child: Column(
-                          children: [
-                            AmountMatchWidget(state: state),
-                            Observer(
-                              builder: (context) {
-                                return AnimatedCrossFade(
-                                  firstChild: Column(
-                                    children: [
-                                      Observer(
-                                        builder: (context) {
-                                          return Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 10,
-                                                  top: 10,
-                                                  bottom: 10,
-                                                ),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    const Text(
-                                                      'Estimated fee',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color: AppColors
-                                                            .primaryTextColor,
+
+    return Observer(
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {
+            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+          },
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: SizedBox(
+              height: context.height * 0.8,
+              child: Column(
+                children: [
+                  const Text(
+                    'Amount',
+                    style: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryTextColor,
+                    ),
+                  ),
+                  AmountInputField(
+                    usdFocusNode: usdFocusNode,
+                    btcFocusNode: btcFocusNode,
+                    state: state,
+                  ),
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: context.height * 0.5,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Card(
+                              color: const Color(0xFFF7F7FA),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              clipBehavior: Clip.hardEdge,
+                              child: Column(
+                                children: [
+                                  AmountMatchWidget(state: state),
+                                  Observer(
+                                    builder: (context) {
+                                      return AnimatedCrossFade(
+                                        firstChild: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 10,
+                                                    top: 10,
+                                                    bottom: 10,
+                                                  ),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Text(
+                                                        'Estimated fee',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily
+                                                              .redHatMedium,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: AppColors
+                                                              .primaryTextColor,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    const Gap(8),
-                                                    Text(
-                                                      '\$ ${formatter.format(state.networkFee)} ≈ ${state.networkFeeInBtc} BTC',
+                                                      const Gap(8),
+                                                      Observer(
+                                                        builder: (context) {
+                                                          return Text(
+                                                            '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .textHintsColor,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Divider(
+                                              endIndent: 10,
+                                              indent: 10,
+                                              height: 1,
+                                            ),
+                                          ],
+                                        ),
+                                        secondChild: const SizedBox(),
+                                        crossFadeState:
+                                            state.totalAmount != 0 &&
+                                                    state.amount != 0
+                                                ? CrossFadeState.showFirst
+                                                : CrossFadeState.showSecond,
+                                        duration:
+                                            const Duration(milliseconds: 250),
+                                        firstCurve: Curves.easeOut,
+                                        secondCurve: Curves.elasticOut,
+                                      );
+                                    },
+                                  ),
+                                  Observer(
+                                    builder: (context) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
+                                              top: 10,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  'Selected wallet',
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors
+                                                        .primaryTextColor,
+                                                  ),
+                                                ),
+                                                const Gap(8),
+                                                Observer(
+                                                  builder: (context) {
+                                                    return Text(
+                                                      state.transactionsStore
+                                                                  .selectedCard !=
+                                                              -1
+                                                          ? state.formattedSelectedCardAddress ??
+                                                              ''
+                                                          : state
+                                                              .formattedSelectedBarAddress,
                                                       style: const TextStyle(
                                                         fontFamily: FontFamily
                                                             .redHatMedium,
@@ -114,238 +201,189 @@ class ProvideAmountTab extends HookWidget {
                                                         color: AppColors
                                                             .textHintsColor,
                                                       ),
-                                                    ),
-                                                  ],
+                                                    );
+                                                  },
                                                 ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                      const Divider(
-                                        endIndent: 10,
-                                        indent: 10,
-                                        height: 1,
-                                      ),
-                                    ],
-                                  ),
-                                  secondChild: const SizedBox(),
-                                  crossFadeState: state.amount != 0
-                                      ? CrossFadeState.showFirst
-                                      : CrossFadeState.showSecond,
-                                  duration: const Duration(milliseconds: 250),
-                                  firstCurve: Curves.easeOut,
-                                  secondCurve: Curves.elasticOut,
-                                );
-                              },
-                            ),
-                            Observer(
-                              builder: (context) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 10,
-                                        top: 10,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Selected wallet',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.primaryTextColor,
+                                              ],
                                             ),
                                           ),
-                                          const Gap(8),
-                                          Observer(
-                                            builder: (context) {
-                                              return Text(
-                                                state.transactionsStore
-                                                            .selectedCard !=
-                                                        -1
-                                                    ? state
-                                                        .formattedSelectedCardAddress
-                                                    : state
-                                                        .formattedSelectedBarAddress,
-                                                style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                  color:
-                                                      AppColors.textHintsColor,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 10,
-                                        top: 10,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          const Text(
-                                            'Balance',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.primaryTextColor,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 10,
+                                              top: 10,
                                             ),
-                                          ),
-                                          const Gap(8),
-                                          if (state.btc == null)
-                                            const SizedBox()
-                                          else
-                                            Observer(
-                                              builder: (_) {
-                                                return AnimatedCrossFade(
-                                                  firstChild: Observer(
-                                                    builder: (context) {
-                                                      return Text(
-                                                        '\$${formatter.format(state.spendableBalance)}',
-                                                        style: const TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: AppColors
-                                                              .textHintsColor,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                const Text(
+                                                  'Balance',
+                                                  style: TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors
+                                                        .primaryTextColor,
+                                                  ),
+                                                ),
+                                                const Gap(8),
+                                                if (state.btc == null)
+                                                  const SizedBox()
+                                                else
+                                                  Observer(
+                                                    builder: (_) {
+                                                      return AnimatedCrossFade(
+                                                        firstChild: Observer(
+                                                          builder: (context) {
+                                                            return Text(
+                                                              '\$${formatter.format(state.spendableBalance)}',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .redHatMedium,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: AppColors
+                                                                    .textHintsColor,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                        secondChild: Observer(
+                                                          builder: (context) {
+                                                            return Text(
+                                                              'BTC ${state.spendableBalance.usdToBtc(btcCurrentPrice: state.btcPrice)}',
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    FontFamily
+                                                                        .redHatMedium,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: AppColors
+                                                                    .textHintsColor,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                        crossFadeState:
+                                                            state.currency ==
+                                                                    Currency.USD
+                                                                ? CrossFadeState
+                                                                    .showFirst
+                                                                : CrossFadeState
+                                                                    .showSecond,
+                                                        duration:
+                                                            const Duration(
+                                                          milliseconds: 300,
                                                         ),
                                                       );
                                                     },
                                                   ),
-                                                  secondChild: Observer(
-                                                    builder: (context) {
-                                                      return Text(
-                                                        'BTC ${state.spendableBalance.usdToBtc(btcCurrentPrice: state.btcPrice)}',
-                                                        style: const TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: AppColors
-                                                              .textHintsColor,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  crossFadeState: state
-                                                              .currency ==
-                                                          Currency.USD
-                                                      ? CrossFadeState.showFirst
-                                                      : CrossFadeState
-                                                          .showSecond,
-                                                  duration: const Duration(
-                                                    milliseconds: 300,
-                                                  ),
-                                                );
-                                              },
+                                              ],
                                             ),
+                                          ),
                                         ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            const Divider(
-                              endIndent: 10,
-                              indent: 10,
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                    bottom: 10,
+                                      );
+                                    },
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  const Divider(
+                                    endIndent: 10,
+                                    indent: 10,
+                                  ),
+                                  Row(
                                     children: [
-                                      const Text(
-                                        'Send to',
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.primaryTextColor,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 10,
+                                          bottom: 10,
                                         ),
-                                      ),
-                                      const Gap(8),
-                                      Text(
-                                        state.formattedAddress,
-                                        style: const TextStyle(
-                                          fontFamily: FontFamily.redHatMedium,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.textHintsColor,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Send to',
+                                              style: TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                color:
+                                                    AppColors.primaryTextColor,
+                                              ),
+                                            ),
+                                            const Gap(8),
+                                            Text(
+                                              state.formattedAddress,
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.textHintsColor,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const Gap(12),
-                    Observer(
-                      builder: (context) {
-                        return LoadingButton(
-                          onPressed: state.sendAmountInUsd == 0
-                              ? null
-                              : !state.isInputtedAmountBiggerTotal
-                                  ? !state.isCoverFee
-                                      ? () async {
-                                          usdFocusNode.unfocus();
-                                          btcFocusNode.unfocus();
-                                          await Future.delayed(
-                                            const Duration(milliseconds: 400),
-                                          );
-                                          tabController.animateTo(2);
-                                          await state.transactionsStore
-                                              .findOptimalUtxo();
-                                        }
-                                      : null
-                                  : null,
-                          child: const Text(
-                            'Next',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontWeight: FontWeight.normal,
+                                ],
+                              ),
                             ),
                           ),
-                        ).paddingHorizontal(60);
-                      },
+                          const Gap(12),
+                          Observer(
+                            builder: (context) {
+                              return LoadingButton(
+                                onPressed: !state.isAmountToSmall
+                                    ? state.sendAmountInUsd == 0
+                                        ? null
+                                        : !state.isInputtedAmountBiggerTotal
+                                            ? !state.isCoverFee
+                                                ? () async {
+                                                    usdFocusNode.unfocus();
+                                                    btcFocusNode.unfocus();
+                                                    await Future.delayed(
+                                                      const Duration(
+                                                        milliseconds: 400,
+                                                      ),
+                                                    );
+                                                    tabController.animateTo(2);
+                                                    await state
+                                                        .transactionsStore
+                                                        .findOptimalUtxo();
+                                                  }
+                                                : null
+                                            : null
+                                    : null,
+                                child: const Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ).paddingHorizontal(60);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

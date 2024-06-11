@@ -12,6 +12,8 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
+import '../../../widgets/all_alert_dialogs/broadcast_error_dialog/broadcast_error_dialog.dart';
+import '../../../widgets/all_alert_dialogs/fee_alert_dialog/fee_alert_dialog.dart';
 import '../../../widgets/all_alert_dialogs/tx_submitted_dialog/tx_submitted_dialog.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
@@ -85,16 +87,22 @@ class TransactionReviewTab extends HookWidget {
                                     ),
                                   ),
                                   const Gap(8),
-                                  Text(
-                                    isBarList
-                                        ? state.formattedSelectedBarAddress
-                                        : state.formattedSelectedCardAddress,
-                                    style: const TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.textHintsColor,
-                                    ),
+                                  Observer(
+                                    builder: (context) {
+                                      return Text(
+                                        state.transactionsStore.selectedCard !=
+                                                -1
+                                            ? state.formattedSelectedCardAddress ??
+                                                ''
+                                            : state.formattedSelectedBarAddress,
+                                        style: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.textHintsColor,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
@@ -278,14 +286,18 @@ class TransactionReviewTab extends HookWidget {
                                 ),
                               ),
                               const Gap(8),
-                              Text(
-                                '${state.networkFeeInBtc} BTC ≈ \$${formatter.format(state.networkFee)}',
-                                style: const TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textHintsColor,
-                                ),
+                              Observer(
+                                builder: (context) {
+                                  return Text(
+                                    '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                                    style: const TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.textHintsColor,
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -295,7 +307,9 @@ class TransactionReviewTab extends HookWidget {
                             const Gap(5),
                             IconButton(
                               splashRadius: 20,
-                              onPressed: () {},
+                              onPressed: () {
+                                feeAlertDialog(context: context);
+                              },
                               icon: Assets.icons.txFeeInfo.image(
                                 height: 28,
                               ),
@@ -358,23 +372,40 @@ class TransactionReviewTab extends HookWidget {
               ),
             ),
             const Spacer(),
-            LoadingButton(
-              onPressed: () async {
-                await state.transactionsStore.broadcastTransaction();
-                await router.maybePop();
-                await transactionSubmittedAlert(
-                  context: context,
-                  allSettingsState: allSettingsState,
-                );
+            Observer(
+              builder: (context) {
+                return LoadingButton(
+                  onPressed: () async {
+                    try {
+                      await state.transactionsStore.broadcastTransaction();
+                      await router.maybePop();
+                      await transactionSubmittedAlert(
+                        context: context,
+                        allSettingsState: allSettingsState,
+                      );
+                    } catch (e) {
+                      await broadcastFailAlertDialog(context);
+                    }
+                  },
+                  child: state.transactionsStore.broadcastLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Send',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                ).paddingHorizontal(60);
               },
-              child: const Text(
-                'Send',
-                style: TextStyle(
-                  fontFamily: FontFamily.redHatMedium,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ).paddingHorizontal(60),
+            ),
             const Gap(40),
           ],
         ),

@@ -65,6 +65,20 @@ mixin _$TransactionStore on _TransactionStore, Store {
       (_$outputByteComputed ??= Computed<int>(() => super.outputByte,
               name: '_TransactionStore.outputByte'))
           .value;
+  Computed<int>? _$calculatedTxFeeComputed;
+
+  @override
+  int get calculatedTxFee =>
+      (_$calculatedTxFeeComputed ??= Computed<int>(() => super.calculatedTxFee,
+              name: '_TransactionStore.calculatedTxFee'))
+          .value;
+  Computed<int>? _$calculatedFeeComputed;
+
+  @override
+  int get calculatedFee =>
+      (_$calculatedFeeComputed ??= Computed<int>(() => super.calculatedFee,
+              name: '_TransactionStore.calculatedFee'))
+          .value;
 
   late final _$utxoDataAtom =
       Atom(name: '_TransactionStore.utxoData', context: context);
@@ -195,19 +209,19 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$isBroadcastedAtom =
-      Atom(name: '_TransactionStore.isBroadcasted', context: context);
+  late final _$broadcastLoadingAtom =
+      Atom(name: '_TransactionStore.broadcastLoading', context: context);
 
   @override
-  bool get isBroadcasted {
-    _$isBroadcastedAtom.reportRead();
-    return super.isBroadcasted;
+  bool get broadcastLoading {
+    _$broadcastLoadingAtom.reportRead();
+    return super.broadcastLoading;
   }
 
   @override
-  set isBroadcasted(bool value) {
-    _$isBroadcastedAtom.reportWrite(value, super.isBroadcasted, () {
-      super.isBroadcasted = value;
+  set broadcastLoading(bool value) {
+    _$broadcastLoadingAtom.reportWrite(value, super.broadcastLoading, () {
+      super.broadcastLoading = value;
     });
   }
 
@@ -259,6 +273,22 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
+  late final _$utxoLoadingAtom =
+      Atom(name: '_TransactionStore.utxoLoading', context: context);
+
+  @override
+  bool get utxoLoading {
+    _$utxoLoadingAtom.reportRead();
+    return super.utxoLoading;
+  }
+
+  @override
+  set utxoLoading(bool value) {
+    _$utxoLoadingAtom.reportWrite(value, super.utxoLoading, () {
+      super.utxoLoading = value;
+    });
+  }
+
   late final _$sortedUtxosAtom =
       Atom(name: '_TransactionStore.sortedUtxos', context: context);
 
@@ -272,6 +302,22 @@ mixin _$TransactionStore on _TransactionStore, Store {
   set sortedUtxos(ObservableList<UtxoModel> value) {
     _$sortedUtxosAtom.reportWrite(value, super.sortedUtxos, () {
       super.sortedUtxos = value;
+    });
+  }
+
+  late final _$inputQuantityAtom =
+      Atom(name: '_TransactionStore.inputQuantity', context: context);
+
+  @override
+  int get inputQuantity {
+    _$inputQuantityAtom.reportRead();
+    return super.inputQuantity;
+  }
+
+  @override
+  set inputQuantity(int value) {
+    _$inputQuantityAtom.reportWrite(value, super.inputQuantity, () {
+      super.inputQuantity = value;
     });
   }
 
@@ -378,6 +424,17 @@ mixin _$TransactionStore on _TransactionStore, Store {
   }
 
   @override
+  void updateTxFee() {
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(
+        name: '_TransactionStore.updateTxFee');
+    try {
+      return super.updateTxFee();
+    } finally {
+      _$_TransactionStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void combineUtxos() {
     final _$actionInfo = _$_TransactionStoreActionController.startAction(
         name: '_TransactionStore.combineUtxos');
@@ -410,11 +467,13 @@ txFee: ${txFee},
 txFeeRate: ${txFeeRate},
 receiverWalletAddress: ${receiverWalletAddress},
 txHex: ${txHex},
-isBroadcasted: ${isBroadcasted},
+broadcastLoading: ${broadcastLoading},
 isTxInPending: ${isTxInPending},
 selectedCard: ${selectedCard},
 selectedBar: ${selectedBar},
+utxoLoading: ${utxoLoading},
 sortedUtxos: ${sortedUtxos},
+inputQuantity: ${inputQuantity},
 currentAddress: ${currentAddress},
 cards: ${cards},
 bars: ${bars},
@@ -422,7 +481,9 @@ btc: ${btc},
 selectedCardIndex: ${selectedCardIndex},
 selectedBarIndex: ${selectedBarIndex},
 usedUtxosCount: ${usedUtxosCount},
-outputByte: ${outputByte}
+outputByte: ${outputByte},
+calculatedTxFee: ${calculatedTxFee},
+calculatedFee: ${calculatedFee}
     ''';
   }
 }

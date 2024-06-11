@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:gap/gap.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -68,17 +69,24 @@ Future<void> emailSendFailAlert(BuildContext context) {
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text:
-          'You’ll get the reply shortly, before that you can check out our Help Center.',
-      title: const Text(
-        'Oops…',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: FontFamily.redHatBold,
-          fontSize: 17,
-        ),
+      text: '',
+      title: const Column(
+        children: [
+          Text(
+            'Oops…',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: FontFamily.redHatBold,
+              fontSize: 17,
+            ),
+          ),
+          Gap(20),
+          Text(
+            '🥺',
+            style: TextStyle(fontSize: 90),
+          ),
+        ],
       ),
-      lottieAsset: 'assets/lottie_animations/sad_emoji.json',
       primaryActionText: 'Help Center',
       primaryAction: () async {
         await router.maybePop();
@@ -105,7 +113,7 @@ Future<void> emailSendFailAlert(BuildContext context) {
       widget: ScaleTap(
         enableFeedback: false,
         onPressed: () async {
-          final email = Uri.encodeComponent('support@coinplus.com');
+          final email = Uri.encodeComponent('help@coinplus.com');
           final mail = Uri.parse('mailto:$email');
           if (await launchUrl(mail)) {
             //email app opened
@@ -116,7 +124,7 @@ Future<void> emailSendFailAlert(BuildContext context) {
         child: StyledText(
           textAlign: TextAlign.center,
           text:
-              'Please get in touch with us at <p>support@coinplus.com</p>, or try again later. Before that you can check out \nour Help Center.',
+              'Please try again later or contact us at <p>help@coinplus.com</p>',
           tags: {
             'p': StyledTextTag(
               style: const TextStyle(
@@ -138,7 +146,6 @@ Future<void> emailSendFailAlert(BuildContext context) {
       secondaryActionText: 'Close',
       secondaryAction: () async {
         await router.maybePop();
-        await router.maybePop(const SettingsRoute());
       },
     ),
     isDismissible: true,

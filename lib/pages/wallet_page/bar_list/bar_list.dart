@@ -13,6 +13,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
@@ -38,11 +39,13 @@ class BarList extends StatefulWidget {
     required this.onCardSelected,
     required this.onCarouselScroll,
     required this.tabController,
+    required this.state,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
   final TabController tabController;
+  final SendToState state;
 
   @override
   State<BarList> createState() => _BarListState();
@@ -76,15 +79,25 @@ class _BarListState extends State<BarList>
       _rampService.configuration.userAddress =
           _balanceStore.bars[_balanceStore.barCurrentIndex].address;
     }
-    _balanceStore.setOnBarAddedCallback((address) {
-      final index = _balanceStore.bars
-          .indexWhere((element) => element.address == address);
-      if (index.isNegative) {
-        return;
-      }
-      carouselController.animateToPage(index);
-      widget.tabController.animateTo(1);
-    });
+    _balanceStore
+      ..setOnBarAddedCallback((address) {
+        final index = _balanceStore.bars
+            .indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          return;
+        }
+        carouselController.animateToPage(index);
+        widget.tabController.animateTo(1);
+      })
+      ..setOnBarDeletedCallback((address) {
+        final index = _balanceStore.cards
+            .indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          carouselController.jumpToPage(0);
+          return;
+        }
+        carouselController.jumpToPage(0);
+      });
   }
 
   Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
@@ -1187,6 +1200,8 @@ class _BarListState extends State<BarList>
                   _rampService.configuration.userAddress =
                       _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                   await _historyPageStore.setBarHistoryIndex(index);
+                  await _historyPageStore.setBarActivationIndex(index: index);
+                  widget.state.transactionsStore.onSelectBar(index);
                 }
               },
               enlargeFactor: 0.35,

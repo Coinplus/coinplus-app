@@ -1021,7 +1021,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                                                               await context
                                                                   .pushRoute<
                                                                       String?>(
-                                                            const QrScannerRoute(),
+                                                            QrScannerRoute(),
                                                           );
                                                           if (res == null) {
                                                             return;
@@ -1514,14 +1514,14 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                               if (widget.isOldCard == false ||
                                   widget.isOldCard == null) {
                                 await recordUserProperty(const Tracker());
-                                _balanceStore.saveSelectedCardAsTracker(
+                                _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
                                   label: WalletType.TRACKER_PLUS,
                                   name: 'Bitcoin Wallet',
                                 );
                               } else {
                                 unawaited(connectedCount(widget.receivedData!));
-                                _balanceStore.saveSelectedCardAsTracker(
+                                _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
@@ -1529,7 +1529,7 @@ class _CardFillWithNfcState extends State<CardFillWithNfc>
                               }
                             } else {
                               await recordUserProperty(const Tracker());
-                              _balanceStore.saveSelectedCardAsTracker(
+                              _balanceStore.saveSelectedCardManually(
                                 color: CardColor.TRACKER,
                                 label: WalletType.TRACKER,
                                 name: 'Bitcoin Wallet',
