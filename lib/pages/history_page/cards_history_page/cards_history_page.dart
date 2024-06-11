@@ -16,7 +16,7 @@ import '../../../services/amplitude_service.dart';
 import '../../../utils/date_formatter.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 import '../../../widgets/shimmers/history_page_shimmer.dart';
-import '../pending_transaction_widget/pending_transaction_widget.dart';
+// import '../pending_transaction_widget/pending_transaction_widget.dart';
 import 'card_history_list_state.dart';
 import 'card_history_refresh_button.dart';
 
@@ -182,7 +182,7 @@ class _CardsHistoryPageState extends State<CardsHistoryPage>
                                 }
                                 return Column(
                                   children: [
-                                    const PendingTransactionWidget(),
+                                    // const PendingTransactionWidget(),
                                     ListView.builder(
                                       shrinkWrap: true,
                                       controller: widget.scrollController,

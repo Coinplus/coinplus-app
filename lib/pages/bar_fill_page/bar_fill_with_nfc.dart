@@ -727,7 +727,7 @@ class _BarFillWithNfcState extends State<BarFillWithNfc>
                                                   );
                                                   final res = await context
                                                       .pushRoute<String?>(
-                                                    const QrScannerRoute(),
+                                                    QrScannerRoute(),
                                                   );
                                                   if (res == null) {
                                                     return;

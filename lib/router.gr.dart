@@ -9,9 +9,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
-import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i28;
-import 'package:coinplus/models/bar_model/bar_model.dart' as _i27;
-import 'package:coinplus/models/card_model/card_model.dart' as _i29;
+import 'package:coinplus/modals/send_to/send_to_state.dart' as _i27;
+import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i29;
+import 'package:coinplus/models/bar_model/bar_model.dart' as _i28;
+import 'package:coinplus/models/card_model/card_model.dart' as _i30;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i2;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i3;
 import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart'
@@ -44,9 +45,9 @@ import 'package:coinplus/pages/settings_page/settings_page.dart' as _i21;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i22;
 import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i23;
-import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i30;
+import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i31;
 import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i31;
+    as _i32;
 import 'package:flutter/cupertino.dart' as _i25;
 import 'package:flutter/material.dart' as _i26;
 
@@ -86,13 +87,13 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     BarSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarSecretFillRouteArgs>(
-          orElse: () => const BarSecretFillRouteArgs());
+      final args = routeData.argsAs<BarSecretFillRouteArgs>();
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.BarSecretFillPage(
           key: args.key,
           receivedData: args.receivedData,
+          state: args.state,
         ),
       );
     },
@@ -135,13 +136,13 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     CardSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardSecretFillRouteArgs>(
-          orElse: () => const CardSecretFillRouteArgs());
+      final args = routeData.argsAs<CardSecretFillRouteArgs>();
       return _i24.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i8.CardSecretFillPage(
           key: args.key,
           receivedData: args.receivedData,
+          state: args.state,
         ),
       );
     },
@@ -224,9 +225,14 @@ abstract class $Router extends _i24.RootStackRouter {
       );
     },
     QrScannerRoute.name: (routeData) {
+      final args = routeData.argsAs<QrScannerRouteArgs>(
+          orElse: () => const QrScannerRouteArgs());
       return _i24.AutoRoutePage<String?>(
         routeData: routeData,
-        child: const _i20.QrScannerPage(),
+        child: _i20.QrScannerPage(
+          key: args.key,
+          isScannedReceiverAddress: args.isScannedReceiverAddress,
+        ),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -361,12 +367,14 @@ class BarSecretFillRoute extends _i24.PageRouteInfo<BarSecretFillRouteArgs> {
   BarSecretFillRoute({
     _i26.Key? key,
     String? receivedData,
+    required _i27.SendToState state,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           BarSecretFillRoute.name,
           args: BarSecretFillRouteArgs(
             key: key,
             receivedData: receivedData,
+            state: state,
           ),
           initialChildren: children,
         );
@@ -381,15 +389,18 @@ class BarSecretFillRouteArgs {
   const BarSecretFillRouteArgs({
     this.key,
     this.receivedData,
+    required this.state,
   });
 
   final _i26.Key? key;
 
   final String? receivedData;
 
+  final _i27.SendToState state;
+
   @override
   String toString() {
-    return 'BarSecretFillRouteArgs{key: $key, receivedData: $receivedData}';
+    return 'BarSecretFillRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
   }
 }
 
@@ -398,7 +409,7 @@ class BarSecretFillRouteArgs {
 class BarSettingsRoute extends _i24.PageRouteInfo<BarSettingsRouteArgs> {
   BarSettingsRoute({
     _i26.Key? key,
-    required _i27.BarModel bar,
+    required _i28.BarModel bar,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           BarSettingsRoute.name,
@@ -423,7 +434,7 @@ class BarSettingsRouteArgs {
 
   final _i26.Key? key;
 
-  final _i27.BarModel bar;
+  final _i28.BarModel bar;
 
   @override
   String toString() {
@@ -437,7 +448,7 @@ class CardFillRoute extends _i24.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
     _i26.Key? key,
     String? receivedData,
-    void Function(({_i28.AbstractCard? card, int index}))? onChangeCard,
+    void Function(({_i29.AbstractCard? card, int index}))? onChangeCard,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardFillRoute.name,
@@ -466,7 +477,7 @@ class CardFillRouteArgs {
 
   final String? receivedData;
 
-  final void Function(({_i28.AbstractCard? card, int index}))? onChangeCard;
+  final void Function(({_i29.AbstractCard? card, int index}))? onChangeCard;
 
   @override
   String toString() {
@@ -543,12 +554,14 @@ class CardSecretFillRoute extends _i24.PageRouteInfo<CardSecretFillRouteArgs> {
   CardSecretFillRoute({
     _i26.Key? key,
     String? receivedData,
+    required _i27.SendToState state,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardSecretFillRoute.name,
           args: CardSecretFillRouteArgs(
             key: key,
             receivedData: receivedData,
+            state: state,
           ),
           initialChildren: children,
         );
@@ -563,15 +576,18 @@ class CardSecretFillRouteArgs {
   const CardSecretFillRouteArgs({
     this.key,
     this.receivedData,
+    required this.state,
   });
 
   final _i26.Key? key;
 
   final String? receivedData;
 
+  final _i27.SendToState state;
+
   @override
   String toString() {
-    return 'CardSecretFillRouteArgs{key: $key, receivedData: $receivedData}';
+    return 'CardSecretFillRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
   }
 }
 
@@ -580,7 +596,7 @@ class CardSecretFillRouteArgs {
 class CardSettingsRoute extends _i24.PageRouteInfo<CardSettingsRouteArgs> {
   CardSettingsRoute({
     _i26.Key? key,
-    required _i29.CardModel card,
+    required _i30.CardModel card,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardSettingsRoute.name,
@@ -605,7 +621,7 @@ class CardSettingsRouteArgs {
 
   final _i26.Key? key;
 
-  final _i29.CardModel card;
+  final _i30.CardModel card;
 
   @override
   String toString() {
@@ -717,10 +733,10 @@ class PinCodeForPrivateKey
     extends _i24.PageRouteInfo<PinCodeForPrivateKeyArgs> {
   PinCodeForPrivateKey({
     _i26.Key? key,
-    _i27.BarModel? bar,
-    _i30.BarSettingState? isKeyVisible,
-    _i29.CardModel? card,
-    _i31.CardSettingState? isVisible,
+    _i28.BarModel? bar,
+    _i31.BarSettingState? isKeyVisible,
+    _i30.CardModel? card,
+    _i32.CardSettingState? isVisible,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           PinCodeForPrivateKey.name,
@@ -751,13 +767,13 @@ class PinCodeForPrivateKeyArgs {
 
   final _i26.Key? key;
 
-  final _i27.BarModel? bar;
+  final _i28.BarModel? bar;
 
-  final _i30.BarSettingState? isKeyVisible;
+  final _i31.BarSettingState? isKeyVisible;
 
-  final _i29.CardModel? card;
+  final _i30.CardModel? card;
 
-  final _i31.CardSettingState? isVisible;
+  final _i32.CardSettingState? isVisible;
 
   @override
   String toString() {
@@ -795,16 +811,40 @@ class PinRemove extends _i24.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i20.QrScannerPage]
-class QrScannerRoute extends _i24.PageRouteInfo<void> {
-  const QrScannerRoute({List<_i24.PageRouteInfo>? children})
-      : super(
+class QrScannerRoute extends _i24.PageRouteInfo<QrScannerRouteArgs> {
+  QrScannerRoute({
+    _i25.Key? key,
+    bool? isScannedReceiverAddress,
+    List<_i24.PageRouteInfo>? children,
+  }) : super(
           QrScannerRoute.name,
+          args: QrScannerRouteArgs(
+            key: key,
+            isScannedReceiverAddress: isScannedReceiverAddress,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'QrScannerRoute';
 
-  static const _i24.PageInfo<void> page = _i24.PageInfo<void>(name);
+  static const _i24.PageInfo<QrScannerRouteArgs> page =
+      _i24.PageInfo<QrScannerRouteArgs>(name);
+}
+
+class QrScannerRouteArgs {
+  const QrScannerRouteArgs({
+    this.key,
+    this.isScannedReceiverAddress,
+  });
+
+  final _i25.Key? key;
+
+  final bool? isScannedReceiverAddress;
+
+  @override
+  String toString() {
+    return 'QrScannerRouteArgs{key: $key, isScannedReceiverAddress: $isScannedReceiverAddress}';
+  }
 }
 
 /// generated route for

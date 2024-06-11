@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../extensions/num_extension.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../send_to_state.dart';
@@ -66,7 +64,6 @@ class AmountMatchWidget extends StatelessWidget {
                   secondChild: const SizedBox(),
                   crossFadeState: () {
                     if (state.isCoverFee) {
-                      Gaimon.error();
                       return CrossFadeState.showFirst;
                     } else {
                       return CrossFadeState.showSecond;
@@ -128,7 +125,6 @@ class AmountMatchWidget extends StatelessWidget {
                   crossFadeState: () {
                     if (state.isInputtedAmountBiggerTotal &&
                         !state.isCoverFee) {
-                      Gaimon.error();
                       return CrossFadeState.showFirst;
                     } else {
                       return CrossFadeState.showSecond;
@@ -187,16 +183,9 @@ class AmountMatchWidget extends StatelessWidget {
                     ),
                   ),
                   secondChild: const SizedBox(),
-                  crossFadeState: () {
-                    final usdToSatoshi = state.amount
-                        .usdToSatoshi(btcCurrentPrice: state.btcPrice);
-                    if (0 < usdToSatoshi && usdToSatoshi < 500) {
-                      Gaimon.error();
-                      return CrossFadeState.showFirst;
-                    } else {
-                      return CrossFadeState.showSecond;
-                    }
-                  }(),
+                  crossFadeState: state.isAmountToSmall
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 300),
                 );
               },

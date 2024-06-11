@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../extensions/num_extension.dart';
 import '../../http/repositories/broadcast_repo.dart';
 import '../../http/repositories/mempool_repo.dart';
 import '../../http/repositories/utxo_repo.dart';
@@ -25,6 +26,7 @@ class TransactionStore = _TransactionStore with _$TransactionStore;
 
 abstract class _TransactionStore with Store {
   final _balanceStore = GetIt.I<BalanceStore>();
+
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
   final _marketPageStore = GetIt.I<MarketPageStore>();
 
@@ -36,12 +38,25 @@ abstract class _TransactionStore with Store {
 
   void _init() {
     getUtxosData();
-    _disposer.add(
-      reaction(
-        (p0) => currentAddress,
-        (p0) => getUtxosData(),
-      ),
-    );
+    _disposer
+      ..add(
+        reaction(
+          (p0) => currentAddress,
+          (p0) => getUtxosData(),
+        ),
+      )
+      ..add(
+        reaction(
+          (p0) => txFeeRate,
+          (p0) => updateTxFee(),
+        ),
+      )
+      ..add(
+        reaction(
+          (p0) => outputByte,
+          (p0) => updateTxFee(),
+        ),
+      );
   }
 
   @computed
@@ -91,13 +106,15 @@ abstract class _TransactionStore with Store {
   @observable
   String txHex = '';
   @observable
-  bool isBroadcasted = false;
+  bool broadcastLoading = false;
   @observable
   bool isTxInPending = false;
   @observable
   int selectedCard = -1;
   @observable
   int selectedBar = -1;
+  @observable
+  bool utxoLoading = false;
 
   @computed
   ObservableList<CardModel> get cards => _balanceStore.cards;
@@ -174,19 +191,46 @@ abstract class _TransactionStore with Store {
     totalValue = newValue;
   }
 
+  int calculateFee(int inputCount, int outputCount, int feeRate) {
+    const inputSize = 148;
+    const overheadSize = 10;
+    final transactionSize =
+        (inputCount * inputSize) + (outputCount * outputByte) + overheadSize;
+    final transactionFee = transactionSize * feeRate;
+
+    return transactionFee;
+  }
+
+  @computed
+  int get calculatedTxFee =>
+      calculateFee(usedUtxos.length, 1, txFeeRate.fastestFee);
+
+  @action
+  void updateTxFee() {
+    txFee = calculateFee(usedUtxos.length, 1, txFeeRate.fastestFee);
+  }
+
   Future<void> getUtxosData() async {
-    final currentAddress =
-        _balanceStore.cards[_historyPageStore.cardHistoryIndex].address;
+    utxoLoading = true;
+    var currentAddress = '';
+    if (selectedCard != -1 && selectedBar == -1) {
+      currentAddress = _balanceStore.cards[selectedCardIndex].address;
+    } else if (selectedCard == -1 && selectedBar != -1) {
+      currentAddress = _balanceStore.bars[selectedBarIndex].address;
+    }
+
     utxoData = await utxoRepo.getUtxoList(address: currentAddress);
     final sortedUtxos = (utxoData?.unspentOutputs.toList() ?? <UtxoModel>[])
       ..sort((a, b) => a.value.compareTo(b.value));
-    await _getRecommendedFee();
+
+    await getRecommendedFee();
     final totalValue = sortedUtxos.fold(0, (prev, utxo) => prev + utxo.value);
+    utxoLoading = false;
     setSortedUtxos(sortedUtxos);
     setTotalValue(totalValue);
   }
 
-  Future<void> _getRecommendedFee() async {
+  Future<void> getRecommendedFee() async {
     try {
       txFeeRate = await mempoolRepo.getFees();
     } catch (err) {
@@ -203,9 +247,8 @@ abstract class _TransactionStore with Store {
         print('Not enough funds');
       }
     } else {
-      final TxFeeDto(:fastestFee) = txFeeRate;
-      final initialTxSize = (1 * 148) + (0 * 34) + (1 * outputByte) + 10;
-      final initialFee = initialTxSize * fastestFee;
+      final fastestFee = txFeeRate.fastestFee;
+      final initialFee = calculateFee(1, 1, fastestFee);
       log('Initial Fee: $initialFee');
       final rangeStart = sendAmount + initialFee;
       final rangeEnd = sendAmount + initialFee + 500;
@@ -221,11 +264,10 @@ abstract class _TransactionStore with Store {
           );
         }
         return;
-      } //Pass
+      }
 
       for (final utxo in sortedUtxos) {
-        final txSize = (1 * 148) + (1 * 34) + (1 * outputByte) + 10;
-        final newFee = txSize * fastestFee;
+        final newFee = calculateFee(1, 2, fastestFee);
         usedUtxos = [utxo].asObservable();
         txFee = newFee;
         if (utxo.value >= sendAmount + newFee) {
@@ -236,25 +278,27 @@ abstract class _TransactionStore with Store {
           }
           return;
         }
-      } //Pass
+      }
       combineUtxos();
     }
   }
+
+  @observable
+  int inputQuantity = 1;
 
   @action
   void combineUtxos() {
     usedUtxos.clear();
     final selectedUtxos = <UtxoModel>[];
-    var inputQuantity = 2;
+    inputQuantity = 2;
     if (sendAmount > totalValue) {
       if (kDebugMode) {
         print('Not enough funds');
       }
       return;
     }
+
     while (true) {
-      final fee = ((inputQuantity * 148) + (1 * 34) + (1 * outputByte) + 10) *
-          txFeeRate.fastestFee;
       for (var i = 0; i < sortedUtxos.length - (inputQuantity - 1); i++) {
         var totalValue = sortedUtxos[i].value;
         final combination = [sortedUtxos[i]];
@@ -264,12 +308,12 @@ abstract class _TransactionStore with Store {
           combination.add(sortedUtxos[j]);
         }
 
-        if (totalValue >= sendAmount + fee) {
+        if (totalValue >= sendAmount + calculatedFee) {
           if (kDebugMode) {
             print(
               'Combined UTXOs ($inputQuantity inputs): ${combination.map((utxo) => utxo.txHash).join(', ')}',
             );
-            txFee = fee;
+            txFee = calculatedFee;
           }
 
           selectedUtxos.addAll(combination);
@@ -284,8 +328,7 @@ abstract class _TransactionStore with Store {
       selectedUtxos.clear();
       inputQuantity++;
       final newFeeWithChange =
-          ((inputQuantity * 148) + (1 * 34) + (1 * outputByte) + 10) *
-              txFeeRate.fastestFee;
+          calculateFee(inputQuantity, 2, txFeeRate.fastestFee);
       if (sendAmount + newFeeWithChange > totalValue) {
         findMaxUtxo();
         selectedUtxos.addAll(sortedUtxos);
@@ -295,16 +338,23 @@ abstract class _TransactionStore with Store {
     usedUtxos = selectedUtxos.asObservable();
   }
 
+  @computed
+  int get calculatedFee =>
+      ((inputQuantity * 148) + (1 * outputByte) + 10) * txFeeRate.fastestFee;
+
   @action
   int findMaxUtxo() {
-    final newTxSizeWithoutChange =
-        (sortedUtxos.length * 148) + (1 * outputByte) + 10;
-    final newFeeWithoutChange = newTxSizeWithoutChange * txFeeRate.fastestFee;
+    final selectedUtxos = <UtxoModel>[];
+    final newFeeWithoutChange =
+        calculateFee(sortedUtxos.length, 1, txFeeRate.fastestFee);
+    selectedUtxos.addAll(sortedUtxos);
     txFee = newFeeWithoutChange;
+    log(txFee.satoshiToUsd(btcCurrentPrice: btc?.price).toString());
     final utxoHashes = sortedUtxos.map((utxo) => utxo.txHash).toList();
     if (kDebugMode) {
-      print('Max UTXOs Without Change :$utxoHashes');
+      print('Max UTXOs Without Change: $utxoHashes');
     }
+    usedUtxos = selectedUtxos.asObservable();
     return totalValue;
   }
 
@@ -356,12 +406,15 @@ abstract class _TransactionStore with Store {
 
   @action
   Future<String> broadcastTransaction() async {
+    broadcastLoading = true;
     try {
       final res = await broadcastRepo.broadcastTransaction(hex: txHex);
       log(txHex.toString());
       return res;
     } catch (e) {
       throw Exception('Failed to broadcast transaction: $e');
+    } finally {
+      broadcastLoading = false;
     }
   }
 

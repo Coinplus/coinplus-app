@@ -17,6 +17,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../modals/send_receive_modal/send_receive_modal.dart';
+import '../../modals/send_to/send_to_state.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
@@ -63,6 +64,7 @@ class DashboardPage extends HookWidget {
     final _settingsState = SettingsState();
     final isModalOpened = useState(false);
     final _nfcStore = useMemoized(NfcStore.new);
+    final state = useMemoized(SendToState.new);
     final _allSettingsState = useMemoized(AllSettingsState.new);
     final pageController = useMemoized(PageControllerManager.new);
     final isPaused = useState(false);
@@ -271,6 +273,7 @@ class DashboardPage extends HookWidget {
                       },
                       pageController: _pageController,
                       allSettingsState: _allSettingsState,
+                      state: state,
                     ),
                     const MarketPage(),
                     HistoryPage(
@@ -569,6 +572,7 @@ class DashboardPage extends HookWidget {
                 allSettingsState: _allSettingsState,
                 tabController: tabController,
                 context: context,
+                state: state,
               ).then((value) => isModalOpened.value = false);
               isModalOpened.value = false;
               await recordAmplitudeEvent(

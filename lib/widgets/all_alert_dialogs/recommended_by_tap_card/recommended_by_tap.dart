@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
@@ -15,6 +16,7 @@ Future<void> recommendedByTapAlert({
   required String walletAddress,
   required String walletType,
   required bool activated,
+  required SendToState state,
 }) {
   return showDialogBox(
     context,
@@ -55,7 +57,7 @@ Future<void> recommendedByTapAlert({
             ),
           ),
         );
-        await router.push(CardSecretFillRoute());
+        await router.push(CardSecretFillRoute(state: state));
       },
     ),
     isDismissible: true,

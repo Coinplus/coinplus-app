@@ -88,7 +88,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                   );
                   await router.maybePop(context);
                   final res = await context.pushRoute<String?>(
-                    const QrScannerRoute(),
+                    QrScannerRoute(),
                   );
                   if (res != null) {
                     unawaited(

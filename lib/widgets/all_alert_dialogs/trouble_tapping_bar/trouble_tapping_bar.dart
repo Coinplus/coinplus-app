@@ -9,6 +9,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
@@ -19,9 +20,10 @@ import '../recommended_by_tap_bar/recommended_by_tap.dart';
 import 'recommended_activate_bar_by_tap.dart';
 
 class BarIssueOptionsSheet extends StatelessWidget {
-  const BarIssueOptionsSheet({super.key});
+  const BarIssueOptionsSheet({super.key, required this.state});
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  final SendToState state;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +90,7 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
+                state: state,
               );
             },
           ),
@@ -104,6 +107,7 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
+                state: state,
               );
             },
           ),
@@ -119,6 +123,7 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletType: 'Bar',
                 activated: await isActivated,
                 context: context,
+                state: state,
               );
             },
           ),
@@ -134,6 +139,7 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
+                state: state,
               );
             },
           ),

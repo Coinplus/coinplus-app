@@ -11,6 +11,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
+import '../../modals/send_to/send_to_state.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
@@ -34,11 +35,13 @@ class WalletPage extends StatefulWidget {
     required this.onChangeCard,
     required this.pageController,
     required this.allSettingsState,
+    required this.state,
   });
 
   final CardChangeCallBack onChangeCard;
   final PageController pageController;
   final AllSettingsState allSettingsState;
+  final SendToState state;
 
   @override
   State<WalletPage> createState() => _WalletPageState();
@@ -100,9 +103,21 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       }
       if (_tabController.index == 0) {
         _historyPageStore.setTabIndex(0);
+        if (_balanceStore.cards.isNotEmpty) {
+          if (_balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
+            widget.state.transactionsStore
+                .onSelectCard(_balanceStore.cardCurrentIndex);
+          }
+        }
       }
       if (_tabController.index == 1) {
         _historyPageStore.setTabIndex(1);
+        if (_balanceStore.bars.isNotEmpty) {
+          if (_balanceStore.barCurrentIndex != _balanceStore.bars.length) {
+            widget.state.transactionsStore
+                .onSelectBar(_balanceStore.barCurrentIndex);
+          }
+        }
       }
       widget.onChangeCard(
         (
@@ -243,6 +258,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                               onCarouselScroll: (val) =>
                                   cardCarouselIndex = val,
                               tabController: _tabController,
+                              state: widget.state,
                             ),
                             BarList(
                               onCardSelected: (card) => widget.onChangeCard(
@@ -250,6 +266,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                               ),
                               onCarouselScroll: (val) => barCarouselIndex = val,
                               tabController: _tabController,
+                              state: widget.state,
                             ),
                           ],
                         ),

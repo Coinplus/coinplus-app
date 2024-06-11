@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
@@ -15,6 +16,7 @@ Future<void> recommendedActivateBarByTap({
   required String walletAddress,
   required String walletType,
   required bool activated,
+  required SendToState state,
 }) {
   return showDialogBox(
     context,
@@ -40,7 +42,7 @@ Future<void> recommendedActivateBarByTap({
             ),
           ),
         );
-        await router.push(BarSecretFillRoute());
+        await router.push(BarSecretFillRoute(state: state));
       },
       text:
           'To be able to check the validity of the bar we need you to tap the top of bar box. In case you can’t tap, we can’t validate that your bar is authentic.',

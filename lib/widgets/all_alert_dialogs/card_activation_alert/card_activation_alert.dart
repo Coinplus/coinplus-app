@@ -10,6 +10,7 @@ import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/card_model/card_model.dart';
 import '../../../providers/screen_service.dart';
@@ -29,6 +30,7 @@ Future<void> cardActivationAlert({
   required ValueNotifier<bool> isModalOpened,
   required CardModel card,
   required bool isBarList,
+  required SendToState state,
 }) async {
   await showDialogBox(
     context,
@@ -113,6 +115,7 @@ Future<void> cardActivationAlert({
                         await router.push(
                           CardSecretFillRoute(
                             receivedData: walletAddress.toString(),
+                            state: state,
                           ),
                         );
                       } else {
@@ -147,6 +150,7 @@ Future<void> cardActivationAlert({
                         await router.push(
                           CardSecretFillRoute(
                             receivedData: walletAddress.toString(),
+                            state: state,
                           ),
                         );
                       } else {
@@ -182,6 +186,7 @@ Future<void> cardActivationAlert({
                   return Future(
                     () => showCardTapIssueBottomSheet(
                       isModalOpened: isModalOpened,
+                      state: state,
                     ),
                   );
                 },
@@ -250,6 +255,7 @@ Future<void> cardActivationAlert({
                         await router.push(
                           CardSecretFillRoute(
                             receivedData: walletAddress,
+                            state: state,
                           ),
                         );
                       } else {
@@ -275,6 +281,7 @@ Future<void> cardActivationAlert({
                         await router.push(
                           CardSecretFillRoute(
                             receivedData: walletAddress.toString(),
+                            state: state,
                           ),
                         );
                       } else {
@@ -313,13 +320,17 @@ Future<void> cardActivationAlert({
                     return Future(
                       () => showCardTapIssueBottomSheet(
                         isModalOpened: isModalOpened,
+                        state: state,
                       ),
                     );
                   });
                 },
               );
               await router.maybePop();
-              await showAndroidCardNfcBottomSheet(isModalOpened: isModalOpened);
+              await showAndroidCardNfcBottomSheet(
+                isModalOpened: isModalOpened,
+                state: state,
+              );
             },
       secondaryActionText: 'Got it',
       secondaryAction: () {

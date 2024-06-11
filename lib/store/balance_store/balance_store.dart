@@ -264,7 +264,7 @@ abstract class _BalanceStore with Store {
     }
   }
 
-  void saveSelectedCardAsTracker({
+  void saveSelectedCardManually({
     required CardColor color,
     required WalletType label,
     required String name,
@@ -469,5 +469,24 @@ abstract class _BalanceStore with Store {
     void Function(String addr) onBarAdded,
   ) async {
     this.onBarAdded = onBarAdded;
+  }
+
+  late void Function(String addr) onCardDeleted = _defaultOnCardDeleted;
+  late void Function(String addr) onBarDeleted = _defaultOnBarDeleted;
+
+  void _defaultOnCardDeleted(String addr) {}
+
+  void _defaultOnBarDeleted(String addr) {}
+
+  Future<void> setOnCardDeletedCallback(
+    void Function(String addr) onCardDeleted,
+  ) async {
+    this.onCardDeleted = onCardDeleted;
+  }
+
+  Future<void> setOnBarDeletedCallback(
+    void Function(String addr) onBarDeleted,
+  ) async {
+    this.onBarDeleted = onBarDeleted;
   }
 }

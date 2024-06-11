@@ -23,9 +23,11 @@ import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_walle
 class QrScannerPage extends HookWidget {
   const QrScannerPage({
     Key? key,
+    this.isScannedReceiverAddress,
   }) : super(key: key);
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+  final bool? isScannedReceiverAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -56,39 +58,55 @@ class QrScannerPage extends HookWidget {
                 final _data = capture.barcodes.map((e) => e.displayValue).first;
                 await _qrController.stop();
                 await Future.delayed(const Duration(milliseconds: 300));
-                if (_data?.length == 30) {
-                  await HapticFeedback.mediumImpact();
-                  await router.maybePop(_data);
-                } else if (_data!.startsWith('https')) {
-                  final newAddress =
-                      _data.split('https://air.coinplus.com/btc/');
-                  final splitAddress = newAddress[1];
-                  await HapticFeedback.heavyImpact();
-                  final cardExists = _balanceStore.cards
-                      .any((element) => element.address == splitAddress);
-                  final barExists = _balanceStore.bars
-                      .any((element) => element.address == splitAddress);
-                  if (cardExists || barExists) {
-                    await router.maybePop();
-                    await alreadySavedWallet(context, splitAddress);
-                    _balanceStore.onCardAdded(splitAddress);
-                    _balanceStore.onBarAdded(splitAddress);
-                  } else {
+                if (isScannedReceiverAddress == true) {
+                  if (_data?.length == 30) {
+                    await HapticFeedback.mediumImpact();
+                    await router.maybePop(_data);
+                  } else if (_data!.startsWith('https')) {
+                    final newAddress =
+                        _data.split('https://air.coinplus.com/btc/');
+                    final splitAddress = newAddress[1];
+                    await HapticFeedback.heavyImpact();
                     await router.maybePop(splitAddress);
+                  } else {
+                    await HapticFeedback.mediumImpact();
+                    await router.maybePop(_data);
                   }
                 } else {
-                  await HapticFeedback.mediumImpact();
-                  final cardExists = _balanceStore.cards
-                      .any((element) => element.address == _data);
-                  final barExists = _balanceStore.bars
-                      .any((element) => element.address == _data);
-                  if (cardExists || barExists) {
-                    await router.maybePop();
-                    await alreadySavedWallet(context, _data);
-                    _balanceStore.onCardAdded(_data);
-                    _balanceStore.onBarAdded(_data);
-                  } else {
+                  if (_data?.length == 30) {
+                    await HapticFeedback.mediumImpact();
                     await router.maybePop(_data);
+                  } else if (_data!.startsWith('https')) {
+                    final newAddress =
+                        _data.split('https://air.coinplus.com/btc/');
+                    final splitAddress = newAddress[1];
+                    await HapticFeedback.heavyImpact();
+                    final cardExists = _balanceStore.cards
+                        .any((element) => element.address == splitAddress);
+                    final barExists = _balanceStore.bars
+                        .any((element) => element.address == splitAddress);
+                    if (cardExists || barExists) {
+                      await router.maybePop();
+                      await alreadySavedWallet(context, splitAddress);
+                      _balanceStore.onCardAdded(splitAddress);
+                      _balanceStore.onBarAdded(splitAddress);
+                    } else {
+                      await router.maybePop(splitAddress);
+                    }
+                  } else {
+                    await HapticFeedback.mediumImpact();
+                    final cardExists = _balanceStore.cards
+                        .any((element) => element.address == _data);
+                    final barExists = _balanceStore.bars
+                        .any((element) => element.address == _data);
+                    if (cardExists || barExists) {
+                      await router.maybePop();
+                      await alreadySavedWallet(context, _data);
+                      _balanceStore.onCardAdded(_data);
+                      _balanceStore.onBarAdded(_data);
+                    } else {
+                      await router.maybePop(_data);
+                    }
                   }
                 }
               },

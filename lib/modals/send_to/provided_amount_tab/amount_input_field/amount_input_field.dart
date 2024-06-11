@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../constants/currency.dart';
-import '../../../../extensions/extensions.dart';
 import '../../../../extensions/num_extension.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
@@ -26,10 +26,6 @@ class AmountInputField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = useMemoized(
-      () => NumberFormat.decimalPattern(context.locale.toString()),
-      [context.locale],
-    );
     return Column(
       children: [
         Column(
@@ -39,29 +35,18 @@ class AmountInputField extends HookWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Gap(20),
+                    const Gap(60),
                     if (state.currency == Currency.USD)
-                      Row(
-                        children: [
-                          const Gap(35),
-                          UsdAmountTextField(
-                            state: state,
-                            usdFocusNode: usdFocusNode,
-                          ),
-                        ],
+                      UsdAmountTextField(
+                        state: state,
+                        usdFocusNode: usdFocusNode,
                       )
+                    else if (state.currency == Currency.USD)
+                      const SizedBox()
                     else
-                      Row(
-                        children: [
-                          const Gap(35),
-                          if (state.currency == Currency.USD)
-                            const SizedBox()
-                          else
-                            BtcAmountTextField(
-                              state: state,
-                              btcFocusNode: btcFocusNode,
-                            ),
-                        ],
+                      BtcAmountTextField(
+                        state: state,
+                        btcFocusNode: btcFocusNode,
                       ),
                     IconButton(
                       splashRadius: 25,
@@ -73,6 +58,7 @@ class AmountInputField extends HookWidget {
                         color: const Color(0xFF4A83E0),
                       ),
                     ),
+                    const Gap(20),
                   ],
                 );
               },
@@ -147,7 +133,8 @@ class AmountInputField extends HookWidget {
                     ],
                   ),
                   secondChild: const SizedBox(),
-                  crossFadeState: state.isConvertedAmountVisible
+                  crossFadeState: state.isConvertedAmountVisible &&
+                          !state.isInputtedAmountBiggerTotal
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 300),
@@ -180,6 +167,12 @@ class AmountInputField extends HookWidget {
                 ),
                 onPressed: () {
                   final res = state.onUseMax();
+                  if (res == 0) {
+                    state.usdController.text = '0';
+                    state.btcController.text = '0';
+                    Gaimon.error();
+                    return;
+                  }
                   if (res != 0 &&
                       res >
                           state.transactionsStore.txFee.satoshiToUsd(
@@ -190,7 +183,7 @@ class AmountInputField extends HookWidget {
                           btcCurrentPrice: state.btcPrice,
                         );
                     state.setAmount(maxSendAmount.toString());
-                    state.usdController.text = formatter.format(maxSendAmount);
+                    state.usdController.text = maxSendAmount.toStringAsFixed(3);
                     final btcAmount =
                         res.usdToBtc(btcCurrentPrice: state.btcPrice);
 
@@ -203,9 +196,12 @@ class AmountInputField extends HookWidget {
                           .btcToUsd(btcCurrentPrice: state.btcPrice)
                           .toString(),
                     );
-                    state.btcController.text = maxSendAmountInBtc
-                        .handleDecimalsLessThanOne()
-                        .toString();
+                    state.btcController.text =
+                        maxSendAmountInBtc.toStringAsFixed(8).toString();
+                  } else {
+                    state.usdController.text = '0';
+                    state.btcController.text = '0';
+                    Gaimon.error();
                   }
                 },
                 child: Text(

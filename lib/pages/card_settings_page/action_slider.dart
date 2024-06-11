@@ -65,6 +65,9 @@ class ActionSliderForCardDelete extends StatelessWidget {
             activated: await isCardActivated,
           ),
         );
+        _balanceStore.onCardDeleted(
+          card.address,
+        );
         showTopSnackBar(
           displayDuration: const Duration(
             milliseconds: 600,

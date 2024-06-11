@@ -9,6 +9,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
@@ -19,7 +20,9 @@ import '../recommended_by_tap_card/recommended_by_tap.dart';
 import 'recommended_activate_with_nfc.dart';
 
 class CardIssueOptionsSheet extends StatelessWidget {
-  const CardIssueOptionsSheet({super.key});
+  const CardIssueOptionsSheet({super.key, required this.state});
+
+  final SendToState state;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -88,6 +91,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
+                  state: state,
                 ),
               );
             },
@@ -114,6 +118,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
+                  state: state,
                 ),
               );
             },
@@ -139,6 +144,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
+                state: state,
               );
             },
           ),
@@ -164,6 +170,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
+                  state: state,
                 ),
               );
             },
