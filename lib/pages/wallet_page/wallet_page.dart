@@ -205,12 +205,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white.withOpacity(0.95),
       body: ReactionBuilder(
-        builder: (_) {
+        builder: (context) {
           return reaction(
-            (_) => _balanceStore.bars.length,
-            (length) {
-              if (length > _balanceStore.barCurrentIndex) {
-                _tabController.animateTo(1);
+            (_) => _balanceStore.cardActivation,
+            (status) {
+              if (status == true) {
+                _tabController.animateTo(0);
               }
             },
           );
@@ -218,73 +218,98 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         child: ReactionBuilder(
           builder: (context) {
             return reaction(
-              (_) => _balanceStore.cards.length,
-              (length) {
-                if (length > _balanceStore.cardCurrentIndex) {
-                  _tabController.animateTo(0);
+              (_) => _balanceStore.barActivation,
+              (status) {
+                if (status == true) {
+                  _tabController.animateTo(1);
                 }
               },
             );
           },
-          child: RefreshIndicator(
-            displacement: 50,
-            triggerMode: RefreshIndicatorTriggerMode.anywhere,
-            color: Colors.black,
-            onRefresh: () async {
-              await HapticFeedback.mediumImpact();
-              await _marketPageStore.onRefresh();
-              unawaited(_balanceStore.getCardsInfo());
-              unawaited(_balanceStore.getBarsInfo());
+          child: ReactionBuilder(
+            builder: (_) {
+              return reaction(
+                (_) => _balanceStore.bars.length,
+                (length) {
+                  if (length > _balanceStore.barCurrentIndex) {
+                    _tabController.animateTo(1);
+                  }
+                },
+              );
             },
-            child: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  child: Column(
-                    children: [
-                      if (context.height > 667)
-                        const Gap(15)
-                      else
-                        const SizedBox(),
-                      Expanded(
-                        flex: context.height > 667 ? 7 : 10,
-                        child: TabBarView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          controller: _tabController,
-                          children: [
-                            CardList(
-                              onCardSelected: (card) => widget.onChangeCard(
-                                (card: card, index: 0),
-                              ),
-                              onCarouselScroll: (val) =>
-                                  cardCarouselIndex = val,
-                              tabController: _tabController,
-                              state: widget.state,
+            child: ReactionBuilder(
+              builder: (context) {
+                return reaction(
+                  (_) => _balanceStore.cards.length,
+                  (length) {
+                    if (length > _balanceStore.cardCurrentIndex) {
+                      _tabController.animateTo(0);
+                    }
+                  },
+                );
+              },
+              child: RefreshIndicator(
+                displacement: 50,
+                triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                color: Colors.black,
+                onRefresh: () async {
+                  await HapticFeedback.mediumImpact();
+                  await _marketPageStore.onRefresh();
+                  unawaited(_balanceStore.getCardsInfo());
+                  unawaited(_balanceStore.getBarsInfo());
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    SliverFillRemaining(
+                      child: Column(
+                        children: [
+                          if (context.height > 667)
+                            const Gap(15)
+                          else
+                            const SizedBox(),
+                          Expanded(
+                            flex: context.height > 667 ? 7 : 10,
+                            child: TabBarView(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _tabController,
+                              children: [
+                                CardList(
+                                  onCardSelected: (card) => widget.onChangeCard(
+                                    (card: card, index: 0),
+                                  ),
+                                  onCarouselScroll: (val) =>
+                                      cardCarouselIndex = val,
+                                  tabController: _tabController,
+                                  state: widget.state,
+                                ),
+                                BarList(
+                                  onCardSelected: (card) => widget.onChangeCard(
+                                    (card: card, index: 1),
+                                  ),
+                                  onCarouselScroll: (val) =>
+                                      barCarouselIndex = val,
+                                  tabController: _tabController,
+                                  state: widget.state,
+                                ),
+                              ],
                             ),
-                            BarList(
-                              onCardSelected: (card) => widget.onChangeCard(
-                                (card: card, index: 1),
-                              ),
-                              onCarouselScroll: (val) => barCarouselIndex = val,
-                              tabController: _tabController,
-                              state: widget.state,
-                            ),
-                          ],
-                        ),
+                          ),
+                          // Current price(btc)
+                          if (context.height > 667)
+                            FavoriteCoin(
+                              pageController: widget.pageController,
+                              allSettingsState: widget.allSettingsState,
+                            )
+                          else
+                            const SizedBox(),
+                          const Spacer(),
+                          const Gap(30),
+                        ],
                       ),
-                      // Current price(btc)
-                      if (context.height > 667)
-                        FavoriteCoin(
-                          pageController: widget.pageController,
-                          allSettingsState: widget.allSettingsState,
-                        )
-                      else
-                        const SizedBox(),
-                      const Spacer(),
-                      const Gap(30),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

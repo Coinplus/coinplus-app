@@ -990,6 +990,8 @@ class _CardSecretFillPageState extends State<CardSecretFillPage>
                               walletType: 'Card',
                               isBarList: false,
                               state: widget.state,
+                              card: card,
+                              balanceStore: _balanceStore,
                             );
                             await recordUserProperty(const CardHolder());
                           } else {

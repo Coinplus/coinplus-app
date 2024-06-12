@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,7 +13,6 @@ import '../../../../services/amplitude_service.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../../store/balance_store/balance_store.dart';
-import '../../../../store/ip_store/ip_store.dart';
 import '../../../../utils/wallet_activation_status.dart';
 
 class CardBalanceField extends HookWidget {
@@ -24,8 +21,6 @@ class CardBalanceField extends HookWidget {
   final int index;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  IpStore get _ipStore => GetIt.I<IpStore>();
 
   RampService get _rampService => GetIt.I<RampService>();
 
@@ -37,307 +32,119 @@ class CardBalanceField extends HookWidget {
 
     return Observer(
       builder: (_) {
-        final countryStatus = _ipStore.rampCountryStatus;
-        final regionStatus = _ipStore.rampRegionStatus;
-        return countryStatus
-            ? !regionStatus
-                ? ScaleTap(
-                    onPressed: _balanceStore.cardCurrentIndex == index
-                        ? () async {
-                            final isActivated = isCardWalletActivated(
-                              balanceStore: _balanceStore,
-                            );
-                            await recordAmplitudeEvent(
-                              TopUpButtonClicked(
-                                walletType: 'Card',
-                                walletAddress: state.cards[index].address,
-                                activated: await isActivated,
-                              ),
-                            );
-                            _rampService.presentRamp();
-                          }
-                        : null,
-                    enableFeedback: false,
-                    child: Container(
-                      height: 60,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.height > 667
-                            ? context.height * 0.035
-                            : context.height * 0.043,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.black.withOpacity(
-                            0.3,
+        return ScaleTap(
+          onPressed: _balanceStore.cardCurrentIndex == index
+              ? () async {
+                  final isActivated = isCardWalletActivated(
+                    balanceStore: _balanceStore,
+                  );
+                  await recordAmplitudeEvent(
+                    TopUpButtonClicked(
+                      walletType: 'Card',
+                      walletAddress: state.cards[index].address,
+                      activated: await isActivated,
+                    ),
+                  );
+                  _rampService.presentRamp();
+                }
+              : null,
+          enableFeedback: false,
+          child: Container(
+            height: 60,
+            padding: EdgeInsets.symmetric(
+              horizontal: context.height > 667
+                  ? context.height * 0.035
+                  : context.height * 0.043,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Colors.black.withOpacity(
+                  0.3,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(
+                      8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Balance',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            color: Colors.white,
+                            fontSize: 12,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(
-                                8,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Balancee',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Observer(
-                                    builder: (context) {
-                                      final myFormat =
-                                          NumberFormat.decimalPatternDigits(
-                                        locale: 'en_us',
-                                        decimalDigits: 2,
-                                      );
+                        Observer(
+                          builder: (context) {
+                            final myFormat = NumberFormat.decimalPatternDigits(
+                              locale: 'en_us',
+                              decimalDigits: 2,
+                            );
 
-                                      if (_balanceStore.btcPrice == null ||
-                                          _balanceStore.cardMapResult == null) {
-                                        return const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 4,
-                                            horizontal: 2,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                height: 10,
-                                                width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 3,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                      return Observer(
-                                        builder: (_) {
-                                          if (_accelerometerStore
-                                              .hasPerformedAction) {
-                                            return const Text(
-                                              r'$*****',
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                              ),
-                                            );
-                                          } else {
-                                            return Text(
-                                              '\$${myFormat.format(_balanceStore.cardBalance)}',
-                                              style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Assets.icons.alternative.image(height: 50),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(
-                    height: 60,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.height > 667
-                          ? context.height * 0.035
-                          : context.height * 0.043,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaY: 3, sigmaX: 3),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.black.withOpacity(
-                              0.3,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(
-                                  8,
+                            if (_balanceStore.btcPrice == null ||
+                                _balanceStore.cardMapResult == null) {
+                              return const Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 4,
+                                  horizontal: 2,
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Row(
                                   children: [
-                                    const Text(
-                                      'Balancee',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
+                                    SizedBox(
+                                      height: 10,
+                                      width: 10,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
                                         color: Colors.white,
-                                        fontSize: 12,
                                       ),
-                                    ),
-                                    Observer(
-                                      builder: (context) {
-                                        final myFormat =
-                                            NumberFormat.decimalPatternDigits(
-                                          locale: 'en_us',
-                                          decimalDigits: 2,
-                                        );
-                                        if (_balanceStore
-                                                .cards[_balanceStore
-                                                    .cardCurrentIndex]
-                                                .finalBalance ==
-                                            null) {
-                                          return const Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              vertical: 4,
-                                              horizontal: 2,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  height: 10,
-                                                  width: 10,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    strokeWidth: 2,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }
-                                        return Text(
-                                          '\$${myFormat.format(_balanceStore.cardBalance)}',
-                                          style: const TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        );
-                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                              if (!regionStatus)
-                                Assets.icons.alternative.image(height: 50)
-                              else
-                                const SizedBox(),
-                            ],
-                          ),
+                              );
+                            }
+                            return Observer(
+                              builder: (_) {
+                                if (_accelerometerStore.hasPerformedAction) {
+                                  return const Text(
+                                    r'$*****',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  );
+                                } else {
+                                  return Text(
+                                    '\$${myFormat.format(_balanceStore.cardBalance)}',
+                                    style: const TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                          },
                         ),
-                      ),
-                    ),
-                  )
-            : Container(
-                height: 60,
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.height > 667
-                      ? context.height * 0.035
-                      : context.height * 0.043,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaY: 3, sigmaX: 3),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Colors.black.withOpacity(
-                          0.3,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(
-                              8,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Balance',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                Observer(
-                                  builder: (context) {
-                                    final myFormat =
-                                        NumberFormat.decimalPatternDigits(
-                                      locale: 'en_us',
-                                      decimalDigits: 2,
-                                    );
-                                    if (_balanceStore.btcPrice == null) {
-                                      return const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 4,
-                                          horizontal: 2,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              height: 10,
-                                              width: 10,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                    return Text(
-                                      '\$${myFormat.format(_balanceStore.cardBalance)}',
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (countryStatus)
-                            Assets.icons.alternative.image(height: 50)
-                          else
-                            const SizedBox(),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
-                ),
-              );
+                  Assets.icons.alternative.image(height: 50),
+                ],
+              ),
+            ),
+          ),
+        );
       },
     );
   }

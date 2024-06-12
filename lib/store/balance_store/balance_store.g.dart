@@ -211,6 +211,38 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$barActivationAtom =
+      Atom(name: '_BalanceStore.barActivation', context: context);
+
+  @override
+  bool get barActivation {
+    _$barActivationAtom.reportRead();
+    return super.barActivation;
+  }
+
+  @override
+  set barActivation(bool value) {
+    _$barActivationAtom.reportWrite(value, super.barActivation, () {
+      super.barActivation = value;
+    });
+  }
+
+  late final _$cardActivationAtom =
+      Atom(name: '_BalanceStore.cardActivation', context: context);
+
+  @override
+  bool get cardActivation {
+    _$cardActivationAtom.reportRead();
+    return super.cardActivation;
+  }
+
+  @override
+  set cardActivation(bool value) {
+    _$cardActivationAtom.reportWrite(value, super.cardActivation, () {
+      super.cardActivation = value;
+    });
+  }
+
   late final _$getCardsInfoAsyncAction =
       AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
@@ -361,6 +393,50 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void activateBar() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.activateBar');
+    try {
+      return super.activateBar();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void activateCard() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.activateCard');
+    try {
+      return super.activateCard();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reActivateBar() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.reActivateBar');
+    try {
+      return super.reActivateBar();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reActivateCard() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.reActivateCard');
+    try {
+      return super.reActivateCard();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cardMapResult: ${cardMapResult},
@@ -369,6 +445,8 @@ loadings: ${loadings},
 balanceLoading: ${balanceLoading},
 cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
+barActivation: ${barActivation},
+cardActivation: ${cardActivation},
 allCardsBalances: ${allCardsBalances},
 btcPrice: ${btcPrice},
 singleCoin: ${singleCoin},

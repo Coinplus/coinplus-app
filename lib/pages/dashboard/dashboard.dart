@@ -26,7 +26,6 @@ import '../../services/amplitude_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
-import '../../store/ip_store/ip_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
@@ -53,8 +52,6 @@ class DashboardPage extends HookWidget {
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
-
-  IpStore get _ipStore => GetIt.I<IpStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
@@ -566,7 +563,6 @@ class DashboardPage extends HookWidget {
                 isBarActivated: isBarActivated,
                 currentCard: currentCard,
                 isModalOpened: isModalOpened,
-                ipStore: _ipStore,
                 pageController: _pageController,
                 settingsState: _settingsState,
                 allSettingsState: _allSettingsState,
