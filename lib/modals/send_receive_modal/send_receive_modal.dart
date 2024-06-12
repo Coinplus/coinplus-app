@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,7 +18,6 @@ import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/ip_store/ip_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
@@ -37,7 +35,6 @@ Future<void> sendReceiveButtonModal({
   required Future<bool> isBarActivated,
   required ObjectRef<({AbstractCard? card, int index})> currentCard,
   required ValueNotifier<bool> isModalOpened,
-  required IpStore ipStore,
   required PageController pageController,
   required SettingsState settingsState,
   required AllSettingsState allSettingsState,
@@ -162,84 +159,74 @@ Future<void> sendReceiveButtonModal({
                 state: state,
               ),
             const Gap(8),
-            Observer(
-              builder: (_) {
-                final countryStatus = ipStore.rampCountryStatus;
-                final regionStatus = ipStore.rampRegionStatus;
-                return countryStatus
-                    ? !regionStatus
-                        ? LoadingButton(
-                            style: router.navigatorKey.currentContext!.theme
-                                .buttonStyle(
-                                  textStyle: const TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: AppColors.primaryTextColor,
-                                    fontSize: 15,
-                                  ),
-                                )
-                                .copyWith(
-                                  padding: const WidgetStatePropertyAll(
-                                    EdgeInsets.all(10),
-                                  ),
-                                  backgroundColor: WidgetStateProperty.all(
-                                    Colors.grey.withOpacity(0.1),
-                                  ),
-                                ),
-                            onPressed: () async {
-                              await recordAmplitudeEvent(
-                                BuyWithCardClicked(
-                                  walletType: isBarList ? 'Bar' : 'Card',
-                                  walletAddress: card.address,
-                                  activated: isBarList
-                                      ? await isBarActivated
-                                      : await isCardActivated,
-                                ),
-                              );
-                              await router.maybePop();
-                              _rampService.presentRamp();
-                            },
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 8,
-                                  ),
-                                  child: Assets.icons.buy.image(
-                                    height: 24,
-                                    width: 24,
-                                    color: AppColors.primaryButtonColor,
-                                  ),
-                                ),
-                                const Gap(8),
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Buy with card',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.primaryTextColor,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Purchase crypto with cash',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.normal,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        : const SizedBox()
-                    : const SizedBox();
+            LoadingButton(
+              style: router.navigatorKey.currentContext!.theme
+                  .buttonStyle(
+                textStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primaryTextColor,
+                  fontSize: 15,
+                ),
+              )
+                  .copyWith(
+                padding: const WidgetStatePropertyAll(
+                  EdgeInsets.all(10),
+                ),
+                backgroundColor: WidgetStateProperty.all(
+                  Colors.grey.withOpacity(0.1),
+                ),
+              ),
+              onPressed: () async {
+                await recordAmplitudeEvent(
+                  BuyWithCardClicked(
+                    walletType: isBarList ? 'Bar' : 'Card',
+                    walletAddress: card.address,
+                    activated: isBarList
+                        ? await isBarActivated
+                        : await isCardActivated,
+                  ),
+                );
+                await router.maybePop();
+                _rampService.presentRamp();
               },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 8,
+                    ),
+                    child: Assets.icons.buy.image(
+                      height: 24,
+                      width: 24,
+                      color: AppColors.primaryButtonColor,
+                    ),
+                  ),
+                  const Gap(8),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Buy with card',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: FontFamily.redHatMedium,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.primaryTextColor,
+                        ),
+                      ),
+                      Text(
+                        'Purchase crypto with cash',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: FontFamily.redHatMedium,
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.textHintsColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const Gap(8),
             LoadingButton(

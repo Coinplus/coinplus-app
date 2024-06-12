@@ -70,15 +70,6 @@ class _CardListState extends State<CardList>
           _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
     }
     _balanceStore
-      ..setOnCardAddedCallback((address) {
-        final index = _balanceStore.cards
-            .indexWhere((element) => element.address == address);
-        if (index.isNegative) {
-          return;
-        }
-        carouselController.animateToPage(index);
-        widget.tabController.animateTo(0);
-      })
       ..setOnCardDeletedCallback((address) {
         final index = _balanceStore.cards
             .indexWhere((element) => element.address == address);
@@ -87,6 +78,11 @@ class _CardListState extends State<CardList>
           return;
         }
         carouselController.jumpToPage(0);
+      })
+      ..setOnCardActivatedCallback((address) {
+        final index = _balanceStore.cards
+            .indexWhere((element) => element.address == address);
+        carouselController.jumpToPage(index);
       });
     _nfcState.checkNfcSupport();
   }
@@ -147,7 +143,9 @@ class _CardListState extends State<CardList>
                                   ),
                                   context: context,
                                   builder: (context) {
-                                    return AddNewCardModal(nfcState: _nfcState);
+                                    return AddNewCardModal(
+                                      nfcState: _nfcState,
+                                    );
                                   },
                                 ).then(
                                   (value) => _walletProtectState
@@ -239,7 +237,8 @@ class _CardListState extends State<CardList>
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             context: context,
-                                            shape: const RoundedRectangleBorder(
+                                            shape:
+                                                const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20),

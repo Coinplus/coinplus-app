@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaimon/gaimon.dart';
@@ -49,7 +51,7 @@ class UsdAmountTextField extends StatelessWidget {
                           contentPadding: EdgeInsets.only(left: 8),
                         ),
                         autofocus: true,
-                        cursorHeight: 24,
+                        cursorHeight: Platform.isIOS ? 24 : 40,
                         inputFormatters: [
                           CommaFormatter(),
                           FilteringTextInputFormatter.allow(

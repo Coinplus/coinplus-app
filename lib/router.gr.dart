@@ -10,9 +10,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
 import 'package:coinplus/modals/send_to/send_to_state.dart' as _i27;
-import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i29;
-import 'package:coinplus/models/bar_model/bar_model.dart' as _i28;
-import 'package:coinplus/models/card_model/card_model.dart' as _i30;
+import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i30;
+import 'package:coinplus/models/bar_model/bar_model.dart' as _i29;
+import 'package:coinplus/models/card_model/card_model.dart' as _i31;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i2;
 import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i3;
 import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart'
@@ -45,11 +45,12 @@ import 'package:coinplus/pages/settings_page/settings_page.dart' as _i21;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i22;
 import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i23;
-import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i31;
+import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i32;
 import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i32;
+    as _i33;
 import 'package:flutter/cupertino.dart' as _i25;
-import 'package:flutter/material.dart' as _i26;
+import 'package:flutter/foundation.dart' as _i26;
+import 'package:flutter/material.dart' as _i28;
 
 abstract class $Router extends _i24.RootStackRouter {
   $Router({super.navigatorKey});
@@ -408,8 +409,8 @@ class BarSecretFillRouteArgs {
 /// [_i5.BarSettingsPage]
 class BarSettingsRoute extends _i24.PageRouteInfo<BarSettingsRouteArgs> {
   BarSettingsRoute({
-    _i26.Key? key,
-    required _i28.BarModel bar,
+    _i28.Key? key,
+    required _i29.BarModel bar,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           BarSettingsRoute.name,
@@ -432,9 +433,9 @@ class BarSettingsRouteArgs {
     required this.bar,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
-  final _i28.BarModel bar;
+  final _i29.BarModel bar;
 
   @override
   String toString() {
@@ -446,9 +447,9 @@ class BarSettingsRouteArgs {
 /// [_i6.CardFillPage]
 class CardFillRoute extends _i24.PageRouteInfo<CardFillRouteArgs> {
   CardFillRoute({
-    _i26.Key? key,
+    _i28.Key? key,
     String? receivedData,
-    void Function(({_i29.AbstractCard? card, int index}))? onChangeCard,
+    void Function(({_i30.AbstractCard? card, int index}))? onChangeCard,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardFillRoute.name,
@@ -473,11 +474,11 @@ class CardFillRouteArgs {
     this.onChangeCard,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final String? receivedData;
 
-  final void Function(({_i29.AbstractCard? card, int index}))? onChangeCard;
+  final void Function(({_i30.AbstractCard? card, int index}))? onChangeCard;
 
   @override
   String toString() {
@@ -489,7 +490,7 @@ class CardFillRouteArgs {
 /// [_i7.CardFillWithNfc]
 class CardFillWithNfc extends _i24.PageRouteInfo<CardFillWithNfcArgs> {
   CardFillWithNfc({
-    _i26.Key? key,
+    _i28.Key? key,
     String? receivedData,
     String? cardColor,
     bool? isOriginalCard,
@@ -528,7 +529,7 @@ class CardFillWithNfcArgs {
     this.isActivated,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final String? receivedData;
 
@@ -552,7 +553,7 @@ class CardFillWithNfcArgs {
 /// [_i8.CardSecretFillPage]
 class CardSecretFillRoute extends _i24.PageRouteInfo<CardSecretFillRouteArgs> {
   CardSecretFillRoute({
-    _i26.Key? key,
+    _i28.Key? key,
     String? receivedData,
     required _i27.SendToState state,
     List<_i24.PageRouteInfo>? children,
@@ -579,7 +580,7 @@ class CardSecretFillRouteArgs {
     required this.state,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final String? receivedData;
 
@@ -595,8 +596,8 @@ class CardSecretFillRouteArgs {
 /// [_i9.CardSettingsPage]
 class CardSettingsRoute extends _i24.PageRouteInfo<CardSettingsRouteArgs> {
   CardSettingsRoute({
-    _i26.Key? key,
-    required _i30.CardModel card,
+    _i28.Key? key,
+    required _i31.CardModel card,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           CardSettingsRoute.name,
@@ -619,9 +620,9 @@ class CardSettingsRouteArgs {
     required this.card,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
-  final _i30.CardModel card;
+  final _i31.CardModel card;
 
   @override
   String toString() {
@@ -732,11 +733,11 @@ class PinCodeForAllRoutes extends _i24.PageRouteInfo<void> {
 class PinCodeForPrivateKey
     extends _i24.PageRouteInfo<PinCodeForPrivateKeyArgs> {
   PinCodeForPrivateKey({
-    _i26.Key? key,
-    _i28.BarModel? bar,
-    _i31.BarSettingState? isKeyVisible,
-    _i30.CardModel? card,
-    _i32.CardSettingState? isVisible,
+    _i28.Key? key,
+    _i29.BarModel? bar,
+    _i32.BarSettingState? isKeyVisible,
+    _i31.CardModel? card,
+    _i33.CardSettingState? isVisible,
     List<_i24.PageRouteInfo>? children,
   }) : super(
           PinCodeForPrivateKey.name,
@@ -765,15 +766,15 @@ class PinCodeForPrivateKeyArgs {
     this.isVisible,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
-  final _i28.BarModel? bar;
+  final _i29.BarModel? bar;
 
-  final _i31.BarSettingState? isKeyVisible;
+  final _i32.BarSettingState? isKeyVisible;
 
-  final _i30.CardModel? card;
+  final _i31.CardModel? card;
 
-  final _i32.CardSettingState? isVisible;
+  final _i33.CardSettingState? isVisible;
 
   @override
   String toString() {

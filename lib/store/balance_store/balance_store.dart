@@ -44,6 +44,10 @@ abstract class _BalanceStore with Store {
   int cardCurrentIndex = 0;
   @observable
   int barCurrentIndex = 0;
+  @observable
+  bool barActivation = false;
+  @observable
+  bool cardActivation = false;
 
   _BalanceStore() {
     if (_cards.isNotEmpty) {
@@ -452,6 +456,26 @@ abstract class _BalanceStore with Store {
     barCurrentIndex = index;
   }
 
+  @action
+  void activateBar() {
+    barActivation = true;
+  }
+
+  @action
+  void activateCard() {
+    cardActivation = true;
+  }
+
+  @action
+  void reActivateBar() {
+    barActivation = false;
+  }
+
+  @action
+  void reActivateCard() {
+    cardActivation = false;
+  }
+
   late void Function(String addr) onCardAdded = _defaultOnCardAdded;
   late void Function(String addr) onBarAdded = _defaultOnBarAdded;
 
@@ -488,5 +512,24 @@ abstract class _BalanceStore with Store {
     void Function(String addr) onBarDeleted,
   ) async {
     this.onBarDeleted = onBarDeleted;
+  }
+
+  late void Function(String addr) onCardActivated = _defaultOnCardActivated;
+  late void Function(String addr) onBarActivated = _defaultOnBarActivated;
+
+  void _defaultOnCardActivated(String addr) {}
+
+  void _defaultOnBarActivated(String addr) {}
+
+  Future<void> setOnCardActivatedCallback(
+    void Function(String addr) onCardActivated,
+  ) async {
+    this.onCardActivated = onCardActivated;
+  }
+
+  Future<void> setOnBarActivatedCallback(
+    void Function(String addr) onBarActivated,
+  ) async {
+    this.onBarActivated = onBarActivated;
   }
 }

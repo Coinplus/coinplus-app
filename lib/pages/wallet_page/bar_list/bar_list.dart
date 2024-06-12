@@ -23,7 +23,6 @@ import '../../../services/ramp_service.dart';
 import '../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
-import '../../../store/ip_store/ip_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -57,8 +56,6 @@ class _BarListState extends State<BarList>
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
-  IpStore get _ipStore => GetIt.I<IpStore>();
-
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   RampService get _rampService => GetIt.I<RampService>();
@@ -80,23 +77,19 @@ class _BarListState extends State<BarList>
           _balanceStore.bars[_balanceStore.barCurrentIndex].address;
     }
     _balanceStore
-      ..setOnBarAddedCallback((address) {
-        final index = _balanceStore.bars
-            .indexWhere((element) => element.address == address);
-        if (index.isNegative) {
-          return;
-        }
-        carouselController.animateToPage(index);
-        widget.tabController.animateTo(1);
-      })
       ..setOnBarDeletedCallback((address) {
-        final index = _balanceStore.cards
+        final index = _balanceStore.bars
             .indexWhere((element) => element.address == address);
         if (index.isNegative) {
           carouselController.jumpToPage(0);
           return;
         }
         carouselController.jumpToPage(0);
+      })
+      ..setOnBarActivatedCallback((address) {
+        final index = _balanceStore.bars
+            .indexWhere((element) => element.address == address);
+        carouselController.jumpToPage(index);
       });
   }
 
@@ -133,8 +126,6 @@ class _BarListState extends State<BarList>
                   _rampService.configuration.userAddress =
                       _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 } else {
-                  _balanceStore.setBarCurrentIndex(length);
-                  _historyPageStore.setBarHistoryIndex(length - 1);
                   widget.onCardSelected(null);
                   _rampService.configuration.userAddress =
                       _balanceStore.bars[_balanceStore.barCurrentIndex].address;
@@ -696,387 +687,157 @@ class _BarListState extends State<BarList>
                                     children: [
                                       Gap(context.height * 0.045),
                                       Observer(
-                                        builder: (_) {
-                                          final countryStatus =
-                                              _ipStore.rampCountryStatus;
-                                          final regionStatus =
-                                              _ipStore.rampRegionStatus;
-                                          return countryStatus
-                                              ? !regionStatus
-                                                  ? ScaleTap(
-                                                      enableFeedback: false,
-                                                      opacityMinValue: .98,
-                                                      scaleMinValue: .98,
-                                                      onPressed: _balanceStore
-                                                                  .barCurrentIndex ==
-                                                              index
-                                                          ? () async {
-                                                              final isActivated =
-                                                                  isBarWalletActivated(
-                                                                balanceStore:
-                                                                    _balanceStore,
-                                                              );
-                                                              await recordAmplitudeEvent(
-                                                                TopUpButtonClicked(
-                                                                  walletType:
-                                                                      'Bar',
-                                                                  walletAddress:
-                                                                      bar.address,
-                                                                  activated:
-                                                                      await isActivated,
-                                                                ),
-                                                              );
-                                                              _rampService
-                                                                  .presentRamp();
-                                                            }
-                                                          : null,
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          color: Colors.black
-                                                              .withOpacity(0.3),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            top: 2,
-                                                            bottom: 2,
-                                                            left: 8,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  const Text(
-                                                                    'Balance',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatMedium,
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                  Observer(
-                                                                    builder:
-                                                                        (context) {
-                                                                      final data = _marketPageStore
-                                                                          .singleCoin
-                                                                          ?.result
-                                                                          .first;
-                                                                      final myFormat =
-                                                                          NumberFormat
-                                                                              .decimalPatternDigits(
-                                                                        locale:
-                                                                            'en_us',
-                                                                        decimalDigits:
-                                                                            2,
-                                                                      );
-                                                                      if (data ==
-                                                                          null) {
-                                                                        return const Padding(
-                                                                          padding:
-                                                                              EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                4,
-                                                                            horizontal:
-                                                                                2,
-                                                                          ),
-                                                                          child:
-                                                                              Row(
-                                                                            children: [
-                                                                              SizedBox(
-                                                                                height: 10,
-                                                                                width: 10,
-                                                                                child: CircularProgressIndicator(
-                                                                                  strokeWidth: 3,
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        );
-                                                                      }
-                                                                      final balance =
-                                                                          bar.finalBalance;
-                                                                      return Observer(
-                                                                        builder:
-                                                                            (_) {
-                                                                          if (_accelerometerStore
-                                                                              .hasPerformedAction) {
-                                                                            return const Text(
-                                                                              r'$*****',
-                                                                              style: TextStyle(
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontWeight: FontWeight.w500,
-                                                                                color: Colors.white,
-                                                                                fontSize: 18,
-                                                                              ),
-                                                                            );
-                                                                          } else {
-                                                                            return Text(
-                                                                              '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
-                                                                              style: const TextStyle(
-                                                                                fontFamily: FontFamily.redHatMedium,
-                                                                                fontWeight: FontWeight.w700,
-                                                                                color: Colors.white,
-                                                                                fontSize: 20,
-                                                                              ),
-                                                                            );
-                                                                          }
-                                                                        },
-                                                                      );
-                                                                    },
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Assets.icons
-                                                                  .alternative
-                                                                  .image(
-                                                                height: 48,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ).paddingHorizontal(37),
-                                                    )
-                                                  : Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        color: Colors.black
-                                                            .withOpacity(0.3),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                          top: 2,
-                                                          bottom: 2,
-                                                          left: 8,
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                const Text(
-                                                                  'Balance',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatMedium,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                ),
-                                                                Observer(
-                                                                  builder:
-                                                                      (context) {
-                                                                    final data = _marketPageStore
-                                                                        .singleCoin
-                                                                        ?.result
-                                                                        .first;
-                                                                    final myFormat =
-                                                                        NumberFormat
-                                                                            .decimalPatternDigits(
-                                                                      locale:
-                                                                          'en_us',
-                                                                      decimalDigits:
-                                                                          2,
-                                                                    );
-                                                                    if (bar.finalBalance ==
-                                                                            null ||
-                                                                        data ==
-                                                                            null) {
-                                                                      return const Padding(
-                                                                        padding:
-                                                                            EdgeInsets.symmetric(
-                                                                          vertical:
-                                                                              4,
-                                                                          horizontal:
-                                                                              2,
-                                                                        ),
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              height: 10,
-                                                                              width: 10,
-                                                                              child: CircularProgressIndicator(
-                                                                                strokeWidth: 3,
-                                                                                color: Colors.white,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      );
-                                                                    }
-                                                                    return Text(
-                                                                      (bar.finalBalance != null
-                                                                              ? '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data.price)}'
-                                                                              : '')
-                                                                          .toString(),
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontFamily:
-                                                                            FontFamily.redHatMedium,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            20,
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 48,
-                                                            ),
-                                                            //Assets.icons.alternative.image(height: 48),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ).paddingHorizontal(37)
-                                              : Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      8,
-                                                    ),
-                                                    color: Colors.black
-                                                        .withOpacity(0.3),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      top: 2,
-                                                      bottom: 2,
-                                                      left: 8,
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
+                                        builder: (context) {
+                                          return ScaleTap(
+                                            enableFeedback: false,
+                                            opacityMinValue: .98,
+                                            scaleMinValue: .98,
+                                            onPressed: _balanceStore
+                                                .barCurrentIndex ==
+                                                index
+                                                ? () async {
+                                              final isActivated =
+                                              isBarWalletActivated(
+                                                balanceStore:
+                                                _balanceStore,
+                                              );
+                                              await recordAmplitudeEvent(
+                                                TopUpButtonClicked(
+                                                  walletType:
+                                                  'Bar',
+                                                  walletAddress:
+                                                  bar.address,
+                                                  activated:
+                                                  await isActivated,
+                                                ),
+                                              );
+                                              _rampService
+                                                  .presentRamp();
+                                            }
+                                                : null,
+                                            child: Container(
+                                              decoration:
+                                              BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius
+                                                    .circular(8),
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets
+                                                    .only(
+                                                  top: 2,
+                                                  bottom: 2,
+                                                  left: 8,
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
                                                       children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            const Text(
-                                                              'Balance',
-                                                              style: TextStyle(
-                                                                fontSize: 12,
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .redHatMedium,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ),
-                                                            Observer(
-                                                              builder:
-                                                                  (context) {
-                                                                final data =
-                                                                    _marketPageStore
-                                                                        .singleCoin
-                                                                        ?.result
-                                                                        .first;
-                                                                final myFormat =
-                                                                    NumberFormat
-                                                                        .decimalPatternDigits(
-                                                                  locale:
-                                                                      'en_us',
-                                                                  decimalDigits:
-                                                                      2,
-                                                                );
-                                                                if (data ==
-                                                                    null) {
-                                                                  return const Padding(
-                                                                    padding:
-                                                                        EdgeInsets
-                                                                            .symmetric(
-                                                                      vertical:
-                                                                          4,
-                                                                      horizontal:
-                                                                          2,
+                                                        const Text(
+                                                          'Balance',
+                                                          style:
+                                                          TextStyle(
+                                                            fontSize:
+                                                            12,
+                                                            fontFamily:
+                                                            FontFamily
+                                                                .redHatMedium,
+                                                            color: Colors
+                                                                .white,
+                                                          ),
+                                                        ),
+                                                        Observer(
+                                                          builder:
+                                                              (context) {
+                                                            final data = _marketPageStore
+                                                                .singleCoin
+                                                                ?.result
+                                                                .first;
+                                                            final myFormat =
+                                                            NumberFormat
+                                                                .decimalPatternDigits(
+                                                              locale:
+                                                              'en_us',
+                                                              decimalDigits:
+                                                              2,
+                                                            );
+                                                            if (data ==
+                                                                null) {
+                                                              return const Padding(
+                                                                padding:
+                                                                EdgeInsets.symmetric(
+                                                                  vertical:
+                                                                  4,
+                                                                  horizontal:
+                                                                  2,
+                                                                ),
+                                                                child:
+                                                                Row(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height: 10,
+                                                                      width: 10,
+                                                                      child: CircularProgressIndicator(
+                                                                        strokeWidth: 3,
+                                                                        color: Colors.white,
+                                                                      ),
                                                                     ),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        SizedBox(
-                                                                          height:
-                                                                              10,
-                                                                          width:
-                                                                              10,
-                                                                          child:
-                                                                              CircularProgressIndicator(
-                                                                            strokeWidth:
-                                                                                3,
-                                                                            color:
-                                                                                Colors.white,
-                                                                          ),
-                                                                        ),
-                                                                      ],
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }
+                                                            final balance =
+                                                                bar.finalBalance;
+                                                            return Observer(
+                                                              builder:
+                                                                  (_) {
+                                                                if (_accelerometerStore
+                                                                    .hasPerformedAction) {
+                                                                  return const Text(
+                                                                    r'$*****',
+                                                                    style: TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      color: Colors.white,
+                                                                      fontSize: 18,
+                                                                    ),
+                                                                  );
+                                                                } else {
+                                                                  return Text(
+                                                                    '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
+                                                                    style: const TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      fontWeight: FontWeight.w700,
+                                                                      color: Colors.white,
+                                                                      fontSize: 20,
                                                                     ),
                                                                   );
                                                                 }
-                                                                return Text(
-                                                                  (bar.finalBalance !=
-                                                                              null
-                                                                          ? '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data.price)}'
-                                                                          : '')
-                                                                      .toString(),
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatMedium,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        20,
-                                                                  ),
-                                                                );
                                                               },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 48,
+                                                            );
+                                                          },
                                                         ),
                                                       ],
                                                     ),
-                                                  ),
-                                                ).paddingHorizontal(37);
+                                                    Assets.icons
+                                                        .alternative
+                                                        .image(
+                                                      height: 48,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ).paddingHorizontal(37),
+                                          );
                                         },
                                       ),
                                       const Gap(10),

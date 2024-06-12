@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -164,8 +164,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
 
   @override
   Widget build(BuildContext context) {
-    final bar = _balanceStore.bars[_historyPageStore.barHistoryIndex];
-    log(bar.address);
+    final bar = _balanceStore.bars[_historyPageStore.barActivationIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -459,10 +458,13 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                             null) {
                                                                           return;
                                                                         }
-
+                                                                        _secretOneController.text =
+                                                                            res.replaceAll(
+                                                                              '\n',
+                                                                              '',
+                                                                            );
                                                                         secret1B58 =
-                                                                            _secretOneController.text =
-                                                                                res;
+                                                                            _secretOneController.text;
                                                                         await _validateSecretOne();
                                                                       },
                                                                       child:
@@ -741,8 +743,12 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                                     if (res == null) {
                                                                                       return;
                                                                                     }
-
-                                                                                    secret2B58 = _secretTwoController.text = res;
+                                                                                    _secretTwoController.text =
+                                                                                        res.replaceAll(
+                                                                                          '\n',
+                                                                                          '',
+                                                                                        );
+                                                                                    secret2B58 = _secretTwoController.text;
                                                                                     await _validateSecretTwo();
                                                                                   },
                                                                                   child: SizedBox(
@@ -948,6 +954,8 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                               walletType: 'Bar',
                               isBarList: true,
                               state: widget.state,
+                              bar: bar,
+                              balanceStore: _balanceStore,
                             );
                             await recordUserProperty(const BarHolder());
                           } else {
@@ -967,7 +975,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                             );
                           }
                         } catch (e) {
-                          log(e.toString());
+                          if (kDebugMode) {
+                            print(e.toString());
+                          }
                         }
                       },
                 child: const Text(
@@ -1033,20 +1043,16 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
   Future<void> _validateSecretOne() async {
     final secretOne = _secretOneController.text.trim();
     if (isValidSecret(secretOne)) {
-      _validationStore.validateSecretOne();
-      await Future.delayed(
-        const Duration(milliseconds: 400),
-      );
       _secretOneFocusNode.unfocus();
-      await Future.delayed(
-        const Duration(milliseconds: 200),
-        _validationStore.makeSecretTwoVisible,
-      );
+      _validationStore.validateSecretOne();
+      await Future.delayed(const Duration());
+      await _secretOneLottieController.forward(from: 0);
+      _validationStore.makeSecretTwoVisible();
+      await Future.delayed(const Duration(milliseconds: 100));
+      _secretTwoFocusNode.requestFocus();
       await recordAmplitudeEvent(
         Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'),
       );
-
-      await _secretOneLottieController.forward(from: 0);
     }
   }
 
@@ -1055,7 +1061,7 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
     if (isValidSecret(secretTwo)) {
       _validationStore.validateSecretTwo();
       await Future.delayed(
-        const Duration(milliseconds: 400),
+        const Duration(),
       );
       _secretTwoFocusNode.unfocus();
       await recordAmplitudeEvent(

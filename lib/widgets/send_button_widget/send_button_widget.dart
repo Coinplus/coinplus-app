@@ -235,5 +235,6 @@ Future<void> showSendFromWalletModal({
     ..clearAddressController()
     ..clearAmountControllers()
     ..isUseMaxClicked = false
+    ..shouldValidateReceiverAddress = false
     ..setAmount('0');
 }

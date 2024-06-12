@@ -132,10 +132,10 @@ class ProvideAddressTab extends HookWidget {
                           padding: const EdgeInsets.all(9),
                           child: ScaleTap(
                             onPressed: () async {
+                              sendFocusNode.unfocus();
+                              await Future.delayed(const Duration(milliseconds: 500));
                               final res = await router.push<String?>(
-                                QrScannerRoute(
-                                  isScannedReceiverAddress: true,
-                                ),
+                                QrScannerRoute(isScannedReceiverAddress: true),
                               );
                               if (res == null) {
                                 return;
