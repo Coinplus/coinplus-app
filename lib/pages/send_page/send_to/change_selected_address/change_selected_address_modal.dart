@@ -3,19 +3,19 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
-import '../../../constants/card_color.dart';
-import '../../../constants/card_type.dart';
-import '../../../extensions/extensions.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../gen/colors.gen.dart';
-import '../../../gen/fonts.gen.dart';
-import '../../../models/bar_model/bar_model.dart';
-import '../../../models/card_model/card_model.dart';
-import '../../../providers/screen_service.dart';
-import '../../../utils/data_utils.dart';
-import '../../../widgets/all_alert_dialogs/bar_activation_alert/bar_activation_alert.dart';
-import '../../../widgets/all_alert_dialogs/card_activation_alert/card_activation_alert.dart';
-import '../../../widgets/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../../../../constants/card_color.dart';
+import '../../../../constants/card_type.dart';
+import '../../../../extensions/extensions.dart';
+import '../../../../gen/assets.gen.dart';
+import '../../../../gen/colors.gen.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../../models/bar_model/bar_model.dart';
+import '../../../../models/card_model/card_model.dart';
+import '../../../../providers/screen_service.dart';
+import '../../../../utils/data_utils.dart';
+import '../../../../widgets/all_alert_dialogs/bar_activation_alert/bar_activation_alert.dart';
+import '../../../../widgets/all_alert_dialogs/card_activation_alert/card_activation_alert.dart';
+import '../../../../widgets/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
 import '../send_to_state.dart';
 
 class ChangeSelectedAddressModal extends HookWidget {

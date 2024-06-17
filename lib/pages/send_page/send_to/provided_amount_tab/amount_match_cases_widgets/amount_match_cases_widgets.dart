@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../gen/assets.gen.dart';
-import '../../../../gen/fonts.gen.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../gen/fonts.gen.dart';
 import '../../send_to_state.dart';
 
 class AmountMatchWidget extends StatelessWidget {

@@ -4,12 +4,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../constants/card_color.dart';
-import '../../../../extensions/extensions.dart';
-import '../../../../gen/colors.gen.dart';
-import '../../../../gen/fonts.gen.dart';
-import '../../../../providers/screen_service.dart';
-import '../../../../utils/data_utils.dart';
+import '../../../../../constants/card_color.dart';
+import '../../../../../extensions/extensions.dart';
+import '../../../../../gen/colors.gen.dart';
+import '../../../../../gen/fonts.gen.dart';
+import '../../../../../providers/screen_service.dart';
+import '../../../../../utils/data_utils.dart';
 import '../../change_selected_address/change_selected_address_modal.dart';
 import '../../send_to_state.dart';
 

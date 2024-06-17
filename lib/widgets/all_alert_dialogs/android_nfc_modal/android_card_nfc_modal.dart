@@ -8,7 +8,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../modals/send_to/send_to_state.dart';
+import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../loading_button/loading_button.dart';
 import '../trouble_tapping_card/trouble_tapping_card.dart';

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
-import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/bar_model/bar_model.dart';
 import '../../../models/card_model/card_model.dart';
+import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';

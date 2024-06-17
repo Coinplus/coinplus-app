@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaimon/gaimon.dart';
 
-import '../../../../../extensions/num_extension.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../gen/fonts.gen.dart';
+import '../../../../../../extensions/num_extension.dart';
+import '../../../../../../gen/colors.gen.dart';
+import '../../../../../../gen/fonts.gen.dart';
 import '../../../send_to_state.dart';
 import 'comma_formatter.dart';
 

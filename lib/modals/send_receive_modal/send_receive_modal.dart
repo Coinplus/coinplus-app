@@ -13,6 +13,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
@@ -22,7 +23,6 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 import '../receive_modal/receive_modal.dart';
-import '../send_to/send_to_state.dart';
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 

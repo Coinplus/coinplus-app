@@ -4,10 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../constants/currency.dart';
-import '../../../../extensions/num_extension.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../gen/fonts.gen.dart';
+import '../../../../../constants/currency.dart';
+import '../../../../../extensions/num_extension.dart';
+import '../../../../../gen/assets.gen.dart';
+import '../../../../../gen/fonts.gen.dart';
 import '../../send_to_state.dart';
 import 'btc_amount_text_field/btc_amount_text_field.dart';
 import 'usd_amount_text_field/usd_amount_text_field.dart';

@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../modals/send_to/change_selected_address/change_selected_address_state.dart';
 import '../../../../models/amplitude_event/amplitude_event.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
@@ -15,6 +14,7 @@ import '../../../../utils/data_utils.dart';
 import '../../../../utils/wallet_activation_status.dart';
 import '../../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../../widgets/custom_snack_bar/top_snack.dart';
+import '../../../send_page/send_to/change_selected_address/change_selected_address_state.dart';
 
 class CardAddressField extends HookWidget {
   const CardAddressField({super.key, required this.index});

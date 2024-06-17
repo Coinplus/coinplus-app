@@ -11,7 +11,6 @@ import 'package:mobx/mobx.dart';
 
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
-import '../../modals/send_to/send_to_state.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
@@ -22,6 +21,7 @@ import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/header_custom_paint.dart';
+import '../send_page/send_to/send_to_state.dart';
 import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
 import 'card_and_bar_tab/card_and_bar_tab.dart';

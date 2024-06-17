@@ -5,11 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 
-import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
-import '../../gen/colors.gen.dart';
-import '../../providers/screen_service.dart';
-import '../../store/all_settings_state/all_settings_state.dart';
+import '../../../extensions/context_extension.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
+import '../../../providers/screen_service.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
 import 'provided_amount_tab/provided_amount_tab.dart';
 import 'select_wallet_tab/select_wallet_tab.dart';
 import 'send_to_state.dart';

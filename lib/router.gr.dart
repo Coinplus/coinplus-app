@@ -9,7 +9,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i24;
-import 'package:coinplus/modals/send_to/send_to_state.dart' as _i27;
 import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i30;
 import 'package:coinplus/models/bar_model/bar_model.dart' as _i29;
 import 'package:coinplus/models/card_model/card_model.dart' as _i31;
@@ -37,6 +36,7 @@ import 'package:coinplus/pages/pin_code_page/pin_code_for_private_key.dart'
 import 'package:coinplus/pages/pin_code_page/pin_code_page.dart' as _i18;
 import 'package:coinplus/pages/pin_code_page/remove_pin_code.dart' as _i19;
 import 'package:coinplus/pages/qr_scanner_page/qr_scanner.dart' as _i20;
+import 'package:coinplus/pages/send_page/send_to/send_to_state.dart' as _i27;
 import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart'
     as _i1;
 import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart'

@@ -13,7 +13,6 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../modals/send_to/send_to_state.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
@@ -31,6 +30,7 @@ import '../../../utils/wallet_activation_status.dart';
 import '../../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../../widgets/custom_snack_bar/top_snack.dart';
 import '../../../widgets/wallet_connect_methods/bar_connect_methods.dart';
+import '../../send_page/send_to/send_to_state.dart';
 
 class BarList extends StatefulWidget {
   const BarList({

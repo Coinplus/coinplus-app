@@ -1,12 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../models/bar_model/bar_model.dart';
-import '../../../models/card_model/card_model.dart';
-import '../../../models/coins_dto/coin_model.dart';
-import '../../../store/balance_store/balance_store.dart';
-import '../../../store/history_page_store/history_page_store.dart';
-import '../../../store/market_page_store/market_page_store.dart';
+import '../../../../models/bar_model/bar_model.dart';
+import '../../../../models/card_model/card_model.dart';
+import '../../../../models/coins_dto/coin_model.dart';
+import '../../../../store/balance_store/balance_store.dart';
+import '../../../../store/history_page_store/history_page_store.dart';
+import '../../../../store/market_page_store/market_page_store.dart';
 
 part 'change_selected_address_state.g.dart';
 
