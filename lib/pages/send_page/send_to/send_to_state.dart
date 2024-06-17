@@ -3,17 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../constants/currency.dart';
-import '../../extensions/num_extension.dart';
-import '../../models/bar_model/bar_model.dart';
-import '../../models/card_model/card_model.dart';
-import '../../models/coins_dto/coin_model.dart';
-import '../../store/accelerometer_store/accelerometer_store.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/history_page_store/history_page_store.dart';
-import '../../store/market_page_store/market_page_store.dart';
-import '../../store/transaction_store/transaction_store.dart';
-import '../../utils/data_utils.dart';
+import '../../../constants/currency.dart';
+import '../../../extensions/num_extension.dart';
+import '../../../models/bar_model/bar_model.dart';
+import '../../../models/card_model/card_model.dart';
+import '../../../models/coins_dto/coin_model.dart';
+import '../../../store/accelerometer_store/accelerometer_store.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../store/history_page_store/history_page_store.dart';
+import '../../../store/market_page_store/market_page_store.dart';
+import '../../../store/transaction_store/transaction_store.dart';
+import '../../../utils/data_utils.dart';
 
 part 'send_to_state.g.dart';
 

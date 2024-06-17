@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:gaimon/gaimon.dart';
 
 import '/../../../../extensions/num_extension.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../gen/fonts.gen.dart';
+import '../../../../../../gen/colors.gen.dart';
+import '../../../../../../gen/fonts.gen.dart';
 import '../../../send_to_state.dart';
 import '../usd_amount_text_field/comma_formatter.dart';
 

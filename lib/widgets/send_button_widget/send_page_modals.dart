@@ -7,7 +7,7 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../modals/send_to/send_to_state.dart';
+import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../providers/screen_service.dart';
 import '../all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
 import '../all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';

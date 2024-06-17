@@ -7,13 +7,13 @@ import 'package:get_it/get_it.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../modals/send_to/change_selected_address/change_selected_address_state.dart';
 import '../../../../models/amplitude_event/amplitude_event.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../utils/wallet_activation_status.dart';
+import '../../../send_page/send_to/change_selected_address/change_selected_address_state.dart';
 
 class CardBalanceField extends HookWidget {
   const CardBalanceField({super.key, required this.index});
