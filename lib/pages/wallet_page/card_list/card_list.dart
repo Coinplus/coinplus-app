@@ -98,15 +98,28 @@ class _CardListState extends State<CardList>
               (_) => _balanceStore.cards.length,
               (length) {
                 if (length > _balanceStore.cardCurrentIndex) {
-                  widget.onCarouselScroll(length - 1);
-                  _balanceStore.setCardCurrentIndex(length - 1);
-                  final card = _balanceStore.cards.lastOrNull;
-                  if (card != null) {
+                  if (_balanceStore.cardCurrentIndex != 0) {
+                    widget.onCarouselScroll(length - 1);
+                    _balanceStore.setCardCurrentIndex(length - 1);
+                    final card = _balanceStore.cards.lastOrNull;
+                    if (card != null) {
+                      widget.onCardSelected(card as AbstractCard);
+                    }
+                    _historyPageStore
+                      ..setCardHistoryIndex(length - 1)
+                      ..setCardActivationIndex(index: length - 1);
+                    widget.state.transactionsStore.selectedCard =
+                        widget.state.historyPageStore.cardHistoryIndex;
+                    _rampService.configuration.userAddress = _balanceStore
+                        .cards[_balanceStore.cardCurrentIndex].address;
+                  } else {
+                    _rampService.configuration.userAddress = _balanceStore
+                        .cards[_balanceStore.cardCurrentIndex].address;
+                    _historyPageStore.setCardHistoryIndex(0);
+                    final card = _balanceStore.cards.first;
                     widget.onCardSelected(card as AbstractCard);
+                    _balanceStore.setCardCurrentIndex(0);
                   }
-                  _historyPageStore.setCardHistoryIndex(length - 1);
-                  _rampService.configuration.userAddress = _balanceStore
-                      .cards[_balanceStore.cardCurrentIndex].address;
                 } else {
                   widget.onCardSelected(null);
                   _rampService.configuration.userAddress = _balanceStore
@@ -237,8 +250,7 @@ class _CardListState extends State<CardList>
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             context: context,
-                                            shape:
-                                                const RoundedRectangleBorder(
+                                            shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
                                                 topLeft: Radius.circular(20),
                                                 topRight: Radius.circular(20),

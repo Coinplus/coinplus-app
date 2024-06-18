@@ -209,6 +209,8 @@ class SendButtonWidget extends HookWidget {
   }
 }
 
+BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
 Future<void> showSendFromWalletModal({
   required AllSettingsState allSettingsState,
   required bool isBarList,
@@ -236,5 +238,9 @@ Future<void> showSendFromWalletModal({
     ..clearAmountControllers()
     ..isUseMaxClicked = false
     ..shouldValidateReceiverAddress = false
+    ..transactionsStore.selectedCard = state.historyPageStore.cardHistoryIndex
     ..setAmount('0');
+  isBarList
+      ? state.transactionsStore.selectedBar = _balanceStore.cardCurrentIndex
+      : state.transactionsStore.selectedCard = _balanceStore.cardCurrentIndex;
 }

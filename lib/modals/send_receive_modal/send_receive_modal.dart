@@ -6,8 +6,8 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../constants/card_type.dart';
-import '../../extensions/context_extension.dart';
 import '../../extensions/elevated_button_extensions.dart';
+import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -23,6 +23,7 @@ import '../../store/settings_button_state/settings_button_state.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 import '../receive_modal/receive_modal.dart';
+import 'tap_to_connect_button.dart';
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -162,20 +163,20 @@ Future<void> sendReceiveButtonModal({
             LoadingButton(
               style: router.navigatorKey.currentContext!.theme
                   .buttonStyle(
-                textStyle: const TextStyle(
-                  fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primaryTextColor,
-                  fontSize: 15,
-                ),
-              )
+                    textStyle: const TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      color: AppColors.primaryTextColor,
+                      fontSize: 15,
+                    ),
+                  )
                   .copyWith(
-                padding: const WidgetStatePropertyAll(
-                  EdgeInsets.all(10),
-                ),
-                backgroundColor: WidgetStateProperty.all(
-                  Colors.grey.withOpacity(0.1),
-                ),
-              ),
+                    padding: const WidgetStatePropertyAll(
+                      EdgeInsets.all(10),
+                    ),
+                    backgroundColor: WidgetStateProperty.all(
+                      Colors.grey.withOpacity(0.1),
+                    ),
+                  ),
               onPressed: () async {
                 await recordAmplitudeEvent(
                   BuyWithCardClicked(
@@ -300,6 +301,8 @@ Future<void> sendReceiveButtonModal({
                 ],
               ),
             ),
+            const Gap(8),
+            const TapToConnectButton(),
             const Gap(30),
           ],
         ),

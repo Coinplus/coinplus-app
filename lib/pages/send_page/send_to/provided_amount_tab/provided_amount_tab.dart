@@ -171,7 +171,7 @@ class ProvideAmountTab extends HookWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
-                                                  'Selected wallet',
+                                                  'Send from',
                                                   style: TextStyle(
                                                     fontFamily:
                                                         FontFamily.redHatMedium,

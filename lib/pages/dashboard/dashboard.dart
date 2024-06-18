@@ -7,6 +7,7 @@ import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -230,6 +231,40 @@ class DashboardPage extends HookWidget {
       [],
     );
 
+    final onOpenSendReceiveModal = useCallback(
+      () async {
+        final selectedCard = currentCard.value.card;
+        if (selectedCard == null) {
+          return;
+        }
+
+        final isBarList = currentCard.value.index == 1;
+        final isCardActivated =
+            isCardWalletActivated(balanceStore: _balanceStore);
+        final isBarActivated =
+            isBarWalletActivated(balanceStore: _balanceStore);
+        Gaimon.medium();
+        return sendReceiveButtonModal(
+          selectedCard: selectedCard,
+          isBarList: isBarList,
+          isCardActivated: isCardActivated,
+          isBarActivated: isBarActivated,
+          currentCard: currentCard,
+          isModalOpened: isModalOpened,
+          pageController: _pageController,
+          settingsState: _settingsState,
+          allSettingsState: _allSettingsState,
+          tabController: tabController,
+          context: context,
+          state: state,
+        );
+      },
+      [
+        currentCard.value,
+        isModalOpened,
+      ],
+    );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ReactionBuilder(
@@ -271,6 +306,7 @@ class DashboardPage extends HookWidget {
                       pageController: _pageController,
                       allSettingsState: _allSettingsState,
                       state: state,
+                      onOpenSendReceiveModal: onOpenSendReceiveModal,
                     ),
                     const MarketPage(),
                     HistoryPage(
@@ -556,20 +592,7 @@ class DashboardPage extends HookWidget {
                 return;
               }
               isModalOpened.value = true;
-              await sendReceiveButtonModal(
-                selectedCard: selectedCard,
-                isBarList: isBarList,
-                isCardActivated: isCardActivated,
-                isBarActivated: isBarActivated,
-                currentCard: currentCard,
-                isModalOpened: isModalOpened,
-                pageController: _pageController,
-                settingsState: _settingsState,
-                allSettingsState: _allSettingsState,
-                tabController: tabController,
-                context: context,
-                state: state,
-              ).then((value) => isModalOpened.value = false);
+              await onOpenSendReceiveModal();
               isModalOpened.value = false;
               await recordAmplitudeEvent(
                 TransactionsButtonClicked(

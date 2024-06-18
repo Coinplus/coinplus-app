@@ -38,8 +38,9 @@ Future<void> secretsSuccessAlert({
         ),
       ),
       lottieAsset: 'assets/lottie_animations/card_hovering_transaction.json',
-      text:
-          'Your wallet activation is successful. You can find your private key in the card (bar) settings.',
+      text: isBarList
+          ? 'Your wallet activation is successful. You can find your private key in the bar settings.'
+          : 'Your wallet activation is successful. You can find your private key in the card settings.',
       primaryActionText: 'Next',
       primaryAction: () async {
         if (isBarList) {
@@ -60,10 +61,6 @@ Future<void> secretsSuccessAlert({
         } else {
           balanceStore.reActivateCard();
         }
-      },
-      secondaryActionText: 'Close',
-      secondaryAction: () {
-        router.popUntilRouteWithName(DashboardRoute.name);
       },
     ),
     isDismissible: true,

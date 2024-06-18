@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../constants/fee_rate_mode.dart';
 import '../../extensions/num_extension.dart';
 import '../../http/repositories/broadcast_repo.dart';
 import '../../http/repositories/mempool_repo.dart';
@@ -115,6 +116,8 @@ abstract class _TransactionStore with Store {
   int selectedBar = -1;
   @observable
   bool utxoLoading = false;
+  @observable
+  FeeRateMode feeMode = FeeRateMode.FAST;
 
   @computed
   ObservableList<CardModel> get cards => _balanceStore.cards;
@@ -130,6 +133,13 @@ abstract class _TransactionStore with Store {
 
   @computed
   int get selectedBarIndex => _historyPageStore.barHistoryIndex;
+
+  @computed
+  int get selectedFee => switch (feeMode) {
+        FeeRateMode.FAST => txFeeRate.fastestFee,
+        FeeRateMode.MEDIUM => txFeeRate.halfHourFee,
+        FeeRateMode.SLOW => txFeeRate.hourFee,
+      };
 
   @action
   void onSelectCard(int index) {
@@ -202,12 +212,16 @@ abstract class _TransactionStore with Store {
   }
 
   @computed
-  int get calculatedTxFee =>
-      calculateFee(usedUtxos.length, 1, txFeeRate.fastestFee);
+  int get calculatedTxFee => calculateFee(usedUtxos.length, 1, selectedFee);
 
   @action
   void updateTxFee() {
-    txFee = calculateFee(usedUtxos.length, 1, txFeeRate.fastestFee);
+    txFee = calculateFee(usedUtxos.length, 1, selectedFee);
+  }
+
+  @action
+  void updateFeeRateMode(FeeRateMode mode) {
+    feeMode = mode;
   }
 
   Future<void> getUtxosData() async {
@@ -247,7 +261,7 @@ abstract class _TransactionStore with Store {
         print('Not enough funds');
       }
     } else {
-      final fastestFee = txFeeRate.fastestFee;
+      final fastestFee = selectedFee;
       final initialFee = calculateFee(1, 1, fastestFee);
       log('Initial Fee: $initialFee');
       final rangeStart = sendAmount + initialFee;
@@ -327,8 +341,7 @@ abstract class _TransactionStore with Store {
       }
       selectedUtxos.clear();
       inputQuantity++;
-      final newFeeWithChange =
-          calculateFee(inputQuantity, 2, txFeeRate.fastestFee);
+      final newFeeWithChange = calculateFee(inputQuantity, 2, selectedFee);
       if (sendAmount + newFeeWithChange > totalValue) {
         findMaxUtxo();
         selectedUtxos.addAll(sortedUtxos);
@@ -340,13 +353,13 @@ abstract class _TransactionStore with Store {
 
   @computed
   int get calculatedFee =>
-      ((inputQuantity * 148) + (1 * outputByte) + 10) * txFeeRate.fastestFee;
+      ((inputQuantity * 148) + (1 * outputByte) + 10) * selectedFee;
 
   @action
   int findMaxUtxo() {
     final selectedUtxos = <UtxoModel>[];
     final newFeeWithoutChange =
-        calculateFee(sortedUtxos.length, 1, txFeeRate.fastestFee);
+        calculateFee(sortedUtxos.length, 1, selectedFee);
     selectedUtxos.addAll(sortedUtxos);
     txFee = newFeeWithoutChange;
     log(txFee.satoshiToUsd(btcCurrentPrice: btc?.price).toString());

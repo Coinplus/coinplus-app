@@ -36,7 +36,7 @@ Future<void> recommendedToWaitDialog({
     context,
     DialogBoxWithAction(
       text:
-          'To send from your card (bar) you will need to remove Security Stickers. To maintain the highest level of security, we encourage you to not remove stickers if you don’t need to Send now.',
+          'To send from your bar you will need to remove Security Stickers. To maintain the highest level of security, we encourage you to not remove stickers if you don’t need to Send now.',
       title: const Text(
         'Important',
         textAlign: TextAlign.center,

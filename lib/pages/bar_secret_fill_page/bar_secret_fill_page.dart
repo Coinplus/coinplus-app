@@ -460,9 +460,9 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                         }
                                                                         _secretOneController.text =
                                                                             res.replaceAll(
-                                                                              '\n',
-                                                                              '',
-                                                                            );
+                                                                          '\n',
+                                                                          '',
+                                                                        );
                                                                         secret1B58 =
                                                                             _secretOneController.text;
                                                                         await _validateSecretOne();
@@ -743,11 +743,10 @@ class _BarSecretFillPageState extends State<BarSecretFillPage>
                                                                                     if (res == null) {
                                                                                       return;
                                                                                     }
-                                                                                    _secretTwoController.text =
-                                                                                        res.replaceAll(
-                                                                                          '\n',
-                                                                                          '',
-                                                                                        );
+                                                                                    _secretTwoController.text = res.replaceAll(
+                                                                                      '\n',
+                                                                                      '',
+                                                                                    );
                                                                                     secret2B58 = _secretTwoController.text;
                                                                                     await _validateSecretTwo();
                                                                                   },
