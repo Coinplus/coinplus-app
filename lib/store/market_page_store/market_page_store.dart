@@ -70,7 +70,7 @@ abstract class _MarketPageStore with Store {
   }
 
   Future<void> getOtherCoins({required int pageNumber}) async {
-    allCoins = await coinStatsRepo.getAllCoins(page: pageNumber, limit: 1000);
+    allCoins = await coinStatsRepo.getAllCoins(page: pageNumber, limit: 500);
   }
 
   Future<void> getSingleCoin() async {

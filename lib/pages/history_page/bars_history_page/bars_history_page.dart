@@ -142,7 +142,11 @@ class _BarsHistoryPageState extends State<BarsHistoryPage>
                             )
                           : Observer(
                               builder: (context) {
-                                if (_historyPageStore.historyLoading == true) {
+                                if (_historyPageStore.historyLoading[widget
+                                        .balanceStore
+                                        .bars[_historyPageStore.barHistoryIndex]
+                                        .address] ==
+                                    true) {
                                   return const Padding(
                                     padding: EdgeInsets.all(8),
                                     child: HistoryPageShimmer(),

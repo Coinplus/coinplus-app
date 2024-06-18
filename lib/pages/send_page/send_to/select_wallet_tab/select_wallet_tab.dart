@@ -133,7 +133,9 @@ class ProvideAddressTab extends HookWidget {
                           child: ScaleTap(
                             onPressed: () async {
                               sendFocusNode.unfocus();
-                              await Future.delayed(const Duration(milliseconds: 500));
+                              await Future.delayed(
+                                const Duration(milliseconds: 500),
+                              );
                               final res = await router.push<String?>(
                                 QrScannerRoute(isScannedReceiverAddress: true),
                               );
@@ -198,7 +200,7 @@ class ProvideAddressTab extends HookWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22),
           child: const Text(
-            'Selected wallet',
+            'Send from',
             style: TextStyle(
               fontFamily: FontFamily.redHatMedium,
               fontSize: 15,

@@ -330,7 +330,7 @@ class CardSelectDropdown extends HookWidget {
                         decimalDigits: 2,
                       );
                       final singleCard = state.transactionsStore
-                          .cards[state.transactionsStore.selectedCardIndex];
+                          .cards[state.historyPageStore.cardHistoryIndex];
                       final formattedAddress =
                           getSplitAddress(singleCard.address);
 

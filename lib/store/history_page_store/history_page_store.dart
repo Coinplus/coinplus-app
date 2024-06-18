@@ -72,11 +72,11 @@ abstract class _HistoryPageStore with Store {
       ObservableMap<String, bool>();
 
   @observable
-  ObservableMap<String, bool> barActivationStatus =
-      ObservableMap<String, bool>();
+  ObservableMap<String, bool> historyLoading = ObservableMap<String, bool>();
 
   @observable
-  bool historyLoading = false;
+  ObservableMap<String, bool> barActivationStatus =
+      ObservableMap<String, bool>();
 
   @observable
   ObservableMap<String, bool> disabledButtons = ObservableMap<String, bool>();
@@ -191,7 +191,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> getSingleCardHistory({required String address}) async {
     try {
-      historyLoading = true;
+      historyLoading[address] = true;
       final cachedTransactions = getCardCachedTransaction(address);
       if (cachedTransactions != null) {
         await isCachedCardTransactions(address);
@@ -205,7 +205,7 @@ abstract class _HistoryPageStore with Store {
     } catch (e) {
       log(e.toString());
     } finally {
-      historyLoading = false;
+      historyLoading[address] = false;
     }
   }
 
@@ -236,7 +236,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> getSingleBarHistory({required String address}) async {
     try {
-      historyLoading = true;
+      historyLoading[address] = true;
       final cachedTransactions = getBarCachedTransaction(address);
       if (cachedTransactions != null) {
         await isCachedBarTransactions(address);
@@ -250,7 +250,7 @@ abstract class _HistoryPageStore with Store {
     } catch (e) {
       log(e.toString());
     } finally {
-      historyLoading = false;
+      historyLoading[address] = false;
     }
   }
 
@@ -377,7 +377,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> cardRefresh(String cardAddress) async {
     isCardRefreshing = true;
-    historyLoading = true;
+    historyLoading[cardAddress] = true;
     await coinStatsRepo.patchTransactions(address: cardAddress);
     final now = DateTime.now();
     await _saveLastRefreshed(cardAddress, now.toString());
@@ -390,7 +390,7 @@ abstract class _HistoryPageStore with Store {
     await loadLastRefreshed();
     await getSingleCardHistory(address: cardAddress);
     isCardRefreshing = false;
-    historyLoading = false;
+    historyLoading[cardAddress] = false;
   }
 
   @action
@@ -412,7 +412,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> saveAndPatchBarAddress(String address) async {
     isBarRefreshing = true;
-    historyLoading = true;
+    historyLoading[address] = true;
     await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
@@ -424,14 +424,14 @@ abstract class _HistoryPageStore with Store {
     await _saveLastRefreshed(address, now.toString());
     await loadLastRefreshed();
     await Future.delayed(const Duration(milliseconds: 2000));
-    historyLoading = false;
+    historyLoading[address] = false;
     isBarRefreshing = false;
   }
 
   @action
   Future<void> barRefresh(String cardAddress) async {
     isBarRefreshing = true;
-    historyLoading = true;
+    historyLoading[cardAddress] = true;
     final now = DateTime.now();
     await _saveLastRefreshed(cardAddress, now.toString());
     var synced = false;
@@ -444,7 +444,7 @@ abstract class _HistoryPageStore with Store {
     await loadLastRefreshed();
     await getSingleBarHistory(address: cardAddress);
     isBarRefreshing = false;
-    historyLoading = false;
+    historyLoading[cardAddress] = false;
   }
 
   @action

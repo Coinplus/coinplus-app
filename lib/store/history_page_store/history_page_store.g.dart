@@ -218,6 +218,22 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
     });
   }
 
+  late final _$historyLoadingAtom =
+      Atom(name: '_HistoryPageStore.historyLoading', context: context);
+
+  @override
+  ObservableMap<String, bool> get historyLoading {
+    _$historyLoadingAtom.reportRead();
+    return super.historyLoading;
+  }
+
+  @override
+  set historyLoading(ObservableMap<String, bool> value) {
+    _$historyLoadingAtom.reportWrite(value, super.historyLoading, () {
+      super.historyLoading = value;
+    });
+  }
+
   late final _$barActivationStatusAtom =
       Atom(name: '_HistoryPageStore.barActivationStatus', context: context);
 
@@ -231,22 +247,6 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   set barActivationStatus(ObservableMap<String, bool> value) {
     _$barActivationStatusAtom.reportWrite(value, super.barActivationStatus, () {
       super.barActivationStatus = value;
-    });
-  }
-
-  late final _$historyLoadingAtom =
-      Atom(name: '_HistoryPageStore.historyLoading', context: context);
-
-  @override
-  bool get historyLoading {
-    _$historyLoadingAtom.reportRead();
-    return super.historyLoading;
-  }
-
-  @override
-  set historyLoading(bool value) {
-    _$historyLoadingAtom.reportWrite(value, super.historyLoading, () {
-      super.historyLoading = value;
     });
   }
 
@@ -799,8 +799,8 @@ barHistories: ${barHistories},
 cardTransactionCache: ${cardTransactionCache},
 barTransactionCache: ${barTransactionCache},
 cardActivationStatus: ${cardActivationStatus},
-barActivationStatus: ${barActivationStatus},
 historyLoading: ${historyLoading},
+barActivationStatus: ${barActivationStatus},
 disabledButtons: ${disabledButtons},
 cardTransactions: ${cardTransactions},
 newFetchedData: ${newFetchedData},

@@ -1,0 +1,91 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+default_platform(:ios)
+
+
+def prepare(env)
+	Dir.chdir ".." do
+		project_path = Dir.getwd;
+		sh("gem install cocoapods")
+		sh("pod install --repo-update")
+		Dir.chdir ".." do
+# 			sh("flutter packages pub run build_runner build --delete-conflicting-outputs")
+			sh("flutter build ios -t lib/main_#{env}.dart --release")
+		end
+	end
+end
+
+platform :ios do
+	desc "Push a new build to AppStore"
+	lane :prod_release do
+		begin
+			build_and_send_to_store_prod
+		rescue => exception
+			on_error(exception)
+		end
+	end
+end
+
+platform :ios do
+	desc "Push a new beta build to TestFlight"
+	lane :dev do
+		begin
+			build_and_send_to_dev
+		rescue => exception
+			on_error(exception)
+		end
+	end
+end
+
+
+def build_and_send_to_store_prod
+	prepare("prod")
+	build_app(workspace: "Runner.xcworkspace",
+	              scheme:"Runner",
+    	          export_options: {
+                                    provisioningProfiles: {
+                                                            "com.coinplus.app" => "App Store profile",
+                                                          }
+                                   }
+                  )
+	upload_to_app_store(
+        submit_for_review: true,
+        automatic_release: false,
+        skip_screenshots: true,
+        force: true,
+        precheck_include_in_app_purchases: false,
+        submission_information: {
+            export_compliance_uses_encryption: false,
+            add_id_info_uses_idfa: false,
+        },
+    )
+end
+
+
+def build_and_send_to_dev
+	prepare("dev")
+	build_app(workspace: "Runner.xcworkspace", scheme: "Runner",
+    	          export_options: {
+                                    provisioningProfiles: {
+                                                            "com.coinplus.app" => "App Store",
+                                                          }
+                                   })
+	upload_to_testflight
+end
+
+def on_error(exception)
+    puts exception
+end

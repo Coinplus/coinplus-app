@@ -31,118 +31,166 @@ class CardSelectionModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Assets.icons.notch.image(height: 4),
-          const Gap(20),
-          Observer(
-            builder: (context) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: _balanceStore.cards.length,
-                itemBuilder: (context, index) {
-                  final card = _balanceStore.cards[index];
-                  final formattedAddress = getSplitAddress(card.address);
-                  final data = _marketPageStore.singleCoin?.result.first;
-                  final myFormat = NumberFormat.decimalPatternDigits(
-                    locale: 'en_us',
-                    decimalDigits: 2,
-                  );
-                  return Observer(
-                    builder: (context) {
-                      return InkWell(
-                        onTap: () {
-                          _historyPageStore
-                            ..setCardHistoryIndex(index)
-                            ..setCardSelectedAddress(
-                              _balanceStore
-                                  .cards[_historyPageStore.cardHistoryIndex]
-                                  .address,
-                            )
-                            ..getSingleCardHistory(
-                              address: _historyPageStore.selectedCardAddress,
+    return Container(
+      height: context.height * 0.91,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(12),
+            Assets.icons.notch.image(height: 4),
+            const Gap(20),
+            const Row(
+              children: [
+                Text(
+                  'Select wallet',
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryTextColor,
+                  ),
+                ),
+              ],
+            ),
+            const Gap(15),
+            Expanded(
+              flex: context.height > 667 ? 7 : 10,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Observer(
+                      builder: (context) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _balanceStore.cards.length,
+                          itemBuilder: (context, index) {
+                            final card = _balanceStore.cards[index];
+                            final formattedAddress =
+                                getSplitAddress(card.address);
+                            final data =
+                                _marketPageStore.singleCoin?.result.first;
+                            final myFormat = NumberFormat.decimalPatternDigits(
+                              locale: 'en_us',
+                              decimalDigits: 2,
                             );
-                          recordAmplitudeEventPartTwo(
-                            WalletSelected(
-                              walletType: 'card',
-                              address: _historyPageStore.selectedCardAddress,
-                            ),
-                          );
-                          router.maybePop();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: _historyPageStore.cardHistoryIndex == index
-                                ? const Color(0xFFF7F7FA)
-                                : Colors.transparent,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: card.color.image.image().image,
-                                        ),
+                            return Observer(
+                              builder: (context) {
+                                return InkWell(
+                                  onTap: () {
+                                    _historyPageStore
+                                      ..setCardHistoryIndex(index)
+                                      ..setCardSelectedAddress(
+                                        _balanceStore
+                                            .cards[_historyPageStore
+                                                .cardHistoryIndex]
+                                            .address,
+                                      )
+                                      ..getSingleCardHistory(
+                                        address: _historyPageStore
+                                            .selectedCardAddress,
+                                      );
+                                    recordAmplitudeEventPartTwo(
+                                      WalletSelected(
+                                        walletType: 'card',
+                                        address: _historyPageStore
+                                            .selectedCardAddress,
+                                      ),
+                                    );
+                                    router.maybePop();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color:
+                                          _historyPageStore.cardHistoryIndex ==
+                                                  index
+                                              ? const Color(0xFFF7F7FA)
+                                              : Colors.transparent,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 50,
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: card.color.image
+                                                        .image()
+                                                        .image,
+                                                  ),
+                                                ),
+                                              ),
+                                              const Gap(12),
+                                              Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    card.name,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontSize: 15,
+                                                      color: AppColors.primary,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    formattedAddress,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors
+                                                          .textHintsColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '\$${myFormat.format((card.finalBalance ?? 0) / 100000000 * data!.price)}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              color: AppColors.textHintsColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const Gap(12),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          card.name,
-                                          style: const TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontSize: 15,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                        Text(
-                                          formattedAddress,
-                                          style: const TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontSize: 14,
-                                            color: AppColors.textHintsColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  '\$${myFormat.format((card.finalBalance ?? 0) / 100000000 * data!.price)}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: AppColors.textHintsColor,
-                                    fontWeight: FontWeight.w700,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
-          ),
-        ],
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

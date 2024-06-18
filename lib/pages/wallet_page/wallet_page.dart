@@ -36,12 +36,14 @@ class WalletPage extends StatefulWidget {
     required this.pageController,
     required this.allSettingsState,
     required this.state,
+    this.onOpenSendReceiveModal,
   });
 
   final CardChangeCallBack onChangeCard;
   final PageController pageController;
   final AllSettingsState allSettingsState;
   final SendToState state;
+  final Future<void> Function()? onOpenSendReceiveModal;
 
   @override
   State<WalletPage> createState() => _WalletPageState();
@@ -56,6 +58,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
+  ScrollController controller = ScrollController();
+
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
   late int tabIndex = 0;
@@ -64,11 +68,23 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     length: 2,
     vsync: this,
   );
+  bool isCardScrolledUp = false;
 
   @override
   void initState() {
     super.initState();
     setWalletShown();
+    controller.addListener(() async {
+      if (widget.onOpenSendReceiveModal == null) {
+        return;
+      }
+      if (controller.offset >= 100 && !isCardScrolledUp) {
+        isCardScrolledUp = true;
+        await widget.onOpenSendReceiveModal?.call();
+        isCardScrolledUp = false;
+      }
+    });
+
     if (_balanceStore.cards.isNotEmpty) {
       _balanceStore.getCardsInfo();
     }
@@ -259,6 +275,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                   unawaited(_balanceStore.getBarsInfo());
                 },
                 child: CustomScrollView(
+                  controller: controller,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
                     SliverFillRemaining(
                       child: Column(

@@ -51,6 +51,13 @@ mixin _$TransactionStore on _TransactionStore, Store {
           () => super.selectedBarIndex,
           name: '_TransactionStore.selectedBarIndex'))
       .value;
+  Computed<int>? _$selectedFeeComputed;
+
+  @override
+  int get selectedFee =>
+      (_$selectedFeeComputed ??= Computed<int>(() => super.selectedFee,
+              name: '_TransactionStore.selectedFee'))
+          .value;
   Computed<int>? _$usedUtxosCountComputed;
 
   @override
@@ -289,6 +296,22 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
+  late final _$feeModeAtom =
+      Atom(name: '_TransactionStore.feeMode', context: context);
+
+  @override
+  FeeRateMode get feeMode {
+    _$feeModeAtom.reportRead();
+    return super.feeMode;
+  }
+
+  @override
+  set feeMode(FeeRateMode value) {
+    _$feeModeAtom.reportWrite(value, super.feeMode, () {
+      super.feeMode = value;
+    });
+  }
+
   late final _$sortedUtxosAtom =
       Atom(name: '_TransactionStore.sortedUtxos', context: context);
 
@@ -435,6 +458,17 @@ mixin _$TransactionStore on _TransactionStore, Store {
   }
 
   @override
+  void updateFeeRateMode(FeeRateMode mode) {
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(
+        name: '_TransactionStore.updateFeeRateMode');
+    try {
+      return super.updateFeeRateMode(mode);
+    } finally {
+      _$_TransactionStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void combineUtxos() {
     final _$actionInfo = _$_TransactionStoreActionController.startAction(
         name: '_TransactionStore.combineUtxos');
@@ -472,6 +506,7 @@ isTxInPending: ${isTxInPending},
 selectedCard: ${selectedCard},
 selectedBar: ${selectedBar},
 utxoLoading: ${utxoLoading},
+feeMode: ${feeMode},
 sortedUtxos: ${sortedUtxos},
 inputQuantity: ${inputQuantity},
 currentAddress: ${currentAddress},
@@ -480,6 +515,7 @@ bars: ${bars},
 btc: ${btc},
 selectedCardIndex: ${selectedCardIndex},
 selectedBarIndex: ${selectedBarIndex},
+selectedFee: ${selectedFee},
 usedUtxosCount: ${usedUtxosCount},
 outputByte: ${outputByte},
 calculatedTxFee: ${calculatedTxFee},
