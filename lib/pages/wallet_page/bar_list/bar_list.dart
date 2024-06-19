@@ -113,41 +113,38 @@ class _BarListState extends State<BarList>
       builder: (_) {
         return ReactionBuilder(
           builder: (context) {
-            return reaction(
-              (_) => _balanceStore.bars.length,
-              (length) {
-                {
-                  if (length > _balanceStore.barCurrentIndex) {
-                    if (_balanceStore.barCurrentIndex != 0) {
-                      widget.onCarouselScroll(length - 1);
-                      _balanceStore.setBarCurrentIndex(length - 1);
-                      final bar = _balanceStore.bars.lastOrNull;
-                      if (bar != null) {
-                        widget.onCardSelected(bar as AbstractCard);
-                      }
-                      _historyPageStore
-                        ..setBarHistoryIndex(length - 1)
-                        ..setBarActivationIndex(index: length - 1);
-                      widget.state.transactionsStore.selectedBar =
-                          widget.state.historyPageStore.barHistoryIndex;
-                      _rampService.configuration.userAddress = _balanceStore
-                          .bars[_balanceStore.barCurrentIndex].address;
-                    } else {
-                      _rampService.configuration.userAddress = _balanceStore
-                          .bars[_balanceStore.barCurrentIndex].address;
-                      _historyPageStore.setBarHistoryIndex(0);
-                      final bar = _balanceStore.bars.first;
+            return reaction((_) => _balanceStore.bars.length, (length) {
+              {
+                if (length > _balanceStore.barCurrentIndex) {
+                  if (_balanceStore.barCurrentIndex != 0) {
+                    widget.onCarouselScroll(length - 1);
+                    _balanceStore.setBarCurrentIndex(length - 1);
+                    final bar = _balanceStore.bars.lastOrNull;
+                    if (bar != null) {
                       widget.onCardSelected(bar as AbstractCard);
-                      _balanceStore.setBarCurrentIndex(0);
                     }
-                  } else {
-                    widget.onCardSelected(null);
+                    _historyPageStore
+                      ..setBarHistoryIndex(length - 1)
+                      ..setBarActivationIndex(index: length - 1);
+                    widget.state.transactionsStore.selectedBar =
+                        widget.state.historyPageStore.barHistoryIndex;
                     _rampService.configuration.userAddress = _balanceStore
                         .bars[_balanceStore.barCurrentIndex].address;
+                  } else {
+                    _rampService.configuration.userAddress = _balanceStore
+                        .bars[_balanceStore.barCurrentIndex].address;
+                    _historyPageStore.setBarHistoryIndex(0);
+                    final bar = _balanceStore.bars.first;
+                    widget.onCardSelected(bar as AbstractCard);
+                    _balanceStore.setBarCurrentIndex(0);
                   }
+                } else {
+                  widget.onCardSelected(null);
+                  _rampService.configuration.userAddress =
+                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 }
               }
-            );
+            });
           },
           child: CarouselSlider.builder(
             carouselController: carouselController,

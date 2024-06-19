@@ -87,52 +87,56 @@ class CardBalanceField extends HookWidget {
                               locale: 'en_us',
                               decimalDigits: 2,
                             );
-
-                            if (_balanceStore.btcPrice == null ||
-                                _balanceStore.cardMapResult == null) {
-                              return const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 2,
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 3,
-                                        color: Colors.white,
+                            return AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 400),
+                              child: _balanceStore.btcPrice == null ||
+                                      _balanceStore.cardMapResult == null
+                                  ? const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 4,
+                                        horizontal: 2,
                                       ),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 10,
+                                            width: 10,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 3,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Observer(
+                                      builder: (_) {
+                                        if (_accelerometerStore
+                                            .hasPerformedAction) {
+                                          return const Text(
+                                            r'$*****',
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          );
+                                        } else {
+                                          return Text(
+                                            '\$${myFormat.format(_balanceStore.cardBalance)}',
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          );
+                                        }
+                                      },
                                     ),
-                                  ],
-                                ),
-                              );
-                            }
-                            return Observer(
-                              builder: (_) {
-                                if (_accelerometerStore.hasPerformedAction) {
-                                  return const Text(
-                                    r'$*****',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                  );
-                                } else {
-                                  return Text(
-                                    '\$${myFormat.format(_balanceStore.cardBalance)}',
-                                    style: const TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  );
-                                }
-                              },
                             );
                           },
                         ),

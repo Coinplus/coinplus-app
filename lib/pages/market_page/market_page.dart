@@ -15,7 +15,14 @@ import 'coins_data/coins_data.dart';
 import 'market_data/market_data.dart';
 
 class MarketPage extends StatefulWidget {
-  const MarketPage({super.key});
+  const MarketPage({
+    super.key,
+    required this.pullToRefresh,
+    required this.scrollController,
+  });
+
+  final Future<void> Function()? pullToRefresh;
+  final ScrollController scrollController;
 
   @override
   State<MarketPage> createState() => _MarketPageState();
@@ -27,7 +34,6 @@ class _MarketPageState extends State<MarketPage>
 
   final _textController = TextEditingController();
 
-  final _scrollController = ScrollController();
   final _showOffset = 40;
   late Animation<double> _animation;
 
@@ -39,9 +45,9 @@ class _MarketPageState extends State<MarketPage>
       ..isTextFieldVisible = false
       ..getMarketCap()
       ..loadCoins();
-    _scrollController.addListener(() {
+    widget.scrollController.addListener(() {
       _marketPageStore.toggleShouldShowUpButton(
-        shouldShowUpButton: _scrollController.offset > _showOffset,
+        shouldShowUpButton: widget.scrollController.offset > _showOffset,
       );
     });
     _marketPageStore.initAnimationController(this);
@@ -76,7 +82,7 @@ class _MarketPageState extends State<MarketPage>
                 focusElevation: 0,
                 mini: true,
                 onPressed: () {
-                  _scrollController.animateTo(
+                  widget.scrollController.animateTo(
                     0,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.fastOutSlowIn,
@@ -272,17 +278,10 @@ class _MarketPageState extends State<MarketPage>
           return true;
         },
         child: CustomScrollView(
-          controller: _scrollController,
+          controller: widget.scrollController,
           slivers: [
             CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                await HapticFeedback.mediumImpact();
-                await _marketPageStore.getMarketCap();
-                await _marketPageStore.onRefresh();
-                await recordAmplitudeEventPartTwo(
-                  const PullToRefresh(source: 'market'),
-                );
-              },
+              onRefresh: widget.pullToRefresh,
             ),
             const SliverAppBar(
               floating: true,

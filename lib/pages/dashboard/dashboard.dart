@@ -20,6 +20,7 @@ import '../../gen/fonts.gen.dart';
 import '../../modals/send_receive_modal/send_receive_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
@@ -74,6 +75,7 @@ class DashboardPage extends HookWidget {
       initialLength: 2,
       initialIndex: _historyPageStore.tabIndex == 0 ? 0 : 1,
     );
+    final scrollController = useScrollController();
 
     final currentCard = useRef<CardRecord>(
       (
@@ -81,7 +83,6 @@ class DashboardPage extends HookWidget {
         index: 0,
       ),
     );
-    Timer? _timer;
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -265,6 +266,24 @@ class DashboardPage extends HookWidget {
       ],
     );
 
+    final onRefreshed = useCallback(() async {
+      await _marketPageStore.getMarketCap();
+      await _marketPageStore.onRefresh();
+      await recordAmplitudeEventPartTwo(
+        const PullToRefresh(source: 'market'),
+      );
+    });
+
+    Future<void> programmaticRefresh() async {
+      await scrollController.animateTo(
+        -100,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+      await Future.delayed(const Duration(milliseconds: 300));
+      await onRefreshed();
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ReactionBuilder(
@@ -308,7 +327,10 @@ class DashboardPage extends HookWidget {
                       state: state,
                       onOpenSendReceiveModal: onOpenSendReceiveModal,
                     ),
-                    const MarketPage(),
+                    MarketPage(
+                      pullToRefresh: onRefreshed,
+                      scrollController: scrollController,
+                    ),
                     HistoryPage(
                       onChangeCard: (val) {
                         currentCard.value = val;
@@ -364,13 +386,7 @@ class DashboardPage extends HookWidget {
                               recordAmplitudeEvent(
                                 const MarketTabClicked(),
                               ),
-                              if (_timer == null || !_timer!.isActive)
-                                {
-                                  _timer =
-                                      Timer(const Duration(seconds: 5), () {
-                                    _marketPageStore.onRefresh();
-                                  }),
-                                },
+                              programmaticRefresh(),
                             }
                           else if (index == 2)
                             {

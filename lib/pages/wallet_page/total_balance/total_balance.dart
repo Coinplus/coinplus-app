@@ -68,52 +68,56 @@ class TotalBalance extends StatelessWidget {
                 decimalDigits: 2,
               );
               final balance = _balanceStore.allCardsBalances;
-              if (data == null ||
-                  _balanceStore.balanceLoading == true ||
-                  balance == null) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  child: SizedBox(
-                    height: 15,
-                    width: 15,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  ),
-                );
-              }
-              return Observer(
-                builder: (_) {
-                  if (_accelerometerStore.hasPerformedAction) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Center(
-                        child: Text(
-                          r'$*****',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatBold,
+              return AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: data == null ||
+                        _balanceStore.balanceLoading == true ||
+                        balance == null
+                    ? const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        child: SizedBox(
+                          height: 15,
+                          width: 15,
+                          child: CircularProgressIndicator(
                             color: Colors.white,
-                            fontSize: 28,
                           ),
                         ),
+                      )
+                    : Observer(
+                        builder: (_) {
+                          if (_accelerometerStore.hasPerformedAction) {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Center(
+                                child: Text(
+                                  r'$*****',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatBold,
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatBold,
+                                  color: Colors.white,
+                                  fontSize: balance > 1000000000
+                                      ? (balance > 100000000 ? 24 : 26)
+                                      : 28,
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       ),
-                    );
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        '\$${myFormat.format(balance / 100000000 * data.price)}',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatBold,
-                          color: Colors.white,
-                          fontSize: balance > 1000000000
-                              ? (balance > 100000000 ? 24 : 26)
-                              : 28,
-                        ),
-                      ),
-                    );
-                  }
-                },
               );
             },
           ),
