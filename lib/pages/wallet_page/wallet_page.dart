@@ -91,9 +91,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (_balanceStore.bars.isNotEmpty) {
       _balanceStore.getBarsInfo();
     }
-    _marketPageStore
-      ..selectedCoin = _marketPageStore.allCoins?.result.first.id
-      ..loadSelectedCoin();
     _rampService.configureRamp(
       address: _balanceStore.cards.isNotEmpty
           ? _balanceStore.cards[_balanceStore.cardCurrentIndex].address
@@ -270,7 +267,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 color: Colors.black,
                 onRefresh: () async {
                   await HapticFeedback.mediumImpact();
-                  await _marketPageStore.onRefresh();
+                  await _marketPageStore.getSingleCoin();
                   unawaited(_balanceStore.getCardsInfo());
                   unawaited(_balanceStore.getBarsInfo());
                 },

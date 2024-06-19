@@ -1591,8 +1591,8 @@ class _CardFillPageState extends State<CardFillPage>
                           },
                         );
                         if (_allSettingsState.isActive) {
-                          _balanceStore
-                              .onCardAdded(_balanceStore.selectedCard!.address);
+                          // _balanceStore
+                          //     .onCardAdded(_balanceStore.selectedCard!.address);
                           if (widget.receivedData == null) {
                             final card =
                                 await getCardData(_btcAddressController.text);
@@ -1738,10 +1738,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                   _balanceStore
                                                       .selectedCard!.address,
                                                 );
-                                                _balanceStore.onCardAdded(
-                                                  _balanceStore
-                                                      .selectedCard!.address,
-                                                );
+                                                // _balanceStore.onCardAdded(
+                                                //   _balanceStore
+                                                //       .selectedCard!.address,
+                                                // );
                                               } else {
                                                 await _toggleCard();
                                                 await Future.delayed(
@@ -1790,10 +1790,10 @@ class _CardFillPageState extends State<CardFillPage>
                                                     _balanceStore
                                                         .selectedCard!.address,
                                                   );
-                                                  _balanceStore.onCardAdded(
-                                                    _balanceStore
-                                                        .selectedCard!.address,
-                                                  );
+                                                  // _balanceStore.onCardAdded(
+                                                  //   _balanceStore
+                                                  //       .selectedCard!.address,
+                                                  // );
                                                 } else {
                                                   if (_flipCardController
                                                       .state!.isFront) {

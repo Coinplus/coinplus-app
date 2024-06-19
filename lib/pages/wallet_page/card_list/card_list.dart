@@ -70,6 +70,14 @@ class _CardListState extends State<CardList>
           _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
     }
     _balanceStore
+      ..setOnCardAddedCallback((address) {
+        final index = _balanceStore.cards
+            .indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          return;
+        }
+        carouselController.animateToPage(index);
+      })
       ..setOnCardDeletedCallback((address) {
         final index = _balanceStore.cards
             .indexWhere((element) => element.address == address);

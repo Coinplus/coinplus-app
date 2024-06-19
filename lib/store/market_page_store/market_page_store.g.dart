@@ -242,22 +242,6 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$selectedCoinAtom =
-      Atom(name: '_MarketPageStore.selectedCoin', context: context);
-
-  @override
-  String? get selectedCoin {
-    _$selectedCoinAtom.reportRead();
-    return super.selectedCoin;
-  }
-
-  @override
-  set selectedCoin(String? value) {
-    _$selectedCoinAtom.reportWrite(value, super.selectedCoin, () {
-      super.selectedCoin = value;
-    });
-  }
-
   late final _$makeInvisibleAsyncAction =
       AsyncAction('_MarketPageStore.makeInvisible', context: context);
 
@@ -297,23 +281,6 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
   @override
   Future<void> loadMoreCoins() {
     return _$loadMoreCoinsAsyncAction.run(() => super.loadMoreCoins());
-  }
-
-  late final _$setSelectedCoinAsyncAction =
-      AsyncAction('_MarketPageStore.setSelectedCoin', context: context);
-
-  @override
-  Future<void> setSelectedCoin(String coinName) {
-    return _$setSelectedCoinAsyncAction
-        .run(() => super.setSelectedCoin(coinName));
-  }
-
-  late final _$loadSelectedCoinAsyncAction =
-      AsyncAction('_MarketPageStore.loadSelectedCoin', context: context);
-
-  @override
-  Future<void> loadSelectedCoin() {
-    return _$loadSelectedCoinAsyncAction.run(() => super.loadSelectedCoin());
   }
 
   late final _$toggleShouldShowUpButtonAsyncAction = AsyncAction(
@@ -378,7 +345,6 @@ isLoading: ${isLoading},
 isSearched: ${isSearched},
 allCoins: ${allCoins},
 singleCoin: ${singleCoin},
-selectedCoin: ${selectedCoin},
 searchedList: ${searchedList}
     ''';
   }

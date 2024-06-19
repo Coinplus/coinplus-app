@@ -39,8 +39,8 @@ Future<void> secretsSuccessAlert({
       ),
       lottieAsset: 'assets/lottie_animations/card_hovering_transaction.json',
       text: isBarList
-          ? 'Your wallet activation is successful. You can find your private key in the bar settings.'
-          : 'Your wallet activation is successful. You can find your private key in the card settings.',
+          ? 'Your wallet activation is successful. You can find your private key in the bar settings ⚙️'
+          : 'Your wallet activation is successful. You can find your private key in the card settings ⚙️',
       primaryActionText: 'Next',
       primaryAction: () async {
         if (isBarList) {
