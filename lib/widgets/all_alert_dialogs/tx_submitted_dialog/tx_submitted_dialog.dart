@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
-import '../../../pages/dashboard/page_controller_manager.dart';
 import '../../../providers/screen_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
+import '../../../utils/page_controller_manager.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
 

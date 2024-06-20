@@ -2,50 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../constants/card_color.dart';
-import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
-import '../../gen/fonts.gen.dart';
-import '../../models/abstract_card/abstract_card.dart';
-import '../../services/ramp_service.dart';
-import '../../store/accelerometer_store/accelerometer_store.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/history_page_store/history_page_store.dart';
-import '../../store/market_page_store/market_page_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
-import '../../utils/data_utils.dart';
-import '../../widgets/reorder_card_decorator/reorder_card_decorator.dart';
+import '../../../../constants/card_color.dart';
+import '../../../../extensions/extensions.dart';
+import '../../../../gen/assets.gen.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../../models/abstract_card/abstract_card.dart';
+import '../../../../models/bar_model/bar_model.dart';
+import '../../../../services/ramp_service.dart';
+import '../../../../store/accelerometer_store/accelerometer_store.dart';
+import '../../../../store/balance_store/balance_store.dart';
+import '../../../../store/market_page_store/market_page_store.dart';
+import '../../../../utils/data_utils.dart';
 
-class CardReorderModal extends StatelessWidget {
-  const CardReorderModal({
+class BarReorderWidget extends StatelessWidget {
+  const BarReorderWidget({
     super.key,
+    required this.balanceStore,
+    required this.index,
+    required this.rampService,
+    required this.bar,
+    required this.marketPageStore,
+    required this.accelerometerStore,
     required this.onCardSelected,
     required this.onCarouselScroll,
-    required this.tabController,
-    required this.index,
   });
 
+  final BalanceStore balanceStore;
+  final RampService rampService;
+  final MarketPageStore marketPageStore;
+  final AccelerometerStore accelerometerStore;
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
-  final TabController tabController;
   final int index;
-
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-
-  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
-
-  AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
-
-  RampService get _rampService => GetIt.I<RampService>();
-
-  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+  final BarModel bar;
 
   @override
   Widget build(BuildContext context) {
-    final _settingsState = SettingsState();
-
     return SizedBox(
       height: 600,
       child: Scaffold(
@@ -60,12 +53,15 @@ class CardReorderModal extends StatelessWidget {
               Assets.icons.notch.image(height: 4),
               const Gap(10),
               Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Re-order cards',
+                      'Re-order bars',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: FontFamily.redHatMedium,
@@ -79,8 +75,12 @@ class CardReorderModal extends StatelessWidget {
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                        color: Colors.grey.withOpacity(
+                          0.1,
+                        ),
                       ),
                       child: const Text(
                         'Hold and slide the wallet across the list to re-order',
@@ -101,14 +101,18 @@ class CardReorderModal extends StatelessWidget {
         body: SizedBox(
           height: 700,
           child: ReorderableListView.builder(
-            padding: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(
+              bottom: 30,
+            ),
             proxyDecorator: proxyDecorator,
-            itemCount: _balanceStore.cards.length,
-            clipBehavior: Clip.antiAlias,
+            itemCount: balanceStore.bars.length,
             itemBuilder: (_, index) {
-              final item = _balanceStore.cards[index];
+              final item = balanceStore.bars[index];
+
               return Container(
-                key: ValueKey(item.address),
+                key: ValueKey(
+                  item.address,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 7,
@@ -117,15 +121,19 @@ class CardReorderModal extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: _settingsState.isReorderingStart
-                          ? Colors.grey.withOpacity(0.1)
-                          : Colors.grey.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
+                      color: Colors.grey.withOpacity(
+                        0.2,
+                      ),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        item.color.image.image(height: 80),
+                        item.color.image.image(
+                          height: 80,
+                        ),
                         const Gap(20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +148,9 @@ class CardReorderModal extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                const Gap(5),
+                                const Gap(
+                                  5,
+                                ),
                                 Text(
                                   item.name,
                                   style: const TextStyle(
@@ -161,7 +171,9 @@ class CardReorderModal extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                const Gap(5),
+                                const Gap(
+                                  5,
+                                ),
                                 Text(
                                   getSplitAddress(item.address),
                                   style: const TextStyle(
@@ -181,7 +193,9 @@ class CardReorderModal extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                const Gap(5),
+                                const Gap(
+                                  5,
+                                ),
                                 Text(
                                   item.createdAt,
                                   style: const TextStyle(
@@ -202,11 +216,14 @@ class CardReorderModal extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                const Gap(5),
+                                const Gap(
+                                  5,
+                                ),
                                 Builder(
                                   builder: (context) {
-                                    final data = _marketPageStore
+                                    final data = marketPageStore
                                         .singleCoin?.result.first;
+
                                     final myFormat =
                                         NumberFormat.decimalPatternDigits(
                                       locale: 'en_us',
@@ -233,8 +250,8 @@ class CardReorderModal extends StatelessWidget {
                                     }
                                     return Observer(
                                       builder: (_) {
-                                        final balance = item.finalBalance;
-                                        if (_accelerometerStore
+                                        final balance = bar.finalBalance;
+                                        if (accelerometerStore
                                             .hasPerformedAction) {
                                           return const Text(
                                             r'$*****',
@@ -266,7 +283,9 @@ class CardReorderModal extends StatelessWidget {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Gap(25),
+                            const Gap(
+                              25,
+                            ),
                             Center(
                               child: Icon(
                                 Icons.drag_handle,
@@ -274,7 +293,9 @@ class CardReorderModal extends StatelessWidget {
                                 size: 30,
                               ),
                             ),
-                            const Gap(25),
+                            const Gap(
+                              25,
+                            ),
                           ],
                         ),
                       ],
@@ -284,32 +305,42 @@ class CardReorderModal extends StatelessWidget {
               );
             },
             onReorder: (oldIndex, newIndex) {
-              _balanceStore.changeCardIndexAndSave(
+              balanceStore.changeBarIndexAndSave(
                 oldIndex: oldIndex,
                 newIndex: newIndex,
-                cardAddress: _balanceStore.cards[oldIndex].address,
+                cardAddress: balanceStore.bars[oldIndex].address,
               );
-              onCarouselScroll(index);
+              onCarouselScroll(
+                index,
+              );
               onCardSelected(
-                _balanceStore.cards.elementAtOrNull(index) as AbstractCard?,
+                balanceStore.bars.elementAtOrNull(
+                  index,
+                ) as AbstractCard?,
               );
-              _balanceStore.setCardCurrentIndex(index);
-              _historyPageStore.setCardHistoryIndex(index);
+              balanceStore.setBarCurrentIndex(
+                index,
+              );
             },
             onReorderStart: (val) {
-              _settingsState.startReorder();
               HapticFeedback.heavyImpact();
-            },
-            onReorderEnd: (val) {
-              _settingsState.isReorderingStart = false;
-              if (index != _balanceStore.cards.length) {
-                _rampService.configuration.userAddress =
-                    _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
-              }
             },
           ),
         ),
       ),
     );
   }
+}
+
+Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
+  return AnimatedBuilder(
+    animation: animation,
+    builder: (context, child) {
+      return Material(
+        color: Colors.transparent,
+        child: child,
+      );
+    },
+    child: child,
+  );
 }
