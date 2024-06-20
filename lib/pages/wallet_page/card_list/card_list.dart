@@ -12,7 +12,6 @@ import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../modals/card_reorder_modal/card_reorder_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
@@ -27,6 +26,7 @@ import '../../send_page/send_to/send_to_state.dart';
 import 'card_lists_widgets/add_new_card_modal.dart';
 import 'card_lists_widgets/card_address_field.dart';
 import 'card_lists_widgets/card_balance_field.dart';
+import 'card_lists_widgets/card_reorder_widget.dart';
 
 typedef CardSelectedCallback = void Function(int index);
 
@@ -265,7 +265,7 @@ class _CardListState extends State<CardList>
                                               ),
                                             ),
                                             builder: (context) {
-                                              return CardReorderModal(
+                                              return CardReorderWidget(
                                                 tabController:
                                                     widget.tabController,
                                                 onCardSelected:

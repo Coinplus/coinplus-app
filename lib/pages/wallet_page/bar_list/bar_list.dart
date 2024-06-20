@@ -11,7 +11,6 @@ import 'package:mobx/mobx.dart';
 import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
@@ -25,12 +24,11 @@ import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../../utils/data_utils.dart';
-import '../../../utils/wallet_activation_status.dart';
-import '../../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../../widgets/custom_snack_bar/top_snack.dart';
-import '../../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 import '../../send_page/send_to/send_to_state.dart';
+import 'bar_lists_widgets/add_new_bar_modal.dart';
+import 'bar_lists_widgets/bar_address_field.dart';
+import 'bar_lists_widgets/bar_balance_field.dart';
+import 'bar_lists_widgets/bar_reorder_widget.dart';
 
 class BarList extends StatefulWidget {
   const BarList({
@@ -91,19 +89,6 @@ class _BarListState extends State<BarList>
             .indexWhere((element) => element.address == address);
         carouselController.jumpToPage(index);
       });
-  }
-
-  Widget proxyDecorator(Widget child, int index, Animation<double> animation) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) {
-        return Material(
-          color: Colors.transparent,
-          child: child,
-        );
-      },
-      child: child,
-    );
   }
 
   @override
@@ -172,43 +157,7 @@ class _BarListState extends State<BarList>
                                 ),
                                 context: context,
                                 builder: (context) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(12),
-                                        child: Assets.icons.notch.image(
-                                          height: 4,
-                                        ),
-                                      ),
-                                      const Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 20,
-                                              top: 10,
-                                            ),
-                                            child: Text(
-                                              'Add new wallet',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatBold,
-                                                fontSize: 17,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Gap(18),
-                                      BarScanMethodsPage(
-                                        isAvailable: _nfcStore,
-                                      ).paddingHorizontal(20),
-                                      const Gap(40),
-                                    ],
-                                  );
+                                  return AddNewBarModal(nfcStore: _nfcStore);
                                 },
                               );
                               await _walletProtectState.updateModalStatus(
@@ -223,7 +172,6 @@ class _BarListState extends State<BarList>
               }
 
               final bar = _balanceStore.bars[index];
-              final visibleAddress = getSplitAddress(bar.address);
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -312,362 +260,19 @@ class _BarListState extends State<BarList>
                                               ),
                                             ),
                                             builder: (context) {
-                                              return SizedBox(
-                                                height: 600,
-                                                child: Scaffold(
-                                                  appBar: AppBar(
-                                                    toolbarHeight: 130,
-                                                    automaticallyImplyLeading:
-                                                        false,
-                                                    elevation: 0,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    flexibleSpace: Column(
-                                                      children: <Widget>[
-                                                        const Gap(15),
-                                                        Assets.icons.notch
-                                                            .image(height: 4),
-                                                        const Gap(10),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                            left: 10,
-                                                            right: 10,
-                                                          ),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              const Text(
-                                                                'Re-order bars',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
-                                                                  fontSize: 30,
-                                                                ),
-                                                              ),
-                                                              const Gap(10),
-                                                              Container(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                  horizontal:
-                                                                      15,
-                                                                  vertical: 10,
-                                                                ),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                    10,
-                                                                  ),
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .withOpacity(
-                                                                    0.1,
-                                                                  ),
-                                                                ),
-                                                                child:
-                                                                    const Text(
-                                                                  'Hold and slide the wallet across the list to re-order',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatMedium,
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  body: SizedBox(
-                                                    height: 700,
-                                                    child: ReorderableListView
-                                                        .builder(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        bottom: 30,
-                                                      ),
-                                                      proxyDecorator:
-                                                          proxyDecorator,
-                                                      itemCount: _balanceStore
-                                                          .bars.length,
-                                                      itemBuilder: (_, index) {
-                                                        final item =
-                                                            _balanceStore
-                                                                .bars[index];
-
-                                                        return Container(
-                                                          key: ValueKey(
-                                                            item.address,
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                              vertical: 7,
-                                                              horizontal: 20,
-                                                            ),
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(15),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                  10,
-                                                                ),
-                                                                color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                  0.2,
-                                                                ),
-                                                              ),
-                                                              child: Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  item.color
-                                                                      .image
-                                                                      .image(
-                                                                    height: 80,
-                                                                  ),
-                                                                  const Gap(20),
-                                                                  Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Name:',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                          const Gap(
-                                                                            5,
-                                                                          ),
-                                                                          Text(
-                                                                            item.name,
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              fontWeight: FontWeight.w600,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Address:',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                          const Gap(
-                                                                            5,
-                                                                          ),
-                                                                          Text(
-                                                                            getSplitAddress(item.address),
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontSize: 12,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Row(
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Date added:',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                          const Gap(
-                                                                            5,
-                                                                          ),
-                                                                          Text(
-                                                                            item.createdAt,
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontSize: 12,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Balance:',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 14,
-                                                                              fontFamily: FontFamily.redHatMedium,
-                                                                              fontWeight: FontWeight.w700,
-                                                                            ),
-                                                                          ),
-                                                                          const Gap(
-                                                                            5,
-                                                                          ),
-                                                                          Builder(
-                                                                            builder:
-                                                                                (context) {
-                                                                              final data = _marketPageStore.singleCoin?.result.first;
-
-                                                                              final myFormat = NumberFormat.decimalPatternDigits(
-                                                                                locale: 'en_us',
-                                                                                decimalDigits: 2,
-                                                                              );
-                                                                              if (data == null) {
-                                                                                return const Padding(
-                                                                                  padding: EdgeInsets.all(
-                                                                                    4,
-                                                                                  ),
-                                                                                  child: Row(
-                                                                                    children: [
-                                                                                      SizedBox(
-                                                                                        height: 10,
-                                                                                        width: 10,
-                                                                                        child: CircularProgressIndicator(
-                                                                                          strokeWidth: 1,
-                                                                                          color: Colors.black,
-                                                                                        ),
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
-                                                                                );
-                                                                              }
-                                                                              return Observer(
-                                                                                builder: (_) {
-                                                                                  final balance = bar.finalBalance;
-                                                                                  if (_accelerometerStore.hasPerformedAction) {
-                                                                                    return const Text(
-                                                                                      r'$*****',
-                                                                                      style: TextStyle(
-                                                                                        fontSize: 13,
-                                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                                      ),
-                                                                                    );
-                                                                                  } else {
-                                                                                    return Text(
-                                                                                      '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
-                                                                                      style: const TextStyle(
-                                                                                        fontSize: 13,
-                                                                                        fontFamily: FontFamily.redHatMedium,
-                                                                                      ),
-                                                                                    );
-                                                                                  }
-                                                                                },
-                                                                              );
-                                                                            },
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  const Spacer(),
-                                                                  Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      const Gap(
-                                                                        25,
-                                                                      ),
-                                                                      Center(
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .drag_handle,
-                                                                          color: Colors
-                                                                              .grey
-                                                                              .withOpacity(0.5),
-                                                                          size:
-                                                                              30,
-                                                                        ),
-                                                                      ),
-                                                                      const Gap(
-                                                                        25,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      onReorder:
-                                                          (oldIndex, newIndex) {
-                                                        _balanceStore
-                                                            .changeBarIndexAndSave(
-                                                          oldIndex: oldIndex,
-                                                          newIndex: newIndex,
-                                                          cardAddress:
-                                                              _balanceStore
-                                                                  .bars[
-                                                                      oldIndex]
-                                                                  .address,
-                                                        );
-                                                        widget.onCarouselScroll(
-                                                          index,
-                                                        );
-                                                        widget.onCardSelected(
-                                                          _balanceStore.bars
-                                                              .elementAtOrNull(
-                                                            index,
-                                                          ) as AbstractCard?,
-                                                        );
-                                                        _balanceStore
-                                                            .setBarCurrentIndex(
-                                                          index,
-                                                        );
-                                                      },
-                                                      onReorderStart: (val) {
-                                                        HapticFeedback
-                                                            .heavyImpact();
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
+                                              return BarReorderWidget(
+                                                balanceStore: _balanceStore,
+                                                index: index,
+                                                rampService: _rampService,
+                                                bar: bar,
+                                                marketPageStore:
+                                                    _marketPageStore,
+                                                accelerometerStore:
+                                                    _accelerometerStore,
+                                                onCardSelected:
+                                                    widget.onCardSelected,
+                                                onCarouselScroll:
+                                                    widget.onCarouselScroll,
                                               );
                                             },
                                           );
@@ -699,256 +304,19 @@ class _BarListState extends State<BarList>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Gap(context.height * 0.045),
-                                      Observer(
-                                        builder: (context) {
-                                          return ScaleTap(
-                                            enableFeedback: false,
-                                            opacityMinValue: .98,
-                                            scaleMinValue: .98,
-                                            onPressed: _balanceStore
-                                                        .barCurrentIndex ==
-                                                    index
-                                                ? () async {
-                                                    final isActivated =
-                                                        isBarWalletActivated(
-                                                      balanceStore:
-                                                          _balanceStore,
-                                                    );
-                                                    await recordAmplitudeEvent(
-                                                      TopUpButtonClicked(
-                                                        walletType: 'Bar',
-                                                        walletAddress:
-                                                            bar.address,
-                                                        activated:
-                                                            await isActivated,
-                                                      ),
-                                                    );
-                                                    _rampService.presentRamp();
-                                                  }
-                                                : null,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                color: Colors.black
-                                                    .withOpacity(0.3),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                  top: 2,
-                                                  bottom: 2,
-                                                  left: 8,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Text(
-                                                          'Balance',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                        Observer(
-                                                          builder: (context) {
-                                                            final data =
-                                                                _marketPageStore
-                                                                    .singleCoin
-                                                                    ?.result
-                                                                    .first;
-                                                            final myFormat =
-                                                                NumberFormat
-                                                                    .decimalPatternDigits(
-                                                              locale: 'en_us',
-                                                              decimalDigits: 2,
-                                                            );
-                                                            if (data == null) {
-                                                              return const Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                  vertical: 4,
-                                                                  horizontal: 2,
-                                                                ),
-                                                                child: Row(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      height:
-                                                                          10,
-                                                                      width: 10,
-                                                                      child:
-                                                                          CircularProgressIndicator(
-                                                                        strokeWidth:
-                                                                            3,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            }
-                                                            final balance = bar
-                                                                .finalBalance;
-                                                            return Observer(
-                                                              builder: (_) {
-                                                                if (_accelerometerStore
-                                                                    .hasPerformedAction) {
-                                                                  return const Text(
-                                                                    r'$*****',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatMedium,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          18,
-                                                                    ),
-                                                                  );
-                                                                } else {
-                                                                  return Text(
-                                                                    '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatMedium,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          20,
-                                                                    ),
-                                                                  );
-                                                                }
-                                                              },
-                                                            );
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Assets.icons.alternative
-                                                        .image(
-                                                      height: 48,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ).paddingHorizontal(37),
-                                          );
-                                        },
+                                      BarBalanceField(
+                                        accelerometerStore: _accelerometerStore,
+                                        balanceStore: _balanceStore,
+                                        bar: bar,
+                                        index: index,
+                                        marketPageStore: _marketPageStore,
+                                        rampService: _rampService,
                                       ),
                                       const Gap(10),
-                                      ScaleTap(
-                                        enableFeedback: false,
-                                        onPressed: _balanceStore
-                                                    .barCurrentIndex ==
-                                                index
-                                            ? () async {
-                                                final isBarActivated =
-                                                    isBarWalletActivated(
-                                                  balanceStore: _balanceStore,
-                                                );
-                                                await recordAmplitudeEvent(
-                                                  AddressCopied(
-                                                    walletType: 'Bar',
-                                                    walletAddress: bar.address,
-                                                    activated:
-                                                        await isBarActivated,
-                                                    source: 'Wallet',
-                                                  ),
-                                                );
-                                                await Clipboard.setData(
-                                                  ClipboardData(
-                                                    text:
-                                                        bar.address.toString(),
-                                                  ),
-                                                ).then(
-                                                  (_) {
-                                                    HapticFeedback
-                                                        .mediumImpact();
-                                                    showTopSnackBar(
-                                                      displayDuration:
-                                                          const Duration(
-                                                        milliseconds: 400,
-                                                      ),
-                                                      Overlay.of(context),
-                                                      CustomSnackBar.success(
-                                                        backgroundColor:
-                                                            const Color(
-                                                          0xFF4A4A4A,
-                                                        ).withOpacity(
-                                                          0.9,
-                                                        ),
-                                                        message:
-                                                            'Address was copied',
-                                                        textStyle:
-                                                            const TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontSize: 14,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              }
-                                            : null,
-                                        child: Container(
-                                          height: 33,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: Assets
-                                                  .images.bar.barAddress
-                                                  .image()
-                                                  .image,
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Observer(
-                                              builder: (context) {
-                                                if (_balanceStore.loadings[
-                                                        bar.address] ??
-                                                    false) {
-                                                  return Text(
-                                                    visibleAddress,
-                                                    style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      color: Colors.black,
-                                                      fontSize: 13,
-                                                    ),
-                                                  );
-                                                }
-                                                return Text(
-                                                  visibleAddress,
-                                                  style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    color: Colors.black,
-                                                    fontSize: 13,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ),
+                                      BarAddressField(
+                                        index: index,
+                                        bar: bar,
+                                        balanceStore: _balanceStore,
                                       ),
                                     ],
                                   ),

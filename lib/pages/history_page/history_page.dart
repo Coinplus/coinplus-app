@@ -20,10 +20,10 @@ import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/data_utils.dart';
+import '../../widgets/card_and_bar_tab/card_and_bar_tab.dart';
 import '../../widgets/shimmers/history_dropdown_shimmer.dart';
-import '../wallet_page/card_and_bar_tab/card_and_bar_tab.dart';
-import 'bars_history_page/bars_history_page.dart';
-import 'cards_history_page/cards_history_page.dart';
+import 'bars_history_tab/bars_history_page.dart';
+import 'cards_history_tab/cards_history_page.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({

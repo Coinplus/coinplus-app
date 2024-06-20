@@ -6,16 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
-import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/card_record.dart';
-import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
-import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../modals/send_receive_modal/send_receive_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
@@ -32,18 +28,17 @@ import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
+import '../../utils/page_controller_manager.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
-import '../../widgets/wallet_connect_methods/bar_connect_methods.dart';
-import '../../widgets/wallet_connect_methods/card_connect_methods.dart';
 import '../history_page/history_page.dart';
 import '../market_page/market_page.dart';
 import '../send_page/send_to/send_to_state.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
-import 'page_controller_manager.dart';
+import 'send_receive_action_button.dart';
 
 @RoutePage()
 class DashboardPage extends HookWidget {
@@ -474,228 +469,19 @@ class DashboardPage extends HookWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Builder(
-        builder: (_) {
-          if (isInactive.value &&
-              appLocked.value &&
-              !_walletProtectState.isNfcSessionStarted) {
-            return const SizedBox();
-          }
-          return ScaleTap(
-            enableFeedback: false,
-            onPressed: () async {
-              final selectedCard = currentCard.value.card;
-              final isBarList = currentCard.value.index == 1;
-              final isCardActivated =
-                  isCardWalletActivated(balanceStore: _balanceStore);
-              final isBarActivated =
-                  isBarWalletActivated(balanceStore: _balanceStore);
-              if (selectedCard == null || _pageController.page != 0) {
-                if (isBarList) {
-                  await recordAmplitudeEvent(
-                    AddNewPlusClicked(
-                      source: _pageController.page == 0
-                          ? 'Wallet'
-                          : _pageController.page == 1
-                              ? 'Market'
-                              : _pageController.page == 2
-                                  ? 'History'
-                                  : 'Settings',
-                    ),
-                  );
-                  isModalOpened.value = true;
-                  await showModalBottomSheet(
-                    backgroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    context: context,
-                    builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Assets.icons.notch.image(
-                              height: 4,
-                            ),
-                          ),
-                          const Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 20, top: 10),
-                                child: Text(
-                                  'Add new wallet',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatBold,
-                                    fontSize: 17,
-                                    color: AppColors.primaryTextColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Gap(18),
-                          BarScanMethodsPage(
-                            isAvailable: _nfcStore,
-                          ).paddingHorizontal(20),
-                          const Gap(40),
-                        ],
-                      );
-                    },
-                  );
-                  isModalOpened.value = false;
-                } else {
-                  await recordAmplitudeEvent(
-                    AddNewPlusClicked(
-                      source: _pageController.page == 0 ? 'Wallet' : 'Settings',
-                    ),
-                  );
-                  isModalOpened.value = true;
-                  await showModalBottomSheet(
-                    backgroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    context: context,
-                    builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Assets.icons.notch.image(
-                              height: 4,
-                            ),
-                          ),
-                          const Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20,
-                                  top: 10,
-                                ),
-                                child: Text(
-                                  'Add new wallet',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatBold,
-                                    fontSize: 17,
-                                    color: AppColors.primaryTextColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Gap(18),
-                          CardScanMethodsPage(
-                            isAvailable: _nfcStore,
-                          ).paddingHorizontal(20),
-                          const Gap(40),
-                        ],
-                      );
-                    },
-                  );
-                  isModalOpened.value = false;
-                }
-                return;
-              }
-              isModalOpened.value = true;
-              await onOpenSendReceiveModal();
-              isModalOpened.value = false;
-              await recordAmplitudeEvent(
-                TransactionsButtonClicked(
-                  walletType: isBarList ? 'Bar' : 'Card',
-                  walletAddress: currentCard.value.card!.address,
-                  activated:
-                      isBarList ? await isBarActivated : await isCardActivated,
-                ),
-              );
-            },
-            child: Observer(
-              builder: (context) {
-                return FloatingActionButton(
-                  shape: const CircleBorder(),
-                  elevation: 3,
-                  backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
-                  onPressed: null,
-                  child: AnimatedCrossFade(
-                    duration: const Duration(milliseconds: 1),
-                    crossFadeState: _allSettingsState.tabCurrentIndex == 0
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
-                    firstChild: AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 1),
-                      crossFadeState: _allSettingsState.currentIndex != 0
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      firstChild: AnimatedCrossFade(
-                        duration: const Duration(milliseconds: 1),
-                        crossFadeState: _allSettingsState.isInAddCard
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        firstChild: _balanceStore.cards.isEmpty
-                            ? Assets.icons.plus.image(
-                                color: Colors.white,
-                                height: 32,
-                              )
-                            : Assets.icons.sendReceive.image(
-                                color: Colors.white,
-                                height: 32,
-                              ),
-                        secondChild: Assets.icons.plus.image(
-                          color: Colors.white,
-                          height: 32,
-                        ),
-                      ),
-                      secondChild: Assets.icons.plus.image(
-                        color: Colors.white,
-                        height: 32,
-                      ),
-                    ),
-                    secondChild: AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 1),
-                      crossFadeState: _allSettingsState.currentIndex != 0
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      firstChild: AnimatedCrossFade(
-                        duration: const Duration(milliseconds: 1),
-                        crossFadeState: _allSettingsState.isInAddBar
-                            ? CrossFadeState.showSecond
-                            : CrossFadeState.showFirst,
-                        firstChild: _balanceStore.bars.isEmpty
-                            ? Assets.icons.plus.image(
-                                color: Colors.white,
-                                height: 32,
-                              )
-                            : Assets.icons.sendReceive.image(
-                                color: Colors.white,
-                                height: 32,
-                              ),
-                        secondChild: Assets.icons.plus.image(
-                          color: Colors.white,
-                          height: 32,
-                        ),
-                      ),
-                      secondChild: Assets.icons.plus.image(
-                        color: Colors.white,
-                        height: 32,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
+      floatingActionButton: SendReceiveActionButton(
+        isInactive: isInactive,
+        appLocked: appLocked,
+        walletProtectState: _walletProtectState,
+        currentCard: currentCard,
+        balanceStore: _balanceStore,
+        pageController: _pageController,
+        isModalOpened: isModalOpened,
+        nfcStore: _nfcStore,
+        onOpenSendReceiveModal: onOpenSendReceiveModal,
+        allSettingsState: _allSettingsState,
       ),
     );
   }
 }
+
