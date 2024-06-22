@@ -15,6 +15,7 @@ import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
+import '../../../services/firebase_service.dart';
 import '../../../store/store.dart';
 import '../../../utils/secure_storage_utils.dart';
 import '../../../utils/storage_utils.dart';
@@ -91,6 +92,7 @@ class RemoveUserData extends StatelessWidget {
                 );
                 await StorageUtils.clear();
                 await secureStorage.deleteAll();
+                await signOut();
                 reRegisterStoreGetIt();
                 await router.pushAndPopAll(const OnboardingRoute());
                 await router.maybePop();

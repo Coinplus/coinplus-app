@@ -28,6 +28,7 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
+import '../../services/firebase_service.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
@@ -154,6 +155,7 @@ class OnboardingPage extends HookWidget {
                                     .split('air.coinplus.com/btc/');
                                 walletAddress = parts[1];
                               }
+                              await signInAnonymously();
                               await recordAmplitudeEvent(
                                 NfcTapped(
                                   source: 'Onboarding',
