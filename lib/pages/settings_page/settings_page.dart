@@ -124,255 +124,59 @@ class SettingsPage extends HookWidget {
 
     return CupertinoPageScaffold(
       backgroundColor: Colors.white,
-      child: CustomScrollView(
-        slivers: [
-          const CupertinoSliverNavigationBar(
-            border: Border(),
-            stretch: true,
-            backgroundColor: Colors.transparent,
-            brightness: Brightness.light,
-            largeTitle: Text(
-              'Settings',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-                fontFamily: FontFamily.redHatMedium,
+      child: Scrollbar(
+        child: CustomScrollView(
+          slivers: [
+            const CupertinoSliverNavigationBar(
+              border: Border(),
+              stretch: true,
+              backgroundColor: Colors.transparent,
+              brightness: Brightness.light,
+              largeTitle: Text(
+                'Settings',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: FontFamily.redHatMedium,
+                ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Gap(15),
-                const Padding(
-                  padding: EdgeInsets.only(left: 35),
-                  child: Text(
-                    'Security',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontWeight: FontWeight.w700,
+            SliverToBoxAdapter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Gap(15),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 35),
+                    child: Text(
+                      'Security',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                ),
-                const Gap(14),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Card(
-                    color: const Color(0xFFF7F7FA),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Observer(
-                      builder: (context) {
-                        return Column(
-                          children: [
-                            InkWell(
-                              onTap: () => onToggleAppLock(
-                                !_walletProtectState.isSetPinCode,
-                              ),
-                              splashFactory: InkSparkle.splashFactory,
-                              highlightColor: Colors.transparent,
-                              child: ListTile(
-                                minLeadingWidth: 10,
-                                leading: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Gap(3),
-                                    Assets.icons.lock.image(
-                                      height: 22,
-                                    ),
-                                    const Gap(3),
-                                  ],
-                                ),
-                                trailing: Observer(
-                                  builder: (context) {
-                                    return CupertinoSwitch(
-                                      value: _walletProtectState.isSetPinCode,
-                                      onChanged: onToggleAppLock,
-                                    );
-                                  },
-                                ),
-                                title: const Text(
-                                  'App lock',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Observer(
-                              builder: (_) {
-                                if (!_walletProtectState.isSetPinCode) {
-                                  return const SizedBox();
-                                }
-                                return Column(
-                                  children: [
-                                    Divider(
-                                      height: 1,
-                                      indent: 5,
-                                      endIndent: 5,
-                                      thickness: 1,
-                                      color: Colors.grey.withOpacity(0.1),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        router.push(const ChangePinCode());
-                                        recordAmplitudeEventPartTwo(
-                                          const ChangePasscodeClicked(),
-                                        );
-                                      },
-                                      splashFactory: InkSparkle.splashFactory,
-                                      highlightColor: Colors.transparent,
-                                      child: ListTile(
-                                        trailing:
-                                            Assets.icons.arrowForwardIos.image(
-                                          height: 20,
-                                        ),
-                                        splashColor: Colors.transparent,
-                                        minLeadingWidth: 10,
-                                        leading: Assets.icons.password.image(
-                                          height: 22,
-                                        ),
-                                        title: const Text(
-                                          'Change passcode',
-                                          style: TextStyle(
-                                            fontFamily: FontFamily.redHatMedium,
-                                            fontSize: 15,
-                                            color: AppColors.primaryTextColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    FutureBuilder(
-                                      future: _auth.isDeviceSupported(),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.data == true) {
-                                          return Column(
-                                            children: [
-                                              Divider(
-                                                height: 1,
-                                                indent: 0,
-                                                endIndent: 0,
-                                                thickness: 1,
-                                                color: Colors.grey
-                                                    .withOpacity(0.1),
-                                              ),
-                                              InkWell(
-                                                onTap: () => onToggleFaceId(
-                                                  !_walletProtectState
-                                                      .isBiometricsEnabled,
-                                                ),
-                                                splashFactory:
-                                                    InkSparkle.splashFactory,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                child: ListTile(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  minLeadingWidth: 10,
-                                                  trailing: Observer(
-                                                    builder: (_) {
-                                                      return CupertinoSwitch(
-                                                        value: _walletProtectState
-                                                            .isBiometricsEnabled,
-                                                        onChanged:
-                                                            onToggleFaceId,
-                                                      );
-                                                    },
-                                                  ),
-                                                  leading: Platform.isAndroid
-                                                      ? Assets
-                                                          .icons.faceIdSettings
-                                                          .image(
-                                                          height: 22,
-                                                        )
-                                                      : _walletProtectState
-                                                                  .availableBiometric ==
-                                                              BiometricType
-                                                                  .fingerprint
-                                                          ? Assets.icons
-                                                              .iphoneTouchId
-                                                              .image(
-                                                              height: 22,
-                                                            )
-                                                          : Assets.icons
-                                                              .faceIdSettings
-                                                              .image(
-                                                              height: 22,
-                                                            ),
-                                                  title: Text(
-                                                    Platform.isAndroid
-                                                        ? 'Biometrics'
-                                                        : _walletProtectState
-                                                                    .availableBiometric ==
-                                                                BiometricType
-                                                                    .fingerprint
-                                                            ? 'Touch ID'
-                                                            : 'Face ID',
-                                                    style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontSize: 15,
-                                                      color: AppColors
-                                                          .primaryTextColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return const SizedBox();
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            Divider(
-                              height: 1,
-                              indent: 5,
-                              endIndent: 5,
-                              thickness: 1,
-                              color: Colors.grey.withOpacity(0.1),
-                            ),
-                            if (_nfcState.isNfcSupported)
+                  const Gap(14),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: const Color(0xFFF7F7FA),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Observer(
+                        builder: (context) {
+                          return Column(
+                            children: [
                               InkWell(
-                                onTap: () async {
-                                  await _walletProtectState
-                                      .updateNfcSessionStatus(isStarted: true);
-                                  unawaited(
-                                    recordAmplitudeEventPartTwo(
-                                      const VerifyCardClicked(),
-                                    ),
-                                  );
-                                  Platform.isAndroid
-                                      ? checkNfcAndroid(
-                                          walletProtectState:
-                                              _walletProtectState,
-                                          balanceStore: _balanceStore,
-                                          settingsState: _settingsState,
-                                        )
-                                      : await checkNfcIos(
-                                          walletProtectState:
-                                              _walletProtectState,
-                                          balanceStore: _balanceStore,
-                                          settingsState: _settingsState,
-                                        );
-                                },
+                                onTap: () => onToggleAppLock(
+                                  !_walletProtectState.isSetPinCode,
+                                ),
                                 splashFactory: InkSparkle.splashFactory,
                                 highlightColor: Colors.transparent,
                                 child: ListTile(
@@ -380,16 +184,23 @@ class SettingsPage extends HookWidget {
                                   leading: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Assets.icons.verify.image(
-                                        color: Colors.blue,
+                                      const Gap(3),
+                                      Assets.icons.lock.image(
                                         height: 22,
                                       ),
+                                      const Gap(3),
                                     ],
                                   ),
-                                  trailing: Assets.icons.arrowForwardIos
-                                      .image(height: 20),
+                                  trailing: Observer(
+                                    builder: (context) {
+                                      return CupertinoSwitch(
+                                        value: _walletProtectState.isSetPinCode,
+                                        onChanged: onToggleAppLock,
+                                      );
+                                    },
+                                  ),
                                   title: const Text(
-                                    'Verify Card Authenticity',
+                                    'App lock',
                                     style: TextStyle(
                                       fontFamily: FontFamily.redHatMedium,
                                       fontSize: 15,
@@ -398,668 +209,859 @@ class SettingsPage extends HookWidget {
                                     ),
                                   ),
                                 ),
-                              )
-                            else
-                              const SizedBox(),
-                            Divider(
-                              height: 1,
-                              indent: 5,
-                              endIndent: 5,
-                              thickness: 1,
-                              color: Colors.grey.withOpacity(0.1),
-                            ),
-                            InkWell(
-                              onTap: () => onToggleHideBalances(
-                                _walletProtectState
-                                    .isSwitchedHideBalancesToggle,
                               ),
-                              splashFactory: InkSparkle.splashFactory,
-                              highlightColor: Colors.transparent,
-                              child: ListTile(
-                                splashColor: Colors.transparent,
-                                minLeadingWidth: 10,
-                                trailing: Observer(
-                                  builder: (_) {
-                                    return CupertinoSwitch(
-                                      value: _walletProtectState
-                                          .isSwitchedHideBalancesToggle,
-                                      onChanged: (val) => onToggleHideBalances(
-                                        _walletProtectState
-                                            .isSwitchedHideBalancesToggle,
+                              Observer(
+                                builder: (_) {
+                                  if (!_walletProtectState.isSetPinCode) {
+                                    return const SizedBox();
+                                  }
+                                  return Column(
+                                    children: [
+                                      Divider(
+                                        height: 1,
+                                        indent: 5,
+                                        endIndent: 5,
+                                        thickness: 1,
+                                        color: Colors.grey.withOpacity(0.1),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          router.push(const ChangePinCode());
+                                          recordAmplitudeEventPartTwo(
+                                            const ChangePasscodeClicked(),
+                                          );
+                                        },
+                                        splashFactory: InkSparkle.splashFactory,
+                                        highlightColor: Colors.transparent,
+                                        child: ListTile(
+                                          trailing:
+                                              Assets.icons.arrowForwardIos.image(
+                                            height: 20,
+                                          ),
+                                          splashColor: Colors.transparent,
+                                          minLeadingWidth: 10,
+                                          leading: Assets.icons.password.image(
+                                            height: 22,
+                                          ),
+                                          title: const Text(
+                                            'Change passcode',
+                                            style: TextStyle(
+                                              fontFamily: FontFamily.redHatMedium,
+                                              fontSize: 15,
+                                              color: AppColors.primaryTextColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      FutureBuilder(
+                                        future: _auth.isDeviceSupported(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.data == true) {
+                                            return Column(
+                                              children: [
+                                                Divider(
+                                                  height: 1,
+                                                  indent: 0,
+                                                  endIndent: 0,
+                                                  thickness: 1,
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
+                                                ),
+                                                InkWell(
+                                                  onTap: () => onToggleFaceId(
+                                                    !_walletProtectState
+                                                        .isBiometricsEnabled,
+                                                  ),
+                                                  splashFactory:
+                                                      InkSparkle.splashFactory,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  child: ListTile(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    minLeadingWidth: 10,
+                                                    trailing: Observer(
+                                                      builder: (_) {
+                                                        return CupertinoSwitch(
+                                                          value: _walletProtectState
+                                                              .isBiometricsEnabled,
+                                                          onChanged:
+                                                              onToggleFaceId,
+                                                        );
+                                                      },
+                                                    ),
+                                                    leading: Platform.isAndroid
+                                                        ? Assets
+                                                            .icons.faceIdSettings
+                                                            .image(
+                                                            height: 22,
+                                                          )
+                                                        : _walletProtectState
+                                                                    .availableBiometric ==
+                                                                BiometricType
+                                                                    .fingerprint
+                                                            ? Assets.icons
+                                                                .iphoneTouchId
+                                                                .image(
+                                                                height: 22,
+                                                              )
+                                                            : Assets.icons
+                                                                .faceIdSettings
+                                                                .image(
+                                                                height: 22,
+                                                              ),
+                                                    title: Text(
+                                                      Platform.isAndroid
+                                                          ? 'Biometrics'
+                                                          : _walletProtectState
+                                                                      .availableBiometric ==
+                                                                  BiometricType
+                                                                      .fingerprint
+                                                              ? 'Touch ID'
+                                                              : 'Face ID',
+                                                      style: const TextStyle(
+                                                        fontFamily: FontFamily
+                                                            .redHatMedium,
+                                                        fontSize: 15,
+                                                        color: AppColors
+                                                            .primaryTextColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          } else {
+                                            return const SizedBox();
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                              Divider(
+                                height: 1,
+                                indent: 5,
+                                endIndent: 5,
+                                thickness: 1,
+                                color: Colors.grey.withOpacity(0.1),
+                              ),
+                              if (_nfcState.isNfcSupported)
+                                InkWell(
+                                  onTap: () async {
+                                    await _walletProtectState
+                                        .updateNfcSessionStatus(isStarted: true);
+                                    unawaited(
+                                      recordAmplitudeEventPartTwo(
+                                        const VerifyCardClicked(),
                                       ),
                                     );
+                                    Platform.isAndroid
+                                        ? checkNfcAndroid(
+                                            walletProtectState:
+                                                _walletProtectState,
+                                            balanceStore: _balanceStore,
+                                            settingsState: _settingsState,
+                                          )
+                                        : await checkNfcIos(
+                                            walletProtectState:
+                                                _walletProtectState,
+                                            balanceStore: _balanceStore,
+                                            settingsState: _settingsState,
+                                          );
                                   },
-                                ),
-                                leading: Assets.icons.hide.image(
-                                  height: 24,
-                                ),
-                                title: const Text(
-                                  'Flip Phone to Hide Balance',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
+                                  splashFactory: InkSparkle.splashFactory,
+                                  highlightColor: Colors.transparent,
+                                  child: ListTile(
+                                    minLeadingWidth: 10,
+                                    leading: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Assets.icons.verify.image(
+                                          color: Colors.blue,
+                                          height: 22,
+                                        ),
+                                      ],
+                                    ),
+                                    trailing: Assets.icons.arrowForwardIos
+                                        .image(height: 20),
+                                    title: const Text(
+                                      'Verify Card Authenticity',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        fontSize: 15,
+                                        color: AppColors.primaryTextColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                )
+                              else
+                                const SizedBox(),
+                              Divider(
+                                height: 1,
+                                indent: 5,
+                                endIndent: 5,
+                                thickness: 1,
+                                color: Colors.grey.withOpacity(0.1),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 35),
-                  child: Text(
-                    'Notifications',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const Gap(14),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Card(
-                    color: const Color(0xFFF7F7FA),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Observer(
-                      builder: (context) {
-                        return InkWell(
-                          onTap: () {
-                            onToggleNotifications(
-                              _walletProtectState.isSwitchedNotificationsToggle,
-                            );
-                          },
-                          splashFactory: InkSplash.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            minLeadingWidth: 10,
-                            trailing: CupertinoSwitch(
-                              value: _walletProtectState
-                                  .isSwitchedNotificationsToggle,
-                              onChanged: (_) {
-                                onToggleNotifications(
+                              InkWell(
+                                onTap: () => onToggleHideBalances(
                                   _walletProtectState
-                                      .isSwitchedNotificationsToggle,
-                                );
-                              },
-                            ),
-                            leading: Assets.icons.notifications.image(
-                              height: 22,
-                            ),
-                            title: const Row(
-                              children: [
-                                Gap(2),
-                                Text(
-                                  'Push notifications',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
+                                      .isSwitchedHideBalancesToggle,
+                                ),
+                                splashFactory: InkSparkle.splashFactory,
+                                highlightColor: Colors.transparent,
+                                child: ListTile(
+                                  splashColor: Colors.transparent,
+                                  minLeadingWidth: 10,
+                                  trailing: Observer(
+                                    builder: (_) {
+                                      return CupertinoSwitch(
+                                        value: _walletProtectState
+                                            .isSwitchedHideBalancesToggle,
+                                        onChanged: (val) => onToggleHideBalances(
+                                          _walletProtectState
+                                              .isSwitchedHideBalancesToggle,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  leading: Assets.icons.hide.image(
+                                    height: 24,
+                                  ),
+                                  title: const Text(
+                                    'Flip Phone to Hide Balance',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 15,
+                                      color: AppColors.primaryTextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 35),
-                  child: Text(
-                    'Help & Support',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const Gap(14),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Card(
-                    color: const Color(0xFFF7F7FA),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            await recordAmplitudeEventPartTwo(
-                              const HelpCenterClicked(source: 'Settings'),
-                            );
-                            await FlutterWebBrowser.openWebPage(
-                              url: 'https://coinplus.gitbook.io/help-center',
-                              customTabsOptions: const CustomTabsOptions(
-                                shareState: CustomTabsShareState.on,
-                                instantAppsEnabled: true,
-                                showTitle: true,
-                                urlBarHidingEnabled: true,
                               ),
-                              safariVCOptions:
-                                  const SafariViewControllerOptions(
-                                barCollapsingEnabled: true,
-                                modalPresentationStyle:
-                                    UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle:
-                                    SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance:
-                                    true,
-                              ),
-                            );
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.help.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Help center',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1,
-                          indent: 0,
-                          endIndent: 0,
-                          thickness: 1,
-                          color: Colors.grey.withOpacity(0.1),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            router.push(const ContactUs());
-                            recordAmplitudeEventPartTwo(
-                              const ContactUsClicked(),
-                            );
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.contactUs.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Contact us',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 35),
-                  child: Text(
-                    'Join community',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const Gap(14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ScaleTap(
-                      onPressed: () async {
-                        await recordAmplitudeEventPartTwo(
-                          const JoinCommunityClicked(social: 'Twitter'),
-                        );
-                        await FlutterWebBrowser.openWebPage(
-                          url: 'https://twitter.com/coinplus',
-                          customTabsOptions: const CustomTabsOptions(
-                            shareState: CustomTabsShareState.on,
-                            instantAppsEnabled: true,
-                            showTitle: true,
-                            urlBarHidingEnabled: true,
-                          ),
-                          safariVCOptions: const SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
-                            modalPresentationCapturesStatusBarAppearance: true,
-                          ),
-                        );
-                      },
-                      enableFeedback: false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          color: const Color(0xFFF7F7FA),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Assets.icons.twitter.image(height: 23),
-                          ),
-                        ),
+                            ],
+                          );
+                        },
                       ),
                     ),
-                    const Gap(12),
-                    ScaleTap(
-                      onPressed: () async {
-                        await recordAmplitudeEventPartTwo(
-                          const JoinCommunityClicked(social: 'Instagram'),
-                        );
-                        await FlutterWebBrowser.openWebPage(
-                          url: 'https://www.instagram.com/coinplus.inc',
-                          customTabsOptions: const CustomTabsOptions(
-                            shareState: CustomTabsShareState.on,
-                            instantAppsEnabled: true,
-                            showTitle: true,
-                            urlBarHidingEnabled: true,
-                          ),
-                          safariVCOptions: const SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
-                            modalPresentationCapturesStatusBarAppearance: true,
-                          ),
-                        );
-                      },
-                      enableFeedback: false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          color: const Color(0xFFF7F7FA),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Assets.icons.instagram.image(height: 25),
-                          ),
-                        ),
+                  ),
+                  const Gap(20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 35),
+                    child: Text(
+                      'Notifications',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const Gap(12),
-                    ScaleTap(
-                      onPressed: () async {
-                        await recordAmplitudeEventPartTwo(
-                          const JoinCommunityClicked(social: 'Facebook'),
-                        );
-                        await FlutterWebBrowser.openWebPage(
-                          url: 'https://www.facebook.com/coin.plus',
-                          customTabsOptions: const CustomTabsOptions(
-                            shareState: CustomTabsShareState.on,
-                            instantAppsEnabled: true,
-                            showTitle: true,
-                            urlBarHidingEnabled: true,
-                          ),
-                          safariVCOptions: const SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
-                            modalPresentationCapturesStatusBarAppearance: true,
-                          ),
-                        );
-                      },
-                      enableFeedback: false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          color: const Color(0xFFF7F7FA),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Assets.icons.facebook.image(height: 25),
-                          ),
-                        ),
+                  ),
+                  const Gap(14),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: const Color(0xFFF7F7FA),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Observer(
+                        builder: (context) {
+                          return InkWell(
+                            onTap: () {
+                              onToggleNotifications(
+                                _walletProtectState.isSwitchedNotificationsToggle,
+                              );
+                            },
+                            splashFactory: InkSplash.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              minLeadingWidth: 10,
+                              trailing: CupertinoSwitch(
+                                value: _walletProtectState
+                                    .isSwitchedNotificationsToggle,
+                                onChanged: (_) {
+                                  onToggleNotifications(
+                                    _walletProtectState
+                                        .isSwitchedNotificationsToggle,
+                                  );
+                                },
+                              ),
+                              leading: Assets.icons.notifications.image(
+                                height: 22,
+                              ),
+                              title: const Row(
+                                children: [
+                                  Gap(2),
+                                  Text(
+                                    'Push notifications',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 15,
+                                      color: AppColors.primaryTextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    const Gap(12),
-                    ScaleTap(
-                      onPressed: () async {
-                        await recordAmplitudeEventPartTwo(
-                          const JoinCommunityClicked(social: 'Linkedin'),
-                        );
-                        await FlutterWebBrowser.openWebPage(
-                          url: 'https://www.linkedin.com/company/coinplus/',
-                          customTabsOptions: const CustomTabsOptions(
-                            shareState: CustomTabsShareState.on,
-                            instantAppsEnabled: true,
-                            showTitle: true,
-                            urlBarHidingEnabled: true,
+                  ),
+                  const Gap(20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 35),
+                    child: Text(
+                      'Help & Support',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const Gap(14),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: const Color(0xFFF7F7FA),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await recordAmplitudeEventPartTwo(
+                                const HelpCenterClicked(source: 'Settings'),
+                              );
+                              await FlutterWebBrowser.openWebPage(
+                                url: 'https://coinplus.gitbook.io/help-center',
+                                customTabsOptions: const CustomTabsOptions(
+                                  shareState: CustomTabsShareState.on,
+                                  instantAppsEnabled: true,
+                                  showTitle: true,
+                                  urlBarHidingEnabled: true,
+                                ),
+                                safariVCOptions:
+                                    const SafariViewControllerOptions(
+                                  barCollapsingEnabled: true,
+                                  modalPresentationStyle:
+                                      UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle:
+                                      SafariViewControllerDismissButtonStyle.done,
+                                  modalPresentationCapturesStatusBarAppearance:
+                                      true,
+                                ),
+                              );
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              trailing:
+                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.help.image(
+                                height: 22,
+                              ),
+                              title: const Text(
+                                'Help center',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 15,
+                                  color: AppColors.primaryTextColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                           ),
-                          safariVCOptions: const SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
-                            modalPresentationCapturesStatusBarAppearance: true,
+                          Divider(
+                            height: 1,
+                            indent: 0,
+                            endIndent: 0,
+                            thickness: 1,
+                            color: Colors.grey.withOpacity(0.1),
                           ),
-                        );
-                      },
-                      enableFeedback: false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          color: const Color(0xFFF7F7FA),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Assets.icons.linkedin.image(height: 25),
+                          InkWell(
+                            onTap: () {
+                              router.push(const ContactUs());
+                              recordAmplitudeEventPartTwo(
+                                const ContactUsClicked(),
+                              );
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              trailing:
+                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.contactUs.image(
+                                height: 22,
+                              ),
+                              title: const Text(
+                                'Contact us',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 15,
+                                  color: AppColors.primaryTextColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 35),
+                    child: Text(
+                      'Join community',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const Gap(14),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ScaleTap(
+                        onPressed: () async {
+                          await recordAmplitudeEventPartTwo(
+                            const JoinCommunityClicked(social: 'Twitter'),
+                          );
+                          await FlutterWebBrowser.openWebPage(
+                            url: 'https://twitter.com/coinplus',
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                            safariVCOptions: const SafariViewControllerOptions(
+                              barCollapsingEnabled: true,
+                              modalPresentationStyle:
+                                  UIModalPresentationStyle.formSheet,
+                              dismissButtonStyle:
+                                  SafariViewControllerDismissButtonStyle.done,
+                              modalPresentationCapturesStatusBarAppearance: true,
+                            ),
+                          );
+                        },
+                        enableFeedback: false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            color: const Color(0xFFF7F7FA),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Assets.icons.twitter.image(height: 23),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const Gap(12),
-                    ScaleTap(
-                      onPressed: () async {
-                        await recordAmplitudeEventPartTwo(
-                          const JoinCommunityClicked(social: 'Trust pilot'),
-                        );
-                        await FlutterWebBrowser.openWebPage(
-                          url: 'https://www.trustpilot.com/review/coinplus.com',
-                          customTabsOptions: const CustomTabsOptions(
-                            shareState: CustomTabsShareState.on,
-                            instantAppsEnabled: true,
-                            showTitle: true,
-                            urlBarHidingEnabled: true,
-                          ),
-                          safariVCOptions: const SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            modalPresentationStyle:
-                                UIModalPresentationStyle.formSheet,
-                            dismissButtonStyle:
-                                SafariViewControllerDismissButtonStyle.done,
-                            modalPresentationCapturesStatusBarAppearance: true,
-                          ),
-                        );
-                      },
-                      enableFeedback: false,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Container(
-                          color: const Color(0xFFF7F7FA),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Assets.icons.star.image(height: 25),
+                      const Gap(12),
+                      ScaleTap(
+                        onPressed: () async {
+                          await recordAmplitudeEventPartTwo(
+                            const JoinCommunityClicked(social: 'Instagram'),
+                          );
+                          await FlutterWebBrowser.openWebPage(
+                            url: 'https://www.instagram.com/coinplus.inc',
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                            safariVCOptions: const SafariViewControllerOptions(
+                              barCollapsingEnabled: true,
+                              modalPresentationStyle:
+                                  UIModalPresentationStyle.formSheet,
+                              dismissButtonStyle:
+                                  SafariViewControllerDismissButtonStyle.done,
+                              modalPresentationCapturesStatusBarAppearance: true,
+                            ),
+                          );
+                        },
+                        enableFeedback: false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            color: const Color(0xFFF7F7FA),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Assets.icons.instagram.image(height: 25),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Gap(20),
-                const Padding(
-                  padding: EdgeInsets.only(left: 35),
-                  child: Text(
-                    'About',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: FontFamily.redHatMedium,
-                      color: AppColors.primaryTextColor,
-                      fontWeight: FontWeight.w700,
+                      const Gap(12),
+                      ScaleTap(
+                        onPressed: () async {
+                          await recordAmplitudeEventPartTwo(
+                            const JoinCommunityClicked(social: 'Facebook'),
+                          );
+                          await FlutterWebBrowser.openWebPage(
+                            url: 'https://www.facebook.com/coin.plus',
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                            safariVCOptions: const SafariViewControllerOptions(
+                              barCollapsingEnabled: true,
+                              modalPresentationStyle:
+                                  UIModalPresentationStyle.formSheet,
+                              dismissButtonStyle:
+                                  SafariViewControllerDismissButtonStyle.done,
+                              modalPresentationCapturesStatusBarAppearance: true,
+                            ),
+                          );
+                        },
+                        enableFeedback: false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            color: const Color(0xFFF7F7FA),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Assets.icons.facebook.image(height: 25),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Gap(12),
+                      ScaleTap(
+                        onPressed: () async {
+                          await recordAmplitudeEventPartTwo(
+                            const JoinCommunityClicked(social: 'Linkedin'),
+                          );
+                          await FlutterWebBrowser.openWebPage(
+                            url: 'https://www.linkedin.com/company/coinplus/',
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                            safariVCOptions: const SafariViewControllerOptions(
+                              barCollapsingEnabled: true,
+                              modalPresentationStyle:
+                                  UIModalPresentationStyle.formSheet,
+                              dismissButtonStyle:
+                                  SafariViewControllerDismissButtonStyle.done,
+                              modalPresentationCapturesStatusBarAppearance: true,
+                            ),
+                          );
+                        },
+                        enableFeedback: false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            color: const Color(0xFFF7F7FA),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Assets.icons.linkedin.image(height: 25),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Gap(12),
+                      ScaleTap(
+                        onPressed: () async {
+                          await recordAmplitudeEventPartTwo(
+                            const JoinCommunityClicked(social: 'Trust pilot'),
+                          );
+                          await FlutterWebBrowser.openWebPage(
+                            url: 'https://www.trustpilot.com/review/coinplus.com',
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                            safariVCOptions: const SafariViewControllerOptions(
+                              barCollapsingEnabled: true,
+                              modalPresentationStyle:
+                                  UIModalPresentationStyle.formSheet,
+                              dismissButtonStyle:
+                                  SafariViewControllerDismissButtonStyle.done,
+                              modalPresentationCapturesStatusBarAppearance: true,
+                            ),
+                          );
+                        },
+                        enableFeedback: false,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Container(
+                            color: const Color(0xFFF7F7FA),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Assets.icons.star.image(height: 25),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 35),
+                    child: Text(
+                      'About',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                ),
-                const Gap(14),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Card(
-                    color: const Color(0xFFF7F7FA),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            await FlutterWebBrowser.openWebPage(
-                              url: 'https://coinplus.com/privacy-policy/',
-                              customTabsOptions: const CustomTabsOptions(
-                                shareState: CustomTabsShareState.on,
-                                instantAppsEnabled: true,
-                                showTitle: true,
-                                urlBarHidingEnabled: true,
+                  const Gap(14),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: const Color(0xFFF7F7FA),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await FlutterWebBrowser.openWebPage(
+                                url: 'https://coinplus.com/privacy-policy/',
+                                customTabsOptions: const CustomTabsOptions(
+                                  shareState: CustomTabsShareState.on,
+                                  instantAppsEnabled: true,
+                                  showTitle: true,
+                                  urlBarHidingEnabled: true,
+                                ),
+                                safariVCOptions:
+                                    const SafariViewControllerOptions(
+                                  barCollapsingEnabled: true,
+                                  modalPresentationStyle:
+                                      UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle:
+                                      SafariViewControllerDismissButtonStyle.done,
+                                  modalPresentationCapturesStatusBarAppearance:
+                                      true,
+                                ),
+                              );
+                              await recordAmplitudeEventPartTwo(
+                                const PrivacyPolicyClicked(),
+                              );
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              trailing:
+                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.privacy.image(
+                                height: 22,
                               ),
-                              safariVCOptions:
-                                  const SafariViewControllerOptions(
-                                barCollapsingEnabled: true,
-                                modalPresentationStyle:
-                                    UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle:
-                                    SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance:
-                                    true,
+                              title: const Row(
+                                children: [
+                                  Gap(4),
+                                  Text(
+                                    'Privacy policy',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 15,
+                                      color: AppColors.primaryTextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            );
-                            await recordAmplitudeEventPartTwo(
-                              const PrivacyPolicyClicked(),
-                            );
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.privacy.image(
-                              height: 22,
                             ),
-                            title: const Row(
-                              children: [
-                                Gap(4),
-                                Text(
-                                  'Privacy policy',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
+                          ),
+                          Divider(
+                            height: 1,
+                            indent: 0,
+                            endIndent: 0,
+                            thickness: 1,
+                            color: Colors.grey.withOpacity(0.1),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              await FlutterWebBrowser.openWebPage(
+                                url: 'https://coinplus.com/terms-of-use/',
+                                customTabsOptions: const CustomTabsOptions(
+                                  shareState: CustomTabsShareState.on,
+                                  instantAppsEnabled: true,
+                                  showTitle: true,
+                                  urlBarHidingEnabled: true,
+                                ),
+                                safariVCOptions:
+                                    const SafariViewControllerOptions(
+                                  barCollapsingEnabled: true,
+                                  modalPresentationStyle:
+                                      UIModalPresentationStyle.formSheet,
+                                  dismissButtonStyle:
+                                      SafariViewControllerDismissButtonStyle.done,
+                                  modalPresentationCapturesStatusBarAppearance:
+                                      true,
+                                ),
+                              );
+                              await recordAmplitudeEventPartTwo(
+                                const TermsOfUseClicked(),
+                              );
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              trailing:
+                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.terms.image(
+                                height: 22,
+                              ),
+                              title: const Row(
+                                children: [
+                                  Gap(3),
+                                  Text(
+                                    'Terms of use',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 15,
+                                      color: AppColors.primaryTextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            indent: 0,
+                            endIndent: 0,
+                            thickness: 1,
+                            color: Colors.grey.withOpacity(0.1),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              await router.push(const AboutAppRoute());
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              trailing:
+                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.info.image(
+                                height: 22,
+                                color: Colors.blue,
+                              ),
+                              title: const Text(
+                                'About app',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 15,
+                                  color: AppColors.primaryTextColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const Gap(10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: const Color(0xFFF7F7FA),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              await _walletProtectState.updateModalStatus(
+                                isOpened: true,
+                              );
+                              await recordAmplitudeEventPartTwo(
+                                const EraseMyDataClicked(),
+                              );
+                              await showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1,
-                          indent: 0,
-                          endIndent: 0,
-                          thickness: 1,
-                          color: Colors.grey.withOpacity(0.1),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            await FlutterWebBrowser.openWebPage(
-                              url: 'https://coinplus.com/terms-of-use/',
-                              customTabsOptions: const CustomTabsOptions(
-                                shareState: CustomTabsShareState.on,
-                                instantAppsEnabled: true,
-                                showTitle: true,
-                                urlBarHidingEnabled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) {
+                                  return const RemoveUserData();
+                                },
+                              );
+                              await _walletProtectState.updateModalStatus(
+                                isOpened: false,
+                              );
+                            },
+                            splashFactory: InkSparkle.splashFactory,
+                            highlightColor: Colors.transparent,
+                            child: ListTile(
+                              minLeadingWidth: 10,
+                              leading: Assets.icons.identity.image(
+                                height: 22,
                               ),
-                              safariVCOptions:
-                                  const SafariViewControllerOptions(
-                                barCollapsingEnabled: true,
-                                modalPresentationStyle:
-                                    UIModalPresentationStyle.formSheet,
-                                dismissButtonStyle:
-                                    SafariViewControllerDismissButtonStyle.done,
-                                modalPresentationCapturesStatusBarAppearance:
-                                    true,
-                              ),
-                            );
-                            await recordAmplitudeEventPartTwo(
-                              const TermsOfUseClicked(),
-                            );
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.terms.image(
-                              height: 22,
-                            ),
-                            title: const Row(
-                              children: [
-                                Gap(3),
-                                Text(
-                                  'Terms of use',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 15,
-                                    color: AppColors.primaryTextColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1,
-                          indent: 0,
-                          endIndent: 0,
-                          thickness: 1,
-                          color: Colors.grey.withOpacity(0.1),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            await router.push(const AboutAppRoute());
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            trailing:
-                                Assets.icons.arrowForwardIos.image(height: 20),
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.info.image(
-                              height: 22,
-                              color: Colors.blue,
-                            ),
-                            title: const Text(
-                              'About app',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.primaryTextColor,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Gap(10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Card(
-                    color: const Color(0xFFF7F7FA),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            await _walletProtectState.updateModalStatus(
-                              isOpened: true,
-                            );
-                            await recordAmplitudeEventPartTwo(
-                              const EraseMyDataClicked(),
-                            );
-                            await showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
+                              title: const Text(
+                                'Erase my data',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 15,
+                                  color: AppColors.red,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              backgroundColor: Colors.transparent,
-                              builder: (context) {
-                                return const RemoveUserData();
-                              },
-                            );
-                            await _walletProtectState.updateModalStatus(
-                              isOpened: false,
-                            );
-                          },
-                          splashFactory: InkSparkle.splashFactory,
-                          highlightColor: Colors.transparent,
-                          child: ListTile(
-                            minLeadingWidth: 10,
-                            leading: Assets.icons.identity.image(
-                              height: 22,
-                            ),
-                            title: const Text(
-                              'Erase my data',
-                              style: TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                fontSize: 15,
-                                color: AppColors.red,
-                                fontWeight: FontWeight.w500,
-                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const Gap(120),
-              ],
+                  const Gap(120),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
