@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -11,9 +10,6 @@ import 'package:mobx/mobx.dart';
 
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
-import '../../models/abstract_card/abstract_card.dart';
-import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -27,6 +23,7 @@ import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
 import 'card_list/card_list.dart';
 import 'favorite_coin/favorite_coin.dart';
+import 'tab_controller_listener/tab_controller_listener.dart';
 import 'total_balance/total_balance.dart';
 
 class WalletPage extends StatefulWidget {
@@ -62,8 +59,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
-  late int tabIndex = 0;
-  bool _isAmplitudeEventInProgress = false;
   late final _tabController = TabController(
     length: 2,
     vsync: this,
@@ -98,48 +93,16 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
               ? _balanceStore.bars[_balanceStore.barCurrentIndex].address
               : '',
     );
-    _tabController.addListener(() {
-      final card = _tabController.index == 0
-          ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
-          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
-      if (_tabController.index == 1 &&
-          _balanceStore.bars.isNotEmpty &&
-          _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.bars[_balanceStore.barCurrentIndex].address;
-      }
-      if (_tabController.index == 0 &&
-          _balanceStore.cards.isNotEmpty &&
-          _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
-      }
-      if (_tabController.index == 0) {
-        _historyPageStore.setTabIndex(0);
-        if (_balanceStore.cards.isNotEmpty) {
-          if (_balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-            widget.state.transactionsStore
-                .onSelectCard(_balanceStore.cardCurrentIndex);
-          }
-        }
-      }
-      if (_tabController.index == 1) {
-        _historyPageStore.setTabIndex(1);
-        if (_balanceStore.bars.isNotEmpty) {
-          if (_balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-            widget.state.transactionsStore
-                .onSelectBar(_balanceStore.barCurrentIndex);
-          }
-        }
-      }
-      widget.onChangeCard(
-        (
-          card: card as AbstractCard?,
-          index: _tabController.index,
-        ),
-      );
-      amplitudeEvent();
-    });
+    tabControllerListener(
+      balanceStore: _balanceStore,
+      barCarouselIndex: barCarouselIndex,
+      cardCarouselIndex: cardCarouselIndex,
+      historyPageStore: _historyPageStore,
+      onChangeCard: widget.onChangeCard,
+      rampService: _rampService,
+      state: widget.state,
+      tabController: _tabController,
+    );
     if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
       _tabController.animateTo(1);
     }
@@ -149,28 +112,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (Platform.isAndroid) {
       nfcStop();
     }
-  }
-
-  void amplitudeEvent() {
-    if (!_isAmplitudeEventInProgress) {
-      _isAmplitudeEventInProgress = true;
-      if (_tabController.index == 0) {
-        tabIndex = _tabController.index;
-        unawaited(recordAmplitudeEventPartTwo(const CardTabClicked()));
-      } else if (_tabController.index == 1) {
-        tabIndex = _tabController.index;
-        unawaited(recordAmplitudeEventPartTwo(const BarTabClicked()));
-      }
-      Future.delayed(const Duration(seconds: 1), () {
-        _isAmplitudeEventInProgress = false;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _tabController.removeListener(amplitudeEvent);
-    super.dispose();
   }
 
   @override
