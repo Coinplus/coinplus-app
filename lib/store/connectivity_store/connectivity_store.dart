@@ -2,6 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../services/firebase_service.dart';
+
 part 'connectivity_store.g.dart';
 
 class ConnectivityStore = _ConnectivityStore with _$ConnectivityStore;
@@ -11,7 +13,6 @@ abstract class _ConnectivityStore with Store {
 
   _ConnectivityStore() {
     _connectivity = Connectivity();
-    initConnectivity();
   }
 
   @observable
@@ -19,6 +20,7 @@ abstract class _ConnectivityStore with Store {
 
   @action
   Future<void> initConnectivity() async {
+    await signInAnonymously();
     try {
       final result = await _connectivity.checkConnectivity();
       await updateConnectionStatus(result);
