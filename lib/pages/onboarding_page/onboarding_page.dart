@@ -335,6 +335,7 @@ class OnboardingPage extends HookWidget {
                                   walletAddress: walletAddress,
                                 ),
                               );
+                              await signInAnonymously();
                               final nfcA = NfcA.from(tag);
                               final uid = nfcA!.identifier;
 
@@ -402,6 +403,7 @@ class OnboardingPage extends HookWidget {
                                   if (card != null &&
                                       card.possibleOldCard == true) {
                                     if (card.nfcId == formattedTagId) {
+                                      await signInAnonymously();
                                       await router.push(
                                         CardFillWithNfc(
                                           isOldCard: card.possibleOldCard,
