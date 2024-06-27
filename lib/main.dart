@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app.dart';
 import 'constants/flavor_type.dart';
-import 'firebase_options.dart';
 import 'providers/get_it.dart';
 import 'services/amplitude_service.dart';
 import 'utils/secure_storage_utils.dart';
@@ -17,7 +17,13 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
     RootIsolateToken.instance!,
   );
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.requestPermission();
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
   unawaited(
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[

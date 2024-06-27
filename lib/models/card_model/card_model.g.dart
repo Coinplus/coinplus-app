@@ -8,8 +8,8 @@ part of 'card_model.dart';
 
 _$CardModelImpl _$$CardModelImplFromJson(Map json) => _$CardModelImpl(
       address: json['address'] as String,
-      finalBalance: json['final_balance'] as int?,
-      totalReceived: json['total_received'] as int?,
+      finalBalance: (json['final_balance'] as num?)?.toInt(),
+      totalReceived: (json['total_received'] as num?)?.toInt(),
       color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
           CardColor.ORANGE,
       type:

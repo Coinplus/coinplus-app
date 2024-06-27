@@ -23,14 +23,14 @@ class _CoinsClient implements CoinsClient {
     int? page,
     int? limit,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<CoinModel>(Options(
       method: 'GET',
@@ -54,10 +54,10 @@ class _CoinsClient implements CoinsClient {
 
   @override
   Future<MarketCapDto> getMarketCap() async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MarketCapDto>(Options(
       method: 'GET',
@@ -84,10 +84,10 @@ class _CoinsClient implements CoinsClient {
     required String address,
     required int page,
   }) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TransactionModel>(Options(
       method: 'GET',
@@ -111,10 +111,10 @@ class _CoinsClient implements CoinsClient {
 
   @override
   Future<WalletStatusModel> getWalletStatus({required String address}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<WalletStatusModel>(Options(
       method: 'GET',
@@ -139,10 +139,10 @@ class _CoinsClient implements CoinsClient {
   @override
   Future<PatchTransactionsModel> patchTransactions(
       {required String address}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<PatchTransactionsModel>(Options(
       method: 'PATCH',

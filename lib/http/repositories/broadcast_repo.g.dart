@@ -20,7 +20,7 @@ class _BroadcastClient implements BroadcastClient {
 
   @override
   Future<String> broadcastTransaction({required String hex}) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = hex;

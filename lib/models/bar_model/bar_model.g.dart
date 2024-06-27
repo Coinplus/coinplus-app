@@ -8,8 +8,8 @@ part of 'bar_model.dart';
 
 _$BarModelImpl _$$BarModelImplFromJson(Map json) => _$BarModelImpl(
       address: json['address'] as String,
-      finalBalance: json['final_balance'] as int?,
-      totalReceived: json['total_received'] as int?,
+      finalBalance: (json['final_balance'] as num?)?.toInt(),
+      totalReceived: (json['total_received'] as num?)?.toInt(),
       color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
           CardColor.SILVER,
       type:

@@ -64,9 +64,9 @@ class SendReceiveActionButton extends StatelessWidget {
             final selectedCard = currentCard.value.card;
             final isBarList = currentCard.value.index == 1;
             final isCardActivated =
-            isCardWalletActivated(balanceStore: _balanceStore);
+                isCardWalletActivated(balanceStore: _balanceStore);
             final isBarActivated =
-            isBarWalletActivated(balanceStore: _balanceStore);
+                isBarWalletActivated(balanceStore: _balanceStore);
             if (selectedCard == null || _pageController.page != 0) {
               if (isBarList) {
                 await recordAmplitudeEvent(
@@ -74,10 +74,10 @@ class SendReceiveActionButton extends StatelessWidget {
                     source: _pageController.page == 0
                         ? 'Wallet'
                         : _pageController.page == 1
-                        ? 'Market'
-                        : _pageController.page == 2
-                        ? 'History'
-                        : 'Settings',
+                            ? 'Market'
+                            : _pageController.page == 2
+                                ? 'History'
+                                : 'Settings',
                   ),
                 );
                 isModalOpened.value = true;
@@ -192,7 +192,7 @@ class SendReceiveActionButton extends StatelessWidget {
                 walletType: isBarList ? 'Bar' : 'Card',
                 walletAddress: currentCard.value.card!.address,
                 activated:
-                isBarList ? await isBarActivated : await isCardActivated,
+                    isBarList ? await isBarActivated : await isCardActivated,
               ),
             );
           },
@@ -220,13 +220,13 @@ class SendReceiveActionButton extends StatelessWidget {
                           : CrossFadeState.showFirst,
                       firstChild: _balanceStore.cards.isEmpty
                           ? Assets.icons.plus.image(
-                        color: Colors.white,
-                        height: 32,
-                      )
+                              color: Colors.white,
+                              height: 32,
+                            )
                           : Assets.icons.sendReceive.image(
-                        color: Colors.white,
-                        height: 32,
-                      ),
+                              color: Colors.white,
+                              height: 32,
+                            ),
                       secondChild: Assets.icons.plus.image(
                         color: Colors.white,
                         height: 32,
@@ -249,13 +249,13 @@ class SendReceiveActionButton extends StatelessWidget {
                           : CrossFadeState.showFirst,
                       firstChild: _balanceStore.bars.isEmpty
                           ? Assets.icons.plus.image(
-                        color: Colors.white,
-                        height: 32,
-                      )
+                              color: Colors.white,
+                              height: 32,
+                            )
                           : Assets.icons.sendReceive.image(
-                        color: Colors.white,
-                        height: 32,
-                      ),
+                              color: Colors.white,
+                              height: 32,
+                            ),
                       secondChild: Assets.icons.plus.image(
                         color: Colors.white,
                         height: 32,

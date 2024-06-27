@@ -441,7 +441,10 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo =>
       const AssetGenImage('assets/images/app_logo.png');
 
+  /// Directory path: assets/images/bar
   $AssetsImagesBarGen get bar => const $AssetsImagesBarGen();
+
+  /// Directory path: assets/images/card
   $AssetsImagesCardGen get card => const $AssetsImagesCardGen();
 
   /// File path: assets/images/card_and_bar_forms.png
@@ -505,6 +508,10 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/nfcanimation.json
   String get nfcanimation => 'assets/lottie_animations/nfcanimation.json';
 
+  /// File path: assets/lottie_animations/notification_animation.json
+  String get notificationAnimation =>
+      'assets/lottie_animations/notification_animation.json';
+
   /// File path: assets/lottie_animations/pending.json
   String get pending => 'assets/lottie_animations/pending.json';
 
@@ -543,6 +550,7 @@ class $AssetsLottieAnimationsGen {
         info,
         loadingAnimation,
         nfcanimation,
+        notificationAnimation,
         pending,
         phoneCoinSplash,
         pleaseWait,
@@ -731,9 +739,16 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
 
   final String _assetName;
+
+  final Size? size;
+  final Set<String> flavors;
 
   Image image({
     Key? key,

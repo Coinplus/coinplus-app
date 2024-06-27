@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:did_change_authlocal/did_change_authlocal.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -27,6 +29,7 @@ import '../../store/nfc_state/nfc_state.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
+import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 import 'please_enable_biometrics.dart';
 import 'remove_user_data/remove_user_data.dart';
@@ -46,12 +49,52 @@ class SettingsPage extends HookWidget {
     useAutomaticKeepAlive();
     final _settingsState = SettingsState();
     final _auth = LocalAuthentication();
+    final isAuthorised = useState(false);
     final _nfcState = useMemoized(NfcStore.new);
-    useEffect(() {
-      _walletProtectState.checkBiometrics();
-      _nfcState.checkNfcSupport();
-      return null;
+
+    Future<void> checkStatus() async {
+      final messaging = FirebaseMessaging.instance;
+      final settings = await messaging.requestPermission();
+      final token = await secureStorage.read(key: 'fcm_token');
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        isAuthorised.value = true;
+
+        if (token == null) {
+          final newToken = await messaging.getToken();
+          if (newToken != null) {
+            await secureStorage.write(key: 'fcm_token', value: newToken);
+            unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOn()));
+            unawaited(recordUserProperty(const NotificationsOn()));
+          }
+        }
+      } else {
+        isAuthorised.value = false;
+        if (token != null) {
+          await messaging.deleteToken();
+          await secureStorage.delete(key: 'fcm_token');
+          unawaited(deleteIdentifyProperties(const NotificationsOn()));
+          unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOff()));
+        }
+      }
+    }
+
+    useOnAppLifecycleStateChange((previous, current) async {
+      if (current == AppLifecycleState.resumed) {
+        await checkStatus();
+      }
     });
+
+    useEffect(
+      () {
+        _walletProtectState.checkBiometrics();
+        checkStatus();
+        _nfcState.checkNfcSupport();
+        return null;
+      },
+      [],
+    );
+
     final onToggleAppLock = useCallback(
       (isEnable) async {
         await recordAmplitudeEventPartTwo(const AppLockClicked());
@@ -88,22 +131,6 @@ class SettingsPage extends HookWidget {
         await _walletProtectState.checkBiometricStatus();
       },
       [_walletProtectState.isBiometricsEnabled],
-    );
-    // ignore: avoid_positional_boolean_parameters
-    final onToggleNotifications = useCallback<Future<void> Function(bool p1)>(
-      (isEnable) async {
-        if (!isEnable) {
-          unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOn()));
-          unawaited(recordUserProperty(const NotificationsOn()));
-          await _walletProtectState.enableNotification();
-        } else {
-          await _walletProtectState.disableNotification();
-          unawaited(deleteIdentifyProperties(const NotificationsOn()));
-          unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOff()));
-        }
-        await _walletProtectState.checkNotificationToggleStatus();
-      },
-      [_walletProtectState.isSwitchedNotificationsToggle],
     );
 
     // ignore: avoid_positional_boolean_parameters
@@ -234,8 +261,8 @@ class SettingsPage extends HookWidget {
                                         splashFactory: InkSparkle.splashFactory,
                                         highlightColor: Colors.transparent,
                                         child: ListTile(
-                                          trailing:
-                                              Assets.icons.arrowForwardIos.image(
+                                          trailing: Assets.icons.arrowForwardIos
+                                              .image(
                                             height: 20,
                                           ),
                                           splashColor: Colors.transparent,
@@ -246,7 +273,8 @@ class SettingsPage extends HookWidget {
                                           title: const Text(
                                             'Change passcode',
                                             style: TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               fontSize: 15,
                                               color: AppColors.primaryTextColor,
                                               fontWeight: FontWeight.w500,
@@ -292,8 +320,8 @@ class SettingsPage extends HookWidget {
                                                       },
                                                     ),
                                                     leading: Platform.isAndroid
-                                                        ? Assets
-                                                            .icons.faceIdSettings
+                                                        ? Assets.icons
+                                                            .faceIdSettings
                                                             .image(
                                                             height: 22,
                                                           )
@@ -354,7 +382,9 @@ class SettingsPage extends HookWidget {
                                 InkWell(
                                   onTap: () async {
                                     await _walletProtectState
-                                        .updateNfcSessionStatus(isStarted: true);
+                                        .updateNfcSessionStatus(
+                                      isStarted: true,
+                                    );
                                     unawaited(
                                       recordAmplitudeEventPartTwo(
                                         const VerifyCardClicked(),
@@ -424,7 +454,8 @@ class SettingsPage extends HookWidget {
                                       return CupertinoSwitch(
                                         value: _walletProtectState
                                             .isSwitchedHideBalancesToggle,
-                                        onChanged: (val) => onToggleHideBalances(
+                                        onChanged: (val) =>
+                                            onToggleHideBalances(
                                           _walletProtectState
                                               .isSwitchedHideBalancesToggle,
                                         ),
@@ -474,48 +505,61 @@ class SettingsPage extends HookWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       clipBehavior: Clip.hardEdge,
-                      child: Observer(
-                        builder: (context) {
-                          return InkWell(
-                            onTap: () {
-                              onToggleNotifications(
-                                _walletProtectState.isSwitchedNotificationsToggle,
-                              );
-                            },
-                            splashFactory: InkSplash.splashFactory,
-                            highlightColor: Colors.transparent,
-                            child: ListTile(
-                              minLeadingWidth: 10,
-                              trailing: CupertinoSwitch(
-                                value: _walletProtectState
-                                    .isSwitchedNotificationsToggle,
-                                onChanged: (_) {
-                                  onToggleNotifications(
-                                    _walletProtectState
-                                        .isSwitchedNotificationsToggle,
-                                  );
-                                },
-                              ),
-                              leading: Assets.icons.notifications.image(
-                                height: 22,
-                              ),
-                              title: const Row(
-                                children: [
-                                  Gap(2),
-                                  Text(
-                                    'Push notifications',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 15,
-                                      color: AppColors.primaryTextColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                      child: InkWell(
+                        onTap: () {
+                          AppSettings.openAppSettings(
+                            type: AppSettingsType.notification,
                           );
                         },
+                        splashFactory: InkSparkle.splashFactory,
+                        highlightColor: Colors.transparent,
+                        child: ListTile(
+                          minLeadingWidth: 10,
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (isAuthorised.value)
+                                const Text(
+                                  'On',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              else
+                                const Text(
+                                  'Off',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              const Gap(5),
+                              Assets.icons.arrowForwardIos.image(height: 20),
+                            ],
+                          ),
+                          leading: Assets.icons.notifications.image(
+                            height: 22,
+                          ),
+                          title: const Row(
+                            children: [
+                              Gap(2),
+                              Text(
+                                'Push notifications',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 15,
+                                  color: AppColors.primaryTextColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -563,7 +607,8 @@ class SettingsPage extends HookWidget {
                                   modalPresentationStyle:
                                       UIModalPresentationStyle.formSheet,
                                   dismissButtonStyle:
-                                      SafariViewControllerDismissButtonStyle.done,
+                                      SafariViewControllerDismissButtonStyle
+                                          .done,
                                   modalPresentationCapturesStatusBarAppearance:
                                       true,
                                 ),
@@ -572,8 +617,8 @@ class SettingsPage extends HookWidget {
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
                             child: ListTile(
-                              trailing:
-                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              trailing: Assets.icons.arrowForwardIos
+                                  .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.help.image(
                                 height: 22,
@@ -606,8 +651,8 @@ class SettingsPage extends HookWidget {
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
                             child: ListTile(
-                              trailing:
-                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              trailing: Assets.icons.arrowForwardIos
+                                  .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.contactUs.image(
                                 height: 22,
@@ -663,7 +708,8 @@ class SettingsPage extends HookWidget {
                                   UIModalPresentationStyle.formSheet,
                               dismissButtonStyle:
                                   SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
+                              modalPresentationCapturesStatusBarAppearance:
+                                  true,
                             ),
                           );
                         },
@@ -699,7 +745,8 @@ class SettingsPage extends HookWidget {
                                   UIModalPresentationStyle.formSheet,
                               dismissButtonStyle:
                                   SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
+                              modalPresentationCapturesStatusBarAppearance:
+                                  true,
                             ),
                           );
                         },
@@ -735,7 +782,8 @@ class SettingsPage extends HookWidget {
                                   UIModalPresentationStyle.formSheet,
                               dismissButtonStyle:
                                   SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
+                              modalPresentationCapturesStatusBarAppearance:
+                                  true,
                             ),
                           );
                         },
@@ -771,7 +819,8 @@ class SettingsPage extends HookWidget {
                                   UIModalPresentationStyle.formSheet,
                               dismissButtonStyle:
                                   SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
+                              modalPresentationCapturesStatusBarAppearance:
+                                  true,
                             ),
                           );
                         },
@@ -797,7 +846,8 @@ class SettingsPage extends HookWidget {
                             const JoinCommunityClicked(social: 'Trust pilot'),
                           );
                           await FlutterWebBrowser.openWebPage(
-                            url: 'https://www.trustpilot.com/review/coinplus.com',
+                            url:
+                                'https://www.trustpilot.com/review/coinplus.com',
                             customTabsOptions: const CustomTabsOptions(
                               shareState: CustomTabsShareState.on,
                               instantAppsEnabled: true,
@@ -810,7 +860,8 @@ class SettingsPage extends HookWidget {
                                   UIModalPresentationStyle.formSheet,
                               dismissButtonStyle:
                                   SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
+                              modalPresentationCapturesStatusBarAppearance:
+                                  true,
                             ),
                           );
                         },
@@ -869,7 +920,8 @@ class SettingsPage extends HookWidget {
                                   modalPresentationStyle:
                                       UIModalPresentationStyle.formSheet,
                                   dismissButtonStyle:
-                                      SafariViewControllerDismissButtonStyle.done,
+                                      SafariViewControllerDismissButtonStyle
+                                          .done,
                                   modalPresentationCapturesStatusBarAppearance:
                                       true,
                                 ),
@@ -881,8 +933,8 @@ class SettingsPage extends HookWidget {
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
                             child: ListTile(
-                              trailing:
-                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              trailing: Assets.icons.arrowForwardIos
+                                  .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.privacy.image(
                                 height: 22,
@@ -926,7 +978,8 @@ class SettingsPage extends HookWidget {
                                   modalPresentationStyle:
                                       UIModalPresentationStyle.formSheet,
                                   dismissButtonStyle:
-                                      SafariViewControllerDismissButtonStyle.done,
+                                      SafariViewControllerDismissButtonStyle
+                                          .done,
                                   modalPresentationCapturesStatusBarAppearance:
                                       true,
                                 ),
@@ -938,8 +991,8 @@ class SettingsPage extends HookWidget {
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
                             child: ListTile(
-                              trailing:
-                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              trailing: Assets.icons.arrowForwardIos
+                                  .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.terms.image(
                                 height: 22,
@@ -974,8 +1027,8 @@ class SettingsPage extends HookWidget {
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
                             child: ListTile(
-                              trailing:
-                                  Assets.icons.arrowForwardIos.image(height: 20),
+                              trailing: Assets.icons.arrowForwardIos
+                                  .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.info.image(
                                 height: 22,
