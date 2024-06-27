@@ -144,8 +144,8 @@ Map<String, dynamic> _$$CoinImplToJson(_$CoinImpl instance) =>
     };
 
 _$MetaImpl _$$MetaImplFromJson(Map json) => _$MetaImpl(
-      page: json['page'] as int,
-      limit: json['limit'] as int,
+      page: (json['page'] as num).toInt(),
+      limit: (json['limit'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$MetaImplToJson(_$MetaImpl instance) =>

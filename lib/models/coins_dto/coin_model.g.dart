@@ -46,10 +46,10 @@ Map<String, dynamic> _$$CoinResultModelImplToJson(
     };
 
 _$MetaImpl _$$MetaImplFromJson(Map json) => _$MetaImpl(
-      page: json['page'] as int,
-      limit: json['limit'] as int,
-      itemCount: json['itemCount'] as int,
-      pageCount: json['pageCount'] as int,
+      page: (json['page'] as num).toInt(),
+      limit: (json['limit'] as num).toInt(),
+      itemCount: (json['itemCount'] as num).toInt(),
+      pageCount: (json['pageCount'] as num).toInt(),
       hasPreviousPage: json['hasPreviousPage'] as bool,
       hasNextPage: json['hasNextPage'] as bool,
     );

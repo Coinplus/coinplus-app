@@ -7,11 +7,11 @@ part of 'tx_fee_dto.dart';
 // **************************************************************************
 
 _$TxFeeDtoImpl _$$TxFeeDtoImplFromJson(Map json) => _$TxFeeDtoImpl(
-      fastestFee: json['fastestFee'] as int? ?? 0,
-      halfHourFee: json['halfHourFee'] as int? ?? 0,
-      hourFee: json['hourFee'] as int? ?? 0,
-      economyFee: json['economyFee'] as int? ?? 0,
-      minimumFee: json['minimumFee'] as int? ?? 0,
+      fastestFee: (json['fastestFee'] as num?)?.toInt() ?? 0,
+      halfHourFee: (json['halfHourFee'] as num?)?.toInt() ?? 0,
+      hourFee: (json['hourFee'] as num?)?.toInt() ?? 0,
+      economyFee: (json['economyFee'] as num?)?.toInt() ?? 0,
+      minimumFee: (json['minimumFee'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$TxFeeDtoImplToJson(_$TxFeeDtoImpl instance) =>

@@ -38,11 +38,9 @@ class AddNewBarModal extends StatelessWidget {
                 'Add new wallet',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily:
-                  FontFamily.redHatBold,
+                  fontFamily: FontFamily.redHatBold,
                   fontSize: 17,
-                  color:
-                  AppColors.primaryTextColor,
+                  color: AppColors.primaryTextColor,
                 ),
               ),
             ),

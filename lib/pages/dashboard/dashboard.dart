@@ -484,4 +484,3 @@ class DashboardPage extends HookWidget {
     );
   }
 }
-

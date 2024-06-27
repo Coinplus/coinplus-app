@@ -9,12 +9,12 @@ part of 'utxo_model.dart';
 _$UtxoModelImpl _$$UtxoModelImplFromJson(Map json) => _$UtxoModelImpl(
       txHashBigEndian: json['tx_hash_big_endian'] as String,
       txHash: json['tx_hash'] as String,
-      txOutputN: json['tx_output_n'] as int,
+      txOutputN: (json['tx_output_n'] as num).toInt(),
       script: json['script'] as String,
-      value: json['value'] as int,
+      value: (json['value'] as num).toInt(),
       valueHex: json['value_hex'] as String,
-      confirmations: json['confirmations'] as int,
-      txIndex: json['tx_index'] as int,
+      confirmations: (json['confirmations'] as num).toInt(),
+      txIndex: (json['tx_index'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$UtxoModelImplToJson(_$UtxoModelImpl instance) =>

@@ -8,14 +8,14 @@ part of 'cards_firebase_model.dart';
 
 CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       activated: json['activated'] as bool?,
-      activationCount: json['activationCount'] as int?,
-      activationFailureCount: json['activationFailureCount'] as int?,
+      activationCount: (json['activationCount'] as num?)?.toInt(),
+      activationFailureCount: (json['activationFailureCount'] as num?)?.toInt(),
       address: json['address'] as String?,
       approved: json['approved'] as bool?,
       barcodeId: json['barcodeId'] as String?,
       color: json['color'] as String?,
-      connected: json['connected'] as int?,
-      deleted: json['deleted'] as int?,
+      connected: (json['connected'] as num?)?.toInt(),
+      deleted: (json['deleted'] as num?)?.toInt(),
       email: json['email'] as String?,
       nfcId: json['nfcId'] as String?,
       possibleOldCard: json['possibleOldCard'] as bool?,
@@ -24,7 +24,8 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
           ?.map((e) => Map<String, dynamic>.from(e as Map))
           .toList(),
       type: json['type'] as String?,
-      verificationFailureCount: json['verificationFailureCount'] as int?,
+      verificationFailureCount:
+          (json['verificationFailureCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CardsModelToJson(CardsModel instance) {

@@ -11,11 +11,9 @@ import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../send_page/send_to/send_to_state.dart';
 
-
 int cardCarouselIndex = 0;
 int barCarouselIndex = 0;
 bool _isAmplitudeEventInProgress = false;
-
 
 void tabControllerListener({
   TabController? tabController,
@@ -47,8 +45,7 @@ void tabControllerListener({
       historyPageStore?.setTabIndex(0);
       if (balanceStore!.cards.isNotEmpty) {
         if (balanceStore.cardCurrentIndex != balanceStore.cards.length) {
-          state?.transactionsStore
-              .onSelectCard(balanceStore.cardCurrentIndex);
+          state?.transactionsStore.onSelectCard(balanceStore.cardCurrentIndex);
         }
       }
     }
@@ -56,15 +53,14 @@ void tabControllerListener({
       historyPageStore?.setTabIndex(1);
       if (balanceStore!.bars.isNotEmpty) {
         if (balanceStore.barCurrentIndex != balanceStore.bars.length) {
-          state?.transactionsStore
-              .onSelectBar(balanceStore.barCurrentIndex);
+          state?.transactionsStore.onSelectBar(balanceStore.barCurrentIndex);
         }
       }
     }
     onChangeCard!(
       (
-      card: card as AbstractCard?,
-      index: tabController.index,
+        card: card as AbstractCard?,
+        index: tabController.index,
       ),
     );
     if (!_isAmplitudeEventInProgress) {

@@ -47,7 +47,7 @@ abstract class _WalletProtectState with Store {
   bool isSetPinCode = false;
 
   @observable
-  bool isSwitchedNotificationsToggle = false;
+  bool isSwitchedNotificationsToggle = true;
 
   @observable
   bool isLinkOpened = false;
