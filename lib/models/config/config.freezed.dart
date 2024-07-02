@@ -25,7 +25,6 @@ mixin _$Config {
   String get apiUrl => throw _privateConstructorUsedError;
   String get coinsUrl => throw _privateConstructorUsedError;
   String get mempool => throw _privateConstructorUsedError;
-  String get ipUrl => throw _privateConstructorUsedError;
   String get utxoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +43,6 @@ abstract class $ConfigCopyWith<$Res> {
       String apiUrl,
       String coinsUrl,
       String mempool,
-      String ipUrl,
       String utxoUrl});
 }
 
@@ -66,7 +64,6 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? apiUrl = null,
     Object? coinsUrl = null,
     Object? mempool = null,
-    Object? ipUrl = null,
     Object? utxoUrl = null,
   }) {
     return _then(_value.copyWith(
@@ -90,10 +87,6 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
           ? _value.mempool
           : mempool // ignore: cast_nullable_to_non_nullable
               as String,
-      ipUrl: null == ipUrl
-          ? _value.ipUrl
-          : ipUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       utxoUrl: null == utxoUrl
           ? _value.utxoUrl
           : utxoUrl // ignore: cast_nullable_to_non_nullable
@@ -115,7 +108,6 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
       String apiUrl,
       String coinsUrl,
       String mempool,
-      String ipUrl,
       String utxoUrl});
 }
 
@@ -135,7 +127,6 @@ class __$$ConfigImplCopyWithImpl<$Res>
     Object? apiUrl = null,
     Object? coinsUrl = null,
     Object? mempool = null,
-    Object? ipUrl = null,
     Object? utxoUrl = null,
   }) {
     return _then(_$ConfigImpl(
@@ -159,10 +150,6 @@ class __$$ConfigImplCopyWithImpl<$Res>
           ? _value.mempool
           : mempool // ignore: cast_nullable_to_non_nullable
               as String,
-      ipUrl: null == ipUrl
-          ? _value.ipUrl
-          : ipUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       utxoUrl: null == utxoUrl
           ? _value.utxoUrl
           : utxoUrl // ignore: cast_nullable_to_non_nullable
@@ -180,7 +167,6 @@ class _$ConfigImpl implements _Config {
       required this.apiUrl,
       required this.coinsUrl,
       required this.mempool,
-      required this.ipUrl,
       required this.utxoUrl});
 
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
@@ -197,13 +183,11 @@ class _$ConfigImpl implements _Config {
   @override
   final String mempool;
   @override
-  final String ipUrl;
-  @override
   final String utxoUrl;
 
   @override
   String toString() {
-    return 'Config(env: $env, production: $production, apiUrl: $apiUrl, coinsUrl: $coinsUrl, mempool: $mempool, ipUrl: $ipUrl, utxoUrl: $utxoUrl)';
+    return 'Config(env: $env, production: $production, apiUrl: $apiUrl, coinsUrl: $coinsUrl, mempool: $mempool, utxoUrl: $utxoUrl)';
   }
 
   @override
@@ -218,14 +202,13 @@ class _$ConfigImpl implements _Config {
             (identical(other.coinsUrl, coinsUrl) ||
                 other.coinsUrl == coinsUrl) &&
             (identical(other.mempool, mempool) || other.mempool == mempool) &&
-            (identical(other.ipUrl, ipUrl) || other.ipUrl == ipUrl) &&
             (identical(other.utxoUrl, utxoUrl) || other.utxoUrl == utxoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, env, production, apiUrl, coinsUrl, mempool, ipUrl, utxoUrl);
+      runtimeType, env, production, apiUrl, coinsUrl, mempool, utxoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +231,6 @@ abstract class _Config implements Config {
       required final String apiUrl,
       required final String coinsUrl,
       required final String mempool,
-      required final String ipUrl,
       required final String utxoUrl}) = _$ConfigImpl;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
@@ -263,8 +245,6 @@ abstract class _Config implements Config {
   String get coinsUrl;
   @override
   String get mempool;
-  @override
-  String get ipUrl;
   @override
   String get utxoUrl;
   @override
