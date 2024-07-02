@@ -508,10 +508,6 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/nfcanimation.json
   String get nfcanimation => 'assets/lottie_animations/nfcanimation.json';
 
-  /// File path: assets/lottie_animations/notification_animation.json
-  String get notificationAnimation =>
-      'assets/lottie_animations/notification_animation.json';
-
   /// File path: assets/lottie_animations/pending.json
   String get pending => 'assets/lottie_animations/pending.json';
 
@@ -550,7 +546,6 @@ class $AssetsLottieAnimationsGen {
         info,
         loadingAnimation,
         nfcanimation,
-        notificationAnimation,
         pending,
         phoneCoinSplash,
         pleaseWait,

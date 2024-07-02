@@ -12,7 +12,6 @@ _$ConfigImpl _$$ConfigImplFromJson(Map json) => _$ConfigImpl(
       apiUrl: json['apiUrl'] as String,
       coinsUrl: json['coinsUrl'] as String,
       mempool: json['mempool'] as String,
-      ipUrl: json['ipUrl'] as String,
       utxoUrl: json['utxoUrl'] as String,
     );
 
@@ -23,7 +22,6 @@ Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
       'apiUrl': instance.apiUrl,
       'coinsUrl': instance.coinsUrl,
       'mempool': instance.mempool,
-      'ipUrl': instance.ipUrl,
       'utxoUrl': instance.utxoUrl,
     };
 

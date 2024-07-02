@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../constants/card_color.dart';
 import '../../constants/card_record.dart';
@@ -11,7 +12,6 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../modals/bar_selection_modal/bar_selection_modal.dart';
 import '../../modals/card_selection_modal/card_selection_modal.dart';
-import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
@@ -50,8 +50,6 @@ class _HistoryPageState extends State<HistoryPage>
   RampService get _rampService => GetIt.I<RampService>();
 
   final _scrollController = ScrollController();
-  final cardCarouselIndex = 0;
-  final barCarouselIndex = 0;
   late final _tabController = TabController(
     length: 2,
     initialIndex: _historyPageStore.tabIndex == 0 ? 0 : 1,
@@ -62,9 +60,6 @@ class _HistoryPageState extends State<HistoryPage>
   void initState() {
     super.initState();
     _tabController.addListener(() {
-      final card = _tabController.index == 0
-          ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
-          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
@@ -85,17 +80,17 @@ class _HistoryPageState extends State<HistoryPage>
         _historyPageStore.setTabIndex(1);
         recordAmplitudeEventPartTwo(const BarTabHistoryClicked());
       }
-      widget.onChangeCard(
-        (
-          card: card as AbstractCard?,
-          index: _tabController.index,
-        ),
-      );
     });
 
     if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
       _tabController.animateTo(1);
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
   }
 
   @override
@@ -123,8 +118,16 @@ class _HistoryPageState extends State<HistoryPage>
                     ),
                   ),
                 ),
-                CardAndBarTab(
-                  tabController: _tabController,
+                ReactionBuilder(
+                  builder: (context) {
+                    return reaction(
+                      (p0) => _historyPageStore.tabIndex,
+                      (p1) => _tabController.animateTo(p1),
+                    );
+                  },
+                  child: CardAndBarTab(
+                    tabController: _tabController,
+                  ),
                 ),
               ],
             ),

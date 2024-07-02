@@ -1,7 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -10,8 +12,16 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 
 @RoutePage()
-class AboutAppPage extends StatelessWidget {
+class AboutAppPage extends HookWidget {
   const AboutAppPage({super.key});
+
+  Future<void> appReview() async {
+    final inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      await inAppReview.requestReview();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,35 +175,37 @@ class AboutAppPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Divider(
-                  //   height: 1,
-                  //   indent: 0,
-                  //   endIndent: 0,
-                  //   thickness: 1,
-                  //   color: Colors.grey.withOpacity(0.1),
-                  // ),
-                  // InkWell(
-                  //   onTap: () async {},
-                  //   splashFactory: InkSparkle.splashFactory,
-                  //   highlightColor: Colors.transparent,
-                  //   child: ListTile(
-                  //     trailing: Assets.icons.arrowForwardIos.image(height: 20),
-                  //     minLeadingWidth: 10,
-                  //     leading: Assets.icons.rate.image(
-                  //       height: 22,
-                  //       color: Colors.blue,
-                  //     ),
-                  //     title: const Text(
-                  //       'Rate Coinplus',
-                  //       style: TextStyle(
-                  //         fontFamily: FontFamily.redHatMedium,
-                  //         fontSize: 15,
-                  //         color: AppColors.primaryTextColor,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Divider(
+                    height: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    thickness: 1,
+                    color: Colors.grey.withOpacity(0.1),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await appReview();
+                    },
+                    splashFactory: InkSparkle.splashFactory,
+                    highlightColor: Colors.transparent,
+                    child: ListTile(
+                      trailing: Assets.icons.arrowForwardIos.image(height: 20),
+                      minLeadingWidth: 10,
+                      leading: Assets.icons.rate.image(
+                        height: 22,
+                        color: Colors.blue,
+                      ),
+                      title: const Text(
+                        'Rate Coinplus',
+                        style: TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          fontSize: 15,
+                          color: AppColors.primaryTextColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

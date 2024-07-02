@@ -366,34 +366,24 @@ class DashboardPage extends HookWidget {
                         ),
                         onTap: (index) => [
                           HapticFeedback.lightImpact(),
-                          _pageController.jumpToPage(
-                            index,
-                          ),
+                          _pageController.jumpToPage(index),
                           _allSettingsState.updateIndex(index),
                           if (index == 0)
                             {
-                              recordAmplitudeEvent(
-                                const WalletTabClicked(),
-                              ),
+                              recordAmplitudeEvent(const WalletTabClicked()),
                             }
                           else if (index == 1)
                             {
-                              recordAmplitudeEvent(
-                                const MarketTabClicked(),
-                              ),
+                              recordAmplitudeEvent(const MarketTabClicked()),
                               programmaticRefresh(),
                             }
                           else if (index == 2)
                             {
-                              recordAmplitudeEvent(
-                                const HistoryTabClicked(),
-                              ),
+                              recordAmplitudeEvent(const HistoryTabClicked()),
                             }
                           else if (index == 3)
                             {
-                              recordAmplitudeEvent(
-                                const SettingsTabClicked(),
-                              ),
+                              recordAmplitudeEvent(const SettingsTabClicked()),
                             },
                         ],
                         currentIndex: _allSettingsState.currentIndex,

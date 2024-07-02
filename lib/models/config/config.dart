@@ -14,7 +14,6 @@ class Config with _$Config {
     required String apiUrl,
     required String coinsUrl,
     required String mempool,
-    required String ipUrl,
     required String utxoUrl,
   }) = _Config;
 

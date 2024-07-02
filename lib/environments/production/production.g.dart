@@ -9,7 +9,6 @@ part of 'production.dart';
 const _$productionEnvJsonLiteral = {
   'apiUrl': 'https://blockstream.info',
   'coinsUrl': 'https://openapiv1.coinstats.app',
-  'ipUrl': 'https://api.ipify.org',
   'utxoUrl': 'https://blockchain.info',
   'mempool': 'https://mempool.space',
   'env': 'PROD',
