@@ -15,10 +15,8 @@ import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
-import '../../store/remote_config_store/remote_config_store.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/header_custom_paint.dart';
-import '../../widgets/all_alert_dialogs/ramp_modal/ramp_alert.dart';
 import '../../widgets/card_and_bar_tab/card_and_bar_tab.dart';
 import '../send_page/send_to/send_to_state.dart';
 import '../splash_screen/splash_screen.dart';
@@ -59,8 +57,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   ScrollController controller = ScrollController();
 
-  RemoteConfigStore remoteConfigStore = RemoteConfigStore();
-
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
   late final _tabController = TabController(
@@ -68,14 +64,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     vsync: this,
   );
   bool isCardScrolledUp = false;
-
-  Future<void> showDialog() async {
-    Future.delayed(const Duration(seconds: 1), () async {
-      if (remoteConfigStore.showAlert) {
-        await topUpAlertDialog(context: context, rampService: _rampService);
-      }
-    });
-  }
 
   @override
   void initState() {

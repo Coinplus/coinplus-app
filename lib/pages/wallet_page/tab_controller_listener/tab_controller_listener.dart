@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 
 import '../../../constants/card_record.dart';
 import '../../../models/abstract_card/abstract_card.dart';
@@ -16,53 +17,55 @@ int barCarouselIndex = 0;
 bool _isAmplitudeEventInProgress = false;
 
 void tabControllerListener({
-  TabController? tabController,
-  HistoryPageStore? historyPageStore,
-  BalanceStore? balanceStore,
-  RampService? rampService,
-  CardChangeCallBack? onChangeCard,
-  SendToState? state,
-  int? cardCarouselIndex,
-  int? barCarouselIndex,
+  required TabController tabController,
+  required HistoryPageStore historyPageStore,
+  required BalanceStore balanceStore,
+  required RampService rampService,
+  required CardChangeCallBack onChangeCard,
+  required SendToState state,
+  required int cardCarouselIndex,
+  required int barCarouselIndex,
 }) {
-  tabController?.addListener(() {
+  tabController.addListener(() {
     final card = tabController.index == 0
-        ? balanceStore?.cards.elementAtOrNull(cardCarouselIndex!)
-        : balanceStore?.bars.elementAtOrNull(barCarouselIndex!);
+        ? balanceStore.cards.elementAtOrNull(cardCarouselIndex)
+        : balanceStore.bars.elementAtOrNull(barCarouselIndex);
+
     if (tabController.index == 1 &&
-        balanceStore!.bars.isNotEmpty &&
+        balanceStore.bars.isNotEmpty &&
         balanceStore.barCurrentIndex != balanceStore.bars.length) {
-      rampService?.configuration.userAddress =
+      rampService.configuration.userAddress =
           balanceStore.bars[balanceStore.barCurrentIndex].address;
     }
     if (tabController.index == 0 &&
-        balanceStore!.cards.isNotEmpty &&
+        balanceStore.cards.isNotEmpty &&
         balanceStore.cardCurrentIndex != balanceStore.cards.length) {
-      rampService?.configuration.userAddress =
+      rampService.configuration.userAddress =
           balanceStore.cards[balanceStore.cardCurrentIndex].address;
     }
+    historyPageStore.setTabIndex(tabController.index);
+
     if (tabController.index == 0) {
-      historyPageStore?.setTabIndex(0);
-      if (balanceStore!.cards.isNotEmpty) {
+      if (balanceStore.cards.isNotEmpty) {
         if (balanceStore.cardCurrentIndex != balanceStore.cards.length) {
-          state?.transactionsStore.onSelectCard(balanceStore.cardCurrentIndex);
+          state.transactionsStore.onSelectCard(balanceStore.cardCurrentIndex);
         }
       }
-    }
-    if (tabController.index == 1) {
-      historyPageStore?.setTabIndex(1);
-      if (balanceStore!.bars.isNotEmpty) {
+    } else if (tabController.index == 1) {
+      if (balanceStore.bars.isNotEmpty) {
         if (balanceStore.barCurrentIndex != balanceStore.bars.length) {
-          state?.transactionsStore.onSelectBar(balanceStore.barCurrentIndex);
+          state.transactionsStore.onSelectBar(balanceStore.barCurrentIndex);
         }
       }
     }
-    onChangeCard!(
+
+    onChangeCard(
       (
-        card: card as AbstractCard?,
-        index: tabController.index,
+      card: card as AbstractCard?,
+      index: tabController.index,
       ),
     );
+
     if (!_isAmplitudeEventInProgress) {
       _isAmplitudeEventInProgress = true;
       if (tabController.index == 0) {
@@ -73,6 +76,12 @@ void tabControllerListener({
       Future.delayed(const Duration(seconds: 1), () {
         _isAmplitudeEventInProgress = false;
       });
+    }
+  });
+
+  reaction<int>((_) => historyPageStore.tabIndex, (index) {
+    if (tabController.index != index) {
+      tabController.animateTo(index);
     }
   });
 }

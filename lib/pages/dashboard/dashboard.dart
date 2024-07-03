@@ -331,6 +331,7 @@ class DashboardPage extends HookWidget {
                         currentCard.value = val;
                         _allSettingsState.updateTabIndex(val.index);
                       },
+                      state: state,
                     ),
                     const SettingsPage(),
                   ],
