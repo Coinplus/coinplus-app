@@ -26,6 +26,7 @@ import '../../services/amplitude_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/nfc_state/nfc_state.dart';
+import '../../store/remote_config_store/remote_config_store.dart';
 import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
@@ -44,6 +45,9 @@ class SettingsPage extends HookWidget {
 
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
+  RemoteConfigStore get remoteConfigStore => GetIt.I<RemoteConfigStore>();
+
+
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
@@ -51,6 +55,7 @@ class SettingsPage extends HookWidget {
     final _auth = LocalAuthentication();
     final isAuthorised = useState(false);
     final _nfcState = useMemoized(NfcStore.new);
+
 
     Future<void> checkStatus() async {
       final messaging = FirebaseMessaging.instance;
@@ -465,8 +470,16 @@ class SettingsPage extends HookWidget {
                                   leading: Assets.icons.hide.image(
                                     height: 24,
                                   ),
-                                  title: const Text(
+                                  title: remoteConfigStore.showAlert ? const Text(
                                     'Flip Phone to Hide Balance',
+                                    style: TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      fontSize: 15,
+                                      color: AppColors.primaryTextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ) :  const Text(
+                                    'Flip and Hide Balance',
                                     style: TextStyle(
                                       fontFamily: FontFamily.redHatMedium,
                                       fontSize: 15,

@@ -22,6 +22,8 @@ import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/data_utils.dart';
 import '../../widgets/card_and_bar_tab/card_and_bar_tab.dart';
 import '../../widgets/shimmers/history_dropdown_shimmer.dart';
+import '../send_page/send_to/send_to_state.dart';
+import '../wallet_page/tab_controller_listener/tab_controller_listener.dart';
 import 'bars_history_tab/bars_history_page.dart';
 import 'cards_history_tab/cards_history_page.dart';
 
@@ -29,9 +31,11 @@ class HistoryPage extends StatefulWidget {
   const HistoryPage({
     super.key,
     required this.onChangeCard,
+    required this.state,
   });
 
   final CardChangeCallBack onChangeCard;
+  final SendToState state;
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -59,38 +63,22 @@ class _HistoryPageState extends State<HistoryPage>
   @override
   void initState() {
     super.initState();
-    _tabController.addListener(() {
-      if (_tabController.index == 1 &&
-          _balanceStore.bars.isNotEmpty &&
-          _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.bars[_balanceStore.barCurrentIndex].address;
-      }
-      if (_tabController.index == 0 &&
-          _balanceStore.cards.isNotEmpty &&
-          _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
-      }
-      if (_tabController.index == 0) {
-        _historyPageStore.setTabIndex(0);
-        recordAmplitudeEventPartTwo(const CardTabHistoryClicked());
-      }
-      if (_tabController.index == 1) {
-        _historyPageStore.setTabIndex(1);
-        recordAmplitudeEventPartTwo(const BarTabHistoryClicked());
-      }
-    });
-
-    if (_balanceStore.cards.isEmpty && _balanceStore.bars.isNotEmpty) {
-      _tabController.animateTo(1);
-    }
+    tabControllerListener(
+      balanceStore: _balanceStore,
+      barCarouselIndex: barCarouselIndex,
+      cardCarouselIndex: cardCarouselIndex,
+      historyPageStore: _historyPageStore,
+      onChangeCard: widget.onChangeCard,
+      rampService: _rampService,
+      state: widget.state,
+      tabController: _tabController,
+    );
   }
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    super.dispose();
   }
 
   @override

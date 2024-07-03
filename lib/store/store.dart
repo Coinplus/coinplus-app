@@ -7,6 +7,7 @@ import 'contact_us_state/contact_us_state.dart';
 import 'history_page_store/history_page_store.dart';
 import 'market_page_store/market_page_store.dart';
 import 'qr_detect_state/qr_detect_state.dart';
+import 'remote_config_store/remote_config_store.dart';
 import 'wallet_protect_state/wallet_protect_state.dart';
 
 void registerStoreGetIt() {
@@ -18,6 +19,7 @@ void registerStoreGetIt() {
   GetIt.I.registerSingleton(WalletProtectState());
   GetIt.I.registerSingleton(ValidationState());
   GetIt.I.registerSingleton(AccelerometerStore());
+  GetIt.I.registerSingleton(RemoteConfigStore());
 }
 
 void reRegisterStoreGetIt() {
@@ -29,6 +31,7 @@ void reRegisterStoreGetIt() {
   final _walletProtectState = GetIt.I<WalletProtectState>();
   final _validationStore = GetIt.I<ValidationState>();
   final _sensorsStore = GetIt.I<AccelerometerStore>();
+  final _remoteConfigStore = GetIt.I<RemoteConfigStore>();
 
   GetIt.I.unregister(instance: rampService);
   GetIt.I.unregister(instance: balancesStore);
@@ -38,5 +41,6 @@ void reRegisterStoreGetIt() {
   GetIt.I.unregister(instance: _walletProtectState);
   GetIt.I.unregister(instance: _validationStore);
   GetIt.I.unregister(instance: _sensorsStore);
+  GetIt.I.unregister(instance: _remoteConfigStore);
   registerStoreGetIt();
 }

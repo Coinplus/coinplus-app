@@ -26,7 +26,7 @@ abstract class _RemoteConfigStore with Store {
         ),
       );
       await remoteConfig.fetchAndActivate();
-      showAlert = remoteConfig.getBool('top_up_alert');
+      showAlert = remoteConfig.getBool('hide_balance_toggle');
     } catch (e) {
       if (kDebugMode) {
         print('Failed to fetch remote config: $e');
