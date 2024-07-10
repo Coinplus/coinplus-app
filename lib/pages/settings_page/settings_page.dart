@@ -47,7 +47,6 @@ class SettingsPage extends HookWidget {
 
   RemoteConfigStore get remoteConfigStore => GetIt.I<RemoteConfigStore>();
 
-
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
@@ -55,7 +54,6 @@ class SettingsPage extends HookWidget {
     final _auth = LocalAuthentication();
     final isAuthorised = useState(false);
     final _nfcState = useMemoized(NfcStore.new);
-
 
     Future<void> checkStatus() async {
       final messaging = FirebaseMessaging.instance;
@@ -470,23 +468,25 @@ class SettingsPage extends HookWidget {
                                   leading: Assets.icons.hide.image(
                                     height: 24,
                                   ),
-                                  title: remoteConfigStore.showAlert ? const Text(
-                                    'Flip Phone to Hide Balance',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 15,
-                                      color: AppColors.primaryTextColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ) :  const Text(
-                                    'Flip and Hide Balance',
-                                    style: TextStyle(
-                                      fontFamily: FontFamily.redHatMedium,
-                                      fontSize: 15,
-                                      color: AppColors.primaryTextColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                  title: remoteConfigStore.showAlert
+                                      ? const Text(
+                                          'Flip Phone to Hide Balance',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontSize: 15,
+                                            color: AppColors.primaryTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Flip and Hide Balance',
+                                          style: TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontSize: 15,
+                                            color: AppColors.primaryTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ],

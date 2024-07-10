@@ -89,5 +89,8 @@ class Router extends $Router {
     AdaptiveRoute(
       page: AboutAppRoute.page,
     ),
+    AdaptiveRoute(
+      page: CoinChartRoute.page,
+    ),
   ];
 }

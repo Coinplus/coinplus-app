@@ -242,6 +242,202 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
+  late final _$chartDataAtom =
+      Atom(name: '_MarketPageStore.chartData', context: context);
+
+  @override
+  List<List<num>> get chartData {
+    _$chartDataAtom.reportRead();
+    return super.chartData;
+  }
+
+  @override
+  set chartData(List<List<num>> value) {
+    _$chartDataAtom.reportWrite(value, super.chartData, () {
+      super.chartData = value;
+    });
+  }
+
+  late final _$chartEnumAtom =
+      Atom(name: '_MarketPageStore.chartEnum', context: context);
+
+  @override
+  ChartEnum get chartEnum {
+    _$chartEnumAtom.reportRead();
+    return super.chartEnum;
+  }
+
+  @override
+  set chartEnum(ChartEnum value) {
+    _$chartEnumAtom.reportWrite(value, super.chartEnum, () {
+      super.chartEnum = value;
+    });
+  }
+
+  late final _$chartLoadingAtom =
+      Atom(name: '_MarketPageStore.chartLoading', context: context);
+
+  @override
+  bool get chartLoading {
+    _$chartLoadingAtom.reportRead();
+    return super.chartLoading;
+  }
+
+  @override
+  set chartLoading(bool value) {
+    _$chartLoadingAtom.reportWrite(value, super.chartLoading, () {
+      super.chartLoading = value;
+    });
+  }
+
+  late final _$touchedXValueAtom =
+      Atom(name: '_MarketPageStore.touchedXValue', context: context);
+
+  @override
+  double? get touchedXValue {
+    _$touchedXValueAtom.reportRead();
+    return super.touchedXValue;
+  }
+
+  @override
+  set touchedXValue(double? value) {
+    _$touchedXValueAtom.reportWrite(value, super.touchedXValue, () {
+      super.touchedXValue = value;
+    });
+  }
+
+  late final _$touchedYValueAtom =
+      Atom(name: '_MarketPageStore.touchedYValue', context: context);
+
+  @override
+  double? get touchedYValue {
+    _$touchedYValueAtom.reportRead();
+    return super.touchedYValue;
+  }
+
+  @override
+  set touchedYValue(double? value) {
+    _$touchedYValueAtom.reportWrite(value, super.touchedYValue, () {
+      super.touchedYValue = value;
+    });
+  }
+
+  late final _$chartDateTimeAtom =
+      Atom(name: '_MarketPageStore.chartDateTime', context: context);
+
+  @override
+  String get chartDateTime {
+    _$chartDateTimeAtom.reportRead();
+    return super.chartDateTime;
+  }
+
+  @override
+  set chartDateTime(String value) {
+    _$chartDateTimeAtom.reportWrite(value, super.chartDateTime, () {
+      super.chartDateTime = value;
+    });
+  }
+
+  late final _$onChartTouchAtom =
+      Atom(name: '_MarketPageStore.onChartTouch', context: context);
+
+  @override
+  bool get onChartTouch {
+    _$onChartTouchAtom.reportRead();
+    return super.onChartTouch;
+  }
+
+  @override
+  set onChartTouch(bool value) {
+    _$onChartTouchAtom.reportWrite(value, super.onChartTouch, () {
+      super.onChartTouch = value;
+    });
+  }
+
+  late final _$priceChangeInPercentsAtom =
+      Atom(name: '_MarketPageStore.priceChangeInPercents', context: context);
+
+  @override
+  double? get priceChangeInPercents {
+    _$priceChangeInPercentsAtom.reportRead();
+    return super.priceChangeInPercents;
+  }
+
+  @override
+  set priceChangeInPercents(double? value) {
+    _$priceChangeInPercentsAtom.reportWrite(value, super.priceChangeInPercents,
+        () {
+      super.priceChangeInPercents = value;
+    });
+  }
+
+  late final _$lastTouchedSpotAtom =
+      Atom(name: '_MarketPageStore.lastTouchedSpot', context: context);
+
+  @override
+  FlSpot? get lastTouchedSpot {
+    _$lastTouchedSpotAtom.reportRead();
+    return super.lastTouchedSpot;
+  }
+
+  @override
+  set lastTouchedSpot(FlSpot? value) {
+    _$lastTouchedSpotAtom.reportWrite(value, super.lastTouchedSpot, () {
+      super.lastTouchedSpot = value;
+    });
+  }
+
+  late final _$hapticDebounceTimerAtom =
+      Atom(name: '_MarketPageStore.hapticDebounceTimer', context: context);
+
+  @override
+  Timer? get hapticDebounceTimer {
+    _$hapticDebounceTimerAtom.reportRead();
+    return super.hapticDebounceTimer;
+  }
+
+  @override
+  set hapticDebounceTimer(Timer? value) {
+    _$hapticDebounceTimerAtom.reportWrite(value, super.hapticDebounceTimer, () {
+      super.hapticDebounceTimer = value;
+    });
+  }
+
+  late final _$isHapticFeedbackActiveAtom =
+      Atom(name: '_MarketPageStore.isHapticFeedbackActive', context: context);
+
+  @override
+  bool get isHapticFeedbackActive {
+    _$isHapticFeedbackActiveAtom.reportRead();
+    return super.isHapticFeedbackActive;
+  }
+
+  @override
+  set isHapticFeedbackActive(bool value) {
+    _$isHapticFeedbackActiveAtom
+        .reportWrite(value, super.isHapticFeedbackActive, () {
+      super.isHapticFeedbackActive = value;
+    });
+  }
+
+  late final _$triggerHapticFeedbackAsyncAction =
+      AsyncAction('_MarketPageStore.triggerHapticFeedback', context: context);
+
+  @override
+  Future<void> triggerHapticFeedback() {
+    return _$triggerHapticFeedbackAsyncAction
+        .run(() => super.triggerHapticFeedback());
+  }
+
+  late final _$defaultPercentageAsyncAction =
+      AsyncAction('_MarketPageStore.defaultPercentage', context: context);
+
+  @override
+  Future<void> defaultPercentage({required CoinResultModel? data}) {
+    return _$defaultPercentageAsyncAction
+        .run(() => super.defaultPercentage(data: data));
+  }
+
   late final _$makeInvisibleAsyncAction =
       AsyncAction('_MarketPageStore.makeInvisible', context: context);
 
@@ -297,6 +493,94 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
       ActionController(name: '_MarketPageStore', context: context);
 
   @override
+  void setChartData(List<List<num>> data) {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.setChartData');
+    try {
+      return super.setChartData(data);
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chartTouched() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.chartTouched');
+    try {
+      return super.chartTouched();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void chartUntouched() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.chartUntouched');
+    try {
+      return super.chartUntouched();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setChartDateTime({required String dateTime}) {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.setChartDateTime');
+    try {
+      return super.setChartDateTime(dateTime: dateTime);
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setXValue({required double value}) {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.setXValue');
+    try {
+      return super.setXValue(value: value);
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setYValue({required double value}) {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.setYValue');
+    try {
+      return super.setYValue(value: value);
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPercents({required double percents}) {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.setPercents');
+    try {
+      return super.setPercents(percents: percents);
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resetPercents() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.resetPercents');
+    try {
+      return super.resetPercents();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void initAnimationController(TickerProvider vsync) {
     final _$actionInfo = _$_MarketPageStoreActionController.startAction(
         name: '_MarketPageStore.initAnimationController');
@@ -330,6 +614,83 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
   }
 
   @override
+  void onOneDaySelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onOneDaySelect');
+    try {
+      return super.onOneDaySelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onOneWeekSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onOneWeekSelect');
+    try {
+      return super.onOneWeekSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onOneMonthSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onOneMonthSelect');
+    try {
+      return super.onOneMonthSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onThreeMonthsSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onThreeMonthsSelect');
+    try {
+      return super.onThreeMonthsSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onSixMonthsSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onSixMonthsSelect');
+    try {
+      return super.onSixMonthsSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onOneYearSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onOneYearSelect');
+    try {
+      return super.onOneYearSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onAllSelect() {
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
+        name: '_MarketPageStore.onAllSelect');
+    try {
+      return super.onAllSelect();
+    } finally {
+      _$_MarketPageStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 q: ${q},
@@ -345,6 +706,17 @@ isLoading: ${isLoading},
 isSearched: ${isSearched},
 allCoins: ${allCoins},
 singleCoin: ${singleCoin},
+chartData: ${chartData},
+chartEnum: ${chartEnum},
+chartLoading: ${chartLoading},
+touchedXValue: ${touchedXValue},
+touchedYValue: ${touchedYValue},
+chartDateTime: ${chartDateTime},
+onChartTouch: ${onChartTouch},
+priceChangeInPercents: ${priceChangeInPercents},
+lastTouchedSpot: ${lastTouchedSpot},
+hapticDebounceTimer: ${hapticDebounceTimer},
+isHapticFeedbackActive: ${isHapticFeedbackActive},
 searchedList: ${searchedList}
     ''';
   }

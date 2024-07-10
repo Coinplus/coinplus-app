@@ -93,6 +93,8 @@ dependencies:
       url: https://github.com/Coinplus/coinplus_bitcoin_flutter.git
   btc_address_validate_swan: ^1.2.1
   firebase_remote_config: ^5.0.2
+  fl_chart: ^0.68.0
+  haptic_feedback: ^0.5.1+1
 
 
 

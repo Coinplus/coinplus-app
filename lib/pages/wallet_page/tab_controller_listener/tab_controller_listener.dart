@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 
 import '../../../constants/card_record.dart';
 import '../../../models/abstract_card/abstract_card.dart';
@@ -61,8 +60,8 @@ void tabControllerListener({
 
     onChangeCard(
       (
-      card: card as AbstractCard?,
-      index: tabController.index,
+        card: card as AbstractCard?,
+        index: tabController.index,
       ),
     );
 
@@ -76,12 +75,6 @@ void tabControllerListener({
       Future.delayed(const Duration(seconds: 1), () {
         _isAmplitudeEventInProgress = false;
       });
-    }
-  });
-
-  reaction<int>((_) => historyPageStore.tabIndex, (index) {
-    if (tabController.index != index) {
-      tabController.animateTo(index);
     }
   });
 }

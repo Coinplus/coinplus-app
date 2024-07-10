@@ -1,8 +1,15 @@
 import 'dart:async';
+
+import 'package:dio/dio.dart';
+import 'package:dio_interceptor_plus/dio_interceptor_plus.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../constants/chart_period_enum.dart';
+import '../../http/interceptors/api_keys.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
@@ -57,6 +64,94 @@ abstract class _MarketPageStore with Store {
   @observable
   CoinModel? singleCoin;
 
+  @observable
+  List<List<num>> chartData = [];
+
+  @observable
+  ChartEnum chartEnum = ChartEnum.ONE_DAY;
+
+  @observable
+  bool chartLoading = false;
+
+  @observable
+  double? touchedXValue;
+
+  @observable
+  double? touchedYValue;
+
+  @observable
+  String chartDateTime = '';
+
+  @observable
+  bool onChartTouch = false;
+
+  @observable
+  double? priceChangeInPercents = 0;
+
+  @observable
+  FlSpot? lastTouchedSpot;
+
+  @observable
+  Timer? hapticDebounceTimer;
+
+  @observable
+  bool isHapticFeedbackActive = false;
+
+  @action
+  Future<void> triggerHapticFeedback() async {
+    if (isHapticFeedbackActive) {
+      return;
+    }
+    isHapticFeedbackActive = true;
+    await Haptics.vibrate(HapticsType.light);
+    hapticDebounceTimer?.cancel();
+    hapticDebounceTimer = Timer(const Duration(), () {
+      isHapticFeedbackActive = false;
+    });
+  }
+
+  @action
+  void setChartData(List<List<num>> data) {
+    chartData
+      ..clear()
+      ..addAll(data);
+  }
+
+  @action
+  void chartTouched() {
+    onChartTouch = true;
+  }
+
+  @action
+  void chartUntouched() {
+    onChartTouch = false;
+  }
+
+  @action
+  void setChartDateTime({required String dateTime}) {
+    chartDateTime = dateTime;
+  }
+
+  @action
+  void setXValue({required double value}) {
+    touchedXValue = value;
+  }
+
+  @action
+  void setYValue({required double value}) {
+    touchedYValue = value;
+  }
+
+  @action
+  void setPercents({required double percents}) {
+    priceChangeInPercents = percents;
+  }
+
+  @action
+  void resetPercents() {
+    priceChangeInPercents = 0;
+  }
+
   AnimationController? animationController;
 
   FocusNode focusNode = FocusNode();
@@ -71,6 +166,54 @@ abstract class _MarketPageStore with Store {
 
   Future<void> getSingleCoin() async {
     singleCoin = await coinStatsRepo.getAllCoins(page: 1, limit: 1);
+  }
+
+  Future<void> getChartData({
+    required String coinId,
+    required String period,
+    required CoinResultModel? data,
+  }) async {
+    final dio = Dio();
+    dio.interceptors.add(LoggingInterceptor());
+    chartLoading = true;
+    try {
+      final response = await dio.get(
+        'https://openapiv1.coinstats.app/coins/$coinId/charts?period=$period',
+        options: Options(
+          headers: {
+            'X-API-KEY': coinStatsApiKey,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final chartData = (response.data as List<dynamic>)
+            .map(
+              (item) => (item as List<dynamic>)
+                  .map((numItem) => numItem as num)
+                  .toList(),
+            )
+            .toList();
+        setChartData(chartData);
+      } else {
+        debugPrint('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+    } finally {
+      chartLoading = false;
+      await defaultPercentage(data: data);
+    }
+  }
+
+  @action
+  Future<void> defaultPercentage({required CoinResultModel? data}) async {
+    if (chartData.isNotEmpty && data != null) {
+      final firstPrice = chartData[0][1];
+      final currentPrice = data.price;
+      final percentageChange = ((currentPrice - firstPrice) / firstPrice) * 100;
+      setPercents(percents: percentageChange);
+    }
   }
 
   @action
@@ -186,5 +329,40 @@ abstract class _MarketPageStore with Store {
     bool shouldShowUpButton = false,
   }) async {
     this.shouldShowUpButton = shouldShowUpButton;
+  }
+
+  @action
+  void onOneDaySelect() {
+    chartEnum = ChartEnum.ONE_DAY;
+  }
+
+  @action
+  void onOneWeekSelect() {
+    chartEnum = ChartEnum.ONE_WEEK;
+  }
+
+  @action
+  void onOneMonthSelect() {
+    chartEnum = ChartEnum.ONE_MONTH;
+  }
+
+  @action
+  void onThreeMonthsSelect() {
+    chartEnum = ChartEnum.THREE_MONTHS;
+  }
+
+  @action
+  void onSixMonthsSelect() {
+    chartEnum = ChartEnum.SIX_MONTHS;
+  }
+
+  @action
+  void onOneYearSelect() {
+    chartEnum = ChartEnum.ONE_YEAR;
+  }
+
+  @action
+  void onAllSelect() {
+    chartEnum = ChartEnum.ALL;
   }
 }

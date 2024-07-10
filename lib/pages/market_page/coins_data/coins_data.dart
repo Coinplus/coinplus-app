@@ -9,6 +9,8 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../providers/screen_service.dart';
+import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../utils/number_formatter.dart';
@@ -144,6 +146,7 @@ class CoinsDataWidget extends StatelessWidget {
                                     formatLargeNumber(data.marketCap.toInt());
                                 return GestureDetector(
                                   onTap: () {
+                                    router.push(CoinChartRoute(data: data));
                                     recordAmplitudeEventPartTwo(
                                       CoinClicked(coinName: data.symbol),
                                     );
@@ -260,11 +263,11 @@ class CoinsDataWidget extends StatelessWidget {
                                                       if (data.priceChange1d >
                                                           0)
                                                         Assets.icons.arrowDropUp
-                                                            .image(height: 30)
+                                                            .image(height: 5)
                                                       else
                                                         Assets
                                                             .icons.arrowDropDown
-                                                            .image(height: 30),
+                                                            .image(height: 5),
                                                       Text(
                                                         '${data.priceChange1d.toStringAsFixed(2)}%',
                                                         style: TextStyle(
@@ -287,6 +290,7 @@ class CoinsDataWidget extends StatelessWidget {
                                           const Spacer(),
                                           CryptoPriceFormatter(
                                             price: data.price,
+                                            isChartPage: false,
                                           ),
                                         ],
                                       ),
