@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../extensions/extensions.dart';
+import '../gen/colors.gen.dart';
 import '../gen/fonts.gen.dart';
 
 class CryptoPriceFormatter extends StatelessWidget {
   final num price;
 
-  const CryptoPriceFormatter({Key? key, required this.price}) : super(key: key);
+  const CryptoPriceFormatter({Key? key, required this.price, this.isChartPage})
+      : super(key: key);
+
+  final bool? isChartPage;
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +23,46 @@ class CryptoPriceFormatter extends StatelessWidget {
     var formattedPrice = '';
     num fontSize;
 
-    if (price >= 10) {
-      formattedPrice = _formatDecimal(price, 2);
-    } else if (price < 10 && price >= 1) {
-      formattedPrice = _formatDecimal(price, 3);
-    } else if (price < 1) {
-      formattedPrice = _handleDecimalLessThanOne(price);
-    }
-    if (formattedPrice.length <= 8) {
-      fontSize = 15;
-    } else if (formattedPrice.length >= 9 && formattedPrice.length <= 11) {
-      fontSize = 11;
-    } else {
-      fontSize = 9;
-    }
+    if (isChartPage!) {
+      if (price >= 10) {
+        formattedPrice = _formatDecimal(price, 2);
+      } else if (price < 10 && price >= 1) {
+        formattedPrice = _formatDecimal(price, 3);
+      } else if (price < 1) {
+        formattedPrice = _handleDecimalLessThanOne(price);
+      }
+      if (formattedPrice.length <= 8) {
+        fontSize = 24;
+      } else if (formattedPrice.length >= 9 && formattedPrice.length <= 11) {
+        fontSize = 24;
+      } else {
+        fontSize = 24;
+      }
 
-    if (formattedPrice.length >= 13) {
-      formattedPrice = '0';
-      fontSize = 15;
+      if (formattedPrice.length >= 13) {
+        formattedPrice = '0';
+        fontSize = 18;
+      }
+    } else {
+      if (price >= 10) {
+        formattedPrice = _formatDecimal(price, 2);
+      } else if (price < 10 && price >= 1) {
+        formattedPrice = _formatDecimal(price, 3);
+      } else if (price < 1) {
+        formattedPrice = _handleDecimalLessThanOne(price);
+      }
+      if (formattedPrice.length <= 8) {
+        fontSize = 15;
+      } else if (formattedPrice.length >= 9 && formattedPrice.length <= 11) {
+        fontSize = 11;
+      } else {
+        fontSize = 9;
+      }
+
+      if (formattedPrice.length >= 13) {
+        formattedPrice = '0';
+        fontSize = 15;
+      }
     }
 
     String _formatWithCommas(String value) {
@@ -54,6 +80,7 @@ class CryptoPriceFormatter extends StatelessWidget {
         fontSize: fontSize.toDouble(),
         fontFamily: FontFamily.redHatMedium,
         fontWeight: FontWeight.w700,
+        color: isChartPage! ? AppColors.primary : Colors.black,
       ),
     );
   }

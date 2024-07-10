@@ -57,6 +57,7 @@ class DashboardPage extends HookWidget {
     final deepLinkRes = useRef<String?>(null);
     final _settingsState = SettingsState();
     final isModalOpened = useState(false);
+    final currentIndex = useState(0);
     final _nfcStore = useMemoized(NfcStore.new);
     final state = useMemoized(SendToState.new);
     final _allSettingsState = useMemoized(AllSettingsState.new);
@@ -270,13 +271,17 @@ class DashboardPage extends HookWidget {
     });
 
     Future<void> programmaticRefresh() async {
-      await scrollController.animateTo(
-        -100,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-      await Future.delayed(const Duration(milliseconds: 300));
-      await onRefreshed();
+      if (scrollController.hasClients) {
+        await scrollController.animateTo(
+          -100,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+        await Future.delayed(const Duration(milliseconds: 300));
+        await onRefreshed();
+      } else {
+        debugPrint('ScrollController is not attached to any scroll views.');
+      }
     }
 
     return Scaffold(
@@ -375,8 +380,12 @@ class DashboardPage extends HookWidget {
                             }
                           else if (index == 1)
                             {
+                              if (currentIndex.value == index && index == 1)
+                                {
+                                  programmaticRefresh(),
+                                },
+                              currentIndex.value = index,
                               recordAmplitudeEvent(const MarketTabClicked()),
-                              programmaticRefresh(),
                             }
                           else if (index == 2)
                             {

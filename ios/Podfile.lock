@@ -1219,6 +1219,8 @@ PODS:
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
   - GTMSessionFetcher/Core (2.3.0)
+  - haptic_feedback (0.5.1):
+    - Flutter
   - in_app_review (0.2.0):
     - Flutter
   - leveldb-library (1.22.5)
@@ -1301,6 +1303,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_browser (from `.symlinks/plugins/flutter_web_browser/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
+  - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
@@ -1395,6 +1398,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_web_browser/ios"
   gaimon:
     :path: ".symlinks/plugins/gaimon/ios"
+  haptic_feedback:
+    :path: ".symlinks/plugins/haptic_feedback/ios"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   local_auth_darwin:
@@ -1480,6 +1485,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  haptic_feedback: 8cb3ee0cb6b797946c2b0df9c99ebc8f7ed79c71
   in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   local_auth_darwin: 4d56c90c2683319835a61274b57620df9c4520ab

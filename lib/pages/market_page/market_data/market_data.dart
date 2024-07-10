@@ -77,11 +77,11 @@ class MarketDataWidget extends StatelessWidget {
                             children: [
                               if (marketData.marketCapChange > 0)
                                 Assets.icons.arrowDropUp.image(
-                                  height: 20,
+                                  height: 5,
                                 )
                               else
                                 Assets.icons.arrowDropDown.image(
-                                  height: 20,
+                                  height: 5,
                                 ),
                               const Gap(1),
                               Text(
@@ -139,11 +139,11 @@ class MarketDataWidget extends StatelessWidget {
                             children: [
                               if (marketData.volumeChange > 0)
                                 Assets.icons.arrowDropUp.image(
-                                  height: 20,
+                                  height: 5,
                                 )
                               else
                                 Assets.icons.arrowDropDown.image(
-                                  height: 20,
+                                  height: 5,
                                 ),
                               const Gap(3),
                               Text(
@@ -201,11 +201,11 @@ class MarketDataWidget extends StatelessWidget {
                             children: [
                               if (marketData.btcDominanceChange > 0)
                                 Assets.icons.arrowDropUp.image(
-                                  height: 20,
+                                  height: 5,
                                 )
                               else
                                 Assets.icons.arrowDropDown.image(
-                                  height: 20,
+                                  height: 5,
                                 ),
                               const Gap(3),
                               Text(

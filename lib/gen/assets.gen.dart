@@ -521,6 +521,9 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/qr_animation.json
   String get qrAnimation => 'assets/lottie_animations/qr_animation.json';
 
+  /// File path: assets/lottie_animations/ramp_lottie.json
+  String get rampLottie => 'assets/lottie_animations/ramp_lottie.json';
+
   /// File path: assets/lottie_animations/sad_emoji.json
   String get sadEmoji => 'assets/lottie_animations/sad_emoji.json';
 
@@ -550,6 +553,7 @@ class $AssetsLottieAnimationsGen {
         phoneCoinSplash,
         pleaseWait,
         qrAnimation,
+        rampLottie,
         sadEmoji,
         secretsFail,
         secretsSuccess,
