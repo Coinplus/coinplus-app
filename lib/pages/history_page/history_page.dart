@@ -74,7 +74,6 @@ class _HistoryPageState extends State<HistoryPage>
       tabController: _tabController,
     );
   }
-
   @override
   void dispose() {
     _tabController.dispose();
@@ -366,7 +365,6 @@ class _HistoryPageState extends State<HistoryPage>
                                             _historyPageStore.barHistoryIndex];
                                         final formattedAddress =
                                             getSplitAddress(singleCard.address);
-
                                         return Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
