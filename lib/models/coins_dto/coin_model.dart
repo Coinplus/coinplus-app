@@ -43,6 +43,21 @@ class CoinResultModel with _$CoinResultModel {
       defaultValue: 0,
     )
     required num rank,
+    @JsonKey(
+      name: 'volume',
+      defaultValue: 0,
+    )
+    required num volume,
+    @JsonKey(
+      name: 'availableSupply',
+      defaultValue: 0,
+    )
+    required num availableSupply,
+    @JsonKey(
+      name: 'totalSupply',
+      defaultValue: 0,
+    )
+    required num totalSupply,
   }) = _CoinResultModel;
 
   factory CoinResultModel.fromJson(Map<String, dynamic> json) =>
