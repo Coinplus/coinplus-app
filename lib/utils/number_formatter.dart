@@ -150,3 +150,14 @@ String formatLargeNumber(int number) {
     (match) => '${match.group(1)} ${match.group(2)}',
   );
 }
+
+String formatNumberToBillions(double number) {
+  final billionFormatter = NumberFormat.compactCurrency(
+    decimalDigits: 2,
+    symbol: r'$',
+  );
+
+  return billionFormatter.format(number);
+}
+
+final priceFormatter = NumberFormat('#,##0.00', 'en_US');

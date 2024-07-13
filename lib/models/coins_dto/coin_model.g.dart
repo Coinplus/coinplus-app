@@ -30,6 +30,9 @@ _$CoinResultModelImpl _$$CoinResultModelImplFromJson(Map json) =>
       priceChange1d: json['priceChange1d'] as num? ?? 0,
       marketCap: json['marketCap'] as num? ?? 0,
       rank: json['rank'] as num? ?? 0,
+      volume: json['volume'] as num? ?? 0,
+      availableSupply: json['availableSupply'] as num? ?? 0,
+      totalSupply: json['totalSupply'] as num? ?? 0,
     );
 
 Map<String, dynamic> _$$CoinResultModelImplToJson(
@@ -43,6 +46,9 @@ Map<String, dynamic> _$$CoinResultModelImplToJson(
       'priceChange1d': instance.priceChange1d,
       'marketCap': instance.marketCap,
       'rank': instance.rank,
+      'volume': instance.volume,
+      'availableSupply': instance.availableSupply,
+      'totalSupply': instance.totalSupply,
     };
 
 _$MetaImpl _$$MetaImplFromJson(Map json) => _$MetaImpl(

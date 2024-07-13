@@ -11,3 +11,10 @@ String formatDateString(String dateString) {
   final formattedDate = DateFormat('MMM d, y hh:mm a').format(dateTime);
   return formattedDate;
 }
+
+
+String priceChangeDateFormatter(String dateString) {
+  final dateTime = DateTime.parse(dateString);
+  final formattedDate = DateFormat("MMMM d, yyyy 'at' hh:mm:ss a").format(dateTime);
+  return formattedDate;
+}

@@ -216,6 +216,12 @@ mixin _$CoinResultModel {
   num get marketCap => throw _privateConstructorUsedError;
   @JsonKey(name: 'rank', defaultValue: 0)
   num get rank => throw _privateConstructorUsedError;
+  @JsonKey(name: 'volume', defaultValue: 0)
+  num get volume => throw _privateConstructorUsedError;
+  @JsonKey(name: 'availableSupply', defaultValue: 0)
+  num get availableSupply => throw _privateConstructorUsedError;
+  @JsonKey(name: 'totalSupply', defaultValue: 0)
+  num get totalSupply => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -237,7 +243,10 @@ abstract class $CoinResultModelCopyWith<$Res> {
       @JsonKey(name: 'price', defaultValue: 0) num price,
       @JsonKey(name: 'priceChange1d', defaultValue: 0) num priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) num marketCap,
-      @JsonKey(name: 'rank', defaultValue: 0) num rank});
+      @JsonKey(name: 'rank', defaultValue: 0) num rank,
+      @JsonKey(name: 'volume', defaultValue: 0) num volume,
+      @JsonKey(name: 'availableSupply', defaultValue: 0) num availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0) num totalSupply});
 }
 
 /// @nodoc
@@ -261,6 +270,9 @@ class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
     Object? priceChange1d = null,
     Object? marketCap = null,
     Object? rank = null,
+    Object? volume = null,
+    Object? availableSupply = null,
+    Object? totalSupply = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -295,6 +307,18 @@ class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
           ? _value.rank
           : rank // ignore: cast_nullable_to_non_nullable
               as num,
+      volume: null == volume
+          ? _value.volume
+          : volume // ignore: cast_nullable_to_non_nullable
+              as num,
+      availableSupply: null == availableSupply
+          ? _value.availableSupply
+          : availableSupply // ignore: cast_nullable_to_non_nullable
+              as num,
+      totalSupply: null == totalSupply
+          ? _value.totalSupply
+          : totalSupply // ignore: cast_nullable_to_non_nullable
+              as num,
     ) as $Val);
   }
 }
@@ -315,7 +339,10 @@ abstract class _$$CoinResultModelImplCopyWith<$Res>
       @JsonKey(name: 'price', defaultValue: 0) num price,
       @JsonKey(name: 'priceChange1d', defaultValue: 0) num priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) num marketCap,
-      @JsonKey(name: 'rank', defaultValue: 0) num rank});
+      @JsonKey(name: 'rank', defaultValue: 0) num rank,
+      @JsonKey(name: 'volume', defaultValue: 0) num volume,
+      @JsonKey(name: 'availableSupply', defaultValue: 0) num availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0) num totalSupply});
 }
 
 /// @nodoc
@@ -337,6 +364,9 @@ class __$$CoinResultModelImplCopyWithImpl<$Res>
     Object? priceChange1d = null,
     Object? marketCap = null,
     Object? rank = null,
+    Object? volume = null,
+    Object? availableSupply = null,
+    Object? totalSupply = null,
   }) {
     return _then(_$CoinResultModelImpl(
       id: null == id
@@ -371,6 +401,18 @@ class __$$CoinResultModelImplCopyWithImpl<$Res>
           ? _value.rank
           : rank // ignore: cast_nullable_to_non_nullable
               as num,
+      volume: null == volume
+          ? _value.volume
+          : volume // ignore: cast_nullable_to_non_nullable
+              as num,
+      availableSupply: null == availableSupply
+          ? _value.availableSupply
+          : availableSupply // ignore: cast_nullable_to_non_nullable
+              as num,
+      totalSupply: null == totalSupply
+          ? _value.totalSupply
+          : totalSupply // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -389,7 +431,12 @@ class _$CoinResultModelImpl
       @JsonKey(name: 'priceChange1d', defaultValue: 0)
       required this.priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required this.marketCap,
-      @JsonKey(name: 'rank', defaultValue: 0) required this.rank});
+      @JsonKey(name: 'rank', defaultValue: 0) required this.rank,
+      @JsonKey(name: 'volume', defaultValue: 0) required this.volume,
+      @JsonKey(name: 'availableSupply', defaultValue: 0)
+      required this.availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0)
+      required this.totalSupply});
 
   factory _$CoinResultModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CoinResultModelImplFromJson(json);
@@ -414,10 +461,19 @@ class _$CoinResultModelImpl
   @override
   @JsonKey(name: 'rank', defaultValue: 0)
   final num rank;
+  @override
+  @JsonKey(name: 'volume', defaultValue: 0)
+  final num volume;
+  @override
+  @JsonKey(name: 'availableSupply', defaultValue: 0)
+  final num availableSupply;
+  @override
+  @JsonKey(name: 'totalSupply', defaultValue: 0)
+  final num totalSupply;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CoinResultModel(id: $id, symbol: $symbol, name: $name, icon: $icon, price: $price, priceChange1d: $priceChange1d, marketCap: $marketCap, rank: $rank)';
+    return 'CoinResultModel(id: $id, symbol: $symbol, name: $name, icon: $icon, price: $price, priceChange1d: $priceChange1d, marketCap: $marketCap, rank: $rank, volume: $volume, availableSupply: $availableSupply, totalSupply: $totalSupply)';
   }
 
   @override
@@ -432,7 +488,10 @@ class _$CoinResultModelImpl
       ..add(DiagnosticsProperty('price', price))
       ..add(DiagnosticsProperty('priceChange1d', priceChange1d))
       ..add(DiagnosticsProperty('marketCap', marketCap))
-      ..add(DiagnosticsProperty('rank', rank));
+      ..add(DiagnosticsProperty('rank', rank))
+      ..add(DiagnosticsProperty('volume', volume))
+      ..add(DiagnosticsProperty('availableSupply', availableSupply))
+      ..add(DiagnosticsProperty('totalSupply', totalSupply));
   }
 
   @override
@@ -449,13 +508,18 @@ class _$CoinResultModelImpl
                 other.priceChange1d == priceChange1d) &&
             (identical(other.marketCap, marketCap) ||
                 other.marketCap == marketCap) &&
-            (identical(other.rank, rank) || other.rank == rank));
+            (identical(other.rank, rank) || other.rank == rank) &&
+            (identical(other.volume, volume) || other.volume == volume) &&
+            (identical(other.availableSupply, availableSupply) ||
+                other.availableSupply == availableSupply) &&
+            (identical(other.totalSupply, totalSupply) ||
+                other.totalSupply == totalSupply));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price,
-      priceChange1d, marketCap, rank);
+      priceChange1d, marketCap, rank, volume, availableSupply, totalSupply);
 
   @JsonKey(ignore: true)
   @override
@@ -482,8 +546,12 @@ abstract class _CoinResultModel implements CoinResultModel {
       @JsonKey(name: 'priceChange1d', defaultValue: 0)
       required final num priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required final num marketCap,
-      @JsonKey(name: 'rank', defaultValue: 0)
-      required final num rank}) = _$CoinResultModelImpl;
+      @JsonKey(name: 'rank', defaultValue: 0) required final num rank,
+      @JsonKey(name: 'volume', defaultValue: 0) required final num volume,
+      @JsonKey(name: 'availableSupply', defaultValue: 0)
+      required final num availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0)
+      required final num totalSupply}) = _$CoinResultModelImpl;
 
   factory _CoinResultModel.fromJson(Map<String, dynamic> json) =
       _$CoinResultModelImpl.fromJson;
@@ -508,6 +576,15 @@ abstract class _CoinResultModel implements CoinResultModel {
   @override
   @JsonKey(name: 'rank', defaultValue: 0)
   num get rank;
+  @override
+  @JsonKey(name: 'volume', defaultValue: 0)
+  num get volume;
+  @override
+  @JsonKey(name: 'availableSupply', defaultValue: 0)
+  num get availableSupply;
+  @override
+  @JsonKey(name: 'totalSupply', defaultValue: 0)
+  num get totalSupply;
   @override
   @JsonKey(ignore: true)
   _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>

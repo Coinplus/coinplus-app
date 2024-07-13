@@ -1,3 +1,5 @@
+// ignore_for_file: cascade_invocations
+
 import 'dart:async';
 import 'dart:math';
 
@@ -14,13 +16,18 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../constants/chart_period_enum.dart';
+import '../../../extensions/context_extension.dart';
+import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/coins_dto/coin_model.dart';
+import '../../../providers/screen_service.dart';
 import '../../../store/market_page_store/market_page_store.dart';
+import '../../../utils/date_formatter.dart';
 import '../../../utils/number_formatter.dart';
+import '../../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class CoinChartPage extends StatefulWidget {
@@ -71,7 +78,7 @@ class _CoinChartPageState extends State<CoinChartPage> {
         FlDotData(
           getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
             radius: 4,
-            color: Colors.white,
+            color: Colors.transparent,
             strokeWidth: 2,
             strokeColor: widget.data!.symbol == 'BTC'
                 ? const Color(0xFFf7931a)
@@ -93,9 +100,8 @@ class _CoinChartPageState extends State<CoinChartPage> {
       final dateTime = DateTime.fromMillisecondsSinceEpoch(
         _marketPageStore.touchedXValue!.toInt() * 1000,
       );
-      final formatter = DateFormat("MMMM d, yyyy 'at' hh:mm:ss a");
-      final formattedDateTime = formatter.format(dateTime.toLocal());
-      _marketPageStore.setChartDateTime(dateTime: formattedDateTime);
+      final formatter = priceChangeDateFormatter(dateTime.toString());
+      _marketPageStore.setChartDateTime(dateTime: formatter);
     }
   }
 
@@ -343,496 +349,816 @@ class _CoinChartPageState extends State<CoinChartPage> {
                         ],
                       ),
                     ),
-                    const Gap(20),
-                    if (_marketPageStore.chartLoading)
-                      SizedBox(
+                  ],
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Gap(20),
+              ),
+              SliverToBoxAdapter(
+                child: _marketPageStore.chartLoading ||
+                        _marketPageStore.chartData.isEmpty
+                    ? SizedBox(
                         height: 250,
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 105),
-                            child: CircularProgressIndicator(
-                              color: widget.data!.symbol == 'BTC'
-                                  ? const Color(0xFFf7931a)
-                                  : widget.data!.symbol == 'ETH'
-                                      ? const Color(0xFF7588C8)
-                                      : widget.data!.symbol == 'USDT'
-                                          ? const Color(0xFF2ea07b)
-                                          : widget.data!.symbol == 'BNB'
-                                              ? const Color(0xFFF3BA2F)
-                                              : const Color(0xFFFD5340)
-                                                  .withOpacity(0.7),
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 175,
+                            vertical: 104,
+                          ),
+                          child: CircularProgressIndicator(
+                            color: widget.data!.symbol == 'BTC'
+                                ? const Color(0xFFf7931a)
+                                : widget.data!.symbol == 'ETH'
+                                    ? const Color(0xFF7588C8)
+                                    : widget.data!.symbol == 'USDT'
+                                        ? const Color(0xFF2ea07b)
+                                        : widget.data!.symbol == 'BNB'
+                                            ? const Color(0xFFF3BA2F)
+                                            : const Color(0xFFFD5340)
+                                                .withOpacity(0.7),
                           ),
                         ),
                       )
-                    else
-                      SizedBox(
+                    : SizedBox(
                         height: 250,
                         child: Observer(
                           builder: (context) {
-                            return LineChart(
-                              LineChartData(
-                                minX: spots.first.x,
-                                maxX: spots.last.x,
-                                minY: spots.map((spot) => spot.y).reduce(min),
-                                maxY: spots.map((spot) => spot.y).reduce(max),
-                                backgroundColor: Colors.white,
-                                borderData: FlBorderData(
-                                  border: Border.all(color: Colors.white),
-                                ),
-                                gridData: const FlGridData(
-                                  drawHorizontalLine: false,
-                                  drawVerticalLine: false,
-                                ),
-                                lineTouchData: LineTouchData(
-                                  touchCallback: (event, touchResponse) {
-                                    if (touchResponse != null &&
-                                        touchResponse.lineBarSpots != null) {
-                                      final FlSpot touchedSpot =
-                                          touchResponse.lineBarSpots!.first;
-                                      if (_marketPageStore.lastTouchedSpot ==
-                                              null ||
-                                          _marketPageStore.lastTouchedSpot!.x !=
-                                              touchedSpot.x ||
-                                          _marketPageStore.lastTouchedSpot!.y !=
-                                              touchedSpot.y) {
-                                        _marketPageStore.lastTouchedSpot =
-                                            touchedSpot;
-                                        Future.delayed(
-                                          const Duration(),
-                                          () async {
-                                            await _marketPageStore
-                                                .triggerHapticFeedback();
-                                          },
-                                        );
-                                      }
-                                      _marketPageStore
-                                        ..chartTouched()
-                                        ..setXValue(value: touchedSpot.x)
-                                        ..setYValue(value: touchedSpot.y);
-                                      priceChange(
-                                        touchedSpot: touchedSpot,
-                                        chartPoints: chartPoints,
-                                      );
-                                      timeStamp();
-                                    } else {
-                                      _marketPageStore
-                                        ..chartUntouched()
-                                        ..defaultPercentage(
-                                          data: widget.data,
-                                        );
-                                    }
-                                  },
-                                  touchTooltipData: LineTouchTooltipData(
-                                    tooltipBorder: const BorderSide(
-                                      color: Colors.transparent,
+                            final highestPoint = spots.reduce(
+                              (curr, next) => curr.y > next.y ? curr : next,
+                            );
+                            final lowestPoint = spots.reduce(
+                              (curr, next) => curr.y < next.y ? curr : next,
+                            );
+                            return Stack(
+                              children: [
+                                LineChart(
+                                  LineChartData(
+                                    minX: spots.first.x,
+                                    maxX: spots.last.x,
+                                    minY:
+                                        spots.map((spot) => spot.y).reduce(min),
+                                    maxY:
+                                        spots.map((spot) => spot.y).reduce(max),
+                                    backgroundColor: Colors.white,
+                                    borderData: FlBorderData(
+                                      border: Border.all(color: Colors.white),
                                     ),
-                                    getTooltipColor: (touchedSpot) {
-                                      return Colors.transparent;
-                                    },
-                                    getTooltipItems: (touchedSpots) {
-                                      return touchedSpots.map(
-                                        (touchedSpot) {
-                                          const textStyle = TextStyle(
-                                            color: Colors.transparent,
+                                    gridData: const FlGridData(
+                                      drawHorizontalLine: false,
+                                      drawVerticalLine: false,
+                                    ),
+                                    lineTouchData: LineTouchData(
+                                      touchCallback: (event, touchResponse) {
+                                        if (touchResponse != null &&
+                                            touchResponse.lineBarSpots !=
+                                                null) {
+                                          final FlSpot touchedSpot =
+                                              touchResponse.lineBarSpots!.first;
+                                          if (_marketPageStore
+                                                      .lastTouchedSpot ==
+                                                  null ||
+                                              _marketPageStore
+                                                      .lastTouchedSpot!.x !=
+                                                  touchedSpot.x ||
+                                              _marketPageStore
+                                                      .lastTouchedSpot!.y !=
+                                                  touchedSpot.y) {
+                                            _marketPageStore.lastTouchedSpot =
+                                                touchedSpot;
+                                            Future.delayed(
+                                              const Duration(),
+                                              () async {
+                                                await _marketPageStore
+                                                    .triggerHapticFeedback();
+                                              },
+                                            );
+                                          }
+                                          _marketPageStore
+                                            ..chartTouched()
+                                            ..setXValue(value: touchedSpot.x)
+                                            ..setYValue(value: touchedSpot.y);
+                                          priceChange(
+                                            touchedSpot: touchedSpot,
+                                            chartPoints: chartPoints,
                                           );
-                                          return LineTooltipItem(
-                                            spots[touchedSpot.spotIndex]
-                                                .y
-                                                .toStringAsFixed(2),
-                                            textStyle,
-                                          );
+                                          timeStamp();
+                                        } else {
+                                          _marketPageStore
+                                            ..chartUntouched()
+                                            ..defaultPercentage(
+                                              data: widget.data,
+                                            );
+                                        }
+                                      },
+                                      touchTooltipData: LineTouchTooltipData(
+                                        tooltipBorder: const BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                        getTooltipColor: (touchedSpot) {
+                                          return Colors.transparent;
                                         },
-                                      ).toList();
-                                    },
-                                  ),
-                                  getTouchedSpotIndicator:
-                                      customGetTouchedSpotIndicator,
-                                  getTouchLineEnd: (_, __) => double.infinity,
-                                ),
-                                titlesData: const FlTitlesData(
-                                  show: false,
-                                  leftTitles: AxisTitles(),
-                                ),
-                                lineBarsData: [
-                                  LineChartBarData(
-                                    color: _marketPageStore.chartLoading
-                                        ? Colors.transparent
-                                        : widget.data!.symbol == 'BTC'
-                                            ? const Color(0xFFf7931a)
-                                            : widget.data!.symbol == 'ETH'
-                                                ? const Color(0xFF7588C8)
-                                                : widget.data!.symbol == 'USDT'
-                                                    ? const Color(
-                                                        0xFF2ea07b,
-                                                      )
-                                                    : widget.data!.symbol ==
-                                                            'BNB'
-                                                        ? const Color(
-                                                            0xFFF3BA2F,
-                                                          )
-                                                        : const Color(
-                                                            0xFFFD5340,
-                                                          ).withOpacity(
-                                                            0.7,
-                                                          ),
-                                    belowBarData: BarAreaData(
-                                      color: Colors.grey,
-                                      show: true,
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          if (widget.data!.symbol == 'BTC')
-                                            const Color(0xFFf7931a)
-                                          else
-                                            widget.data!.symbol == 'ETH'
-                                                ? const Color(0xFF7588C8)
-                                                : widget.data!.symbol == 'USDT'
-                                                    ? const Color(
-                                                        0xFF2ea07b,
-                                                      )
-                                                    : widget.data!.symbol ==
-                                                            'BNB'
-                                                        ? const Color(
-                                                            0xFFF3BA2F,
-                                                          )
-                                                        : const Color(
-                                                            0xFFFD5340,
-                                                          ).withOpacity(
-                                                            0.7,
-                                                          ),
-                                          Colors.white,
-                                        ],
+                                        getTooltipItems: (touchedSpots) {
+                                          return touchedSpots.map(
+                                            (touchedSpot) {
+                                              const textStyle = TextStyle(
+                                                color: Colors.transparent,
+                                              );
+                                              return LineTooltipItem(
+                                                spots[touchedSpot.spotIndex]
+                                                    .y
+                                                    .toStringAsFixed(2),
+                                                textStyle,
+                                              );
+                                            },
+                                          ).toList();
+                                        },
                                       ),
+                                      getTouchedSpotIndicator:
+                                          customGetTouchedSpotIndicator,
+                                      getTouchLineEnd: (_, __) =>
+                                          double.infinity,
                                     ),
-                                    spots: spots,
-                                    isCurved: _marketPageStore.chartEnum !=
-                                        ChartEnum.ONE_MONTH,
-                                    dotData: const FlDotData(
+                                    titlesData: const FlTitlesData(
                                       show: false,
+                                      leftTitles: AxisTitles(),
                                     ),
+                                    extraLinesData: ExtraLinesData(
+                                      horizontalLines: [
+                                        HorizontalLine(
+                                          dashArray: [1, 4],
+                                          y: highestPoint.y,
+                                          color: Colors.grey,
+                                          strokeWidth: 1,
+                                          label: HorizontalLineLabel(
+                                            show: true,
+                                            alignment: Alignment.topRight,
+                                            style: const TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 12,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                            ),
+                                            labelResolver: (line) =>
+                                                '\$${priceFormatter.format(highestPoint.y)}',
+                                          ),
+                                        ),
+                                        HorizontalLine(
+                                          y: lowestPoint.y,
+                                          color: Colors.grey,
+                                          strokeWidth: 1,
+                                          dashArray: [1, 4],
+                                          label: HorizontalLineLabel(
+                                            show: true,
+                                            alignment: Alignment.bottomRight,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 12,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
+                                            ),
+                                            labelResolver: (line) =>
+                                                '\$${priceFormatter.format(lowestPoint.y)}',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    lineBarsData: [
+                                      LineChartBarData(
+                                        dotData: FlDotData(
+                                          getDotPainter:
+                                              (spot, percent, barData, index) {
+                                            if (spot == highestPoint ||
+                                                spot == lowestPoint) {
+                                              return FlDotCirclePainter(
+                                                radius: 3,
+                                                color: widget.data!.symbol ==
+                                                        'BTC'
+                                                    ? const Color(0xFFf7931a)
+                                                    : widget.data!.symbol ==
+                                                            'ETH'
+                                                        ? const Color(
+                                                            0xFF7588C8,
+                                                          )
+                                                        : widget.data!.symbol ==
+                                                                'USDT'
+                                                            ? const Color(
+                                                                0xFF2ea07b,
+                                                              )
+                                                            : widget.data!
+                                                                        .symbol ==
+                                                                    'BNB'
+                                                                ? const Color(
+                                                                    0xFFF3BA2F,
+                                                                  )
+                                                                : const Color(
+                                                                    0xFFFD5340,
+                                                                  ).withOpacity(
+                                                                    0.7,
+                                                                  ),
+                                                strokeWidth: 2,
+                                                strokeColor: Colors.transparent,
+                                              );
+                                            }
+                                            return FlDotCirclePainter(
+                                              radius: 0,
+                                              color: Colors.transparent,
+                                              strokeWidth: 2,
+                                              strokeColor: Colors.transparent,
+                                            );
+                                          },
+                                        ),
+                                        color: _marketPageStore.chartLoading
+                                            ? Colors.transparent
+                                            : widget.data!.symbol == 'BTC'
+                                                ? const Color(0xFFf7931a)
+                                                : widget.data!.symbol == 'ETH'
+                                                    ? const Color(0xFF7588C8)
+                                                    : widget.data!.symbol ==
+                                                            'USDT'
+                                                        ? const Color(
+                                                            0xFF2ea07b,
+                                                          )
+                                                        : widget.data!.symbol ==
+                                                                'BNB'
+                                                            ? const Color(
+                                                                0xFFF3BA2F,
+                                                              )
+                                                            : const Color(
+                                                                0xFFFD5340,
+                                                              ).withOpacity(
+                                                                0.7,
+                                                              ),
+                                        belowBarData: BarAreaData(
+                                          show: true,
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              if (widget.data!.symbol == 'BTC')
+                                                const Color(0xFFf7931a)
+                                              else
+                                                widget.data!.symbol == 'ETH'
+                                                    ? const Color(0xFF7588C8)
+                                                    : widget.data!.symbol ==
+                                                            'USDT'
+                                                        ? const Color(
+                                                            0xFF2ea07b,
+                                                          )
+                                                        : widget.data!.symbol ==
+                                                                'BNB'
+                                                            ? const Color(
+                                                                0xFFF3BA2F,
+                                                              )
+                                                            : const Color(
+                                                                0xFFFD5340,
+                                                              ).withOpacity(
+                                                                0.7,
+                                                              ),
+                                              Colors.white,
+                                            ],
+                                          ),
+                                        ),
+                                        spots: spots,
+                                        isCurved: _marketPageStore.chartEnum !=
+                                            ChartEnum.ONE_MONTH,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Positioned(
+                                  left: 10,
+                                  bottom: 10,
+                                  child: Assets.icons.coinplusLogoBlack.image(
+                                    height: 20,
+                                    color: Colors.black.withOpacity(0.3),
+                                  ),
+                                ),
+                              ],
                             );
                           },
                         ),
                       ),
-                    const Gap(25),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.ONE_DAY) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '24h',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onOneDaySelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+              ),
+              const SliverToBoxAdapter(
+                child: Gap(30),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum != ChartEnum.ONE_DAY) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '24h',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onOneDaySelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color:
+                                _marketPageStore.chartEnum == ChartEnum.ONE_DAY
+                                    ? Colors.grey.withOpacity(0.2)
+                                    : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '1D',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.ONE_DAY
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '1D',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.ONE_DAY
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.ONE_WEEK) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '1w',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onOneWeekSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum !=
+                                  ChartEnum.ONE_WEEK &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '1w',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onOneWeekSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color:
+                                _marketPageStore.chartEnum == ChartEnum.ONE_WEEK
+                                    ? Colors.grey.withOpacity(0.2)
+                                    : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '1W',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.ONE_WEEK
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '1W',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.ONE_WEEK
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.ONE_MONTH) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '1m',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onOneMonthSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum !=
+                                  ChartEnum.ONE_MONTH &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '1m',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onOneMonthSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: _marketPageStore.chartEnum ==
+                                    ChartEnum.ONE_MONTH
+                                ? Colors.grey.withOpacity(0.2)
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '1M',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.ONE_MONTH
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '1M',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.ONE_MONTH
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.THREE_MONTHS) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '3m',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onThreeMonthsSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum !=
+                                  ChartEnum.THREE_MONTHS &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '3m',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onThreeMonthsSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: _marketPageStore.chartEnum ==
+                                    ChartEnum.THREE_MONTHS
+                                ? Colors.grey.withOpacity(0.2)
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '3M',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.THREE_MONTHS
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '3M',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.THREE_MONTHS
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.SIX_MONTHS) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '6m',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onSixMonthsSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum !=
+                                  ChartEnum.SIX_MONTHS &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '6m',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onSixMonthsSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: _marketPageStore.chartEnum ==
+                                    ChartEnum.SIX_MONTHS
+                                ? Colors.grey.withOpacity(0.2)
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '6M',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.SIX_MONTHS
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '6M',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.SIX_MONTHS
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum !=
-                                  ChartEnum.ONE_YEAR) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: '1y',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onOneYearSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum !=
+                                  ChartEnum.ONE_YEAR &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: '1y',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onOneYearSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color:
+                                _marketPageStore.chartEnum == ChartEnum.ONE_YEAR
+                                    ? Colors.grey.withOpacity(0.2)
+                                    : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '1Y',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color: _marketPageStore.chartEnum ==
                                         ChartEnum.ONE_YEAR
-                                    ? Colors.grey.withOpacity(0.2)
-                                    : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '1Y',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.ONE_YEAR
-                                        ? AppColors.primary
-                                        : Colors.grey,
-                                  ),
-                                ),
+                                    ? AppColors.primary
+                                    : Colors.grey,
                               ),
                             ),
                           ),
-                          ScaleTap(
-                            enableFeedback: false,
-                            onPressed: () {
-                              Gaimon.light();
-                              if (_marketPageStore.chartEnum != ChartEnum.ALL) {
-                                _marketPageStore.chartData.clear();
-                                _marketPageStore
-                                  ..getChartData(
-                                    coinId: widget.data!.id,
-                                    data: widget.data,
-                                    period: 'all',
-                                  )
-                                  ..defaultPercentage(data: widget.data);
-                              }
-                              _marketPageStore.onAllSelect();
-                            },
-                            child: Container(
-                              width: 38,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      ScaleTap(
+                        enableFeedback: false,
+                        onPressed: () {
+                          Gaimon.light();
+                          if (_marketPageStore.chartEnum != ChartEnum.ALL &&
+                              !_marketPageStore.chartLoading) {
+                            _marketPageStore.chartData.clear();
+                            _marketPageStore
+                              ..getChartData(
+                                coinId: widget.data!.id,
+                                data: widget.data,
+                                period: 'all',
+                              )
+                              ..defaultPercentage(data: widget.data);
+                          }
+                          _marketPageStore.onAllSelect();
+                        },
+                        child: Container(
+                          width: 48,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: _marketPageStore.chartEnum == ChartEnum.ALL
+                                ? Colors.grey.withOpacity(0.2)
+                                : Colors.transparent,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'ALL',
+                              style: TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
                                 color:
                                     _marketPageStore.chartEnum == ChartEnum.ALL
-                                        ? Colors.grey.withOpacity(0.2)
-                                        : Colors.transparent,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'ALL',
-                                  style: TextStyle(
-                                    fontFamily: FontFamily.redHatMedium,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    color: _marketPageStore.chartEnum ==
-                                            ChartEnum.ALL
                                         ? AppColors.primary
                                         : Colors.grey,
-                                  ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: Gap(16)),
+              Builder(
+                builder: (context) {
+                  final formattedMarketCap =
+                      formatNumberToBillions(widget.data!.marketCap.toDouble());
+                  final formattedVolume =
+                      formatNumberToBillions(widget.data!.volume.toDouble());
+                  final formattedAvailableSupply = formatNumberToBillions(
+                    widget.data!.availableSupply.toDouble(),
+                  );
+                  final formattedTotalSupply = formatNumberToBillions(
+                    widget.data!.totalSupply.toDouble(),
+                  );
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Card(
+                        color: const Color(0xFFF7F7FA),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              minLeadingWidth: 10,
+                              title: Text(
+                                'Market Cap',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 13,
+                                  color:
+                                      AppColors.textHintsColor.withOpacity(0.8),
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
+                              trailing: Text(
+                                formattedMarketCap,
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: AppColors.primary.withOpacity(0.8),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              height: 1,
+                              indent: 5,
+                              endIndent: 5,
+                              thickness: 1,
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            ListTile(
+                              minLeadingWidth: 10,
+                              title: Text(
+                                '24h Volume',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 13,
+                                  color:
+                                      AppColors.textHintsColor.withOpacity(0.8),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              trailing: Text(
+                                formattedVolume,
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: AppColors.primary.withOpacity(0.8),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              height: 1,
+                              indent: 5,
+                              endIndent: 5,
+                              thickness: 1,
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            ListTile(
+                              minLeadingWidth: 10,
+                              title: Text(
+                                'Available Supply',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 13,
+                                  color:
+                                      AppColors.textHintsColor.withOpacity(0.8),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              trailing: Text(
+                                formattedAvailableSupply,
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: AppColors.primary.withOpacity(0.8),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              height: 1,
+                              indent: 5,
+                              endIndent: 5,
+                              thickness: 1,
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            ListTile(
+                              minLeadingWidth: 10,
+                              title: Text(
+                                'Total Supply',
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 13,
+                                  color:
+                                      AppColors.textHintsColor.withOpacity(0.8),
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              trailing: Text(
+                                formattedTotalSupply,
+                                style: TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  color: AppColors.primary.withOpacity(0.8),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+               SliverToBoxAdapter(
+                child:  Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 63.5, vertical: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(1000),
+                    child: LoadingButton(
+                      style: router.navigatorKey.currentContext!.theme
+                          .buttonStyle(
+                        textStyle: const TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          color: AppColors.primaryTextColor,
+                          fontSize: 15,
+                        ),
+                      )
+                          .copyWith(
+                        backgroundColor: WidgetStateProperty.all(
+                            widget.data!.symbol == 'BTC'
+                                ? const Color(0xFFf7931a)
+                                : widget.data!.symbol == 'ETH'
+                                ? const Color(0xFF7588C8)
+                                : widget.data!.symbol ==
+                                'USDT'
+                                ? const Color(
+                              0xFF2ea07b,
+                            )
+                                : widget.data!.symbol ==
+                                'BNB'
+                                ? const Color(
+                              0xFFF3BA2F,
+                            )
+                                : const Color(
+                              0xFFFD5340,
+                            ).withOpacity(
+                              0.7,
+                            ),
+                        ),
+                      ),
+                      onPressed: () {
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Assets.icons.buy.image(
+                            height: 24,
+                            width: 24,
+                            color: AppColors.white,
+                          ),
+                          const Gap(10),
+                          const Text(
+                            'Buy bitcoin',
+                            style: TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
+              const SliverToBoxAdapter(child: Gap(60),),
             ],
           );
         },
