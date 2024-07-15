@@ -16,18 +16,14 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../constants/chart_period_enum.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/elevated_button_extensions.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/coins_dto/coin_model.dart';
-import '../../../providers/screen_service.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../../utils/date_formatter.dart';
 import '../../../utils/number_formatter.dart';
-import '../../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
 class CoinChartPage extends StatefulWidget {
@@ -963,10 +959,10 @@ class _CoinChartPageState extends State<CoinChartPage> {
                       formatNumberToBillions(widget.data!.marketCap.toDouble());
                   final formattedVolume =
                       formatNumberToBillions(widget.data!.volume.toDouble());
-                  final formattedAvailableSupply = formatNumberToBillions(
+                  final formattedAvailableSupply = formatNumberBillions(
                     widget.data!.availableSupply.toDouble(),
                   );
-                  final formattedTotalSupply = formatNumberToBillions(
+                  final formattedTotalSupply = formatNumberBillions(
                     widget.data!.totalSupply.toDouble(),
                   );
                   return SliverToBoxAdapter(
@@ -1051,7 +1047,7 @@ class _CoinChartPageState extends State<CoinChartPage> {
                                 ),
                               ),
                               trailing: Text(
-                                formattedAvailableSupply,
+                                '$formattedAvailableSupply coins',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
                                   color: AppColors.primary.withOpacity(0.8),
@@ -1080,7 +1076,7 @@ class _CoinChartPageState extends State<CoinChartPage> {
                                 ),
                               ),
                               trailing: Text(
-                                formattedTotalSupply,
+                                '$formattedTotalSupply coins',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
                                   color: AppColors.primary.withOpacity(0.8),
@@ -1096,69 +1092,52 @@ class _CoinChartPageState extends State<CoinChartPage> {
                   );
                 },
               ),
-               SliverToBoxAdapter(
-                child:  Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 63.5, vertical: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(1000),
-                    child: LoadingButton(
-                      style: router.navigatorKey.currentContext!.theme
-                          .buttonStyle(
-                        textStyle: const TextStyle(
+              const SliverToBoxAdapter(
+                child: Gap(24),
+              ),
+              if (widget.data!.symbol == 'BTC') SliverToBoxAdapter(
+                child: ScaleTap(
+                  enableFeedback: false,
+                  onPressed: () {},
+                  child: Container(
+                    height: 50,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1000),
+                      color: widget.data!.symbol == 'BTC'
+                          ? const Color(0xFFf7931a)
+                          : widget.data!.symbol == 'ETH'
+                              ? const Color(0xFF7588C8)
+                              : widget.data!.symbol == 'USDT'
+                                  ? const Color(
+                                      0xFF2ea07b,
+                                    )
+                                  : widget.data!.symbol == 'BNB'
+                                      ? const Color(
+                                          0xFFF3BA2F,
+                                        )
+                                      : const Color(
+                                          0xFFFD5340,
+                                        ).withOpacity(
+                                          0.7,
+                                        ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Buy bitcoin',
+                        style: TextStyle(
                           fontFamily: FontFamily.redHatMedium,
-                          color: AppColors.primaryTextColor,
-                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
                         ),
-                      )
-                          .copyWith(
-                        backgroundColor: WidgetStateProperty.all(
-                            widget.data!.symbol == 'BTC'
-                                ? const Color(0xFFf7931a)
-                                : widget.data!.symbol == 'ETH'
-                                ? const Color(0xFF7588C8)
-                                : widget.data!.symbol ==
-                                'USDT'
-                                ? const Color(
-                              0xFF2ea07b,
-                            )
-                                : widget.data!.symbol ==
-                                'BNB'
-                                ? const Color(
-                              0xFFF3BA2F,
-                            )
-                                : const Color(
-                              0xFFFD5340,
-                            ).withOpacity(
-                              0.7,
-                            ),
-                        ),
-                      ),
-                      onPressed: () {
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Assets.icons.buy.image(
-                            height: 24,
-                            width: 24,
-                            color: AppColors.white,
-                          ),
-                          const Gap(10),
-                          const Text(
-                            'Buy bitcoin',
-                            style: TextStyle(
-                              fontFamily: FontFamily.redHatMedium,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),
-                ),
+                ).paddingHorizontal(60),
+              ) else SliverToBoxAdapter(),
+              const SliverToBoxAdapter(
+                child: Gap(60),
               ),
-              const SliverToBoxAdapter(child: Gap(60),),
             ],
           );
         },
