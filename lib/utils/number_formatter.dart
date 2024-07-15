@@ -160,4 +160,13 @@ String formatNumberToBillions(double number) {
   return billionFormatter.format(number);
 }
 
+String formatNumberBillions(double number) {
+  final billionFormatter = NumberFormat.compactCurrency(
+    decimalDigits: 2,
+    symbol: '',
+  );
+
+  return billionFormatter.format(number);
+}
+
 final priceFormatter = NumberFormat('#,##0.00', 'en_US');
