@@ -67,7 +67,29 @@ class _CoinChartPageState extends State<CoinChartPage> {
                       ? const Color(0xFF2ea07b)
                       : widget.data!.symbol == 'BNB'
                           ? const Color(0xFFF3BA2F)
-                          : const Color(0xFFFD5340).withOpacity(0.7),
+                          : widget.data!.symbol == 'SOL'
+                              ? const Color(0xFF9945FF)
+                              : widget.data!.symbol == 'USDC'
+                                  ? const Color(0xFF2775ca)
+                                  : widget.data!.symbol == 'STETH'
+                                      ? const Color(0xFF749EED)
+                                      : widget.data!.symbol == 'XRP'
+                                          ? const Color(
+                                              0xFF2f2c56,
+                                            )
+                                          : widget.data!.symbol == 'TON'
+                                              ? const Color(
+                                                  0xFF3887E6,
+                                                )
+                                              : widget.data!.symbol == 'DOGE'
+                                                  ? const Color(
+                                                      0xFFe1b303,
+                                                    )
+                                                  : const Color(
+                                                      0xFFFD5340,
+                                                    ).withOpacity(
+                                                      0.7,
+                                                    ),
           strokeWidth: 1,
           dashArray: [1, 3],
         ),
@@ -84,7 +106,29 @@ class _CoinChartPageState extends State<CoinChartPage> {
                         ? const Color(0xFF2ea07b)
                         : widget.data!.symbol == 'BNB'
                             ? const Color(0xFFF3BA2F)
-                            : const Color(0xFFFD5340).withOpacity(0.7),
+                            : widget.data!.symbol == 'SOL'
+                                ? const Color(0xFF9945FF)
+                                : widget.data!.symbol == 'USDC'
+                                    ? const Color(0xFF2775ca)
+                                    : widget.data!.symbol == 'STETH'
+                                        ? const Color(0xFF749EED)
+                                        : widget.data!.symbol == 'XRP'
+                                            ? const Color(
+                                                0xFF2f2c56,
+                                              )
+                                            : widget.data!.symbol == 'TON'
+                                                ? const Color(
+                                                    0xFF3887E6,
+                                                  )
+                                                : widget.data!.symbol == 'DOGE'
+                                                    ? const Color(
+                                                        0xFFe1b303,
+                                                      )
+                                                    : const Color(
+                                                        0xFFFD5340,
+                                                      ).withOpacity(
+                                                        0.7,
+                                                      ),
           ),
         ),
       );
@@ -351,221 +395,199 @@ class _CoinChartPageState extends State<CoinChartPage> {
               const SliverToBoxAdapter(
                 child: Gap(20),
               ),
-              SliverToBoxAdapter(
-                child: _marketPageStore.chartLoading ||
-                        _marketPageStore.chartData.isEmpty
-                    ? SizedBox(
-                        height: 250,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 175,
-                            vertical: 104,
-                          ),
-                          child: CircularProgressIndicator(
-                            color: widget.data!.symbol == 'BTC'
-                                ? const Color(0xFFf7931a)
-                                : widget.data!.symbol == 'ETH'
-                                    ? const Color(0xFF7588C8)
-                                    : widget.data!.symbol == 'USDT'
-                                        ? const Color(0xFF2ea07b)
-                                        : widget.data!.symbol == 'BNB'
-                                            ? const Color(0xFFF3BA2F)
-                                            : const Color(0xFFFD5340)
-                                                .withOpacity(0.7),
-                          ),
-                        ),
-                      )
-                    : SizedBox(
-                        height: 250,
-                        child: Observer(
-                          builder: (context) {
-                            final highestPoint = spots.reduce(
-                              (curr, next) => curr.y > next.y ? curr : next,
-                            );
-                            final lowestPoint = spots.reduce(
-                              (curr, next) => curr.y < next.y ? curr : next,
-                            );
-                            return Stack(
-                              children: [
-                                LineChart(
-                                  LineChartData(
-                                    minX: spots.first.x,
-                                    maxX: spots.last.x,
-                                    minY:
-                                        spots.map((spot) => spot.y).reduce(min),
-                                    maxY:
-                                        spots.map((spot) => spot.y).reduce(max),
-                                    backgroundColor: Colors.white,
-                                    borderData: FlBorderData(
-                                      border: Border.all(color: Colors.white),
-                                    ),
-                                    gridData: const FlGridData(
-                                      drawHorizontalLine: false,
-                                      drawVerticalLine: false,
-                                    ),
-                                    lineTouchData: LineTouchData(
-                                      touchCallback: (event, touchResponse) {
-                                        if (touchResponse != null &&
-                                            touchResponse.lineBarSpots !=
-                                                null) {
-                                          final FlSpot touchedSpot =
-                                              touchResponse.lineBarSpots!.first;
-                                          if (_marketPageStore
-                                                      .lastTouchedSpot ==
-                                                  null ||
-                                              _marketPageStore
-                                                      .lastTouchedSpot!.x !=
-                                                  touchedSpot.x ||
-                                              _marketPageStore
-                                                      .lastTouchedSpot!.y !=
-                                                  touchedSpot.y) {
-                                            _marketPageStore.lastTouchedSpot =
-                                                touchedSpot;
-                                            Future.delayed(
-                                              const Duration(),
-                                              () async {
-                                                await _marketPageStore
-                                                    .triggerHapticFeedback();
-                                              },
-                                            );
-                                          }
-                                          _marketPageStore
-                                            ..chartTouched()
-                                            ..setXValue(value: touchedSpot.x)
-                                            ..setYValue(value: touchedSpot.y);
-                                          priceChange(
-                                            touchedSpot: touchedSpot,
-                                            chartPoints: chartPoints,
-                                          );
-                                          timeStamp();
-                                        } else {
-                                          _marketPageStore
-                                            ..chartUntouched()
-                                            ..defaultPercentage(
-                                              data: widget.data,
-                                            );
-                                        }
-                                      },
-                                      touchTooltipData: LineTouchTooltipData(
-                                        tooltipBorder: const BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                        getTooltipColor: (touchedSpot) {
-                                          return Colors.transparent;
-                                        },
-                                        getTooltipItems: (touchedSpots) {
-                                          return touchedSpots.map(
-                                            (touchedSpot) {
-                                              const textStyle = TextStyle(
-                                                color: Colors.transparent,
-                                              );
-                                              return LineTooltipItem(
-                                                spots[touchedSpot.spotIndex]
-                                                    .y
-                                                    .toStringAsFixed(2),
-                                                textStyle,
-                                              );
-                                            },
-                                          ).toList();
-                                        },
-                                      ),
-                                      getTouchedSpotIndicator:
-                                          customGetTouchedSpotIndicator,
-                                      getTouchLineEnd: (_, __) =>
-                                          double.infinity,
-                                    ),
-                                    titlesData: const FlTitlesData(
-                                      show: false,
-                                      leftTitles: AxisTitles(),
-                                    ),
-                                    extraLinesData: ExtraLinesData(
-                                      horizontalLines: [
-                                        HorizontalLine(
-                                          dashArray: [1, 4],
-                                          y: highestPoint.y,
-                                          color: Colors.grey,
-                                          strokeWidth: 1,
-                                          label: HorizontalLineLabel(
-                                            show: true,
-                                            alignment: Alignment.topRight,
-                                            style: const TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 12,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                            ),
-                                            labelResolver: (line) =>
-                                                '\$${priceFormatter.format(highestPoint.y)}',
-                                          ),
-                                        ),
-                                        HorizontalLine(
-                                          y: lowestPoint.y,
-                                          color: Colors.grey,
-                                          strokeWidth: 1,
-                                          dashArray: [1, 4],
-                                          label: HorizontalLineLabel(
-                                            show: true,
-                                            alignment: Alignment.bottomRight,
-                                            style: const TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 12,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                            ),
-                                            labelResolver: (line) =>
-                                                '\$${priceFormatter.format(lowestPoint.y)}',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    lineBarsData: [
-                                      LineChartBarData(
-                                        dotData: FlDotData(
-                                          getDotPainter:
-                                              (spot, percent, barData, index) {
-                                            if (spot == highestPoint ||
-                                                spot == lowestPoint) {
-                                              return FlDotCirclePainter(
-                                                radius: 3,
-                                                color: widget.data!.symbol ==
-                                                        'BTC'
-                                                    ? const Color(0xFFf7931a)
+              if (_marketPageStore.chartLoading ||
+                  _marketPageStore.chartData.isEmpty)
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 250,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: widget.data!.symbol == 'BTC'
+                            ? const Color(0xFFf7931a)
+                            : widget.data!.symbol == 'ETH'
+                                ? const Color(0xFF7588C8)
+                                : widget.data!.symbol == 'USDT'
+                                    ? const Color(0xFF2ea07b)
+                                    : widget.data!.symbol == 'BNB'
+                                        ? const Color(0xFFF3BA2F)
+                                        : widget.data!.symbol == 'SOL'
+                                            ? const Color(0xFF9945FF)
+                                            : widget.data!.symbol == 'USDC'
+                                                ? const Color(0xFF2775ca)
+                                                : widget.data!.symbol == 'STETH'
+                                                    ? const Color(0xFF749EED)
                                                     : widget.data!.symbol ==
-                                                            'ETH'
+                                                            'XRP'
                                                         ? const Color(
-                                                            0xFF7588C8,
+                                                            0xFF2f2c56,
                                                           )
                                                         : widget.data!.symbol ==
-                                                                'USDT'
+                                                                'TON'
                                                             ? const Color(
-                                                                0xFF2ea07b,
+                                                                0xFF3887E6,
                                                               )
                                                             : widget.data!
                                                                         .symbol ==
-                                                                    'BNB'
+                                                                    'DOGE'
                                                                 ? const Color(
-                                                                    0xFFF3BA2F,
+                                                                    0xFFe1b303,
                                                                   )
                                                                 : const Color(
                                                                     0xFFFD5340,
                                                                   ).withOpacity(
                                                                     0.7,
                                                                   ),
-                                                strokeWidth: 2,
-                                                strokeColor: Colors.transparent,
-                                              );
-                                            }
-                                            return FlDotCirclePainter(
-                                              radius: 0,
-                                              color: Colors.transparent,
-                                              strokeWidth: 2,
-                                              strokeColor: Colors.transparent,
-                                            );
+                      ),
+                    ),
+                  ),
+                )
+              //e1b303
+              else
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 250,
+                    child: Observer(
+                      builder: (context) {
+                        final highestPoint = spots.reduce(
+                          (curr, next) => curr.y > next.y ? curr : next,
+                        );
+                        final lowestPoint = spots.reduce(
+                          (curr, next) => curr.y < next.y ? curr : next,
+                        );
+                        return Stack(
+                          children: [
+                            LineChart(
+                              LineChartData(
+                                minX: spots.first.x,
+                                maxX: spots.last.x,
+                                minY: spots.map((spot) => spot.y).reduce(min),
+                                maxY: spots.map((spot) => spot.y).reduce(max),
+                                backgroundColor: Colors.white,
+                                borderData: FlBorderData(
+                                  border: Border.all(color: Colors.white),
+                                ),
+                                gridData: const FlGridData(
+                                  drawHorizontalLine: false,
+                                  drawVerticalLine: false,
+                                ),
+                                lineTouchData: LineTouchData(
+                                  touchCallback: (event, touchResponse) {
+                                    if (touchResponse != null &&
+                                        touchResponse.lineBarSpots != null) {
+                                      final FlSpot touchedSpot =
+                                          touchResponse.lineBarSpots!.first;
+                                      if (_marketPageStore.lastTouchedSpot ==
+                                              null ||
+                                          _marketPageStore.lastTouchedSpot!.x !=
+                                              touchedSpot.x ||
+                                          _marketPageStore.lastTouchedSpot!.y !=
+                                              touchedSpot.y) {
+                                        _marketPageStore.lastTouchedSpot =
+                                            touchedSpot;
+                                        Future.delayed(
+                                          const Duration(),
+                                          () async {
+                                            await _marketPageStore
+                                                .triggerHapticFeedback();
                                           },
+                                        );
+                                      }
+                                      _marketPageStore
+                                        ..chartTouched()
+                                        ..setXValue(value: touchedSpot.x)
+                                        ..setYValue(value: touchedSpot.y);
+                                      priceChange(
+                                        touchedSpot: touchedSpot,
+                                        chartPoints: chartPoints,
+                                      );
+                                      timeStamp();
+                                    } else {
+                                      _marketPageStore
+                                        ..chartUntouched()
+                                        ..defaultPercentage(
+                                          data: widget.data,
+                                        );
+                                    }
+                                  },
+                                  touchTooltipData: LineTouchTooltipData(
+                                    tooltipBorder: const BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                    getTooltipColor: (touchedSpot) {
+                                      return Colors.transparent;
+                                    },
+                                    getTooltipItems: (touchedSpots) {
+                                      return touchedSpots.map(
+                                        (touchedSpot) {
+                                          const textStyle = TextStyle(
+                                            color: Colors.transparent,
+                                          );
+                                          return LineTooltipItem(
+                                            spots[touchedSpot.spotIndex]
+                                                .y
+                                                .toStringAsFixed(2),
+                                            textStyle,
+                                          );
+                                        },
+                                      ).toList();
+                                    },
+                                  ),
+                                  getTouchedSpotIndicator:
+                                      customGetTouchedSpotIndicator,
+                                  getTouchLineEnd: (_, __) => double.infinity,
+                                ),
+                                titlesData: const FlTitlesData(
+                                  show: false,
+                                  leftTitles: AxisTitles(),
+                                ),
+                                extraLinesData: ExtraLinesData(
+                                  horizontalLines: [
+                                    HorizontalLine(
+                                      dashArray: [1, 4],
+                                      y: highestPoint.y,
+                                      color: Colors.grey,
+                                      strokeWidth: 1,
+                                      label: HorizontalLineLabel(
+                                        show: true,
+                                        alignment: Alignment.topRight,
+                                        style: const TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 12,
+                                          fontFamily: FontFamily.redHatMedium,
                                         ),
-                                        color: _marketPageStore.chartLoading
-                                            ? Colors.transparent
-                                            : widget.data!.symbol == 'BTC'
+                                        labelResolver: (line) =>
+                                            '\$${priceFormatter.format(highestPoint.y)}',
+                                      ),
+                                    ),
+                                    HorizontalLine(
+                                      y: lowestPoint.y,
+                                      color: Colors.grey,
+                                      strokeWidth: 1,
+                                      dashArray: [1, 4],
+                                      label: HorizontalLineLabel(
+                                        show: true,
+                                        alignment: Alignment.bottomRight,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12,
+                                          fontFamily: FontFamily.redHatMedium,
+                                        ),
+                                        labelResolver: (line) =>
+                                            '\$${priceFormatter.format(lowestPoint.y)}',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                lineBarsData: [
+                                  LineChartBarData(
+                                    dotData: FlDotData(
+                                      getDotPainter:
+                                          (spot, percent, barData, index) {
+                                        if (spot == highestPoint ||
+                                            spot == lowestPoint) {
+                                          return FlDotCirclePainter(
+                                            radius: 3,
+                                            color: widget.data!.symbol == 'BTC'
                                                 ? const Color(0xFFf7931a)
                                                 : widget.data!.symbol == 'ETH'
                                                     ? const Color(0xFF7588C8)
@@ -579,21 +601,114 @@ class _CoinChartPageState extends State<CoinChartPage> {
                                                             ? const Color(
                                                                 0xFFF3BA2F,
                                                               )
-                                                            : const Color(
-                                                                0xFFFD5340,
-                                                              ).withOpacity(
-                                                                0.7,
-                                                              ),
-                                        belowBarData: BarAreaData(
-                                          show: true,
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              if (widget.data!.symbol == 'BTC')
-                                                const Color(0xFFf7931a)
-                                              else
-                                                widget.data!.symbol == 'ETH'
+                                                            : widget.data!
+                                                                        .symbol ==
+                                                                    'SOL'
+                                                                ? const Color(
+                                                                    0xFF9945FF,
+                                                                  )
+                                                                : widget.data!
+                                                                            .symbol ==
+                                                                        'USDC'
+                                                                    ? const Color(
+                                                                        0xFF2775ca,
+                                                                      )
+                                                                    : widget.data!.symbol ==
+                                                                            'STETH'
+                                                                        ? const Color(
+                                                                            0xFF749EED,
+                                                                          )
+                                                                        : widget.data!.symbol ==
+                                                                                'XRP'
+                                                                            ? const Color(
+                                                                                0xFF2f2c56,
+                                                                              )
+                                                                            : widget.data!.symbol == 'TON'
+                                                                                ? const Color(
+                                                                                    0xFF3887E6,
+                                                                                  )
+                                                                                : widget.data!.symbol == 'DOGE'
+                                                                                    ? const Color(
+                                                                                        0xFFe1b303,
+                                                                                      )
+                                                                                    : const Color(
+                                                                                        0xFFFD5340,
+                                                                                      ).withOpacity(
+                                                                                        0.7,
+                                                                                      ),
+                                            strokeWidth: 2,
+                                            strokeColor: Colors.transparent,
+                                          );
+                                        }
+                                        return FlDotCirclePainter(
+                                          radius: 0,
+                                          color: Colors.transparent,
+                                          strokeWidth: 2,
+                                          strokeColor: Colors.transparent,
+                                        );
+                                      },
+                                    ),
+                                    color: _marketPageStore.chartLoading
+                                        ? Colors.transparent
+                                        : widget.data!.symbol == 'BTC'
+                                            ? const Color(0xFFf7931a)
+                                            : widget.data!.symbol == 'ETH'
+                                                ? const Color(0xFF7588C8)
+                                                : widget.data!.symbol == 'USDT'
+                                                    ? const Color(0xFF2ea07b)
+                                                    : widget.data!.symbol ==
+                                                            'BNB'
+                                                        ? const Color(
+                                                            0xFFF3BA2F,
+                                                          )
+                                                        : widget.data!.symbol ==
+                                                                'SOL'
+                                                            ? const Color(
+                                                                0xFF9945FF,
+                                                              )
+                                                            : widget.data!
+                                                                        .symbol ==
+                                                                    'USDC'
+                                                                ? const Color(
+                                                                    0xFF2775ca,
+                                                                  )
+                                                                : widget.data!
+                                                                            .symbol ==
+                                                                        'STETH'
+                                                                    ? const Color(
+                                                                        0xFF749EED,
+                                                                      )
+                                                                    : widget.data!.symbol ==
+                                                                            'XRP'
+                                                                        ? const Color(
+                                                                            0xFF2f2c56,
+                                                                          )
+                                                                        : widget.data!.symbol ==
+                                                                                'TON'
+                                                                            ? const Color(
+                                                                                0xFF3887E6,
+                                                                              )
+                                                                            : widget.data!.symbol == 'DOGE'
+                                                                                ? const Color(
+                                                                                    0xFFe1b303,
+                                                                                  )
+                                                                                : const Color(
+                                                                                    0xFFFD5340,
+                                                                                  ).withOpacity(
+                                                                                    0.7,
+                                                                                  ),
+                                    belowBarData: BarAreaData(
+                                      show: true,
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          if (widget.data!.symbol == 'BTC')
+                                            const Color(0xFFf7931a)
+                                          else
+                                            widget.data!.symbol == 'BTC'
+                                                ? const Color(0xFFf7931a)
+                                                : widget.data!.symbol == 'ETH'
                                                     ? const Color(0xFF7588C8)
                                                     : widget.data!.symbol ==
                                                             'USDT'
@@ -605,36 +720,66 @@ class _CoinChartPageState extends State<CoinChartPage> {
                                                             ? const Color(
                                                                 0xFFF3BA2F,
                                                               )
-                                                            : const Color(
-                                                                0xFFFD5340,
-                                                              ).withOpacity(
-                                                                0.7,
-                                                              ),
-                                              Colors.white,
-                                            ],
-                                          ),
-                                        ),
-                                        spots: spots,
-                                        isCurved: _marketPageStore.chartEnum !=
-                                            ChartEnum.ONE_MONTH,
+                                                            : widget.data!
+                                                                        .symbol ==
+                                                                    'SOL'
+                                                                ? const Color(
+                                                                    0xFF9945FF,
+                                                                  )
+                                                                : widget.data!
+                                                                            .symbol ==
+                                                                        'USDC'
+                                                                    ? const Color(
+                                                                        0xFF2775ca,
+                                                                      )
+                                                                    : widget.data!.symbol ==
+                                                                            'STETH'
+                                                                        ? const Color(
+                                                                            0xFF749EED,
+                                                                          )
+                                                                        : widget.data!.symbol ==
+                                                                                'XRP'
+                                                                            ? const Color(
+                                                                                0xFF2f2c56,
+                                                                              )
+                                                                            : widget.data!.symbol == 'TON'
+                                                                                ? const Color(
+                                                                                    0xFF3887E6,
+                                                                                  )
+                                                                                : widget.data!.symbol == 'DOGE'
+                                                                                    ? const Color(
+                                                                                        0xFFe1b303,
+                                                                                      )
+                                                                                    : const Color(
+                                                                                        0xFFFD5340,
+                                                                                      ).withOpacity(
+                                                                                        0.7,
+                                                                                      ),
+                                          Colors.white,
+                                        ],
                                       ),
-                                    ],
+                                    ),
+                                    spots: spots,
+                                    isCurved: _marketPageStore.chartEnum !=
+                                        ChartEnum.ONE_MONTH,
                                   ),
-                                ),
-                                Positioned(
-                                  left: 10,
-                                  bottom: 10,
-                                  child: Assets.icons.coinplusLogoBlack.image(
-                                    height: 20,
-                                    color: Colors.black.withOpacity(0.3),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-              ),
+                                ],
+                              ),
+                            ),
+                            Positioned(
+                              left: 10,
+                              bottom: 10,
+                              child: Assets.icons.coinplusLogoBlack.image(
+                                height: 20,
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
               const SliverToBoxAdapter(
                 child: Gap(30),
               ),
@@ -1095,46 +1240,33 @@ class _CoinChartPageState extends State<CoinChartPage> {
               const SliverToBoxAdapter(
                 child: Gap(24),
               ),
-              if (widget.data!.symbol == 'BTC') SliverToBoxAdapter(
-                child: ScaleTap(
-                  enableFeedback: false,
-                  onPressed: () {},
-                  child: Container(
-                    height: 50,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(1000),
-                      color: widget.data!.symbol == 'BTC'
-                          ? const Color(0xFFf7931a)
-                          : widget.data!.symbol == 'ETH'
-                              ? const Color(0xFF7588C8)
-                              : widget.data!.symbol == 'USDT'
-                                  ? const Color(
-                                      0xFF2ea07b,
-                                    )
-                                  : widget.data!.symbol == 'BNB'
-                                      ? const Color(
-                                          0xFFF3BA2F,
-                                        )
-                                      : const Color(
-                                          0xFFFD5340,
-                                        ).withOpacity(
-                                          0.7,
-                                        ),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Buy bitcoin',
-                        style: TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+              if (widget.data!.symbol == 'BTC')
+                SliverToBoxAdapter(
+                  child: ScaleTap(
+                    enableFeedback: false,
+                    onPressed: () {},
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(1000),
+                        color: const Color(0xFFf7931a),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Buy bitcoin',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ).paddingHorizontal(60),
-              ) else SliverToBoxAdapter(),
+                  ).paddingHorizontal(60),
+                )
+              else
+                const SliverToBoxAdapter(),
               const SliverToBoxAdapter(
                 child: Gap(60),
               ),
