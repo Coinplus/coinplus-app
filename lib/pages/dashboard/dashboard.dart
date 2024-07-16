@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:gaimon/gaimon.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 import '../../constants/card_record.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -31,14 +33,13 @@ import '../../utils/deep_link_util.dart';
 import '../../utils/page_controller_manager.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
-import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../../widgets/send_receive_action_button/send_receive_action_button.dart';
 import '../history_page/history_page.dart';
 import '../market_page/market_page.dart';
 import '../send_page/send_to/send_to_state.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
-import 'send_receive_action_button.dart';
 
 @RoutePage()
 class DashboardPage extends HookWidget {
@@ -130,7 +131,7 @@ class DashboardPage extends HookWidget {
                 );
                 if (!cardExists) {
                   await router
-                      .push(CardFillRoute(receivedData: deepLinkRes.value));
+                      .push(CardConnectRoute(receivedData: deepLinkRes.value));
                   deepLinkRes.value = null;
                 } else {
                   Future.delayed(
@@ -163,7 +164,7 @@ class DashboardPage extends HookWidget {
             deepLinkRes.value = onLinkPassed(data);
             if (!appLocked.value &&
                 deepLinkRes.value != null &&
-                router.current.name != CardFillRoute.name) {
+                router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Wallet',
@@ -176,7 +177,7 @@ class DashboardPage extends HookWidget {
               );
               if (!cardExists) {
                 await router
-                    .push(CardFillRoute(receivedData: deepLinkRes.value));
+                    .push(CardConnectRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(
@@ -193,7 +194,7 @@ class DashboardPage extends HookWidget {
             } else if (appLocked.value &&
                 deepLinkRes.value != null &&
                 resumed.value &&
-                router.current.name != CardFillRoute.name) {
+                router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Wallet',
@@ -206,7 +207,7 @@ class DashboardPage extends HookWidget {
               );
               if (!cardExists) {
                 await router
-                    .push(CardFillRoute(receivedData: deepLinkRes.value));
+                    .push(CardConnectRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(
@@ -361,91 +362,106 @@ class DashboardPage extends HookWidget {
                   ),
                   child: Observer(
                     builder: (context) {
-                      return BottomNavigationBar(
-                        selectedLabelStyle: const TextStyle(
-                          fontSize: 11,
-                          fontFamily: FontFamily.redHatMedium,
-                        ),
-                        unselectedLabelStyle: const TextStyle(
-                          fontSize: 11,
-                          fontFamily: FontFamily.redHatMedium,
-                        ),
-                        onTap: (index) => [
-                          HapticFeedback.lightImpact(),
-                          _pageController.jumpToPage(index),
-                          _allSettingsState.updateIndex(index),
-                          if (index == 0)
-                            {
-                              recordAmplitudeEvent(const WalletTabClicked()),
-                            }
-                          else if (index == 1)
-                            {
-                              if (currentIndex.value == index && index == 1)
+                      return ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                          child: BottomNavigationBar(
+                            selectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
+                            ),
+                            unselectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
+                            ),
+                            onTap: (index) => [
+                              HapticFeedback.lightImpact(),
+                              _pageController.jumpToPage(index),
+                              _allSettingsState.updateIndex(index),
+                              if (index == 0)
                                 {
-                                  programmaticRefresh(),
+                                  recordAmplitudeEvent(
+                                    const WalletTabClicked(),
+                                  ),
+                                }
+                              else if (index == 1)
+                                {
+                                  if (currentIndex.value == index && index == 1)
+                                    {
+                                      programmaticRefresh(),
+                                    },
+                                  currentIndex.value = index,
+                                  recordAmplitudeEvent(
+                                    const MarketTabClicked(),
+                                  ),
+                                }
+                              else if (index == 2)
+                                {
+                                  recordAmplitudeEvent(
+                                    const HistoryTabClicked(),
+                                  ),
+                                }
+                              else if (index == 3)
+                                {
+                                  recordAmplitudeEvent(
+                                    const SettingsTabClicked(),
+                                  ),
                                 },
-                              currentIndex.value = index,
-                              recordAmplitudeEvent(const MarketTabClicked()),
-                            }
-                          else if (index == 2)
-                            {
-                              recordAmplitudeEvent(const HistoryTabClicked()),
-                            }
-                          else if (index == 3)
-                            {
-                              recordAmplitudeEvent(const SettingsTabClicked()),
-                            },
-                        ],
-                        currentIndex: _allSettingsState.currentIndex,
-                        backgroundColor: Colors.white,
-                        elevation: 0,
-                        type: BottomNavigationBarType.fixed,
-                        selectedItemColor: Colors.black,
-                        unselectedItemColor: const Color(0xFfB8BEC5),
-                        items: <BottomNavigationBarItem>[
-                          BottomNavigationBarItem(
-                            icon: Assets.icons.walletIcon.image(
-                              height: 32,
-                              color: _allSettingsState.currentIndex == 0
-                                  ? Colors.black
-                                  : const Color(0xFfB8BEC5),
-                            ),
-                            label: 'Wallet',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(right: 30, top: 8),
-                              child: Assets.icons.market.image(
-                                height: 23,
-                                color: _allSettingsState.currentIndex == 1
-                                    ? Colors.black
-                                    : const Color(0xFfB8BEC5),
+                            ],
+                            currentIndex: _allSettingsState.currentIndex,
+                            backgroundColor: Colors.white.withOpacity(0.8),
+                            elevation: 0,
+                            type: BottomNavigationBarType.fixed,
+                            selectedItemColor: Colors.black,
+                            unselectedItemColor: const Color(0xFfB8BEC5),
+                            items: <BottomNavigationBarItem>[
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.walletIcon.image(
+                                  height: 32,
+                                  color: _allSettingsState.currentIndex == 0
+                                      ? Colors.black
+                                      : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Wallet',
                               ),
-                            ),
-                            label: 'Markets            ',
-                          ),
-                          BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: const EdgeInsets.only(left: 30, top: 5),
-                              child: Assets.icons.history.image(
-                                height: 28,
-                                color: _allSettingsState.currentIndex == 2
-                                    ? Colors.black
-                                    : const Color(0xFfB8BEC5),
+                              BottomNavigationBarItem(
+                                icon: Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 30, top: 8),
+                                  child: Assets.icons.market.image(
+                                    height: 23,
+                                    color: _allSettingsState.currentIndex == 1
+                                        ? Colors.black
+                                        : const Color(0xFfB8BEC5),
+                                  ),
+                                ),
+                                label: 'Markets            ',
                               ),
-                            ),
-                            label: '             History',
+                              BottomNavigationBarItem(
+                                icon: Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 30, top: 5),
+                                  child: Assets.icons.history.image(
+                                    height: 28,
+                                    color: _allSettingsState.currentIndex == 2
+                                        ? Colors.black
+                                        : const Color(0xFfB8BEC5),
+                                  ),
+                                ),
+                                label: '             History',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.pageInfo.image(
+                                  height: 32,
+                                  color: _allSettingsState.currentIndex == 3
+                                      ? Colors.black
+                                      : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Settings',
+                              ),
+                            ],
                           ),
-                          BottomNavigationBarItem(
-                            icon: Assets.icons.pageInfo.image(
-                              height: 32,
-                              color: _allSettingsState.currentIndex == 3
-                                  ? Colors.black
-                                  : const Color(0xFfB8BEC5),
-                            ),
-                            label: 'Settings',
-                          ),
-                        ],
+                        ),
                       );
                     },
                   ),

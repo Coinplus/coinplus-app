@@ -74,6 +74,7 @@ class _HistoryPageState extends State<HistoryPage>
       tabController: _tabController,
     );
   }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -84,7 +85,7 @@ class _HistoryPageState extends State<HistoryPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 140,
+        toolbarHeight: 70,
         elevation: 0,
         backgroundColor: Colors.white,
         title: Column(
@@ -118,393 +119,394 @@ class _HistoryPageState extends State<HistoryPage>
                 ),
               ],
             ),
-            const Gap(18),
-            SizedBox(
-              height: 60,
-              child: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _tabController,
-                children: [
-                  if (_balanceStore.cards.isEmpty)
-                    const SizedBox()
-                  else
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Observer(
-                        builder: (_) {
-                          return _marketPageStore.singleCoin?.result == null
-                              ? const Padding(
-                                  padding: EdgeInsets.only(top: 14),
-                                  child: HistoryDropdownShimmer(),
-                                )
-                              : ScaleTap(
-                                  enableFeedback: false,
-                                  onPressed: _balanceStore.cards.length > 1
-                                      ? () {
-                                          showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.white,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            builder: (_) {
-                                              return CardSelectionModal(
-                                                balanceStore: _balanceStore,
-                                                marketPageStore:
-                                                    _marketPageStore,
-                                                historyPageStore:
-                                                    _historyPageStore,
-                                              );
-                                            },
-                                          );
-                                          recordAmplitudeEventPartTwo(
-                                            const SelectWalletClicked(
-                                              walletType: 'card',
-                                            ),
-                                          );
-                                        }
-                                      : null,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Observer(
-                                      builder: (_) {
-                                        final data = _marketPageStore
-                                            .singleCoin?.result.first;
-                                        final myFormat =
-                                            NumberFormat.decimalPatternDigits(
-                                          locale: 'en_us',
-                                          decimalDigits: 2,
-                                        );
-                                        final singleCard = _balanceStore.cards[
-                                            _historyPageStore.cardHistoryIndex];
-                                        final formattedAddress =
-                                            getSplitAddress(singleCard.address);
-
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 25,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: singleCard
-                                                          .color.image
-                                                          .image()
-                                                          .image,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 10,
-                                                        spreadRadius: 5,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.2),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const Gap(10),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      singleCard.name,
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        color:
-                                                            AppColors.primary,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      formattedAddress,
-                                                      style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontSize: 14,
-                                                        color: AppColors
-                                                            .textHintsColor,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Observer(
-                                                  builder: (context) {
-                                                    return _accelerometerStore
-                                                            .hasPerformedAction
-                                                        ? Text(
-                                                            r'$*****',
-                                                            style: TextStyle(
-                                                              fontSize: singleCard
-                                                                          .finalBalance
-                                                                          .toString()
-                                                                          .length >
-                                                                      9
-                                                                  ? 17
-                                                                  : 20,
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              color: AppColors
-                                                                  .textHintsColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
-                                                          )
-                                                        : Text(
-                                                            '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
-                                                            style: TextStyle(
-                                                              fontSize: singleCard
-                                                                          .finalBalance
-                                                                          .toString()
-                                                                          .length >
-                                                                      9
-                                                                  ? 17
-                                                                  : 20,
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              color: AppColors
-                                                                  .textHintsColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
-                                                          );
-                                                  },
-                                                ),
-                                                if (_balanceStore.cards.length >
-                                                    1)
-                                                  const Icon(
-                                                    Icons.keyboard_arrow_down,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                );
-                        },
-                      ),
-                    ),
-                  if (_balanceStore.bars.isEmpty)
-                    const SizedBox()
-                  else
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Observer(
-                        builder: (_) {
-                          return _marketPageStore.singleCoin?.result == null
-                              ? const HistoryDropdownShimmer()
-                              : ScaleTap(
-                                  onPressed: _balanceStore.bars.length > 1
-                                      ? () {
-                                          showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.white,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            builder: (_) {
-                                              return BarSelectionModal(
-                                                balanceStore: _balanceStore,
-                                                marketPageStore:
-                                                    _marketPageStore,
-                                                historyPageStore:
-                                                    _historyPageStore,
-                                              );
-                                            },
-                                          );
-                                          recordAmplitudeEventPartTwo(
-                                            const SelectWalletClicked(
-                                              walletType: 'bar',
-                                            ),
-                                          );
-                                        }
-                                      : null,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Observer(
-                                      builder: (_) {
-                                        final data = _marketPageStore
-                                            .singleCoin?.result.first;
-                                        final myFormat =
-                                            NumberFormat.decimalPatternDigits(
-                                          locale: 'en_us',
-                                          decimalDigits: 2,
-                                        );
-                                        final singleCard = _balanceStore.bars[
-                                            _historyPageStore.barHistoryIndex];
-                                        final formattedAddress =
-                                            getSplitAddress(singleCard.address);
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 25,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: singleCard
-                                                          .color.image
-                                                          .image()
-                                                          .image,
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        blurRadius: 10,
-                                                        spreadRadius: 5,
-                                                        color: Colors.grey
-                                                            .withOpacity(0.2),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const Gap(10),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      singleCard.name,
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        color:
-                                                            AppColors.primary,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      formattedAddress,
-                                                      style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
-                                                        fontSize: 14,
-                                                        color: AppColors
-                                                            .textHintsColor,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Observer(
-                                                  builder: (context) {
-                                                    return _accelerometerStore
-                                                            .hasPerformedAction
-                                                        ? Text(
-                                                            r'$*****',
-                                                            style: TextStyle(
-                                                              fontSize: singleCard
-                                                                          .finalBalance
-                                                                          .toString()
-                                                                          .length >
-                                                                      9
-                                                                  ? 17
-                                                                  : 20,
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              color: AppColors
-                                                                  .textHintsColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
-                                                          )
-                                                        : Text(
-                                                            '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
-                                                            style: TextStyle(
-                                                              fontSize: singleCard
-                                                                          .finalBalance
-                                                                          .toString()
-                                                                          .length >
-                                                                      9
-                                                                  ? 17
-                                                                  : 20,
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              color: AppColors
-                                                                  .textHintsColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                            ),
-                                                          );
-                                                  },
-                                                ),
-                                                if (_balanceStore.bars.length >
-                                                    1)
-                                                  const Icon(
-                                                    Icons.keyboard_arrow_down,
-                                                    color: AppColors
-                                                        .textHintsColor,
-                                                  ),
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                );
-                        },
-                      ),
-                    ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
       backgroundColor: Colors.white,
-      body: TabBarView(
-        controller: _tabController,
-        physics: const NeverScrollableScrollPhysics(),
+      body: Column(
         children: [
-          CardsHistoryPage(
-            scrollController: _scrollController,
+          SizedBox(
+            height: 60,
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children: [
+                if (_balanceStore.cards.isEmpty)
+                  const SizedBox()
+                else
+                  Observer(
+                    builder: (_) {
+                      return _marketPageStore.singleCoin?.result == null
+                          ? const Padding(
+                              padding:
+                                  EdgeInsets.only(left: 28, right: 28, top: 14),
+                              child: HistoryDropdownShimmer(),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 28),
+                              child: ScaleTap(
+                                enableFeedback: false,
+                                onPressed: _balanceStore.cards.length > 1
+                                    ? () {
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          context: context,
+                                          builder: (_) {
+                                            return CardSelectionModal(
+                                              balanceStore: _balanceStore,
+                                              marketPageStore: _marketPageStore,
+                                              historyPageStore:
+                                                  _historyPageStore,
+                                            );
+                                          },
+                                        );
+                                        recordAmplitudeEventPartTwo(
+                                          const SelectWalletClicked(
+                                            walletType: 'card',
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Observer(
+                                    builder: (_) {
+                                      final data = _marketPageStore
+                                          .singleCoin?.result.first;
+                                      final myFormat =
+                                          NumberFormat.decimalPatternDigits(
+                                        locale: 'en_us',
+                                        decimalDigits: 2,
+                                      );
+                                      final singleCard = _balanceStore.cards[
+                                          _historyPageStore.cardHistoryIndex];
+                                      final formattedAddress =
+                                          getSplitAddress(singleCard.address);
+
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 40,
+                                                width: 25,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: singleCard
+                                                        .color.image
+                                                        .image()
+                                                        .image,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 10,
+                                                      spreadRadius: 5,
+                                                      color: Colors.grey
+                                                          .withOpacity(0.2),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const Gap(10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    singleCard.name,
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      color: AppColors.primary,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    formattedAddress,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors
+                                                          .textHintsColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Observer(
+                                                builder: (context) {
+                                                  return _accelerometerStore
+                                                          .hasPerformedAction
+                                                      ? Text(
+                                                          r'$*****',
+                                                          style: TextStyle(
+                                                            fontSize: singleCard
+                                                                        .finalBalance
+                                                                        .toString()
+                                                                        .length >
+                                                                    9
+                                                                ? 17
+                                                                : 20,
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
+                                                            color: AppColors
+                                                                .textHintsColor,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        )
+                                                      : Text(
+                                                          '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
+                                                          style: TextStyle(
+                                                            fontSize: singleCard
+                                                                        .finalBalance
+                                                                        .toString()
+                                                                        .length >
+                                                                    9
+                                                                ? 17
+                                                                : 20,
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
+                                                            color: AppColors
+                                                                .textHintsColor,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        );
+                                                },
+                                              ),
+                                              if (_balanceStore.cards.length >
+                                                  1)
+                                                const Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  color:
+                                                      AppColors.textHintsColor,
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                    },
+                  ),
+                if (_balanceStore.bars.isEmpty)
+                  const SizedBox()
+                else
+                  Observer(
+                    builder: (_) {
+                      return _marketPageStore.singleCoin?.result == null
+                          ? const Padding(
+                              padding:
+                                  EdgeInsets.only(left: 28, right: 28, top: 14),
+                              child: HistoryDropdownShimmer(),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 28),
+                              child: ScaleTap(
+                                onPressed: _balanceStore.bars.length > 1
+                                    ? () {
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.white,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          context: context,
+                                          builder: (_) {
+                                            return BarSelectionModal(
+                                              balanceStore: _balanceStore,
+                                              marketPageStore: _marketPageStore,
+                                              historyPageStore:
+                                                  _historyPageStore,
+                                            );
+                                          },
+                                        );
+                                        recordAmplitudeEventPartTwo(
+                                          const SelectWalletClicked(
+                                            walletType: 'bar',
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Observer(
+                                    builder: (_) {
+                                      final data = _marketPageStore
+                                          .singleCoin?.result.first;
+                                      final myFormat =
+                                          NumberFormat.decimalPatternDigits(
+                                        locale: 'en_us',
+                                        decimalDigits: 2,
+                                      );
+                                      final singleCard = _balanceStore.bars[
+                                          _historyPageStore.barHistoryIndex];
+                                      final formattedAddress =
+                                          getSplitAddress(singleCard.address);
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 40,
+                                                width: 25,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: singleCard
+                                                        .color.image
+                                                        .image()
+                                                        .image,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 10,
+                                                      spreadRadius: 5,
+                                                      color: Colors.grey
+                                                          .withOpacity(0.2),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const Gap(10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    singleCard.name,
+                                                    style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      color: AppColors.primary,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    formattedAddress,
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily
+                                                          .redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors
+                                                          .textHintsColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Observer(
+                                                builder: (context) {
+                                                  return _accelerometerStore
+                                                          .hasPerformedAction
+                                                      ? Text(
+                                                          r'$*****',
+                                                          style: TextStyle(
+                                                            fontSize: singleCard
+                                                                        .finalBalance
+                                                                        .toString()
+                                                                        .length >
+                                                                    9
+                                                                ? 17
+                                                                : 20,
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
+                                                            color: AppColors
+                                                                .textHintsColor,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        )
+                                                      : Text(
+                                                          '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
+                                                          style: TextStyle(
+                                                            fontSize: singleCard
+                                                                        .finalBalance
+                                                                        .toString()
+                                                                        .length >
+                                                                    9
+                                                                ? 17
+                                                                : 20,
+                                                            fontFamily: FontFamily
+                                                                .redHatMedium,
+                                                            color: AppColors
+                                                                .textHintsColor,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                        );
+                                                },
+                                              ),
+                                              if (_balanceStore.bars.length > 1)
+                                                const Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  color:
+                                                      AppColors.textHintsColor,
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                    },
+                  ),
+              ],
+            ),
           ),
-          BarsHistoryPage(
-            balanceStore: _balanceStore,
-            scrollController: _scrollController,
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                CardsHistoryPage(
+                  scrollController: _scrollController,
+                ),
+                BarsHistoryPage(
+                  balanceStore: _balanceStore,
+                  scrollController: _scrollController,
+                ),
+              ],
+            ),
           ),
         ],
       ),

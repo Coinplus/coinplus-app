@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
+import '../../all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';
+import '../../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../../all_alert_dialogs/trouble_tapping_bar/trouble_tapping_bar.dart';
+import '../../all_alert_dialogs/trouble_tapping_card/trouble_tapping_card.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -9,11 +14,6 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../providers/screen_service.dart';
-import '../all_alert_dialogs/android_nfc_modal/android_bar_nfc_modal.dart';
-import '../all_alert_dialogs/android_nfc_modal/android_card_nfc_modal.dart';
-import '../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
-import '../all_alert_dialogs/trouble_tapping_bar/trouble_tapping_bar.dart';
-import '../all_alert_dialogs/trouble_tapping_card/trouble_tapping_card.dart';
 import '../loading_button/loading_button.dart';
 
 Future<void> showBarTapIssueBottomSheet({

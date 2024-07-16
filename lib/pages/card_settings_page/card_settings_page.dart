@@ -101,7 +101,8 @@ class CardSettingsPage extends HookWidget {
             isPaused.value = false;
             isInactive.value = false;
             if (deepLinkRes.value != null) {
-              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+              await router
+                  .push(CardConnectRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
           }

@@ -224,7 +224,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               );
               await router.push(
-                BarFillRoute(receivedData: res),
+                BarConnectRoute(receivedData: res),
               );
             }
           },
@@ -265,7 +265,7 @@ class BarScanMethodsPage extends HookWidget {
           onPressed: () {
             router
               ..maybePop()
-              ..push(BarFillRoute());
+              ..push(BarConnectRoute());
             unawaited(
               recordAmplitudeEvent(
                 const ConnectManuallyClicked(source: 'Wallet'),

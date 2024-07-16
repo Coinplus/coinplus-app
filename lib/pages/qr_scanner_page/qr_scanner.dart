@@ -11,13 +11,13 @@ import 'package:get_it/get_it.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart'
     show QrScannerOverlayShape;
+import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
-import '../../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 
 @RoutePage<String?>()
 class QrScannerPage extends HookWidget {

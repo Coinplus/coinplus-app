@@ -10,16 +10,17 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
+import '../../../all_alert_dialogs/email_send_alert/email_send_alert.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../http/interceptors/api_keys.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/contact_us_state/contact_us_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/curved_app_bar.dart';
-import '../../../widgets/all_alert_dialogs/email_send_alert/email_send_alert.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 
 @RoutePage()
@@ -376,9 +377,9 @@ class _ContactUsState extends State<ContactUs> {
 
   Future<void> sendEmail() async {
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-    const serviceId = 'service_tfaf84u';
-    const templateId = 'template_in2otz2';
-    const userId = 'pcZtAC06-Rn1w2mgC';
+    const serviceId = serviceID;
+    const templateId = templateID;
+    const userId = userID;
 
     unawaited(
       showDialog(

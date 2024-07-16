@@ -14,6 +14,8 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
+import '../../all_alert_dialogs/bar_recommended_to_wait_dialog/bar_recommended_to_wait_dialog.dart';
+import '../../all_alert_dialogs/card_recommended_to_wait_dialog/card_recommended_to_wait_dialog.dart';
 import '../../constants/card_type.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../pages/send_page/send_to/send_to_modal.dart';
@@ -21,8 +23,6 @@ import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/wallet_activation_status.dart';
-import '../all_alert_dialogs/bar_recommended_to_wait_dialog/bar_recommended_to_wait_dialog.dart';
-import '../all_alert_dialogs/card_recommended_to_wait_dialog/card_recommended_to_wait_dialog.dart';
 import '../loading_button/loading_button.dart';
 import 'send_page_modals.dart';
 

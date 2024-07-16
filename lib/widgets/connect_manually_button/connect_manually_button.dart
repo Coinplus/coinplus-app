@@ -16,8 +16,8 @@ import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/nfc_state/nfc_state.dart';
-import '../form_factor_widget/form_factor_widget.dart';
 import '../loading_button/loading_button.dart';
+import '../wallet_type_widget/wallet_type_widget.dart';
 
 class ConnectManuallyButton extends StatefulWidget {
   const ConnectManuallyButton({super.key});
@@ -97,7 +97,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                       ),
                     );
                     await router.push(
-                      CardFillRoute(receivedData: res),
+                      CardConnectRoute(receivedData: res),
                     );
                   }
                 },
@@ -217,7 +217,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
             ),
           ],
         ),
-        singleChildContent: FormFactorPage(
+        singleChildContent: WalletTypeWidget(
           pageIndexNotifier: pageIndexNotifier,
         ),
       );

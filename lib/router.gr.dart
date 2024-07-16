@@ -13,20 +13,21 @@ import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i31;
 import 'package:coinplus/models/bar_model/bar_model.dart' as _i30;
 import 'package:coinplus/models/card_model/card_model.dart' as _i32;
 import 'package:coinplus/models/coins_dto/coin_model.dart' as _i33;
-import 'package:coinplus/pages/bar_fill_page/bar_fill_manual.dart' as _i2;
-import 'package:coinplus/pages/bar_fill_page/bar_fill_with_nfc.dart' as _i3;
-import 'package:coinplus/pages/bar_secret_fill_page/bar_secret_fill_page.dart'
+import 'package:coinplus/pages/bar_activation_page/bar_activation_page.dart'
+    as _i2;
+import 'package:coinplus/pages/bar_connect_page/bar_connect_page.dart' as _i3;
+import 'package:coinplus/pages/bar_connect_page/bar_connect_with_nfc.dart'
     as _i4;
 import 'package:coinplus/pages/bar_settings_page/bar_settings_page.dart' as _i5;
-import 'package:coinplus/pages/card_fill_page/card_fill_page.dart' as _i6;
-import 'package:coinplus/pages/card_fill_page/card_fill_with_nfc.dart' as _i7;
-import 'package:coinplus/pages/card_secret_fill_page/card_secret_fill_page.dart'
+import 'package:coinplus/pages/card_activation_page/card_activation_page.dart'
+    as _i6;
+import 'package:coinplus/pages/card_connect_page/card_connect_page.dart' as _i7;
+import 'package:coinplus/pages/card_connect_page/card_connect_with_nfc.dart'
     as _i8;
 import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
     as _i9;
+import 'package:coinplus/pages/coin_chart_page/coin_chart_page.dart' as _i11;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i14;
-import 'package:coinplus/pages/market_page/coin_chart_page/coin_chart_page.dart'
-    as _i11;
 import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i15;
 import 'package:coinplus/pages/pin_code_page/change_pin_code_page.dart' as _i10;
 import 'package:coinplus/pages/pin_code_page/create_pin_code_page.dart' as _i13;
@@ -39,7 +40,7 @@ import 'package:coinplus/pages/pin_code_page/pin_code_for_private_key.dart'
 import 'package:coinplus/pages/pin_code_page/pin_code_page.dart' as _i19;
 import 'package:coinplus/pages/pin_code_page/remove_pin_code.dart' as _i20;
 import 'package:coinplus/pages/qr_scanner_page/qr_scanner.dart' as _i21;
-import 'package:coinplus/pages/send_page/send_to/send_to_state.dart' as _i28;
+import 'package:coinplus/pages/send_page/send_to/send_to_state.dart' as _i27;
 import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart'
     as _i1;
 import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart'
@@ -51,8 +52,8 @@ import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dar
 import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i34;
 import 'package:coinplus/store/card_color_state/card_setting_state.dart'
     as _i35;
-import 'package:flutter/cupertino.dart' as _i26;
-import 'package:flutter/foundation.dart' as _i27;
+import 'package:flutter/cupertino.dart' as _i28;
+import 'package:flutter/foundation.dart' as _i26;
 import 'package:flutter/material.dart' as _i29;
 
 abstract class $Router extends _i25.RootStackRouter {
@@ -66,38 +67,38 @@ abstract class $Router extends _i25.RootStackRouter {
         child: const _i1.AboutAppPage(),
       );
     },
-    BarFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarFillRouteArgs>(
-          orElse: () => const BarFillRouteArgs());
+    BarActivationRoute.name: (routeData) {
+      final args = routeData.argsAs<BarActivationRouteArgs>();
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.BarFillPage(
+        child: _i2.BarActivationPage(
+          key: args.key,
+          receivedData: args.receivedData,
+          state: args.state,
+        ),
+      );
+    },
+    BarConnectRoute.name: (routeData) {
+      final args = routeData.argsAs<BarConnectRouteArgs>(
+          orElse: () => const BarConnectRouteArgs());
+      return _i25.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i3.BarConnectPage(
           key: args.key,
           receivedData: args.receivedData,
         ),
       );
     },
-    BarFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<BarFillWithNfcArgs>();
+    BarConnectWithNfc.name: (routeData) {
+      final args = routeData.argsAs<BarConnectWithNfcArgs>();
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.BarFillWithNfc(
+        child: _i4.BarConnectWithNfc(
           key: args.key,
           receivedData: args.receivedData,
           barColor: args.barColor,
           isOriginalTag: args.isOriginalTag,
           isActivated: args.isActivated,
-        ),
-      );
-    },
-    BarSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<BarSecretFillRouteArgs>();
-      return _i25.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i4.BarSecretFillPage(
-          key: args.key,
-          receivedData: args.receivedData,
-          state: args.state,
         ),
       );
     },
@@ -111,24 +112,35 @@ abstract class $Router extends _i25.RootStackRouter {
         ),
       );
     },
-    CardFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardFillRouteArgs>(
-          orElse: () => const CardFillRouteArgs());
+    CardActivationRoute.name: (routeData) {
+      final args = routeData.argsAs<CardActivationRouteArgs>();
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i6.CardFillPage(
+        child: _i6.CardActivationPage(
+          key: args.key,
+          receivedData: args.receivedData,
+          state: args.state,
+        ),
+      );
+    },
+    CardConnectRoute.name: (routeData) {
+      final args = routeData.argsAs<CardConnectRouteArgs>(
+          orElse: () => const CardConnectRouteArgs());
+      return _i25.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i7.CardConnectPage(
           key: args.key,
           receivedData: args.receivedData,
           onChangeCard: args.onChangeCard,
         ),
       );
     },
-    CardFillWithNfc.name: (routeData) {
-      final args = routeData.argsAs<CardFillWithNfcArgs>(
-          orElse: () => const CardFillWithNfcArgs());
+    CardConnectWithNfc.name: (routeData) {
+      final args = routeData.argsAs<CardConnectWithNfcArgs>(
+          orElse: () => const CardConnectWithNfcArgs());
       return _i25.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i7.CardFillWithNfc(
+        child: _i8.CardConnectWithNfc(
           key: args.key,
           receivedData: args.receivedData,
           cardColor: args.cardColor,
@@ -136,17 +148,6 @@ abstract class $Router extends _i25.RootStackRouter {
           isMiFareUltralight: args.isMiFareUltralight,
           isOldCard: args.isOldCard,
           isActivated: args.isActivated,
-        ),
-      );
-    },
-    CardSecretFillRoute.name: (routeData) {
-      final args = routeData.argsAs<CardSecretFillRouteArgs>();
-      return _i25.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i8.CardSecretFillPage(
-          key: args.key,
-          receivedData: args.receivedData,
-          state: args.state,
         ),
       );
     },
@@ -285,56 +286,99 @@ class AboutAppRoute extends _i25.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.BarFillPage]
-class BarFillRoute extends _i25.PageRouteInfo<BarFillRouteArgs> {
-  BarFillRoute({
+/// [_i2.BarActivationPage]
+class BarActivationRoute extends _i25.PageRouteInfo<BarActivationRouteArgs> {
+  BarActivationRoute({
     _i26.Key? key,
     String? receivedData,
+    required _i27.SendToState state,
     List<_i25.PageRouteInfo>? children,
   }) : super(
-          BarFillRoute.name,
-          args: BarFillRouteArgs(
+          BarActivationRoute.name,
+          args: BarActivationRouteArgs(
             key: key,
             receivedData: receivedData,
+            state: state,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'BarFillRoute';
+  static const String name = 'BarActivationRoute';
 
-  static const _i25.PageInfo<BarFillRouteArgs> page =
-      _i25.PageInfo<BarFillRouteArgs>(name);
+  static const _i25.PageInfo<BarActivationRouteArgs> page =
+      _i25.PageInfo<BarActivationRouteArgs>(name);
 }
 
-class BarFillRouteArgs {
-  const BarFillRouteArgs({
+class BarActivationRouteArgs {
+  const BarActivationRouteArgs({
     this.key,
     this.receivedData,
+    required this.state,
   });
 
   final _i26.Key? key;
 
   final String? receivedData;
 
+  final _i27.SendToState state;
+
   @override
   String toString() {
-    return 'BarFillRouteArgs{key: $key, receivedData: $receivedData}';
+    return 'BarActivationRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
   }
 }
 
 /// generated route for
-/// [_i3.BarFillWithNfc]
-class BarFillWithNfc extends _i25.PageRouteInfo<BarFillWithNfcArgs> {
-  BarFillWithNfc({
-    _i26.Key? key,
+/// [_i3.BarConnectPage]
+class BarConnectRoute extends _i25.PageRouteInfo<BarConnectRouteArgs> {
+  BarConnectRoute({
+    _i28.Key? key,
+    String? receivedData,
+    List<_i25.PageRouteInfo>? children,
+  }) : super(
+          BarConnectRoute.name,
+          args: BarConnectRouteArgs(
+            key: key,
+            receivedData: receivedData,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'BarConnectRoute';
+
+  static const _i25.PageInfo<BarConnectRouteArgs> page =
+      _i25.PageInfo<BarConnectRouteArgs>(name);
+}
+
+class BarConnectRouteArgs {
+  const BarConnectRouteArgs({
+    this.key,
+    this.receivedData,
+  });
+
+  final _i28.Key? key;
+
+  final String? receivedData;
+
+  @override
+  String toString() {
+    return 'BarConnectRouteArgs{key: $key, receivedData: $receivedData}';
+  }
+}
+
+/// generated route for
+/// [_i4.BarConnectWithNfc]
+class BarConnectWithNfc extends _i25.PageRouteInfo<BarConnectWithNfcArgs> {
+  BarConnectWithNfc({
+    _i28.Key? key,
     String? receivedData,
     String? barColor,
     bool? isOriginalTag,
     required bool? isActivated,
     List<_i25.PageRouteInfo>? children,
   }) : super(
-          BarFillWithNfc.name,
-          args: BarFillWithNfcArgs(
+          BarConnectWithNfc.name,
+          args: BarConnectWithNfcArgs(
             key: key,
             receivedData: receivedData,
             barColor: barColor,
@@ -344,14 +388,14 @@ class BarFillWithNfc extends _i25.PageRouteInfo<BarFillWithNfcArgs> {
           initialChildren: children,
         );
 
-  static const String name = 'BarFillWithNfc';
+  static const String name = 'BarConnectWithNfc';
 
-  static const _i25.PageInfo<BarFillWithNfcArgs> page =
-      _i25.PageInfo<BarFillWithNfcArgs>(name);
+  static const _i25.PageInfo<BarConnectWithNfcArgs> page =
+      _i25.PageInfo<BarConnectWithNfcArgs>(name);
 }
 
-class BarFillWithNfcArgs {
-  const BarFillWithNfcArgs({
+class BarConnectWithNfcArgs {
+  const BarConnectWithNfcArgs({
     this.key,
     this.receivedData,
     this.barColor,
@@ -359,7 +403,7 @@ class BarFillWithNfcArgs {
     required this.isActivated,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final String? receivedData;
 
@@ -371,50 +415,7 @@ class BarFillWithNfcArgs {
 
   @override
   String toString() {
-    return 'BarFillWithNfcArgs{key: $key, receivedData: $receivedData, barColor: $barColor, isOriginalTag: $isOriginalTag, isActivated: $isActivated}';
-  }
-}
-
-/// generated route for
-/// [_i4.BarSecretFillPage]
-class BarSecretFillRoute extends _i25.PageRouteInfo<BarSecretFillRouteArgs> {
-  BarSecretFillRoute({
-    _i27.Key? key,
-    String? receivedData,
-    required _i28.SendToState state,
-    List<_i25.PageRouteInfo>? children,
-  }) : super(
-          BarSecretFillRoute.name,
-          args: BarSecretFillRouteArgs(
-            key: key,
-            receivedData: receivedData,
-            state: state,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'BarSecretFillRoute';
-
-  static const _i25.PageInfo<BarSecretFillRouteArgs> page =
-      _i25.PageInfo<BarSecretFillRouteArgs>(name);
-}
-
-class BarSecretFillRouteArgs {
-  const BarSecretFillRouteArgs({
-    this.key,
-    this.receivedData,
-    required this.state,
-  });
-
-  final _i27.Key? key;
-
-  final String? receivedData;
-
-  final _i28.SendToState state;
-
-  @override
-  String toString() {
-    return 'BarSecretFillRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
+    return 'BarConnectWithNfcArgs{key: $key, receivedData: $receivedData, barColor: $barColor, isOriginalTag: $isOriginalTag, isActivated: $isActivated}';
   }
 }
 
@@ -457,16 +458,59 @@ class BarSettingsRouteArgs {
 }
 
 /// generated route for
-/// [_i6.CardFillPage]
-class CardFillRoute extends _i25.PageRouteInfo<CardFillRouteArgs> {
-  CardFillRoute({
+/// [_i6.CardActivationPage]
+class CardActivationRoute extends _i25.PageRouteInfo<CardActivationRouteArgs> {
+  CardActivationRoute({
+    _i29.Key? key,
+    String? receivedData,
+    required _i27.SendToState state,
+    List<_i25.PageRouteInfo>? children,
+  }) : super(
+          CardActivationRoute.name,
+          args: CardActivationRouteArgs(
+            key: key,
+            receivedData: receivedData,
+            state: state,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CardActivationRoute';
+
+  static const _i25.PageInfo<CardActivationRouteArgs> page =
+      _i25.PageInfo<CardActivationRouteArgs>(name);
+}
+
+class CardActivationRouteArgs {
+  const CardActivationRouteArgs({
+    this.key,
+    this.receivedData,
+    required this.state,
+  });
+
+  final _i29.Key? key;
+
+  final String? receivedData;
+
+  final _i27.SendToState state;
+
+  @override
+  String toString() {
+    return 'CardActivationRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
+  }
+}
+
+/// generated route for
+/// [_i7.CardConnectPage]
+class CardConnectRoute extends _i25.PageRouteInfo<CardConnectRouteArgs> {
+  CardConnectRoute({
     _i29.Key? key,
     String? receivedData,
     void Function(({_i31.AbstractCard? card, int index}))? onChangeCard,
     List<_i25.PageRouteInfo>? children,
   }) : super(
-          CardFillRoute.name,
-          args: CardFillRouteArgs(
+          CardConnectRoute.name,
+          args: CardConnectRouteArgs(
             key: key,
             receivedData: receivedData,
             onChangeCard: onChangeCard,
@@ -474,14 +518,14 @@ class CardFillRoute extends _i25.PageRouteInfo<CardFillRouteArgs> {
           initialChildren: children,
         );
 
-  static const String name = 'CardFillRoute';
+  static const String name = 'CardConnectRoute';
 
-  static const _i25.PageInfo<CardFillRouteArgs> page =
-      _i25.PageInfo<CardFillRouteArgs>(name);
+  static const _i25.PageInfo<CardConnectRouteArgs> page =
+      _i25.PageInfo<CardConnectRouteArgs>(name);
 }
 
-class CardFillRouteArgs {
-  const CardFillRouteArgs({
+class CardConnectRouteArgs {
+  const CardConnectRouteArgs({
     this.key,
     this.receivedData,
     this.onChangeCard,
@@ -495,14 +539,14 @@ class CardFillRouteArgs {
 
   @override
   String toString() {
-    return 'CardFillRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard}';
+    return 'CardConnectRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard}';
   }
 }
 
 /// generated route for
-/// [_i7.CardFillWithNfc]
-class CardFillWithNfc extends _i25.PageRouteInfo<CardFillWithNfcArgs> {
-  CardFillWithNfc({
+/// [_i8.CardConnectWithNfc]
+class CardConnectWithNfc extends _i25.PageRouteInfo<CardConnectWithNfcArgs> {
+  CardConnectWithNfc({
     _i29.Key? key,
     String? receivedData,
     String? cardColor,
@@ -512,8 +556,8 @@ class CardFillWithNfc extends _i25.PageRouteInfo<CardFillWithNfcArgs> {
     bool? isActivated,
     List<_i25.PageRouteInfo>? children,
   }) : super(
-          CardFillWithNfc.name,
-          args: CardFillWithNfcArgs(
+          CardConnectWithNfc.name,
+          args: CardConnectWithNfcArgs(
             key: key,
             receivedData: receivedData,
             cardColor: cardColor,
@@ -525,14 +569,14 @@ class CardFillWithNfc extends _i25.PageRouteInfo<CardFillWithNfcArgs> {
           initialChildren: children,
         );
 
-  static const String name = 'CardFillWithNfc';
+  static const String name = 'CardConnectWithNfc';
 
-  static const _i25.PageInfo<CardFillWithNfcArgs> page =
-      _i25.PageInfo<CardFillWithNfcArgs>(name);
+  static const _i25.PageInfo<CardConnectWithNfcArgs> page =
+      _i25.PageInfo<CardConnectWithNfcArgs>(name);
 }
 
-class CardFillWithNfcArgs {
-  const CardFillWithNfcArgs({
+class CardConnectWithNfcArgs {
+  const CardConnectWithNfcArgs({
     this.key,
     this.receivedData,
     this.cardColor,
@@ -558,50 +602,7 @@ class CardFillWithNfcArgs {
 
   @override
   String toString() {
-    return 'CardFillWithNfcArgs{key: $key, receivedData: $receivedData, cardColor: $cardColor, isOriginalCard: $isOriginalCard, isMiFareUltralight: $isMiFareUltralight, isOldCard: $isOldCard, isActivated: $isActivated}';
-  }
-}
-
-/// generated route for
-/// [_i8.CardSecretFillPage]
-class CardSecretFillRoute extends _i25.PageRouteInfo<CardSecretFillRouteArgs> {
-  CardSecretFillRoute({
-    _i29.Key? key,
-    String? receivedData,
-    required _i28.SendToState state,
-    List<_i25.PageRouteInfo>? children,
-  }) : super(
-          CardSecretFillRoute.name,
-          args: CardSecretFillRouteArgs(
-            key: key,
-            receivedData: receivedData,
-            state: state,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'CardSecretFillRoute';
-
-  static const _i25.PageInfo<CardSecretFillRouteArgs> page =
-      _i25.PageInfo<CardSecretFillRouteArgs>(name);
-}
-
-class CardSecretFillRouteArgs {
-  const CardSecretFillRouteArgs({
-    this.key,
-    this.receivedData,
-    required this.state,
-  });
-
-  final _i29.Key? key;
-
-  final String? receivedData;
-
-  final _i28.SendToState state;
-
-  @override
-  String toString() {
-    return 'CardSecretFillRouteArgs{key: $key, receivedData: $receivedData, state: $state}';
+    return 'CardConnectWithNfcArgs{key: $key, receivedData: $receivedData, cardColor: $cardColor, isOriginalCard: $isOriginalCard, isMiFareUltralight: $isMiFareUltralight, isOldCard: $isOldCard, isActivated: $isActivated}';
   }
 }
 
@@ -661,7 +662,7 @@ class ChangePinCode extends _i25.PageRouteInfo<void> {
 /// [_i11.CoinChartPage]
 class CoinChartRoute extends _i25.PageRouteInfo<CoinChartRouteArgs> {
   CoinChartRoute({
-    _i26.Key? key,
+    _i28.Key? key,
     required _i33.CoinResultModel? data,
     List<_i25.PageRouteInfo>? children,
   }) : super(
@@ -685,7 +686,7 @@ class CoinChartRouteArgs {
     required this.data,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final _i33.CoinResultModel? data;
 
@@ -865,7 +866,7 @@ class PinRemove extends _i25.PageRouteInfo<void> {
 /// [_i21.QrScannerPage]
 class QrScannerRoute extends _i25.PageRouteInfo<QrScannerRouteArgs> {
   QrScannerRoute({
-    _i26.Key? key,
+    _i28.Key? key,
     bool? isScannedReceiverAddress,
     List<_i25.PageRouteInfo>? children,
   }) : super(
@@ -889,7 +890,7 @@ class QrScannerRouteArgs {
     this.isScannedReceiverAddress,
   });
 
-  final _i26.Key? key;
+  final _i28.Key? key;
 
   final bool? isScannedReceiverAddress;
 

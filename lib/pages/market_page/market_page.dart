@@ -78,8 +78,12 @@ class _MarketPageState extends State<MarketPage>
               child: FloatingActionButton(
                 elevation: 0,
                 heroTag: 'Scroll Up',
-                splashColor: Colors.grey.withOpacity(0.5),
+                splashColor: Colors.white,
                 focusElevation: 0,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey.withOpacity(0.6)),
+                  borderRadius: BorderRadius.circular(100),
+                ),
                 mini: true,
                 onPressed: () {
                   widget.scrollController.animateTo(
@@ -89,7 +93,7 @@ class _MarketPageState extends State<MarketPage>
                   );
                   recordAmplitudeEventPartTwo(const GoUpClicked());
                 },
-                backgroundColor: Colors.grey.withOpacity(0.5),
+                backgroundColor: Colors.white,
                 child: const Icon(
                   Icons.arrow_upward,
                   color: Colors.black,
