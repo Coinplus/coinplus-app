@@ -4,6 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../all_alert_dialogs/broadcast_error_dialog/broadcast_error_dialog.dart';
+import '../../../../all_alert_dialogs/fee_alert_dialog/fee_alert_dialog.dart';
+import '../../../../all_alert_dialogs/tx_submitted_dialog/tx_submitted_dialog.dart';
 import '../../../../constants/currency.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../extensions/num_extension.dart';
@@ -12,9 +15,6 @@ import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../providers/screen_service.dart';
 import '../../../../store/all_settings_state/all_settings_state.dart';
-import '../../../../widgets/all_alert_dialogs/broadcast_error_dialog/broadcast_error_dialog.dart';
-import '../../../../widgets/all_alert_dialogs/fee_alert_dialog/fee_alert_dialog.dart';
-import '../../../../widgets/all_alert_dialogs/tx_submitted_dialog/tx_submitted_dialog.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
 

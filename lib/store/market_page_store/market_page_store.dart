@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio_interceptor_plus/dio_interceptor_plus.dart';
@@ -103,7 +104,9 @@ abstract class _MarketPageStore with Store {
       return;
     }
     isHapticFeedbackActive = true;
-    await Haptics.vibrate(HapticsType.light);
+    if (Platform.isIOS) {
+      await Haptics.vibrate(HapticsType.light);
+    }
     hapticDebounceTimer?.cancel();
     hapticDebounceTimer = Timer(const Duration(), () {
       isHapticFeedbackActive = false;
@@ -161,7 +164,7 @@ abstract class _MarketPageStore with Store {
   }
 
   Future<void> getOtherCoins({required int pageNumber}) async {
-    allCoins = await coinStatsRepo.getAllCoins(page: pageNumber, limit: 500);
+    allCoins = await coinStatsRepo.getAllCoins(page: pageNumber, limit: 100);
   }
 
   Future<void> getSingleCoin() async {

@@ -16,6 +16,7 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
+import '../../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../../constants/button_settings.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/elevated_button_extensions.dart';
@@ -32,7 +33,6 @@ import '../../services/firebase_service.dart';
 import '../../store/nfc_state/nfc_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
-import '../../widgets/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../../widgets/connect_manually_button/connect_manually_button.dart';
 import '../../widgets/loading_button/loading_button.dart';
 
@@ -61,11 +61,12 @@ class OnboardingPage extends HookWidget {
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             if (deepLinkRes.value != null &&
-                router.current.name != CardFillWithNfc.name &&
-                router.current.name != CardFillRoute.name &&
-                router.current.name != BarFillRoute.name &&
-                router.current.name != BarFillWithNfc.name) {
-              await router.push(CardFillRoute(receivedData: deepLinkRes.value));
+                router.current.name != CardConnectWithNfc.name &&
+                router.current.name != CardConnectRoute.name &&
+                router.current.name != BarConnectRoute.name &&
+                router.current.name != BarConnectWithNfc.name) {
+              await router
+                  .push(CardConnectRoute(receivedData: deepLinkRes.value));
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Onboarding',
@@ -196,7 +197,7 @@ class OnboardingPage extends HookWidget {
                                   );
                                   if (formFactor == 'c') {
                                     await router.push(
-                                      CardFillWithNfc(
+                                      CardConnectWithNfc(
                                         isOriginalCard: isOriginalTag,
                                         receivedData: walletAddress,
                                         cardColor: cardColor,
@@ -205,7 +206,7 @@ class OnboardingPage extends HookWidget {
                                     );
                                   } else if (formFactor == 'b') {
                                     await router.push(
-                                      BarFillWithNfc(
+                                      BarConnectWithNfc(
                                         isOriginalTag: isOriginalTag,
                                         receivedData: walletAddress,
                                         barColor: cardColor,
@@ -238,7 +239,7 @@ class OnboardingPage extends HookWidget {
                                     if (card.nfcId == formattedTagId) {
                                       //Connect as Coinplus Bitcoin Wallet
                                       await router.push(
-                                        CardFillWithNfc(
+                                        CardConnectWithNfc(
                                           isOldCard: card.possibleOldCard,
                                           isMiFareUltralight:
                                               isMifareUltralight.value,
@@ -264,7 +265,7 @@ class OnboardingPage extends HookWidget {
                                   } else {
                                     //Connect as TrackerPlus
                                     await router.push(
-                                      CardFillWithNfc(
+                                      CardConnectWithNfc(
                                         isOldCard: card?.possibleOldCard,
                                         isMiFareUltralight:
                                             isMifareUltralight.value,
@@ -277,7 +278,7 @@ class OnboardingPage extends HookWidget {
                                 } else {
                                   //Connect as Tracker
                                   await router.push(
-                                    CardFillWithNfc(
+                                    CardConnectWithNfc(
                                       isOriginalCard: false,
                                       isMiFareUltralight: false,
                                       receivedData: walletAddress,
@@ -372,7 +373,7 @@ class OnboardingPage extends HookWidget {
                                   );
                                   if (formFactor == 'c') {
                                     await router.push(
-                                      CardFillWithNfc(
+                                      CardConnectWithNfc(
                                         isOriginalCard: isOriginalTag,
                                         receivedData: walletAddress,
                                         cardColor: cardColor,
@@ -380,7 +381,7 @@ class OnboardingPage extends HookWidget {
                                     );
                                   } else if (formFactor == 'b') {
                                     await router.push(
-                                      BarFillWithNfc(
+                                      BarConnectWithNfc(
                                         isOriginalTag: isOriginalTag,
                                         receivedData: walletAddress,
                                         barColor: cardColor,
@@ -405,7 +406,7 @@ class OnboardingPage extends HookWidget {
                                     if (card.nfcId == formattedTagId) {
                                       await signInAnonymously();
                                       await router.push(
-                                        CardFillWithNfc(
+                                        CardConnectWithNfc(
                                           isOldCard: card.possibleOldCard,
                                           isMiFareUltralight:
                                               isMifareUltralight.value,
@@ -424,7 +425,7 @@ class OnboardingPage extends HookWidget {
                                     }
                                   } else {
                                     await router.push(
-                                      CardFillWithNfc(
+                                      CardConnectWithNfc(
                                         isOldCard: card?.possibleOldCard,
                                         isMiFareUltralight:
                                             isMifareUltralight.value,
@@ -435,7 +436,7 @@ class OnboardingPage extends HookWidget {
                                   }
                                 } else {
                                   await router.push(
-                                    CardFillWithNfc(
+                                    CardConnectWithNfc(
                                       isOriginalCard: false,
                                       isMiFareUltralight: false,
                                       receivedData: walletAddress,

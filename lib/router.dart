@@ -25,19 +25,19 @@ class Router extends $Router {
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
-      page: BarFillRoute.page,
+      page: BarConnectRoute.page,
     ),
     AdaptiveRoute(
-      page: BarFillWithNfc.page,
+      page: BarConnectWithNfc.page,
     ),
     AdaptiveRoute(
       page: DashboardRoute.page,
     ),
     AdaptiveRoute(
-      page: CardFillRoute.page,
+      page: CardConnectRoute.page,
     ),
     AdaptiveRoute(
-      page: CardFillWithNfc.page,
+      page: CardConnectWithNfc.page,
     ),
     AdaptiveRoute(
       page: WalletProtectionRoute.page,
@@ -81,10 +81,10 @@ class Router extends $Router {
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
-      page: CardSecretFillRoute.page,
+      page: CardActivationRoute.page,
     ),
     AdaptiveRoute(
-      page: BarSecretFillRoute.page,
+      page: BarActivationRoute.page,
     ),
     AdaptiveRoute(
       page: AboutAppRoute.page,

@@ -9,6 +9,9 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
+import '../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
+import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../extensions/elevated_button_extensions.dart';
 import '../extensions/extensions.dart';
 import '../gen/assets.gen.dart';
@@ -26,9 +29,6 @@ import '../services/cloud_firestore_service.dart';
 import '../store/balance_store/balance_store.dart';
 import '../store/settings_button_state/settings_button_state.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
-import '../widgets/all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
-import '../widgets/all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
-import '../widgets/all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../widgets/loading_button/loading_button.dart';
 import 'wallet_activation_status.dart';
 
@@ -120,7 +120,7 @@ Future<void> nfcSessionIos({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                CardFillWithNfc(
+                CardConnectWithNfc(
                   isOriginalCard: isOriginalTag,
                   receivedData: walletAddress,
                   cardColor: cardColor,
@@ -142,7 +142,7 @@ Future<void> nfcSessionIos({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                BarFillWithNfc(
+                BarConnectWithNfc(
                   isOriginalTag: isOriginalTag,
                   receivedData: walletAddress,
                   barColor: cardColor,
@@ -190,7 +190,7 @@ Future<void> nfcSessionIos({
                 await _walletProtectState.updateModalStatus(isOpened: false);
               } else {
                 await router.push(
-                  CardFillWithNfc(
+                  CardConnectWithNfc(
                     isOldCard: card.possibleOldCard,
                     isMiFareUltralight: isMifareUltralight,
                     isOriginalCard: false,
@@ -233,7 +233,7 @@ Future<void> nfcSessionIos({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                CardFillWithNfc(
+                CardConnectWithNfc(
                   isOldCard: card?.possibleOldCard,
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalCard: false,
@@ -258,7 +258,7 @@ Future<void> nfcSessionIos({
             await _walletProtectState.updateModalStatus(isOpened: false);
           } else {
             await router.push(
-              CardFillWithNfc(
+              CardConnectWithNfc(
                 isOriginalCard: false,
                 isMiFareUltralight: false,
                 receivedData: walletAddress,
@@ -357,7 +357,7 @@ Future<void> nfcSessionAndroid({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                CardFillWithNfc(
+                CardConnectWithNfc(
                   isOriginalCard: isOriginalTag,
                   receivedData: walletAddress,
                   cardColor: cardColor,
@@ -379,7 +379,7 @@ Future<void> nfcSessionAndroid({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                BarFillWithNfc(
+                BarConnectWithNfc(
                   isOriginalTag: isOriginalTag,
                   receivedData: walletAddress,
                   barColor: cardColor,
@@ -422,7 +422,7 @@ Future<void> nfcSessionAndroid({
                 await _walletProtectState.updateModalStatus(isOpened: false);
               } else {
                 await router.push(
-                  CardFillWithNfc(
+                  CardConnectWithNfc(
                     isOldCard: card.possibleOldCard,
                     isMiFareUltralight: isMifareUltralight,
                     isOriginalCard: false,
@@ -461,7 +461,7 @@ Future<void> nfcSessionAndroid({
               await _walletProtectState.updateModalStatus(isOpened: false);
             } else {
               await router.push(
-                CardFillWithNfc(
+                CardConnectWithNfc(
                   isOldCard: card?.possibleOldCard,
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalCard: false,
@@ -485,7 +485,7 @@ Future<void> nfcSessionAndroid({
             await _walletProtectState.updateModalStatus(isOpened: false);
           } else {
             await router.push(
-              CardFillWithNfc(
+              CardConnectWithNfc(
                 isOriginalCard: false,
                 isMiFareUltralight: false,
                 receivedData: walletAddress,

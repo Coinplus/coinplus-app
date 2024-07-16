@@ -46,7 +46,7 @@
             <intent-filter>
                 <!-- If utilizing $deeplink_path please explicitly declare your hosts, or utilize a
                 wildcard(*) -->
-                <data android:scheme="mycoinplus+cardfillroute" android:host="open" />
+                <data android:scheme="mycoinplus+CardConnectRoute" android:host="open" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

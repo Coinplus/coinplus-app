@@ -223,7 +223,7 @@ class CardScanMethodsPage extends HookWidget {
                 ),
               );
               await router.push(
-                CardFillRoute(receivedData: res),
+                CardConnectRoute(receivedData: res),
               );
             }
           },
@@ -264,7 +264,7 @@ class CardScanMethodsPage extends HookWidget {
           onPressed: () {
             router
               ..maybePop()
-              ..push(CardFillRoute());
+              ..push(CardConnectRoute());
             unawaited(
               recordAmplitudeEvent(
                 const ConnectManuallyClicked(source: 'Wallet'),

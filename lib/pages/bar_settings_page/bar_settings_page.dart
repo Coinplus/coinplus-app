@@ -101,7 +101,8 @@ class BarSettingsPage extends HookWidget {
             isPaused.value = false;
             isInactive.value = false;
             if (deepLinkRes.value != null) {
-              await router.push(BarFillRoute(receivedData: deepLinkRes.value));
+              await router
+                  .push(BarConnectRoute(receivedData: deepLinkRes.value));
               deepLinkRes.value = null;
             }
           }
