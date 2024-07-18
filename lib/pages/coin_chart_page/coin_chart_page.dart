@@ -15,7 +15,9 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/coins_dto/coin_model.dart';
 import '../../../store/market_page_store/market_page_store.dart';
+import '../../providers/screen_service.dart';
 import '../../widgets/chart_loading_indicator/chart_loading_indicator.dart';
+import 'card_select_dropdown.dart';
 import 'chart_widget.dart';
 import 'coin_name_and_price.dart';
 import 'market_data_widget.dart';
@@ -126,7 +128,21 @@ class _CoinChartPageState extends State<CoinChartPage> {
                 SliverToBoxAdapter(
                   child: ScaleTap(
                     enableFeedback: false,
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: router.navigatorKey.currentContext!,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        builder: (_) {
+                          return const CardSelectDropdown();
+                        },
+                      );
+                    },
                     child: Container(
                       height: 50,
                       width: 200,
