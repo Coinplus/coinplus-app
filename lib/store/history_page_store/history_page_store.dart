@@ -384,7 +384,7 @@ abstract class _HistoryPageStore with Store {
     await _saveLastRefreshed(cardAddress, now.toString());
     var synced = false;
     while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 3000));
       await getWalletStatus(address: cardAddress);
       synced = walletStatus?.status == 'synced';
     }
@@ -400,7 +400,7 @@ abstract class _HistoryPageStore with Store {
     await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 3000));
       await getWalletStatus(address: address);
       synced = walletStatus?.status == 'synced';
     }
@@ -417,14 +417,14 @@ abstract class _HistoryPageStore with Store {
     await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 3000));
       await getWalletStatus(address: address);
       synced = walletStatus?.status == 'synced';
     }
     final now = DateTime.now();
     await _saveLastRefreshed(address, now.toString());
     await loadLastRefreshed();
-    await Future.delayed(const Duration(milliseconds: 2000));
+    await Future.delayed(const Duration(milliseconds: 3000));
     historyLoading[address] = false;
     isBarRefreshing = false;
   }
@@ -438,7 +438,7 @@ abstract class _HistoryPageStore with Store {
     var synced = false;
     await coinStatsRepo.patchTransactions(address: cardAddress);
     while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 3000));
       await getWalletStatus(address: cardAddress);
       synced = walletStatus?.status == 'synced';
     }

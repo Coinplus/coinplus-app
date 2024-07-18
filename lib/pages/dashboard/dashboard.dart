@@ -22,6 +22,7 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
+import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
@@ -52,6 +53,8 @@ class DashboardPage extends HookWidget {
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
+  RampService get _rampService => GetIt.I<RampService>();
 
   @override
   Widget build(BuildContext context) {
@@ -383,6 +386,22 @@ class DashboardPage extends HookWidget {
                                   recordAmplitudeEvent(
                                     const WalletTabClicked(),
                                   ),
+                                  if (_balanceStore.cards.isNotEmpty)
+                                    {
+                                      _rampService.configuration.userAddress =
+                                          _balanceStore
+                                              .cards[_historyPageStore
+                                                  .cardHistoryIndex]
+                                              .address,
+                                    }
+                                  else if (_balanceStore.bars.isNotEmpty)
+                                    {
+                                      _rampService.configuration.userAddress =
+                                          _balanceStore
+                                              .bars[_historyPageStore
+                                                  .barHistoryIndex]
+                                              .address,
+                                    },
                                 }
                               else if (index == 1)
                                 {
