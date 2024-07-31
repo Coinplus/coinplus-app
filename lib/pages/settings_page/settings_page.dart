@@ -211,15 +211,8 @@ class SettingsPage extends HookWidget {
                                 highlightColor: Colors.transparent,
                                 child: ListTile(
                                   minLeadingWidth: 10,
-                                  leading: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Gap(3),
-                                      Assets.icons.lock.image(
-                                        height: 22,
-                                      ),
-                                      const Gap(3),
-                                    ],
+                                  leading: Assets.icons.lock.image(
+                                    height: 24,
                                   ),
                                   trailing: Observer(
                                     builder: (context) {
@@ -271,7 +264,7 @@ class SettingsPage extends HookWidget {
                                           splashColor: Colors.transparent,
                                           minLeadingWidth: 10,
                                           leading: Assets.icons.password.image(
-                                            height: 22,
+                                            height: 24,
                                           ),
                                           title: const Text(
                                             'Change passcode',
@@ -326,7 +319,7 @@ class SettingsPage extends HookWidget {
                                                         ? Assets.icons
                                                             .faceIdSettings
                                                             .image(
-                                                            height: 22,
+                                                            height: 24,
                                                           )
                                                         : _walletProtectState
                                                                     .availableBiometric ==
@@ -335,12 +328,12 @@ class SettingsPage extends HookWidget {
                                                             ? Assets.icons
                                                                 .iphoneTouchId
                                                                 .image(
-                                                                height: 22,
+                                                                height: 24,
                                                               )
                                                             : Assets.icons
                                                                 .faceIdSettings
                                                                 .image(
-                                                                height: 22,
+                                                                height: 24,
                                                               ),
                                                     title: Text(
                                                       Platform.isAndroid
@@ -416,7 +409,7 @@ class SettingsPage extends HookWidget {
                                       children: [
                                         Assets.icons.verify.image(
                                           color: Colors.blue,
-                                          height: 22,
+                                          height: 24,
                                         ),
                                       ],
                                     ),
@@ -556,7 +549,7 @@ class SettingsPage extends HookWidget {
                             ],
                           ),
                           leading: Assets.icons.notifications.image(
-                            height: 22,
+                            height: 24,
                           ),
                           title: const Row(
                             children: [
@@ -634,7 +627,7 @@ class SettingsPage extends HookWidget {
                                   .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.help.image(
-                                height: 22,
+                                height: 24,
                               ),
                               title: const Text(
                                 'Help center',
@@ -668,7 +661,7 @@ class SettingsPage extends HookWidget {
                                   .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.contactUs.image(
-                                height: 22,
+                                height: 24,
                               ),
                               title: const Text(
                                 'Contact us',
@@ -950,7 +943,7 @@ class SettingsPage extends HookWidget {
                                   .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.privacy.image(
-                                height: 22,
+                                height: 24,
                               ),
                               title: const Row(
                                 children: [
@@ -1008,7 +1001,7 @@ class SettingsPage extends HookWidget {
                                   .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.terms.image(
-                                height: 22,
+                                height: 24,
                               ),
                               title: const Row(
                                 children: [
@@ -1044,7 +1037,7 @@ class SettingsPage extends HookWidget {
                                   .image(height: 20),
                               minLeadingWidth: 10,
                               leading: Assets.icons.info.image(
-                                height: 22,
+                                height: 24,
                                 color: Colors.blue,
                               ),
                               title: const Text(
@@ -1105,7 +1098,7 @@ class SettingsPage extends HookWidget {
                             child: ListTile(
                               minLeadingWidth: 10,
                               leading: Assets.icons.identity.image(
-                                height: 22,
+                                height: 24,
                               ),
                               title: const Text(
                                 'Erase my data',

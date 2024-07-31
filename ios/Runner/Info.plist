@@ -31,7 +31,7 @@
 			<string>coinplus</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>mycoinplus+CardConnectRoute</string>
+				<string>mycoinplus+cardfillroute</string>
 			</array>
 		</dict>
 	</array>

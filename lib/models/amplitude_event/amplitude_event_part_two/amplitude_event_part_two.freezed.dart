@@ -133,6 +133,10 @@ AmplitudeEventPartTwo _$AmplitudeEventPartTwoFromJson(
       return LoadTransactionClicked.fromJson(json);
     case 'refreshClicked':
       return RefreshClicked.fromJson(json);
+    case 'buyBitcoinSown':
+      return BuyBitcoinShown.fromJson(json);
+    case 'buyBitcoinNowClicked':
+      return BuyBitcoinNowClicked.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
@@ -254,6 +258,8 @@ mixin _$AmplitudeEventPartTwo {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -358,6 +364,8 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -454,6 +462,8 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -522,6 +532,8 @@ mixin _$AmplitudeEventPartTwo {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -585,6 +597,8 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -648,6 +662,8 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -910,6 +926,8 @@ class _$ContinueCLickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return continueClicked(eventType, walletAddress, walletType);
   }
@@ -1017,6 +1035,8 @@ class _$ContinueCLickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return continueClicked?.call(eventType, walletAddress, walletType);
   }
@@ -1116,6 +1136,8 @@ class _$ContinueCLickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (continueClicked != null) {
@@ -1190,6 +1212,8 @@ class _$ContinueCLickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return continueClicked(this);
   }
@@ -1256,6 +1280,8 @@ class _$ContinueCLickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return continueClicked?.call(this);
   }
@@ -1322,6 +1348,8 @@ class _$ContinueCLickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (continueClicked != null) {
@@ -1576,6 +1604,8 @@ class _$EditSecretsClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return editSecretsClicked(eventType, walletAddress, walletType);
   }
@@ -1683,6 +1713,8 @@ class _$EditSecretsClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return editSecretsClicked?.call(eventType, walletAddress, walletType);
   }
@@ -1782,6 +1814,8 @@ class _$EditSecretsClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (editSecretsClicked != null) {
@@ -1856,6 +1890,8 @@ class _$EditSecretsClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return editSecretsClicked(this);
   }
@@ -1922,6 +1958,8 @@ class _$EditSecretsClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return editSecretsClicked?.call(this);
   }
@@ -1988,6 +2026,8 @@ class _$EditSecretsClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (editSecretsClicked != null) {
@@ -2244,6 +2284,8 @@ class _$ValidationSuccessfulImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return validationSuccessful(eventType, walletAddress, walletType);
   }
@@ -2351,6 +2393,8 @@ class _$ValidationSuccessfulImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return validationSuccessful?.call(eventType, walletAddress, walletType);
   }
@@ -2450,6 +2494,8 @@ class _$ValidationSuccessfulImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (validationSuccessful != null) {
@@ -2524,6 +2570,8 @@ class _$ValidationSuccessfulImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return validationSuccessful(this);
   }
@@ -2590,6 +2638,8 @@ class _$ValidationSuccessfulImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return validationSuccessful?.call(this);
   }
@@ -2656,6 +2706,8 @@ class _$ValidationSuccessfulImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (validationSuccessful != null) {
@@ -2910,6 +2962,8 @@ class _$ValidationFailedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return validationFailed(eventType, walletAddress, walletType);
   }
@@ -3017,6 +3071,8 @@ class _$ValidationFailedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return validationFailed?.call(eventType, walletAddress, walletType);
   }
@@ -3116,6 +3172,8 @@ class _$ValidationFailedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (validationFailed != null) {
@@ -3190,6 +3248,8 @@ class _$ValidationFailedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return validationFailed(this);
   }
@@ -3256,6 +3316,8 @@ class _$ValidationFailedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return validationFailed?.call(this);
   }
@@ -3322,6 +3384,8 @@ class _$ValidationFailedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (validationFailed != null) {
@@ -3575,6 +3639,8 @@ class _$GuideMeClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return guideMeClicked(eventType, walletAddress, walletType);
   }
@@ -3682,6 +3748,8 @@ class _$GuideMeClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return guideMeClicked?.call(eventType, walletAddress, walletType);
   }
@@ -3781,6 +3849,8 @@ class _$GuideMeClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (guideMeClicked != null) {
@@ -3855,6 +3925,8 @@ class _$GuideMeClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return guideMeClicked(this);
   }
@@ -3921,6 +3993,8 @@ class _$GuideMeClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return guideMeClicked?.call(this);
   }
@@ -3987,6 +4061,8 @@ class _$GuideMeClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (guideMeClicked != null) {
@@ -4239,6 +4315,8 @@ class _$CardColorCHangedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardColorChanged(eventType, walletAddress, color);
   }
@@ -4346,6 +4424,8 @@ class _$CardColorCHangedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardColorChanged?.call(eventType, walletAddress, color);
   }
@@ -4445,6 +4525,8 @@ class _$CardColorCHangedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardColorChanged != null) {
@@ -4519,6 +4601,8 @@ class _$CardColorCHangedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardColorChanged(this);
   }
@@ -4585,6 +4669,8 @@ class _$CardColorCHangedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardColorChanged?.call(this);
   }
@@ -4651,6 +4737,8 @@ class _$CardColorCHangedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardColorChanged != null) {
@@ -4905,6 +4993,8 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return clickedOnPrivateKey(eventType, walletAddress, walletType);
   }
@@ -5012,6 +5102,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return clickedOnPrivateKey?.call(eventType, walletAddress, walletType);
   }
@@ -5111,6 +5203,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (clickedOnPrivateKey != null) {
@@ -5185,6 +5279,8 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return clickedOnPrivateKey(this);
   }
@@ -5251,6 +5347,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return clickedOnPrivateKey?.call(this);
   }
@@ -5317,6 +5415,8 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (clickedOnPrivateKey != null) {
@@ -5571,6 +5671,8 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return privateKeyRevealed(eventType, walletAddress, walletType);
   }
@@ -5678,6 +5780,8 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return privateKeyRevealed?.call(eventType, walletAddress, walletType);
   }
@@ -5777,6 +5881,8 @@ class _$PrivateKeyRevealedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privateKeyRevealed != null) {
@@ -5851,6 +5957,8 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return privateKeyRevealed(this);
   }
@@ -5917,6 +6025,8 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return privateKeyRevealed?.call(this);
   }
@@ -5983,6 +6093,8 @@ class _$PrivateKeyRevealedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privateKeyRevealed != null) {
@@ -6237,6 +6349,8 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return privateKeyCopied(eventType, walletAddress, walletType);
   }
@@ -6344,6 +6458,8 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return privateKeyCopied?.call(eventType, walletAddress, walletType);
   }
@@ -6443,6 +6559,8 @@ class _$PrivateKeyCopiedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privateKeyCopied != null) {
@@ -6517,6 +6635,8 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return privateKeyCopied(this);
   }
@@ -6583,6 +6703,8 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return privateKeyCopied?.call(this);
   }
@@ -6649,6 +6771,8 @@ class _$PrivateKeyCopiedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privateKeyCopied != null) {
@@ -6891,6 +7015,8 @@ class _$CardNameChangedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardNameChanged(eventType, walletType);
   }
@@ -6998,6 +7124,8 @@ class _$CardNameChangedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardNameChanged?.call(eventType, walletType);
   }
@@ -7097,6 +7225,8 @@ class _$CardNameChangedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardNameChanged != null) {
@@ -7171,6 +7301,8 @@ class _$CardNameChangedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardNameChanged(this);
   }
@@ -7237,6 +7369,8 @@ class _$CardNameChangedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardNameChanged?.call(this);
   }
@@ -7303,6 +7437,8 @@ class _$CardNameChangedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardNameChanged != null) {
@@ -7542,6 +7678,8 @@ class _$HelpCenterClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return helpCenterClicked(eventType, source);
   }
@@ -7649,6 +7787,8 @@ class _$HelpCenterClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return helpCenterClicked?.call(eventType, source);
   }
@@ -7748,6 +7888,8 @@ class _$HelpCenterClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (helpCenterClicked != null) {
@@ -7822,6 +7964,8 @@ class _$HelpCenterClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return helpCenterClicked(this);
   }
@@ -7888,6 +8032,8 @@ class _$HelpCenterClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return helpCenterClicked?.call(this);
   }
@@ -7954,6 +8100,8 @@ class _$HelpCenterClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (helpCenterClicked != null) {
@@ -8221,6 +8369,8 @@ class _$RemoveCardClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return removeCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -8328,6 +8478,8 @@ class _$RemoveCardClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return removeCardClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -8428,6 +8580,8 @@ class _$RemoveCardClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (removeCardClicked != null) {
@@ -8502,6 +8656,8 @@ class _$RemoveCardClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return removeCardClicked(this);
   }
@@ -8568,6 +8724,8 @@ class _$RemoveCardClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return removeCardClicked?.call(this);
   }
@@ -8634,6 +8792,8 @@ class _$RemoveCardClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (removeCardClicked != null) {
@@ -8901,6 +9061,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardDeleted(eventType, walletAddress, walletType, activated);
   }
@@ -9008,6 +9170,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardDeleted?.call(eventType, walletAddress, walletType, activated);
   }
@@ -9107,6 +9271,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardDeleted != null) {
@@ -9181,6 +9347,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardDeleted(this);
   }
@@ -9247,6 +9415,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardDeleted?.call(this);
   }
@@ -9313,6 +9483,8 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardDeleted != null) {
@@ -9583,6 +9755,8 @@ class _$NotSureClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return notSureClicked(eventType, walletAddress, walletType, activated);
   }
@@ -9690,6 +9864,8 @@ class _$NotSureClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return notSureClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -9790,6 +9966,8 @@ class _$NotSureClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (notSureClicked != null) {
@@ -9864,6 +10042,8 @@ class _$NotSureClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return notSureClicked(this);
   }
@@ -9930,6 +10110,8 @@ class _$NotSureClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return notSureClicked?.call(this);
   }
@@ -9996,6 +10178,8 @@ class _$NotSureClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (notSureClicked != null) {
@@ -10228,6 +10412,8 @@ class _$ContactUsClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return contactUsClicked(eventType);
   }
@@ -10335,6 +10521,8 @@ class _$ContactUsClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return contactUsClicked?.call(eventType);
   }
@@ -10434,6 +10622,8 @@ class _$ContactUsClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (contactUsClicked != null) {
@@ -10508,6 +10698,8 @@ class _$ContactUsClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return contactUsClicked(this);
   }
@@ -10574,6 +10766,8 @@ class _$ContactUsClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return contactUsClicked?.call(this);
   }
@@ -10640,6 +10834,8 @@ class _$ContactUsClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (contactUsClicked != null) {
@@ -10865,6 +11061,8 @@ class _$AppLockClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return appLockClicked(eventType);
   }
@@ -10972,6 +11170,8 @@ class _$AppLockClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return appLockClicked?.call(eventType);
   }
@@ -11071,6 +11271,8 @@ class _$AppLockClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (appLockClicked != null) {
@@ -11145,6 +11347,8 @@ class _$AppLockClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return appLockClicked(this);
   }
@@ -11211,6 +11415,8 @@ class _$AppLockClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return appLockClicked?.call(this);
   }
@@ -11277,6 +11483,8 @@ class _$AppLockClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (appLockClicked != null) {
@@ -11502,6 +11710,8 @@ class _$AppLockDisabledImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return appLockDisabled(eventType);
   }
@@ -11609,6 +11819,8 @@ class _$AppLockDisabledImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return appLockDisabled?.call(eventType);
   }
@@ -11708,6 +11920,8 @@ class _$AppLockDisabledImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (appLockDisabled != null) {
@@ -11782,6 +11996,8 @@ class _$AppLockDisabledImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return appLockDisabled(this);
   }
@@ -11848,6 +12064,8 @@ class _$AppLockDisabledImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return appLockDisabled?.call(this);
   }
@@ -11914,6 +12132,8 @@ class _$AppLockDisabledImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (appLockDisabled != null) {
@@ -12142,6 +12362,8 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return changePasscodeClicked(eventType);
   }
@@ -12249,6 +12471,8 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return changePasscodeClicked?.call(eventType);
   }
@@ -12348,6 +12572,8 @@ class _$ChangePasscodeClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (changePasscodeClicked != null) {
@@ -12422,6 +12648,8 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return changePasscodeClicked(this);
   }
@@ -12488,6 +12716,8 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return changePasscodeClicked?.call(this);
   }
@@ -12554,6 +12784,8 @@ class _$ChangePasscodeClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (changePasscodeClicked != null) {
@@ -12780,6 +13012,8 @@ class _$PasscodeChangedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return passcodeChanged(eventType);
   }
@@ -12887,6 +13121,8 @@ class _$PasscodeChangedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return passcodeChanged?.call(eventType);
   }
@@ -12986,6 +13222,8 @@ class _$PasscodeChangedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (passcodeChanged != null) {
@@ -13060,6 +13298,8 @@ class _$PasscodeChangedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return passcodeChanged(this);
   }
@@ -13126,6 +13366,8 @@ class _$PasscodeChangedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return passcodeChanged?.call(this);
   }
@@ -13192,6 +13434,8 @@ class _$PasscodeChangedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (passcodeChanged != null) {
@@ -13416,6 +13660,8 @@ class _$FaceIdEnabledImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return faceIdEnabled(eventType);
   }
@@ -13523,6 +13769,8 @@ class _$FaceIdEnabledImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return faceIdEnabled?.call(eventType);
   }
@@ -13622,6 +13870,8 @@ class _$FaceIdEnabledImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (faceIdEnabled != null) {
@@ -13696,6 +13946,8 @@ class _$FaceIdEnabledImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return faceIdEnabled(this);
   }
@@ -13762,6 +14014,8 @@ class _$FaceIdEnabledImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return faceIdEnabled?.call(this);
   }
@@ -13828,6 +14082,8 @@ class _$FaceIdEnabledImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (faceIdEnabled != null) {
@@ -14052,6 +14308,8 @@ class _$FaceIdDisabledImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return faceIdDisabled(eventType);
   }
@@ -14159,6 +14417,8 @@ class _$FaceIdDisabledImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return faceIdDisabled?.call(eventType);
   }
@@ -14258,6 +14518,8 @@ class _$FaceIdDisabledImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (faceIdDisabled != null) {
@@ -14332,6 +14594,8 @@ class _$FaceIdDisabledImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return faceIdDisabled(this);
   }
@@ -14398,6 +14662,8 @@ class _$FaceIdDisabledImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return faceIdDisabled?.call(this);
   }
@@ -14464,6 +14730,8 @@ class _$FaceIdDisabledImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (faceIdDisabled != null) {
@@ -14689,6 +14957,8 @@ class _$PushNotificationsOnImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return pushNotificationsOn(eventType);
   }
@@ -14796,6 +15066,8 @@ class _$PushNotificationsOnImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return pushNotificationsOn?.call(eventType);
   }
@@ -14895,6 +15167,8 @@ class _$PushNotificationsOnImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOn != null) {
@@ -14969,6 +15243,8 @@ class _$PushNotificationsOnImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return pushNotificationsOn(this);
   }
@@ -15035,6 +15311,8 @@ class _$PushNotificationsOnImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return pushNotificationsOn?.call(this);
   }
@@ -15101,6 +15379,8 @@ class _$PushNotificationsOnImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOn != null) {
@@ -15329,6 +15609,8 @@ class _$PushNotificationsOffImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return pushNotificationsOff(eventType);
   }
@@ -15436,6 +15718,8 @@ class _$PushNotificationsOffImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return pushNotificationsOff?.call(eventType);
   }
@@ -15535,6 +15819,8 @@ class _$PushNotificationsOffImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOff != null) {
@@ -15609,6 +15895,8 @@ class _$PushNotificationsOffImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return pushNotificationsOff(this);
   }
@@ -15675,6 +15963,8 @@ class _$PushNotificationsOffImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return pushNotificationsOff?.call(this);
   }
@@ -15741,6 +16031,8 @@ class _$PushNotificationsOffImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pushNotificationsOff != null) {
@@ -15980,6 +16272,8 @@ class _$JoinCommunityClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return joinCommunityClicked(eventType, social);
   }
@@ -16087,6 +16381,8 @@ class _$JoinCommunityClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return joinCommunityClicked?.call(eventType, social);
   }
@@ -16186,6 +16482,8 @@ class _$JoinCommunityClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (joinCommunityClicked != null) {
@@ -16260,6 +16558,8 @@ class _$JoinCommunityClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return joinCommunityClicked(this);
   }
@@ -16326,6 +16626,8 @@ class _$JoinCommunityClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return joinCommunityClicked?.call(this);
   }
@@ -16392,6 +16694,8 @@ class _$JoinCommunityClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (joinCommunityClicked != null) {
@@ -16622,6 +16926,8 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return privacyPolicyClicked(eventType);
   }
@@ -16729,6 +17035,8 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return privacyPolicyClicked?.call(eventType);
   }
@@ -16828,6 +17136,8 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privacyPolicyClicked != null) {
@@ -16902,6 +17212,8 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return privacyPolicyClicked(this);
   }
@@ -16968,6 +17280,8 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return privacyPolicyClicked?.call(this);
   }
@@ -17034,6 +17348,8 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (privacyPolicyClicked != null) {
@@ -17260,6 +17576,8 @@ class _$TermsOfUseClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return termsOfUseClicked(eventType);
   }
@@ -17367,6 +17685,8 @@ class _$TermsOfUseClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return termsOfUseClicked?.call(eventType);
   }
@@ -17466,6 +17786,8 @@ class _$TermsOfUseClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (termsOfUseClicked != null) {
@@ -17540,6 +17862,8 @@ class _$TermsOfUseClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return termsOfUseClicked(this);
   }
@@ -17606,6 +17930,8 @@ class _$TermsOfUseClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return termsOfUseClicked?.call(this);
   }
@@ -17672,6 +17998,8 @@ class _$TermsOfUseClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (termsOfUseClicked != null) {
@@ -17898,6 +18226,8 @@ class _$VerifyCardClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return verifyCardClicked(eventType);
   }
@@ -18005,6 +18335,8 @@ class _$VerifyCardClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return verifyCardClicked?.call(eventType);
   }
@@ -18104,6 +18436,8 @@ class _$VerifyCardClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (verifyCardClicked != null) {
@@ -18178,6 +18512,8 @@ class _$VerifyCardClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return verifyCardClicked(this);
   }
@@ -18244,6 +18580,8 @@ class _$VerifyCardClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return verifyCardClicked?.call(this);
   }
@@ -18310,6 +18648,8 @@ class _$VerifyCardClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (verifyCardClicked != null) {
@@ -18575,6 +18915,8 @@ class _$VerifyCardTappedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return verifyCardTapped(eventType, walletAddress, walletType, activated);
   }
@@ -18682,6 +19024,8 @@ class _$VerifyCardTappedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return verifyCardTapped?.call(
         eventType, walletAddress, walletType, activated);
@@ -18782,6 +19126,8 @@ class _$VerifyCardTappedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (verifyCardTapped != null) {
@@ -18856,6 +19202,8 @@ class _$VerifyCardTappedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return verifyCardTapped(this);
   }
@@ -18922,6 +19270,8 @@ class _$VerifyCardTappedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return verifyCardTapped?.call(this);
   }
@@ -18988,6 +19338,8 @@ class _$VerifyCardTappedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (verifyCardTapped != null) {
@@ -19220,6 +19572,8 @@ class _$SendMessageClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return sendMessageClicked(eventType);
   }
@@ -19327,6 +19681,8 @@ class _$SendMessageClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return sendMessageClicked?.call(eventType);
   }
@@ -19426,6 +19782,8 @@ class _$SendMessageClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (sendMessageClicked != null) {
@@ -19500,6 +19858,8 @@ class _$SendMessageClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return sendMessageClicked(this);
   }
@@ -19566,6 +19926,8 @@ class _$SendMessageClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return sendMessageClicked?.call(this);
   }
@@ -19632,6 +19994,8 @@ class _$SendMessageClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (sendMessageClicked != null) {
@@ -19857,6 +20221,8 @@ class _$CardTabClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardTabClicked(eventType);
   }
@@ -19964,6 +20330,8 @@ class _$CardTabClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardTabClicked?.call(eventType);
   }
@@ -20063,6 +20431,8 @@ class _$CardTabClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardTabClicked != null) {
@@ -20137,6 +20507,8 @@ class _$CardTabClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardTabClicked(this);
   }
@@ -20203,6 +20575,8 @@ class _$CardTabClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardTabClicked?.call(this);
   }
@@ -20269,6 +20643,8 @@ class _$CardTabClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardTabClicked != null) {
@@ -20492,6 +20868,8 @@ class _$BarTabClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return barTabClicked(eventType);
   }
@@ -20599,6 +20977,8 @@ class _$BarTabClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return barTabClicked?.call(eventType);
   }
@@ -20698,6 +21078,8 @@ class _$BarTabClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barTabClicked != null) {
@@ -20772,6 +21154,8 @@ class _$BarTabClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return barTabClicked(this);
   }
@@ -20838,6 +21222,8 @@ class _$BarTabClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return barTabClicked?.call(this);
   }
@@ -20904,6 +21290,8 @@ class _$BarTabClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barTabClicked != null) {
@@ -21140,6 +21528,8 @@ class _$TapToConnectClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return tapToConnectClicked(eventType, tab);
   }
@@ -21247,6 +21637,8 @@ class _$TapToConnectClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return tapToConnectClicked?.call(eventType, tab);
   }
@@ -21346,6 +21738,8 @@ class _$TapToConnectClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (tapToConnectClicked != null) {
@@ -21420,6 +21814,8 @@ class _$TapToConnectClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return tapToConnectClicked(this);
   }
@@ -21486,6 +21882,8 @@ class _$TapToConnectClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return tapToConnectClicked?.call(this);
   }
@@ -21552,6 +21950,8 @@ class _$TapToConnectClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (tapToConnectClicked != null) {
@@ -21819,6 +22219,8 @@ class _$CardDamagedClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardDamagedClicked(eventType, walletAddress, walletType, activated);
   }
@@ -21926,6 +22328,8 @@ class _$CardDamagedClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardDamagedClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -22026,6 +22430,8 @@ class _$CardDamagedClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardDamagedClicked != null) {
@@ -22101,6 +22507,8 @@ class _$CardDamagedClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardDamagedClicked(this);
   }
@@ -22167,6 +22575,8 @@ class _$CardDamagedClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardDamagedClicked?.call(this);
   }
@@ -22233,6 +22643,8 @@ class _$CardDamagedClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardDamagedClicked != null) {
@@ -22506,6 +22918,8 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return nfcNotWorkingClicked(
         eventType, walletAddress, walletType, activated);
@@ -22614,6 +23028,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return nfcNotWorkingClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -22714,6 +23130,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (nfcNotWorkingClicked != null) {
@@ -22789,6 +23207,8 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return nfcNotWorkingClicked(this);
   }
@@ -22855,6 +23275,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return nfcNotWorkingClicked?.call(this);
   }
@@ -22921,6 +23343,8 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (nfcNotWorkingClicked != null) {
@@ -23192,6 +23616,8 @@ class _$DontHaveCardClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return dontHaveCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -23299,6 +23725,8 @@ class _$DontHaveCardClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return dontHaveCardClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -23399,6 +23827,8 @@ class _$DontHaveCardClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (dontHaveCardClicked != null) {
@@ -23474,6 +23904,8 @@ class _$DontHaveCardClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return dontHaveCardClicked(this);
   }
@@ -23540,6 +23972,8 @@ class _$DontHaveCardClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return dontHaveCardClicked?.call(this);
   }
@@ -23606,6 +24040,8 @@ class _$DontHaveCardClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (dontHaveCardClicked != null) {
@@ -23877,6 +24313,8 @@ class _$LostCardClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return lostCardClicked(eventType, walletAddress, walletType, activated);
   }
@@ -23984,6 +24422,8 @@ class _$LostCardClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return lostCardClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -24084,6 +24524,8 @@ class _$LostCardClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (lostCardClicked != null) {
@@ -24158,6 +24600,8 @@ class _$LostCardClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return lostCardClicked(this);
   }
@@ -24224,6 +24668,8 @@ class _$LostCardClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return lostCardClicked?.call(this);
   }
@@ -24290,6 +24736,8 @@ class _$LostCardClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (lostCardClicked != null) {
@@ -24564,6 +25012,8 @@ class _$TroubleActivateClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return troubleActivateClicked(
         eventType, walletAddress, walletType, activated);
@@ -24672,6 +25122,8 @@ class _$TroubleActivateClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return troubleActivateClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -24772,6 +25224,8 @@ class _$TroubleActivateClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateClicked != null) {
@@ -24847,6 +25301,8 @@ class _$TroubleActivateClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return troubleActivateClicked(this);
   }
@@ -24913,6 +25369,8 @@ class _$TroubleActivateClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return troubleActivateClicked?.call(this);
   }
@@ -24979,6 +25437,8 @@ class _$TroubleActivateClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateClicked != null) {
@@ -25250,6 +25710,8 @@ class _$TroubleCloseClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return troubleCloseClicked(eventType, walletAddress, walletType, activated);
   }
@@ -25357,6 +25819,8 @@ class _$TroubleCloseClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return troubleCloseClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -25457,6 +25921,8 @@ class _$TroubleCloseClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleCloseClicked != null) {
@@ -25532,6 +25998,8 @@ class _$TroubleCloseClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return troubleCloseClicked(this);
   }
@@ -25598,6 +26066,8 @@ class _$TroubleCloseClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return troubleCloseClicked?.call(this);
   }
@@ -25664,6 +26134,8 @@ class _$TroubleCloseClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleCloseClicked != null) {
@@ -25935,6 +26407,8 @@ class _$TroubleGotItClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return troubleGotItClicked(eventType, walletAddress, walletType, activated);
   }
@@ -26042,6 +26516,8 @@ class _$TroubleGotItClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return troubleGotItClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -26142,6 +26618,8 @@ class _$TroubleGotItClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleGotItClicked != null) {
@@ -26217,6 +26695,8 @@ class _$TroubleGotItClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return troubleGotItClicked(this);
   }
@@ -26283,6 +26763,8 @@ class _$TroubleGotItClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return troubleGotItClicked?.call(this);
   }
@@ -26349,6 +26831,8 @@ class _$TroubleGotItClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleGotItClicked != null) {
@@ -26623,6 +27107,8 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return troubleActivateNowClicked(
         eventType, walletAddress, walletType, activated);
@@ -26731,6 +27217,8 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return troubleActivateNowClicked?.call(
         eventType, walletAddress, walletType, activated);
@@ -26831,6 +27319,8 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateNowClicked != null) {
@@ -26906,6 +27396,8 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return troubleActivateNowClicked(this);
   }
@@ -26972,6 +27464,8 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return troubleActivateNowClicked?.call(this);
   }
@@ -27038,6 +27532,8 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (troubleActivateNowClicked != null) {
@@ -27280,6 +27776,8 @@ class _$CardAddedEventImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardAdded(eventType, address);
   }
@@ -27387,6 +27885,8 @@ class _$CardAddedEventImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardAdded?.call(eventType, address);
   }
@@ -27486,6 +27986,8 @@ class _$CardAddedEventImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardAdded != null) {
@@ -27560,6 +28062,8 @@ class _$CardAddedEventImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardAdded(this);
   }
@@ -27626,6 +28130,8 @@ class _$CardAddedEventImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardAdded?.call(this);
   }
@@ -27692,6 +28198,8 @@ class _$CardAddedEventImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardAdded != null) {
@@ -27929,6 +28437,8 @@ class _$BarAddedEventImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return barAdded(eventType, address);
   }
@@ -28036,6 +28546,8 @@ class _$BarAddedEventImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return barAdded?.call(eventType, address);
   }
@@ -28135,6 +28647,8 @@ class _$BarAddedEventImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barAdded != null) {
@@ -28209,6 +28723,8 @@ class _$BarAddedEventImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return barAdded(this);
   }
@@ -28275,6 +28791,8 @@ class _$BarAddedEventImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return barAdded?.call(this);
   }
@@ -28341,6 +28859,8 @@ class _$BarAddedEventImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barAdded != null) {
@@ -28569,6 +29089,8 @@ class _$EraseMyDataClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return eraseMyDataClicked(eventType);
   }
@@ -28676,6 +29198,8 @@ class _$EraseMyDataClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return eraseMyDataClicked?.call(eventType);
   }
@@ -28775,6 +29299,8 @@ class _$EraseMyDataClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataClicked != null) {
@@ -28849,6 +29375,8 @@ class _$EraseMyDataClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return eraseMyDataClicked(this);
   }
@@ -28915,6 +29443,8 @@ class _$EraseMyDataClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return eraseMyDataClicked?.call(this);
   }
@@ -28981,6 +29511,8 @@ class _$EraseMyDataClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataClicked != null) {
@@ -29209,6 +29741,8 @@ class _$EraseMyDataConfirmedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return eraseMyDataConfirmed(eventType);
   }
@@ -29316,6 +29850,8 @@ class _$EraseMyDataConfirmedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return eraseMyDataConfirmed?.call(eventType);
   }
@@ -29415,6 +29951,8 @@ class _$EraseMyDataConfirmedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataConfirmed != null) {
@@ -29489,6 +30027,8 @@ class _$EraseMyDataConfirmedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return eraseMyDataConfirmed(this);
   }
@@ -29555,6 +30095,8 @@ class _$EraseMyDataConfirmedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return eraseMyDataConfirmed?.call(this);
   }
@@ -29621,6 +30163,8 @@ class _$EraseMyDataConfirmedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (eraseMyDataConfirmed != null) {
@@ -29847,6 +30391,8 @@ class _$CoinSearchClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return coinSearchClicked(eventType);
   }
@@ -29954,6 +30500,8 @@ class _$CoinSearchClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return coinSearchClicked?.call(eventType);
   }
@@ -30053,6 +30601,8 @@ class _$CoinSearchClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinSearchClicked != null) {
@@ -30127,6 +30677,8 @@ class _$CoinSearchClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return coinSearchClicked(this);
   }
@@ -30193,6 +30745,8 @@ class _$CoinSearchClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return coinSearchClicked?.call(this);
   }
@@ -30259,6 +30813,8 @@ class _$CoinSearchClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinSearchClicked != null) {
@@ -30493,6 +31049,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return coinSearched(eventType, coinName);
   }
@@ -30600,6 +31158,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return coinSearched?.call(eventType, coinName);
   }
@@ -30699,6 +31259,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinSearched != null) {
@@ -30773,6 +31335,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return coinSearched(this);
   }
@@ -30839,6 +31403,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return coinSearched?.call(this);
   }
@@ -30905,6 +31471,8 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinSearched != null) {
@@ -31128,6 +31696,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return fiatClicked(eventType);
   }
@@ -31235,6 +31805,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return fiatClicked?.call(eventType);
   }
@@ -31334,6 +31906,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (fiatClicked != null) {
@@ -31408,6 +31982,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return fiatClicked(this);
   }
@@ -31474,6 +32050,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return fiatClicked?.call(this);
   }
@@ -31540,6 +32118,8 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (fiatClicked != null) {
@@ -31773,6 +32353,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return coinClicked(eventType, coinName);
   }
@@ -31880,6 +32462,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return coinClicked?.call(eventType, coinName);
   }
@@ -31979,6 +32563,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinClicked != null) {
@@ -32053,6 +32639,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return coinClicked(this);
   }
@@ -32119,6 +32707,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return coinClicked?.call(this);
   }
@@ -32185,6 +32775,8 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (coinClicked != null) {
@@ -32413,6 +33005,8 @@ class _$LoadCoinsClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return loadCoinsClicked(eventType);
   }
@@ -32520,6 +33114,8 @@ class _$LoadCoinsClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return loadCoinsClicked?.call(eventType);
   }
@@ -32619,6 +33215,8 @@ class _$LoadCoinsClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (loadCoinsClicked != null) {
@@ -32693,6 +33291,8 @@ class _$LoadCoinsClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return loadCoinsClicked(this);
   }
@@ -32759,6 +33359,8 @@ class _$LoadCoinsClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return loadCoinsClicked?.call(this);
   }
@@ -32825,6 +33427,8 @@ class _$LoadCoinsClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (loadCoinsClicked != null) {
@@ -33047,6 +33651,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return goUpClicked(eventType);
   }
@@ -33154,6 +33760,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return goUpClicked?.call(eventType);
   }
@@ -33253,6 +33861,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (goUpClicked != null) {
@@ -33327,6 +33937,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return goUpClicked(this);
   }
@@ -33393,6 +34005,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return goUpClicked?.call(this);
   }
@@ -33459,6 +34073,8 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (goUpClicked != null) {
@@ -33686,6 +34302,8 @@ class _$CardTabHistoryClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return cardTabHistoryClicked(eventType);
   }
@@ -33793,6 +34411,8 @@ class _$CardTabHistoryClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return cardTabHistoryClicked?.call(eventType);
   }
@@ -33892,6 +34512,8 @@ class _$CardTabHistoryClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardTabHistoryClicked != null) {
@@ -33966,6 +34588,8 @@ class _$CardTabHistoryClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return cardTabHistoryClicked(this);
   }
@@ -34032,6 +34656,8 @@ class _$CardTabHistoryClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return cardTabHistoryClicked?.call(this);
   }
@@ -34098,6 +34724,8 @@ class _$CardTabHistoryClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (cardTabHistoryClicked != null) {
@@ -34326,6 +34954,8 @@ class _$BarTabHistoryClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return barTabHistoryClicked(eventType);
   }
@@ -34433,6 +35063,8 @@ class _$BarTabHistoryClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return barTabHistoryClicked?.call(eventType);
   }
@@ -34532,6 +35164,8 @@ class _$BarTabHistoryClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barTabHistoryClicked != null) {
@@ -34606,6 +35240,8 @@ class _$BarTabHistoryClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return barTabHistoryClicked(this);
   }
@@ -34672,6 +35308,8 @@ class _$BarTabHistoryClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return barTabHistoryClicked?.call(this);
   }
@@ -34738,6 +35376,8 @@ class _$BarTabHistoryClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (barTabHistoryClicked != null) {
@@ -34976,6 +35616,8 @@ class _$SelectWalletClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return selectWalletClicked(eventType, walletType);
   }
@@ -35083,6 +35725,8 @@ class _$SelectWalletClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return selectWalletClicked?.call(eventType, walletType);
   }
@@ -35182,6 +35826,8 @@ class _$SelectWalletClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (selectWalletClicked != null) {
@@ -35256,6 +35902,8 @@ class _$SelectWalletClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return selectWalletClicked(this);
   }
@@ -35322,6 +35970,8 @@ class _$SelectWalletClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return selectWalletClicked?.call(this);
   }
@@ -35388,6 +36038,8 @@ class _$SelectWalletClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (selectWalletClicked != null) {
@@ -35637,6 +36289,8 @@ class _$WalletSelectedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return walletSelected(eventType, walletType, address);
   }
@@ -35744,6 +36398,8 @@ class _$WalletSelectedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return walletSelected?.call(eventType, walletType, address);
   }
@@ -35843,6 +36499,8 @@ class _$WalletSelectedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (walletSelected != null) {
@@ -35917,6 +36575,8 @@ class _$WalletSelectedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return walletSelected(this);
   }
@@ -35983,6 +36643,8 @@ class _$WalletSelectedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return walletSelected?.call(this);
   }
@@ -36049,6 +36711,8 @@ class _$WalletSelectedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (walletSelected != null) {
@@ -36288,6 +36952,8 @@ class _$PullToRefreshImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return pullToRefresh(eventType, source);
   }
@@ -36395,6 +37061,8 @@ class _$PullToRefreshImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return pullToRefresh?.call(eventType, source);
   }
@@ -36494,6 +37162,8 @@ class _$PullToRefreshImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pullToRefresh != null) {
@@ -36568,6 +37238,8 @@ class _$PullToRefreshImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return pullToRefresh(this);
   }
@@ -36634,6 +37306,8 @@ class _$PullToRefreshImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return pullToRefresh?.call(this);
   }
@@ -36700,6 +37374,8 @@ class _$PullToRefreshImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (pullToRefresh != null) {
@@ -36928,6 +37604,8 @@ class _$TransactionClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return transactionClicked(eventType);
   }
@@ -37035,6 +37713,8 @@ class _$TransactionClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return transactionClicked?.call(eventType);
   }
@@ -37134,6 +37814,8 @@ class _$TransactionClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (transactionClicked != null) {
@@ -37208,6 +37890,8 @@ class _$TransactionClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return transactionClicked(this);
   }
@@ -37274,6 +37958,8 @@ class _$TransactionClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return transactionClicked?.call(this);
   }
@@ -37340,6 +38026,8 @@ class _$TransactionClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (transactionClicked != null) {
@@ -37569,6 +38257,8 @@ class _$LoadTransactionClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return loadTransactionClicked(eventType);
   }
@@ -37676,6 +38366,8 @@ class _$LoadTransactionClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return loadTransactionClicked?.call(eventType);
   }
@@ -37775,6 +38467,8 @@ class _$LoadTransactionClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (loadTransactionClicked != null) {
@@ -37849,6 +38543,8 @@ class _$LoadTransactionClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return loadTransactionClicked(this);
   }
@@ -37915,6 +38611,8 @@ class _$LoadTransactionClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return loadTransactionClicked?.call(this);
   }
@@ -37981,6 +38679,8 @@ class _$LoadTransactionClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (loadTransactionClicked != null) {
@@ -38217,6 +38917,8 @@ class _$RefreshClickedImpl
     required TResult Function(String eventType) transactionClicked,
     required TResult Function(String eventType) loadTransactionClicked,
     required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
   }) {
     return refreshClicked(eventType, address);
   }
@@ -38324,6 +39026,8 @@ class _$RefreshClickedImpl
     TResult? Function(String eventType)? transactionClicked,
     TResult? Function(String eventType)? loadTransactionClicked,
     TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
   }) {
     return refreshClicked?.call(eventType, address);
   }
@@ -38423,6 +39127,8 @@ class _$RefreshClickedImpl
     TResult Function(String eventType)? transactionClicked,
     TResult Function(String eventType)? loadTransactionClicked,
     TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (refreshClicked != null) {
@@ -38497,6 +39203,8 @@ class _$RefreshClickedImpl
     required TResult Function(LoadTransactionClicked value)
         loadTransactionClicked,
     required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
   }) {
     return refreshClicked(this);
   }
@@ -38563,6 +39271,8 @@ class _$RefreshClickedImpl
     TResult? Function(TransactionClicked value)? transactionClicked,
     TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
   }) {
     return refreshClicked?.call(this);
   }
@@ -38629,6 +39339,8 @@ class _$RefreshClickedImpl
     TResult Function(TransactionClicked value)? transactionClicked,
     TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
     TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
     required TResult orElse(),
   }) {
     if (refreshClicked != null) {
@@ -38660,4 +39372,1305 @@ abstract class RefreshClicked implements AmplitudeEventPartTwo {
   @JsonKey(ignore: true)
   _$$RefreshClickedImplCopyWith<_$RefreshClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BuyBitcoinShownImplCopyWith<$Res>
+    implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$BuyBitcoinShownImplCopyWith(_$BuyBitcoinShownImpl value,
+          $Res Function(_$BuyBitcoinShownImpl) then) =
+      __$$BuyBitcoinShownImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$BuyBitcoinShownImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$BuyBitcoinShownImpl>
+    implements _$$BuyBitcoinShownImplCopyWith<$Res> {
+  __$$BuyBitcoinShownImplCopyWithImpl(
+      _$BuyBitcoinShownImpl _value, $Res Function(_$BuyBitcoinShownImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$BuyBitcoinShownImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BuyBitcoinShownImpl
+    with DiagnosticableTreeMixin
+    implements BuyBitcoinShown {
+  const _$BuyBitcoinShownImpl(
+      {this.eventType = 'BUY_BITCOIN_SHOWN', final String? $type})
+      : $type = $type ?? 'buyBitcoinSown';
+
+  factory _$BuyBitcoinShownImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BuyBitcoinShownImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.buyBitcoinSown(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.buyBitcoinSown'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BuyBitcoinShownImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BuyBitcoinShownImplCopyWith<_$BuyBitcoinShownImpl> get copyWith =>
+      __$$BuyBitcoinShownImplCopyWithImpl<_$BuyBitcoinShownImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        continueClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        editSecretsClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationSuccessful,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationFailed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        guideMeClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String color)
+        cardColorChanged,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        clickedOnPrivateKey,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyRevealed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyCopied,
+    required TResult Function(String eventType, String walletType)
+        cardNameChanged,
+    required TResult Function(String eventType, String source)
+        helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDeleted,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social)
+        joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType)
+        selectWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String address)
+        walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinSown(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinSown?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
+    required TResult orElse(),
+  }) {
+    if (buyBitcoinSown != null) {
+      return buyBitcoinSown(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value)
+        changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value)
+        troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value)
+        troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value)
+        cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value)
+        loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinSown(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinSown?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+    required TResult orElse(),
+  }) {
+    if (buyBitcoinSown != null) {
+      return buyBitcoinSown(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BuyBitcoinShownImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class BuyBitcoinShown implements AmplitudeEventPartTwo {
+  const factory BuyBitcoinShown({final String eventType}) =
+      _$BuyBitcoinShownImpl;
+
+  factory BuyBitcoinShown.fromJson(Map<String, dynamic> json) =
+      _$BuyBitcoinShownImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$BuyBitcoinShownImplCopyWith<_$BuyBitcoinShownImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BuyBitcoinNowClickedImplCopyWith<$Res>
+    implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$BuyBitcoinNowClickedImplCopyWith(_$BuyBitcoinNowClickedImpl value,
+          $Res Function(_$BuyBitcoinNowClickedImpl) then) =
+      __$$BuyBitcoinNowClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$BuyBitcoinNowClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res,
+        _$BuyBitcoinNowClickedImpl>
+    implements _$$BuyBitcoinNowClickedImplCopyWith<$Res> {
+  __$$BuyBitcoinNowClickedImplCopyWithImpl(_$BuyBitcoinNowClickedImpl _value,
+      $Res Function(_$BuyBitcoinNowClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$BuyBitcoinNowClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BuyBitcoinNowClickedImpl
+    with DiagnosticableTreeMixin
+    implements BuyBitcoinNowClicked {
+  const _$BuyBitcoinNowClickedImpl(
+      {this.eventType = 'BUY_BITCOIN_NOW_CLICKED', final String? $type})
+      : $type = $type ?? 'buyBitcoinNowClicked';
+
+  factory _$BuyBitcoinNowClickedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BuyBitcoinNowClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.buyBitcoinNowClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'AmplitudeEventPartTwo.buyBitcoinNowClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BuyBitcoinNowClickedImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BuyBitcoinNowClickedImplCopyWith<_$BuyBitcoinNowClickedImpl>
+      get copyWith =>
+          __$$BuyBitcoinNowClickedImplCopyWithImpl<_$BuyBitcoinNowClickedImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        continueClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        editSecretsClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationSuccessful,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        validationFailed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        guideMeClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String color)
+        cardColorChanged,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        clickedOnPrivateKey,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyRevealed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyCopied,
+    required TResult Function(String eventType, String walletType)
+        cardNameChanged,
+    required TResult Function(String eventType, String source)
+        helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDeleted,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social)
+        joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        dontHaveCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType)
+        selectWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String address)
+        walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinSown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinNowClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinSown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinNowClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationSuccessful,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        validationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinSown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
+    required TResult orElse(),
+  }) {
+    if (buyBitcoinNowClicked != null) {
+      return buyBitcoinNowClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(ValidationSuccessful value) validationSuccessful,
+    required TResult Function(ValidationFailed value) validationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value)
+        changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value)
+        troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value)
+        troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value)
+        cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value)
+        loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinSown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinNowClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(ValidationSuccessful value)? validationSuccessful,
+    TResult? Function(ValidationFailed value)? validationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+  }) {
+    return buyBitcoinNowClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(ValidationSuccessful value)? validationSuccessful,
+    TResult Function(ValidationFailed value)? validationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinSown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+    required TResult orElse(),
+  }) {
+    if (buyBitcoinNowClicked != null) {
+      return buyBitcoinNowClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BuyBitcoinNowClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class BuyBitcoinNowClicked implements AmplitudeEventPartTwo {
+  const factory BuyBitcoinNowClicked({final String eventType}) =
+      _$BuyBitcoinNowClickedImpl;
+
+  factory BuyBitcoinNowClicked.fromJson(Map<String, dynamic> json) =
+      _$BuyBitcoinNowClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$BuyBitcoinNowClickedImplCopyWith<_$BuyBitcoinNowClickedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

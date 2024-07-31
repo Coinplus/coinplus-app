@@ -306,6 +306,14 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String address,
   }) = RefreshClicked;
 
+  const factory AmplitudeEventPartTwo.buyBitcoinSown({
+    @Default('BUY_BITCOIN_SHOWN') String eventType,
+  }) = BuyBitcoinShown;
+
+  const factory AmplitudeEventPartTwo.buyBitcoinNowClicked({
+    @Default('BUY_BITCOIN_NOW_CLICKED') String eventType,
+  }) = BuyBitcoinNowClicked;
+
   factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) =>
       _$AmplitudeEventPartTwoFromJson(json);
 }
