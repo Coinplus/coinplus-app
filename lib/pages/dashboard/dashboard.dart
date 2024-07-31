@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
@@ -10,11 +11,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 import '../../constants/card_record.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/buy_bitcoin_modal/buy_bitcoin_modal.dart';
 import '../../modals/send_receive_modal/send_receive_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
@@ -83,6 +87,58 @@ class DashboardPage extends HookWidget {
         index: 0,
       ),
     );
+
+    Future<void> openModalBottomSheet() async {
+      await recordAmplitudeEventPartTwo(const BuyBitcoinShown());
+      await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (_) {
+        return const BuyBitcoinModal();
+      },
+      );
+    }
+
+    Future<void> initModalState() async {
+      final prefs = await SharedPreferences.getInstance();
+      final packageInfo = await PackageInfo.fromPlatform();
+      await FirebaseMessaging.instance
+          .getInitialMessage()
+          .then((message) async {
+        if (message != null && message.data['screen'] == 'buy_bitcoin') {
+          await Future.delayed(const Duration(milliseconds: 1000));
+          await openModalBottomSheet();
+        }
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+        if (message.data['screen'] == 'buy_bitcoin') {
+          await Future.delayed(const Duration(milliseconds: 1000));
+          if (appLocked.value) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              openModalBottomSheet();
+            });
+          } else {
+            await openModalBottomSheet();
+          }
+        }
+      });
+
+      if (prefs.getBool('show_modal') == true ||
+          prefs.getString('package_info') != packageInfo.version.toString()) {
+        await Future.delayed(const Duration(milliseconds: 1000));
+        await openModalBottomSheet();
+        await prefs.setBool('show_modal', false);
+        await prefs.setString('package_info', packageInfo.version.toString());
+      }
+    }
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -227,6 +283,9 @@ class DashboardPage extends HookWidget {
             }
           },
         );
+        if (_balanceStore.cards.isNotEmpty || _balanceStore.bars.isNotEmpty) {
+          initModalState();
+        }
         return streamSubscription.cancel;
       },
       [],

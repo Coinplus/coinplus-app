@@ -880,3 +880,29 @@ Map<String, dynamic> _$$RefreshClickedImplToJson(
       'address': instance.address,
       'runtimeType': instance.$type,
     };
+
+_$BuyBitcoinShownImpl _$$BuyBitcoinShownImplFromJson(Map json) =>
+    _$BuyBitcoinShownImpl(
+      eventType: json['eventType'] as String? ?? 'BUY_BITCOIN_SHOWN',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$BuyBitcoinShownImplToJson(
+        _$BuyBitcoinShownImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$BuyBitcoinNowClickedImpl _$$BuyBitcoinNowClickedImplFromJson(Map json) =>
+    _$BuyBitcoinNowClickedImpl(
+      eventType: json['eventType'] as String? ?? 'BUY_BITCOIN_NOW_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$BuyBitcoinNowClickedImplToJson(
+        _$BuyBitcoinNowClickedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };

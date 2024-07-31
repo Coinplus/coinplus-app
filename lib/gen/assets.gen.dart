@@ -69,6 +69,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/buy.png
   AssetGenImage get buy => const AssetGenImage('assets/icons/buy.png');
 
+  /// File path: assets/icons/buy_bitcoin.png
+  AssetGenImage get buyBitcoin =>
+      const AssetGenImage('assets/icons/buy_bitcoin.png');
+
   /// File path: assets/icons/card_back_link.png
   AssetGenImage get cardBackLink =>
       const AssetGenImage('assets/icons/card_back_link.png');
@@ -352,6 +356,7 @@ class $AssetsIconsGen {
         barAddressField,
         binIcon,
         buy,
+        buyBitcoin,
         cardBackLink,
         cardBackLinkBlack,
         cardBackText,

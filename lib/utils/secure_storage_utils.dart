@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const secureStorage = FlutterSecureStorage();
@@ -89,7 +90,10 @@ Future<bool> checkWalletStatus(String address) async {
 Future<void> localStorage() async {
   final prefs = await SharedPreferences.getInstance();
   const secureStorage = FlutterSecureStorage();
+  final packageInfo = await PackageInfo.fromPlatform();
   if (prefs.getBool('first_run') ?? true) {
+    await prefs.setBool('show_modal', true);
+    await prefs.setString('package_info', packageInfo.version.toString());
     await secureStorage.deleteAll();
     await prefs.setBool('first_run', false);
   }
