@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -577,23 +576,8 @@ class OnboardingPage extends HookWidget {
                       const BuyNewCardClicked(source: 'Onboarding'),
                     ),
                   );
-                  await FlutterWebBrowser.openWebPage(
-                    url: 'https://coinplus.com/shop/',
-                    customTabsOptions: const CustomTabsOptions(
-                      shareState: CustomTabsShareState.on,
-                      instantAppsEnabled: true,
-                      showTitle: true,
-                      urlBarHidingEnabled: true,
-                    ),
-                    safariVCOptions: const SafariViewControllerOptions(
-                      barCollapsingEnabled: true,
-                      modalPresentationStyle:
-                          UIModalPresentationStyle.formSheet,
-                      dismissButtonStyle:
-                          SafariViewControllerDismissButtonStyle.done,
-                      modalPresentationCapturesStatusBarAppearance: true,
-                    ),
-                  );
+                  await signInAnonymously();
+                  await router.pushAndPopAll(const DashboardRoute());
                 },
                 style: context.theme
                     .buttonStyle(
@@ -608,17 +592,9 @@ class OnboardingPage extends HookWidget {
                       overlayColor: WidgetStateProperty.all(
                         Colors.grey.withOpacity(0.1),
                       ),
+                  splashFactory: NoSplash.splashFactory,
                     ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Buy new card'),
-                    const Gap(16),
-                    Assets.icons.shop.image(
-                      height: 24,
-                    ),
-                  ],
-                ),
+                child: const Text('Don’t have a card?'),
               ).paddingHorizontal(64),
               const Spacer(),
             ],

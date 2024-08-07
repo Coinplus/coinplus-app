@@ -651,10 +651,6 @@ class $AssetsImagesCardGen {
   /// File path: assets/images/card/Back.png
   AssetGenImage get back => const AssetGenImage('assets/images/card/Back.png');
 
-  /// File path: assets/images/card/Front.png
-  AssetGenImage get front =>
-      const AssetGenImage('assets/images/card/Front.png');
-
   /// File path: assets/images/card/Secret1.png
   AssetGenImage get secret1 =>
       const AssetGenImage('assets/images/card/Secret1.png');
@@ -667,6 +663,14 @@ class $AssetsImagesCardGen {
   AssetGenImage get brownCardFront =>
       const AssetGenImage('assets/images/card/brown_card_front.png');
 
+  /// File path: assets/images/card/buy_card_text.png
+  AssetGenImage get buyCardText =>
+      const AssetGenImage('assets/images/card/buy_card_text.png');
+
+  /// File path: assets/images/card/buy_cards.png
+  AssetGenImage get buyCards =>
+      const AssetGenImage('assets/images/card/buy_cards.png');
+
   /// File path: assets/images/card/card_back_black.png
   AssetGenImage get cardBackBlack =>
       const AssetGenImage('assets/images/card/card_back_black.png');
@@ -675,6 +679,10 @@ class $AssetsImagesCardGen {
   AssetGenImage get cardBackWhite =>
       const AssetGenImage('assets/images/card/card_back_white.png');
 
+  /// File path: assets/images/card/card_buy_blur_effect.png
+  AssetGenImage get cardBuyBlurEffect =>
+      const AssetGenImage('assets/images/card/card_buy_blur_effect.png');
+
   /// File path: assets/images/card/card_form.png
   AssetGenImage get cardForm =>
       const AssetGenImage('assets/images/card/card_form.png');
@@ -682,6 +690,10 @@ class $AssetsImagesCardGen {
   /// File path: assets/images/card/card_stickers.png
   AssetGenImage get cardStickers =>
       const AssetGenImage('assets/images/card/card_stickers.png');
+
+  /// File path: assets/images/card/empty_card.png
+  AssetGenImage get emptyCard =>
+      const AssetGenImage('assets/images/card/empty_card.png');
 
   /// File path: assets/images/card/filled_back.png
   AssetGenImage get filledBack =>
@@ -714,14 +726,17 @@ class $AssetsImagesCardGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         back,
-        front,
         secret1,
         secret2,
         brownCardFront,
+        buyCardText,
+        buyCards,
         cardBackBlack,
         cardBackWhite,
+        cardBuyBlurEffect,
         cardForm,
         cardStickers,
+        emptyCard,
         filledBack,
         filledBackBrown,
         filledBackWhite,

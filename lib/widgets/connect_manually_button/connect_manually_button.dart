@@ -60,7 +60,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
             ),
           ],
         ),
-        singleChildContent: Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
@@ -68,17 +68,17 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
               LoadingButton(
                 style: context.theme
                     .buttonStyle(
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        color: AppColors.primaryTextColor,
-                        fontSize: 15,
-                      ),
-                    )
+                  textStyle: const TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    color: AppColors.primaryTextColor,
+                    fontSize: 15,
+                  ),
+                )
                     .copyWith(
-                      backgroundColor: WidgetStateProperty.all(
-                        Colors.grey.withOpacity(0.1),
-                      ),
-                    ),
+                  backgroundColor: WidgetStateProperty.all(
+                    Colors.grey.withOpacity(0.1),
+                  ),
+                ),
                 onPressed: () async {
                   await recordAmplitudeEvent(
                     const ConnectOptionSelected(
@@ -125,17 +125,17 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
               LoadingButton(
                 style: context.theme
                     .buttonStyle(
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        color: AppColors.primaryTextColor,
-                        fontSize: 15,
-                      ),
-                    )
+                  textStyle: const TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    color: AppColors.primaryTextColor,
+                    fontSize: 15,
+                  ),
+                )
                     .copyWith(
-                      backgroundColor: WidgetStateProperty.all(
-                        Colors.grey.withOpacity(0.1),
-                      ),
-                    ),
+                  backgroundColor: WidgetStateProperty.all(
+                    Colors.grey.withOpacity(0.1),
+                  ),
+                ),
                 onPressed: () async {
                   await recordAmplitudeEvent(
                     const ConnectOptionSelected(
@@ -217,7 +217,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
             ),
           ],
         ),
-        singleChildContent: WalletTypeWidget(
+        child: WalletTypeWidget(
           pageIndexNotifier: pageIndexNotifier,
         ),
       );
@@ -262,9 +262,9 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
               modalTypeBuilder: (context) {
                 final size = MediaQuery.of(context).size.width;
                 if (size < 768) {
-                  return WoltModalType.bottomSheet;
+                  return WoltModalType.bottomSheet();
                 } else {
-                  return WoltModalType.dialog;
+                  return WoltModalType.dialog();
                 }
               },
               onModalDismissedWithBarrierTap: () {

@@ -229,7 +229,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                         ),
                       ],
                       image: DecorationImage(
-                        image: Assets.images.card.front.image().image,
+                        image: Assets.images.card.orangeCardFront.image().image,
                       ),
                     ),
                     child: Center(

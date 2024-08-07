@@ -35,8 +35,14 @@ class CardAndBarTab extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           splashColor: Colors.transparent,
+          splashHighlightColor: Colors.transparent,
+          barDecoration:
+              BoxDecoration(borderRadius: BorderRadius.circular(100)),
+          indicatorDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Colors.grey.withOpacity(0.1),
+          ),
           controller: tabController,
-          indicatorColor: Colors.grey.withOpacity(0.1),
           tabs: const [
             SegmentTab(
               backgroundColor: Colors.white,
