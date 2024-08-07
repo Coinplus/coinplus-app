@@ -59,7 +59,7 @@ class RemoveUserData extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              'Deleting your data will permanently erase all app data, including activated wallet private keys. Once the data is deleted, the app will be closed.',
+              'Deleting your data will permanently erase all app data, including activated wallet private keys.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -84,18 +84,17 @@ class RemoveUserData extends StatelessWidget {
                 color: Colors.white,
               ),
               action: (controller) async {
+                await StorageUtils.clear();
+                await secureStorage.deleteAll();
                 controller.loading();
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();
                 unawaited(
                   recordAmplitudeEventPartTwo(const EraseMyDataConfirmed()),
                 );
-                await StorageUtils.clear();
-                await secureStorage.deleteAll();
-                await signOut();
                 reRegisterStoreGetIt();
+                await signOut();
                 await router.pushAndPopAll(const OnboardingRoute());
-                await router.maybePop();
               },
               boxShadow: [
                 BoxShadow(

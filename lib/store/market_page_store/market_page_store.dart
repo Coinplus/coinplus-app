@@ -6,7 +6,7 @@ import 'package:dio_interceptor_plus/dio_interceptor_plus.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:haptic_feedback/haptic_feedback.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/chart_period_enum.dart';
@@ -105,7 +105,7 @@ abstract class _MarketPageStore with Store {
     }
     isHapticFeedbackActive = true;
     if (Platform.isIOS) {
-      await Haptics.vibrate(HapticsType.light);
+      Gaimon.light();
     }
     hapticDebounceTimer?.cancel();
     hapticDebounceTimer = Timer(const Duration(), () {

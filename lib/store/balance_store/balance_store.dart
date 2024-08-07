@@ -48,6 +48,8 @@ abstract class _BalanceStore with Store {
   bool barActivation = false;
   @observable
   bool cardActivation = false;
+  @observable
+  bool inAppWebViewLoading = false;
 
   _BalanceStore() {
     if (_cards.isNotEmpty) {
@@ -474,6 +476,16 @@ abstract class _BalanceStore with Store {
   @action
   void reActivateCard() {
     cardActivation = false;
+  }
+
+  @action
+  void webViewStartLoading() {
+    inAppWebViewLoading = true;
+  }
+
+  @action
+  void webViewStopLoading() {
+    inAppWebViewLoading = false;
   }
 
   late void Function(String addr) onCardAdded = _defaultOnCardAdded;

@@ -243,6 +243,22 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$inAppWebViewLoadingAtom =
+      Atom(name: '_BalanceStore.inAppWebViewLoading', context: context);
+
+  @override
+  bool get inAppWebViewLoading {
+    _$inAppWebViewLoadingAtom.reportRead();
+    return super.inAppWebViewLoading;
+  }
+
+  @override
+  set inAppWebViewLoading(bool value) {
+    _$inAppWebViewLoadingAtom.reportWrite(value, super.inAppWebViewLoading, () {
+      super.inAppWebViewLoading = value;
+    });
+  }
+
   late final _$getCardsInfoAsyncAction =
       AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
@@ -437,6 +453,28 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void webViewStartLoading() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.webViewStartLoading');
+    try {
+      return super.webViewStartLoading();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void webViewStopLoading() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.webViewStopLoading');
+    try {
+      return super.webViewStopLoading();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 cardMapResult: ${cardMapResult},
@@ -447,6 +485,7 @@ cardCurrentIndex: ${cardCurrentIndex},
 barCurrentIndex: ${barCurrentIndex},
 barActivation: ${barActivation},
 cardActivation: ${cardActivation},
+inAppWebViewLoading: ${inAppWebViewLoading},
 allCardsBalances: ${allCardsBalances},
 btcPrice: ${btcPrice},
 singleCoin: ${singleCoin},

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/firebase_model/buy_card_model.dart';
 import '../models/firebase_model/cards_firebase_model.dart';
 import '../models/old_card_model/old_card_model.dart';
 
@@ -137,6 +138,21 @@ Future<void> verificationFailureCount(String documentId) async {
       'verificationFailureCount': newFailureCount,
     });
   }
+}
+
+Future<BuyCardModel?> getBuyCardData() async {
+  final DocumentSnapshot documentSnapshot =
+  await _firestore.collection('links').doc('buy_card').get();
+
+  if (documentSnapshot.exists) {
+    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
+
+    if (documentData != null) {
+      final card = BuyCardModel.fromJson(documentData);
+      return card;
+    }
+  } else {}
+  return null;
 }
 
 Future<void> addReplenishmentHistory({
