@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../services/firebase_service.dart';
 import '../../../store/store.dart';
 import '../../../utils/secure_storage_utils.dart';
 import '../../../utils/storage_utils.dart';
@@ -84,16 +84,18 @@ class RemoveUserData extends StatelessWidget {
                 color: Colors.white,
               ),
               action: (controller) async {
-                await StorageUtils.clear();
-                await secureStorage.deleteAll();
                 controller.loading();
+                await StorageUtils.clear();
+                await secureStorage.readAll();
+                await secureStorage.deleteAll();
+                final data = await secureStorage.read(key: 'biometricAuth');
+                reRegisterStoreGetIt();
+                log(data.toString());
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();
                 unawaited(
                   recordAmplitudeEventPartTwo(const EraseMyDataConfirmed()),
                 );
-                reRegisterStoreGetIt();
-                await signOut();
                 await router.pushAndPopAll(const OnboardingRoute());
               },
               boxShadow: [

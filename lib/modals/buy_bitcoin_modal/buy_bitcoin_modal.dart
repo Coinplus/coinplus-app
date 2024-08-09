@@ -31,7 +31,7 @@ class BuyBitcoinModal extends StatelessWidget {
           Assets.icons.notch.image(height: 4),
           const Gap(20),
           const Text(
-            'Boost Your Portfolio with Bitcoin!',
+            'Boost Your Portfolio With Bitcoin!',
             style: TextStyle(
               fontSize: 17,
               color: AppColors.primary,
@@ -45,7 +45,7 @@ class BuyBitcoinModal extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 31),
             child: Text(
-              "Diversify your investments with Bitcoin. It's never been easier to buy and start enjoying the benefits of crypto.",
+              "Diversify your investments with bitcoin. It's never been easier to buy and start enjoying the benefits of crypto.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -68,9 +68,10 @@ class BuyBitcoinModal extends StatelessWidget {
                     ),
                   )
                   .copyWith(),
-              onPressed: () {
-                recordAmplitudeEventPartTwo(const BuyBitcoinNowClicked());
-                showModalBottomSheet(
+              onPressed: () async {
+                await recordAmplitudeEventPartTwo(const BuyBitcoinNowClicked());
+                await router.maybePop();
+                await showModalBottomSheet(
                   isScrollControlled: true,
                   context: router.navigatorKey.currentContext!,
                   shape: const RoundedRectangleBorder(

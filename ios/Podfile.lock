@@ -1084,6 +1084,15 @@ PODS:
   - flutter_branch_sdk (6.8.0):
     - BranchSDK (~> 2.2.1)
     - Flutter
+  - flutter_inappwebview_ios (0.0.1):
+    - Flutter
+    - flutter_inappwebview_ios/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview_ios/Core (0.0.1):
+    - Flutter
+    - OrderedSet (~> 5.0)
+  - flutter_keyboard_visibility (0.0.1):
+    - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_secure_storage (6.0.0):
@@ -1219,13 +1228,12 @@ PODS:
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
   - GTMSessionFetcher/Core (2.3.0)
-  - haptic_feedback (0.5.1):
-    - Flutter
   - in_app_review (0.2.0):
     - Flutter
   - leveldb-library (1.22.5)
   - local_auth_darwin (0.0.1):
     - Flutter
+    - FlutterMacOS
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
     - MLKitCommon (~> 9.0)
@@ -1255,6 +1263,7 @@ PODS:
   - nanopb/encode (2.30910.0)
   - nfc_manager (0.0.1):
     - Flutter
+  - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -1299,11 +1308,12 @@ DEPENDENCIES:
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_branch_sdk (from `.symlinks/plugins/flutter_branch_sdk/ios`)
+  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
+  - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_browser (from `.symlinks/plugins/flutter_web_browser/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
-  - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
@@ -1359,6 +1369,7 @@ SPEC REPOS:
     - MLKitVision
     - MTBBarcodeScanner
     - nanopb
+    - OrderedSet
     - PromisesObjC
     - ReachabilitySwift
     - RecaptchaInterop
@@ -1390,6 +1401,10 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_branch_sdk:
     :path: ".symlinks/plugins/flutter_branch_sdk/ios"
+  flutter_inappwebview_ios:
+    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
+  flutter_keyboard_visibility:
+    :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_secure_storage:
@@ -1398,8 +1413,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_web_browser/ios"
   gaimon:
     :path: ".symlinks/plugins/gaimon/ios"
-  haptic_feedback:
-    :path: ".symlinks/plugins/haptic_feedback/ios"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   local_auth_darwin:
@@ -1473,6 +1486,8 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: 48de4aec81a6b79bb30404e5e6db43ea74848fed
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_branch_sdk: 938f6f386a976356ee7e5f60969e53d4ae5704d9
+  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
+  flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   flutter_web_browser: 7bccaafbb0c5b8862afe7bcd158f15557109f61f
@@ -1485,10 +1500,9 @@ SPEC CHECKSUMS:
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  haptic_feedback: 8cb3ee0cb6b797946c2b0df9c99ebc8f7ed79c71
   in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
-  local_auth_darwin: 4d56c90c2683319835a61274b57620df9c4520ab
+  local_auth_darwin: 66e40372f1c29f383a314c738c7446e2f7fdadc3
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
@@ -1497,6 +1511,7 @@ SPEC CHECKSUMS:
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   nfc_manager: d7da7cb781f7744b94df5fe9dbca904ac4a0939e
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
@@ -1505,7 +1520,7 @@ SPEC CHECKSUMS:
   ramp_flutter: aac85dee8bc93b5f7563c909ba15a37727fe3fe8
   ReachabilitySwift: 7f151ff156cea1481a8411701195ac6a984f4979
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  sensors_plus: 42b9de1b8237675fa8d8121e4bb93be0f79fa61d
+  sensors_plus: 4b7c4bd9c9be2efbd575649368fe77ef09b429ad
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec

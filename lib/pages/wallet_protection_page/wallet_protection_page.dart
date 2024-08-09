@@ -39,11 +39,7 @@ class WalletProtectionPage extends HookWidget {
 
     final onToggleAppLock = useCallback(
       (isEnable) async {
-        if (isEnable) {
-          await router.push(const CreatePinCode());
-        } else {
-          await router.push(const PinRemove());
-        }
+        await router.push(const CreatePinCode());
         await _walletProtectState.checkPinCodeStatus();
         await _walletProtectState.checkBiometricStatus();
       },
