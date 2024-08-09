@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
@@ -13,6 +14,7 @@ import '../../models/card_model/card_model.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/map_result/map_result_dto.dart';
 import '../../services/cloud_firestore_service.dart';
+import '../../services/firebase_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 import '../market_page_store/market_page_store.dart';
@@ -51,6 +53,13 @@ abstract class _BalanceStore with Store {
   @observable
   bool inAppWebViewLoading = false;
 
+  Future<void> signIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('first_run') ?? true) {
+      await signInAnonymously();
+    }
+  }
+
   _BalanceStore() {
     if (_cards.isNotEmpty) {
       getCardsInfo();
@@ -60,6 +69,7 @@ abstract class _BalanceStore with Store {
     }
     getCardsFromStorage();
     getBarsFromStorage();
+    signIn();
   }
 
   Future<void> getCardsFromStorage() async {

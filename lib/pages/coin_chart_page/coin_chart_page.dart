@@ -16,6 +16,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/coins_dto/coin_model.dart';
 import '../../../store/market_page_store/market_page_store.dart';
 import '../../providers/screen_service.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../widgets/chart_loading_indicator/chart_loading_indicator.dart';
 import 'card_select_dropdown.dart';
 import 'chart_widget.dart';
@@ -36,6 +37,8 @@ class CoinChartPage extends StatefulWidget {
 
 class _CoinChartPageState extends State<CoinChartPage> {
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   void initState() {
@@ -124,7 +127,9 @@ class _CoinChartPageState extends State<CoinChartPage> {
               const SliverToBoxAdapter(
                 child: Gap(24),
               ),
-              if (widget.data!.symbol == 'BTC')
+              if (widget.data!.symbol == 'BTC' &&
+                      _balanceStore.cards.isNotEmpty ||
+                  _balanceStore.bars.isNotEmpty)
                 SliverToBoxAdapter(
                   child: ScaleTap(
                     enableFeedback: false,

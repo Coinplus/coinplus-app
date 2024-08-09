@@ -67,9 +67,9 @@ class CardEmptyState extends StatelessWidget {
                     child: Assets.images.card.buyCards.image(),
                   ),
                   Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
+                    bottom: 1,
+                    left: 1,
+                    right: 1,
                     child: Assets.images.card.cardBuyBlurEffect.image(),
                   ),
                   Positioned(
