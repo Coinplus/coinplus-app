@@ -28,7 +28,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   );
 
   await EasyLocalization.ensureInitialized();
-  unawaited(localStorage());
+  await localStorage();
   registerGetIt(env);
 
   runApp(

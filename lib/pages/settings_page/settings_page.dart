@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
@@ -65,6 +66,7 @@ class SettingsPage extends HookWidget {
 
         if (token == null) {
           final newToken = await messaging.getToken();
+          log(newToken.toString());
           if (newToken != null) {
             await secureStorage.write(key: 'fcm_token', value: newToken);
             unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOn()));
