@@ -91,18 +91,18 @@ class DashboardPage extends HookWidget {
     Future<void> openModalBottomSheet() async {
       await recordAmplitudeEventPartTwo(const BuyBitcoinShown());
       await showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+        isScrollControlled: true,
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
-      ),
-      context: context,
-      builder: (_) {
-        return const BuyBitcoinModal();
-      },
+        context: context,
+        builder: (_) {
+          return const BuyBitcoinModal();
+        },
       );
     }
 

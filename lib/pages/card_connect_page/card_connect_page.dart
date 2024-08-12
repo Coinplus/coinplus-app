@@ -1591,8 +1591,9 @@ class _CardConnectPageState extends State<CardConnectPage>
                           },
                         );
                         if (_allSettingsState.isActive) {
-                          // _balanceStore
-                          //     .onCardAdded(_balanceStore.selectedCard!.address);
+                          await _balanceStore.updateIndicatorIndex(
+                            _balanceStore.cardCurrentIndex,
+                          );
                           if (widget.receivedData == null) {
                             final card =
                                 await getCardData(_btcAddressController.text);

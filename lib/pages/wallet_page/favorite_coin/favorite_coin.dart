@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
@@ -151,123 +150,110 @@ class FavoriteCoin extends HookWidget {
                       : Builder(
                           builder: (context) {
                             final formattedPrice = myFormat.format(data.price);
-                            return ScaleTap(
-                              scaleMinValue: 0.98,
-                              enableFeedback: false,
-                              onPressed: () async {
-                                await allSettingsState.updateIndex(1);
-                                pageController.jumpToPage(
-                                  1,
-                                );
-                              },
-                              child: Container(
-                                decoration: const BoxDecoration(),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      height: 25,
-                                      width: 25,
-                                      child: CachedNetworkImage(
-                                        imageUrl: data.icon,
-                                      ),
+                            return Container(
+                              decoration: const BoxDecoration(),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    height: 25,
+                                    width: 25,
+                                    child: CachedNetworkImage(
+                                      imageUrl: data.icon,
                                     ),
-                                    const Gap(8),
-                                    Text(
-                                      data.name,
-                                      style: const TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      ),
+                                  ),
+                                  const Gap(8),
+                                  Text(
+                                    data.name,
+                                    style: const TextStyle(
+                                      fontFamily: FontFamily.redHatMedium,
+                                      color: Colors.black,
+                                      fontSize: 16,
                                     ),
-                                    const Gap(8),
-                                    Column(
-                                      children: [
-                                        const Gap(3),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                            color: Colors.grey.withOpacity(0.1),
+                                  ),
+                                  const Gap(8),
+                                  Column(
+                                    children: [
+                                      const Gap(3),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                          color: Colors.grey.withOpacity(0.1),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 4,
+                                          vertical: 2,
+                                        ),
+                                        child: Text(
+                                          data.symbol.toUpperCase(),
+                                          style: const TextStyle(
+                                            fontFamily: FontFamily.redHatMedium,
+                                            fontSize: 10,
+                                            color: AppColors.textHintsColor,
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 4,
-                                            vertical: 2,
-                                          ),
-                                          child: Text(
-                                            data.symbol.toUpperCase(),
-                                            style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
-                                              fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '\$ ${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: FontFamily.redHatMedium,
+                                          color: AppColors.primaryTextColor,
+                                        ),
+                                      ),
+                                      const Gap(4),
+                                      Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: Row(
+                                          children: [
+                                            Assets.icons.schedule.image(
+                                              height: 18,
                                               color: AppColors.textHintsColor,
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          '\$ ${formattedPrice.substring(0, min(formattedPrice.length, 9))}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: FontFamily.redHatMedium,
-                                            color: AppColors.primaryTextColor,
-                                          ),
-                                        ),
-                                        const Gap(4),
-                                        Padding(
-                                          padding: const EdgeInsets.all(3),
-                                          child: Row(
-                                            children: [
-                                              Assets.icons.schedule.image(
-                                                height: 18,
+                                            const Gap(4),
+                                            const Text(
+                                              '24h',
+                                              style: TextStyle(
+                                                fontSize: 10,
                                                 color: AppColors.textHintsColor,
+                                                fontFamily:
+                                                    FontFamily.redHatBold,
                                               ),
-                                              const Gap(4),
-                                              const Text(
-                                                '24h',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  color:
-                                                      AppColors.textHintsColor,
-                                                  fontFamily:
-                                                      FontFamily.redHatBold,
-                                                ),
+                                            ),
+                                            if (data.priceChange1d > 0)
+                                              const Icon(
+                                                Icons.arrow_drop_up,
+                                                size: 25,
+                                                color: Colors.green,
+                                              )
+                                            else
+                                              const Icon(
+                                                Icons.arrow_drop_down,
+                                                size: 25,
+                                                color: Colors.red,
                                               ),
-                                              if (data.priceChange1d > 0)
-                                                const Icon(
-                                                  Icons.arrow_drop_up,
-                                                  size: 25,
-                                                  color: Colors.green,
-                                                )
-                                              else
-                                                const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  size: 25,
-                                                  color: Colors.red,
-                                                ),
-                                              Text(
-                                                '${data.priceChange1d.toStringAsFixed(2)} %',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: data.priceChange1d > 0
-                                                      ? Colors.green
-                                                      : Colors.red,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                            Text(
+                                              '${data.priceChange1d.toStringAsFixed(2)} %',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: data.priceChange1d > 0
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             );
                           },

@@ -56,6 +56,10 @@ class ActionSliderForCardDelete extends StatelessWidget {
         await router.maybePop();
         unawaited(balanceStore.removeSelectedCard());
         _historyPageStore.cardHistories[card.address]?.clear();
+        _balanceStore.onCardDeleted(
+          card.address,
+        );
+        await _historyPageStore.setCardHistoryIndex(0);
         final isCardActivated =
             isCardWalletActivated(balanceStore: _balanceStore);
         await recordAmplitudeEventPartTwo(
@@ -64,9 +68,6 @@ class ActionSliderForCardDelete extends StatelessWidget {
             walletType: 'Card',
             activated: await isCardActivated,
           ),
-        );
-        _balanceStore.onCardDeleted(
-          card.address,
         );
         showTopSnackBar(
           displayDuration: const Duration(

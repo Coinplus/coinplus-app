@@ -68,17 +68,17 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
               LoadingButton(
                 style: context.theme
                     .buttonStyle(
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    color: AppColors.primaryTextColor,
-                    fontSize: 15,
-                  ),
-                )
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 15,
+                      ),
+                    )
                     .copyWith(
-                  backgroundColor: WidgetStateProperty.all(
-                    Colors.grey.withOpacity(0.1),
-                  ),
-                ),
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.1),
+                      ),
+                    ),
                 onPressed: () async {
                   await recordAmplitudeEvent(
                     const ConnectOptionSelected(
@@ -125,17 +125,17 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
               LoadingButton(
                 style: context.theme
                     .buttonStyle(
-                  textStyle: const TextStyle(
-                    fontFamily: FontFamily.redHatMedium,
-                    color: AppColors.primaryTextColor,
-                    fontSize: 15,
-                  ),
-                )
+                      textStyle: const TextStyle(
+                        fontFamily: FontFamily.redHatMedium,
+                        color: AppColors.primaryTextColor,
+                        fontSize: 15,
+                      ),
+                    )
                     .copyWith(
-                  backgroundColor: WidgetStateProperty.all(
-                    Colors.grey.withOpacity(0.1),
-                  ),
-                ),
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.grey.withOpacity(0.1),
+                      ),
+                    ),
                 onPressed: () async {
                   await recordAmplitudeEvent(
                     const ConnectOptionSelected(

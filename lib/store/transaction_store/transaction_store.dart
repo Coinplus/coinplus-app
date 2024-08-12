@@ -228,6 +228,7 @@ abstract class _TransactionStore with Store {
     utxoLoading = true;
     var currentAddress = '';
     if (selectedCard != -1 && selectedBar == -1) {
+      log(selectedCardIndex.toString());
       currentAddress = _balanceStore.cards[selectedCardIndex].address;
     } else if (selectedCard == -1 && selectedBar != -1) {
       currentAddress = _balanceStore.bars[selectedBarIndex].address;

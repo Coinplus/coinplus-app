@@ -7,10 +7,12 @@ import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
@@ -38,12 +40,16 @@ class CardList extends StatefulWidget {
     required this.onCarouselScroll,
     required this.tabController,
     required this.state,
+    required this.carouselController,
+    required this.indicatorController,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
   final TabController tabController;
   final SendToState state;
+  final CarouselController carouselController;
+  final PageController indicatorController;
 
   @override
   State<CardList> createState() => _CardListState();
@@ -61,8 +67,6 @@ class _CardListState extends State<CardList>
 
   final _nfcState = NfcStore();
 
-  final carouselController = CarouselController();
-
   @override
   void initState() {
     super.initState();
@@ -77,21 +81,21 @@ class _CardListState extends State<CardList>
         if (index.isNegative) {
           return;
         }
-        carouselController.animateToPage(index);
+        widget.carouselController.animateToPage(index);
       })
       ..setOnCardDeletedCallback((address) {
         final index = _balanceStore.cards
             .indexWhere((element) => element.address == address);
         if (index.isNegative) {
-          carouselController.jumpToPage(0);
+          widget.carouselController.jumpToPage(0);
           return;
         }
-        carouselController.jumpToPage(0);
+        widget.carouselController.jumpToPage(0);
       })
       ..setOnCardActivatedCallback((address) {
         final index = _balanceStore.cards
             .indexWhere((element) => element.address == address);
-        carouselController.jumpToPage(index);
+        widget.carouselController.jumpToPage(index);
       });
     _nfcState.checkNfcSupport();
   }
@@ -143,137 +147,38 @@ class _CardListState extends State<CardList>
                   balanceStore: _balanceStore,
                   nfcState: _nfcState,
                 )
-              : CarouselSlider.builder(
-                  carouselController: carouselController,
-                  itemBuilder: (context, index, constrains) {
-                    if (index == _balanceStore.cards.length) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 25, top: 20),
-                        child: Observer(
-                          builder: (context) {
-                            return ScaleTap(
-                              enableFeedback: false,
-                              onPressed: _balanceStore.cardCurrentIndex ==
-                                      _balanceStore.cards.length
-                                  ? () async {
-                                      await _walletProtectState
-                                          .updateModalStatus(
-                                        isOpened: true,
-                                      );
-                                      await recordAmplitudeEvent(
-                                        const AddNewClicked(tab: 'Card'),
-                                      );
-                                      await showModalBottomSheet(
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20),
-                                          ),
-                                        ),
-                                        context: context,
-                                        builder: (context) {
-                                          return AddNewCardModal(
-                                            nfcState: _nfcState,
-                                          );
-                                        },
-                                      ).then(
-                                        (value) => _walletProtectState
-                                            .updateModalStatus(isOpened: false),
-                                      );
-                                    }
-                                  : null,
-                              child: Assets.images.addCard.image(),
-                            );
-                          },
-                        ),
-                      );
-                    }
-                    final card = _balanceStore.cards[index];
-
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Expanded(
-                              child: Observer(
-                                builder: (context) {
-                                  return AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 600),
-                                    child: _balanceStore.cardCurrentIndex ==
-                                            index
-                                        ? Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                  left: 25,
-                                                ),
-                                                child: Text(
-                                                  card.name,
-                                                  style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              ScaleTap(
-                                                enableFeedback: false,
-                                                onPressed: () async {
-                                                  await recordAmplitudeEvent(
-                                                    WalletSettingsClicked(
-                                                      walletAddress:
-                                                          card.address,
-                                                      walletType: 'Card',
-                                                    ),
-                                                  );
-                                                  await router.push(
-                                                    CardSettingsRoute(
-                                                      card: card,
-                                                    ),
-                                                  );
-                                                },
-                                                child:
-                                                    Assets.icons.settings.image(
-                                                  height: 30,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox(height: 30),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        Observer(
-                          builder: (context) {
-                            return Expanded(
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 30),
-                                  child: ScaleTap(
-                                    enableFeedback: false,
-                                    opacityMinValue: .99,
-                                    scaleMinValue: .99,
-                                    onLongPress: _balanceStore
-                                                .cardCurrentIndex ==
-                                            index
-                                        ? _balanceStore.cards.length > 1
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Observer(
+                        builder: (context) {
+                          return CarouselSlider.builder(
+                            carouselController: widget.carouselController,
+                            itemBuilder: (context, index, constrains) {
+                              if (index == _balanceStore.cards.length) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 25,
+                                    top: 20,
+                                  ),
+                                  child: Observer(
+                                    builder: (context) {
+                                      return ScaleTap(
+                                        enableFeedback: false,
+                                        onPressed: _balanceStore
+                                                    .cardCurrentIndex ==
+                                                _balanceStore.cards.length
                                             ? () async {
                                                 await _walletProtectState
                                                     .updateModalStatus(
                                                   isOpened: true,
                                                 );
-                                                await HapticFeedback
-                                                    .mediumImpact();
+                                                await recordAmplitudeEvent(
+                                                  const AddNewClicked(
+                                                    tab: 'Card',
+                                                  ),
+                                                );
                                                 await showModalBottomSheet(
-                                                  isScrollControlled: true,
-                                                  context: context,
                                                   shape:
                                                       const RoundedRectangleBorder(
                                                     borderRadius:
@@ -284,111 +189,306 @@ class _CardListState extends State<CardList>
                                                           Radius.circular(20),
                                                     ),
                                                   ),
+                                                  context: context,
                                                   builder: (context) {
-                                                    return CardReorderWidget(
-                                                      tabController:
-                                                          widget.tabController,
-                                                      onCardSelected:
-                                                          widget.onCardSelected,
-                                                      onCarouselScroll: widget
-                                                          .onCarouselScroll,
-                                                      index: index,
+                                                    return AddNewCardModal(
+                                                      nfcState: _nfcState,
                                                     );
                                                   },
-                                                );
-                                                await _walletProtectState
-                                                    .updateModalStatus(
-                                                  isOpened: false,
+                                                ).then(
+                                                  (value) => _walletProtectState
+                                                      .updateModalStatus(
+                                                    isOpened: false,
+                                                  ),
                                                 );
                                               }
-                                            : () async {
-                                                Gaimon.error();
-                                              }
-                                        : null,
-                                    child: Container(
-                                      margin: EdgeInsets.all(
-                                        context.height > 667 ? 5 : 0,
+                                            : null,
+                                        child: Assets.images.addCard.image(),
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                              final card = _balanceStore.cards[index];
+
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Flex(
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Expanded(
+                                        child: Observer(
+                                          builder: (context) {
+                                            return AnimatedSwitcher(
+                                              duration: const Duration(
+                                                milliseconds: 600,
+                                              ),
+                                              child: _balanceStore
+                                                          .cardCurrentIndex ==
+                                                      index
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                            left: 25,
+                                                          ),
+                                                          child: Text(
+                                                            card.name,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily: FontFamily
+                                                                  .redHatMedium,
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ScaleTap(
+                                                          enableFeedback: false,
+                                                          onPressed: () async {
+                                                            await recordAmplitudeEvent(
+                                                              WalletSettingsClicked(
+                                                                walletAddress:
+                                                                    card.address,
+                                                                walletType:
+                                                                    'Card',
+                                                              ),
+                                                            );
+                                                            await router.push(
+                                                              CardSettingsRoute(
+                                                                card: card,
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: Assets
+                                                              .icons.settings
+                                                              .image(
+                                                            height: 30,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : const SizedBox(height: 30),
+                                            );
+                                          },
+                                        ),
                                       ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 20,
-                                            spreadRadius: 0.5,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: Image(
-                                              image: card.color.image
-                                                  .image()
-                                                  .image,
-                                              fit: BoxFit.cover,
+                                    ],
+                                  ),
+                                  Observer(
+                                    builder: (context) {
+                                      return Expanded(
+                                        flex: 10,
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 10,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: context.height > 667
-                                                ? context.height * 0.52
-                                                : 450,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  SizedBox(
-                                                    height:
-                                                        context.height * 0.2,
-                                                  ),
-                                                  CardAddressField(
-                                                    index: index,
-                                                  ),
-                                                  const Gap(4),
-                                                  CardBalanceField(
-                                                    index: index,
-                                                  ),
-                                                ],
+                                            child: ScaleTap(
+                                              enableFeedback: false,
+                                              opacityMinValue: .99,
+                                              scaleMinValue: .99,
+                                              onLongPress: _balanceStore
+                                                          .cardCurrentIndex ==
+                                                      index
+                                                  ? _balanceStore.cards.length >
+                                                          1
+                                                      ? () async {
+                                                          await _walletProtectState
+                                                              .updateModalStatus(
+                                                            isOpened: true,
+                                                          );
+                                                          await HapticFeedback
+                                                              .mediumImpact();
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            context: context,
+                                                            shape:
+                                                                const RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                  20,
+                                                                ),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                  20,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            builder: (context) {
+                                                              return CardReorderWidget(
+                                                                tabController:
+                                                                    widget
+                                                                        .tabController,
+                                                                onCardSelected:
+                                                                    widget
+                                                                        .onCardSelected,
+                                                                onCarouselScroll:
+                                                                    widget
+                                                                        .onCarouselScroll,
+                                                                index: index,
+                                                              );
+                                                            },
+                                                          );
+                                                          await _walletProtectState
+                                                              .updateModalStatus(
+                                                            isOpened: false,
+                                                          );
+                                                        }
+                                                      : () async {
+                                                          Gaimon.error();
+                                                        }
+                                                  : null,
+                                              child: Container(
+                                                margin: EdgeInsets.all(
+                                                  context.height > 667 ? 5 : 0,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.2),
+                                                      blurRadius: 20,
+                                                      spreadRadius: 0.5,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: Stack(
+                                                  children: [
+                                                    Center(
+                                                      child: Image(
+                                                        image: card.color.image
+                                                            .image()
+                                                            .image,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height:
+                                                          context.height > 667
+                                                              ? context.height *
+                                                                  0.52
+                                                              : 450,
+                                                      child: Center(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            SizedBox(
+                                                              height: context
+                                                                      .height *
+                                                                  0.2,
+                                                            ),
+                                                            CardAddressField(
+                                                              index: index,
+                                                            ),
+                                                            const Gap(4),
+                                                            CardBalanceField(
+                                                              index: index,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                  options: CarouselOptions(
-                    onPageChanged: (index, reason) async {
-                      widget.onCarouselScroll(index);
-                      widget.onCardSelected(
-                        _balanceStore.cards.elementAtOrNull(index)
-                            as AbstractCard?,
-                      );
-                      await _balanceStore.setCardCurrentIndex(index);
-                      if (index != _balanceStore.cards.length) {
-                        _rampService.configuration.userAddress = _balanceStore
-                            .cards[_balanceStore.cardCurrentIndex].address;
-                        await _historyPageStore.setCardHistoryIndex(index);
-                        await _historyPageStore.setCardActivationIndex(
-                          index: index,
-                        );
-                        widget.state.transactionsStore.onSelectCard(index);
-                      }
-                    },
-                    enlargeFactor: 0.35,
-                    enableInfiniteScroll: false,
-                    viewportFraction: 0.79,
-                    enlargeCenterPage: true,
-                    enlargeStrategy: CenterPageEnlargeStrategy.zoom,
-                  ),
-                  itemCount: _balanceStore.cards.length + 1,
+                                ],
+                              );
+                            },
+                            options: CarouselOptions(
+                              onPageChanged: (index, reason) async {
+                                widget.onCarouselScroll(index);
+                                widget.onCardSelected(
+                                  _balanceStore.cards.elementAtOrNull(index)
+                                      as AbstractCard?,
+                                );
+                                await _balanceStore.setCardCurrentIndex(index);
+                                if (index != _balanceStore.cards.length) {
+                                  _rampService.configuration.userAddress =
+                                      _balanceStore
+                                          .cards[_balanceStore.cardCurrentIndex]
+                                          .address;
+                                  await _historyPageStore
+                                      .setCardHistoryIndex(index);
+                                  await _historyPageStore
+                                      .setCardActivationIndex(
+                                    index: index,
+                                  );
+                                  widget.state.transactionsStore
+                                      .onSelectCard(index);
+                                }
+                                if (index != _balanceStore.cards.length) {
+                                  await _balanceStore
+                                      .updateIndicatorIndex(index);
+                                }
+                              },
+                              enlargeFactor: 0.35,
+                              enableInfiniteScroll: false,
+                              viewportFraction: 0.79,
+                              enlargeCenterPage: true,
+                              enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                            ),
+                            itemCount: _balanceStore.cards.length + 1,
+                          );
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Observer(
+                        builder: (context) {
+                          return _balanceStore.cards.length > 1
+                              ? Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.grey.withOpacity(0.1),
+                                  ),
+                                  child: SmoothPageIndicator(
+                                    controller: PageController(
+                                      initialPage: _balanceStore.indicatorIndex,
+                                    ),
+                                    count: _balanceStore.cards.length,
+                                    effect: ScaleEffect(
+                                      dotWidth: 8,
+                                      spacing: 12,
+                                      dotHeight: 8,
+                                      dotColor: Colors.grey.withOpacity(0.3),
+                                      activeDotColor: AppColors
+                                          .primaryButtonColor
+                                          .withOpacity(0.7),
+                                      strokeWidth: 50,
+                                    ),
+                                    onDotClicked: (index) {
+                                      Gaimon.light();
+                                      widget.carouselController
+                                          .animateToPage(index);
+                                    },
+                                  ),
+                                )
+                              : const SizedBox();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
         );
       },

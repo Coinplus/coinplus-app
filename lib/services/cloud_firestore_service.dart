@@ -142,7 +142,7 @@ Future<void> verificationFailureCount(String documentId) async {
 
 Future<BuyCardModel?> getBuyCardData() async {
   final DocumentSnapshot documentSnapshot =
-  await _firestore.collection('links').doc('buy_card').get();
+      await _firestore.collection('links').doc('buy_card').get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
