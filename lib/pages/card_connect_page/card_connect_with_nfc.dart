@@ -1490,6 +1490,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                   ? LoadingButton(
                       onPressed: () async {
                         if (_allSettingsState.isActive) {
+                          await _balanceStore.updateIndicatorIndex(
+                            _balanceStore.cardCurrentIndex,
+                          );
                           if (widget.isOriginalCard == true) {
                             unawaited(connectedCount(widget.receivedData!));
                             if (widget.cardColor == '0') {
@@ -1555,8 +1558,6 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                           await _historyPageStore.saveAndPatchCardAddress(
                             _balanceStore.selectedCard!.address,
                           );
-                          // _balanceStore
-                          //     .onCardAdded(_balanceStore.selectedCard!.address);
                         } else {
                           await HapticFeedback.vibrate();
                           _allSettingsState.accept();

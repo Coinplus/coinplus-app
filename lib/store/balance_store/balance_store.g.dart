@@ -259,6 +259,38 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$indicatorIndexAtom =
+      Atom(name: '_BalanceStore.indicatorIndex', context: context);
+
+  @override
+  int get indicatorIndex {
+    _$indicatorIndexAtom.reportRead();
+    return super.indicatorIndex;
+  }
+
+  @override
+  set indicatorIndex(int value) {
+    _$indicatorIndexAtom.reportWrite(value, super.indicatorIndex, () {
+      super.indicatorIndex = value;
+    });
+  }
+
+  late final _$isScrollingAtom =
+      Atom(name: '_BalanceStore.isScrolling', context: context);
+
+  @override
+  bool get isScrolling {
+    _$isScrollingAtom.reportRead();
+    return super.isScrolling;
+  }
+
+  @override
+  set isScrolling(bool value) {
+    _$isScrollingAtom.reportWrite(value, super.isScrolling, () {
+      super.isScrolling = value;
+    });
+  }
+
   late final _$getCardsInfoAsyncAction =
       AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
@@ -273,6 +305,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
   @override
   Future<void> getBarsInfo() {
     return _$getBarsInfoAsyncAction.run(() => super.getBarsInfo());
+  }
+
+  late final _$updateIndicatorIndexAsyncAction =
+      AsyncAction('_BalanceStore.updateIndicatorIndex', context: context);
+
+  @override
+  Future<void> updateIndicatorIndex(int index) {
+    return _$updateIndicatorIndexAsyncAction
+        .run(() => super.updateIndicatorIndex(index));
   }
 
   late final _$getSelectedCardAsyncAction =
@@ -341,6 +382,28 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   late final _$_BalanceStoreActionController =
       ActionController(name: '_BalanceStore', context: context);
+
+  @override
+  void startScrolling() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.startScrolling');
+    try {
+      return super.startScrolling();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopScrolling() {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.stopScrolling');
+    try {
+      return super.stopScrolling();
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeBarIndexAndSave(
@@ -486,6 +549,8 @@ barCurrentIndex: ${barCurrentIndex},
 barActivation: ${barActivation},
 cardActivation: ${cardActivation},
 inAppWebViewLoading: ${inAppWebViewLoading},
+indicatorIndex: ${indicatorIndex},
+isScrolling: ${isScrolling},
 allCardsBalances: ${allCardsBalances},
 btcPrice: ${btcPrice},
 singleCoin: ${singleCoin},

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,6 +60,10 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   ScrollController controller = ScrollController();
+
+  final carouselController = CarouselController();
+
+  final PageController indicatorController = PageController();
 
   int cardCarouselIndex = 0;
   int barCarouselIndex = 0;
@@ -289,6 +294,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                               controller: _tabController,
                               children: [
                                 CardList(
+                                  indicatorController: indicatorController,
+                                  carouselController: carouselController,
                                   onCardSelected: (card) => widget.onChangeCard(
                                     (card: card, index: 0),
                                   ),
@@ -309,7 +316,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          // Current price(btc)
                           if (context.height > 667)
                             FavoriteCoin(
                               pageController: widget.pageController,
@@ -318,7 +324,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                           else
                             const SizedBox(),
                           const Spacer(),
-                          const Gap(30),
+                          const Gap(20),
                         ],
                       ),
                     ),

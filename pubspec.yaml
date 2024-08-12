@@ -92,7 +92,7 @@ dependencies:
 
   fl_chart: ^0.68.0
   flutter_inappwebview: ^6.0.0
-
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.

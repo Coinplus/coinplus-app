@@ -592,7 +592,7 @@ class OnboardingPage extends HookWidget {
                       overlayColor: WidgetStateProperty.all(
                         Colors.grey.withOpacity(0.1),
                       ),
-                  splashFactory: NoSplash.splashFactory,
+                      splashFactory: NoSplash.splashFactory,
                     ),
                 child: const Text('Don’t have a card?'),
               ).paddingHorizontal(64),

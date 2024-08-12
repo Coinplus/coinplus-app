@@ -138,7 +138,8 @@ class CardEmptyState extends StatelessWidget {
                                     } else {
                                       return Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                           color: const Color(0xFFFD7E70),
                                         ),
                                         child: Padding(
@@ -149,7 +150,8 @@ class CardEmptyState extends StatelessWidget {
                                           child: Text(
                                             snapshot.data!.price.toString(),
                                             style: const TextStyle(
-                                              fontFamily: FontFamily.redHatMedium,
+                                              fontFamily:
+                                                  FontFamily.redHatMedium,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -166,7 +168,7 @@ class CardEmptyState extends StatelessWidget {
                         const Gap(8),
                         LoadingButton(
                           onPressed: () {
-                           router.push(const BuyCardRoute());
+                            router.push(const BuyCardRoute());
                           },
                           style: context.theme
                               .buttonStyle(
@@ -197,31 +199,33 @@ class CardEmptyState extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 25, top: 20),
           child: ScaleTap(
             enableFeedback: false,
-            onPressed: index == 1 ? () async {
-              await walletProtectState.updateModalStatus(
-                isOpened: true,
-              );
-              await recordAmplitudeEvent(
-                const AddNewClicked(tab: 'Card'),
-              );
-              await showModalBottomSheet(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                context: context,
-                builder: (context) {
-                  return AddNewCardModal(
-                    nfcState: nfcState,
-                  );
-                },
-              ).then(
-                (value) =>
-                    walletProtectState.updateModalStatus(isOpened: false),
-              );
-            } : null,
+            onPressed: index == 1
+                ? () async {
+                    await walletProtectState.updateModalStatus(
+                      isOpened: true,
+                    );
+                    await recordAmplitudeEvent(
+                      const AddNewClicked(tab: 'Card'),
+                    );
+                    await showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      context: context,
+                      builder: (context) {
+                        return AddNewCardModal(
+                          nfcState: nfcState,
+                        );
+                      },
+                    ).then(
+                      (value) =>
+                          walletProtectState.updateModalStatus(isOpened: false),
+                    );
+                  }
+                : null,
             child: Assets.images.addCard.image(),
           ),
         );
