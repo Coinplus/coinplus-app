@@ -1591,7 +1591,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                           },
                         );
                         if (_allSettingsState.isActive) {
-                          await _balanceStore.updateIndicatorIndex(
+                          await _balanceStore.updateCardIndicatorIndex(
                             _balanceStore.cardCurrentIndex,
                           );
                           if (widget.receivedData == null) {

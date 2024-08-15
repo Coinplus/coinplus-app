@@ -259,35 +259,36 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$indicatorIndexAtom =
-      Atom(name: '_BalanceStore.indicatorIndex', context: context);
+  late final _$cardIndicatorIndexAtom =
+      Atom(name: '_BalanceStore.cardIndicatorIndex', context: context);
 
   @override
-  int get indicatorIndex {
-    _$indicatorIndexAtom.reportRead();
-    return super.indicatorIndex;
+  int get cardIndicatorIndex {
+    _$cardIndicatorIndexAtom.reportRead();
+    return super.cardIndicatorIndex;
   }
 
   @override
-  set indicatorIndex(int value) {
-    _$indicatorIndexAtom.reportWrite(value, super.indicatorIndex, () {
-      super.indicatorIndex = value;
+  set cardIndicatorIndex(int value) {
+    _$cardIndicatorIndexAtom.reportWrite(value, super.cardIndicatorIndex, () {
+      super.cardIndicatorIndex = value;
     });
   }
 
-  late final _$isScrollingAtom =
-      Atom(name: '_BalanceStore.isScrolling', context: context);
+  late final _$isCardIndicatorTappedAtom =
+      Atom(name: '_BalanceStore.isCardIndicatorTapped', context: context);
 
   @override
-  bool get isScrolling {
-    _$isScrollingAtom.reportRead();
-    return super.isScrolling;
+  bool get isCardIndicatorTapped {
+    _$isCardIndicatorTappedAtom.reportRead();
+    return super.isCardIndicatorTapped;
   }
 
   @override
-  set isScrolling(bool value) {
-    _$isScrollingAtom.reportWrite(value, super.isScrolling, () {
-      super.isScrolling = value;
+  set isCardIndicatorTapped(bool value) {
+    _$isCardIndicatorTappedAtom.reportWrite(value, super.isCardIndicatorTapped,
+        () {
+      super.isCardIndicatorTapped = value;
     });
   }
 
@@ -307,13 +308,22 @@ mixin _$BalanceStore on _BalanceStore, Store {
     return _$getBarsInfoAsyncAction.run(() => super.getBarsInfo());
   }
 
-  late final _$updateIndicatorIndexAsyncAction =
-      AsyncAction('_BalanceStore.updateIndicatorIndex', context: context);
+  late final _$updateCardIndicatorIndexAsyncAction =
+      AsyncAction('_BalanceStore.updateCardIndicatorIndex', context: context);
 
   @override
-  Future<void> updateIndicatorIndex(int index) {
-    return _$updateIndicatorIndexAsyncAction
-        .run(() => super.updateIndicatorIndex(index));
+  Future<void> updateCardIndicatorIndex(int index) {
+    return _$updateCardIndicatorIndexAsyncAction
+        .run(() => super.updateCardIndicatorIndex(index));
+  }
+
+  late final _$cardIndicatorTapStatusAsyncAction =
+      AsyncAction('_BalanceStore.cardIndicatorTapStatus', context: context);
+
+  @override
+  Future<void> cardIndicatorTapStatus({required bool status}) {
+    return _$cardIndicatorTapStatusAsyncAction
+        .run(() => super.cardIndicatorTapStatus(status: status));
   }
 
   late final _$getSelectedCardAsyncAction =
@@ -382,28 +392,6 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   late final _$_BalanceStoreActionController =
       ActionController(name: '_BalanceStore', context: context);
-
-  @override
-  void startScrolling() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.startScrolling');
-    try {
-      return super.startScrolling();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void stopScrolling() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.stopScrolling');
-    try {
-      return super.stopScrolling();
-    } finally {
-      _$_BalanceStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void changeBarIndexAndSave(
@@ -549,8 +537,8 @@ barCurrentIndex: ${barCurrentIndex},
 barActivation: ${barActivation},
 cardActivation: ${cardActivation},
 inAppWebViewLoading: ${inAppWebViewLoading},
-indicatorIndex: ${indicatorIndex},
-isScrolling: ${isScrolling},
+cardIndicatorIndex: ${cardIndicatorIndex},
+isCardIndicatorTapped: ${isCardIndicatorTapped},
 allCardsBalances: ${allCardsBalances},
 btcPrice: ${btcPrice},
 singleCoin: ${singleCoin},
