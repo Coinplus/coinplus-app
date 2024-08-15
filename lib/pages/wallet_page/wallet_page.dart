@@ -61,7 +61,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
 
   ScrollController controller = ScrollController();
 
-  final carouselController = CarouselController();
+  final carouselController = CarouselSliderController();
 
   final PageController indicatorController = PageController();
 

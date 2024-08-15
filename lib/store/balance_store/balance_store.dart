@@ -53,7 +53,9 @@ abstract class _BalanceStore with Store {
   @observable
   bool inAppWebViewLoading = false;
   @observable
-  int indicatorIndex = 0;
+  int cardIndicatorIndex = 0;
+  @observable
+  bool isCardIndicatorTapped = false;
 
   Future<void> signIn() async {
     final prefs = await SharedPreferences.getInstance();
@@ -198,21 +200,13 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<void> updateIndicatorIndex(int index) async {
-    indicatorIndex = index;
-  }
-
-  @observable
-  bool isScrolling = false;
-
-  @action
-  void startScrolling() {
-    isScrolling = true;
+  Future<void> updateCardIndicatorIndex(int index) async {
+    cardIndicatorIndex = index;
   }
 
   @action
-  void stopScrolling() {
-    isScrolling = false;
+  Future<void> cardIndicatorTapStatus({required bool status}) async {
+    isCardIndicatorTapped = status;
   }
 
   @action

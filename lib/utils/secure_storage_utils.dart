@@ -89,7 +89,6 @@ Future<bool> checkWalletStatus(String address) async {
 
 Future<void> localStorage() async {
   final prefs = await SharedPreferences.getInstance();
-  const secureStorage = FlutterSecureStorage();
   final packageInfo = await PackageInfo.fromPlatform();
   if (prefs.getBool('first_run') ?? true) {
     await prefs.setBool('show_modal', true);

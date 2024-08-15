@@ -1490,7 +1490,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                   ? LoadingButton(
                       onPressed: () async {
                         if (_allSettingsState.isActive) {
-                          await _balanceStore.updateIndicatorIndex(
+                          await _balanceStore.updateCardIndicatorIndex(
                             _balanceStore.cardCurrentIndex,
                           );
                           if (widget.isOriginalCard == true) {

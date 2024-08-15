@@ -64,7 +64,7 @@ class _BarListState extends State<BarList>
 
   final _nfcStore = NfcStore();
 
-  final carouselController = CarouselController();
+  final carouselController = CarouselSliderController();
 
   @override
   void initState() {

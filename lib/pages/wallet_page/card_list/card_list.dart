@@ -6,8 +6,8 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:ios_smooth_page_indicator/ios_smooth_page_indicator.dart';
 import 'package:mobx/mobx.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../constants/card_color.dart';
 import '../../../extensions/extensions.dart';
@@ -48,7 +48,7 @@ class CardList extends StatefulWidget {
   final ValueChanged<int> onCarouselScroll;
   final TabController tabController;
   final SendToState state;
-  final CarouselController carouselController;
+  final CarouselSliderController carouselController;
   final PageController indicatorController;
 
   @override
@@ -435,10 +435,8 @@ class _CardListState extends State<CardList>
                                   widget.state.transactionsStore
                                       .onSelectCard(index);
                                 }
-                                if (index != _balanceStore.cards.length) {
-                                  await _balanceStore
-                                      .updateIndicatorIndex(index);
-                                }
+                                await _balanceStore
+                                    .updateCardIndicatorIndex(index);
                               },
                               enlargeFactor: 0.35,
                               enableInfiniteScroll: false,
@@ -455,34 +453,21 @@ class _CardListState extends State<CardList>
                       alignment: Alignment.bottomCenter,
                       child: Observer(
                         builder: (context) {
-                          return _balanceStore.cards.length > 1
-                              ? Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.grey.withOpacity(0.1),
-                                  ),
-                                  child: SmoothPageIndicator(
-                                    controller: PageController(
-                                      initialPage: _balanceStore.indicatorIndex,
-                                    ),
-                                    count: _balanceStore.cards.length,
-                                    effect: ScaleEffect(
-                                      dotWidth: 8,
-                                      spacing: 12,
-                                      dotHeight: 8,
-                                      dotColor: Colors.grey.withOpacity(0.3),
-                                      activeDotColor: AppColors
-                                          .primaryButtonColor
-                                          .withOpacity(0.7),
-                                      strokeWidth: 50,
-                                    ),
-                                    onDotClicked: (index) {
-                                      Gaimon.light();
-                                      widget.carouselController
-                                          .animateToPage(index);
-                                    },
-                                  ),
+                          return _balanceStore.cards.isNotEmpty
+                              ? IosSmoothPageIndicator(
+                                  dotIndex: _balanceStore.cardIndicatorIndex,
+                                  dotsCount: _balanceStore.cards.length + 1,
+                                  carouselController: widget.carouselController,
+                                  dotBackgroundColor:
+                                      Colors.grey.withOpacity(0.1),
+                                  dotColor: Colors.grey.withOpacity(0.3),
+                                  activeDotColor: AppColors.primaryButtonColor
+                                      .withOpacity(0.7),
+                                  onDotTapped: (index) {
+                                    Gaimon.light();
+                                    widget.carouselController
+                                        .animateToPage(index);
+                                  },
                                 )
                               : const SizedBox();
                         },
