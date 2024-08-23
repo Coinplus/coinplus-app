@@ -451,26 +451,19 @@ class _CardListState extends State<CardList>
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Observer(
-                        builder: (context) {
-                          return _balanceStore.cards.isNotEmpty
-                              ? IosSmoothPageIndicator(
-                                  dotIndex: _balanceStore.cardIndicatorIndex,
-                                  dotsCount: _balanceStore.cards.length + 1,
-                                  carouselController: widget.carouselController,
-                                  dotBackgroundColor:
-                                      Colors.grey.withOpacity(0.1),
-                                  dotColor: Colors.grey.withOpacity(0.3),
-                                  activeDotColor: AppColors.primaryButtonColor
-                                      .withOpacity(0.7),
-                                  onDotTapped: (index) {
-                                    Gaimon.light();
-                                    widget.carouselController
-                                        .animateToPage(index);
-                                  },
-                                )
-                              : const SizedBox();
-                        },
+                      child: AbsorbPointer(
+                        absorbing: false,
+                        child: IosSmoothPageIndicator(
+                          dotIndex: _balanceStore.cardIndicatorIndex,
+                          dotsCount: _balanceStore.cards.length + 1,
+                          dotBackgroundColor: Colors.grey.withOpacity(0.1),
+                          carouselController: widget.carouselController,
+                          dotColor: Colors.grey.withOpacity(0.3),
+                          onPageChanged: _balanceStore.updateCardIndicatorIndex,
+                          activeDotColor:
+                              AppColors.primaryButtonColor.withOpacity(0.7),
+                          onDotTapped: (_) {},
+                        ),
                       ),
                     ),
                   ],

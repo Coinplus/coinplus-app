@@ -57,14 +57,14 @@ dependencies:
   text_link: ^1.0.0
   shake_animation_widget: ^3.0.4
   flutter_branch_sdk: ^6.9.0
-  share_plus: ^7.2.1
+  share_plus: ^10.0.0
   qr_flutter: ^4.1.0
   bs58: ^1.0.2
   hashlib: ^1.12.0
   amplitude_flutter: ^3.16.2
   pin_code_fields: ^8.0.1
   firebase_auth: ^5.1.0
-  firebase_core: ^3.1.0
+  firebase_core: ^3.3.0
   firebase_messaging: ^15.0.1
   firebase_remote_config: ^5.0.2
   flutter_local_notifications: ^17.1.2
@@ -76,7 +76,7 @@ dependencies:
   nxp_originality_verifier: ^0.0.6
   gaimon: ^1.3.1
   connectivity_plus: ^5.0.2
-  package_info_plus: ^6.0.0
+  package_info_plus: ^8.0.2
   cloud_firestore: ^5.0.1
   ramp_flutter: ^3.0.0
   action_slider: ^0.7.0
@@ -89,10 +89,9 @@ dependencies:
     git:
       url: https://github.com/Coinplus/coinplus_bitcoin_flutter.git
   btc_address_validate_swan: ^1.2.1
-
   fl_chart: ^0.68.0
   flutter_inappwebview: ^6.0.0
-  ios_smooth_page_indicator: ^1.0.5+1
+  ios_smooth_page_indicator: 1.1.4
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.
@@ -133,7 +132,7 @@ flutter_gen:
     # Optional
     outputs:
       # Optional
-      # Set to true if you want this package to be a package dependency
+      # Set to true if you want this package to be a package dependency50
       # See: https://flutter.dev/docs/development/ui/assets-and-images#from-packages
       package_parameter_enabled: false
       # Optional
