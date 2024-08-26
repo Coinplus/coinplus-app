@@ -12,6 +12,8 @@ import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../services/amplitude_service.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 
 Future<void> secretsSuccessAlert({
@@ -55,6 +57,9 @@ Future<void> secretsSuccessAlert({
           allSettingsState: allSettingsState,
           isBarList: isBarList,
           state: state,
+        );
+        await recordAmplitudeEventPartTwo(
+          ActivationNextClicked(address: card!.address),
         );
         if (isBarList) {
           balanceStore.reActivateBar();

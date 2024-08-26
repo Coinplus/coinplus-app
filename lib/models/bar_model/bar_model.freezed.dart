@@ -33,8 +33,12 @@ mixin _$BarModel {
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
 
+  /// Serializes this BarModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BarModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BarModelCopyWith<BarModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -66,6 +70,8 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BarModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,6 +154,8 @@ class __$$BarModelImplCopyWithImpl<$Res>
       _$BarModelImpl _value, $Res Function(_$BarModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BarModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -271,12 +279,14 @@ class _$BarModelImpl implements _BarModel {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, finalBalance,
       totalReceived, color, type, label, name, blockchain, createdAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BarModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>
@@ -327,8 +337,11 @@ abstract class _BarModel implements BarModel, AbstractCard {
   @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;
+
+  /// Create a copy of BarModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -27,8 +27,12 @@ mixin _$MarketCapDto {
   double get volumeChange => throw _privateConstructorUsedError;
   double get btcDominanceChange => throw _privateConstructorUsedError;
 
+  /// Serializes this MarketCapDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of MarketCapDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MarketCapDtoCopyWith<MarketCapDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +62,8 @@ class _$MarketCapDtoCopyWithImpl<$Res, $Val extends MarketCapDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of MarketCapDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -122,6 +128,8 @@ class __$$MarketCapDtoImplCopyWithImpl<$Res>
       _$MarketCapDtoImpl _value, $Res Function(_$MarketCapDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of MarketCapDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -224,12 +232,14 @@ class _$MarketCapDtoImpl with DiagnosticableTreeMixin implements _MarketCapDto {
                 other.btcDominanceChange == btcDominanceChange));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, marketCap, volume, btcDominance,
       marketCapChange, volumeChange, btcDominanceChange);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of MarketCapDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MarketCapDtoImplCopyWith<_$MarketCapDtoImpl> get copyWith =>
@@ -267,8 +277,11 @@ abstract class _MarketCapDto implements MarketCapDto {
   double get volumeChange;
   @override
   double get btcDominanceChange;
+
+  /// Create a copy of MarketCapDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MarketCapDtoImplCopyWith<_$MarketCapDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

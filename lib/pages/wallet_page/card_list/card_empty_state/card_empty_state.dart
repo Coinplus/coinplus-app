@@ -41,7 +41,7 @@ class CardEmptyState extends StatelessWidget {
             enableFeedback: false,
             scaleMinValue: 0.98,
             onPressed: () {
-              router.push(const BuyCardRoute());
+              router.push(BuyCardRoute(method: getBuyCardData()));
             },
             child: Container(
               height: context.height * 0.5,
@@ -168,7 +168,10 @@ class CardEmptyState extends StatelessWidget {
                         const Gap(8),
                         LoadingButton(
                           onPressed: () {
-                            router.push(const BuyCardRoute());
+                            recordAmplitudeEvent(
+                              const BuyNewCardClicked(source: 'Wallet'),
+                            );
+                            router.push(BuyCardRoute(method: getBuyCardData()));
                           },
                           style: context.theme
                               .buttonStyle(

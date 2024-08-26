@@ -23,8 +23,12 @@ mixin _$CoinModel {
   List<CoinResultModel> get result => throw _privateConstructorUsedError;
   Meta get meta => throw _privateConstructorUsedError;
 
+  /// Serializes this CoinModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CoinModelCopyWith<CoinModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -67,6 +73,8 @@ class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel>
     ) as $Val);
   }
 
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $MetaCopyWith<$Res> get meta {
@@ -98,6 +106,8 @@ class __$$CoinModelImplCopyWithImpl<$Res>
       _$CoinModelImpl _value, $Res Function(_$CoinModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,12 +171,14 @@ class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
             (identical(other.meta, meta) || other.meta == meta));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_result), meta);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith =>
@@ -192,8 +204,11 @@ abstract class _CoinModel implements CoinModel {
   List<CoinResultModel> get result;
   @override
   Meta get meta;
+
+  /// Create a copy of CoinModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -223,8 +238,12 @@ mixin _$CoinResultModel {
   @JsonKey(name: 'totalSupply', defaultValue: 0)
   num get totalSupply => throw _privateConstructorUsedError;
 
+  /// Serializes this CoinResultModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoinResultModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CoinResultModelCopyWith<CoinResultModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -259,6 +278,8 @@ class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CoinResultModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -353,6 +374,8 @@ class __$$CoinResultModelImplCopyWithImpl<$Res>
       _$CoinResultModelImpl _value, $Res Function(_$CoinResultModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoinResultModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -516,12 +539,14 @@ class _$CoinResultModelImpl
                 other.totalSupply == totalSupply));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price,
       priceChange1d, marketCap, rank, volume, availableSupply, totalSupply);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoinResultModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
@@ -585,8 +610,11 @@ abstract class _CoinResultModel implements CoinResultModel {
   @override
   @JsonKey(name: 'totalSupply', defaultValue: 0)
   num get totalSupply;
+
+  /// Create a copy of CoinResultModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -604,8 +632,12 @@ mixin _$Meta {
   bool get hasPreviousPage => throw _privateConstructorUsedError;
   bool get hasNextPage => throw _privateConstructorUsedError;
 
+  /// Serializes this Meta to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Meta
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MetaCopyWith<Meta> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -633,6 +665,8 @@ class _$MetaCopyWithImpl<$Res, $Val extends Meta>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Meta
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -695,6 +729,8 @@ class __$$MetaImplCopyWithImpl<$Res>
   __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Meta
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -796,12 +832,14 @@ class _$MetaImpl with DiagnosticableTreeMixin implements _Meta {
                 other.hasNextPage == hasNextPage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, page, limit, itemCount,
       pageCount, hasPreviousPage, hasNextPage);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Meta
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
@@ -838,8 +876,11 @@ abstract class _Meta implements Meta {
   bool get hasPreviousPage;
   @override
   bool get hasNextPage;
+
+  /// Create a copy of Meta
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

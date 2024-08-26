@@ -54,7 +54,7 @@ Future<void> barActivationDialog({
       secondaryActionText: 'Got it',
       primaryAction: Platform.isIOS
           ? () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
               );
@@ -164,7 +164,7 @@ Future<void> barActivationDialog({
               );
             }
           : () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
               );

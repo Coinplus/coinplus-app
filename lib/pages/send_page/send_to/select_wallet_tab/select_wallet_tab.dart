@@ -10,8 +10,11 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../http/repositories/mempool_repo.dart';
+import '../../../../models/amplitude_event/amplitude_event.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../../providers/screen_service.dart';
 import '../../../../router.gr.dart';
+import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../utils/secure_storage_utils.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
@@ -132,6 +135,12 @@ class ProvideAddressTab extends HookWidget {
                           padding: const EdgeInsets.all(9),
                           child: ScaleTap(
                             onPressed: () async {
+                              await recordAmplitudeEvent(
+                                QrButtonClicked(
+                                  walletType: isBarList ? 'bar' : 'card',
+                                  source: 'send',
+                                ),
+                              );
                               sendFocusNode.unfocus();
                               await Future.delayed(
                                 const Duration(milliseconds: 500),
@@ -181,6 +190,11 @@ class ProvideAddressTab extends HookWidget {
                           ..onAddressChanges(value)
                           ..setOutputAddress(value)
                           ..handleNextButtonStatus();
+                        if (value.length > 28) {
+                          recordAmplitudeEventPartTwo(
+                            SendToAddressFilled(address: value),
+                          );
+                        }
                       },
                       textAlignVertical: TextAlignVertical.center,
                       textInputAction: TextInputAction.done,
@@ -236,6 +250,12 @@ class ProvideAddressTab extends HookWidget {
                   ? () async {
                       await mempoolRepo.getFees();
                       await state.transactionsStore.getUtxosData();
+                      await recordAmplitudeEventPartTwo(
+                        SendNextClicked(
+                          sendToAddress: state.outputAddress,
+                          sendFromAddress: state.selectedCardAddress!,
+                        ),
+                      );
                       if (state.transactionsStore.cards.length == 1 &&
                           state.transactionsStore.bars.isEmpty) {
                         if (await isCardActivated) {

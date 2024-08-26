@@ -586,14 +586,27 @@ Map<String, dynamic> _$$GotItSendClickedImplToJson(
       'runtimeType': instance.$type,
     };
 
-_$SendAnywayClickedImpl _$$SendAnywayClickedImplFromJson(Map json) =>
-    _$SendAnywayClickedImpl(
-      eventType: json['eventType'] as String? ?? 'SEND_ANYWAY_CLICKED',
+_$IneedToSendNowImpl _$$IneedToSendNowImplFromJson(Map json) =>
+    _$IneedToSendNowImpl(
+      eventType: json['eventType'] as String? ?? 'I_NEED_TO_SEND_NOW',
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$SendAnywayClickedImplToJson(
-        _$SendAnywayClickedImpl instance) =>
+Map<String, dynamic> _$$IneedToSendNowImplToJson(
+        _$IneedToSendNowImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$IneedToSendGotItImpl _$$IneedToSendGotItImplFromJson(Map json) =>
+    _$IneedToSendGotItImpl(
+      eventType: json['eventType'] as String? ?? 'I_NEED_TO_SEND_GOT_IT',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$IneedToSendGotItImplToJson(
+        _$IneedToSendGotItImpl instance) =>
     <String, dynamic>{
       'eventType': instance.eventType,
       'runtimeType': instance.$type,

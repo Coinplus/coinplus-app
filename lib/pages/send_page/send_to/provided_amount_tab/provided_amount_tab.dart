@@ -8,6 +8,8 @@ import '../../../../extensions/extensions.dart';
 import '../../../../extensions/num_extension.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../../services/amplitude_service.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
 import 'amount_input_field/amount_input_field.dart';
@@ -360,6 +362,20 @@ class ProvideAmountTab extends HookWidget {
                                                     await state
                                                         .transactionsStore
                                                         .findOptimalUtxo();
+                                                    await recordAmplitudeEventPartTwo(
+                                                      AmountNextClicked(
+                                                        sendToAddress:
+                                                            state.outputAddress,
+                                                        sendFromAddress: state
+                                                            .selectedCardAddress!,
+                                                        amount:
+                                                            '${state.amount.toStringAsFixed(3)} \$',
+                                                        balance:
+                                                            '${state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice).toStringAsFixed(3)} \$',
+                                                        fee:
+                                                            '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))}',
+                                                      ),
+                                                    );
                                                   }
                                                 : null
                                             : null

@@ -16,6 +16,7 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
@@ -462,7 +463,11 @@ class _CardListState extends State<CardList>
                           onPageChanged: _balanceStore.updateCardIndicatorIndex,
                           activeDotColor:
                               AppColors.primaryButtonColor.withOpacity(0.7),
-                          onDotTapped: (_) {},
+                          onDotTapped: (_) {
+                            recordAmplitudeEventPartTwo(
+                              const PageIndicatorClicked(),
+                            );
+                          },
                         ),
                       ),
                     ),

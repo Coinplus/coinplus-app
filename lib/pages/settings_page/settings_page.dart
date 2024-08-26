@@ -60,6 +60,7 @@ class SettingsPage extends HookWidget {
       final messaging = FirebaseMessaging.instance;
       final settings = await messaging.requestPermission();
       final token = await secureStorage.read(key: 'fcm_token');
+      log(token.toString());
 
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         isAuthorised.value = true;

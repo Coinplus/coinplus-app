@@ -2,15 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gaimon/gaimon.dart';
 
+import '../../../../../../extensions/extensions.dart';
 import '../../../../../../extensions/num_extension.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../../gen/fonts.gen.dart';
+import '../../../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../../../../services/amplitude_service.dart';
 import '../../../send_to_state.dart';
 import 'comma_formatter.dart';
 
-class UsdAmountTextField extends StatelessWidget {
+class UsdAmountTextField extends HookWidget {
   const UsdAmountTextField({
     super.key,
     required this.usdFocusNode,
@@ -22,6 +26,10 @@ class UsdAmountTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = useMemoized(
+      () => NumberFormat.decimalPattern(context.locale.toString()),
+      [context.locale],
+    );
     return Expanded(
       child: Center(
         child: IntrinsicWidth(
@@ -91,6 +99,15 @@ class UsdAmountTextField extends StatelessWidget {
                           }
                           state.setAmount(value);
                           state.transactionsStore.findOptimalUtxo();
+                          recordAmplitudeEventPartTwo(
+                            AmountEntered(
+                              amount: '$value\$',
+                              balance:
+                                  '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
+                              fee:
+                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                            ),
+                          );
 
                           previousTextLength = value.length;
                         },

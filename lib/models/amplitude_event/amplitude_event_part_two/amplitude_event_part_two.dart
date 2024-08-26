@@ -19,17 +19,17 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String walletType,
   }) = EditSecretsClicked;
 
-  const factory AmplitudeEventPartTwo.validationSuccessful({
-    @Default('VALIDATION_SUCCESSFUL') String eventType,
+  const factory AmplitudeEventPartTwo.walletActivated({
+    @Default('WALLET_ACTIVATED') String eventType,
     required String walletAddress,
     required String walletType,
-  }) = ValidationSuccessful;
+  }) = WalletActivated;
 
-  const factory AmplitudeEventPartTwo.validationFailed({
-    @Default('VALIDATION_FAILED') String eventType,
+  const factory AmplitudeEventPartTwo.walletActivationFailed({
+    @Default('WALLET_ACTIVATION_FAILED') String eventType,
     required String walletAddress,
     required String walletType,
-  }) = ValidationFailed;
+  }) = WalletActivationFailed;
 
   const factory AmplitudeEventPartTwo.guideMeClicked({
     @Default('GUIDE_ME_CLICKED') String eventType,
@@ -183,12 +183,12 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required bool activated,
   }) = NfcNotWorkingCLicked;
 
-  const factory AmplitudeEventPartTwo.dontHaveCardClicked({
-    @Default('DONT_HAVE_CARD_CLICKED') String eventType,
+  const factory AmplitudeEventPartTwo.dontHaveCardWithMeNowClicked({
+    @Default('DONT_HAVE_CARD_WITH_ME_NOW_CLICKED') String eventType,
     required String walletAddress,
     required String walletType,
     required bool activated,
-  }) = DontHaveCardClicked;
+  }) = DontHaveCardWithMeNowClicked;
 
   const factory AmplitudeEventPartTwo.lostCardClicked({
     @Default('LOST_CARD_CLICKED') String eventType,
@@ -306,13 +306,79 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String address,
   }) = RefreshClicked;
 
-  const factory AmplitudeEventPartTwo.buyBitcoinSown({
+  const factory AmplitudeEventPartTwo.buyBitcoinShown({
     @Default('BUY_BITCOIN_SHOWN') String eventType,
   }) = BuyBitcoinShown;
 
   const factory AmplitudeEventPartTwo.buyBitcoinNowClicked({
     @Default('BUY_BITCOIN_NOW_CLICKED') String eventType,
   }) = BuyBitcoinNowClicked;
+
+  const factory AmplitudeEventPartTwo.dontHaveCardClicked({
+    @Default('DONT_HAVE_CARD_CLICKED') String eventType,
+  }) = DontHaveCardClicked;
+
+  const factory AmplitudeEventPartTwo.pageIndicatorClicked({
+    @Default('PAGE_INDICATOR_CLICKED') String eventType,
+  }) = PageIndicatorClicked;
+
+  const factory AmplitudeEventPartTwo.activationNextClicked({
+    @Default('ACTIVATION_NEXT_CLICKED') String eventType,
+    required String address,
+  }) = ActivationNextClicked;
+
+  const factory AmplitudeEventPartTwo.sendToAddressFilled({
+    @Default('SEND_TO_ADDRESS_FILLED') String eventType,
+    required String address,
+  }) = SendToAddressFilled;
+
+  const factory AmplitudeEventPartTwo.sendFromAddressChanged({
+    @Default('SEND_FROM_ADDRESS_CHANGED') String eventType,
+    required String address,
+  }) = SendFromAddressChanged;
+
+  const factory AmplitudeEventPartTwo.sendNextClicked({
+    @Default('SEND_NEXT_CLICKED') String eventType,
+    required String sendToAddress,
+    required String sendFromAddress,
+  }) = SendNextClicked;
+
+  const factory AmplitudeEventPartTwo.amountEntered({
+    @Default('AMOUNT_ENTERED') String eventType,
+    required String amount,
+    required String balance,
+    required String fee,
+  }) = AmountEntered;
+
+  const factory AmplitudeEventPartTwo.sendCurrencyChanged({
+    @Default('SEND_CURRENCY_CHANGED') String eventType,
+    required String currency,
+  }) = SendCurrencyChanged;
+
+  const factory AmplitudeEventPartTwo.useMaxClicked({
+    @Default('USE_MAX_CLICKED') String eventType,
+    required String amount,
+    required String enoughFunds,
+  }) = UseMaxClicked;
+
+  const factory AmplitudeEventPartTwo.amountNextClicked({
+    @Default('AMOUNT_NEXT_CLICKED') String eventType,
+    required String sendToAddress,
+    required String sendFromAddress,
+    required String amount,
+    required String balance,
+    required String fee,
+  }) = AmountNextClicked;
+
+  const factory AmplitudeEventPartTwo.sendClicked({
+    @Default('SEND_CLICKED') String eventType,
+    required String sendToAddress,
+    required String sendFromAddress,
+    required String amount,
+    required String balance,
+    required String fee,
+    required String txHash,
+  }) = SendClicked;
 
   factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) =>
       _$AmplitudeEventPartTwoFromJson(json);

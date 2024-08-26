@@ -12,9 +12,11 @@ import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../../models/bar_model/bar_model.dart';
 import '../../../../models/card_model/card_model.dart';
 import '../../../../providers/screen_service.dart';
+import '../../../../services/amplitude_service.dart';
 import '../../../../utils/data_utils.dart';
 import '../send_to_state.dart';
 
@@ -116,6 +118,11 @@ class ChangeSelectedAddressModal extends HookWidget {
                                                   state.transactionsStore
                                                       .onSelectCard(index);
                                                   await router.maybePop();
+                                                  await recordAmplitudeEventPartTwo(
+                                                    SendFromAddressChanged(
+                                                      address: card.address,
+                                                    ),
+                                                  );
                                                   await state.transactionsStore
                                                       .getUtxosData();
                                                 } else {
@@ -245,6 +252,11 @@ class ChangeSelectedAddressModal extends HookWidget {
                                       state.transactionsStore.selectedBar != -1;
                                   return InkWell(
                                     onTap: () async {
+                                      await recordAmplitudeEventPartTwo(
+                                        SendFromAddressChanged(
+                                          address: bar.address,
+                                        ),
+                                      );
                                       if (barActivationStatus) {
                                         state.transactionsStore.onSelectBar(
                                           index -

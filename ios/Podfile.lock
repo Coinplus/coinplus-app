@@ -961,11 +961,11 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.32)
   - BoringSSL-GRPC/Interface (0.0.32)
   - BranchSDK (2.2.2)
-  - cloud_firestore (5.0.1):
+  - cloud_firestore (5.2.1):
     - Firebase/Firestore (= 10.29.0)
     - firebase_core
     - Flutter
-  - cloud_functions (5.0.1):
+  - cloud_functions (5.0.4):
     - Firebase/Functions (= 10.29.0)
     - firebase_core
     - Flutter
@@ -993,18 +993,18 @@ PODS:
   - Firebase/RemoteConfig (10.29.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 10.29.0)
-  - firebase_auth (5.1.0):
+  - firebase_auth (5.1.4):
     - Firebase/Auth (= 10.29.0)
     - firebase_core
     - Flutter
   - firebase_core (3.3.0):
     - Firebase/CoreOnly (= 10.29.0)
     - Flutter
-  - firebase_messaging (15.0.1):
+  - firebase_messaging (15.0.4):
     - Firebase/Messaging (= 10.29.0)
     - firebase_core
     - Flutter
-  - firebase_remote_config (5.0.2):
+  - firebase_remote_config (5.0.4):
     - Firebase/RemoteConfig (= 10.29.0)
     - firebase_core
     - Flutter
@@ -1458,16 +1458,16 @@ SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   BranchSDK: 324f47ce8568005684cf024a47980bb713f47648
-  cloud_firestore: 9fa1cc49da557636ef1b7db32f38f945e2c93cfd
-  cloud_functions: f09d95ce6419a5158666693730b491e0108ebe82
+  cloud_firestore: 8a2ff2bb050f87d0ca996866625cefbe2395a83b
+  cloud_functions: b499cfa8500e51c7d6d1ced8ee8f4e7d3cdc5827
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   did_change_authlocal: 4c744cc61a03ecfc0a058f4eb12128e0466edbc0
   dio_interceptor_plus: 97c8a418478ab3afefab3ae8aa81f3e892307cb9
   Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
-  firebase_auth: 54f183aa8dabf5f9620753879b1d702731371203
+  firebase_auth: 8dbfcdd635cc4fb2ea213aeee8c9a979b3d3373b
   firebase_core: 57aeb91680e5d5e6df6b888064be7c785f146efb
-  firebase_messaging: 590585234830cc794f4120d7ef10f91be9255a86
-  firebase_remote_config: ceb03e20817d204db79d5ae95ec5918ed1826761
+  firebase_messaging: c862b3d2b973ecc769194dc8de09bd22c77ae757
+  firebase_remote_config: 622c7e72a9349b7db48658ea902d9f2f1f2d7aaa
   FirebaseABTesting: d87f56707159bae64e269757a6e963d490f2eebe
   FirebaseAppCheckInterop: 6a1757cfd4067d8e00fccd14fcc1b8fd78cfac07
   FirebaseAuth: e2ebfaf9fb4638a1c9a3b0efd17d1b90943987cd

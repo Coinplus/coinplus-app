@@ -131,6 +131,8 @@ mixin _$IdentifyModel {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this IdentifyModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
@@ -150,6 +152,9 @@ class _$IdentifyModelCopyWithImpl<$Res, $Val extends IdentifyModel>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -169,6 +174,8 @@ class __$$CardTapImplCopyWithImpl<$Res>
       _$CardTapImpl _value, $Res Function(_$CardTapImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -220,11 +227,13 @@ class _$CardTapImpl with DiagnosticableTreeMixin implements CardTap {
             (identical(other.cardTap, cardTap) || other.cardTap == cardTap));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cardTap);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
@@ -354,7 +363,10 @@ abstract class CardTap implements IdentifyModel {
   factory CardTap.fromJson(Map<String, dynamic> json) = _$CardTapImpl.fromJson;
 
   String get cardTap;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CardTapImplCopyWith<_$CardTapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -376,6 +388,8 @@ class __$$BarTapImplCopyWithImpl<$Res>
       _$BarTapImpl _value, $Res Function(_$BarTapImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -427,11 +441,13 @@ class _$BarTapImpl with DiagnosticableTreeMixin implements BarTap {
             (identical(other.barTap, barTap) || other.barTap == barTap));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, barTap);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
@@ -561,7 +577,10 @@ abstract class BarTap implements IdentifyModel {
   factory BarTap.fromJson(Map<String, dynamic> json) = _$BarTapImpl.fromJson;
 
   String get barTap;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BarTapImplCopyWith<_$BarTapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -583,6 +602,8 @@ class __$$CardManualImplCopyWithImpl<$Res>
       _$CardManualImpl _value, $Res Function(_$CardManualImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -635,11 +656,13 @@ class _$CardManualImpl with DiagnosticableTreeMixin implements CardManual {
                 other.cardManual == cardManual));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cardManual);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith =>
@@ -770,7 +793,10 @@ abstract class CardManual implements IdentifyModel {
       _$CardManualImpl.fromJson;
 
   String get cardManual;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CardManualImplCopyWith<_$CardManualImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -792,6 +818,8 @@ class __$$BarManualImplCopyWithImpl<$Res>
       _$BarManualImpl _value, $Res Function(_$BarManualImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -844,11 +872,13 @@ class _$BarManualImpl with DiagnosticableTreeMixin implements BarManual {
                 other.barManual == barManual));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, barManual);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith =>
@@ -979,7 +1009,10 @@ abstract class BarManual implements IdentifyModel {
       _$BarManualImpl.fromJson;
 
   String get barManual;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BarManualImplCopyWith<_$BarManualImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1001,6 +1034,8 @@ class __$$TrackerImplCopyWithImpl<$Res>
       _$TrackerImpl _value, $Res Function(_$TrackerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1052,11 +1087,13 @@ class _$TrackerImpl with DiagnosticableTreeMixin implements Tracker {
             (identical(other.tracker, tracker) || other.tracker == tracker));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, tracker);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
@@ -1186,7 +1223,10 @@ abstract class Tracker implements IdentifyModel {
   factory Tracker.fromJson(Map<String, dynamic> json) = _$TrackerImpl.fromJson;
 
   String get tracker;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TrackerImplCopyWith<_$TrackerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1208,6 +1248,8 @@ class __$$CardHolderImplCopyWithImpl<$Res>
       _$CardHolderImpl _value, $Res Function(_$CardHolderImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1260,11 +1302,13 @@ class _$CardHolderImpl with DiagnosticableTreeMixin implements CardHolder {
                 other.cardHolder == cardHolder));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, cardHolder);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith =>
@@ -1395,7 +1439,10 @@ abstract class CardHolder implements IdentifyModel {
       _$CardHolderImpl.fromJson;
 
   String get cardHolder;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CardHolderImplCopyWith<_$CardHolderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1417,6 +1464,8 @@ class __$$BarHolderImplCopyWithImpl<$Res>
       _$BarHolderImpl _value, $Res Function(_$BarHolderImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1469,11 +1518,13 @@ class _$BarHolderImpl with DiagnosticableTreeMixin implements BarHolder {
                 other.barHolder == barHolder));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, barHolder);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith =>
@@ -1604,7 +1655,10 @@ abstract class BarHolder implements IdentifyModel {
       _$BarHolderImpl.fromJson;
 
   String get barHolder;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BarHolderImplCopyWith<_$BarHolderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1626,6 +1680,8 @@ class __$$FraudActivityImplCopyWithImpl<$Res>
       _$FraudActivityImpl _value, $Res Function(_$FraudActivityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1680,11 +1736,13 @@ class _$FraudActivityImpl
                 other.fraudActivity == fraudActivity));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, fraudActivity);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith =>
@@ -1816,7 +1874,10 @@ abstract class FraudActivity implements IdentifyModel {
       _$FraudActivityImpl.fromJson;
 
   String get fraudActivity;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FraudActivityImplCopyWith<_$FraudActivityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1838,6 +1899,8 @@ class __$$ActivationFailedImplCopyWithImpl<$Res>
       $Res Function(_$ActivationFailedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1893,11 +1956,13 @@ class _$ActivationFailedImpl
                 other.activationFailed == activationFailed));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, activationFailed);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
@@ -2030,7 +2095,10 @@ abstract class ActivationFailed implements IdentifyModel {
       _$ActivationFailedImpl.fromJson;
 
   String get activationFailed;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ActivationFailedImplCopyWith<_$ActivationFailedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2052,6 +2120,8 @@ class __$$NotificationsOnImplCopyWithImpl<$Res>
       _$NotificationsOnImpl _value, $Res Function(_$NotificationsOnImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2107,11 +2177,13 @@ class _$NotificationsOnImpl
                 other.notificationOn == notificationOn));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notificationOn);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
@@ -2244,7 +2316,10 @@ abstract class NotificationsOn implements IdentifyModel {
       _$NotificationsOnImpl.fromJson;
 
   String get notificationOn;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IdentifyModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NotificationsOnImplCopyWith<_$NotificationsOnImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

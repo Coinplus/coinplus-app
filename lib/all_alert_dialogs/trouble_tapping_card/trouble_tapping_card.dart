@@ -132,7 +132,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
               await router.maybePop();
               unawaited(
                 recordAmplitudeEventPartTwo(
-                  DontHaveCardClicked(
+                  DontHaveCardWithMeNowClicked(
                     walletAddress: walletAddress,
                     walletType: 'Card',
                     activated: await isActivated,

@@ -8,6 +8,8 @@ import '../../../../../constants/currency.dart';
 import '../../../../../extensions/num_extension.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/fonts.gen.dart';
+import '../../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../../../services/amplitude_service.dart';
 import '../../send_to_state.dart';
 import 'btc_amount_text_field/btc_amount_text_field.dart';
 import 'usd_amount_text_field/usd_amount_text_field.dart';
@@ -52,6 +54,11 @@ class AmountInputField extends HookWidget {
                       splashRadius: 25,
                       onPressed: () async {
                         await state.onToggleCurrency();
+                        await recordAmplitudeEventPartTwo(
+                          SendCurrencyChanged(
+                            currency: state.currency.name.toString(),
+                          ),
+                        );
                       },
                       icon: Assets.icons.swapButton.image(
                         height: 30,
@@ -149,7 +156,7 @@ class AmountInputField extends HookWidget {
               secondChild: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
-                  state.isUseMaxClicked ? 'Maximum sendable amount' : '',
+                  state.isUseMaxClicked ? 'Maximum spendable amount' : '',
                   style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 15,
@@ -170,6 +177,9 @@ class AmountInputField extends HookWidget {
                   if (res == 0) {
                     state.usdController.text = '0';
                     state.btcController.text = '0';
+                    recordAmplitudeEventPartTwo(
+                      const UseMaxClicked(amount: '0', enoughFunds: 'false'),
+                    );
                     Gaimon.error();
                     return;
                   }
@@ -183,6 +193,12 @@ class AmountInputField extends HookWidget {
                           btcCurrentPrice: state.btcPrice,
                         );
                     state.setAmount(maxSendAmount.toString());
+                    recordAmplitudeEventPartTwo(
+                      UseMaxClicked(
+                        amount: maxSendAmount.toString(),
+                        enoughFunds: 'true',
+                      ),
+                    );
                     state.usdController.text = maxSendAmount.toStringAsFixed(3);
                     final btcAmount =
                         res.usdToBtc(btcCurrentPrice: state.btcPrice);
@@ -201,6 +217,9 @@ class AmountInputField extends HookWidget {
                   } else {
                     state.usdController.text = '0';
                     state.btcController.text = '0';
+                    recordAmplitudeEventPartTwo(
+                      const UseMaxClicked(amount: '0', enoughFunds: 'false'),
+                    );
                     Gaimon.error();
                   }
                 },
