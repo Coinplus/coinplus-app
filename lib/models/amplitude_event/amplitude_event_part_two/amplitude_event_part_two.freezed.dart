@@ -145,6 +145,8 @@ AmplitudeEventPartTwo _$AmplitudeEventPartTwoFromJson(
       return ActivationNextClicked.fromJson(json);
     case 'sendToAddressFilled':
       return SendToAddressFilled.fromJson(json);
+    case 'buyCardClicked':
+      return BuyCardClicked.fromJson(json);
     case 'sendFromAddressChanged':
       return SendFromAddressChanged.fromJson(json);
     case 'sendNextClicked':
@@ -288,6 +290,7 @@ mixin _$AmplitudeEventPartTwo {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -423,6 +426,7 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -547,6 +551,7 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -646,6 +651,7 @@ mixin _$AmplitudeEventPartTwo {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -724,6 +730,7 @@ mixin _$AmplitudeEventPartTwo {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -801,6 +808,7 @@ mixin _$AmplitudeEventPartTwo {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -1089,6 +1097,7 @@ class _$ContinueCLickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -1227,6 +1236,7 @@ class _$ContinueCLickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -1354,6 +1364,7 @@ class _$ContinueCLickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -1459,6 +1470,7 @@ class _$ContinueCLickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -1540,6 +1552,7 @@ class _$ContinueCLickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -1620,6 +1633,7 @@ class _$ContinueCLickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -1896,6 +1910,7 @@ class _$EditSecretsClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -2034,6 +2049,7 @@ class _$EditSecretsClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -2161,6 +2177,7 @@ class _$EditSecretsClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -2266,6 +2283,7 @@ class _$EditSecretsClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -2347,6 +2365,7 @@ class _$EditSecretsClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -2427,6 +2446,7 @@ class _$EditSecretsClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -2703,6 +2723,7 @@ class _$WalletActivatedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -2841,6 +2862,7 @@ class _$WalletActivatedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -2968,6 +2990,7 @@ class _$WalletActivatedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -3073,6 +3096,7 @@ class _$WalletActivatedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -3154,6 +3178,7 @@ class _$WalletActivatedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -3234,6 +3259,7 @@ class _$WalletActivatedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -3513,6 +3539,7 @@ class _$WalletActivationFailedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -3651,6 +3678,7 @@ class _$WalletActivationFailedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -3778,6 +3806,7 @@ class _$WalletActivationFailedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -3883,6 +3912,7 @@ class _$WalletActivationFailedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -3964,6 +3994,7 @@ class _$WalletActivationFailedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -4044,6 +4075,7 @@ class _$WalletActivationFailedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -4319,6 +4351,7 @@ class _$GuideMeClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -4457,6 +4490,7 @@ class _$GuideMeClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -4584,6 +4618,7 @@ class _$GuideMeClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -4689,6 +4724,7 @@ class _$GuideMeClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -4770,6 +4806,7 @@ class _$GuideMeClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -4850,6 +4887,7 @@ class _$GuideMeClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -5124,6 +5162,7 @@ class _$CardColorCHangedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -5262,6 +5301,7 @@ class _$CardColorCHangedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -5389,6 +5429,7 @@ class _$CardColorCHangedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -5494,6 +5535,7 @@ class _$CardColorCHangedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -5575,6 +5617,7 @@ class _$CardColorCHangedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -5655,6 +5698,7 @@ class _$CardColorCHangedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -5931,6 +5975,7 @@ class _$ClickedOnPrivateKeyImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -6069,6 +6114,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -6196,6 +6242,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -6301,6 +6348,7 @@ class _$ClickedOnPrivateKeyImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -6382,6 +6430,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -6462,6 +6511,7 @@ class _$ClickedOnPrivateKeyImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -6738,6 +6788,7 @@ class _$PrivateKeyRevealedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -6876,6 +6927,7 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -7003,6 +7055,7 @@ class _$PrivateKeyRevealedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -7108,6 +7161,7 @@ class _$PrivateKeyRevealedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -7189,6 +7243,7 @@ class _$PrivateKeyRevealedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -7269,6 +7324,7 @@ class _$PrivateKeyRevealedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -7545,6 +7601,7 @@ class _$PrivateKeyCopiedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -7683,6 +7740,7 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -7810,6 +7868,7 @@ class _$PrivateKeyCopiedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -7915,6 +7974,7 @@ class _$PrivateKeyCopiedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -7996,6 +8056,7 @@ class _$PrivateKeyCopiedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -8076,6 +8137,7 @@ class _$PrivateKeyCopiedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -8340,6 +8402,7 @@ class _$CardNameChangedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -8478,6 +8541,7 @@ class _$CardNameChangedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -8605,6 +8669,7 @@ class _$CardNameChangedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -8710,6 +8775,7 @@ class _$CardNameChangedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -8791,6 +8857,7 @@ class _$CardNameChangedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -8871,6 +8938,7 @@ class _$CardNameChangedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -9132,6 +9200,7 @@ class _$HelpCenterClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -9270,6 +9339,7 @@ class _$HelpCenterClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -9397,6 +9467,7 @@ class _$HelpCenterClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -9502,6 +9573,7 @@ class _$HelpCenterClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -9583,6 +9655,7 @@ class _$HelpCenterClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -9663,6 +9736,7 @@ class _$HelpCenterClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -9952,6 +10026,7 @@ class _$RemoveCardClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -10090,6 +10165,7 @@ class _$RemoveCardClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -10218,6 +10294,7 @@ class _$RemoveCardClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -10323,6 +10400,7 @@ class _$RemoveCardClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -10404,6 +10482,7 @@ class _$RemoveCardClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -10484,6 +10563,7 @@ class _$RemoveCardClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -10773,6 +10853,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -10911,6 +10992,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -11038,6 +11120,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -11143,6 +11226,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -11224,6 +11308,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -11304,6 +11389,7 @@ class _$CardDeletedImpl with DiagnosticableTreeMixin implements CardDeleted {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -11596,6 +11682,7 @@ class _$NotSureClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -11734,6 +11821,7 @@ class _$NotSureClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -11862,6 +11950,7 @@ class _$NotSureClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -11967,6 +12056,7 @@ class _$NotSureClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -12048,6 +12138,7 @@ class _$NotSureClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -12128,6 +12219,7 @@ class _$NotSureClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -12382,6 +12474,7 @@ class _$ContactUsClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -12520,6 +12613,7 @@ class _$ContactUsClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -12647,6 +12741,7 @@ class _$ContactUsClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -12752,6 +12847,7 @@ class _$ContactUsClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -12833,6 +12929,7 @@ class _$ContactUsClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -12913,6 +13010,7 @@ class _$ContactUsClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -13160,6 +13258,7 @@ class _$AppLockClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -13298,6 +13397,7 @@ class _$AppLockClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -13425,6 +13525,7 @@ class _$AppLockClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -13530,6 +13631,7 @@ class _$AppLockClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -13611,6 +13713,7 @@ class _$AppLockClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -13691,6 +13794,7 @@ class _$AppLockClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -13938,6 +14042,7 @@ class _$AppLockDisabledImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -14076,6 +14181,7 @@ class _$AppLockDisabledImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -14203,6 +14309,7 @@ class _$AppLockDisabledImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -14308,6 +14415,7 @@ class _$AppLockDisabledImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -14389,6 +14497,7 @@ class _$AppLockDisabledImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -14469,6 +14578,7 @@ class _$AppLockDisabledImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -14719,6 +14829,7 @@ class _$ChangePasscodeClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -14857,6 +14968,7 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -14984,6 +15096,7 @@ class _$ChangePasscodeClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -15089,6 +15202,7 @@ class _$ChangePasscodeClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -15170,6 +15284,7 @@ class _$ChangePasscodeClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -15250,6 +15365,7 @@ class _$ChangePasscodeClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -15498,6 +15614,7 @@ class _$PasscodeChangedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -15636,6 +15753,7 @@ class _$PasscodeChangedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -15763,6 +15881,7 @@ class _$PasscodeChangedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -15868,6 +15987,7 @@ class _$PasscodeChangedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -15949,6 +16069,7 @@ class _$PasscodeChangedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -16029,6 +16150,7 @@ class _$PasscodeChangedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -16275,6 +16397,7 @@ class _$FaceIdEnabledImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -16413,6 +16536,7 @@ class _$FaceIdEnabledImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -16540,6 +16664,7 @@ class _$FaceIdEnabledImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -16645,6 +16770,7 @@ class _$FaceIdEnabledImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -16726,6 +16852,7 @@ class _$FaceIdEnabledImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -16806,6 +16933,7 @@ class _$FaceIdEnabledImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -17052,6 +17180,7 @@ class _$FaceIdDisabledImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -17190,6 +17319,7 @@ class _$FaceIdDisabledImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -17317,6 +17447,7 @@ class _$FaceIdDisabledImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -17422,6 +17553,7 @@ class _$FaceIdDisabledImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -17503,6 +17635,7 @@ class _$FaceIdDisabledImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -17583,6 +17716,7 @@ class _$FaceIdDisabledImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -17830,6 +17964,7 @@ class _$PushNotificationsOnImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -17968,6 +18103,7 @@ class _$PushNotificationsOnImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -18095,6 +18231,7 @@ class _$PushNotificationsOnImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -18200,6 +18337,7 @@ class _$PushNotificationsOnImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -18281,6 +18419,7 @@ class _$PushNotificationsOnImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -18361,6 +18500,7 @@ class _$PushNotificationsOnImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -18611,6 +18751,7 @@ class _$PushNotificationsOffImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -18749,6 +18890,7 @@ class _$PushNotificationsOffImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -18876,6 +19018,7 @@ class _$PushNotificationsOffImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -18981,6 +19124,7 @@ class _$PushNotificationsOffImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -19062,6 +19206,7 @@ class _$PushNotificationsOffImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -19142,6 +19287,7 @@ class _$PushNotificationsOffImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -19403,6 +19549,7 @@ class _$JoinCommunityClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -19541,6 +19688,7 @@ class _$JoinCommunityClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -19668,6 +19816,7 @@ class _$JoinCommunityClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -19773,6 +19922,7 @@ class _$JoinCommunityClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -19854,6 +20004,7 @@ class _$JoinCommunityClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -19934,6 +20085,7 @@ class _$JoinCommunityClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -20186,6 +20338,7 @@ class _$PrivacyPolicyClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -20324,6 +20477,7 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -20451,6 +20605,7 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -20556,6 +20711,7 @@ class _$PrivacyPolicyClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -20637,6 +20793,7 @@ class _$PrivacyPolicyClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -20717,6 +20874,7 @@ class _$PrivacyPolicyClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -20965,6 +21123,7 @@ class _$TermsOfUseClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -21103,6 +21262,7 @@ class _$TermsOfUseClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -21230,6 +21390,7 @@ class _$TermsOfUseClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -21335,6 +21496,7 @@ class _$TermsOfUseClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -21416,6 +21578,7 @@ class _$TermsOfUseClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -21496,6 +21659,7 @@ class _$TermsOfUseClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -21744,6 +21908,7 @@ class _$VerifyCardClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -21882,6 +22047,7 @@ class _$VerifyCardClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -22009,6 +22175,7 @@ class _$VerifyCardClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -22114,6 +22281,7 @@ class _$VerifyCardClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -22195,6 +22363,7 @@ class _$VerifyCardClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -22275,6 +22444,7 @@ class _$VerifyCardClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -22562,6 +22732,7 @@ class _$VerifyCardTappedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -22700,6 +22871,7 @@ class _$VerifyCardTappedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -22828,6 +23000,7 @@ class _$VerifyCardTappedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -22933,6 +23106,7 @@ class _$VerifyCardTappedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -23014,6 +23188,7 @@ class _$VerifyCardTappedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -23094,6 +23269,7 @@ class _$VerifyCardTappedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -23348,6 +23524,7 @@ class _$SendMessageClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -23486,6 +23663,7 @@ class _$SendMessageClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -23613,6 +23791,7 @@ class _$SendMessageClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -23718,6 +23897,7 @@ class _$SendMessageClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -23799,6 +23979,7 @@ class _$SendMessageClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -23879,6 +24060,7 @@ class _$SendMessageClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -24126,6 +24308,7 @@ class _$CardTabClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -24264,6 +24447,7 @@ class _$CardTabClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -24391,6 +24575,7 @@ class _$CardTabClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -24496,6 +24681,7 @@ class _$CardTabClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -24577,6 +24763,7 @@ class _$CardTabClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -24657,6 +24844,7 @@ class _$CardTabClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -24902,6 +25090,7 @@ class _$BarTabClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -25040,6 +25229,7 @@ class _$BarTabClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -25167,6 +25357,7 @@ class _$BarTabClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -25272,6 +25463,7 @@ class _$BarTabClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -25353,6 +25545,7 @@ class _$BarTabClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -25433,6 +25626,7 @@ class _$BarTabClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -25691,6 +25885,7 @@ class _$TapToConnectClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -25829,6 +26024,7 @@ class _$TapToConnectClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -25956,6 +26152,7 @@ class _$TapToConnectClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -26061,6 +26258,7 @@ class _$TapToConnectClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -26142,6 +26340,7 @@ class _$TapToConnectClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -26222,6 +26421,7 @@ class _$TapToConnectClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -26511,6 +26711,7 @@ class _$CardDamagedClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -26649,6 +26850,7 @@ class _$CardDamagedClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -26777,6 +26979,7 @@ class _$CardDamagedClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -26883,6 +27086,7 @@ class _$CardDamagedClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -26964,6 +27168,7 @@ class _$CardDamagedClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -27044,6 +27249,7 @@ class _$CardDamagedClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -27339,6 +27545,7 @@ class _$NfcNotWorkingCLickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -27478,6 +27685,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -27606,6 +27814,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -27712,6 +27921,7 @@ class _$NfcNotWorkingCLickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -27793,6 +28003,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -27873,6 +28084,7 @@ class _$NfcNotWorkingCLickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -28171,6 +28383,7 @@ class _$DontHaveCardWithMeNowClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -28310,6 +28523,7 @@ class _$DontHaveCardWithMeNowClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -28438,6 +28652,7 @@ class _$DontHaveCardWithMeNowClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -28544,6 +28759,7 @@ class _$DontHaveCardWithMeNowClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -28625,6 +28841,7 @@ class _$DontHaveCardWithMeNowClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -28705,6 +28922,7 @@ class _$DontHaveCardWithMeNowClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -28999,6 +29217,7 @@ class _$LostCardClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -29137,6 +29356,7 @@ class _$LostCardClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -29265,6 +29485,7 @@ class _$LostCardClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -29370,6 +29591,7 @@ class _$LostCardClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -29451,6 +29673,7 @@ class _$LostCardClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -29531,6 +29754,7 @@ class _$LostCardClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -29827,6 +30051,7 @@ class _$TroubleActivateClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -29966,6 +30191,7 @@ class _$TroubleActivateClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -30094,6 +30320,7 @@ class _$TroubleActivateClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -30200,6 +30427,7 @@ class _$TroubleActivateClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -30281,6 +30509,7 @@ class _$TroubleActivateClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -30361,6 +30590,7 @@ class _$TroubleActivateClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -30654,6 +30884,7 @@ class _$TroubleCloseClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -30792,6 +31023,7 @@ class _$TroubleCloseClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -30920,6 +31152,7 @@ class _$TroubleCloseClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -31026,6 +31259,7 @@ class _$TroubleCloseClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -31107,6 +31341,7 @@ class _$TroubleCloseClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -31187,6 +31422,7 @@ class _$TroubleCloseClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -31480,6 +31716,7 @@ class _$TroubleGotItClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -31618,6 +31855,7 @@ class _$TroubleGotItClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -31746,6 +31984,7 @@ class _$TroubleGotItClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -31852,6 +32091,7 @@ class _$TroubleGotItClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -31933,6 +32173,7 @@ class _$TroubleGotItClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -32013,6 +32254,7 @@ class _$TroubleGotItClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -32309,6 +32551,7 @@ class _$TroubleActivateNowClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -32448,6 +32691,7 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -32576,6 +32820,7 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -32682,6 +32927,7 @@ class _$TroubleActivateNowClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -32763,6 +33009,7 @@ class _$TroubleActivateNowClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -32843,6 +33090,7 @@ class _$TroubleActivateNowClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -33107,6 +33355,7 @@ class _$CardAddedEventImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -33245,6 +33494,7 @@ class _$CardAddedEventImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -33372,6 +33622,7 @@ class _$CardAddedEventImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -33477,6 +33728,7 @@ class _$CardAddedEventImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -33558,6 +33810,7 @@ class _$CardAddedEventImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -33638,6 +33891,7 @@ class _$CardAddedEventImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -33897,6 +34151,7 @@ class _$BarAddedEventImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -34035,6 +34290,7 @@ class _$BarAddedEventImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -34162,6 +34418,7 @@ class _$BarAddedEventImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -34267,6 +34524,7 @@ class _$BarAddedEventImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -34348,6 +34606,7 @@ class _$BarAddedEventImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -34428,6 +34687,7 @@ class _$BarAddedEventImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -34678,6 +34938,7 @@ class _$EraseMyDataClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -34816,6 +35077,7 @@ class _$EraseMyDataClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -34943,6 +35205,7 @@ class _$EraseMyDataClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -35048,6 +35311,7 @@ class _$EraseMyDataClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -35129,6 +35393,7 @@ class _$EraseMyDataClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -35209,6 +35474,7 @@ class _$EraseMyDataClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -35459,6 +35725,7 @@ class _$EraseMyDataConfirmedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -35597,6 +35864,7 @@ class _$EraseMyDataConfirmedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -35724,6 +35992,7 @@ class _$EraseMyDataConfirmedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -35829,6 +36098,7 @@ class _$EraseMyDataConfirmedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -35910,6 +36180,7 @@ class _$EraseMyDataConfirmedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -35990,6 +36261,7 @@ class _$EraseMyDataConfirmedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -36238,6 +36510,7 @@ class _$CoinSearchClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -36376,6 +36649,7 @@ class _$CoinSearchClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -36503,6 +36777,7 @@ class _$CoinSearchClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -36608,6 +36883,7 @@ class _$CoinSearchClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -36689,6 +36965,7 @@ class _$CoinSearchClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -36769,6 +37046,7 @@ class _$CoinSearchClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -37025,6 +37303,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -37163,6 +37442,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -37290,6 +37570,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -37395,6 +37676,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -37476,6 +37758,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -37556,6 +37839,7 @@ class _$CoinSearchedImpl with DiagnosticableTreeMixin implements CoinSearched {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -37801,6 +38085,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -37939,6 +38224,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -38066,6 +38352,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -38171,6 +38458,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -38252,6 +38540,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -38332,6 +38621,7 @@ class _$FiatClikedImpl with DiagnosticableTreeMixin implements FiatCliked {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -38587,6 +38877,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -38725,6 +39016,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -38852,6 +39144,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -38957,6 +39250,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -39038,6 +39332,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -39118,6 +39413,7 @@ class _$CoinClickedImpl with DiagnosticableTreeMixin implements CoinClicked {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -39368,6 +39664,7 @@ class _$LoadCoinsClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -39506,6 +39803,7 @@ class _$LoadCoinsClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -39633,6 +39931,7 @@ class _$LoadCoinsClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -39738,6 +40037,7 @@ class _$LoadCoinsClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -39819,6 +40119,7 @@ class _$LoadCoinsClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -39899,6 +40200,7 @@ class _$LoadCoinsClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -40143,6 +40445,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -40281,6 +40584,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -40408,6 +40712,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -40513,6 +40818,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -40594,6 +40900,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -40674,6 +40981,7 @@ class _$GoUpClickedImpl with DiagnosticableTreeMixin implements GoUpClicked {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -40923,6 +41231,7 @@ class _$CardTabHistoryClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -41061,6 +41370,7 @@ class _$CardTabHistoryClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -41188,6 +41498,7 @@ class _$CardTabHistoryClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -41293,6 +41604,7 @@ class _$CardTabHistoryClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -41374,6 +41686,7 @@ class _$CardTabHistoryClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -41454,6 +41767,7 @@ class _$CardTabHistoryClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -41704,6 +42018,7 @@ class _$BarTabHistoryClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -41842,6 +42157,7 @@ class _$BarTabHistoryClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -41969,6 +42285,7 @@ class _$BarTabHistoryClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -42074,6 +42391,7 @@ class _$BarTabHistoryClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -42155,6 +42473,7 @@ class _$BarTabHistoryClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -42235,6 +42554,7 @@ class _$BarTabHistoryClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -42495,6 +42815,7 @@ class _$SelectWalletClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -42633,6 +42954,7 @@ class _$SelectWalletClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -42760,6 +43082,7 @@ class _$SelectWalletClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -42865,6 +43188,7 @@ class _$SelectWalletClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -42946,6 +43270,7 @@ class _$SelectWalletClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -43026,6 +43351,7 @@ class _$SelectWalletClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -43297,6 +43623,7 @@ class _$WalletSelectedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -43435,6 +43762,7 @@ class _$WalletSelectedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -43562,6 +43890,7 @@ class _$WalletSelectedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -43667,6 +43996,7 @@ class _$WalletSelectedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -43748,6 +44078,7 @@ class _$WalletSelectedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -43828,6 +44159,7 @@ class _$WalletSelectedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -44089,6 +44421,7 @@ class _$PullToRefreshImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -44227,6 +44560,7 @@ class _$PullToRefreshImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -44354,6 +44688,7 @@ class _$PullToRefreshImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -44459,6 +44794,7 @@ class _$PullToRefreshImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -44540,6 +44876,7 @@ class _$PullToRefreshImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -44620,6 +44957,7 @@ class _$PullToRefreshImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -44870,6 +45208,7 @@ class _$TransactionClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -45008,6 +45347,7 @@ class _$TransactionClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -45135,6 +45475,7 @@ class _$TransactionClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -45240,6 +45581,7 @@ class _$TransactionClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -45321,6 +45663,7 @@ class _$TransactionClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -45401,6 +45744,7 @@ class _$TransactionClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -45652,6 +45996,7 @@ class _$LoadTransactionClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -45790,6 +46135,7 @@ class _$LoadTransactionClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -45917,6 +46263,7 @@ class _$LoadTransactionClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -46022,6 +46369,7 @@ class _$LoadTransactionClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -46103,6 +46451,7 @@ class _$LoadTransactionClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -46183,6 +46532,7 @@ class _$LoadTransactionClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -46441,6 +46791,7 @@ class _$RefreshClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -46579,6 +46930,7 @@ class _$RefreshClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -46706,6 +47058,7 @@ class _$RefreshClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -46811,6 +47164,7 @@ class _$RefreshClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -46892,6 +47246,7 @@ class _$RefreshClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -46972,6 +47327,7 @@ class _$RefreshClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -47222,6 +47578,7 @@ class _$BuyBitcoinShownImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -47360,6 +47717,7 @@ class _$BuyBitcoinShownImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -47487,6 +47845,7 @@ class _$BuyBitcoinShownImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -47592,6 +47951,7 @@ class _$BuyBitcoinShownImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -47673,6 +48033,7 @@ class _$BuyBitcoinShownImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -47753,6 +48114,7 @@ class _$BuyBitcoinShownImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -48003,6 +48365,7 @@ class _$BuyBitcoinNowClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -48141,6 +48504,7 @@ class _$BuyBitcoinNowClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -48268,6 +48632,7 @@ class _$BuyBitcoinNowClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -48373,6 +48738,7 @@ class _$BuyBitcoinNowClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -48454,6 +48820,7 @@ class _$BuyBitcoinNowClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -48534,6 +48901,7 @@ class _$BuyBitcoinNowClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -48782,6 +49150,7 @@ class _$DontHaveCardClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -48920,6 +49289,7 @@ class _$DontHaveCardClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -49047,6 +49417,7 @@ class _$DontHaveCardClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -49152,6 +49523,7 @@ class _$DontHaveCardClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -49233,6 +49605,7 @@ class _$DontHaveCardClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -49313,6 +49686,7 @@ class _$DontHaveCardClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -49563,6 +49937,7 @@ class _$PageIndicatorClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -49701,6 +50076,7 @@ class _$PageIndicatorClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -49828,6 +50204,7 @@ class _$PageIndicatorClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -49933,6 +50310,7 @@ class _$PageIndicatorClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -50014,6 +50392,7 @@ class _$PageIndicatorClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -50094,6 +50473,7 @@ class _$PageIndicatorClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -50355,6 +50735,7 @@ class _$ActivationNextClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -50493,6 +50874,7 @@ class _$ActivationNextClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -50620,6 +51002,7 @@ class _$ActivationNextClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -50725,6 +51108,7 @@ class _$ActivationNextClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -50806,6 +51190,7 @@ class _$ActivationNextClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -50886,6 +51271,7 @@ class _$ActivationNextClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -51147,6 +51533,7 @@ class _$SendToAddressFilledImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -51285,6 +51672,7 @@ class _$SendToAddressFilledImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -51412,6 +51800,7 @@ class _$SendToAddressFilledImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -51517,6 +51906,7 @@ class _$SendToAddressFilledImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -51598,6 +51988,7 @@ class _$SendToAddressFilledImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -51678,6 +52069,7 @@ class _$SendToAddressFilledImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -51718,6 +52110,789 @@ abstract class SendToAddressFilled implements AmplitudeEventPartTwo {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SendToAddressFilledImplCopyWith<_$SendToAddressFilledImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$BuyCardClickedImplCopyWith<$Res>
+    implements $AmplitudeEventPartTwoCopyWith<$Res> {
+  factory _$$BuyCardClickedImplCopyWith(_$BuyCardClickedImpl value,
+          $Res Function(_$BuyCardClickedImpl) then) =
+      __$$BuyCardClickedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$BuyCardClickedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventPartTwoCopyWithImpl<$Res, _$BuyCardClickedImpl>
+    implements _$$BuyCardClickedImplCopyWith<$Res> {
+  __$$BuyCardClickedImplCopyWithImpl(
+      _$BuyCardClickedImpl _value, $Res Function(_$BuyCardClickedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AmplitudeEventPartTwo
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$BuyCardClickedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BuyCardClickedImpl
+    with DiagnosticableTreeMixin
+    implements BuyCardClicked {
+  const _$BuyCardClickedImpl(
+      {this.eventType = 'BUY_CARD_CLICKED', final String? $type})
+      : $type = $type ?? 'buyCardClicked';
+
+  factory _$BuyCardClickedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BuyCardClickedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEventPartTwo.buyCardClicked(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEventPartTwo.buyCardClicked'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BuyCardClickedImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  /// Create a copy of AmplitudeEventPartTwo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BuyCardClickedImplCopyWith<_$BuyCardClickedImpl> get copyWith =>
+      __$$BuyCardClickedImplCopyWithImpl<_$BuyCardClickedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        continueClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        editSecretsClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletActivated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletActivationFailed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        guideMeClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String color)
+        cardColorChanged,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        clickedOnPrivateKey,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyRevealed,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        privateKeyCopied,
+    required TResult Function(String eventType, String walletType)
+        cardNameChanged,
+    required TResult Function(String eventType, String source)
+        helpCenterClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        removeCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDeleted,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        notSureClicked,
+    required TResult Function(String eventType) contactUsClicked,
+    required TResult Function(String eventType) appLockClicked,
+    required TResult Function(String eventType) appLockDisabled,
+    required TResult Function(String eventType) changePasscodeClicked,
+    required TResult Function(String eventType) passcodeChanged,
+    required TResult Function(String eventType) faceIdEnabled,
+    required TResult Function(String eventType) faceIdDisabled,
+    required TResult Function(String eventType) pushNotificationsOn,
+    required TResult Function(String eventType) pushNotificationsOff,
+    required TResult Function(String eventType, String social)
+        joinCommunityClicked,
+    required TResult Function(String eventType) privacyPolicyClicked,
+    required TResult Function(String eventType) termsOfUseClicked,
+    required TResult Function(String eventType) verifyCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        verifyCardTapped,
+    required TResult Function(String eventType) sendMessageClicked,
+    required TResult Function(String eventType) cardTabClicked,
+    required TResult Function(String eventType) barTabClicked,
+    required TResult Function(String eventType, String tab) tapToConnectClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        cardDamagedClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        nfcNotWorkingClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        dontHaveCardWithMeNowClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        lostCardClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleCloseClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleGotItClicked,
+    required TResult Function(String eventType, String walletAddress,
+            String walletType, bool activated)
+        troubleActivateNowClicked,
+    required TResult Function(String eventType, String address) cardAdded,
+    required TResult Function(String eventType, String address) barAdded,
+    required TResult Function(String eventType) eraseMyDataClicked,
+    required TResult Function(String eventType) eraseMyDataConfirmed,
+    required TResult Function(String eventType) coinSearchClicked,
+    required TResult Function(String eventType, String coinName) coinSearched,
+    required TResult Function(String eventType) fiatClicked,
+    required TResult Function(String eventType, String coinName) coinClicked,
+    required TResult Function(String eventType) loadCoinsClicked,
+    required TResult Function(String eventType) goUpClicked,
+    required TResult Function(String eventType) cardTabHistoryClicked,
+    required TResult Function(String eventType) barTabHistoryClicked,
+    required TResult Function(String eventType, String walletType)
+        selectWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String address)
+        walletSelected,
+    required TResult Function(String eventType, String source) pullToRefresh,
+    required TResult Function(String eventType) transactionClicked,
+    required TResult Function(String eventType) loadTransactionClicked,
+    required TResult Function(String eventType, String address) refreshClicked,
+    required TResult Function(String eventType) buyBitcoinShown,
+    required TResult Function(String eventType) buyBitcoinNowClicked,
+    required TResult Function(String eventType) dontHaveCardClicked,
+    required TResult Function(String eventType) pageIndicatorClicked,
+    required TResult Function(String eventType, String address)
+        activationNextClicked,
+    required TResult Function(String eventType, String address)
+        sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
+    required TResult Function(String eventType, String address)
+        sendFromAddressChanged,
+    required TResult Function(
+            String eventType, String sendToAddress, String sendFromAddress)
+        sendNextClicked,
+    required TResult Function(
+            String eventType, String amount, String balance, String fee)
+        amountEntered,
+    required TResult Function(String eventType, String currency)
+        sendCurrencyChanged,
+    required TResult Function(
+            String eventType, String amount, String enoughFunds)
+        useMaxClicked,
+    required TResult Function(String eventType, String sendToAddress,
+            String sendFromAddress, String amount, String balance, String fee)
+        amountNextClicked,
+    required TResult Function(
+            String eventType,
+            String sendToAddress,
+            String sendFromAddress,
+            String amount,
+            String balance,
+            String fee,
+            String txHash)
+        sendClicked,
+  }) {
+    return buyCardClicked(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletActivated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletActivationFailed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult? Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult? Function(String eventType, String walletType)? cardNameChanged,
+    TResult? Function(String eventType, String source)? helpCenterClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult? Function(String eventType)? contactUsClicked,
+    TResult? Function(String eventType)? appLockClicked,
+    TResult? Function(String eventType)? appLockDisabled,
+    TResult? Function(String eventType)? changePasscodeClicked,
+    TResult? Function(String eventType)? passcodeChanged,
+    TResult? Function(String eventType)? faceIdEnabled,
+    TResult? Function(String eventType)? faceIdDisabled,
+    TResult? Function(String eventType)? pushNotificationsOn,
+    TResult? Function(String eventType)? pushNotificationsOff,
+    TResult? Function(String eventType, String social)? joinCommunityClicked,
+    TResult? Function(String eventType)? privacyPolicyClicked,
+    TResult? Function(String eventType)? termsOfUseClicked,
+    TResult? Function(String eventType)? verifyCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult? Function(String eventType)? sendMessageClicked,
+    TResult? Function(String eventType)? cardTabClicked,
+    TResult? Function(String eventType)? barTabClicked,
+    TResult? Function(String eventType, String tab)? tapToConnectClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardWithMeNowClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult? Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult? Function(String eventType, String address)? cardAdded,
+    TResult? Function(String eventType, String address)? barAdded,
+    TResult? Function(String eventType)? eraseMyDataClicked,
+    TResult? Function(String eventType)? eraseMyDataConfirmed,
+    TResult? Function(String eventType)? coinSearchClicked,
+    TResult? Function(String eventType, String coinName)? coinSearched,
+    TResult? Function(String eventType)? fiatClicked,
+    TResult? Function(String eventType, String coinName)? coinClicked,
+    TResult? Function(String eventType)? loadCoinsClicked,
+    TResult? Function(String eventType)? goUpClicked,
+    TResult? Function(String eventType)? cardTabHistoryClicked,
+    TResult? Function(String eventType)? barTabHistoryClicked,
+    TResult? Function(String eventType, String walletType)? selectWalletClicked,
+    TResult? Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult? Function(String eventType, String source)? pullToRefresh,
+    TResult? Function(String eventType)? transactionClicked,
+    TResult? Function(String eventType)? loadTransactionClicked,
+    TResult? Function(String eventType, String address)? refreshClicked,
+    TResult? Function(String eventType)? buyBitcoinShown,
+    TResult? Function(String eventType)? buyBitcoinNowClicked,
+    TResult? Function(String eventType)? dontHaveCardClicked,
+    TResult? Function(String eventType)? pageIndicatorClicked,
+    TResult? Function(String eventType, String address)? activationNextClicked,
+    TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
+    TResult? Function(String eventType, String address)? sendFromAddressChanged,
+    TResult? Function(
+            String eventType, String sendToAddress, String sendFromAddress)?
+        sendNextClicked,
+    TResult? Function(
+            String eventType, String amount, String balance, String fee)?
+        amountEntered,
+    TResult? Function(String eventType, String currency)? sendCurrencyChanged,
+    TResult? Function(String eventType, String amount, String enoughFunds)?
+        useMaxClicked,
+    TResult? Function(String eventType, String sendToAddress,
+            String sendFromAddress, String amount, String balance, String fee)?
+        amountNextClicked,
+    TResult? Function(
+            String eventType,
+            String sendToAddress,
+            String sendFromAddress,
+            String amount,
+            String balance,
+            String fee,
+            String txHash)?
+        sendClicked,
+  }) {
+    return buyCardClicked?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        continueClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        editSecretsClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletActivated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletActivationFailed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        guideMeClicked,
+    TResult Function(String eventType, String walletAddress, String color)?
+        cardColorChanged,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        clickedOnPrivateKey,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyRevealed,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        privateKeyCopied,
+    TResult Function(String eventType, String walletType)? cardNameChanged,
+    TResult Function(String eventType, String source)? helpCenterClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        removeCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDeleted,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        notSureClicked,
+    TResult Function(String eventType)? contactUsClicked,
+    TResult Function(String eventType)? appLockClicked,
+    TResult Function(String eventType)? appLockDisabled,
+    TResult Function(String eventType)? changePasscodeClicked,
+    TResult Function(String eventType)? passcodeChanged,
+    TResult Function(String eventType)? faceIdEnabled,
+    TResult Function(String eventType)? faceIdDisabled,
+    TResult Function(String eventType)? pushNotificationsOn,
+    TResult Function(String eventType)? pushNotificationsOff,
+    TResult Function(String eventType, String social)? joinCommunityClicked,
+    TResult Function(String eventType)? privacyPolicyClicked,
+    TResult Function(String eventType)? termsOfUseClicked,
+    TResult Function(String eventType)? verifyCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        verifyCardTapped,
+    TResult Function(String eventType)? sendMessageClicked,
+    TResult Function(String eventType)? cardTabClicked,
+    TResult Function(String eventType)? barTabClicked,
+    TResult Function(String eventType, String tab)? tapToConnectClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        cardDamagedClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        nfcNotWorkingClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        dontHaveCardWithMeNowClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        lostCardClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleCloseClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleGotItClicked,
+    TResult Function(String eventType, String walletAddress, String walletType,
+            bool activated)?
+        troubleActivateNowClicked,
+    TResult Function(String eventType, String address)? cardAdded,
+    TResult Function(String eventType, String address)? barAdded,
+    TResult Function(String eventType)? eraseMyDataClicked,
+    TResult Function(String eventType)? eraseMyDataConfirmed,
+    TResult Function(String eventType)? coinSearchClicked,
+    TResult Function(String eventType, String coinName)? coinSearched,
+    TResult Function(String eventType)? fiatClicked,
+    TResult Function(String eventType, String coinName)? coinClicked,
+    TResult Function(String eventType)? loadCoinsClicked,
+    TResult Function(String eventType)? goUpClicked,
+    TResult Function(String eventType)? cardTabHistoryClicked,
+    TResult Function(String eventType)? barTabHistoryClicked,
+    TResult Function(String eventType, String walletType)? selectWalletClicked,
+    TResult Function(String eventType, String walletType, String address)?
+        walletSelected,
+    TResult Function(String eventType, String source)? pullToRefresh,
+    TResult Function(String eventType)? transactionClicked,
+    TResult Function(String eventType)? loadTransactionClicked,
+    TResult Function(String eventType, String address)? refreshClicked,
+    TResult Function(String eventType)? buyBitcoinShown,
+    TResult Function(String eventType)? buyBitcoinNowClicked,
+    TResult Function(String eventType)? dontHaveCardClicked,
+    TResult Function(String eventType)? pageIndicatorClicked,
+    TResult Function(String eventType, String address)? activationNextClicked,
+    TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
+    TResult Function(String eventType, String address)? sendFromAddressChanged,
+    TResult Function(
+            String eventType, String sendToAddress, String sendFromAddress)?
+        sendNextClicked,
+    TResult Function(
+            String eventType, String amount, String balance, String fee)?
+        amountEntered,
+    TResult Function(String eventType, String currency)? sendCurrencyChanged,
+    TResult Function(String eventType, String amount, String enoughFunds)?
+        useMaxClicked,
+    TResult Function(String eventType, String sendToAddress,
+            String sendFromAddress, String amount, String balance, String fee)?
+        amountNextClicked,
+    TResult Function(
+            String eventType,
+            String sendToAddress,
+            String sendFromAddress,
+            String amount,
+            String balance,
+            String fee,
+            String txHash)?
+        sendClicked,
+    required TResult orElse(),
+  }) {
+    if (buyCardClicked != null) {
+      return buyCardClicked(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ContinueCLicked value) continueClicked,
+    required TResult Function(EditSecretsClicked value) editSecretsClicked,
+    required TResult Function(WalletActivated value) walletActivated,
+    required TResult Function(WalletActivationFailed value)
+        walletActivationFailed,
+    required TResult Function(GuideMeClicked value) guideMeClicked,
+    required TResult Function(CardColorCHanged value) cardColorChanged,
+    required TResult Function(ClickedOnPrivateKey value) clickedOnPrivateKey,
+    required TResult Function(PrivateKeyRevealed value) privateKeyRevealed,
+    required TResult Function(PrivateKeyCopied value) privateKeyCopied,
+    required TResult Function(CardNameChanged value) cardNameChanged,
+    required TResult Function(HelpCenterClicked value) helpCenterClicked,
+    required TResult Function(RemoveCardClicked value) removeCardClicked,
+    required TResult Function(CardDeleted value) cardDeleted,
+    required TResult Function(NotSureClicked value) notSureClicked,
+    required TResult Function(ContactUsClicked value) contactUsClicked,
+    required TResult Function(AppLockClicked value) appLockClicked,
+    required TResult Function(AppLockDisabled value) appLockDisabled,
+    required TResult Function(ChangePasscodeClicked value)
+        changePasscodeClicked,
+    required TResult Function(PasscodeChanged value) passcodeChanged,
+    required TResult Function(FaceIdEnabled value) faceIdEnabled,
+    required TResult Function(FaceIdDisabled value) faceIdDisabled,
+    required TResult Function(PushNotificationsOn value) pushNotificationsOn,
+    required TResult Function(PushNotificationsOff value) pushNotificationsOff,
+    required TResult Function(JoinCommunityClicked value) joinCommunityClicked,
+    required TResult Function(PrivacyPolicyClicked value) privacyPolicyClicked,
+    required TResult Function(TermsOfUseClicked value) termsOfUseClicked,
+    required TResult Function(VerifyCardClicked value) verifyCardClicked,
+    required TResult Function(VerifyCardTapped value) verifyCardTapped,
+    required TResult Function(SendMessageClicked value) sendMessageClicked,
+    required TResult Function(CardTabClicked value) cardTabClicked,
+    required TResult Function(BarTabClicked value) barTabClicked,
+    required TResult Function(TapToConnectClicked value) tapToConnectClicked,
+    required TResult Function(CardDamagedClicked value) cardDamagedClicked,
+    required TResult Function(NfcNotWorkingCLicked value) nfcNotWorkingClicked,
+    required TResult Function(DontHaveCardWithMeNowClicked value)
+        dontHaveCardWithMeNowClicked,
+    required TResult Function(LostCardClicked value) lostCardClicked,
+    required TResult Function(TroubleActivateClicked value)
+        troubleActivateClicked,
+    required TResult Function(TroubleCloseClicked value) troubleCloseClicked,
+    required TResult Function(TroubleGotItClicked value) troubleGotItClicked,
+    required TResult Function(TroubleActivateNowClicked value)
+        troubleActivateNowClicked,
+    required TResult Function(CardAddedEvent value) cardAdded,
+    required TResult Function(BarAddedEvent value) barAdded,
+    required TResult Function(EraseMyDataClicked value) eraseMyDataClicked,
+    required TResult Function(EraseMyDataConfirmed value) eraseMyDataConfirmed,
+    required TResult Function(CoinSearchClicked value) coinSearchClicked,
+    required TResult Function(CoinSearched value) coinSearched,
+    required TResult Function(FiatCliked value) fiatClicked,
+    required TResult Function(CoinClicked value) coinClicked,
+    required TResult Function(LoadCoinsClicked value) loadCoinsClicked,
+    required TResult Function(GoUpClicked value) goUpClicked,
+    required TResult Function(CardTabHistoryClicked value)
+        cardTabHistoryClicked,
+    required TResult Function(BarTabHistoryClicked value) barTabHistoryClicked,
+    required TResult Function(SelectWalletClicked value) selectWalletClicked,
+    required TResult Function(WalletSelected value) walletSelected,
+    required TResult Function(PullToRefresh value) pullToRefresh,
+    required TResult Function(TransactionClicked value) transactionClicked,
+    required TResult Function(LoadTransactionClicked value)
+        loadTransactionClicked,
+    required TResult Function(RefreshClicked value) refreshClicked,
+    required TResult Function(BuyBitcoinShown value) buyBitcoinShown,
+    required TResult Function(BuyBitcoinNowClicked value) buyBitcoinNowClicked,
+    required TResult Function(DontHaveCardClicked value) dontHaveCardClicked,
+    required TResult Function(PageIndicatorClicked value) pageIndicatorClicked,
+    required TResult Function(ActivationNextClicked value)
+        activationNextClicked,
+    required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
+    required TResult Function(SendFromAddressChanged value)
+        sendFromAddressChanged,
+    required TResult Function(SendNextClicked value) sendNextClicked,
+    required TResult Function(AmountEntered value) amountEntered,
+    required TResult Function(SendCurrencyChanged value) sendCurrencyChanged,
+    required TResult Function(UseMaxClicked value) useMaxClicked,
+    required TResult Function(AmountNextClicked value) amountNextClicked,
+    required TResult Function(SendClicked value) sendClicked,
+  }) {
+    return buyCardClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ContinueCLicked value)? continueClicked,
+    TResult? Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult? Function(WalletActivated value)? walletActivated,
+    TResult? Function(WalletActivationFailed value)? walletActivationFailed,
+    TResult? Function(GuideMeClicked value)? guideMeClicked,
+    TResult? Function(CardColorCHanged value)? cardColorChanged,
+    TResult? Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult? Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult? Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult? Function(CardNameChanged value)? cardNameChanged,
+    TResult? Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult? Function(RemoveCardClicked value)? removeCardClicked,
+    TResult? Function(CardDeleted value)? cardDeleted,
+    TResult? Function(NotSureClicked value)? notSureClicked,
+    TResult? Function(ContactUsClicked value)? contactUsClicked,
+    TResult? Function(AppLockClicked value)? appLockClicked,
+    TResult? Function(AppLockDisabled value)? appLockDisabled,
+    TResult? Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult? Function(PasscodeChanged value)? passcodeChanged,
+    TResult? Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult? Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult? Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult? Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult? Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult? Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult? Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult? Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult? Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult? Function(SendMessageClicked value)? sendMessageClicked,
+    TResult? Function(CardTabClicked value)? cardTabClicked,
+    TResult? Function(BarTabClicked value)? barTabClicked,
+    TResult? Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult? Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult? Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult? Function(DontHaveCardWithMeNowClicked value)?
+        dontHaveCardWithMeNowClicked,
+    TResult? Function(LostCardClicked value)? lostCardClicked,
+    TResult? Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult? Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult? Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult? Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult? Function(CardAddedEvent value)? cardAdded,
+    TResult? Function(BarAddedEvent value)? barAdded,
+    TResult? Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult? Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult? Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult? Function(CoinSearched value)? coinSearched,
+    TResult? Function(FiatCliked value)? fiatClicked,
+    TResult? Function(CoinClicked value)? coinClicked,
+    TResult? Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult? Function(GoUpClicked value)? goUpClicked,
+    TResult? Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult? Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult? Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult? Function(WalletSelected value)? walletSelected,
+    TResult? Function(PullToRefresh value)? pullToRefresh,
+    TResult? Function(TransactionClicked value)? transactionClicked,
+    TResult? Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult? Function(RefreshClicked value)? refreshClicked,
+    TResult? Function(BuyBitcoinShown value)? buyBitcoinShown,
+    TResult? Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+    TResult? Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
+    TResult? Function(ActivationNextClicked value)? activationNextClicked,
+    TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
+    TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
+    TResult? Function(SendNextClicked value)? sendNextClicked,
+    TResult? Function(AmountEntered value)? amountEntered,
+    TResult? Function(SendCurrencyChanged value)? sendCurrencyChanged,
+    TResult? Function(UseMaxClicked value)? useMaxClicked,
+    TResult? Function(AmountNextClicked value)? amountNextClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+  }) {
+    return buyCardClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ContinueCLicked value)? continueClicked,
+    TResult Function(EditSecretsClicked value)? editSecretsClicked,
+    TResult Function(WalletActivated value)? walletActivated,
+    TResult Function(WalletActivationFailed value)? walletActivationFailed,
+    TResult Function(GuideMeClicked value)? guideMeClicked,
+    TResult Function(CardColorCHanged value)? cardColorChanged,
+    TResult Function(ClickedOnPrivateKey value)? clickedOnPrivateKey,
+    TResult Function(PrivateKeyRevealed value)? privateKeyRevealed,
+    TResult Function(PrivateKeyCopied value)? privateKeyCopied,
+    TResult Function(CardNameChanged value)? cardNameChanged,
+    TResult Function(HelpCenterClicked value)? helpCenterClicked,
+    TResult Function(RemoveCardClicked value)? removeCardClicked,
+    TResult Function(CardDeleted value)? cardDeleted,
+    TResult Function(NotSureClicked value)? notSureClicked,
+    TResult Function(ContactUsClicked value)? contactUsClicked,
+    TResult Function(AppLockClicked value)? appLockClicked,
+    TResult Function(AppLockDisabled value)? appLockDisabled,
+    TResult Function(ChangePasscodeClicked value)? changePasscodeClicked,
+    TResult Function(PasscodeChanged value)? passcodeChanged,
+    TResult Function(FaceIdEnabled value)? faceIdEnabled,
+    TResult Function(FaceIdDisabled value)? faceIdDisabled,
+    TResult Function(PushNotificationsOn value)? pushNotificationsOn,
+    TResult Function(PushNotificationsOff value)? pushNotificationsOff,
+    TResult Function(JoinCommunityClicked value)? joinCommunityClicked,
+    TResult Function(PrivacyPolicyClicked value)? privacyPolicyClicked,
+    TResult Function(TermsOfUseClicked value)? termsOfUseClicked,
+    TResult Function(VerifyCardClicked value)? verifyCardClicked,
+    TResult Function(VerifyCardTapped value)? verifyCardTapped,
+    TResult Function(SendMessageClicked value)? sendMessageClicked,
+    TResult Function(CardTabClicked value)? cardTabClicked,
+    TResult Function(BarTabClicked value)? barTabClicked,
+    TResult Function(TapToConnectClicked value)? tapToConnectClicked,
+    TResult Function(CardDamagedClicked value)? cardDamagedClicked,
+    TResult Function(NfcNotWorkingCLicked value)? nfcNotWorkingClicked,
+    TResult Function(DontHaveCardWithMeNowClicked value)?
+        dontHaveCardWithMeNowClicked,
+    TResult Function(LostCardClicked value)? lostCardClicked,
+    TResult Function(TroubleActivateClicked value)? troubleActivateClicked,
+    TResult Function(TroubleCloseClicked value)? troubleCloseClicked,
+    TResult Function(TroubleGotItClicked value)? troubleGotItClicked,
+    TResult Function(TroubleActivateNowClicked value)?
+        troubleActivateNowClicked,
+    TResult Function(CardAddedEvent value)? cardAdded,
+    TResult Function(BarAddedEvent value)? barAdded,
+    TResult Function(EraseMyDataClicked value)? eraseMyDataClicked,
+    TResult Function(EraseMyDataConfirmed value)? eraseMyDataConfirmed,
+    TResult Function(CoinSearchClicked value)? coinSearchClicked,
+    TResult Function(CoinSearched value)? coinSearched,
+    TResult Function(FiatCliked value)? fiatClicked,
+    TResult Function(CoinClicked value)? coinClicked,
+    TResult Function(LoadCoinsClicked value)? loadCoinsClicked,
+    TResult Function(GoUpClicked value)? goUpClicked,
+    TResult Function(CardTabHistoryClicked value)? cardTabHistoryClicked,
+    TResult Function(BarTabHistoryClicked value)? barTabHistoryClicked,
+    TResult Function(SelectWalletClicked value)? selectWalletClicked,
+    TResult Function(WalletSelected value)? walletSelected,
+    TResult Function(PullToRefresh value)? pullToRefresh,
+    TResult Function(TransactionClicked value)? transactionClicked,
+    TResult Function(LoadTransactionClicked value)? loadTransactionClicked,
+    TResult Function(RefreshClicked value)? refreshClicked,
+    TResult Function(BuyBitcoinShown value)? buyBitcoinShown,
+    TResult Function(BuyBitcoinNowClicked value)? buyBitcoinNowClicked,
+    TResult Function(DontHaveCardClicked value)? dontHaveCardClicked,
+    TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
+    TResult Function(ActivationNextClicked value)? activationNextClicked,
+    TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
+    TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
+    TResult Function(SendNextClicked value)? sendNextClicked,
+    TResult Function(AmountEntered value)? amountEntered,
+    TResult Function(SendCurrencyChanged value)? sendCurrencyChanged,
+    TResult Function(UseMaxClicked value)? useMaxClicked,
+    TResult Function(AmountNextClicked value)? amountNextClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    required TResult orElse(),
+  }) {
+    if (buyCardClicked != null) {
+      return buyCardClicked(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BuyCardClickedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class BuyCardClicked implements AmplitudeEventPartTwo {
+  const factory BuyCardClicked({final String eventType}) = _$BuyCardClickedImpl;
+
+  factory BuyCardClicked.fromJson(Map<String, dynamic> json) =
+      _$BuyCardClickedImpl.fromJson;
+
+  @override
+  String get eventType;
+
+  /// Create a copy of AmplitudeEventPartTwo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BuyCardClickedImplCopyWith<_$BuyCardClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -51942,6 +53117,7 @@ class _$SendFromAddressChangedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -52080,6 +53256,7 @@ class _$SendFromAddressChangedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -52207,6 +53384,7 @@ class _$SendFromAddressChangedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -52312,6 +53490,7 @@ class _$SendFromAddressChangedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -52393,6 +53572,7 @@ class _$SendFromAddressChangedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -52473,6 +53653,7 @@ class _$SendFromAddressChangedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -52747,6 +53928,7 @@ class _$SendNextClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -52885,6 +54067,7 @@ class _$SendNextClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -53012,6 +54195,7 @@ class _$SendNextClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -53117,6 +54301,7 @@ class _$SendNextClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -53198,6 +54383,7 @@ class _$SendNextClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -53278,6 +54464,7 @@ class _$SendNextClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -53559,6 +54746,7 @@ class _$AmountEnteredImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -53697,6 +54885,7 @@ class _$AmountEnteredImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -53824,6 +55013,7 @@ class _$AmountEnteredImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -53929,6 +55119,7 @@ class _$AmountEnteredImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -54010,6 +55201,7 @@ class _$AmountEnteredImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -54090,6 +55282,7 @@ class _$AmountEnteredImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -54356,6 +55549,7 @@ class _$SendCurrencyChangedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -54494,6 +55688,7 @@ class _$SendCurrencyChangedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -54621,6 +55816,7 @@ class _$SendCurrencyChangedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -54726,6 +55922,7 @@ class _$SendCurrencyChangedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -54807,6 +56004,7 @@ class _$SendCurrencyChangedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -54887,6 +56085,7 @@ class _$SendCurrencyChangedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -55157,6 +56356,7 @@ class _$UseMaxClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -55295,6 +56495,7 @@ class _$UseMaxClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -55422,6 +56623,7 @@ class _$UseMaxClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -55527,6 +56729,7 @@ class _$UseMaxClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -55608,6 +56811,7 @@ class _$UseMaxClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -55688,6 +56892,7 @@ class _$UseMaxClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -56000,6 +57205,7 @@ class _$AmountNextClickedImpl
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -56139,6 +57345,7 @@ class _$AmountNextClickedImpl
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -56267,6 +57474,7 @@ class _$AmountNextClickedImpl
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -56373,6 +57581,7 @@ class _$AmountNextClickedImpl
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -56454,6 +57663,7 @@ class _$AmountNextClickedImpl
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -56534,6 +57744,7 @@ class _$AmountNextClickedImpl
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,
@@ -56859,6 +58070,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         activationNextClicked,
     required TResult Function(String eventType, String address)
         sendToAddressFilled,
+    required TResult Function(String eventType) buyCardClicked,
     required TResult Function(String eventType, String address)
         sendFromAddressChanged,
     required TResult Function(
@@ -56998,6 +58210,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(String eventType)? pageIndicatorClicked,
     TResult? Function(String eventType, String address)? activationNextClicked,
     TResult? Function(String eventType, String address)? sendToAddressFilled,
+    TResult? Function(String eventType)? buyCardClicked,
     TResult? Function(String eventType, String address)? sendFromAddressChanged,
     TResult? Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -57126,6 +58339,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(String eventType)? pageIndicatorClicked,
     TResult Function(String eventType, String address)? activationNextClicked,
     TResult Function(String eventType, String address)? sendToAddressFilled,
+    TResult Function(String eventType)? buyCardClicked,
     TResult Function(String eventType, String address)? sendFromAddressChanged,
     TResult Function(
             String eventType, String sendToAddress, String sendFromAddress)?
@@ -57232,6 +58446,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(ActivationNextClicked value)
         activationNextClicked,
     required TResult Function(SendToAddressFilled value) sendToAddressFilled,
+    required TResult Function(BuyCardClicked value) buyCardClicked,
     required TResult Function(SendFromAddressChanged value)
         sendFromAddressChanged,
     required TResult Function(SendNextClicked value) sendNextClicked,
@@ -57313,6 +58528,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult? Function(ActivationNextClicked value)? activationNextClicked,
     TResult? Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult? Function(BuyCardClicked value)? buyCardClicked,
     TResult? Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult? Function(SendNextClicked value)? sendNextClicked,
     TResult? Function(AmountEntered value)? amountEntered,
@@ -57393,6 +58609,7 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(PageIndicatorClicked value)? pageIndicatorClicked,
     TResult Function(ActivationNextClicked value)? activationNextClicked,
     TResult Function(SendToAddressFilled value)? sendToAddressFilled,
+    TResult Function(BuyCardClicked value)? buyCardClicked,
     TResult Function(SendFromAddressChanged value)? sendFromAddressChanged,
     TResult Function(SendNextClicked value)? sendNextClicked,
     TResult Function(AmountEntered value)? amountEntered,

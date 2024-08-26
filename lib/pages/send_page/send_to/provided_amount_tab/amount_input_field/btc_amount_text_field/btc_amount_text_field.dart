@@ -79,6 +79,18 @@ class BtcAmountTextField extends HookWidget {
                           decimal: true,
                         ),
                         cursorColor: Colors.blue,
+                        onEditingComplete: () {
+                          recordAmplitudeEventPartTwo(
+                            AmountEntered(
+                              amount:
+                                  '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
+                              balance:
+                                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
+                              fee:
+                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                            ),
+                          );
+                        },
                         onChanged: (value) {
                           var previousTextLength = 0;
                           Gaimon.selection();
@@ -93,15 +105,6 @@ class BtcAmountTextField extends HookWidget {
                             btcCurrentPrice: state.btcPrice,
                           );
                           state.setAmount(btcToUsd.toString());
-                          recordAmplitudeEventPartTwo(
-                            AmountEntered(
-                              amount: '${value}BTC',
-                              balance:
-                                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
-                              fee:
-                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
-                            ),
-                          );
                           state.transactionsStore.findOptimalUtxo();
                           final amountToDouble = double.tryParse(value);
                           if (value.isNotEmpty) {

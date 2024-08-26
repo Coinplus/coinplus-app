@@ -332,6 +332,10 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String address,
   }) = SendToAddressFilled;
 
+  const factory AmplitudeEventPartTwo.buyCardClicked({
+    @Default('BUY_CARD_CLICKED') String eventType,
+  }) = BuyCardClicked;
+
   const factory AmplitudeEventPartTwo.sendFromAddressChanged({
     @Default('SEND_FROM_ADDRESS_CHANGED') String eventType,
     required String address,
