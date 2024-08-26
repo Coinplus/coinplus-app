@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
@@ -86,11 +85,8 @@ class RemoveUserData extends StatelessWidget {
               action: (controller) async {
                 controller.loading();
                 await StorageUtils.clear();
-                await secureStorage.readAll();
-                await secureStorage.deleteAll();
-                final data = await secureStorage.read(key: 'biometricAuth');
+                await clearSecureStorage();
                 reRegisterStoreGetIt();
-                log(data.toString());
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();
                 unawaited(

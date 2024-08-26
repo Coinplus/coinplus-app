@@ -93,7 +93,11 @@ Future<void> localStorage() async {
   if (prefs.getBool('first_run') ?? true) {
     await prefs.setBool('show_modal', true);
     await prefs.setString('package_info', packageInfo.version.toString());
-    await secureStorage.deleteAll();
+    await clearSecureStorage();
     await prefs.setBool('first_run', false);
   }
+}
+
+Future<void> clearSecureStorage() async {
+  await secureStorage.deleteAll();
 }

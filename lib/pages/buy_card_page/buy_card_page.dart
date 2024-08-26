@@ -42,6 +42,10 @@ class BuyCardPage extends StatelessWidget {
             return Stack(
               children: [
                 InAppWebView(
+                  initialSettings: InAppWebViewSettings(
+                    underPageBackgroundColor: Colors.white,
+                    transparentBackground: true,
+                  ),
                   initialUrlRequest: URLRequest(
                     httpShouldHandleCookies: false,
                     url: WebUri(
