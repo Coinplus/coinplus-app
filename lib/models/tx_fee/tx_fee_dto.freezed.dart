@@ -26,8 +26,12 @@ mixin _$TxFeeDto {
   int get economyFee => throw _privateConstructorUsedError;
   int get minimumFee => throw _privateConstructorUsedError;
 
+  /// Serializes this TxFeeDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TxFeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TxFeeDtoCopyWith<TxFeeDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$TxFeeDtoCopyWithImpl<$Res, $Val extends TxFeeDto>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TxFeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -113,6 +119,8 @@ class __$$TxFeeDtoImplCopyWithImpl<$Res>
       _$TxFeeDtoImpl _value, $Res Function(_$TxFeeDtoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TxFeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -197,12 +205,14 @@ class _$TxFeeDtoImpl implements _TxFeeDto {
                 other.minimumFee == minimumFee));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, fastestFee, halfHourFee, hourFee, economyFee, minimumFee);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TxFeeDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TxFeeDtoImplCopyWith<_$TxFeeDtoImpl> get copyWith =>
@@ -237,8 +247,11 @@ abstract class _TxFeeDto implements TxFeeDto {
   int get economyFee;
   @override
   int get minimumFee;
+
+  /// Create a copy of TxFeeDto
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TxFeeDtoImplCopyWith<_$TxFeeDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

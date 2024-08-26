@@ -979,7 +979,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                             );
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEventPartTwo(
-                              ValidationSuccessful(
+                              WalletActivated(
                                 walletAddress: card.address,
                                 walletType: 'Card',
                               ),
@@ -997,7 +997,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                           } else {
                             await router.maybePop();
                             await recordAmplitudeEventPartTwo(
-                              ValidationFailed(
+                              WalletActivationFailed(
                                 walletAddress: card.address,
                                 walletType: 'Card',
                               ),
@@ -1012,7 +1012,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                           }
                         } catch (e) {
                           await recordAmplitudeEventPartTwo(
-                            ValidationFailed(
+                            WalletActivated(
                               walletAddress: card.address,
                               walletType: 'Card',
                             ),

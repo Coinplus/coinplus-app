@@ -6,17 +6,20 @@ part of 'broadcast_repo.dart';
 // RetrofitGenerator
 // **************************************************************************
 
-// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
 class _BroadcastClient implements BroadcastClient {
   _BroadcastClient(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   });
 
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<String> broadcastTransaction({required String hex}) async {
@@ -24,7 +27,7 @@ class _BroadcastClient implements BroadcastClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = hex;
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+    final _options = _setStreamType<String>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -39,9 +42,16 @@ class _BroadcastClient implements BroadcastClient {
             baseUrl: _combineBaseUrls(
           _dio.options.baseUrl,
           baseUrl,
-        ))));
-    final value = _result.data!;
-    return value;
+        )));
+    final _result = await _dio.fetch<String>(_options);
+    late String _value;
+    try {
+      _value = _result.data!;
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

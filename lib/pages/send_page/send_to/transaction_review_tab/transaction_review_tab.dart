@@ -13,7 +13,9 @@ import '../../../../extensions/num_extension.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../../providers/screen_service.dart';
+import '../../../../services/amplitude_service.dart';
 import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
@@ -377,6 +379,18 @@ class TransactionReviewTab extends HookWidget {
                 return LoadingButton(
                   onPressed: () async {
                     try {
+                      await recordAmplitudeEventPartTwo(
+                        SendClicked(
+                          sendToAddress: state.outputAddress,
+                          sendFromAddress: state.selectedCardAddress!,
+                          amount: '${state.amount.toStringAsFixed(3)} \$',
+                          balance:
+                              '${state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice).toStringAsFixed(3)} \$',
+                          fee:
+                              '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))}',
+                          txHash: state.transactionsStore.txHex,
+                        ),
+                      );
                       await state.transactionsStore.broadcastTransaction();
                       await router.maybePop();
                       await transactionSubmittedAlert(

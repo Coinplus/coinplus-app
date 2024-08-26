@@ -34,8 +34,12 @@ mixin _$UtxoModel {
   @JsonKey(name: 'tx_index')
   int get txIndex => throw _privateConstructorUsedError;
 
+  /// Serializes this UtxoModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of UtxoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $UtxoModelCopyWith<UtxoModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -66,6 +70,8 @@ class _$UtxoModelCopyWithImpl<$Res, $Val extends UtxoModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UtxoModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -142,6 +148,8 @@ class __$$UtxoModelImplCopyWithImpl<$Res>
       _$UtxoModelImpl _value, $Res Function(_$UtxoModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UtxoModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -268,12 +276,14 @@ class _$UtxoModelImpl with DiagnosticableTreeMixin implements _UtxoModel {
             (identical(other.txIndex, txIndex) || other.txIndex == txIndex));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, txHashBigEndian, txHash,
       txOutputN, script, value, valueHex, confirmations, txIndex);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UtxoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UtxoModelImplCopyWith<_$UtxoModelImpl> get copyWith =>
@@ -323,8 +333,11 @@ abstract class _UtxoModel implements UtxoModel {
   @override
   @JsonKey(name: 'tx_index')
   int get txIndex;
+
+  /// Create a copy of UtxoModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UtxoModelImplCopyWith<_$UtxoModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -339,8 +352,12 @@ mixin _$Status {
   @JsonKey(name: 'unspent_outputs')
   List<UtxoModel> get unspentOutputs => throw _privateConstructorUsedError;
 
+  /// Serializes this Status to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StatusCopyWith<Status> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -364,6 +381,8 @@ class _$StatusCopyWithImpl<$Res, $Val extends Status>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -403,6 +422,8 @@ class __$$StatusImplCopyWithImpl<$Res>
       _$StatusImpl _value, $Res Function(_$StatusImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -469,12 +490,14 @@ class _$StatusImpl with DiagnosticableTreeMixin implements _Status {
                 .equals(other._unspentOutputs, _unspentOutputs));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notice,
       const DeepCollectionEquality().hash(_unspentOutputs));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StatusImplCopyWith<_$StatusImpl> get copyWith =>
@@ -501,8 +524,11 @@ abstract class _Status implements Status {
   @override
   @JsonKey(name: 'unspent_outputs')
   List<UtxoModel> get unspentOutputs;
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatusImplCopyWith<_$StatusImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

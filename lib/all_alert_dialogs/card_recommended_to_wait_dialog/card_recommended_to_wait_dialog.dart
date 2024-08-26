@@ -50,7 +50,7 @@ Future<void> cardRecommendedToWaitDialog({
       primaryActionText: 'I need to Send now',
       primaryAction: Platform.isIOS
           ? () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               await router.maybePop();
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
@@ -194,7 +194,7 @@ Future<void> cardRecommendedToWaitDialog({
               );
             }
           : () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
               );

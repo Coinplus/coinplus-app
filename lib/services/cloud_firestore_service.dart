@@ -155,6 +155,21 @@ Future<BuyCardModel?> getBuyCardData() async {
   return null;
 }
 
+Future<BuyCardModel?> getBuyCardPlusButtonLink() async {
+  final DocumentSnapshot documentSnapshot =
+      await _firestore.collection('links').doc('buy_card_plus_button').get();
+
+  if (documentSnapshot.exists) {
+    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
+
+    if (documentData != null) {
+      final link = BuyCardModel.fromJson(documentData);
+      return link;
+    }
+  } else {}
+  return null;
+}
+
 Future<void> addReplenishmentHistory({
   required String documentId,
   required int amount,

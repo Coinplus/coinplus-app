@@ -214,9 +214,13 @@ class AmplitudeEvent with _$AmplitudeEvent {
     @Default('GOT_IT_SEND_CLICKED') String eventType,
   }) = GotItSendClicked;
 
-  const factory AmplitudeEvent.sendAnywayClicked({
-    @Default('SEND_ANYWAY_CLICKED') String eventType,
-  }) = SendAnywayClicked;
+  const factory AmplitudeEvent.iNeedToSendNow({
+    @Default('I_NEED_TO_SEND_NOW') String eventType,
+  }) = IneedToSendNow;
+
+  const factory AmplitudeEvent.iNeedToSendGotIt({
+    @Default('I_NEED_TO_SEND_GOT_IT') String eventType,
+  }) = IneedToSendGotIt;
 
   const factory AmplitudeEvent.backButtonClicked({
     @Default('BACK_BUTTON_CLICKED') String eventType,

@@ -942,7 +942,7 @@ class _BarActivationPageState extends State<BarActivationPage>
                             );
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEventPartTwo(
-                              ValidationSuccessful(
+                              WalletActivated(
                                 walletAddress: walletAddress,
                                 walletType: 'Bar',
                               ),
@@ -960,7 +960,7 @@ class _BarActivationPageState extends State<BarActivationPage>
                           } else {
                             await router.maybePop();
                             await recordAmplitudeEventPartTwo(
-                              ValidationFailed(
+                              WalletActivationFailed(
                                 walletAddress: walletAddress,
                                 walletType: 'Bar',
                               ),

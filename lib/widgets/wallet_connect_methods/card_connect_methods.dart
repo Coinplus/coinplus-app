@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -23,6 +22,7 @@ import '../../../services/amplitude_service.dart';
 import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../loading_button/loading_button.dart';
 
 class CardScanMethodsPage extends HookWidget {
@@ -306,26 +306,13 @@ class CardScanMethodsPage extends HookWidget {
                     WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
+            await router.maybePop();
             unawaited(
               recordAmplitudeEvent(
                 const BuyNewCardClicked(source: 'Wallet'),
               ),
             );
-            await FlutterWebBrowser.openWebPage(
-              url: 'https://coinplus.com/shop/',
-              customTabsOptions: const CustomTabsOptions(
-                shareState: CustomTabsShareState.on,
-                instantAppsEnabled: true,
-                showTitle: true,
-                urlBarHidingEnabled: true,
-              ),
-              safariVCOptions: const SafariViewControllerOptions(
-                barCollapsingEnabled: true,
-                modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                modalPresentationCapturesStatusBarAppearance: true,
-              ),
-            );
+            await router.push(BuyCardRoute(method: getBuyCardPlusButtonLink()));
           },
           child: Row(
             children: [

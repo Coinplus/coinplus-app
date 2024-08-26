@@ -49,7 +49,7 @@ Future<void> cardActivationAlert({
       primaryActionText: 'I need to Send now',
       primaryAction: Platform.isIOS
           ? () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               router.popUntilRouteWithName(DashboardRoute.name);
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
@@ -193,7 +193,7 @@ Future<void> cardActivationAlert({
               );
             }
           : () async {
-              await recordAmplitudeEvent(const SendAnywayClicked());
+              await recordAmplitudeEvent(const IneedToSendNow());
               await _walletProtectState.updateNfcSessionStatus(
                 isStarted: true,
               );
@@ -334,7 +334,7 @@ Future<void> cardActivationAlert({
             },
       secondaryActionText: 'Got it',
       secondaryAction: () {
-        recordAmplitudeEvent(const GotItSendClicked());
+        recordAmplitudeEvent(const IneedToSendGotIt());
         router.maybePop();
       },
     ),

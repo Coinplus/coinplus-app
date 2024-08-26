@@ -8,11 +8,14 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i32;
+
 import 'package:auto_route/auto_route.dart' as _i26;
-import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i32;
+import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i34;
 import 'package:coinplus/models/bar_model/bar_model.dart' as _i31;
-import 'package:coinplus/models/card_model/card_model.dart' as _i33;
-import 'package:coinplus/models/coins_dto/coin_model.dart' as _i34;
+import 'package:coinplus/models/card_model/card_model.dart' as _i35;
+import 'package:coinplus/models/coins_dto/coin_model.dart' as _i36;
+import 'package:coinplus/models/firebase_model/buy_card_model.dart' as _i33;
 import 'package:coinplus/pages/bar_activation_page/bar_activation_page.dart'
     as _i2;
 import 'package:coinplus/pages/bar_connect_page/bar_connect_page.dart' as _i3;
@@ -50,9 +53,9 @@ import 'package:coinplus/pages/settings_page/settings_page.dart' as _i23;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i24;
 import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
     as _i25;
-import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i35;
+import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i37;
 import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i36;
+    as _i38;
 import 'package:flutter/cupertino.dart' as _i29;
 import 'package:flutter/foundation.dart' as _i27;
 import 'package:flutter/material.dart' as _i30;
@@ -114,9 +117,13 @@ abstract class $Router extends _i26.RootStackRouter {
       );
     },
     BuyCardRoute.name: (routeData) {
+      final args = routeData.argsAs<BuyCardRouteArgs>();
       return _i26.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.BuyCardPage(),
+        child: _i6.BuyCardPage(
+          key: args.key,
+          method: args.method,
+        ),
       );
     },
     CardActivationRoute.name: (routeData) {
@@ -466,16 +473,40 @@ class BarSettingsRouteArgs {
 
 /// generated route for
 /// [_i6.BuyCardPage]
-class BuyCardRoute extends _i26.PageRouteInfo<void> {
-  const BuyCardRoute({List<_i26.PageRouteInfo>? children})
-      : super(
+class BuyCardRoute extends _i26.PageRouteInfo<BuyCardRouteArgs> {
+  BuyCardRoute({
+    _i30.Key? key,
+    required _i32.Future<_i33.BuyCardModel?> method,
+    List<_i26.PageRouteInfo>? children,
+  }) : super(
           BuyCardRoute.name,
+          args: BuyCardRouteArgs(
+            key: key,
+            method: method,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'BuyCardRoute';
 
-  static const _i26.PageInfo<void> page = _i26.PageInfo<void>(name);
+  static const _i26.PageInfo<BuyCardRouteArgs> page =
+      _i26.PageInfo<BuyCardRouteArgs>(name);
+}
+
+class BuyCardRouteArgs {
+  const BuyCardRouteArgs({
+    this.key,
+    required this.method,
+  });
+
+  final _i30.Key? key;
+
+  final _i32.Future<_i33.BuyCardModel?> method;
+
+  @override
+  String toString() {
+    return 'BuyCardRouteArgs{key: $key, method: $method}';
+  }
 }
 
 /// generated route for
@@ -527,7 +558,7 @@ class CardConnectRoute extends _i26.PageRouteInfo<CardConnectRouteArgs> {
   CardConnectRoute({
     _i30.Key? key,
     String? receivedData,
-    void Function(({_i32.AbstractCard? card, int index}))? onChangeCard,
+    void Function(({_i34.AbstractCard? card, int index}))? onChangeCard,
     List<_i26.PageRouteInfo>? children,
   }) : super(
           CardConnectRoute.name,
@@ -556,7 +587,7 @@ class CardConnectRouteArgs {
 
   final String? receivedData;
 
-  final void Function(({_i32.AbstractCard? card, int index}))? onChangeCard;
+  final void Function(({_i34.AbstractCard? card, int index}))? onChangeCard;
 
   @override
   String toString() {
@@ -632,7 +663,7 @@ class CardConnectWithNfcArgs {
 class CardSettingsRoute extends _i26.PageRouteInfo<CardSettingsRouteArgs> {
   CardSettingsRoute({
     _i30.Key? key,
-    required _i33.CardModel card,
+    required _i35.CardModel card,
     List<_i26.PageRouteInfo>? children,
   }) : super(
           CardSettingsRoute.name,
@@ -657,7 +688,7 @@ class CardSettingsRouteArgs {
 
   final _i30.Key? key;
 
-  final _i33.CardModel card;
+  final _i35.CardModel card;
 
   @override
   String toString() {
@@ -684,7 +715,7 @@ class ChangePinCode extends _i26.PageRouteInfo<void> {
 class CoinChartRoute extends _i26.PageRouteInfo<CoinChartRouteArgs> {
   CoinChartRoute({
     _i29.Key? key,
-    required _i34.CoinResultModel? data,
+    required _i36.CoinResultModel? data,
     List<_i26.PageRouteInfo>? children,
   }) : super(
           CoinChartRoute.name,
@@ -709,7 +740,7 @@ class CoinChartRouteArgs {
 
   final _i29.Key? key;
 
-  final _i34.CoinResultModel? data;
+  final _i36.CoinResultModel? data;
 
   @override
   String toString() {
@@ -808,9 +839,9 @@ class PinCodeForPrivateKey
   PinCodeForPrivateKey({
     _i30.Key? key,
     _i31.BarModel? bar,
-    _i35.BarSettingState? isKeyVisible,
-    _i33.CardModel? card,
-    _i36.CardSettingState? isVisible,
+    _i37.BarSettingState? isKeyVisible,
+    _i35.CardModel? card,
+    _i38.CardSettingState? isVisible,
     List<_i26.PageRouteInfo>? children,
   }) : super(
           PinCodeForPrivateKey.name,
@@ -843,11 +874,11 @@ class PinCodeForPrivateKeyArgs {
 
   final _i31.BarModel? bar;
 
-  final _i35.BarSettingState? isKeyVisible;
+  final _i37.BarSettingState? isKeyVisible;
 
-  final _i33.CardModel? card;
+  final _i35.CardModel? card;
 
-  final _i36.CardSettingState? isVisible;
+  final _i38.CardSettingState? isVisible;
 
   @override
   String toString() {

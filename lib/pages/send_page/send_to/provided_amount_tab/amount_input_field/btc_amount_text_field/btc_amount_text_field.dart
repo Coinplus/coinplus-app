@@ -2,15 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gaimon/gaimon.dart';
 
 import '/../../../../extensions/num_extension.dart';
+import '../../../../../../extensions/extensions.dart';
 import '../../../../../../gen/colors.gen.dart';
 import '../../../../../../gen/fonts.gen.dart';
+import '../../../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../../../../services/amplitude_service.dart';
 import '../../../send_to_state.dart';
 import '../usd_amount_text_field/comma_formatter.dart';
 
-class BtcAmountTextField extends StatelessWidget {
+class BtcAmountTextField extends HookWidget {
   const BtcAmountTextField({
     super.key,
     required this.btcFocusNode,
@@ -22,6 +26,10 @@ class BtcAmountTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = useMemoized(
+      () => NumberFormat.decimalPattern(context.locale.toString()),
+      [context.locale],
+    );
     return Expanded(
       child: Center(
         child: IntrinsicWidth(
@@ -85,6 +93,15 @@ class BtcAmountTextField extends StatelessWidget {
                             btcCurrentPrice: state.btcPrice,
                           );
                           state.setAmount(btcToUsd.toString());
+                          recordAmplitudeEventPartTwo(
+                            AmountEntered(
+                              amount: '${value}BTC',
+                              balance:
+                                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
+                              fee:
+                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                            ),
+                          );
                           state.transactionsStore.findOptimalUtxo();
                           final amountToDouble = double.tryParse(value);
                           if (value.isNotEmpty) {

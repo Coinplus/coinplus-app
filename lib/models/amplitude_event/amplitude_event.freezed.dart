@@ -88,8 +88,10 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return ShareAddressClicked.fromJson(json);
     case 'gotItSendClicked':
       return GotItSendClicked.fromJson(json);
-    case 'sendAnywayClicked':
-      return SendAnywayClicked.fromJson(json);
+    case 'iNeedToSendNow':
+      return IneedToSendNow.fromJson(json);
+    case 'iNeedToSendGotIt':
+      return IneedToSendGotIt.fromJson(json);
     case 'backButtonClicked':
       return BackButtonClicked.fromJson(json);
     case 'secret1Validated':
@@ -190,7 +192,8 @@ mixin _$AmplitudeEvent {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -276,7 +279,8 @@ mixin _$AmplitudeEvent {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -359,7 +363,8 @@ mixin _$AmplitudeEvent {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -413,7 +418,8 @@ mixin _$AmplitudeEvent {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -458,7 +464,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -503,15 +510,21 @@ mixin _$AmplitudeEvent {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this AmplitudeEvent to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AmplitudeEventCopyWith<AmplitudeEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -535,6 +548,8 @@ class _$AmplitudeEventCopyWithImpl<$Res, $Val extends AmplitudeEvent>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -568,6 +583,8 @@ class __$$ConnectWalletClickedImplCopyWithImpl<$Res>
       $Res Function(_$ConnectWalletClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -623,11 +640,13 @@ class _$ConnectWalletClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConnectWalletClickedImplCopyWith<_$ConnectWalletClickedImpl>
@@ -720,7 +739,8 @@ class _$ConnectWalletClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -809,7 +829,8 @@ class _$ConnectWalletClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -895,7 +916,8 @@ class _$ConnectWalletClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -955,7 +977,8 @@ class _$ConnectWalletClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -1003,7 +1026,8 @@ class _$ConnectWalletClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -1051,7 +1075,8 @@ class _$ConnectWalletClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -1080,8 +1105,11 @@ abstract class ConnectWalletClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConnectWalletClickedImplCopyWith<_$ConnectWalletClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1107,6 +1135,8 @@ class __$$ConnectManuallyClickedImplCopyWithImpl<$Res>
       $Res Function(_$ConnectManuallyClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1174,11 +1204,13 @@ class _$ConnectManuallyClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConnectManuallyClickedImplCopyWith<_$ConnectManuallyClickedImpl>
@@ -1270,7 +1302,8 @@ class _$ConnectManuallyClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -1359,7 +1392,8 @@ class _$ConnectManuallyClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -1445,7 +1479,8 @@ class _$ConnectManuallyClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -1505,7 +1540,8 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -1553,7 +1589,8 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -1601,7 +1638,8 @@ class _$ConnectManuallyClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -1632,8 +1670,11 @@ abstract class ConnectManuallyClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConnectManuallyClickedImplCopyWith<_$ConnectManuallyClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -1658,6 +1699,8 @@ class __$$ConnectWitchQrClickedImplCopyWithImpl<$Res>
       $Res Function(_$ConnectWitchQrClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1724,11 +1767,13 @@ class _$ConnectWitchQrClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConnectWitchQrClickedImplCopyWith<_$ConnectWitchQrClickedImpl>
@@ -1820,7 +1865,8 @@ class _$ConnectWitchQrClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -1909,7 +1955,8 @@ class _$ConnectWitchQrClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -1995,7 +2042,8 @@ class _$ConnectWitchQrClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -2055,7 +2103,8 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -2103,7 +2152,8 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -2151,7 +2201,8 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -2182,8 +2233,11 @@ abstract class ConnectWitchQrClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConnectWitchQrClickedImplCopyWith<_$ConnectWitchQrClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -2207,6 +2261,8 @@ class __$$QrButtonClickedImplCopyWithImpl<$Res>
       _$QrButtonClickedImpl _value, $Res Function(_$QrButtonClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2284,11 +2340,13 @@ class _$QrButtonClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, walletType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QrButtonClickedImplCopyWith<_$QrButtonClickedImpl> get copyWith =>
@@ -2380,7 +2438,8 @@ class _$QrButtonClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -2469,7 +2528,8 @@ class _$QrButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -2555,7 +2615,8 @@ class _$QrButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -2615,7 +2676,8 @@ class _$QrButtonClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -2663,7 +2725,8 @@ class _$QrButtonClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -2711,7 +2774,8 @@ class _$QrButtonClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -2744,8 +2808,11 @@ abstract class QrButtonClicked implements AmplitudeEvent {
   String get eventType;
   String get walletType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QrButtonClickedImplCopyWith<_$QrButtonClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -2769,6 +2836,8 @@ class __$$QrScannedImplCopyWithImpl<$Res>
       _$QrScannedImpl _value, $Res Function(_$QrScannedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2844,12 +2913,14 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$QrScannedImplCopyWith<_$QrScannedImpl> get copyWith =>
@@ -2940,7 +3011,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -3029,7 +3101,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -3115,7 +3188,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -3175,7 +3249,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -3223,7 +3298,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -3271,7 +3347,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -3304,8 +3381,11 @@ abstract class QrScanned implements AmplitudeEvent {
   String get eventType;
   String get source;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$QrScannedImplCopyWith<_$QrScannedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3329,6 +3409,8 @@ class __$$BuyNewCardClickedImplCopyWithImpl<$Res>
       $Res Function(_$BuyNewCardClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3395,11 +3477,13 @@ class _$BuyNewCardClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BuyNewCardClickedImplCopyWith<_$BuyNewCardClickedImpl> get copyWith =>
@@ -3491,7 +3575,8 @@ class _$BuyNewCardClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -3580,7 +3665,8 @@ class _$BuyNewCardClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -3666,7 +3752,8 @@ class _$BuyNewCardClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -3726,7 +3813,8 @@ class _$BuyNewCardClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -3774,7 +3862,8 @@ class _$BuyNewCardClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -3822,7 +3911,8 @@ class _$BuyNewCardClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -3853,8 +3943,11 @@ abstract class BuyNewCardClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BuyNewCardClickedImplCopyWith<_$BuyNewCardClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -3879,6 +3972,8 @@ class __$$ConnectOptionSelectedImplCopyWithImpl<$Res>
       $Res Function(_$ConnectOptionSelectedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -3956,12 +4051,14 @@ class _$ConnectOptionSelectedImpl
                 other.connectOption == connectOption));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, connectOption);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ConnectOptionSelectedImplCopyWith<_$ConnectOptionSelectedImpl>
@@ -4053,7 +4150,8 @@ class _$ConnectOptionSelectedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -4142,7 +4240,8 @@ class _$ConnectOptionSelectedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -4228,7 +4327,8 @@ class _$ConnectOptionSelectedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -4288,7 +4388,8 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -4336,7 +4437,8 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -4384,7 +4486,8 @@ class _$ConnectOptionSelectedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -4417,8 +4520,11 @@ abstract class ConnectOptionSelected implements AmplitudeEvent {
   String get eventType;
   String get source;
   String get connectOption;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConnectOptionSelectedImplCopyWith<_$ConnectOptionSelectedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -4442,6 +4548,8 @@ class __$$NfcTappedImplCopyWithImpl<$Res>
       _$NfcTappedImpl _value, $Res Function(_$NfcTappedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -4517,12 +4625,14 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NfcTappedImplCopyWith<_$NfcTappedImpl> get copyWith =>
@@ -4613,7 +4723,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -4702,7 +4813,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -4788,7 +4900,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -4848,7 +4961,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -4896,7 +5010,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -4944,7 +5059,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -4977,8 +5093,11 @@ abstract class NfcTapped implements AmplitudeEvent {
   String get eventType;
   String get source;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NfcTappedImplCopyWith<_$NfcTappedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -5002,6 +5121,8 @@ class __$$NfcClosedImplCopyWithImpl<$Res>
       _$NfcClosedImpl _value, $Res Function(_$NfcClosedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -5066,11 +5187,13 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NfcClosedImplCopyWith<_$NfcClosedImpl> get copyWith =>
@@ -5161,7 +5284,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -5250,7 +5374,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -5336,7 +5461,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -5396,7 +5522,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -5444,7 +5571,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -5492,7 +5620,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -5522,8 +5651,11 @@ abstract class NfcClosed implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NfcClosedImplCopyWith<_$NfcClosedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -5551,6 +5683,8 @@ class __$$AddressFilledImplCopyWithImpl<$Res>
       _$AddressFilledImpl _value, $Res Function(_$AddressFilledImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -5639,12 +5773,14 @@ class _$AddressFilledImpl
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddressFilledImplCopyWith<_$AddressFilledImpl> get copyWith =>
@@ -5735,7 +5871,8 @@ class _$AddressFilledImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -5824,7 +5961,8 @@ class _$AddressFilledImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -5910,7 +6048,8 @@ class _$AddressFilledImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -5970,7 +6109,8 @@ class _$AddressFilledImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -6018,7 +6158,8 @@ class _$AddressFilledImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -6066,7 +6207,8 @@ class _$AddressFilledImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -6101,8 +6243,11 @@ abstract class AddressFilled implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddressFilledImplCopyWith<_$AddressFilledImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -6130,6 +6275,8 @@ class __$$DeeplinkClickedImplCopyWithImpl<$Res>
       _$DeeplinkClickedImpl _value, $Res Function(_$DeeplinkClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -6218,12 +6365,14 @@ class _$DeeplinkClickedImpl
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DeeplinkClickedImplCopyWith<_$DeeplinkClickedImpl> get copyWith =>
@@ -6315,7 +6464,8 @@ class _$DeeplinkClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -6404,7 +6554,8 @@ class _$DeeplinkClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -6490,7 +6641,8 @@ class _$DeeplinkClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -6550,7 +6702,8 @@ class _$DeeplinkClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -6598,7 +6751,8 @@ class _$DeeplinkClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -6646,7 +6800,8 @@ class _$DeeplinkClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -6681,8 +6836,11 @@ abstract class DeeplinkClicked implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeeplinkClickedImplCopyWith<_$DeeplinkClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -6706,6 +6864,8 @@ class __$$TypeSelectedImplCopyWithImpl<$Res>
       _$TypeSelectedImpl _value, $Res Function(_$TypeSelectedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -6781,11 +6941,13 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
                 other.walletType == walletType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source, walletType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TypeSelectedImplCopyWith<_$TypeSelectedImpl> get copyWith =>
@@ -6876,7 +7038,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -6965,7 +7128,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -7051,7 +7215,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -7111,7 +7276,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -7159,7 +7325,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -7207,7 +7374,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -7240,8 +7408,11 @@ abstract class TypeSelected implements AmplitudeEvent {
   String get eventType;
   String get source;
   String get walletType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TypeSelectedImplCopyWith<_$TypeSelectedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -7269,6 +7440,8 @@ class __$$SaveToWalletClickedImplCopyWithImpl<$Res>
       $Res Function(_$SaveToWalletClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -7357,12 +7530,14 @@ class _$SaveToWalletClickedImpl
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SaveToWalletClickedImplCopyWith<_$SaveToWalletClickedImpl> get copyWith =>
@@ -7454,7 +7629,8 @@ class _$SaveToWalletClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -7543,7 +7719,8 @@ class _$SaveToWalletClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -7630,7 +7807,8 @@ class _$SaveToWalletClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -7690,7 +7868,8 @@ class _$SaveToWalletClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -7738,7 +7917,8 @@ class _$SaveToWalletClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -7786,7 +7966,8 @@ class _$SaveToWalletClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -7821,8 +8002,11 @@ abstract class SaveToWalletClicked implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SaveToWalletClickedImplCopyWith<_$SaveToWalletClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -7848,6 +8032,8 @@ class __$$AlreadySavedGotItClickedImplCopyWithImpl<$Res>
       $Res Function(_$AlreadySavedGotItClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -7927,12 +8113,14 @@ class _$AlreadySavedGotItClickedImpl
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AlreadySavedGotItClickedImplCopyWith<_$AlreadySavedGotItClickedImpl>
@@ -8024,7 +8212,8 @@ class _$AlreadySavedGotItClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -8113,7 +8302,8 @@ class _$AlreadySavedGotItClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -8199,7 +8389,8 @@ class _$AlreadySavedGotItClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -8259,7 +8450,8 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -8307,7 +8499,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -8355,7 +8548,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -8388,8 +8582,11 @@ abstract class AlreadySavedGotItClicked implements AmplitudeEvent {
   String get eventType;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AlreadySavedGotItClickedImplCopyWith<_$AlreadySavedGotItClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -8419,6 +8616,8 @@ class __$$ActivatedCheckboxClickedImplCopyWithImpl<$Res>
       $Res Function(_$ActivatedCheckboxClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -8508,12 +8707,14 @@ class _$ActivatedCheckboxClickedImpl
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ActivatedCheckboxClickedImplCopyWith<_$ActivatedCheckboxClickedImpl>
@@ -8605,7 +8806,8 @@ class _$ActivatedCheckboxClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -8695,7 +8897,8 @@ class _$ActivatedCheckboxClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -8782,7 +8985,8 @@ class _$ActivatedCheckboxClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -8843,7 +9047,8 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -8891,7 +9096,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -8939,7 +9145,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -8974,8 +9181,11 @@ abstract class ActivatedCheckboxClicked implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ActivatedCheckboxClickedImplCopyWith<_$ActivatedCheckboxClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -9003,6 +9213,8 @@ class __$$GotItClickedImplCopyWithImpl<$Res>
       _$GotItClickedImpl _value, $Res Function(_$GotItClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -9089,12 +9301,14 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GotItClickedImplCopyWith<_$GotItClickedImpl> get copyWith =>
@@ -9185,7 +9399,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -9274,7 +9489,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -9360,7 +9576,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -9420,7 +9637,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -9468,7 +9686,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -9516,7 +9735,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -9551,8 +9771,11 @@ abstract class GotItClicked implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GotItClickedImplCopyWith<_$GotItClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -9580,6 +9803,8 @@ class __$$FakeWalletImplCopyWithImpl<$Res>
       _$FakeWalletImpl _value, $Res Function(_$FakeWalletImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -9666,12 +9891,14 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
                 other.walletAddress == walletAddress));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, source, walletType, walletAddress);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FakeWalletImplCopyWith<_$FakeWalletImpl> get copyWith =>
@@ -9762,7 +9989,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -9851,7 +10079,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -9937,7 +10166,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -9997,7 +10227,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -10045,7 +10276,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -10093,7 +10325,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -10128,8 +10361,11 @@ abstract class FakeWallet implements AmplitudeEvent {
   String get source;
   String get walletType;
   String get walletAddress;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FakeWalletImplCopyWith<_$FakeWalletImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -10155,6 +10391,8 @@ class __$$WarningCheckboxClickedImplCopyWithImpl<$Res>
       $Res Function(_$WarningCheckboxClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -10211,11 +10449,13 @@ class _$WarningCheckboxClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WarningCheckboxClickedImplCopyWith<_$WarningCheckboxClickedImpl>
@@ -10307,7 +10547,8 @@ class _$WarningCheckboxClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -10396,7 +10637,8 @@ class _$WarningCheckboxClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -10482,7 +10724,8 @@ class _$WarningCheckboxClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -10542,7 +10785,8 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -10590,7 +10834,8 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -10638,7 +10883,8 @@ class _$WarningCheckboxClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -10667,8 +10913,11 @@ abstract class WarningCheckboxClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WarningCheckboxClickedImplCopyWith<_$WarningCheckboxClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -10692,6 +10941,8 @@ class __$$AppLockEnabledImplCopyWithImpl<$Res>
       _$AppLockEnabledImpl _value, $Res Function(_$AppLockEnabledImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -10747,11 +10998,13 @@ class _$AppLockEnabledImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AppLockEnabledImplCopyWith<_$AppLockEnabledImpl> get copyWith =>
@@ -10843,7 +11096,8 @@ class _$AppLockEnabledImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -10932,7 +11186,8 @@ class _$AppLockEnabledImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -11018,7 +11273,8 @@ class _$AppLockEnabledImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -11078,7 +11334,8 @@ class _$AppLockEnabledImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -11126,7 +11383,8 @@ class _$AppLockEnabledImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -11174,7 +11432,8 @@ class _$AppLockEnabledImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -11202,8 +11461,11 @@ abstract class AppLockEnabled implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AppLockEnabledImplCopyWith<_$AppLockEnabledImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -11227,6 +11489,8 @@ class __$$NotNowLockClickedImplCopyWithImpl<$Res>
       $Res Function(_$NotNowLockClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -11282,11 +11546,13 @@ class _$NotNowLockClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$NotNowLockClickedImplCopyWith<_$NotNowLockClickedImpl> get copyWith =>
@@ -11378,7 +11644,8 @@ class _$NotNowLockClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -11467,7 +11734,8 @@ class _$NotNowLockClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -11553,7 +11821,8 @@ class _$NotNowLockClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -11613,7 +11882,8 @@ class _$NotNowLockClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -11661,7 +11931,8 @@ class _$NotNowLockClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -11709,7 +11980,8 @@ class _$NotNowLockClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -11738,8 +12010,11 @@ abstract class NotNowLockClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$NotNowLockClickedImplCopyWith<_$NotNowLockClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -11763,6 +12038,8 @@ class __$$WalletTabClickedImplCopyWithImpl<$Res>
       $Res Function(_$WalletTabClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -11818,11 +12095,13 @@ class _$WalletTabClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WalletTabClickedImplCopyWith<_$WalletTabClickedImpl> get copyWith =>
@@ -11914,7 +12193,8 @@ class _$WalletTabClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -12003,7 +12283,8 @@ class _$WalletTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -12089,7 +12370,8 @@ class _$WalletTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -12149,7 +12431,8 @@ class _$WalletTabClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -12197,7 +12480,8 @@ class _$WalletTabClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -12245,7 +12529,8 @@ class _$WalletTabClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -12274,8 +12559,11 @@ abstract class WalletTabClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WalletTabClickedImplCopyWith<_$WalletTabClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -12299,6 +12587,8 @@ class __$$MarketTabClickedImplCopyWithImpl<$Res>
       $Res Function(_$MarketTabClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -12354,11 +12644,13 @@ class _$MarketTabClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MarketTabClickedImplCopyWith<_$MarketTabClickedImpl> get copyWith =>
@@ -12450,7 +12742,8 @@ class _$MarketTabClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -12539,7 +12832,8 @@ class _$MarketTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -12625,7 +12919,8 @@ class _$MarketTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -12685,7 +12980,8 @@ class _$MarketTabClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -12733,7 +13029,8 @@ class _$MarketTabClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -12781,7 +13078,8 @@ class _$MarketTabClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -12810,8 +13108,11 @@ abstract class MarketTabClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MarketTabClickedImplCopyWith<_$MarketTabClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -12835,6 +13136,8 @@ class __$$HistoryTabClickedImplCopyWithImpl<$Res>
       $Res Function(_$HistoryTabClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -12890,11 +13193,13 @@ class _$HistoryTabClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryTabClickedImplCopyWith<_$HistoryTabClickedImpl> get copyWith =>
@@ -12986,7 +13291,8 @@ class _$HistoryTabClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -13075,7 +13381,8 @@ class _$HistoryTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -13161,7 +13468,8 @@ class _$HistoryTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -13221,7 +13529,8 @@ class _$HistoryTabClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -13269,7 +13578,8 @@ class _$HistoryTabClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -13317,7 +13627,8 @@ class _$HistoryTabClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -13346,8 +13657,11 @@ abstract class HistoryTabClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HistoryTabClickedImplCopyWith<_$HistoryTabClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -13371,6 +13685,8 @@ class __$$SettingsTabClickedImplCopyWithImpl<$Res>
       $Res Function(_$SettingsTabClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -13426,11 +13742,13 @@ class _$SettingsTabClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SettingsTabClickedImplCopyWith<_$SettingsTabClickedImpl> get copyWith =>
@@ -13522,7 +13840,8 @@ class _$SettingsTabClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -13611,7 +13930,8 @@ class _$SettingsTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -13697,7 +14017,8 @@ class _$SettingsTabClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -13757,7 +14078,8 @@ class _$SettingsTabClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -13805,7 +14127,8 @@ class _$SettingsTabClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -13853,7 +14176,8 @@ class _$SettingsTabClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -13882,8 +14206,11 @@ abstract class SettingsTabClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SettingsTabClickedImplCopyWith<_$SettingsTabClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -13913,6 +14240,8 @@ class __$$TransactionsButtonClickedImplCopyWithImpl<$Res>
       $Res Function(_$TransactionsButtonClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -14003,12 +14332,14 @@ class _$TransactionsButtonClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TransactionsButtonClickedImplCopyWith<_$TransactionsButtonClickedImpl>
@@ -14100,7 +14431,8 @@ class _$TransactionsButtonClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -14190,7 +14522,8 @@ class _$TransactionsButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -14277,7 +14610,8 @@ class _$TransactionsButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -14338,7 +14672,8 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -14386,7 +14721,8 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -14434,7 +14770,8 @@ class _$TransactionsButtonClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -14469,8 +14806,11 @@ abstract class TransactionsButtonClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TransactionsButtonClickedImplCopyWith<_$TransactionsButtonClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -14494,6 +14834,8 @@ class __$$AddNewClickedImplCopyWithImpl<$Res>
       _$AddNewClickedImpl _value, $Res Function(_$AddNewClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -14560,11 +14902,13 @@ class _$AddNewClickedImpl
             (identical(other.tab, tab) || other.tab == tab));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, tab);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddNewClickedImplCopyWith<_$AddNewClickedImpl> get copyWith =>
@@ -14655,7 +14999,8 @@ class _$AddNewClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -14744,7 +15089,8 @@ class _$AddNewClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -14830,7 +15176,8 @@ class _$AddNewClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -14890,7 +15237,8 @@ class _$AddNewClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -14938,7 +15286,8 @@ class _$AddNewClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -14986,7 +15335,8 @@ class _$AddNewClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -15017,8 +15367,11 @@ abstract class AddNewClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get tab;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddNewClickedImplCopyWith<_$AddNewClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -15042,6 +15395,8 @@ class __$$AddNewPlusClickedImplCopyWithImpl<$Res>
       $Res Function(_$AddNewPlusClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -15108,11 +15463,13 @@ class _$AddNewPlusClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddNewPlusClickedImplCopyWith<_$AddNewPlusClickedImpl> get copyWith =>
@@ -15204,7 +15561,8 @@ class _$AddNewPlusClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -15293,7 +15651,8 @@ class _$AddNewPlusClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -15379,7 +15738,8 @@ class _$AddNewPlusClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -15439,7 +15799,8 @@ class _$AddNewPlusClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -15487,7 +15848,8 @@ class _$AddNewPlusClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -15535,7 +15897,8 @@ class _$AddNewPlusClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -15566,8 +15929,11 @@ abstract class AddNewPlusClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddNewPlusClickedImplCopyWith<_$AddNewPlusClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -15592,6 +15958,8 @@ class __$$WalletSettingsClickedImplCopyWithImpl<$Res>
       $Res Function(_$WalletSettingsClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -15670,12 +16038,14 @@ class _$WalletSettingsClickedImpl
                 other.walletType == walletType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletAddress, walletType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WalletSettingsClickedImplCopyWith<_$WalletSettingsClickedImpl>
@@ -15767,7 +16137,8 @@ class _$WalletSettingsClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -15856,7 +16227,8 @@ class _$WalletSettingsClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -15942,7 +16314,8 @@ class _$WalletSettingsClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -16002,7 +16375,8 @@ class _$WalletSettingsClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -16050,7 +16424,8 @@ class _$WalletSettingsClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -16098,7 +16473,8 @@ class _$WalletSettingsClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -16131,8 +16507,11 @@ abstract class WalletSettingsClicked implements AmplitudeEvent {
   String get eventType;
   String get walletAddress;
   String get walletType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WalletSettingsClickedImplCopyWith<_$WalletSettingsClickedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -16160,6 +16539,8 @@ class __$$TopUpButtonClickedImplCopyWithImpl<$Res>
       $Res Function(_$TopUpButtonClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -16249,12 +16630,14 @@ class _$TopUpButtonClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TopUpButtonClickedImplCopyWith<_$TopUpButtonClickedImpl> get copyWith =>
@@ -16346,7 +16729,8 @@ class _$TopUpButtonClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -16435,7 +16819,8 @@ class _$TopUpButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -16522,7 +16907,8 @@ class _$TopUpButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -16583,7 +16969,8 @@ class _$TopUpButtonClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -16631,7 +17018,8 @@ class _$TopUpButtonClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -16679,7 +17067,8 @@ class _$TopUpButtonClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -16714,8 +17103,11 @@ abstract class TopUpButtonClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TopUpButtonClickedImplCopyWith<_$TopUpButtonClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -16743,6 +17135,8 @@ class __$$ReceiveClickedImplCopyWithImpl<$Res>
       _$ReceiveClickedImpl _value, $Res Function(_$ReceiveClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -16832,12 +17226,14 @@ class _$ReceiveClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ReceiveClickedImplCopyWith<_$ReceiveClickedImpl> get copyWith =>
@@ -16929,7 +17325,8 @@ class _$ReceiveClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -17018,7 +17415,8 @@ class _$ReceiveClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -17105,7 +17503,8 @@ class _$ReceiveClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -17165,7 +17564,8 @@ class _$ReceiveClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -17213,7 +17613,8 @@ class _$ReceiveClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -17261,7 +17662,8 @@ class _$ReceiveClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -17296,8 +17698,11 @@ abstract class ReceiveClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReceiveClickedImplCopyWith<_$ReceiveClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -17325,6 +17730,8 @@ class __$$SendClickedImplCopyWithImpl<$Res>
       _$SendClickedImpl _value, $Res Function(_$SendClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -17412,12 +17819,14 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SendClickedImplCopyWith<_$SendClickedImpl> get copyWith =>
@@ -17508,7 +17917,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -17597,7 +18007,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -17683,7 +18094,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -17743,7 +18155,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -17791,7 +18204,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -17839,7 +18253,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -17874,8 +18289,11 @@ abstract class SendClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SendClickedImplCopyWith<_$SendClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -17903,6 +18321,8 @@ class __$$BuyWithCardClickedImplCopyWithImpl<$Res>
       $Res Function(_$BuyWithCardClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -17992,12 +18412,14 @@ class _$BuyWithCardClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BuyWithCardClickedImplCopyWith<_$BuyWithCardClickedImpl> get copyWith =>
@@ -18089,7 +18511,8 @@ class _$BuyWithCardClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -18178,7 +18601,8 @@ class _$BuyWithCardClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -18265,7 +18689,8 @@ class _$BuyWithCardClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -18326,7 +18751,8 @@ class _$BuyWithCardClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -18374,7 +18800,8 @@ class _$BuyWithCardClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -18422,7 +18849,8 @@ class _$BuyWithCardClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -18457,8 +18885,11 @@ abstract class BuyWithCardClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BuyWithCardClickedImplCopyWith<_$BuyWithCardClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -18486,6 +18917,8 @@ class __$$HistoryClickedImplCopyWithImpl<$Res>
       _$HistoryClickedImpl _value, $Res Function(_$HistoryClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -18575,12 +19008,14 @@ class _$HistoryClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HistoryClickedImplCopyWith<_$HistoryClickedImpl> get copyWith =>
@@ -18672,7 +19107,8 @@ class _$HistoryClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -18761,7 +19197,8 @@ class _$HistoryClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -18848,7 +19285,8 @@ class _$HistoryClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -18908,7 +19346,8 @@ class _$HistoryClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -18956,7 +19395,8 @@ class _$HistoryClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -19004,7 +19444,8 @@ class _$HistoryClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -19039,8 +19480,11 @@ abstract class HistoryClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HistoryClickedImplCopyWith<_$HistoryClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -19069,6 +19513,8 @@ class __$$AddressCopiedImplCopyWithImpl<$Res>
       _$AddressCopiedImpl _value, $Res Function(_$AddressCopiedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -19168,12 +19614,14 @@ class _$AddressCopiedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, eventType, source, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AddressCopiedImplCopyWith<_$AddressCopiedImpl> get copyWith =>
@@ -19264,7 +19712,8 @@ class _$AddressCopiedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -19354,7 +19803,8 @@ class _$AddressCopiedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -19441,7 +19891,8 @@ class _$AddressCopiedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -19502,7 +19953,8 @@ class _$AddressCopiedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -19550,7 +20002,8 @@ class _$AddressCopiedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -19598,7 +20051,8 @@ class _$AddressCopiedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -19635,8 +20089,11 @@ abstract class AddressCopied implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AddressCopiedImplCopyWith<_$AddressCopiedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -19664,6 +20121,8 @@ class __$$ShareAddressClickedImplCopyWithImpl<$Res>
       $Res Function(_$ShareAddressClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -19753,12 +20212,14 @@ class _$ShareAddressClickedImpl
                 other.activated == activated));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletType, walletAddress, activated);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ShareAddressClickedImplCopyWith<_$ShareAddressClickedImpl> get copyWith =>
@@ -19850,7 +20311,8 @@ class _$ShareAddressClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -19939,7 +20401,8 @@ class _$ShareAddressClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -20026,7 +20489,8 @@ class _$ShareAddressClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -20087,7 +20551,8 @@ class _$ShareAddressClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -20135,7 +20600,8 @@ class _$ShareAddressClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -20183,7 +20649,8 @@ class _$ShareAddressClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -20218,8 +20685,11 @@ abstract class ShareAddressClicked implements AmplitudeEvent {
   String get walletType;
   String get walletAddress;
   bool get activated;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ShareAddressClickedImplCopyWith<_$ShareAddressClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -20243,6 +20713,8 @@ class __$$GotItSendClickedImplCopyWithImpl<$Res>
       $Res Function(_$GotItSendClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -20298,11 +20770,13 @@ class _$GotItSendClickedImpl
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GotItSendClickedImplCopyWith<_$GotItSendClickedImpl> get copyWith =>
@@ -20394,7 +20868,8 @@ class _$GotItSendClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -20483,7 +20958,8 @@ class _$GotItSendClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -20569,7 +21045,8 @@ class _$GotItSendClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -20629,7 +21106,8 @@ class _$GotItSendClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -20677,7 +21155,8 @@ class _$GotItSendClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -20725,7 +21204,8 @@ class _$GotItSendClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -20754,37 +21234,42 @@ abstract class GotItSendClicked implements AmplitudeEvent {
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GotItSendClickedImplCopyWith<_$GotItSendClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SendAnywayClickedImplCopyWith<$Res>
+abstract class _$$IneedToSendNowImplCopyWith<$Res>
     implements $AmplitudeEventCopyWith<$Res> {
-  factory _$$SendAnywayClickedImplCopyWith(_$SendAnywayClickedImpl value,
-          $Res Function(_$SendAnywayClickedImpl) then) =
-      __$$SendAnywayClickedImplCopyWithImpl<$Res>;
+  factory _$$IneedToSendNowImplCopyWith(_$IneedToSendNowImpl value,
+          $Res Function(_$IneedToSendNowImpl) then) =
+      __$$IneedToSendNowImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String eventType});
 }
 
 /// @nodoc
-class __$$SendAnywayClickedImplCopyWithImpl<$Res>
-    extends _$AmplitudeEventCopyWithImpl<$Res, _$SendAnywayClickedImpl>
-    implements _$$SendAnywayClickedImplCopyWith<$Res> {
-  __$$SendAnywayClickedImplCopyWithImpl(_$SendAnywayClickedImpl _value,
-      $Res Function(_$SendAnywayClickedImpl) _then)
+class __$$IneedToSendNowImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$IneedToSendNowImpl>
+    implements _$$IneedToSendNowImplCopyWith<$Res> {
+  __$$IneedToSendNowImplCopyWithImpl(
+      _$IneedToSendNowImpl _value, $Res Function(_$IneedToSendNowImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? eventType = null,
   }) {
-    return _then(_$SendAnywayClickedImpl(
+    return _then(_$IneedToSendNowImpl(
       eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
@@ -20795,15 +21280,15 @@ class __$$SendAnywayClickedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SendAnywayClickedImpl
+class _$IneedToSendNowImpl
     with DiagnosticableTreeMixin
-    implements SendAnywayClicked {
-  const _$SendAnywayClickedImpl(
-      {this.eventType = 'SEND_ANYWAY_CLICKED', final String? $type})
-      : $type = $type ?? 'sendAnywayClicked';
+    implements IneedToSendNow {
+  const _$IneedToSendNowImpl(
+      {this.eventType = 'I_NEED_TO_SEND_NOW', final String? $type})
+      : $type = $type ?? 'iNeedToSendNow';
 
-  factory _$SendAnywayClickedImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SendAnywayClickedImplFromJson(json);
+  factory _$IneedToSendNowImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IneedToSendNowImplFromJson(json);
 
   @override
   @JsonKey()
@@ -20814,14 +21299,14 @@ class _$SendAnywayClickedImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AmplitudeEvent.sendAnywayClicked(eventType: $eventType)';
+    return 'AmplitudeEvent.iNeedToSendNow(eventType: $eventType)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.sendAnywayClicked'))
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.iNeedToSendNow'))
       ..add(DiagnosticsProperty('eventType', eventType));
   }
 
@@ -20829,20 +21314,22 @@ class _$SendAnywayClickedImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SendAnywayClickedImpl &&
+            other is _$IneedToSendNowImpl &&
             (identical(other.eventType, eventType) ||
                 other.eventType == eventType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SendAnywayClickedImplCopyWith<_$SendAnywayClickedImpl> get copyWith =>
-      __$$SendAnywayClickedImplCopyWithImpl<_$SendAnywayClickedImpl>(
+  _$$IneedToSendNowImplCopyWith<_$IneedToSendNowImpl> get copyWith =>
+      __$$IneedToSendNowImplCopyWithImpl<_$IneedToSendNowImpl>(
           this, _$identity);
 
   @override
@@ -20930,7 +21417,8 @@ class _$SendAnywayClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -20940,7 +21428,7 @@ class _$SendAnywayClickedImpl
             String eventType, String walletAddress, String walletType)
         secret2Validated,
   }) {
-    return sendAnywayClicked(eventType);
+    return iNeedToSendNow(eventType);
   }
 
   @override
@@ -21019,7 +21507,8 @@ class _$SendAnywayClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -21028,7 +21517,7 @@ class _$SendAnywayClickedImpl
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
   }) {
-    return sendAnywayClicked?.call(eventType);
+    return iNeedToSendNow?.call(eventType);
   }
 
   @override
@@ -21105,7 +21594,8 @@ class _$SendAnywayClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -21113,8 +21603,8 @@ class _$SendAnywayClickedImpl
         secret2Validated,
     required TResult orElse(),
   }) {
-    if (sendAnywayClicked != null) {
-      return sendAnywayClicked(eventType);
+    if (iNeedToSendNow != null) {
+      return iNeedToSendNow(eventType);
     }
     return orElse();
   }
@@ -21165,12 +21655,13 @@ class _$SendAnywayClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
   }) {
-    return sendAnywayClicked(this);
+    return iNeedToSendNow(this);
   }
 
   @override
@@ -21213,12 +21704,13 @@ class _$SendAnywayClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
   }) {
-    return sendAnywayClicked?.call(this);
+    return iNeedToSendNow?.call(this);
   }
 
   @override
@@ -21261,38 +21753,590 @@ class _$SendAnywayClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
     required TResult orElse(),
   }) {
-    if (sendAnywayClicked != null) {
-      return sendAnywayClicked(this);
+    if (iNeedToSendNow != null) {
+      return iNeedToSendNow(this);
     }
     return orElse();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SendAnywayClickedImplToJson(
+    return _$$IneedToSendNowImplToJson(
       this,
     );
   }
 }
 
-abstract class SendAnywayClicked implements AmplitudeEvent {
-  const factory SendAnywayClicked({final String eventType}) =
-      _$SendAnywayClickedImpl;
+abstract class IneedToSendNow implements AmplitudeEvent {
+  const factory IneedToSendNow({final String eventType}) = _$IneedToSendNowImpl;
 
-  factory SendAnywayClicked.fromJson(Map<String, dynamic> json) =
-      _$SendAnywayClickedImpl.fromJson;
+  factory IneedToSendNow.fromJson(Map<String, dynamic> json) =
+      _$IneedToSendNowImpl.fromJson;
 
   @override
   String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$SendAnywayClickedImplCopyWith<_$SendAnywayClickedImpl> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$IneedToSendNowImplCopyWith<_$IneedToSendNowImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$IneedToSendGotItImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$IneedToSendGotItImplCopyWith(_$IneedToSendGotItImpl value,
+          $Res Function(_$IneedToSendGotItImpl) then) =
+      __$$IneedToSendGotItImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$IneedToSendGotItImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$IneedToSendGotItImpl>
+    implements _$$IneedToSendGotItImplCopyWith<$Res> {
+  __$$IneedToSendGotItImplCopyWithImpl(_$IneedToSendGotItImpl _value,
+      $Res Function(_$IneedToSendGotItImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$IneedToSendGotItImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$IneedToSendGotItImpl
+    with DiagnosticableTreeMixin
+    implements IneedToSendGotIt {
+  const _$IneedToSendGotItImpl(
+      {this.eventType = 'I_NEED_TO_SEND_GOT_IT', final String? $type})
+      : $type = $type ?? 'iNeedToSendGotIt';
+
+  factory _$IneedToSendGotItImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IneedToSendGotItImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.iNeedToSendGotIt(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.iNeedToSendGotIt'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IneedToSendGotItImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IneedToSendGotItImplCopyWith<_$IneedToSendGotItImpl> get copyWith =>
+      __$$IneedToSendGotItImplCopyWithImpl<_$IneedToSendGotItImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source)
+        connectManuallyClicked,
+    required TResult Function(String eventType, String source)
+        connectWithQrClicked,
+    required TResult Function(
+            String eventType, String walletType, String source)
+        qrButtonClicked,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        qrScanned,
+    required TResult Function(String eventType, String source)
+        buyNewCardClicked,
+    required TResult Function(
+            String eventType, String source, String connectOption)
+        connectOptionSelected,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        addressFilled,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        deepLinkClicked,
+    required TResult Function(
+            String eventType, String source, String walletType)
+        typeSelected,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String walletAddress)
+        alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source)
+        addNewPlusClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletSettingsClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        receiveClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        sendClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        historyClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
+    required TResult Function(String eventType, String source)
+        backButtonClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret1Validated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret2Validated,
+  }) {
+    return iNeedToSendGotIt(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult? Function(
+            String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+  }) {
+    return iNeedToSendGotIt?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (iNeedToSendGotIt != null) {
+      return iNeedToSendGotIt(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value)
+        connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value)
+        connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value)
+        alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value)
+        activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value)
+        warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value)
+        transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value)
+        walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+  }) {
+    return iNeedToSendGotIt(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+  }) {
+    return iNeedToSendGotIt?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    required TResult orElse(),
+  }) {
+    if (iNeedToSendGotIt != null) {
+      return iNeedToSendGotIt(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$IneedToSendGotItImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class IneedToSendGotIt implements AmplitudeEvent {
+  const factory IneedToSendGotIt({final String eventType}) =
+      _$IneedToSendGotItImpl;
+
+  factory IneedToSendGotIt.fromJson(Map<String, dynamic> json) =
+      _$IneedToSendGotItImpl.fromJson;
+
+  @override
+  String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$IneedToSendGotItImplCopyWith<_$IneedToSendGotItImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -21315,6 +22359,8 @@ class __$$BackButtonClickedImplCopyWithImpl<$Res>
       $Res Function(_$BackButtonClickedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -21381,11 +22427,13 @@ class _$BackButtonClickedImpl
             (identical(other.source, source) || other.source == source));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, eventType, source);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BackButtonClickedImplCopyWith<_$BackButtonClickedImpl> get copyWith =>
@@ -21477,7 +22525,8 @@ class _$BackButtonClickedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -21566,7 +22615,8 @@ class _$BackButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -21652,7 +22702,8 @@ class _$BackButtonClickedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -21712,7 +22763,8 @@ class _$BackButtonClickedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -21760,7 +22812,8 @@ class _$BackButtonClickedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -21808,7 +22861,8 @@ class _$BackButtonClickedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -21839,8 +22893,11 @@ abstract class BackButtonClicked implements AmplitudeEvent {
   @override
   String get eventType;
   String get source;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BackButtonClickedImplCopyWith<_$BackButtonClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -21864,6 +22921,8 @@ class __$$Secret1ValidatedImplCopyWithImpl<$Res>
       $Res Function(_$Secret1ValidatedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -21942,12 +23001,14 @@ class _$Secret1ValidatedImpl
                 other.walletType == walletType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletAddress, walletType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$Secret1ValidatedImplCopyWith<_$Secret1ValidatedImpl> get copyWith =>
@@ -22039,7 +23100,8 @@ class _$Secret1ValidatedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -22128,7 +23190,8 @@ class _$Secret1ValidatedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -22214,7 +23277,8 @@ class _$Secret1ValidatedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -22274,7 +23338,8 @@ class _$Secret1ValidatedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -22322,7 +23387,8 @@ class _$Secret1ValidatedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -22370,7 +23436,8 @@ class _$Secret1ValidatedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -22403,8 +23470,11 @@ abstract class Secret1Validated implements AmplitudeEvent {
   String get eventType;
   String get walletAddress;
   String get walletType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$Secret1ValidatedImplCopyWith<_$Secret1ValidatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -22428,6 +23498,8 @@ class __$$Secret2ValidatedImplCopyWithImpl<$Res>
       $Res Function(_$Secret2ValidatedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -22506,12 +23578,14 @@ class _$Secret2ValidatedImpl
                 other.walletType == walletType));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, eventType, walletAddress, walletType);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$Secret2ValidatedImplCopyWith<_$Secret2ValidatedImpl> get copyWith =>
@@ -22603,7 +23677,8 @@ class _$Secret2ValidatedImpl
             String walletAddress, bool activated)
         shareAddressClicked,
     required TResult Function(String eventType) gotItSendClicked,
-    required TResult Function(String eventType) sendAnywayClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
     required TResult Function(String eventType, String source)
         backButtonClicked,
     required TResult Function(
@@ -22692,7 +23767,8 @@ class _$Secret2ValidatedImpl
             bool activated)?
         shareAddressClicked,
     TResult? Function(String eventType)? gotItSendClicked,
-    TResult? Function(String eventType)? sendAnywayClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
     TResult? Function(String eventType, String source)? backButtonClicked,
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
@@ -22778,7 +23854,8 @@ class _$Secret2ValidatedImpl
             bool activated)?
         shareAddressClicked,
     TResult Function(String eventType)? gotItSendClicked,
-    TResult Function(String eventType)? sendAnywayClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
     TResult Function(String eventType, String source)? backButtonClicked,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret1Validated,
@@ -22838,7 +23915,8 @@ class _$Secret2ValidatedImpl
     required TResult Function(AddressCopied value) addressCopied,
     required TResult Function(ShareAddressClicked value) shareAddressClicked,
     required TResult Function(GotItSendClicked value) gotItSendClicked,
-    required TResult Function(SendAnywayClicked value) sendAnywayClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
@@ -22886,7 +23964,8 @@ class _$Secret2ValidatedImpl
     TResult? Function(AddressCopied value)? addressCopied,
     TResult? Function(ShareAddressClicked value)? shareAddressClicked,
     TResult? Function(GotItSendClicked value)? gotItSendClicked,
-    TResult? Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
@@ -22934,7 +24013,8 @@ class _$Secret2ValidatedImpl
     TResult Function(AddressCopied value)? addressCopied,
     TResult Function(ShareAddressClicked value)? shareAddressClicked,
     TResult Function(GotItSendClicked value)? gotItSendClicked,
-    TResult Function(SendAnywayClicked value)? sendAnywayClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
@@ -22967,8 +24047,11 @@ abstract class Secret2Validated implements AmplitudeEvent {
   String get eventType;
   String get walletAddress;
   String get walletType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$Secret2ValidatedImplCopyWith<_$Secret2ValidatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
