@@ -20,6 +20,7 @@ class Preferences {
 }
 
 class StorageUtils {
+  StorageUtils._();
   static Future<SharedPreferences> get sharedInstance =>
       SharedPreferences.getInstance();
 
@@ -173,6 +174,16 @@ class StorageUtils {
   static Future<void> clear() async {
     final prefs = await sharedInstance;
     await prefs.reload();
-    await prefs.clear();
+    await Future.wait([
+      prefs.remove('cards'),
+      prefs.remove('bars'),
+      prefs.remove('strings'),
+      prefs.remove('bools'),
+      prefs.remove('ints'),
+      prefs.remove('isActivatedBool'),
+      prefs.remove('switchKey'),
+      prefs.remove('show_modal'),
+      prefs.remove('package_info'),
+    ]);
   }
 }
