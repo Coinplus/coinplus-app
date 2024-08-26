@@ -73,6 +73,17 @@ class UsdAmountTextField extends HookWidget {
                           decimal: true,
                         ),
                         cursorColor: Colors.blue,
+                        onEditingComplete: () {
+                          recordAmplitudeEventPartTwo(
+                            AmountEntered(
+                              amount: '${state.amount}\$',
+                              balance:
+                                  '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
+                              fee:
+                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                            ),
+                          );
+                        },
                         onChanged: (value) {
                           Gaimon.selection();
                           state.handleUsdAmountSelection();
@@ -99,16 +110,6 @@ class UsdAmountTextField extends HookWidget {
                           }
                           state.setAmount(value);
                           state.transactionsStore.findOptimalUtxo();
-                          recordAmplitudeEventPartTwo(
-                            AmountEntered(
-                              amount: '$value\$',
-                              balance:
-                                  '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
-                              fee:
-                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
-                            ),
-                          );
-
                           previousTextLength = value.length;
                         },
                         style: const TextStyle(

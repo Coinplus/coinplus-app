@@ -157,6 +157,12 @@ class ProvideAddressTab extends HookWidget {
                               state
                                 ..onAddressChanges(res)
                                 ..setOutputAddress(res);
+                              await recordAmplitudeEvent(
+                                QrScanned(
+                                  source: 'send',
+                                  walletAddress: res,
+                                ),
+                              );
                             },
                             child: Assets.icons.qrCode.image(height: 18),
                           ),

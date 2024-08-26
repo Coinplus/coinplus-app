@@ -10,6 +10,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../models/amplitude_event/amplitude_event.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../../providers/screen_service.dart';
 import '../../../../router.dart';
 import '../../../../services/amplitude_service.dart';
@@ -168,8 +169,8 @@ class CardEmptyState extends StatelessWidget {
                         const Gap(8),
                         LoadingButton(
                           onPressed: () {
-                            recordAmplitudeEvent(
-                              const BuyNewCardClicked(source: 'Wallet'),
+                            recordAmplitudeEventPartTwo(
+                              const BuyCardClicked(),
                             );
                             router.push(BuyCardRoute(method: getBuyCardData()));
                           },

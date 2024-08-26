@@ -965,6 +965,19 @@ Map<String, dynamic> _$$SendToAddressFilledImplToJson(
       'runtimeType': instance.$type,
     };
 
+_$BuyCardClickedImpl _$$BuyCardClickedImplFromJson(Map json) =>
+    _$BuyCardClickedImpl(
+      eventType: json['eventType'] as String? ?? 'BUY_CARD_CLICKED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$BuyCardClickedImplToJson(
+        _$BuyCardClickedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
 _$SendFromAddressChangedImpl _$$SendFromAddressChangedImplFromJson(Map json) =>
     _$SendFromAddressChangedImpl(
       eventType: json['eventType'] as String? ?? 'SEND_FROM_ADDRESS_CHANGED',
