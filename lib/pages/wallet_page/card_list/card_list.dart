@@ -82,6 +82,7 @@ class _CardListState extends State<CardList>
         if (index.isNegative) {
           return;
         }
+        _balanceStore.getCardsInfo();
         widget.carouselController.animateToPage(index);
       })
       ..setOnCardDeletedCallback((address) {

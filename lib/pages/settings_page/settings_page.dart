@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
@@ -60,14 +59,11 @@ class SettingsPage extends HookWidget {
       final messaging = FirebaseMessaging.instance;
       final settings = await messaging.requestPermission();
       final token = await secureStorage.read(key: 'fcm_token');
-      log(token.toString());
-
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         isAuthorised.value = true;
 
         if (token == null) {
           final newToken = await messaging.getToken();
-          log(newToken.toString());
           if (newToken != null) {
             await secureStorage.write(key: 'fcm_token', value: newToken);
             unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOn()));

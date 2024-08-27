@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,6 +31,40 @@ class UsdAmountTextField extends HookWidget {
       () => NumberFormat.decimalPattern(context.locale.toString()),
       [context.locale],
     );
+    Timer? _typingTimer;
+
+
+    final _hasPrinted = useRef<bool?>(false);
+
+    void _onTextChanged() {
+      if (_typingTimer?.isActive ?? false) {
+        _typingTimer?.cancel();
+      }
+      _hasPrinted.value = false;
+      _typingTimer = Timer(const Duration(milliseconds: 1000), () {
+        if (_hasPrinted.value == false) {
+          final text = state.usdController.text;
+          final textToInt = int.parse(text);
+          if (textToInt != 0) {
+            recordAmplitudeEventPartTwo(
+              AmountEntered(
+                amount: '${state.amount}\$',
+                balance:
+                    '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
+                fee:
+                    '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+              ),
+            );
+          }
+          _hasPrinted.value = true;
+        }
+      });
+    }
+
+    useEffect(() {
+      state.usdController.addListener(_onTextChanged);
+      return null;
+    });
     return Expanded(
       child: Center(
         child: IntrinsicWidth(
@@ -73,17 +108,6 @@ class UsdAmountTextField extends HookWidget {
                           decimal: true,
                         ),
                         cursorColor: Colors.blue,
-                        onEditingComplete: () {
-                          recordAmplitudeEventPartTwo(
-                            AmountEntered(
-                              amount: '${state.amount}\$',
-                              balance:
-                                  '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
-                              fee:
-                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
-                            ),
-                          );
-                        },
                         onChanged: (value) {
                           Gaimon.selection();
                           state.handleUsdAmountSelection();

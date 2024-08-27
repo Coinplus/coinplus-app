@@ -304,7 +304,7 @@ abstract class _BalanceStore with Store {
     }
 
     final isCardNotExist = _cards
-        .indexWhere((element) => element.address == _selectedCard?.address)
+        .indexWhere((element) => element.address == _selectedCard!.address)
         .isNegative;
     final isBarNotExist = _bars
         .indexWhere((element) => element.address == _selectedCard?.address)

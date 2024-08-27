@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,6 +31,36 @@ class BtcAmountTextField extends HookWidget {
       () => NumberFormat.decimalPattern(context.locale.toString()),
       [context.locale],
     );
+    Timer? _typingTimer;
+
+    final _hasPrinted = useRef<bool?>(false);
+
+    void _onTextChanged() {
+      if (_typingTimer?.isActive ?? false) {
+        _typingTimer?.cancel();
+      }
+      _hasPrinted.value = false;
+      _typingTimer = Timer(const Duration(milliseconds: 1000), () {
+        if (_hasPrinted.value == false) {
+          recordAmplitudeEventPartTwo(
+            AmountEntered(
+              amount:
+              '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
+              balance:
+              '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
+              fee:
+              '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+            ),
+          );
+          _hasPrinted.value = true;
+        }
+      });
+    }
+
+    useEffect(() {
+      state.btcController.addListener(_onTextChanged);
+      return null;
+    });
     return Expanded(
       child: Center(
         child: IntrinsicWidth(
@@ -79,18 +110,6 @@ class BtcAmountTextField extends HookWidget {
                           decimal: true,
                         ),
                         cursorColor: Colors.blue,
-                        onEditingComplete: () {
-                          recordAmplitudeEventPartTwo(
-                            AmountEntered(
-                              amount:
-                                  '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
-                              balance:
-                                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
-                              fee:
-                                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
-                            ),
-                          );
-                        },
                         onChanged: (value) {
                           var previousTextLength = 0;
                           Gaimon.selection();
