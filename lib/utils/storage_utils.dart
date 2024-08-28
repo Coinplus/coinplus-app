@@ -12,9 +12,7 @@ class Preferences {
 
   static const cards = 'cards';
   static const bars = 'bars';
-  static const bools = 'bools';
-  static const strings = 'strings';
-  static const ints = 'ints';
+  static const hasShownWallet = 'bools';
   static const isActivatedBool = 'isActivatedBool';
   static const switchKey = 'switchKey';
 }
@@ -108,12 +106,12 @@ class StorageUtils {
 
   static Future<bool> getBool() async {
     final prefs = await sharedInstance;
-    return prefs.getBool(Preferences.bools) ?? false;
+    return prefs.getBool(Preferences.hasShownWallet) ?? false;
   }
 
   static Future<void> setBool({required bool value}) async {
     final prefs = await sharedInstance;
-    await prefs.setBool(Preferences.bools, value);
+    await prefs.setBool(Preferences.hasShownWallet, value);
   }
 
   Future<void> saveSwitchValue({required bool value}) async {
@@ -177,9 +175,7 @@ class StorageUtils {
     await Future.wait([
       prefs.remove('cards'),
       prefs.remove('bars'),
-      prefs.remove('strings'),
       prefs.remove('bools'),
-      prefs.remove('ints'),
       prefs.remove('isActivatedBool'),
       prefs.remove('switchKey'),
       prefs.remove('show_modal'),

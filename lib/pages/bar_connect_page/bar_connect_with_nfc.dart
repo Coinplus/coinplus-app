@@ -688,7 +688,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc>
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
-                                    hintText: 'Write here your bar address ',
+                                    hintText: 'Type in your card address',
                                     hintMaxLines: 1,
                                     hintStyle: TextStyle(
                                       fontFamily: FontFamily.redHatLight,

@@ -38,38 +38,19 @@ class ProvideAddressTab extends HookWidget {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  Future<bool> isCardWalletActivated({
-    required BalanceStore balanceStore,
-  }) async {
-    if (balanceStore.cards.isNotEmpty &&
-        balanceStore.cards.length != balanceStore.cardCurrentIndex) {
-      return checkWalletStatus(
-        balanceStore.cards[state.historyPageStore.cardHistoryIndex].address,
-      );
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> isBarWalletActivated({
-    required BalanceStore balanceStore,
-  }) async {
-    if (balanceStore.bars.isNotEmpty &&
-        balanceStore.bars.length != balanceStore.barCurrentIndex) {
-      return checkWalletStatus(
-        balanceStore.bars[state.historyPageStore.barHistoryIndex].address,
-      );
-    } else {
-      return false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final _scrollController = useScrollController();
+    final _secureStorage = SecureStorageService();
     useAutomaticKeepAlive();
-    final isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
-    final isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+    final isCardActivated = _secureStorage.isCardWalletActivated(
+      balanceStore: _balanceStore,
+      state: state,
+    );
+    final isBarActivated = _secureStorage.isBarWalletActivated(
+      balanceStore: _balanceStore,
+      state: state,
+    );
     return Column(
       children: [
         Padding(

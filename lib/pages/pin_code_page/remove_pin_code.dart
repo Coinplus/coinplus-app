@@ -27,6 +27,7 @@ class PinRemove extends StatelessWidget {
     final _walletProtectState = WalletProtectState();
     late final _shakeAnimationController = ShakeAnimationController();
     final _pinController = TextEditingController();
+    final _secureStorage = SecureStorageService();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -115,9 +116,9 @@ class PinRemove extends StatelessWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 onCompleted: (value) async {
-                  final savedPinCode = await getSavedPinCode();
+                  final savedPinCode = await _secureStorage.getSavedPinCode();
                   if (value == savedPinCode) {
-                    await secureStorage.delete(key: 'pin_code');
+                    await _secureStorage.delete(key: 'pin_code');
                     await recordAmplitudeEventPartTwo(const AppLockDisabled());
                     await router.maybePop();
                   } else {

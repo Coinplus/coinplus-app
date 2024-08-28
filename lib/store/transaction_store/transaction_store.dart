@@ -33,6 +33,8 @@ abstract class _TransactionStore with Store {
 
   final _disposer = <ReactionDisposer>[];
 
+  final _secureStorage = SecureStorageService();
+
   _TransactionStore() {
     _init();
   }
@@ -380,7 +382,7 @@ abstract class _TransactionStore with Store {
     required String refundAddress,
   }) async {
     final network = bitcoin;
-    final privateKey = await secureStorage.read(key: refundAddress);
+    final privateKey = await _secureStorage.read(key: refundAddress);
     if (privateKey == null) {
       return;
     }

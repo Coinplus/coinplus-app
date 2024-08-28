@@ -33,6 +33,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
   final _enterPinCodeController = TextEditingController();
   final _repeatPinCodeController = TextEditingController();
   late final _shakeAnimationController = ShakeAnimationController();
+  final _secureStorage = SecureStorageService();
   final _enterFocusNode = FocusNode();
   final _reEnterFocusNode = FocusNode();
 
@@ -256,7 +257,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                           await _walletProtectState
                               .authenticateWithBiometrics();
                         }
-                        await savePinCode(pinCode: value);
+                        await _secureStorage.savePinCode(pinCode: value);
                         await Future.delayed(const Duration(milliseconds: 100));
                         await router.pushAndPopAll(const DashboardRoute());
                         await recordAmplitudeEvent(

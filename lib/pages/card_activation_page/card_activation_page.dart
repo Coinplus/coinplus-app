@@ -76,6 +76,7 @@ class _CardActivationPageState extends State<CardActivationPage>
   final _validationStore = ValidationState();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
+  final _secureStorage = SecureStorageService();
 
   @override
   void initState() {
@@ -968,12 +969,12 @@ class _CardActivationPageState extends State<CardActivationPage>
                           if (card.address == publicKey) {
                             unawaited(toggleActivation(card.address));
                             unawaited(incrementActivationCount(card.address));
-                            await savePrivateKeyInSecureStorage(
+                            await _secureStorage.savePrivateKeyInSecureStorage(
                               key: card.address,
                               value: wif,
                             );
                             await router.maybePop();
-                            await isWalletActivated(
+                            await _secureStorage.isWalletActivated(
                               isSet: true,
                               address: card.address,
                             );

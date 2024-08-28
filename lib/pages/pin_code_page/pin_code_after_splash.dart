@@ -35,6 +35,7 @@ class PinAfterSplash extends HookWidget {
     late final _shakeAnimationController =
         useMemoized(ShakeAnimationController.new);
     final _pinController = useTextEditingController();
+    final _secureStorage = SecureStorageService();
 
     final isLocalAuthChanged = useCallback<Future<bool> Function()>(
       () async {
@@ -60,7 +61,7 @@ class PinAfterSplash extends HookWidget {
         final isAuthChanged = await isLocalAuthChanged();
 
         if (isAuthChanged) {
-          await disableBiometricAuth();
+          await _secureStorage.disableBiometricAuth();
           _walletProtectState.isBiometricsEnabled = false;
         }
 
@@ -135,7 +136,7 @@ class PinAfterSplash extends HookWidget {
                     style: TextStyle(fontSize: 15),
                   ),
                   onCompleted: (value) async {
-                    final savedPinCode = await getSavedPinCode();
+                    final savedPinCode = await _secureStorage.getSavedPinCode();
                     if (value == savedPinCode) {
                       await router.pushAndPopAll(const DashboardRoute());
                     } else {

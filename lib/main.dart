@@ -19,6 +19,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initNotifications();
+  final _secureStorage = SecureStorageService();
 
   unawaited(
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -28,7 +29,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   );
 
   await EasyLocalization.ensureInitialized();
-  unawaited(localStorage());
+  unawaited(_secureStorage.localStorage());
   registerGetIt(env);
 
   runApp(

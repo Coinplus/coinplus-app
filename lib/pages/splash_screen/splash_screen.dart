@@ -16,14 +16,13 @@ class SplashPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPinCodeSet = getIsPinCodeSet();
+    final _secureStorage = SecureStorageService();
+    final isPinCodeSet = _secureStorage.getIsPinCodeSet();
     useEffect(() {
       hasShownWallet().then(
         (hasShown) async {
           if (hasShown) {
-            unawaited(
-              await isPinCodeSet ? showPinCode() : openWallet(),
-            );
+            await (await isPinCodeSet ? showPinCode() : openWallet());
           } else {
             await openOnboardingPage();
           }

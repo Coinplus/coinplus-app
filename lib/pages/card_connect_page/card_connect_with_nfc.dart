@@ -932,7 +932,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                         decoration:
                                                             InputDecoration(
                                                           hintText:
-                                                              'Write here your card address',
+                                                              'Type in your card address',
                                                           fillColor:
                                                               Colors.white,
                                                           hintMaxLines: 10,
@@ -944,7 +944,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                             color: AppColors
                                                                 .primaryTextColor
                                                                 .withOpacity(
-                                                              0.4,
+                                                              0.5,
                                                             ),
                                                           ),
                                                           contentPadding:

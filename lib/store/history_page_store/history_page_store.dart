@@ -34,6 +34,8 @@ abstract class _HistoryPageStore with Store {
 
   Timer? _timer;
 
+  final _secureStorage = SecureStorageService();
+
   @observable
   WalletStatusModel? walletStatus;
 
@@ -176,7 +178,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> loadCardActivationStatus(List<CardModel> cards) async {
     for (final card in cards) {
-      final status = await checkWalletStatus(card.address);
+      final status = await _secureStorage.checkWalletStatus(card.address);
       setCardActivationStatus(address: card.address, status: status);
     }
   }
@@ -184,7 +186,7 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> loadBarActivationStatus(List<BarModel> bars) async {
     for (final bar in bars) {
-      final status = await checkWalletStatus(bar.address);
+      final status = await _secureStorage.checkWalletStatus(bar.address);
       setBarActivationStatus(address: bar.address, status: status);
     }
   }

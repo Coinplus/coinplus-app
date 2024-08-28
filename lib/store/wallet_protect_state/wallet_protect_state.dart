@@ -17,6 +17,7 @@ class WalletProtectState = _WalletProtectState with _$WalletProtectState;
 abstract class _WalletProtectState with Store {
   final _auth = LocalAuthentication();
   late FocusNode pinFocusNode = FocusNode();
+  final _secureStorage = SecureStorageService();
 
   _WalletProtectState() {
     checkPinCodeStatus();
@@ -66,26 +67,28 @@ abstract class _WalletProtectState with Store {
 
   @action
   Future<void> checkPinCodeStatus() async {
-    isSetPinCode = await getIsPinCodeSet();
+    isSetPinCode = await _secureStorage.getIsPinCodeSet();
     if (!isSetPinCode) {
       isBiometricsEnabled = false;
-      await disableBiometricAuth();
+      await _secureStorage.disableBiometricAuth();
     }
   }
 
   @action
   Future<void> checkBiometricStatus() async {
-    isBiometricsEnabled = await getBiometricStatus();
+    isBiometricsEnabled = await _secureStorage.getBiometricStatus();
   }
 
   @action
   Future<void> checkNotificationToggleStatus() async {
-    isSwitchedNotificationsToggle = await getNotificationToggleStatus();
+    isSwitchedNotificationsToggle =
+        await _secureStorage.getNotificationToggleStatus();
   }
 
   @action
   Future<void> checkHideBalancesToggleStatus() async {
-    isSwitchedHideBalancesToggle = await getHideBalancesToggleStatus();
+    isSwitchedHideBalancesToggle =
+        await _secureStorage.getHideBalancesToggleStatus();
   }
 
   @action
@@ -102,32 +105,32 @@ abstract class _WalletProtectState with Store {
   Future<void> disableBiometric() async {
     final res = await authenticateWithBiometrics();
     if (res) {
-      await disableBiometricAuth();
+      await _secureStorage.disableBiometricAuth();
       isBiometricsEnabled = false;
     }
   }
 
   @action
   Future<void> disableNotification() async {
-    await disableNotificationToggle();
+    await _secureStorage.disableNotificationToggle();
     isSwitchedNotificationsToggle = false;
   }
 
   @action
   Future<void> enableNotification() async {
-    await enableNotificationToggle();
+    await _secureStorage.enableNotificationToggle();
     isSwitchedNotificationsToggle = true;
   }
 
   @action
   Future<void> hideBalances() async {
-    await disableHideBalancesToggle();
+    await _secureStorage.disableHideBalancesToggle();
     isSwitchedHideBalancesToggle = false;
   }
 
   @action
   Future<void> showBalances() async {
-    await enableHideBalancesToggle();
+    await _secureStorage.enableHideBalancesToggle();
     isSwitchedHideBalancesToggle = true;
   }
 
@@ -151,7 +154,7 @@ abstract class _WalletProtectState with Store {
           ],
         );
         if (isAuthorized) {
-          await enableBiometricAuth();
+          await _secureStorage.enableBiometricAuth();
 
           await router.pushAndPopAll(const DashboardRoute());
           return true;
@@ -207,7 +210,7 @@ abstract class _WalletProtectState with Store {
           ),
         );
         if (isAuthorized) {
-          await enableBiometricAuth();
+          await _secureStorage.enableBiometricAuth();
           await router.maybePop();
           return true;
         }

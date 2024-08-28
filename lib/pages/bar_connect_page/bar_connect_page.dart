@@ -708,8 +708,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
-                                        hintText:
-                                            'Write here your bar address ',
+                                        hintText: 'Type in your bar address',
                                         hintMaxLines: 1,
                                         hintStyle: TextStyle(
                                           fontFamily: FontFamily.redHatLight,

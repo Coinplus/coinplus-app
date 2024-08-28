@@ -33,7 +33,6 @@ class UsdAmountTextField extends HookWidget {
     );
     Timer? _typingTimer;
 
-
     final _hasPrinted = useRef<bool?>(false);
 
     void _onTextChanged() {

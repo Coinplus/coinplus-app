@@ -31,6 +31,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _secureStorage = SecureStorageService();
     return ActionSlider.standard(
       direction: TextDirection.rtl,
       height: 60,
@@ -48,7 +49,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
         unawaited(_balanceStore.getSelectedBar(bar.address));
-        await secureStorage.delete(key: 'card${bar.address}');
+        await _secureStorage.deleteBar(bar: bar);
         unawaited(deleteCount(bar.address));
         await router.maybePop();
         unawaited(_balanceStore.removeSelectedBar());

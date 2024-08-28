@@ -45,11 +45,11 @@ class BtcAmountTextField extends HookWidget {
           recordAmplitudeEventPartTwo(
             AmountEntered(
               amount:
-              '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
+                  '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
               balance:
-              '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
+                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
               fee:
-              '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
             ),
           );
           _hasPrinted.value = true;

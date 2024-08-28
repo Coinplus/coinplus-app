@@ -917,7 +917,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                         decoration:
                                                             InputDecoration(
                                                           hintText:
-                                                              'Write here your card address',
+                                                              'Type in your card address',
                                                           fillColor:
                                                               Colors.white,
                                                           hintMaxLines: 10,
@@ -929,7 +929,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                             color: AppColors
                                                                 .primaryTextColor
                                                                 .withOpacity(
-                                                              0.4,
+                                                              0.5,
                                                             ),
                                                           ),
                                                           contentPadding:
