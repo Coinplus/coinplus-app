@@ -51,10 +51,10 @@ class BarSettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
-
+    final _secureStorage = SecureStorageService();
     final _cardSettingsState = useMemoized(() => BarSettingState(bar: bar));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
-    final _isPinSet = getIsPinCodeSet();
+    final _isPinSet = _secureStorage.getIsPinCodeSet();
     final _auth = LocalAuthentication();
     final isInactive = useState(false);
     final appLocked = useState(false);
@@ -65,18 +65,19 @@ class BarSettingsPage extends HookWidget {
     final privateKey = useState('');
 
     Future<void> fetchPrivateKey() async {
-      final fetchedKey = await secureStorage.read(key: bar.address);
+      final fetchedKey = await _secureStorage.read(key: bar.address);
       if (fetchedKey != null) {
         privateKey.value = fetchedKey;
       }
     }
 
     Future<void> isPrivateSet() async {
-      isPrivateKeySet.value = await getIsPrivateKeySet(bar.address);
+      isPrivateKeySet.value =
+          await _secureStorage.getIsPrivateKeySet(bar.address);
     }
 
     useOnAppLifecycleStateChange((previous, current) async {
-      appLocked.value = await getIsPinCodeSet();
+      appLocked.value = await _secureStorage.getIsPinCodeSet();
       isInactive.value = [AppLifecycleState.inactive].contains(current);
       if (isInactive.value) {
         _cardSettingsState.isPrivateKeyVisible = false;

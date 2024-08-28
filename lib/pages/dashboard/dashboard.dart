@@ -75,6 +75,7 @@ class DashboardPage extends HookWidget {
     final appLocked = useState(false);
     final resumed = useState(false);
     final _pageController = pageController.pageController;
+    final _secureStorage = SecureStorageService();
     final tabController = useTabController(
       initialLength: 2,
       initialIndex: _historyPageStore.tabIndex == 0 ? 0 : 1,
@@ -164,7 +165,7 @@ class DashboardPage extends HookWidget {
             _walletProtectState.isModalOpened == true) {
           await router.maybePop();
         }
-        appLocked.value = await getIsPinCodeSet();
+        appLocked.value = await _secureStorage.getIsPinCodeSet();
         if (isPaused.value &&
             router.current.name == DashboardRoute.name &&
             !_walletProtectState.isBiometricsRunning &&

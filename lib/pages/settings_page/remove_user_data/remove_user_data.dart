@@ -25,6 +25,8 @@ class RemoveUserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _secureStorage = SecureStorageService();
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -85,7 +87,7 @@ class RemoveUserData extends StatelessWidget {
               action: (controller) async {
                 controller.loading();
                 await StorageUtils.clear();
-                await clearSecureStorage();
+                await _secureStorage.clearSecureStorage();
                 reRegisterStoreGetIt();
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();

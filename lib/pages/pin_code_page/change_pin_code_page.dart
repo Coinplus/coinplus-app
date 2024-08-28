@@ -30,6 +30,7 @@ class ChangePinCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _changePinCodeState = ChangePinCodeState();
+    final _secureStorage = SecureStorageService();
     final _pageController = PageController();
     final _enteredPinShakeController = ShakeAnimationController();
     final _reEnteredPinShakeController = ShakeAnimationController();
@@ -132,7 +133,8 @@ class ChangePinCode extends StatelessWidget {
                       style: TextStyle(fontSize: 15),
                     ),
                     onCompleted: (value) async {
-                      final savedPinCode = await getSavedPinCode();
+                      final savedPinCode =
+                          await _secureStorage.getSavedPinCode();
                       enteredPin = value;
                       if (enteredPin == savedPinCode) {
                         _pageController.jumpToPage(1);
@@ -336,7 +338,7 @@ class ChangePinCode extends StatelessWidget {
                     onCompleted: (value) async {
                       repeatPin = value;
                       if (repeatPin == newPin) {
-                        await savePinCode(pinCode: value);
+                        await _secureStorage.savePinCode(pinCode: value);
                         await _walletProtectState.isBiometricAvailable();
                         await router.pushAndPopAll(const DashboardRoute());
                         await recordAmplitudeEventPartTwo(

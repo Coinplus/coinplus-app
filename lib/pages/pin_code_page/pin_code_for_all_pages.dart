@@ -32,6 +32,7 @@ class PinCodeForAllPages extends HookWidget {
     final isResumed = useState(false);
     final isFirstTime = useState(true);
     final _shakeAnimationController = useMemoized(ShakeAnimationController.new);
+    final _secureStorage = SecureStorageService();
 
     useOnAppLifecycleStateChange(
       (previous, current) async {
@@ -112,7 +113,7 @@ class PinCodeForAllPages extends HookWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 onCompleted: (value) async {
-                  final savedPinCode = await getSavedPinCode();
+                  final savedPinCode = await _secureStorage.getSavedPinCode();
                   if (value == savedPinCode) {
                     await router.maybePop();
                   } else {

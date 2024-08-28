@@ -27,9 +27,9 @@ class RampService {
 
     ramp = RampFlutter();
     ramp
-      ..onOnrampPurchaseCreated = onOnrampPurchaseCreated
+      ..onOnrampPurchaseCreated = onOnRampPurchaseCreated
       ..onSendCryptoRequested = onSendCryptoRequested
-      ..onOfframpSaleCreated = onOfframpSaleCreated
+      ..onOfframpSaleCreated = onOffRampSaleCreated
       ..onRampClosed = onRampClosed;
 
     isConfigured = true;
@@ -39,7 +39,7 @@ class RampService {
     ramp.showRamp(configuration);
   }
 
-  void onOnrampPurchaseCreated(
+  void onOnRampPurchaseCreated(
     OnrampPurchase purchase,
     String purchaseViewToken,
     String apiUrl,
@@ -47,7 +47,7 @@ class RampService {
 
   void onSendCryptoRequested(SendCryptoPayload payload) {}
 
-  void onOfframpSaleCreated(
+  void onOffRampSaleCreated(
     OfframpSale sale,
     String saleViewToken,
     String apiUrl,

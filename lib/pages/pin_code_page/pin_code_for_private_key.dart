@@ -43,6 +43,7 @@ class PinCodeForPrivateKey extends HookWidget {
   Widget build(BuildContext context) {
     final _shakeAnimationController = useMemoized(ShakeAnimationController.new);
     final _pinController = useTextEditingController();
+    final _secureStorage = SecureStorageService();
 
     useEffect(() {
       Future.delayed(Duration.zero, () async {
@@ -117,7 +118,7 @@ class PinCodeForPrivateKey extends HookWidget {
                   style: TextStyle(fontSize: 15),
                 ),
                 onCompleted: (value) async {
-                  final savedPinCode = await getSavedPinCode();
+                  final savedPinCode = await _secureStorage.getSavedPinCode();
                   if (value == savedPinCode) {
                     isVisible?.isPrivateKeyVisible = true;
                     await router.maybePop();

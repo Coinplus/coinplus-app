@@ -64,6 +64,8 @@ abstract class _BalanceStore with Store {
     }
   }
 
+  final _secureStorage = SecureStorageService();
+
   _BalanceStore() {
     if (_cards.isNotEmpty) {
       getCardsInfo();
@@ -251,7 +253,7 @@ abstract class _BalanceStore with Store {
         .indexWhere((element) => element.address == _selectedCard!.address);
     _cards.removeAt(index);
     await StorageUtils.removeCard(_selectedCard!.address);
-    await secureStorage.delete(key: _selectedCard!.address);
+    await _secureStorage.delete(key: _selectedCard!.address);
   }
 
   @action
@@ -263,7 +265,7 @@ abstract class _BalanceStore with Store {
         _bars.indexWhere((element) => element.address == _selectedBar!.address);
     _bars.removeAt(index);
     await StorageUtils.removeBar(_selectedBar!.address);
-    await secureStorage.delete(key: _selectedBar!.address);
+    await _secureStorage.delete(key: _selectedBar!.address);
   }
 
   void saveSelectedCard({required CardColor color}) {

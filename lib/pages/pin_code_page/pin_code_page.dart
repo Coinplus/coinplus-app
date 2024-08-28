@@ -36,6 +36,7 @@ class PinCodePage extends HookWidget {
     final isFirstTime = useState(true);
     final _enteredPinShakeController =
         useMemoized(ShakeAnimationController.new);
+    final _secureStorage = SecureStorageService();
 
     final isLocalAuthChanged = useCallback<Future<bool> Function()>(
       () async {
@@ -61,7 +62,7 @@ class PinCodePage extends HookWidget {
           await _walletProtectState.checkBiometricStatus();
           final isAuthChanged = await isLocalAuthChanged();
           if (isAuthChanged) {
-            await disableBiometricAuth();
+            await _secureStorage.disableBiometricAuth();
             _walletProtectState.isBiometricsEnabled = false;
           }
           if (_walletProtectState.isBiometricsEnabled && !isAuthChanged) {
@@ -146,7 +147,7 @@ class PinCodePage extends HookWidget {
                     style: TextStyle(fontSize: 15),
                   ),
                   onCompleted: (value) async {
-                    final savedPinCode = await getSavedPinCode();
+                    final savedPinCode = await _secureStorage.getSavedPinCode();
                     if (value == savedPinCode) {
                       await router.maybePop();
                     } else {

@@ -54,18 +54,19 @@ class SettingsPage extends HookWidget {
     final _auth = LocalAuthentication();
     final isAuthorised = useState(false);
     final _nfcState = useMemoized(NfcStore.new);
+    final _secureStorage = SecureStorageService();
 
     Future<void> checkStatus() async {
       final messaging = FirebaseMessaging.instance;
       final settings = await messaging.requestPermission();
-      final token = await secureStorage.read(key: 'fcm_token');
+      final token = await _secureStorage.read(key: 'fcm_token');
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         isAuthorised.value = true;
 
         if (token == null) {
           final newToken = await messaging.getToken();
           if (newToken != null) {
-            await secureStorage.write(key: 'fcm_token', value: newToken);
+            await _secureStorage.write(key: 'fcm_token', value: newToken);
             unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOn()));
             unawaited(recordUserProperty(const NotificationsOn()));
           }
@@ -74,7 +75,7 @@ class SettingsPage extends HookWidget {
         isAuthorised.value = false;
         if (token != null) {
           await messaging.deleteToken();
-          await secureStorage.delete(key: 'fcm_token');
+          await _secureStorage.delete(key: 'fcm_token');
           unawaited(deleteIdentifyProperties(const NotificationsOn()));
           unawaited(recordAmplitudeEventPartTwo(const PushNotificationsOff()));
         }

@@ -72,6 +72,7 @@ class _BarActivationPageState extends State<BarActivationPage>
   late AnimationController _secretOneLottieController;
   late AnimationController _secretTwoLottieController;
   final _validationStore = ValidationState();
+  final _secureStorage = SecureStorageService();
   final _secretOneFocusNode = FocusNode();
   final _secretTwoFocusNode = FocusNode();
 
@@ -931,12 +932,12 @@ class _BarActivationPageState extends State<BarActivationPage>
                           if (bar.address == publicKey) {
                             unawaited(toggleActivation(bar.address));
                             unawaited(incrementActivationCount(bar.address));
-                            await savePrivateKeyInSecureStorage(
+                            await _secureStorage.savePrivateKeyInSecureStorage(
                               key: bar.address,
                               value: wif,
                             );
                             await router.maybePop();
-                            await isWalletActivated(
+                            await _secureStorage.isWalletActivated(
                               isSet: true,
                               address: bar.address,
                             );
