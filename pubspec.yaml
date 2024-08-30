@@ -43,7 +43,6 @@ dependencies:
   gap: ^3.0.1
   flutter_scale_tap: ^1.0.5
   lottie: ^3.1.2
-  qr_code_scanner: ^1.0.1
   nfc_manager: ^3.5.0
   uni_links: ^0.5.1
   mobile_scanner: ^4.0.0

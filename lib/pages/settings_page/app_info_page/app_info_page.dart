@@ -19,7 +19,7 @@ class AboutAppPage extends HookWidget {
     final inAppReview = InAppReview.instance;
 
     if (await inAppReview.isAvailable()) {
-      await inAppReview.requestReview();
+       await inAppReview.openStoreListing(appStoreId: 'id6466606575');
     }
   }
 
