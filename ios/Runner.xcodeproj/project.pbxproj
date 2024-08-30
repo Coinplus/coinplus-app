@@ -500,7 +500,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = CU3K4PRR82;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.4.0;
+				FLUTTER_BUILD_NAME = 1.4.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -707,7 +707,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = CU3K4PRR82;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.4.0;
+				FLUTTER_BUILD_NAME = 1.4.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -740,7 +740,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = CU3K4PRR82;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.4.0;
+				FLUTTER_BUILD_NAME = 1.4.1;
 				FLUTTER_BUILD_NUMBER = 1;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
