@@ -141,6 +141,7 @@ abstract class _TransactionStore with Store {
         FeeRateMode.FAST => txFeeRate.fastestFee,
         FeeRateMode.MEDIUM => txFeeRate.halfHourFee,
         FeeRateMode.SLOW => txFeeRate.hourFee,
+        FeeRateMode.MINIMUM => txFeeRate.minimumFee,
       };
 
   @action
@@ -376,7 +377,7 @@ abstract class _TransactionStore with Store {
 
   @action
   Future<void> createTransaction({
-    required List<({String hash, int amount, int vout})> inputs,
+    required List<({dynamic hash, int amount, int vout})> inputs,
     required ({String address, int amount}) output,
     required int fee,
     required String refundAddress,
@@ -401,7 +402,8 @@ abstract class _TransactionStore with Store {
 
     final canRefund = refundAmount > 500;
 
-    for (final input in inputs) {
+    for (var i = 0; i < inputs.length; i++) {
+      final input = inputs[i];
       txb.addInput(input.hash, input.vout);
     }
 
@@ -409,7 +411,14 @@ abstract class _TransactionStore with Store {
     if (canRefund) {
       txb.addOutput(refundAddress, refundAmount);
     }
-    txb.sign(vin: 0, keyPair: decrypter);
+
+    for (var i = 0; i < inputs.length; i++) {
+      txb.sign(
+        vin: i,
+        keyPair: decrypter,
+        witnessValue: inputs[i].amount,
+      );
+    }
 
     final tx = txb.build().toHex();
 
