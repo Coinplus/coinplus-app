@@ -43,7 +43,7 @@ class UsdAmountTextField extends HookWidget {
       _typingTimer = Timer(const Duration(milliseconds: 1000), () {
         if (_hasPrinted.value == false) {
           final text = state.usdController.text;
-          final textToInt = int.parse(text);
+          final textToInt = double.tryParse(text);
           if (textToInt != 0) {
             recordAmplitudeEventPartTwo(
               AmountEntered(

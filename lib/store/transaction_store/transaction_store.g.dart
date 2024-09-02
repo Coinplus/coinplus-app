@@ -357,7 +357,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   Future<void> createTransaction(
-      {required List<({int amount, String hash, int vout})> inputs,
+      {required List<({int amount, dynamic hash, int vout})> inputs,
       required ({String address, int amount}) output,
       required int fee,
       required String refundAddress}) {
