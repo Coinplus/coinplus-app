@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,6 +9,7 @@ import 'package:gap/gap.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -16,10 +20,29 @@ class AboutAppPage extends HookWidget {
   const AboutAppPage({super.key});
 
   Future<void> appReview() async {
+    final startTime = Stopwatch()..start();
     final inAppReview = InAppReview.instance;
-
     if (await inAppReview.isAvailable()) {
-       await inAppReview.openStoreListing(appStoreId: 'id6466606575');
+      try {
+        await inAppReview.requestReview();
+      } catch (e) {
+        log(e.toString());
+      }
+    }
+    final elapsedMilliseconds = startTime.elapsedMilliseconds;
+    if (elapsedMilliseconds > 300) {
+      return;
+    }
+    try {
+      if (Platform.isAndroid) {
+        await launchUrl(
+          Uri.parse(
+            'https://play.google.com/store/apps/details?id=com.coinplus.app',
+          ),
+        );
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 

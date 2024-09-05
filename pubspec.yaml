@@ -90,7 +90,7 @@ dependencies:
   btc_address_validate_swan: ^1.2.1
   fl_chart: ^0.68.0
   flutter_inappwebview: ^6.0.0
-  ios_smooth_page_indicator: 1.1.4
+  ios_smooth_page_indicator: 1.1.5
 
 dev_dependencies:
   # Provides API to test Flutter applications that run on real devices and emulators.

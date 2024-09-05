@@ -171,13 +171,13 @@ mixin _$TransactionStore on _TransactionStore, Store {
       Atom(name: '_TransactionStore.txFeeRate', context: context);
 
   @override
-  TxFeeDto get txFeeRate {
+  TxFeeDto? get txFeeRate {
     _$txFeeRateAtom.reportRead();
     return super.txFeeRate;
   }
 
   @override
-  set txFeeRate(TxFeeDto value) {
+  set txFeeRate(TxFeeDto? value) {
     _$txFeeRateAtom.reportWrite(value, super.txFeeRate, () {
       super.txFeeRate = value;
     });

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bitcoin_flutter/bitcoin_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
@@ -7,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/fee_rate_mode.dart';
-import '../../extensions/num_extension.dart';
 import '../../http/repositories/broadcast_repo.dart';
 import '../../http/repositories/mempool_repo.dart';
 import '../../http/repositories/utxo_repo.dart';
@@ -42,12 +39,6 @@ abstract class _TransactionStore with Store {
   void _init() {
     getUtxosData();
     _disposer
-      ..add(
-        reaction(
-          (p0) => currentAddress,
-          (p0) => getUtxosData(),
-        ),
-      )
       ..add(
         reaction(
           (p0) => txFeeRate,
@@ -103,7 +94,7 @@ abstract class _TransactionStore with Store {
   @observable
   int txFee = 0;
   @observable
-  TxFeeDto txFeeRate = const TxFeeDto();
+  TxFeeDto? txFeeRate;
   @observable
   String receiverWalletAddress = '';
   @observable
@@ -138,10 +129,10 @@ abstract class _TransactionStore with Store {
 
   @computed
   int get selectedFee => switch (feeMode) {
-        FeeRateMode.FAST => txFeeRate.fastestFee,
-        FeeRateMode.MEDIUM => txFeeRate.halfHourFee,
-        FeeRateMode.SLOW => txFeeRate.hourFee,
-        FeeRateMode.MINIMUM => txFeeRate.minimumFee,
+        FeeRateMode.FAST => txFeeRate!.fastestFee,
+        FeeRateMode.MEDIUM => txFeeRate!.halfHourFee,
+        FeeRateMode.SLOW => txFeeRate!.hourFee,
+        FeeRateMode.MINIMUM => txFeeRate!.minimumFee,
       };
 
   @action
@@ -231,7 +222,6 @@ abstract class _TransactionStore with Store {
     utxoLoading = true;
     var currentAddress = '';
     if (selectedCard != -1 && selectedBar == -1) {
-      log(selectedCardIndex.toString());
       currentAddress = _balanceStore.cards[selectedCardIndex].address;
     } else if (selectedCard == -1 && selectedBar != -1) {
       currentAddress = _balanceStore.bars[selectedBarIndex].address;
@@ -260,45 +250,38 @@ abstract class _TransactionStore with Store {
 
   @action
   Future<void> findOptimalUtxo() async {
-    if (sendAmount > totalValue) {
+    final fastestFee = selectedFee;
+    final initialFee = calculateFee(1, 1, fastestFee);
+    final rangeStart = sendAmount + initialFee;
+    final rangeEnd = sendAmount + initialFee + 500;
+    final mostOptimalSingleUtxo = sortedUtxos.firstWhereOrNull(
+      (utxo) => utxo.value >= rangeStart && utxo.value <= rangeEnd,
+    );
+    if (mostOptimalSingleUtxo != null) {
+      txFee = initialFee;
+      usedUtxos = [mostOptimalSingleUtxo].asObservable();
       if (kDebugMode) {
-        print('Not enough funds');
+        print(
+          'Smallest UTXO (1 input, 1 output, without change): ${mostOptimalSingleUtxo.txHash}',
+        );
       }
-    } else {
-      final fastestFee = selectedFee;
-      final initialFee = calculateFee(1, 1, fastestFee);
-      log('Initial Fee: $initialFee');
-      final rangeStart = sendAmount + initialFee;
-      final rangeEnd = sendAmount + initialFee + 500;
-      final mostOptimalSingleUtxo = sortedUtxos.firstWhereOrNull(
-        (utxo) => utxo.value >= rangeStart && utxo.value <= rangeEnd,
-      );
-      if (mostOptimalSingleUtxo != null) {
-        txFee = initialFee;
-        usedUtxos = [mostOptimalSingleUtxo].asObservable();
+      return;
+    }
+
+    for (final utxo in sortedUtxos) {
+      final newFee = calculateFee(1, 2, fastestFee);
+      usedUtxos = [utxo].asObservable();
+      txFee = newFee;
+      if (utxo.value >= sendAmount + newFee) {
         if (kDebugMode) {
           print(
-            'Smallest UTXO (1 input, 1 output, without change): ${mostOptimalSingleUtxo.txHash}',
+            'Smallest UTXO (1 input, 2 outputs, with change): ${utxo.txHash}',
           );
         }
         return;
       }
-
-      for (final utxo in sortedUtxos) {
-        final newFee = calculateFee(1, 2, fastestFee);
-        usedUtxos = [utxo].asObservable();
-        txFee = newFee;
-        if (utxo.value >= sendAmount + newFee) {
-          if (kDebugMode) {
-            print(
-              'Smallest UTXO (1 input, 2 outputs, with change): ${utxo.txHash}',
-            );
-          }
-          return;
-        }
-      }
-      combineUtxos();
     }
+    combineUtxos();
   }
 
   @observable
@@ -310,9 +293,6 @@ abstract class _TransactionStore with Store {
     final selectedUtxos = <UtxoModel>[];
     inputQuantity = 2;
     if (sendAmount > totalValue) {
-      if (kDebugMode) {
-        print('Not enough funds');
-      }
       return;
     }
 
@@ -366,7 +346,6 @@ abstract class _TransactionStore with Store {
         calculateFee(sortedUtxos.length, 1, selectedFee);
     selectedUtxos.addAll(sortedUtxos);
     txFee = newFeeWithoutChange;
-    log(txFee.satoshiToUsd(btcCurrentPrice: btc?.price).toString());
     final utxoHashes = sortedUtxos.map((utxo) => utxo.txHash).toList();
     if (kDebugMode) {
       print('Max UTXOs Without Change: $utxoHashes');
@@ -434,7 +413,6 @@ abstract class _TransactionStore with Store {
     broadcastLoading = true;
     try {
       final res = await broadcastRepo.broadcastTransaction(hex: txHex);
-      log(txHex.toString());
       return res;
     } catch (e) {
       throw Exception('Failed to broadcast transaction: $e');
