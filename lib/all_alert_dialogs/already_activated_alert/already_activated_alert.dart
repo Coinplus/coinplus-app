@@ -11,7 +11,7 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
     context,
     DialogBoxWithAction(
       text:
-          'Check out our detailed guide on how to send crypto from your wallet.',
+          'Check out our detailed guide on how to send crypto from your Ethereum wallet.',
       title: const Text(
         'Your wallet is \nalready activated!',
         textAlign: TextAlign.center,

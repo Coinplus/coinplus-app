@@ -5,16 +5,16 @@ import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../store/nfc_state/nfc_state.dart';
+import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../widgets/wallet_connect_methods/card_connect_methods.dart';
 
 class AddNewCardModal extends StatelessWidget {
   const AddNewCardModal({
     super.key,
-    required NfcStore nfcState,
+    required AllSettingsState nfcState,
   }) : _nfcState = nfcState;
 
-  final NfcStore _nfcState;
+  final AllSettingsState _nfcState;
 
   @override
   Widget build(BuildContext context) {

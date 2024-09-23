@@ -4,19 +4,18 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../gen/colors.gen.dart';
-import '../../../gen/fonts.gen.dart';
-import '../../extensions/widget_extension.dart';
-import '../../gen/assets.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../models/card_model/card_model.dart';
-import '../../providers/screen_service.dart';
-import '../../services/amplitude_service.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/card_name_sate/card_name_sate.dart';
-import '../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button/loading_button.dart';
+import '../../../../gen/colors.gen.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../extensions/widget_extension.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../models/card_model/card_model.dart';
+import '../../../providers/screen_service.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../widgets/custom_snack_bar/snack_bar_method.dart';
+import '../../../widgets/loading_button/loading_button.dart';
 
 class CardNameChangeModal extends StatefulWidget {
   const CardNameChangeModal({super.key, required this.card});
@@ -29,7 +28,7 @@ class CardNameChangeModal extends StatefulWidget {
 
 class _CardNameChangeModalState extends State<CardNameChangeModal> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  final _nameState = CardNameState();
+  final _nameState = AllSettingsState();
   final _focusNode = FocusNode();
 
   @override
@@ -171,21 +170,9 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                             await recordAmplitudeEventPartTwo(
                               const CardNameChanged(walletType: 'Card'),
                             );
-                            showTopSnackBar(
-                              displayDuration: const Duration(
-                                milliseconds: 600,
-                              ),
-                              Overlay.of(context),
-                              CustomSnackBar.success(
-                                backgroundColor:
-                                    const Color(0xFF4A4A4A).withOpacity(0.9),
-                                message: 'Your card name was changed',
-                                textStyle: const TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                              ),
+                            await showCustomSnackBar(
+                              context: context,
+                              message: 'Your card name was changed',
                             );
                           }
                         : null,

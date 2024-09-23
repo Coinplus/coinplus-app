@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -21,9 +22,11 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
+import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
@@ -33,6 +36,7 @@ import '../../store/history_page_store/history_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/compute_private_key.dart';
+import '../../utils/ethereum_private_key/ethereum_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/loading_button/loading_button.dart';
@@ -78,20 +82,44 @@ class _CardActivationPageState extends State<CardActivationPage>
   final _secretTwoFocusNode = FocusNode();
   final _secureStorage = SecureStorageService();
 
+  late final AbstractCard? card; // Nullable card
+
   @override
   void initState() {
     super.initState();
     _toggleCard();
     _secretOneTextField();
+
+    if (widget.receivedData!.startsWith('0')) {
+      log(_historyPageStore.cardActivationIndex.toString());
+      final ethCardIndex =
+          _historyPageStore.cardActivationIndex - _balanceStore.cards.length;
+      if (ethCardIndex >= 0 && ethCardIndex < _balanceStore.ethCards.length) {
+        card = _balanceStore.ethCards[ethCardIndex] as AbstractCard?;
+      } else {
+        card = null;
+      }
+    } else {
+      if (_historyPageStore.cardActivationIndex >= 0 &&
+          _historyPageStore.cardActivationIndex < _balanceStore.cards.length) {
+        card = _balanceStore.cards[_historyPageStore.cardActivationIndex]
+            as AbstractCard?;
+      } else {
+        card = null;
+      }
+    }
     _secretOneController.text = secret1B58;
     _secretTwoController.text = secret2B58;
+
     if (Platform.isAndroid) {
       nfcStop();
     }
+
     _lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -165,7 +193,6 @@ class _CardActivationPageState extends State<CardActivationPage>
 
   @override
   Widget build(BuildContext context) {
-    final card = _balanceStore.cards[_historyPageStore.cardActivationIndex];
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -231,7 +258,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                           ),
                         ],
                         image: DecorationImage(
-                          image: getFrontImageForCardColor(card.color).image,
+                          image: getFrontImageForCardColor(card!.color).image,
                         ),
                       ),
                     ),
@@ -257,7 +284,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                                   ),
                                 ],
                                 image: DecorationImage(
-                                  image: getBackImageForCardColor(card.color)
+                                  image: getBackImageForCardColor(card!.color)
                                       .image,
                                 ),
                               ),
@@ -333,7 +360,9 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                       TextField(
                                                                     inputFormatters: [
                                                                       LengthLimitingTextInputFormatter(
-                                                                        30,
+                                                                        card is CardModel
+                                                                            ? 30
+                                                                            : 28,
                                                                       ),
                                                                     ],
                                                                     textAlignVertical:
@@ -347,26 +376,42 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                     textAlign:
                                                                         TextAlign
                                                                             .center,
-                                                                    onChanged: (
-                                                                      value,
-                                                                    ) {
-                                                                      if (value
-                                                                              .length ==
-                                                                          30) {
-                                                                        _validateSecretOne(
-                                                                          card.address,
-                                                                        );
-                                                                      } else if (value
-                                                                              .length <
-                                                                          30) {
-                                                                        _validationStore
-                                                                            .invalidSecretOne();
-                                                                        _secretOneLottieController
-                                                                            .reset();
-                                                                      }
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      if (card
+                                                                          is CardModel) {
+                                                                        if (value.length ==
+                                                                            30) {
+                                                                          _validateSecretOne(
+                                                                            card!.address,
+                                                                          );
+                                                                        } else if (value.length <
+                                                                            30) {
+                                                                          _validationStore
+                                                                              .invalidSecretOne();
+                                                                          _secretOneLottieController
+                                                                              .reset();
+                                                                        }
 
-                                                                      secret1B58 =
-                                                                          value;
+                                                                        secret1B58 =
+                                                                            value;
+                                                                      } else {
+                                                                        if (value.length ==
+                                                                            28) {
+                                                                          _validateSecretOne(
+                                                                            card!.address,
+                                                                          );
+                                                                        } else if (value.length <
+                                                                            28) {
+                                                                          _validationStore
+                                                                              .invalidSecretOne();
+                                                                          _secretOneLottieController
+                                                                              .reset();
+                                                                        }
+
+                                                                        secret1B58 =
+                                                                            value;
+                                                                      }
                                                                     },
                                                                     controller:
                                                                         _secretOneController,
@@ -510,7 +555,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                           secret1B58 =
                                                                               _secretOneController.text;
                                                                           await _validateSecretOne(
-                                                                            card.address,
+                                                                            card!.address,
                                                                           );
                                                                         },
                                                                         child:
@@ -610,7 +655,9 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                       TextField(
                                                                     inputFormatters: [
                                                                       LengthLimitingTextInputFormatter(
-                                                                        30,
+                                                                        card is CardModel
+                                                                            ? 30
+                                                                            : 28,
                                                                       ),
                                                                     ],
                                                                     textAlignVertical:
@@ -626,23 +673,40 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                             .center,
                                                                     onChanged:
                                                                         (value) {
-                                                                      if (value
-                                                                              .length ==
-                                                                          30) {
-                                                                        _validateSecretTwo(
-                                                                          card.address,
-                                                                        );
-                                                                      } else if (value
-                                                                              .length <
-                                                                          30) {
-                                                                        _validationStore
-                                                                            .invalidSecretTwo();
-                                                                        _secretTwoLottieController
-                                                                            .reset();
-                                                                      }
+                                                                      if (card
+                                                                          is CardModel) {
+                                                                        if (value.length ==
+                                                                            30) {
+                                                                          _validateSecretTwo(
+                                                                            card!.address,
+                                                                          );
+                                                                        } else if (value.length <
+                                                                            30) {
+                                                                          _validationStore
+                                                                              .invalidSecretTwo();
+                                                                          _secretTwoLottieController
+                                                                              .reset();
+                                                                        }
 
-                                                                      secret2B58 =
-                                                                          value;
+                                                                        secret2B58 =
+                                                                            value;
+                                                                      } else {
+                                                                        if (value.length ==
+                                                                            14) {
+                                                                          _validateSecretTwo(
+                                                                            card!.address,
+                                                                          );
+                                                                        } else if (value.length <
+                                                                            14) {
+                                                                          _validationStore
+                                                                              .invalidSecretTwo();
+                                                                          _secretTwoLottieController
+                                                                              .reset();
+                                                                        }
+
+                                                                        secret2B58 =
+                                                                            value;
+                                                                      }
                                                                     },
                                                                     controller:
                                                                         _secretTwoController,
@@ -782,7 +846,7 @@ class _CardActivationPageState extends State<CardActivationPage>
                                                                           secret2B58 =
                                                                               _secretTwoController.text;
                                                                           await _validateSecretTwo(
-                                                                            card.address,
+                                                                            card!.address,
                                                                           );
                                                                         },
                                                                         child:
@@ -960,31 +1024,36 @@ class _CardActivationPageState extends State<CardActivationPage>
                             },
                           ),
                         );
-                        try {
-                          final wif = await getWif(secret1B58, secret2B58);
-                          final publicKey = wifToPublicKey(wif);
-                          _validationStore.setWalletAddress(
-                            publicKey: publicKey!,
+                        if (card!.address.startsWith('0')) {
+                          final privateKey = await getEthereumPrivateKey(
+                            secret1B58,
+                            secret2B58,
                           );
-                          if (card.address == publicKey) {
-                            unawaited(toggleActivation(card.address));
-                            unawaited(incrementActivationCount(card.address));
+                          final publicKey = getAddressKey(privateKey);
+                          final cardAddress = card!.address.toLowerCase();
+                          _validationStore.setWalletAddress(
+                            publicKey: publicKey,
+                          );
+                          if (cardAddress.hashCode == publicKey.hashCode) {
+                            unawaited(toggleActivation(card!.address));
+                            unawaited(incrementActivationCount(card!.address));
                             await _secureStorage.savePrivateKeyInSecureStorage(
-                              key: card.address,
-                              value: wif,
+                              key: card!.address,
+                              value: privateKey,
                             );
                             await router.maybePop();
                             await _secureStorage.isWalletActivated(
                               isSet: true,
-                              address: card.address,
+                              address: card!.address,
                             );
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEventPartTwo(
                               WalletActivated(
-                                walletAddress: card.address,
+                                walletAddress: card!.address,
                                 walletType: 'Card',
                               ),
                             );
+
                             await secretsSuccessAlert(
                               context: context,
                               walletAddress: _validationStore.walletAddress,
@@ -994,37 +1063,100 @@ class _CardActivationPageState extends State<CardActivationPage>
                               card: card,
                               balanceStore: _balanceStore,
                             );
+
                             await recordUserProperty(const CardHolder());
                           } else {
                             await router.maybePop();
                             await recordAmplitudeEventPartTwo(
                               WalletActivationFailed(
-                                walletAddress: card.address,
+                                walletAddress: card!.address,
                                 walletType: 'Card',
                               ),
                             );
-                            await recordUserProperty(const ActivationFailed());
-                            unawaited(activationFailureCount(card.address));
+                            await recordUserProperty(
+                              const ActivationFailed(),
+                            );
+                            unawaited(activationFailureCount(card!.address));
                             await secretsFailDialog(
                               context: context,
                               walletAddress: _validationStore.walletAddress,
                               walletType: 'Card',
                             );
                           }
-                        } catch (e) {
-                          await recordAmplitudeEventPartTwo(
-                            WalletActivated(
-                              walletAddress: card.address,
+                        } else {
+                          try {
+                            final wif = await getWif(secret1B58, secret2B58);
+                            final publicKey = wifToPublicKey(wif);
+                            _validationStore.setWalletAddress(
+                              publicKey: publicKey!,
+                            );
+                            if (card!.address == publicKey) {
+                              unawaited(toggleActivation(card!.address));
+                              unawaited(
+                                incrementActivationCount(card!.address),
+                              );
+                              await _secureStorage
+                                  .savePrivateKeyInSecureStorage(
+                                key: card!.address,
+                                value: wif,
+                              );
+                              await router.maybePop();
+                              await _secureStorage.isWalletActivated(
+                                isSet: true,
+                                address: card!.address,
+                              );
+                              await HapticFeedback.heavyImpact();
+                              await recordAmplitudeEventPartTwo(
+                                WalletActivated(
+                                  walletAddress: card!.address,
+                                  walletType: 'Card',
+                                ),
+                              );
+
+                              await secretsSuccessAlert(
+                                context: context,
+                                walletAddress: _validationStore.walletAddress,
+                                walletType: 'Card',
+                                isBarList: false,
+                                state: widget.state,
+                                card: card,
+                                balanceStore: _balanceStore,
+                              );
+
+                              await recordUserProperty(const CardHolder());
+                            } else {
+                              await router.maybePop();
+                              await recordAmplitudeEventPartTwo(
+                                WalletActivationFailed(
+                                  walletAddress: card!.address,
+                                  walletType: 'Card',
+                                ),
+                              );
+                              await recordUserProperty(
+                                const ActivationFailed(),
+                              );
+                              unawaited(activationFailureCount(card!.address));
+                              await secretsFailDialog(
+                                context: context,
+                                walletAddress: _validationStore.walletAddress,
+                                walletType: 'Card',
+                              );
+                            }
+                          } catch (e) {
+                            await recordAmplitudeEventPartTwo(
+                              WalletActivated(
+                                walletAddress: card!.address,
+                                walletType: 'Card',
+                              ),
+                            );
+                            await recordUserProperty(const ActivationFailed());
+                            unawaited(activationFailureCount(card!.address));
+                            await secretsFailDialog(
+                              context: context,
+                              walletAddress: _validationStore.walletAddress,
                               walletType: 'Card',
-                            ),
-                          );
-                          await recordUserProperty(const ActivationFailed());
-                          unawaited(activationFailureCount(card.address));
-                          await secretsFailDialog(
-                            context: context,
-                            walletAddress: _validationStore.walletAddress,
-                            walletType: 'Card',
-                          );
+                            );
+                          }
                         }
                       },
                 child: const Text(
@@ -1114,34 +1246,63 @@ class _CardActivationPageState extends State<CardActivationPage>
 
   Future<void> _validateSecretOne(String walletAddress) async {
     final secretOne = _secretOneController.text.trim();
-    if (isValidSecret(secretOne)) {
-      _secretOneFocusNode.unfocus();
-      _validationStore.validateSecretOne();
-      await Future.delayed(const Duration());
-      await _secretOneLottieController.forward(from: 0);
-      _validationStore.makeSecretTwoVisible();
-      await Future.delayed(const Duration(milliseconds: 100));
-      _secretTwoFocusNode.requestFocus();
+    if (card is CardModel) {
+      if (isValidSecret(secretOne)) {
+        _secretOneFocusNode.unfocus();
+        _validationStore.validateSecretOne();
+        await Future.delayed(const Duration());
+        await _secretOneLottieController.forward(from: 0);
+        _validationStore.makeSecretTwoVisible();
+        await Future.delayed(const Duration(milliseconds: 100));
+        _secretTwoFocusNode.requestFocus();
 
-      await recordAmplitudeEvent(
-        Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
-      );
+        await recordAmplitudeEvent(
+          Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
+        );
+      }
+    } else {
+      if (isValidEthSecretOne(secretOne)) {
+        _secretOneFocusNode.unfocus();
+        _validationStore.validateSecretOne();
+        await Future.delayed(const Duration());
+        await _secretOneLottieController.forward(from: 0);
+        _validationStore.makeSecretTwoVisible();
+        await Future.delayed(const Duration(milliseconds: 100));
+        _secretTwoFocusNode.requestFocus();
+        await recordAmplitudeEvent(
+          Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
+        );
+      }
     }
   }
 
   Future<void> _validateSecretTwo(String walletAddress) async {
     final secretTwo = _secretTwoController.text.trim();
-    if (isValidSecret(secretTwo)) {
-      _validationStore.validateSecretTwo();
-      await Future.delayed(
-        const Duration(),
-      );
-      _secretTwoFocusNode.unfocus();
-      await recordAmplitudeEvent(
-        Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
-      );
+    if (card is CardModel) {
+      if (isValidSecret(secretTwo)) {
+        _validationStore.validateSecretTwo();
+        await Future.delayed(
+          const Duration(),
+        );
+        _secretTwoFocusNode.unfocus();
+        await recordAmplitudeEvent(
+          Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
+        );
 
-      await _secretTwoLottieController.forward(from: 0);
+        await _secretTwoLottieController.forward(from: 0);
+      }
+    } else {
+      if (isValidEthSecretTwo(secretTwo)) {
+        _validationStore.validateSecretTwo();
+        await Future.delayed(
+          const Duration(),
+        );
+        _secretTwoFocusNode.unfocus();
+        await recordAmplitudeEvent(
+          Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
+        );
+        await _secretTwoLottieController.forward(from: 0);
+      }
     }
   }
 

@@ -20,9 +20,9 @@ import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
 
 class BarScanMethodsPage extends HookWidget {
@@ -31,7 +31,7 @@ class BarScanMethodsPage extends HookWidget {
     this.isAvailable,
   });
 
-  final NfcStore? isAvailable;
+  final AllSettingsState? isAvailable;
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 

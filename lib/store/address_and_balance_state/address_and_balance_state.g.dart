@@ -25,6 +25,22 @@ mixin _$AddressState on _AddressState, Store {
     });
   }
 
+  late final _$ethAddressAtom =
+      Atom(name: '_AddressState.ethAddress', context: context);
+
+  @override
+  String get ethAddress {
+    _$ethAddressAtom.reportRead();
+    return super.ethAddress;
+  }
+
+  @override
+  set ethAddress(String value) {
+    _$ethAddressAtom.reportWrite(value, super.ethAddress, () {
+      super.ethAddress = value;
+    });
+  }
+
   late final _$hasErrorAtom =
       Atom(name: '_AddressState.hasError', context: context);
 
@@ -113,6 +129,7 @@ mixin _$AddressState on _AddressState, Store {
   String toString() {
     return '''
 btcAddress: ${btcAddress},
+ethAddress: ${ethAddress},
 hasError: ${hasError},
 isAddressValid: ${isAddressValid},
 isAddressVisible: ${isAddressVisible}

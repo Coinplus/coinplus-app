@@ -15,6 +15,7 @@ import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../utils/wallet_activation_status.dart';
+import '../../models/abstract_card/abstract_card.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../recommended_by_tap_card/recommended_by_tap.dart';
 import 'recommended_activate_with_nfc.dart';
@@ -28,8 +29,19 @@ class CardIssueOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final card = _balanceStore.cards[_balanceStore.cardCurrentIndex];
+    AbstractCard? card;
+
+    final cardIndex = _balanceStore.cardCurrentIndex;
+
+    if (cardIndex < _balanceStore.cards.length) {
+      card = _balanceStore.cards[cardIndex] as AbstractCard;
+    } else {
+      final ethCardIndex = cardIndex - _balanceStore.cards.length;
+      card = _balanceStore.ethCards[ethCardIndex] as AbstractCard;
+    }
+
     final walletAddress = card.address;
+
     final isActivated = isCardWalletActivated(balanceStore: _balanceStore);
     return Padding(
       padding: const EdgeInsets.symmetric(

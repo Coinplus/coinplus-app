@@ -15,7 +15,7 @@ import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../utils/data_utils.dart';
 import '../../widgets/loading_button/loading_button.dart';
 
@@ -26,7 +26,7 @@ Future<void> receiveModal({
   required Future<bool> isBarActivated,
   required ObjectRef<({AbstractCard? card, int index})> currentCard,
   required ValueNotifier<bool> isModalOpened,
-  required SettingsState settingsState,
+  required AllSettingsState settingsState,
 }) async {
   isModalOpened.value = true;
   await showModalBottomSheet(
@@ -63,19 +63,26 @@ Future<void> receiveModal({
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Receive BTC',
+                        Text(
+                          card.blockchain == 'BTC'
+                              ? 'Receive BTC'
+                              : 'Receive ETH',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
                             fontSize: 17,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         const Gap(6),
-                        Assets.icons.bTCIcon.image(
-                          height: 24,
-                        ),
+                        if (card.blockchain == 'BTC')
+                          Assets.icons.bTCIcon.image(
+                            height: 24,
+                          )
+                        else
+                          Assets.icons.ethIcon.image(
+                            height: 24,
+                          ),
                       ],
                     ),
                   ),
@@ -148,6 +155,7 @@ Future<void> receiveModal({
                             padding: const EdgeInsets.only(
                               top: 10,
                               bottom: 10,
+                              left: 10,
                             ),
                             child: Row(
                               children: [
@@ -191,7 +199,7 @@ Future<void> receiveModal({
                                           ),
                                           secondChild: context.height > 667
                                               ? Text(
-                                                  card.address,
+                                                  getSplitAddress(card.address),
                                                   style: const TextStyle(
                                                     fontFamily:
                                                         FontFamily.redHatMedium,
@@ -257,10 +265,10 @@ Future<void> receiveModal({
                         height: 24,
                       ),
                       const Gap(10),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Please note',
                             style: TextStyle(
                               fontFamily: FontFamily.redHatMedium,
@@ -271,11 +279,13 @@ Future<void> receiveModal({
                               ),
                             ),
                           ),
-                          Gap(4),
+                          const Gap(4),
                           Text(
-                            'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.',
+                            card.blockchain == 'BTC'
+                                ? 'This address is exclusively for receiving \nBitcoin. You cannot receive any other \ncryptocurrency to this address.'
+                                : 'This address is exclusively for receiving \nEthereum. You cannot receive any other \ncryptocurrency to this address.',
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: FontFamily.redHatMedium,
                               fontSize: 14,
                               fontWeight: FontWeight.normal,

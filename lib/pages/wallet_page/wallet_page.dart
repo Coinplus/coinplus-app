@@ -93,6 +93,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (_balanceStore.cards.isNotEmpty) {
       _balanceStore.getCardsInfo();
     }
+    if (_balanceStore.ethCards.isNotEmpty) {
+      _balanceStore.getEthCardsInfo();
+    }
     if (_balanceStore.bars.isNotEmpty) {
       _balanceStore.getBarsInfo();
     }
@@ -273,8 +276,15 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                 onRefresh: () async {
                   await HapticFeedback.mediumImpact();
                   await _marketPageStore.getSingleCoin();
-                  unawaited(_balanceStore.getCardsInfo());
-                  unawaited(_balanceStore.getBarsInfo());
+                  if (_balanceStore.cards.isNotEmpty) {
+                    unawaited(_balanceStore.getCardsInfo());
+                  }
+                  if (_balanceStore.bars.isNotEmpty) {
+                    unawaited(_balanceStore.getBarsInfo());
+                  }
+                  if (_balanceStore.ethCards.isNotEmpty) {
+                    await _balanceStore.getEthCardsInfo();
+                  }
                 },
                 child: CustomScrollView(
                   controller: controller,

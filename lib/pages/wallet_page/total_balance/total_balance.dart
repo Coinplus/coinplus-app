@@ -63,6 +63,8 @@ class TotalBalance extends StatelessWidget {
           Observer(
             builder: (context) {
               final data = _marketPageStore.singleCoin?.result.first;
+              final ethPrice = _balanceStore.ethPrice ?? 0;
+              final ethBalance = _balanceStore.allEthCardsBalances * ethPrice;
               final myFormat = NumberFormat.decimalPatternDigits(
                 locale: 'en_us',
                 decimalDigits: 2,
@@ -70,9 +72,7 @@ class TotalBalance extends StatelessWidget {
               final balance = _balanceStore.allCardsBalances;
               return AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
-                child: data == null ||
-                        _balanceStore.balanceLoading == true ||
-                        balance == null
+                child: data == null || _balanceStore.balanceLoading == true
                     ? const Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -105,7 +105,7 @@ class TotalBalance extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
-                                '\$${myFormat.format(balance / 100000000 * data.price)}',
+                                '\$${myFormat.format((balance / 100000000 * (data.price)) + ethBalance)}',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatBold,
                                   color: Colors.white,

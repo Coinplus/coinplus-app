@@ -17,6 +17,7 @@ import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
 import '../../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../../constants/button_settings.dart';
+import '../../constants/card_type.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/widget_extension.dart';
@@ -30,7 +31,8 @@ import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
-import '../../store/nfc_state/nfc_state.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
 import '../../widgets/connect_manually_button/connect_manually_button.dart';
@@ -42,9 +44,11 @@ class OnboardingPage extends HookWidget {
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
   @override
   Widget build(BuildContext context) {
-    final _nfcState = useMemoized(NfcStore.new);
+    final _nfcState = useMemoized(AllSettingsState.new);
     final deepLinkRes = useRef<String?>(null);
     final resumed = useState(false);
     final isMifareUltralight = useRef<bool?>(false);
@@ -146,6 +150,11 @@ class OnboardingPage extends HookWidget {
                                 final Map payloadData =
                                     await json.decode(payloadString);
                                 walletAddress = payloadData['a'];
+                                if (walletAddress.toString().startsWith('0')) {
+                                  await _balanceStore.setChainType(
+                                    blockchain: BlockchainType.ETHEREUM,
+                                  );
+                                }
                                 cardColor = payloadData['c'];
                                 formFactor = payloadData['t'];
                               } else {

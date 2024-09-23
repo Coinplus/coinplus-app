@@ -12,6 +12,7 @@ import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -28,6 +29,8 @@ class ActionSliderForBarDelete extends StatelessWidget {
   final BalanceStore balanceStore;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,11 @@ class ActionSliderForBarDelete extends StatelessWidget {
         controller.success();
         unawaited(_balanceStore.getSelectedBar(bar.address));
         await _secureStorage.deleteBar(bar: bar);
+        await _historyPageStore.deleteAddressFromHistoryMap(
+          address: bar.address,
+        );
+        _historyPageStore.cardHistories[bar.address]?.clear();
+        await _historyPageStore.setCardHistoryIndex(0);
         unawaited(deleteCount(bar.address));
         await router.maybePop();
         unawaited(_balanceStore.removeSelectedBar());

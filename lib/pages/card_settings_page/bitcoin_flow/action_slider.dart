@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../models/card_model/card_model.dart';
-import '../../providers/screen_service.dart';
-import '../../services/amplitude_service.dart';
-import '../../services/cloud_firestore_service.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/history_page_store/history_page_store.dart';
-import '../../utils/secure_storage_utils.dart';
-import '../../utils/wallet_activation_status.dart';
-import '../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../widgets/custom_snack_bar/top_snack.dart';
+import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../models/card_model/card_model.dart';
+import '../../../providers/screen_service.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../services/cloud_firestore_service.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../store/history_page_store/history_page_store.dart';
+import '../../../utils/secure_storage_utils.dart';
+import '../../../utils/wallet_activation_status.dart';
+import '../../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../../widgets/custom_snack_bar/top_snack.dart';
 
 class ActionSliderForCardDelete extends StatelessWidget {
   const ActionSliderForCardDelete({
@@ -54,6 +54,9 @@ class ActionSliderForCardDelete extends StatelessWidget {
         controller.success();
         unawaited(balanceStore.getSelectedCard(card.address));
         await _secureStorage.deleteCard(card: card);
+        await _historyPageStore.deleteAddressFromHistoryMap(
+          address: card.address,
+        );
         unawaited(deleteCount(card.address));
         await router.maybePop();
         unawaited(balanceStore.removeSelectedCard());

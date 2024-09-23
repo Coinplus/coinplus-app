@@ -10,7 +10,7 @@ import '../../models/amplitude_event/amplitude_event.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
-import '../../store/form_factor_state/form_factor_state.dart';
+import '../../store/wallet_type_state/wallet_type_state.dart';
 
 class WalletTypeWidget extends StatefulWidget {
   const WalletTypeWidget({super.key, required this.pageIndexNotifier});
@@ -37,7 +37,7 @@ class _WalletTypeWidgetState extends State<WalletTypeWidget>
           .animate(
     CurvedAnimation(parent: _controller, curve: Curves.decelerate),
   );
-  final _formFactorState = FormFactorState();
+  final _formFactorState = WalletTypeState();
 
   @override
   Widget build(BuildContext context) {

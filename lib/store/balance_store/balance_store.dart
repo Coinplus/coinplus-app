@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -12,6 +13,7 @@ import '../../http/repositories/balance_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coins_dto/coin_model.dart';
+import '../../models/eth_card_model/eth_card_model.dart';
 import '../../models/map_result/map_result_dto.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
@@ -29,13 +31,19 @@ abstract class _BalanceStore with Store {
   @readonly
   ObservableList<CardModel> _cards = <CardModel>[].asObservable();
   @readonly
+  ObservableList<EthCardModel> _ethCards = <EthCardModel>[].asObservable();
+  @readonly
   ObservableList<BarModel> _bars = <BarModel>[].asObservable();
   @observable
   MapResult? cardMapResult;
   @observable
+  List<dynamic>? listResult;
+  @observable
   MapResult? barMapResult;
   @readonly
   CardModel? _selectedCard;
+  @readonly
+  EthCardModel? _selectedEthCard;
   @readonly
   BarModel? _selectedBar;
   @observable
@@ -56,6 +64,8 @@ abstract class _BalanceStore with Store {
   int cardIndicatorIndex = 0;
   @observable
   bool isCardIndicatorTapped = false;
+  @observable
+  BlockchainType chainType = BlockchainType.BITCOIN;
 
   Future<void> signIn() async {
     final prefs = await SharedPreferences.getInstance();
@@ -73,7 +83,11 @@ abstract class _BalanceStore with Store {
     if (_bars.isNotEmpty) {
       getBarsInfo();
     }
+    if (_cards.isNotEmpty) {
+      getEthCardsInfo();
+    }
     getCardsFromStorage();
+    getEthCardsFromStorage();
     getBarsFromStorage();
     signIn();
   }
@@ -81,6 +95,14 @@ abstract class _BalanceStore with Store {
   Future<void> getCardsFromStorage() async {
     final allCards = await StorageUtils.getCards();
     _cards = allCards
+        .where((element) => element.type == CardType.CARD)
+        .toList()
+        .asObservable();
+  }
+
+  Future<void> getEthCardsFromStorage() async {
+    final allCards = await StorageUtils.getEthCards();
+    _ethCards = allCards
         .where((element) => element.type == CardType.CARD)
         .toList()
         .asObservable();
@@ -95,20 +117,36 @@ abstract class _BalanceStore with Store {
   }
 
   @computed
-  int? get allCardsBalances {
-    final cardTotalBalance = _cards.fold<int>(
+  num? get btcPrice => _marketPageStore.singleCoin?.result.first.price;
+
+  @computed
+  num? get ethPrice => _marketPageStore.singleCoin?.result
+      .firstWhereOrNull((e) => e.symbol == 'ETH')
+      ?.price;
+
+  @computed
+  num get allCardsBalances {
+    final cardTotalBalance = _cards.fold<num>(
       0,
       (acc, card) => acc + (card.finalBalance ?? 0),
     );
-    final barTotalBalance = _bars.fold<int>(
+
+    final barTotalBalance = _bars.fold<num>(
       0,
       (acc, bar) => acc + (bar.finalBalance ?? 0),
     );
+
     return cardTotalBalance + barTotalBalance;
   }
 
   @computed
-  num? get btcPrice => _marketPageStore.singleCoin?.result.first.price;
+  num get allEthCardsBalances {
+    final cardTotalBalance = _ethCards.fold<num>(
+      0,
+      (acc, card) => acc + (card.finalBalance ?? 0),
+    );
+    return cardTotalBalance;
+  }
 
   @computed
   CoinModel? get singleCoin => _marketPageStore.singleCoin;
@@ -202,6 +240,66 @@ abstract class _BalanceStore with Store {
   }
 
   @action
+  Future<EthCardModel> getEthCard({required int index}) async {
+    return _ethCards[index - _ethCards.length];
+  }
+
+  @computed
+  List<Object> get allCards => [..._cards, ..._ethCards];
+
+  List<Object> filterCardsByBlockchain(String blockchainType) {
+    if (blockchainType == 'BTC') {
+      return _cards;
+    } else if (blockchainType == 'ETH') {
+      return _ethCards;
+    } else {
+      return [];
+    }
+  }
+
+  @action
+  Future<void> getEthCardsInfo() async {
+    if (_ethCards.isEmpty) {
+      return;
+    }
+
+    final apiData = CoinStatsRepo();
+
+    try {
+      balanceLoading = true;
+
+      for (var i = 0; i < _ethCards.length; i++) {
+        final card = _ethCards[i];
+        final address = card.address;
+
+        final res = await apiData.getWalletData(address: address);
+        listResult = res;
+        if (res == null || res.isEmpty) {
+          continue;
+        }
+
+        final firstResult = res[0] as Map<String, dynamic>;
+
+        final resJson = {
+          'address': address,
+          'amount': firstResult['amount'],
+        };
+
+        final updatedCard = EthCardModel.fromJson(resJson);
+
+        _ethCards[i] = card.copyWith(
+          finalBalance: updatedCard.finalBalance,
+          address: updatedCard.address,
+        );
+      }
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      balanceLoading = false;
+    }
+  }
+
+  @action
   Future<void> updateCardIndicatorIndex(int index) async {
     cardIndicatorIndex = index;
   }
@@ -225,6 +323,35 @@ abstract class _BalanceStore with Store {
       'total_received': (res.value as Map)['total_received'],
     };
     _selectedCard = CardModel.fromJson(cardJson);
+  }
+
+  Future<void> getSelectedEthCard(String address) async {
+    final apiData = CoinStatsRepo();
+    loadings[address] = true;
+    try {
+      final ethData = await apiData.getWalletData(address: address);
+
+      if (ethData == null || ethData.isEmpty) {
+        _selectedEthCard = EthCardModel(
+          address: address,
+          finalBalance: 0,
+        );
+        return;
+      }
+
+      final Map<String, dynamic> res = ethData.first;
+
+      final cardJson = {
+        'address': address,
+        'amount': res['amount'] ?? 0,
+      };
+
+      _selectedEthCard = EthCardModel.fromJson(cardJson);
+    } catch (e) {
+      log('Error fetching Ethereum card data: $e');
+    } finally {
+      loadings[address] = false;
+    }
   }
 
   @action
@@ -254,6 +381,18 @@ abstract class _BalanceStore with Store {
     _cards.removeAt(index);
     await StorageUtils.removeCard(_selectedCard!.address);
     await _secureStorage.delete(key: _selectedCard!.address);
+  }
+
+  @action
+  Future<void> removeSelectedEthCard() async {
+    if (_selectedEthCard == null) {
+      return;
+    }
+    final index = _ethCards
+        .indexWhere((element) => element.address == _selectedEthCard!.address);
+    _ethCards.removeAt(index);
+    await StorageUtils.removeEthCard(_selectedEthCard!.address);
+    await _secureStorage.delete(key: _selectedEthCard!.address);
   }
 
   @action
@@ -291,6 +430,31 @@ abstract class _BalanceStore with Store {
       onCardAdded(_selectedCard!.address);
     } else {
       onCardAdded(_selectedCard!.address);
+
+      throw Exception('Card is already added');
+    }
+  }
+
+  void saveSelectedEthCard({required CardColor color}) {
+    if (_selectedEthCard == null) {
+      return;
+    }
+
+    final isCardNotExist = _ethCards
+        .indexWhere((element) => element.address == _selectedEthCard?.address)
+        .isNegative;
+
+    if (isCardNotExist) {
+      _selectedEthCard = _selectedEthCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+      );
+      _ethCards.add(_selectedEthCard!);
+
+      StorageUtils.addEthCard(_selectedEthCard!);
+      onCardAdded(_selectedEthCard!.address);
+    } else {
+      onCardAdded(_selectedEthCard!.address);
 
       throw Exception('Card is already added');
     }
@@ -406,6 +570,24 @@ abstract class _BalanceStore with Store {
   }
 
   @action
+  void changeEthCardColorAndSave({
+    required String cardAddress,
+    required CardColor color,
+  }) {
+    final cardIndex =
+        _ethCards.indexWhere((element) => element.address == cardAddress);
+
+    if (cardIndex != -1) {
+      final updatedCard = _ethCards[cardIndex].copyWith(color: color);
+      _ethCards[cardIndex] = updatedCard;
+
+      StorageUtils.replaceEthCard(cardAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
   void changeBarColorAndSave({
     required String barAddress,
     required CardColor color,
@@ -512,6 +694,11 @@ abstract class _BalanceStore with Store {
   @action
   void webViewStopLoading() {
     inAppWebViewLoading = false;
+  }
+
+  @action
+  Future<void> setChainType({required BlockchainType blockchain}) async {
+    chainType = blockchain;
   }
 
   late void Function(String addr) onCardAdded = _defaultOnCardAdded;

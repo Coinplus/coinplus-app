@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ethereum_addresses/ethereum_addresses.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -21,10 +22,17 @@ abstract class _AddressState with Store {
       (p0) => btcAddress,
       (p0) => validateBTCAddress(),
     );
+    reaction(
+      (p0) => ethAddress,
+      (p0) => validateETHAddress(),
+    );
   }
 
   @observable
   String btcAddress = '';
+
+  @observable
+  String ethAddress = '';
 
   @observable
   bool hasError = false;
@@ -55,6 +63,35 @@ abstract class _AddressState with Store {
     final isAddressExist = addressType == CardType.CARD
         ? _balanceStore.selectedCard != null
         : _balanceStore.selectedBar != null;
+
+    if (isAddressExist) {
+      setValidationPassed();
+      return;
+    }
+
+    setValidationFailed();
+  }
+
+  Future<void> validateETHAddress() async {
+    if (ethAddress.length < 38) {
+      setValidationFailed();
+      return;
+    }
+
+    final validationRes = isValidEthereumAddress(ethAddress);
+    if (!validationRes) {
+      setValidationFailed();
+      return;
+    }
+    setValidationPassed();
+
+    addressType == CardType.CARD
+        ? await _balanceStore.getSelectedEthCard(ethAddress)
+        : await _balanceStore.getSelectedEthCard(ethAddress);
+
+    final isAddressExist = addressType == CardType.CARD
+        ? _balanceStore.selectedEthCard != null
+        : _balanceStore.selectedEthCard != null;
 
     if (isAddressExist) {
       setValidationPassed();

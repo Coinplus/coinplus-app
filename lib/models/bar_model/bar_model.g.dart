@@ -52,6 +52,7 @@ const _$CardColorEnumMap = {
   CardColor.TRACKER: 'TRACKER',
   CardColor.SILVER: 'SILVER',
   CardColor.GOLD: 'GOLD',
+  CardColor.ETHEREUM: 'ETHEREUM',
 };
 
 const _$CardTypeEnumMap = {

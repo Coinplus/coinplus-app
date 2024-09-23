@@ -31,8 +31,6 @@ import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
-import '../../store/nfc_state/nfc_state.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/deep_link_util.dart';
 import '../../utils/page_controller_manager.dart';
@@ -63,10 +61,10 @@ class DashboardPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final deepLinkRes = useRef<String?>(null);
-    final _settingsState = SettingsState();
+    final _settingsState = AllSettingsState();
     final isModalOpened = useState(false);
     final currentIndex = useState(0);
-    final _nfcStore = useMemoized(NfcStore.new);
+    final _nfcStore = useMemoized(AllSettingsState.new);
     final state = useMemoized(SendToState.new);
     final _allSettingsState = useMemoized(AllSettingsState.new);
     final pageController = useMemoized(PageControllerManager.new);
@@ -85,6 +83,13 @@ class DashboardPage extends HookWidget {
     final currentCard = useRef<CardRecord>(
       (
         card: _balanceStore.cards.firstOrNull as AbstractCard?,
+        index: 0,
+      ),
+    );
+
+    final currentEthCard = useRef<CardRecord>(
+      (
+        card: _balanceStore.ethCards.firstOrNull as AbstractCard?,
         index: 0,
       ),
     );
@@ -295,18 +300,31 @@ class DashboardPage extends HookWidget {
     final onOpenSendReceiveModal = useCallback(
       () async {
         final selectedCard = currentCard.value.card;
-        if (selectedCard == null) {
+        final selectedEthCard = currentEthCard.value.card;
+
+        if (selectedCard == null && selectedEthCard == null) {
           return;
         }
 
         final isBarList = currentCard.value.index == 1;
-        final isCardActivated =
-            isCardWalletActivated(balanceStore: _balanceStore);
-        final isBarActivated =
-            isBarWalletActivated(balanceStore: _balanceStore);
+
+        dynamic isCardActivated;
+        dynamic isBarActivated;
+
+        if (selectedEthCard != null) {
+          isCardActivated =
+              isEthCardWalletActivated(balanceStore: _balanceStore);
+          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+        } else {
+          isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+        }
+
         Gaimon.medium();
+
         return sendReceiveButtonModal(
-          selectedCard: selectedCard,
+          selectedCard: selectedCard!,
+          selectedEthCard: selectedEthCard!,
           isBarList: isBarList,
           isCardActivated: isCardActivated,
           isBarActivated: isBarActivated,
@@ -322,6 +340,7 @@ class DashboardPage extends HookWidget {
       },
       [
         currentCard.value,
+        currentEthCard.value,
         isModalOpened,
       ],
     );
@@ -421,7 +440,7 @@ class DashboardPage extends HookWidget {
                   builder: (context) {
                     return Theme(
                       data: ThemeData(
-                        canvasColor: _allSettingsState.currentIndex == 0
+                        canvasColor: _allSettingsState.currentIndex == 1
                             ? Colors.white
                             : Colors.white.withOpacity(0.5),
                         splashColor: Colors.transparent,
@@ -433,9 +452,9 @@ class DashboardPage extends HookWidget {
                             child: BackdropFilter(
                               filter: ImageFilter.blur(
                                 sigmaX:
-                                    _allSettingsState.currentIndex == 0 ? 0 : 8,
+                                    _allSettingsState.currentIndex == 1 ? 0 : 8,
                                 sigmaY:
-                                    _allSettingsState.currentIndex == 0 ? 0 : 8,
+                                    _allSettingsState.currentIndex == 1 ? 0 : 8,
                               ),
                               child: BottomNavigationBar(
                                 selectedLabelStyle: const TextStyle(
@@ -501,7 +520,7 @@ class DashboardPage extends HookWidget {
                                 ],
                                 currentIndex: _allSettingsState.currentIndex,
                                 backgroundColor:
-                                    _allSettingsState.currentIndex == 0
+                                    _allSettingsState.currentIndex == 1
                                         ? Colors.white
                                         : Colors.white.withOpacity(0.8),
                                 elevation: 0,
@@ -592,6 +611,7 @@ class DashboardPage extends HookWidget {
         appLocked: appLocked,
         walletProtectState: _walletProtectState,
         currentCard: currentCard,
+        currentEthCard: currentEthCard,
         balanceStore: _balanceStore,
         pageController: _pageController,
         isModalOpened: isModalOpened,

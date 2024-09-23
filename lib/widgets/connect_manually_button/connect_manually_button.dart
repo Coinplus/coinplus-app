@@ -15,7 +15,7 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
-import '../../../store/nfc_state/nfc_state.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
 import '../wallet_type_widget/wallet_type_widget.dart';
 
@@ -28,7 +28,7 @@ class ConnectManuallyButton extends StatefulWidget {
 
 class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
   final pageIndexNotifier = ValueNotifier(0);
-  final _nfcState = NfcStore();
+  final _nfcState = AllSettingsState();
 
   @override
   void initState() {

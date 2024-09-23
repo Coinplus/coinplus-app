@@ -15,6 +15,7 @@ import '../../models/history_model/transaction_model.dart';
 import '../../models/wallet_status_model/wallet_status_model.dart';
 import '../../utils/date_formatter.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/storage_utils.dart';
 import '../balance_store/balance_store.dart';
 
 part 'history_page_store.g.dart';
@@ -213,6 +214,27 @@ abstract class _HistoryPageStore with Store {
   }
 
   @action
+  Future<void> getSingleBarHistory({required String address}) async {
+    try {
+      historyLoading[address] = true;
+      final cachedTransactions = getBarCachedTransaction(address);
+      if (cachedTransactions != null) {
+        await isCachedBarTransactions(address);
+      } else {
+        final fetchedTransactions =
+            await coinStatsRepo.getTransactions(address: address, page: 1);
+        barTransactions.add(fetchedTransactions);
+        barHistories[address] = [fetchedTransactions];
+        cacheBarTransaction(address, [fetchedTransactions]);
+      }
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      historyLoading[address] = false;
+    }
+  }
+
+  @action
   Future<void> isCachedCardTransactions(String address) async {
     final cachedTransactions = getCardCachedTransaction(address);
     cardTransactions.addAll(cachedTransactions!);
@@ -234,27 +256,6 @@ abstract class _HistoryPageStore with Store {
   @action
   Future<void> setBarActivationIndex({required int index}) async {
     barActivationIndex = index;
-  }
-
-  @action
-  Future<void> getSingleBarHistory({required String address}) async {
-    try {
-      historyLoading[address] = true;
-      final cachedTransactions = getBarCachedTransaction(address);
-      if (cachedTransactions != null) {
-        await isCachedBarTransactions(address);
-      } else {
-        final fetchedTransactions =
-            await coinStatsRepo.getTransactions(address: address, page: 1);
-        barTransactions.add(fetchedTransactions);
-        barHistories[address] = [fetchedTransactions];
-        cacheBarTransaction(address, [fetchedTransactions]);
-      }
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      historyLoading[address] = false;
-    }
   }
 
   @action
@@ -378,31 +379,12 @@ abstract class _HistoryPageStore with Store {
   }
 
   @action
-  Future<void> cardRefresh(String cardAddress) async {
-    isCardRefreshing = true;
-    historyLoading[cardAddress] = true;
-    await coinStatsRepo.patchTransactions(address: cardAddress);
-    final now = DateTime.now();
-    await _saveLastRefreshed(cardAddress, now.toString());
-    var synced = false;
-    while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 3000));
-      await getWalletStatus(address: cardAddress);
-      synced = walletStatus?.status == 'synced';
-    }
-    await loadLastRefreshed();
-    await getSingleCardHistory(address: cardAddress);
-    isCardRefreshing = false;
-    historyLoading[cardAddress] = false;
-  }
-
-  @action
   Future<void> saveAndPatchCardAddress(String address) async {
     isCardRefreshing = true;
     await coinStatsRepo.patchTransactions(address: address);
     var synced = false;
     while (!synced) {
-      await Future.delayed(const Duration(milliseconds: 3000));
+      await Future.delayed(const Duration(seconds: 3));
       await getWalletStatus(address: address);
       synced = walletStatus?.status == 'synced';
     }
@@ -429,6 +411,25 @@ abstract class _HistoryPageStore with Store {
     await Future.delayed(const Duration(milliseconds: 3000));
     historyLoading[address] = false;
     isBarRefreshing = false;
+  }
+
+  @action
+  Future<void> cardRefresh(String cardAddress) async {
+    isCardRefreshing = true;
+    historyLoading[cardAddress] = true;
+    await coinStatsRepo.patchTransactions(address: cardAddress);
+    final now = DateTime.now();
+    await _saveLastRefreshed(cardAddress, now.toString());
+    var synced = false;
+    while (!synced) {
+      await Future.delayed(const Duration(seconds: 3));
+      await getWalletStatus(address: cardAddress);
+      synced = walletStatus?.status == 'synced';
+    }
+    await loadLastRefreshed();
+    await getSingleCardHistory(address: cardAddress);
+    isCardRefreshing = false;
+    historyLoading[cardAddress] = false;
   }
 
   @action
@@ -517,6 +518,11 @@ abstract class _HistoryPageStore with Store {
 
   void dispose() {
     _timer?.cancel();
+  }
+
+  @action
+  Future<void> deleteAddressFromHistoryMap({required String address}) async {
+    await StorageUtils.removeAddressFromMap(address);
   }
 
   String getLastRefreshed(String cardAddress) {

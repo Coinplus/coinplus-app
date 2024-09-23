@@ -9,18 +9,31 @@ part of 'balance_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BalanceStore on _BalanceStore, Store {
-  Computed<int?>? _$allCardsBalancesComputed;
-
-  @override
-  int? get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<int?>(
-          () => super.allCardsBalances,
-          name: '_BalanceStore.allCardsBalances'))
-      .value;
   Computed<num?>? _$btcPriceComputed;
 
   @override
   num? get btcPrice => (_$btcPriceComputed ??=
           Computed<num?>(() => super.btcPrice, name: '_BalanceStore.btcPrice'))
+      .value;
+  Computed<num?>? _$ethPriceComputed;
+
+  @override
+  num? get ethPrice => (_$ethPriceComputed ??=
+          Computed<num?>(() => super.ethPrice, name: '_BalanceStore.ethPrice'))
+      .value;
+  Computed<num>? _$allCardsBalancesComputed;
+
+  @override
+  num get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<num>(
+          () => super.allCardsBalances,
+          name: '_BalanceStore.allCardsBalances'))
+      .value;
+  Computed<num>? _$allEthCardsBalancesComputed;
+
+  @override
+  num get allEthCardsBalances => (_$allEthCardsBalancesComputed ??=
+          Computed<num>(() => super.allEthCardsBalances,
+              name: '_BalanceStore.allEthCardsBalances'))
       .value;
   Computed<CoinModel?>? _$singleCoinComputed;
 
@@ -43,6 +56,13 @@ mixin _$BalanceStore on _BalanceStore, Store {
       (_$barBalanceComputed ??= Computed<num?>(() => super.barBalance,
               name: '_BalanceStore.barBalance'))
           .value;
+  Computed<List<Object>>? _$allCardsComputed;
+
+  @override
+  List<Object> get allCards =>
+      (_$allCardsComputed ??= Computed<List<Object>>(() => super.allCards,
+              name: '_BalanceStore.allCards'))
+          .value;
 
   late final _$_cardsAtom =
       Atom(name: '_BalanceStore._cards', context: context);
@@ -59,6 +79,24 @@ mixin _$BalanceStore on _BalanceStore, Store {
   set _cards(ObservableList<CardModel> value) {
     _$_cardsAtom.reportWrite(value, super._cards, () {
       super._cards = value;
+    });
+  }
+
+  late final _$_ethCardsAtom =
+      Atom(name: '_BalanceStore._ethCards', context: context);
+
+  ObservableList<EthCardModel> get ethCards {
+    _$_ethCardsAtom.reportRead();
+    return super._ethCards;
+  }
+
+  @override
+  ObservableList<EthCardModel> get _ethCards => ethCards;
+
+  @override
+  set _ethCards(ObservableList<EthCardModel> value) {
+    _$_ethCardsAtom.reportWrite(value, super._ethCards, () {
+      super._ethCards = value;
     });
   }
 
@@ -95,6 +133,22 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$listResultAtom =
+      Atom(name: '_BalanceStore.listResult', context: context);
+
+  @override
+  List<dynamic>? get listResult {
+    _$listResultAtom.reportRead();
+    return super.listResult;
+  }
+
+  @override
+  set listResult(List<dynamic>? value) {
+    _$listResultAtom.reportWrite(value, super.listResult, () {
+      super.listResult = value;
+    });
+  }
+
   late final _$barMapResultAtom =
       Atom(name: '_BalanceStore.barMapResult', context: context);
 
@@ -126,6 +180,24 @@ mixin _$BalanceStore on _BalanceStore, Store {
   set _selectedCard(CardModel? value) {
     _$_selectedCardAtom.reportWrite(value, super._selectedCard, () {
       super._selectedCard = value;
+    });
+  }
+
+  late final _$_selectedEthCardAtom =
+      Atom(name: '_BalanceStore._selectedEthCard', context: context);
+
+  EthCardModel? get selectedEthCard {
+    _$_selectedEthCardAtom.reportRead();
+    return super._selectedEthCard;
+  }
+
+  @override
+  EthCardModel? get _selectedEthCard => selectedEthCard;
+
+  @override
+  set _selectedEthCard(EthCardModel? value) {
+    _$_selectedEthCardAtom.reportWrite(value, super._selectedEthCard, () {
+      super._selectedEthCard = value;
     });
   }
 
@@ -292,6 +364,22 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$chainTypeAtom =
+      Atom(name: '_BalanceStore.chainType', context: context);
+
+  @override
+  BlockchainType get chainType {
+    _$chainTypeAtom.reportRead();
+    return super.chainType;
+  }
+
+  @override
+  set chainType(BlockchainType value) {
+    _$chainTypeAtom.reportWrite(value, super.chainType, () {
+      super.chainType = value;
+    });
+  }
+
   late final _$getCardsInfoAsyncAction =
       AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
@@ -306,6 +394,22 @@ mixin _$BalanceStore on _BalanceStore, Store {
   @override
   Future<void> getBarsInfo() {
     return _$getBarsInfoAsyncAction.run(() => super.getBarsInfo());
+  }
+
+  late final _$getEthCardAsyncAction =
+      AsyncAction('_BalanceStore.getEthCard', context: context);
+
+  @override
+  Future<EthCardModel> getEthCard({required int index}) {
+    return _$getEthCardAsyncAction.run(() => super.getEthCard(index: index));
+  }
+
+  late final _$getEthCardsInfoAsyncAction =
+      AsyncAction('_BalanceStore.getEthCardsInfo', context: context);
+
+  @override
+  Future<void> getEthCardsInfo() {
+    return _$getEthCardsInfoAsyncAction.run(() => super.getEthCardsInfo());
   }
 
   late final _$updateCardIndicatorIndexAsyncAction =
@@ -352,6 +456,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
         .run(() => super.removeSelectedCard());
   }
 
+  late final _$removeSelectedEthCardAsyncAction =
+      AsyncAction('_BalanceStore.removeSelectedEthCard', context: context);
+
+  @override
+  Future<void> removeSelectedEthCard() {
+    return _$removeSelectedEthCardAsyncAction
+        .run(() => super.removeSelectedEthCard());
+  }
+
   late final _$removeSelectedBarAsyncAction =
       AsyncAction('_BalanceStore.removeSelectedBar', context: context);
 
@@ -390,6 +503,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
         .run(() => super.setBarCurrentIndex(index));
   }
 
+  late final _$setChainTypeAsyncAction =
+      AsyncAction('_BalanceStore.setChainType', context: context);
+
+  @override
+  Future<void> setChainType({required BlockchainType blockchain}) {
+    return _$setChainTypeAsyncAction
+        .run(() => super.setChainType(blockchain: blockchain));
+  }
+
   late final _$_BalanceStoreActionController =
       ActionController(name: '_BalanceStore', context: context);
 
@@ -416,6 +538,19 @@ mixin _$BalanceStore on _BalanceStore, Store {
     try {
       return super
           .changeCardColorAndSave(cardAddress: cardAddress, color: color);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeEthCardColorAndSave(
+      {required String cardAddress, required CardColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.changeEthCardColorAndSave');
+    try {
+      return super
+          .changeEthCardColorAndSave(cardAddress: cardAddress, color: color);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
@@ -529,6 +664,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
   String toString() {
     return '''
 cardMapResult: ${cardMapResult},
+listResult: ${listResult},
 barMapResult: ${barMapResult},
 loadings: ${loadings},
 balanceLoading: ${balanceLoading},
@@ -539,11 +675,15 @@ cardActivation: ${cardActivation},
 inAppWebViewLoading: ${inAppWebViewLoading},
 cardIndicatorIndex: ${cardIndicatorIndex},
 isCardIndicatorTapped: ${isCardIndicatorTapped},
-allCardsBalances: ${allCardsBalances},
+chainType: ${chainType},
 btcPrice: ${btcPrice},
+ethPrice: ${ethPrice},
+allCardsBalances: ${allCardsBalances},
+allEthCardsBalances: ${allEthCardsBalances},
 singleCoin: ${singleCoin},
 cardBalance: ${cardBalance},
-barBalance: ${barBalance}
+barBalance: ${barBalance},
+allCards: ${allCards}
     ''';
   }
 }
