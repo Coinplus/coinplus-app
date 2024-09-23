@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/market_page_store/market_page_store.dart';
-import 'coins_data/coins_data.dart';
+import 'coins_data/coins_list_widget.dart';
 import 'market_data/market_data.dart';
+import 'market_data/overview_widget.dart';
 
 class MarketPage extends StatefulWidget {
   const MarketPage({
@@ -28,26 +27,53 @@ class MarketPage extends StatefulWidget {
   State<MarketPage> createState() => _MarketPageState();
 }
 
-class _MarketPageState extends State<MarketPage>
-    with SingleTickerProviderStateMixin {
+class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   final _textController = TextEditingController();
 
+  late TabController _tabController;
+
+  ScrollController? nestedScrollController;
+
+  final ScrollController _mainScrollController = ScrollController();
+  final ScrollController _secondScrollController = ScrollController();
+
   final _showOffset = 40;
   late Animation<double> _animation;
+
+  void _handleSecondScroll() {
+    if (_secondScrollController.offset > 50 && !_marketPageStore.isCollapsed) {
+      _mainScrollController.animateTo(
+        100,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+      _marketPageStore.collapseWidget();
+    } else if (_secondScrollController.offset <= 50 &&
+        _marketPageStore.isCollapsed) {
+      _mainScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+      _marketPageStore.expandWidget();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _secondScrollController.addListener(_handleSecondScroll);
     _marketPageStore
       ..isSearchVisible = false
       ..isTextFieldVisible = false
       ..getMarketCap()
       ..loadCoins();
-    widget.scrollController.addListener(() {
+    _secondScrollController.addListener(() {
       _marketPageStore.toggleShouldShowUpButton(
-        shouldShowUpButton: widget.scrollController.offset > _showOffset,
+        shouldShowUpButton: _secondScrollController.offset > _showOffset,
       );
     });
     _marketPageStore.initAnimationController(this);
@@ -57,6 +83,12 @@ class _MarketPageState extends State<MarketPage>
         curve: Curves.easeInOut,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,7 +118,7 @@ class _MarketPageState extends State<MarketPage>
                 ),
                 mini: true,
                 onPressed: () {
-                  widget.scrollController.animateTo(
+                  _secondScrollController.animateTo(
                     0,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.fastOutSlowIn,
@@ -191,7 +223,7 @@ class _MarketPageState extends State<MarketPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'All coins',
+                          'Markets',
                           style: TextStyle(
                             fontSize: 28,
                             fontFamily: FontFamily.redHatMedium,
@@ -282,18 +314,14 @@ class _MarketPageState extends State<MarketPage>
           return true;
         },
         child: CustomScrollView(
-          controller: widget.scrollController,
+          controller: _mainScrollController,
           slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: widget.pullToRefresh,
-            ),
             const SliverAppBar(
               floating: true,
               snap: true,
-              stretch: true,
               backgroundColor: Colors.white,
               elevation: 0,
-              toolbarHeight: 100,
+              toolbarHeight: 90,
               systemOverlayStyle: SystemUiOverlayStyle(
                 systemNavigationBarColor: Colors.white,
                 statusBarColor: Colors.transparent,
@@ -302,67 +330,46 @@ class _MarketPageState extends State<MarketPage>
             ),
             SliverAppBar(
               backgroundColor: Colors.white,
-              pinned: true,
               elevation: 0,
-              toolbarHeight: 20,
-              title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 9),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: context.width - 185,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '#',
-                            style: TextStyle(
-                              color: Color(0xFF838995),
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Gap(20),
-                          Text(
-                            'Market cap',
-                            style: TextStyle(
-                              color: Color(0xFF838995),
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            '24h %',
-                            style: TextStyle(
-                              color: Color(0xFF838995),
-                              fontFamily: FontFamily.redHatMedium,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Text(
-                      'Price',
-                      style: TextStyle(
-                        color: Color(0xFF838995),
-                        fontFamily: FontFamily.redHatMedium,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+              pinned: true,
+              toolbarHeight: 0,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                systemNavigationBarColor: Colors.white,
+                statusBarColor: Colors.transparent,
+              ),
+              bottom: TabBar(
+                controller: _tabController,
+                indicatorColor: AppColors.primaryButtonColor,
+                tabs: const [
+                  Tab(text: 'Coins List'),
+                  Tab(text: 'Overview'),
+                  Tab(text: 'Favorites'),
+                ],
+                labelStyle: const TextStyle(
+                  fontFamily: FontFamily.redHatMedium,
+                  color: AppColors.primary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
+                unselectedLabelColor: Colors.grey,
+                splashFactory: NoSplash.splashFactory,
               ),
             ),
-            const CoinsDataWidget(),
             const SliverToBoxAdapter(
-              child: Gap(120),
+              child: Gap(10),
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  CoinsListWidget(
+                    pullToRefresh: widget.pullToRefresh,
+                    secondScrollController: _secondScrollController,
+                  ),
+                  const OverviewWidget(),
+                  const Center(child: Text('Add Favorite Coins')),
+                ],
+              ),
             ),
           ],
         ),

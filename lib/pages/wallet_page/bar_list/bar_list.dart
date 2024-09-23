@@ -19,10 +19,10 @@ import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../services/ramp_service.dart';
 import '../../../store/accelerometer_store/accelerometer_store.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../store/history_page_store/history_page_store.dart';
 import '../../../store/market_page_store/market_page_store.dart';
-import '../../../store/nfc_state/nfc_state.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../send_page/send_to/send_to_state.dart';
 import 'bar_lists_widgets/add_new_bar_modal.dart';
@@ -62,7 +62,7 @@ class _BarListState extends State<BarList>
 
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
-  final _nfcStore = NfcStore();
+  final _nfcStore = AllSettingsState();
 
   final carouselController = CarouselSliderController();
 

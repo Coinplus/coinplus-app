@@ -13,7 +13,6 @@ import '../../models/amplitude_event/amplitude_event.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/nfc_state/nfc_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../wallet_connect_methods/bar_connect_methods.dart';
@@ -29,8 +28,9 @@ class SendReceiveActionButton extends StatelessWidget {
     required BalanceStore balanceStore,
     required PageController pageController,
     required this.isModalOpened,
-    required NfcStore nfcStore,
+    required AllSettingsState nfcStore,
     required this.onOpenSendReceiveModal,
+    required this.currentEthCard,
     required AllSettingsState allSettingsState,
   })  : _walletProtectState = walletProtectState,
         _balanceStore = balanceStore,
@@ -42,10 +42,11 @@ class SendReceiveActionButton extends StatelessWidget {
   final ValueNotifier<bool> appLocked;
   final WalletProtectState _walletProtectState;
   final ObjectRef<CardRecord> currentCard;
+  final ObjectRef<CardRecord> currentEthCard;
   final BalanceStore _balanceStore;
   final PageController _pageController;
   final ValueNotifier<bool> isModalOpened;
-  final NfcStore _nfcStore;
+  final AllSettingsState _nfcStore;
   final Future<void> Function() onOpenSendReceiveModal;
   final AllSettingsState _allSettingsState;
 
@@ -63,10 +64,18 @@ class SendReceiveActionButton extends StatelessWidget {
           onPressed: () async {
             final selectedCard = currentCard.value.card;
             final isBarList = currentCard.value.index == 1;
-            final isCardActivated =
-                isCardWalletActivated(balanceStore: _balanceStore);
-            final isBarActivated =
-                isBarWalletActivated(balanceStore: _balanceStore);
+            dynamic isCardActivated;
+            dynamic isBarActivated;
+            if (selectedCard?.blockchain == 'BTC') {
+              isCardActivated =
+                  isCardWalletActivated(balanceStore: _balanceStore);
+              isBarActivated =
+                  isBarWalletActivated(balanceStore: _balanceStore);
+            } else if (selectedCard?.blockchain == 'ETH') {
+              isCardActivated =
+                  isEthCardWalletActivated(balanceStore: _balanceStore);
+            }
+
             if (selectedCard == null || _pageController.page != 0) {
               if (isBarList) {
                 await recordAmplitudeEvent(
@@ -219,10 +228,15 @@ class SendReceiveActionButton extends StatelessWidget {
                           ? CrossFadeState.showSecond
                           : CrossFadeState.showFirst,
                       firstChild: _balanceStore.cards.isEmpty
-                          ? Assets.icons.plus.image(
-                              color: Colors.white,
-                              height: 32,
-                            )
+                          ? _balanceStore.ethCards.isEmpty
+                              ? Assets.icons.plus.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                )
+                              : Assets.icons.sendReceive.image(
+                                  color: Colors.white,
+                                  height: 32,
+                                )
                           : Assets.icons.sendReceive.image(
                               color: Colors.white,
                               height: 32,

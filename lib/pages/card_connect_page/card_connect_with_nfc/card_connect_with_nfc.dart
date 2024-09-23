@@ -16,35 +16,28 @@ import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
-import '../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
-import '../../constants/card_color.dart';
-import '../../constants/card_type.dart';
-import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
-import '../../gen/colors.gen.dart';
-import '../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
-import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
-import '../../providers/screen_service.dart';
-import '../../router.gr.dart';
-import '../../services/amplitude_service.dart';
-import '../../services/cloud_firestore_service.dart';
-import '../../store/address_and_balance_state/address_and_balance_state.dart';
-import '../../store/all_settings_state/all_settings_state.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/connectivity_store/connectivity_store.dart';
-import '../../store/history_page_store/history_page_store.dart';
-import '../../store/market_page_store/market_page_store.dart';
-import '../../store/qr_detect_state/qr_detect_state.dart';
-import '../../utils/card_color_detecting.dart';
-import '../../utils/card_nfc_session.dart';
-import '../../utils/custom_paint_lines.dart';
-import '../../utils/data_utils.dart';
-import '../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../widgets/custom_snack_bar/top_snack.dart';
-import '../../widgets/loading_button/loading_button.dart';
-import '../splash_screen/splash_screen.dart';
+import '../../../constants/card_type.dart';
+import '../../../extensions/extensions.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
+import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../../providers/screen_service.dart';
+import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../store/address_and_balance_state/address_and_balance_state.dart';
+import '../../../store/all_settings_state/all_settings_state.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../store/connectivity_store/connectivity_store.dart';
+import '../../../store/history_page_store/history_page_store.dart';
+import '../../../store/market_page_store/market_page_store.dart';
+import '../../../store/qr_detect_state/qr_detect_state.dart';
+import '../../../utils/card_color_detecting.dart';
+import '../../../utils/card_nfc_session.dart';
+import '../../../utils/custom_paint_lines.dart';
+import '../../splash_screen/splash_screen.dart';
+import 'card_connect_widgets/card_front.dart';
+import 'card_connect_widgets/got_it_button.dart';
 
 @RoutePage()
 class CardConnectWithNfc extends StatefulWidget {
@@ -78,9 +71,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
   final _focusNode = FocusNode();
   final _addressState = AddressState(CardType.CARD);
   final _allSettingsState = AllSettingsState();
-  late String btcAddress = '';
-  late final TextEditingController _btcAddressController =
-      TextEditingController();
+  late String myWalletAddress = '';
+  late String ethAddress = '';
+  late final TextEditingController _addressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakeAnimationController _shakeAnimationController =
       ShakeAnimationController();
@@ -102,7 +95,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
     if (Platform.isAndroid) {
       nfcStop();
     }
-    _btcAddressController.addListener(_addressState.validateBTCAddress);
+    if (widget.receivedData!.startsWith('0')) {
+      _addressController.addListener(_addressState.validateETHAddress);
+      myWalletAddress = widget.receivedData!;
+    } else {
+      _addressController.addListener(_addressState.validateBTCAddress);
+    }
     _lottieController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -120,8 +118,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
     );
     if (widget.receivedData != null) {
       Future.delayed(const Duration(milliseconds: 300), () {
-        _btcAddressController.text = widget.receivedData ?? '';
-        _addressState.btcAddress = widget.receivedData!;
+        if (widget.receivedData!.startsWith('0')) {
+          _addressController.text = widget.receivedData ?? '';
+          _addressState.ethAddress = widget.receivedData!;
+        } else {
+          _addressController.text = widget.receivedData ?? '';
+          _addressState.btcAddress = widget.receivedData!;
+        }
       });
     }
     _connectivityStore.initConnectivity();
@@ -216,349 +219,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                 child: FlipCard(
                   flipOnTouch: false,
                   controller: _flipCardController,
-                  front: Container(
-                    height: context.height > 667 ? 455 : 365,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 1,
-                          blurRadius: 15,
-                        ),
-                      ],
-                      image: DecorationImage(
-                        image:
-                            getFrontImageForCardColor(widget.cardColor).image,
-                      ),
-                    ),
-                    child: Center(
-                      child: Observer(
-                        builder: (context) {
-                          return Visibility(
-                            visible: _addressState.isAddressVisible,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: context.height * 0.22,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: context.height < 932
-                                        ? context.height < 867.4
-                                            ? context.height > 844
-                                                ? context.width *
-                                                    0.11 // iPhone 14 Pro (ok)
-                                                : context.height > 667
-                                                    ? context.width *
-                                                        0.17 //iPhone 13 Pro
-                                                    : context.width *
-                                                        0.23 // iPhone 7/8/SE (ok)
-                                            : context.width *
-                                                0.15 //Samsung large display
-                                        : context.width *
-                                            0.15, //iPhone 13 Pro Max,
-                                  ),
-                                  child: ScaleTap(
-                                    enableFeedback: false,
-                                    onPressed: () async {
-                                      await recordAmplitudeEvent(
-                                        AddressCopied(
-                                          walletType: 'Card',
-                                          walletAddress: _balanceStore
-                                              .selectedCard!.address,
-                                          activated: false,
-                                          source: 'Balance',
-                                        ),
-                                      );
-                                      if (Platform.isIOS) {
-                                        await Clipboard.setData(
-                                          ClipboardData(
-                                            text: _balanceStore
-                                                .selectedCard!.address
-                                                .toString(),
-                                          ),
-                                        ).then(
-                                          (_) {
-                                            HapticFeedback.mediumImpact();
-                                            showTopSnackBar(
-                                              displayDuration: const Duration(
-                                                milliseconds: 400,
-                                              ),
-                                              Overlay.of(
-                                                context,
-                                              ),
-                                              CustomSnackBar.success(
-                                                backgroundColor: const Color(
-                                                  0xFF4A4A4A,
-                                                ).withOpacity(0.9),
-                                                message: 'Address was copied',
-                                                textStyle: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      } else {
-                                        await Clipboard.setData(
-                                          ClipboardData(
-                                            text: _balanceStore
-                                                .selectedCard!.address
-                                                .toString(),
-                                          ),
-                                        ).then(
-                                          (_) {
-                                            HapticFeedback.mediumImpact();
-                                          },
-                                        );
-                                      }
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(6),
-                                      child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                          sigmaX: 5,
-                                          sigmaY: 5,
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                            left: 8,
-                                            right: 8,
-                                            top: 12,
-                                            bottom: 12,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              6,
-                                            ),
-                                            color: Colors.black.withOpacity(
-                                              0.2,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              const Row(
-                                                children: [
-                                                  Text(
-                                                    'Address',
-                                                    style: TextStyle(
-                                                      fontSize: 11,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Observer(
-                                                builder: (context) {
-                                                  if (_balanceStore.loadings[
-                                                          _balanceStore
-                                                              .selectedCard
-                                                              ?.address] ??
-                                                      false) {
-                                                    return const Padding(
-                                                      padding: EdgeInsets.all(
-                                                        4,
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 10,
-                                                            width: 10,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
-                                                              strokeWidth: 3,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }
-                                                  final visibleAddress =
-                                                      getSplitAddress(
-                                                    _balanceStore
-                                                        .selectedCard!.address,
-                                                  );
-                                                  return Text(
-                                                    visibleAddress,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ).expandedHorizontally();
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const Gap(4),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: context.height < 932
-                                        ? context.height < 867.4
-                                            ? context.height > 844
-                                                ? context.width *
-                                                    0.11 // iPhone 14 Pro (ok)
-                                                : context.height > 667
-                                                    ? context.width *
-                                                        0.17 //iPhone 13 Pro
-                                                    : context.width *
-                                                        0.23 // iPhone 7/8/SE (ok)
-                                            : context.width *
-                                                0.15 //Samsung large display
-                                        : context.width *
-                                            0.15, //iPhone 13 Pro Max,
-                                  ),
-                                  child: ScaleTap(
-                                    enableFeedback: false,
-                                    onPressed: () {},
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(6),
-                                      child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                          sigmaX: 5,
-                                          sigmaY: 5,
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(
-                                            8,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              6,
-                                            ),
-                                            color: Colors.black.withOpacity(
-                                              0.2,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              const Row(
-                                                children: [
-                                                  Text(
-                                                    'Balance',
-                                                    style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      color: Colors.white,
-                                                      fontSize: 11,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Observer(
-                                                builder: (context) {
-                                                  final myFormat = NumberFormat
-                                                      .decimalPatternDigits(
-                                                    locale: 'en_us',
-                                                    decimalDigits: 2,
-                                                  );
-                                                  final data = _marketPageStore
-                                                      .singleCoin?.result.first;
-                                                  if (_balanceStore
-                                                              .selectedCard !=
-                                                          null &&
-                                                      _balanceStore
-                                                              .selectedCard!
-                                                              .finalBalance !=
-                                                          null &&
-                                                      data != null) {
-                                                    final cardBalance =
-                                                        _balanceStore
-                                                            .selectedCard!
-                                                            .finalBalance!;
-
-                                                    if (cardBalance.isNaN) {
-                                                      return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(4),
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 10,
-                                                              width: 10,
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color: Colors
-                                                                    .white,
-                                                                strokeWidth: 3,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    return Row(
-                                                      children: [
-                                                        Text(
-                                                          '\$${myFormat.format(cardBalance / 100000000 * data.price)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: Colors.white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  } else {
-                                                    return const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(4),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 10,
-                                                            width: 10,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ).paddingHorizontal(
-                            context.height < 845 ? 0 : 20,
-                          );
-                        },
-                      ),
-                    ),
+                  front: CardFront(
+                    receivedData: widget.receivedData!,
+                    balanceStore: _balanceStore,
+                    cardColor: widget.cardColor!,
+                    addressState: _addressState,
+                    marketPageStore: _marketPageStore,
                   ),
                   back: ClipRRect(
                     child: Padding(
@@ -846,9 +512,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                     builder: (context) {
                                                       return TextField(
                                                         inputFormatters: [
-                                                          LengthLimitingTextInputFormatter(
-                                                            35,
-                                                          ),
+                                                          if (!widget
+                                                              .receivedData!
+                                                              .startsWith('0'))
+                                                            LengthLimitingTextInputFormatter(
+                                                              35,
+                                                            ),
                                                         ],
                                                         readOnly:
                                                             !_validationStore
@@ -863,45 +532,75 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                         textAlign:
                                                             TextAlign.center,
                                                         onChanged: (value) {
-                                                          if (value.length >
-                                                              25) {
-                                                            _addressState
-                                                              ..btcAddress =
-                                                                  value
-                                                              ..validateBTCAddress();
-                                                            btcAddress = value;
-                                                            hasShownWallet()
-                                                                .then(
-                                                              (hasShown) async {
-                                                                if (hasShown) {
-                                                                  await recordAmplitudeEvent(
-                                                                    AddressFilled(
-                                                                      source:
-                                                                          'Wallet',
-                                                                      walletAddress:
-                                                                          btcAddress,
-                                                                      walletType:
-                                                                          'Card',
-                                                                    ),
-                                                                  );
-                                                                } else {
-                                                                  await recordAmplitudeEvent(
-                                                                    AddressFilled(
-                                                                      source:
-                                                                          'Onboarding',
-                                                                      walletAddress:
-                                                                          btcAddress,
-                                                                      walletType:
-                                                                          'Card',
-                                                                    ),
-                                                                  );
-                                                                }
-                                                              },
-                                                            );
+                                                          if (widget
+                                                              .receivedData!
+                                                              .startsWith(
+                                                            '0',
+                                                          )) {
+                                                            if (value.length >=
+                                                                40) {
+                                                              _addressState
+                                                                ..ethAddress =
+                                                                    value
+                                                                ..validateETHAddress();
+                                                              ethAddress =
+                                                                  value;
+                                                            } else {
+                                                              if (value.length >
+                                                                  25) {
+                                                                _addressState
+                                                                  ..btcAddress =
+                                                                      value
+                                                                  ..validateBTCAddress();
+                                                                myWalletAddress =
+                                                                    value;
+                                                              }
+
+                                                              hasShownWallet()
+                                                                  .then(
+                                                                (
+                                                                  hasShown,
+                                                                ) async {
+                                                                  if (hasShown) {
+                                                                    await recordAmplitudeEvent(
+                                                                      AddressFilled(
+                                                                        source:
+                                                                            'Wallet',
+                                                                        walletAddress:
+                                                                            myWalletAddress,
+                                                                        walletType:
+                                                                            'Card',
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    await recordAmplitudeEvent(
+                                                                      AddressFilled(
+                                                                        source:
+                                                                            'Onboarding',
+                                                                        walletAddress:
+                                                                            myWalletAddress,
+                                                                        walletType:
+                                                                            'Card',
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                },
+                                                              );
+                                                            }
                                                           }
                                                         },
                                                         onEditingComplete: () {
-                                                          if (btcAddress
+                                                          if (widget
+                                                                  .receivedData!
+                                                                  .startsWith(
+                                                                '0',
+                                                              ) &&
+                                                              ethAddress
+                                                                      .length >=
+                                                                  40) {
+                                                            _addressState
+                                                                .validateETHAddress();
+                                                          } else if (myWalletAddress
                                                                   .length >
                                                               25) {
                                                             _addressState
@@ -909,7 +608,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                           }
                                                         },
                                                         controller:
-                                                            _btcAddressController,
+                                                            _addressController,
                                                         maxLines: 15,
                                                         focusNode: _focusNode,
                                                         cursorColor:
@@ -1055,14 +754,26 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                             },
                                                           );
                                                           setState(() {
-                                                            _btcAddressController
+                                                            _addressController
                                                                 .text = res;
                                                           });
-                                                          _addressState
-                                                              .btcAddress = res;
-
-                                                          await _addressState
-                                                              .validateBTCAddress();
+                                                          if (widget
+                                                              .receivedData!
+                                                              .startsWith(
+                                                            '0',
+                                                          )) {
+                                                            _addressState
+                                                                    .ethAddress =
+                                                                res;
+                                                            await _addressState
+                                                                .validateETHAddress();
+                                                          } else {
+                                                            _addressState
+                                                                    .btcAddress =
+                                                                res;
+                                                            await _addressState
+                                                                .validateBTCAddress();
+                                                          }
                                                         },
                                                         child: SizedBox(
                                                           height: 50,
@@ -1219,33 +930,64 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                               builder: (context) {
                                 return GestureDetector(
                                   onTap: () {
-                                    hasShownWallet().then(
-                                      (hasShown) async {
-                                        if (hasShown) {
-                                          unawaited(
-                                            recordAmplitudeEvent(
-                                              ActivatedCheckboxClicked(
-                                                source: 'Wallet',
-                                                walletType: 'Card',
-                                                walletAddress: _balanceStore
-                                                    .selectedCard!.address,
+                                    if (myWalletAddress.startsWith('0')) {
+                                      hasShownWallet().then(
+                                        (hasShown) async {
+                                          if (hasShown) {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Wallet',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore
+                                                      .selectedEthCard!.address,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        } else {
-                                          unawaited(
-                                            recordAmplitudeEvent(
-                                              ActivatedCheckboxClicked(
-                                                source: 'Onboarding',
-                                                walletType: 'Card',
-                                                walletAddress: _balanceStore
-                                                    .selectedCard!.address,
+                                            );
+                                          } else {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Onboarding',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore
+                                                      .selectedEthCard!.address,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    );
+                                            );
+                                          }
+                                        },
+                                      );
+                                    } else {
+                                      hasShownWallet().then(
+                                        (hasShown) async {
+                                          if (hasShown) {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Wallet',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore
+                                                      .selectedCard!.address,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            unawaited(
+                                              recordAmplitudeEvent(
+                                                ActivatedCheckboxClicked(
+                                                  source: 'Onboarding',
+                                                  walletType: 'Card',
+                                                  walletAddress: _balanceStore
+                                                      .selectedCard!.address,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      );
+                                    }
+
                                     _allSettingsState.makeActiveCheckbox();
                                     HapticFeedback.heavyImpact();
                                   },
@@ -1394,33 +1136,66 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                     value:
                                         _allSettingsState.isActivatedCheckBox,
                                     onChanged: (_) {
-                                      hasShownWallet().then(
-                                        (hasShown) async {
-                                          if (hasShown) {
-                                            unawaited(
-                                              recordAmplitudeEvent(
-                                                ActivatedCheckboxClicked(
-                                                  source: 'Wallet',
-                                                  walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedCard!.address,
+                                      if (myWalletAddress.startsWith('0')) {
+                                        hasShownWallet().then(
+                                          (hasShown) async {
+                                            if (hasShown) {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore
+                                                        .selectedEthCard!
+                                                        .address,
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          } else {
-                                            unawaited(
-                                              recordAmplitudeEvent(
-                                                ActivatedCheckboxClicked(
-                                                  source: 'Onboarding',
-                                                  walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedCard!.address,
+                                              );
+                                            } else {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore
+                                                        .selectedEthCard!
+                                                        .address,
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      );
+                                              );
+                                            }
+                                          },
+                                        );
+                                      } else {
+                                        hasShownWallet().then(
+                                          (hasShown) async {
+                                            if (hasShown) {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore
+                                                        .selectedCard!.address,
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              unawaited(
+                                                recordAmplitudeEvent(
+                                                  ActivatedCheckboxClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore
+                                                        .selectedCard!.address,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        );
+                                      }
+
                                       _allSettingsState.makeActiveCheckbox();
                                     },
                                     splashRadius: 15,
@@ -1484,271 +1259,21 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
             },
           ),
           const Spacer(),
-          Observer(
-            builder: (_) {
-              return _allSettingsState.isLineVisible
-                  ? LoadingButton(
-                      onPressed: () async {
-                        if (_allSettingsState.isActive) {
-                          await _balanceStore.updateCardIndicatorIndex(
-                            _balanceStore.cardCurrentIndex,
-                          );
-                          if (widget.isOriginalCard == true) {
-                            unawaited(connectedCount(widget.receivedData!));
-                            if (widget.cardColor == '0') {
-                              _balanceStore.saveSelectedCard(
-                                color: CardColor.ORANGE,
-                              );
-                            } else if (widget.cardColor == '1') {
-                              _balanceStore.saveSelectedCard(
-                                color: CardColor.WHITE,
-                              );
-                            } else if (widget.cardColor == '2') {
-                              _balanceStore.saveSelectedCard(
-                                color: CardColor.BLACK,
-                              );
-                            } else {
-                              _balanceStore.saveSelectedCard(
-                                color: CardColor.ORANGE,
-                              );
-                            }
-                          } else {
-                            if (widget.isMiFareUltralight == true) {
-                              if (widget.isOldCard == false ||
-                                  widget.isOldCard == null) {
-                                await recordUserProperty(const Tracker());
-                                _balanceStore.saveSelectedCardManually(
-                                  color: CardColor.ORANGE,
-                                  label: WalletType.TRACKER_PLUS,
-                                  name: 'Bitcoin Wallet',
-                                );
-                              } else {
-                                unawaited(connectedCount(widget.receivedData!));
-                                _balanceStore.saveSelectedCardManually(
-                                  color: CardColor.ORANGE,
-                                  label: WalletType.COINPLUS_WALLET,
-                                  name: 'Coinplus Bitcoin Wallet',
-                                );
-                              }
-                            } else {
-                              await recordUserProperty(const Tracker());
-                              _balanceStore.saveSelectedCardManually(
-                                color: CardColor.TRACKER,
-                                label: WalletType.TRACKER,
-                                name: 'Bitcoin Wallet',
-                              );
-                            }
-                          }
-                          await hasShownWallet().then((hasShown) {
-                            recordAmplitudeEventPartTwo(
-                              CardAddedEvent(
-                                address: _balanceStore.selectedCard!.address,
-                              ),
-                            );
-                            recordUserProperty(const CardTap());
-                            if (hasShown) {
-                              router.maybePop();
-                            } else {
-                              router.pushAndPopAll(
-                                const WalletProtectionRoute(),
-                              );
-                            }
-                          });
-
-                          await _historyPageStore.saveAndPatchCardAddress(
-                            _balanceStore.selectedCard!.address,
-                          );
-                        } else {
-                          await HapticFeedback.vibrate();
-                          _allSettingsState.accept();
-                          _shakeAnimationController.start();
-                          await Future.delayed(
-                            const Duration(
-                              milliseconds: 600,
-                            ),
-                          );
-                          _shakeAnimationController.stop();
-                        }
-                        await hasShownWallet().then(
-                          (hasShown) async {
-                            if (hasShown) {
-                              await recordAmplitudeEvent(
-                                GotItClicked(
-                                  source: 'Wallet',
-                                  walletType: 'Card',
-                                  walletAddress:
-                                      _balanceStore.selectedCard!.address,
-                                ),
-                              );
-                            } else {
-                              await recordAmplitudeEvent(
-                                GotItClicked(
-                                  source: 'Onboarding',
-                                  walletType: 'Card',
-                                  walletAddress:
-                                      _balanceStore.selectedCard!.address,
-                                ),
-                              );
-                            }
-                            await recordAmplitudeEventPartTwo(
-                              CardAddedEvent(
-                                address: _balanceStore.selectedCard!.address,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text(
-                        'Got it',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontFamily: FontFamily.redHatSemiBold,
-                        ),
-                      ),
-                    ).paddingHorizontal(49)
-                  : Observer(
-                      builder: (context) {
-                        return LoadingButton(
-                          onPressed: _connectivityStore.connectionStatus ==
-                                  ConnectivityResult.none
-                              ? null
-                              : _addressState.isAddressVisible
-                                  ? _allSettingsState.isActivatedCheckBox
-                                      ? () async {
-                                          await hasShownWallet().then(
-                                            (hasShown) async {
-                                              if (hasShown) {
-                                                await recordAmplitudeEvent(
-                                                  SaveToWalletClicked(
-                                                    source: 'Wallet',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
-                                                  ),
-                                                );
-                                              } else {
-                                                await recordAmplitudeEvent(
-                                                  SaveToWalletClicked(
-                                                    source: 'Onboarding',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          );
-                                          final cardIndex =
-                                              _balanceStore.cards.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                _balanceStore
-                                                    .selectedCard?.address,
-                                          );
-                                          final barIndex =
-                                              _balanceStore.bars.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                _balanceStore
-                                                    .selectedCard?.address,
-                                          );
-                                          if (cardIndex != -1 ||
-                                              barIndex != -1) {
-                                            await alreadySavedCard(
-                                              context,
-                                              _balanceStore
-                                                  .selectedCard!.address,
-                                            );
-                                          } else {
-                                            await _toggleCard();
-                                            await Future.delayed(
-                                              const Duration(milliseconds: 300),
-                                            );
-                                            _allSettingsState.makeVisible();
-                                          }
-                                        }
-                                      : () async {
-                                          await hasShownWallet().then(
-                                            (hasShown) async {
-                                              if (hasShown) {
-                                                await recordAmplitudeEvent(
-                                                  SaveToWalletClicked(
-                                                    source: 'Wallet',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
-                                                  ),
-                                                );
-                                              } else {
-                                                await recordAmplitudeEvent(
-                                                  SaveToWalletClicked(
-                                                    source: 'Onboarding',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          );
-                                          if (widget.isActivated == true) {
-                                            await HapticFeedback.vibrate();
-                                            _allSettingsState.checkboxAccept();
-                                            _shakeAnimationController.start();
-                                            await Future.delayed(
-                                              const Duration(
-                                                milliseconds: 600,
-                                              ),
-                                            );
-                                            _shakeAnimationController.stop();
-                                          } else {
-                                            final cardIndex =
-                                                _balanceStore.cards.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  _balanceStore
-                                                      .selectedCard?.address,
-                                            );
-                                            final barIndex =
-                                                _balanceStore.bars.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  _balanceStore
-                                                      .selectedCard?.address,
-                                            );
-
-                                            if (cardIndex != -1 ||
-                                                barIndex != -1) {
-                                              await alreadySavedCard(
-                                                context,
-                                                _balanceStore
-                                                    .selectedCard!.address,
-                                              );
-                                              // _balanceStore.onCardAdded(
-                                              //   _balanceStore
-                                              //       .selectedCard!.address,
-                                              // );
-                                            } else {
-                                              if (_flipCardController
-                                                  .state!.isFront) {
-                                                await _toggleCard();
-                                                _allSettingsState.makeVisible();
-                                              }
-                                            }
-                                          }
-                                        }
-                                  : null,
-                          child: const Text(
-                            'Save to wallet',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontFamily: FontFamily.redHatSemiBold,
-                            ),
-                          ),
-                        ).paddingHorizontal(49);
-                      },
-                    );
-            },
+          GotItButton(
+            allSettingsState: _allSettingsState,
+            receivedData: widget.receivedData!,
+            balanceStore: _balanceStore,
+            cardColor: widget.cardColor!,
+            isOriginalCard: widget.isOriginalCard!,
+            shakeAnimationController: _shakeAnimationController,
+            isOldCard: widget.isOldCard,
+            isMiFareUltralight: widget.isMiFareUltralight,
+            isActivated: widget.isActivated,
+            historyPageStore: _historyPageStore,
+            connectivityStore: _connectivityStore,
+            addressState: _addressState,
+            toggleCard: _toggleCard,
+            flipCardController: _flipCardController,
           ),
           const Spacer(flex: 2),
         ],

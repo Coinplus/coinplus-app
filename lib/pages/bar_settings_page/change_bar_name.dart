@@ -12,8 +12,8 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../models/bar_model/bar_model.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/card_name_sate/card_name_sate.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button/loading_button.dart';
@@ -29,7 +29,7 @@ class BarNameChangeModal extends StatefulWidget {
 
 class _BarNameChangeModalState extends State<BarNameChangeModal> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  final _nameState = CardNameState();
+  final _nameState = AllSettingsState();
   final _focusNode = FocusNode();
 
   @override

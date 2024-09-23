@@ -98,6 +98,9 @@ abstract class _MarketPageStore with Store {
   @observable
   bool isHapticFeedbackActive = false;
 
+  @observable
+  bool isCollapsed = false;
+
   @action
   Future<void> triggerHapticFeedback() async {
     if (isHapticFeedbackActive) {
@@ -155,6 +158,16 @@ abstract class _MarketPageStore with Store {
     priceChangeInPercents = 0;
   }
 
+  @action
+  Future<void> collapseWidget() async {
+    isCollapsed = true;
+  }
+
+  @action
+  Future<void> expandWidget() async {
+    isCollapsed = false;
+  }
+
   AnimationController? animationController;
 
   FocusNode focusNode = FocusNode();
@@ -168,7 +181,7 @@ abstract class _MarketPageStore with Store {
   }
 
   Future<void> getSingleCoin() async {
-    singleCoin = await coinStatsRepo.getAllCoins(page: 1, limit: 1);
+    singleCoin = await coinStatsRepo.getAllCoins(page: 1, limit: 2);
   }
 
   Future<void> getChartData({

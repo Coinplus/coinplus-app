@@ -24,10 +24,9 @@ import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/nfc_state/nfc_state.dart';
 import '../../store/remote_config_store/remote_config_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -50,10 +49,10 @@ class SettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
-    final _settingsState = SettingsState();
+    final _settingsState = AllSettingsState();
     final _auth = LocalAuthentication();
     final isAuthorised = useState(false);
-    final _nfcState = useMemoized(NfcStore.new);
+    final _nfcState = useMemoized(AllSettingsState.new);
     final _secureStorage = SecureStorageService();
 
     Future<void> checkStatus() async {

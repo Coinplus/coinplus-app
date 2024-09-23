@@ -14,7 +14,6 @@ import '../../../../services/amplitude_service.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';
 import '../../../../store/balance_store/balance_store.dart';
-import '../../../../utils/wallet_activation_status.dart';
 import '../../../send_page/send_to/change_selected_address/change_selected_address_state.dart';
 
 class CardBalanceField extends HookWidget {
@@ -37,14 +36,11 @@ class CardBalanceField extends HookWidget {
         return ScaleTap(
           onPressed: _balanceStore.cardCurrentIndex == index
               ? () async {
-                  final isActivated = isCardWalletActivated(
-                    balanceStore: _balanceStore,
-                  );
                   await recordAmplitudeEvent(
                     TopUpButtonClicked(
                       walletType: 'Card',
                       walletAddress: state.cards[index].address,
-                      activated: await isActivated,
+                      activated: false,
                     ),
                   );
                   _rampService.presentRamp();

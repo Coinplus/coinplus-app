@@ -420,6 +420,22 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
+  late final _$isCollapsedAtom =
+      Atom(name: '_MarketPageStore.isCollapsed', context: context);
+
+  @override
+  bool get isCollapsed {
+    _$isCollapsedAtom.reportRead();
+    return super.isCollapsed;
+  }
+
+  @override
+  set isCollapsed(bool value) {
+    _$isCollapsedAtom.reportWrite(value, super.isCollapsed, () {
+      super.isCollapsed = value;
+    });
+  }
+
   late final _$triggerHapticFeedbackAsyncAction =
       AsyncAction('_MarketPageStore.triggerHapticFeedback', context: context);
 
@@ -427,6 +443,22 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
   Future<void> triggerHapticFeedback() {
     return _$triggerHapticFeedbackAsyncAction
         .run(() => super.triggerHapticFeedback());
+  }
+
+  late final _$collapseWidgetAsyncAction =
+      AsyncAction('_MarketPageStore.collapseWidget', context: context);
+
+  @override
+  Future<void> collapseWidget() {
+    return _$collapseWidgetAsyncAction.run(() => super.collapseWidget());
+  }
+
+  late final _$expandWidgetAsyncAction =
+      AsyncAction('_MarketPageStore.expandWidget', context: context);
+
+  @override
+  Future<void> expandWidget() {
+    return _$expandWidgetAsyncAction.run(() => super.expandWidget());
   }
 
   late final _$defaultPercentageAsyncAction =
@@ -717,6 +749,7 @@ priceChangeInPercents: ${priceChangeInPercents},
 lastTouchedSpot: ${lastTouchedSpot},
 hapticDebounceTimer: ${hapticDebounceTimer},
 isHapticFeedbackActive: ${isHapticFeedbackActive},
+isCollapsed: ${isCollapsed},
 searchedList: ${searchedList}
     ''';
   }

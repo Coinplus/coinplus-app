@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../constants/button_settings.dart';
-import '../../extensions/elevated_button_extensions.dart';
-import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
-import '../../gen/colors.gen.dart';
-import '../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../models/card_model/card_model.dart';
-import '../../providers/screen_service.dart';
-import '../../services/amplitude_service.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../utils/wallet_activation_status.dart';
-import '../../widgets/loading_button/loading_button.dart';
+import '../../../constants/button_settings.dart';
+import '../../../extensions/elevated_button_extensions.dart';
+import '../../../extensions/extensions.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../gen/colors.gen.dart';
+import '../../../gen/fonts.gen.dart';
+import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../models/card_model/card_model.dart';
+import '../../../providers/screen_service.dart';
+import '../../../services/amplitude_service.dart';
+import '../../../store/balance_store/balance_store.dart';
+import '../../../utils/wallet_activation_status.dart';
+import '../../../widgets/loading_button/loading_button.dart';
 import 'action_slider.dart';
 
 class RemoveCard extends StatefulWidget {

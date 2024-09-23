@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/bar_model/bar_model.dart';
 import '../models/card_model/card_model.dart';
+import '../models/eth_card_model/eth_card_model.dart';
 import '../pages/send_page/send_to/send_to_state.dart';
 import '../store/balance_store/balance_store.dart';
 
@@ -38,6 +39,10 @@ class SecureStorageService {
   }
 
   Future<void> deleteCard({required CardModel card}) async {
+    await _secureStorage.delete(key: 'card${card.address}');
+  }
+
+  Future<void> deleteEthCard({required EthCardModel card}) async {
     await _secureStorage.delete(key: 'card${card.address}');
   }
 

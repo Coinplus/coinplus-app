@@ -14,6 +14,22 @@ Future<bool> isCardWalletActivated({required BalanceStore balanceStore}) async {
   }
 }
 
+Future<bool> isEthCardWalletActivated({
+  required BalanceStore balanceStore,
+}) async {
+  final ethCardIndex =
+      balanceStore.cardCurrentIndex - balanceStore.cards.length;
+  if (balanceStore.ethCards.isNotEmpty &&
+      ethCardIndex >= 0 &&
+      ethCardIndex < balanceStore.ethCards.length) {
+    return _secureStorage.checkWalletStatus(
+      balanceStore.ethCards[ethCardIndex].address,
+    );
+  } else {
+    return false;
+  }
+}
+
 Future<bool> isBarWalletActivated({required BalanceStore balanceStore}) async {
   if (balanceStore.bars.isNotEmpty &&
       balanceStore.bars.length != balanceStore.barCurrentIndex) {

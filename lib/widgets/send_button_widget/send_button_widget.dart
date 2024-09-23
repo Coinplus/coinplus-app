@@ -14,6 +14,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
+import '../../all_alert_dialogs/already_activated_alert/already_activated_alert.dart';
 import '../../all_alert_dialogs/bar_recommended_to_wait_dialog/bar_recommended_to_wait_dialog.dart';
 import '../../all_alert_dialogs/card_recommended_to_wait_dialog/card_recommended_to_wait_dialog.dart';
 import '../../constants/card_type.dart';
@@ -52,10 +53,15 @@ class SendButtonWidget extends HookWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        final isCardActivated =
-            isCardWalletActivated(balanceStore: _balanceStore);
-        final isBarActivated =
-            isBarWalletActivated(balanceStore: _balanceStore);
+        dynamic isCardActivated;
+        dynamic isBarActivated;
+        if (card.blockchain == 'BTC') {
+          isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
+          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+        } else if (card.blockchain == 'ETH') {
+          isCardActivated =
+              isEthCardWalletActivated(balanceStore: _balanceStore);
+        }
 
         return LoadingButton(
           style: context.theme
@@ -127,11 +133,15 @@ class SendButtonWidget extends HookWidget {
                           ),
                         );
                         isModalOpened.value = true;
-                        await showSendFromWalletModal(
-                          allSettingsState: allSettingsState,
-                          isBarList: isBarList,
-                          state: state,
-                        );
+                        if (card.blockchain == 'BTC') {
+                          await showSendFromWalletModal(
+                            allSettingsState: allSettingsState,
+                            isBarList: isBarList,
+                            state: state,
+                          );
+                        } else {
+                          await alreadyActivatedWallet(context);
+                        }
                         isModalOpened.value = false;
                       } else {
                         await recordAmplitudeEvent(

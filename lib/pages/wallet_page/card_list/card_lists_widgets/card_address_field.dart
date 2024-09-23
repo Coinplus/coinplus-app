@@ -14,14 +14,14 @@ import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../utils/data_utils.dart';
 import '../../../../utils/wallet_activation_status.dart';
-import '../../../../widgets/custom_snack_bar/snack_bar.dart';
-import '../../../../widgets/custom_snack_bar/top_snack.dart';
+import '../../../../widgets/custom_snack_bar/snack_bar_method.dart';
 import '../../../send_page/send_to/change_selected_address/change_selected_address_state.dart';
 
 class CardAddressField extends HookWidget {
   const CardAddressField({super.key, required this.index});
 
   final int index;
+
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
@@ -50,20 +50,9 @@ class CardAddressField extends HookWidget {
               ).then(
                 (_) {
                   HapticFeedback.mediumImpact();
-                  showTopSnackBar(
-                    displayDuration: const Duration(
-                      milliseconds: 400,
-                    ),
-                    Overlay.of(context),
-                    CustomSnackBar.success(
-                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
-                      message: 'Address was copied',
-                      textStyle: const TextStyle(
-                        fontFamily: FontFamily.redHatMedium,
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
+                  showCustomSnackBar(
+                    context: context,
+                    message: 'Address was copied',
                   );
                 },
               );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
@@ -50,10 +51,7 @@ class CoinsDataWidget extends StatelessWidget {
               duration: const Duration(milliseconds: 800),
               child: _marketPageStore.filteredData.isEmpty
                   ? const Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 26,
-                        vertical: 15,
-                      ),
+                      padding: EdgeInsets.all(15),
                       child: MarketPageShimmer(),
                     )
                   : _marketPageStore.searchedList.isEmpty
@@ -79,7 +77,7 @@ class CoinsDataWidget extends StatelessWidget {
                               child: _marketPageStore.isLoading
                                   ? const Padding(
                                       padding:
-                                          EdgeInsets.symmetric(horizontal: 24),
+                                          EdgeInsets.symmetric(horizontal: 15),
                                       child: MarketPageShimmer(),
                                     )
                                   : Padding(
@@ -144,8 +142,10 @@ class CoinsDataWidget extends StatelessWidget {
                                     _marketPageStore.searchedList[index];
                                 final formattedMarketCap =
                                     formatLargeNumber(data.marketCap.toInt());
-                                return GestureDetector(
-                                  onTap: () {
+                                return ScaleTap(
+                                  scaleMinValue: 0.99,
+                                  enableFeedback: false,
+                                  onPressed: () {
                                     router.push(CoinChartRoute(data: data));
                                     recordAmplitudeEventPartTwo(
                                       CoinClicked(coinName: data.symbol),

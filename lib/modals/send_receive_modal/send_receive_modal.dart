@@ -19,7 +19,6 @@ import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
-import '../../store/settings_button_state/settings_button_state.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 import '../receive_modal/receive_modal.dart';
@@ -31,13 +30,14 @@ RampService get _rampService => GetIt.I<RampService>();
 
 Future<void> sendReceiveButtonModal({
   required AbstractCard selectedCard,
+  required AbstractCard selectedEthCard,
   required bool isBarList,
   required Future<bool> isCardActivated,
   required Future<bool> isBarActivated,
   required ObjectRef<({AbstractCard? card, int index})> currentCard,
   required ValueNotifier<bool> isModalOpened,
   required PageController pageController,
-  required SettingsState settingsState,
+  required AllSettingsState settingsState,
   required AllSettingsState allSettingsState,
   required TabController tabController,
   required BuildContext context,
@@ -55,6 +55,7 @@ Future<void> sendReceiveButtonModal({
     builder: (_) {
       final card = [
         ..._balanceStore.cards,
+        ..._balanceStore.ethCards,
         ..._balanceStore.bars,
       ].firstWhere(
         (element) => (element as AbstractCard).address == selectedCard.address,
@@ -159,6 +160,7 @@ Future<void> sendReceiveButtonModal({
                 allSettingsState: allSettingsState,
                 state: state,
               ),
+            if (card.blockchain == 'ETH') const SizedBox(),
             const Gap(8),
             LoadingButton(
               style: router.navigatorKey.currentContext!.theme

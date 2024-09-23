@@ -15,8 +15,8 @@ import '../../../../providers/screen_service.dart';
 import '../../../../router.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../services/cloud_firestore_service.dart';
+import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../store/balance_store/balance_store.dart';
-import '../../../../store/nfc_state/nfc_state.dart';
 import '../../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../card_lists_widgets/add_new_card_modal.dart';
@@ -31,7 +31,7 @@ class CardEmptyState extends StatelessWidget {
 
   final WalletProtectState walletProtectState;
   final BalanceStore balanceStore;
-  final NfcStore nfcState;
+  final AllSettingsState nfcState;
 
   @override
   Widget build(BuildContext context) {

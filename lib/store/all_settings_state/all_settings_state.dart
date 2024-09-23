@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 import '../../models/abstract_card/abstract_card.dart';
 
@@ -7,6 +9,8 @@ part 'all_settings_state.g.dart';
 class AllSettingsState = _AllSettingsState with _$AllSettingsState;
 
 abstract class _AllSettingsState with Store {
+  late TextEditingController nameController = TextEditingController();
+
   @observable
   int currentIndex = 0;
   @observable
@@ -25,6 +29,19 @@ abstract class _AllSettingsState with Store {
   bool isActivatedCheckBox = false;
   @observable
   bool isLineVisible = false;
+  @observable
+  bool isAddressCopied = false;
+  @observable
+  bool isReorderingStart = false;
+  @observable
+  bool isButtonEnabled = false;
+  @observable
+  bool isNfcSupported = false;
+
+  @action
+  bool isEmpty() {
+    return isButtonEnabled = nameController.text.isNotEmpty;
+  }
 
   @action
   void makeVisible() {
@@ -56,6 +73,12 @@ abstract class _AllSettingsState with Store {
   }
 
   @action
+  Future<void> checkNfcSupport() async {
+    final isAvailable = await NfcManager.instance.isAvailable();
+    isNfcSupported = isAvailable;
+  }
+
+  @action
   void updateAddCardPosition({AbstractCard? card, required int tabIndex}) {
     isInAddCard = card == null && tabIndex == 0;
     isInAddBar = card == null && tabIndex == 1;
@@ -69,5 +92,17 @@ abstract class _AllSettingsState with Store {
   @action
   Future<void> updateTabIndex(int index) async {
     tabCurrentIndex = index;
+  }
+
+  @action
+  void startReorder() {
+    isReorderingStart = true;
+  }
+
+  @action
+  Future<void> copyAddress() async {
+    isAddressCopied = true;
+    await Future.delayed(const Duration(milliseconds: 1000));
+    isAddressCopied = false;
   }
 }

@@ -8,3 +8,8 @@ enum WalletType {
   TRACKER,
   TRACKER_PLUS,
 }
+
+enum BlockchainType {
+  BITCOIN,
+  ETHEREUM,
+}

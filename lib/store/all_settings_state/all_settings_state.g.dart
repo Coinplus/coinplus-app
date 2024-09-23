@@ -153,6 +153,78 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
+  late final _$isAddressCopiedAtom =
+      Atom(name: '_AllSettingsState.isAddressCopied', context: context);
+
+  @override
+  bool get isAddressCopied {
+    _$isAddressCopiedAtom.reportRead();
+    return super.isAddressCopied;
+  }
+
+  @override
+  set isAddressCopied(bool value) {
+    _$isAddressCopiedAtom.reportWrite(value, super.isAddressCopied, () {
+      super.isAddressCopied = value;
+    });
+  }
+
+  late final _$isReorderingStartAtom =
+      Atom(name: '_AllSettingsState.isReorderingStart', context: context);
+
+  @override
+  bool get isReorderingStart {
+    _$isReorderingStartAtom.reportRead();
+    return super.isReorderingStart;
+  }
+
+  @override
+  set isReorderingStart(bool value) {
+    _$isReorderingStartAtom.reportWrite(value, super.isReorderingStart, () {
+      super.isReorderingStart = value;
+    });
+  }
+
+  late final _$isButtonEnabledAtom =
+      Atom(name: '_AllSettingsState.isButtonEnabled', context: context);
+
+  @override
+  bool get isButtonEnabled {
+    _$isButtonEnabledAtom.reportRead();
+    return super.isButtonEnabled;
+  }
+
+  @override
+  set isButtonEnabled(bool value) {
+    _$isButtonEnabledAtom.reportWrite(value, super.isButtonEnabled, () {
+      super.isButtonEnabled = value;
+    });
+  }
+
+  late final _$isNfcSupportedAtom =
+      Atom(name: '_AllSettingsState.isNfcSupported', context: context);
+
+  @override
+  bool get isNfcSupported {
+    _$isNfcSupportedAtom.reportRead();
+    return super.isNfcSupported;
+  }
+
+  @override
+  set isNfcSupported(bool value) {
+    _$isNfcSupportedAtom.reportWrite(value, super.isNfcSupported, () {
+      super.isNfcSupported = value;
+    });
+  }
+
+  late final _$checkNfcSupportAsyncAction =
+      AsyncAction('_AllSettingsState.checkNfcSupport', context: context);
+
+  @override
+  Future<void> checkNfcSupport() {
+    return _$checkNfcSupportAsyncAction.run(() => super.checkNfcSupport());
+  }
+
   late final _$updateIndexAsyncAction =
       AsyncAction('_AllSettingsState.updateIndex', context: context);
 
@@ -169,8 +241,27 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     return _$updateTabIndexAsyncAction.run(() => super.updateTabIndex(index));
   }
 
+  late final _$copyAddressAsyncAction =
+      AsyncAction('_AllSettingsState.copyAddress', context: context);
+
+  @override
+  Future<void> copyAddress() {
+    return _$copyAddressAsyncAction.run(() => super.copyAddress());
+  }
+
   late final _$_AllSettingsStateActionController =
       ActionController(name: '_AllSettingsState', context: context);
+
+  @override
+  bool isEmpty() {
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
+        name: '_AllSettingsState.isEmpty');
+    try {
+      return super.isEmpty();
+    } finally {
+      _$_AllSettingsStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void makeVisible() {
@@ -239,6 +330,17 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
   }
 
   @override
+  void startReorder() {
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
+        name: '_AllSettingsState.startReorder');
+    try {
+      return super.startReorder();
+    } finally {
+      _$_AllSettingsStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentIndex: ${currentIndex},
@@ -249,7 +351,11 @@ isAccepted: ${isAccepted},
 isCheckboxAccepted: ${isCheckboxAccepted},
 isActive: ${isActive},
 isActivatedCheckBox: ${isActivatedCheckBox},
-isLineVisible: ${isLineVisible}
+isLineVisible: ${isLineVisible},
+isAddressCopied: ${isAddressCopied},
+isReorderingStart: ${isReorderingStart},
+isButtonEnabled: ${isButtonEnabled},
+isNfcSupported: ${isNfcSupported}
     ''';
   }
 }

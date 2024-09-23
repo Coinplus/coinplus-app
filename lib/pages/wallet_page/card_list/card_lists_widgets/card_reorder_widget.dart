@@ -11,10 +11,10 @@ import '../../../../gen/fonts.gen.dart';
 import '../../../../models/abstract_card/abstract_card.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';
+import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../store/history_page_store/history_page_store.dart';
 import '../../../../store/market_page_store/market_page_store.dart';
-import '../../../../store/settings_button_state/settings_button_state.dart';
 import '../../../../utils/data_utils.dart';
 import '../../../../widgets/reorder_card_decorator/reorder_card_decorator.dart';
 
@@ -44,7 +44,7 @@ class CardReorderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _settingsState = SettingsState();
+    final _settingsState = AllSettingsState();
 
     return SizedBox(
       height: 600,

@@ -26,8 +26,8 @@ import '../providers/screen_service.dart';
 import '../router.gr.dart';
 import '../services/amplitude_service.dart';
 import '../services/cloud_firestore_service.dart';
+import '../store/all_settings_state/all_settings_state.dart';
 import '../store/balance_store/balance_store.dart';
-import '../store/settings_button_state/settings_button_state.dart';
 import '../store/wallet_protect_state/wallet_protect_state.dart';
 import '../widgets/loading_button/loading_button.dart';
 import 'wallet_activation_status.dart';
@@ -506,7 +506,7 @@ Future<void> nfcSessionAndroid({
 Future<void> checkNfcIos({
   required WalletProtectState walletProtectState,
   required BalanceStore balanceStore,
-  required SettingsState settingsState,
+  required AllSettingsState settingsState,
   bool? isMifareUltralight,
 }) async {
   await NfcManager.instance.startSession(
@@ -628,7 +628,7 @@ Future<void> checkNfcIos({
 Future<void> checkNfcAndroid({
   required WalletProtectState walletProtectState,
   required BalanceStore balanceStore,
-  required SettingsState settingsState,
+  required AllSettingsState settingsState,
   bool? isMifareUltralight,
 }) async {
   await NfcManager.instance.startSession(
@@ -839,6 +839,6 @@ Future<void> checkNfcAndroid({
 }
 
 Future<void> nfcStop() async {
-  await Future.delayed(const Duration(milliseconds: 10000));
+  await Future.delayed(const Duration(milliseconds: 5000));
   await NfcManager.instance.stopSession();
 }

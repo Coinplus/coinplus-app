@@ -6,11 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/bar_model/bar_model.dart';
 import '../models/card_model/card_model.dart';
+import '../models/eth_card_model/eth_card_model.dart';
 
 class Preferences {
   Preferences._();
 
   static const cards = 'cards';
+  static const ethCards = 'ethCards';
   static const bars = 'bars';
   static const hasShownWallet = 'bools';
   static const isActivatedBool = 'isActivatedBool';
@@ -19,6 +21,7 @@ class Preferences {
 
 class StorageUtils {
   StorageUtils._();
+
   static Future<SharedPreferences> get sharedInstance =>
       SharedPreferences.getInstance();
 
@@ -30,6 +33,20 @@ class StorageUtils {
     for (final element in cardsJson) {
       cards.add(
         CardModel.fromJson(element),
+      );
+    }
+
+    return cards;
+  }
+
+  static Future<List<EthCardModel>> getEthCards() async {
+    final cardsJson =
+        await _read<List>(Preferences.ethCards) ?? <Map<String, dynamic>>[];
+
+    final cards = <EthCardModel>[];
+    for (final element in cardsJson) {
+      cards.add(
+        EthCardModel.fromJson(element),
       );
     }
 
@@ -60,6 +77,19 @@ class StorageUtils {
     }
   }
 
+  static Future<void> replaceEthCard(
+    String address,
+    EthCardModel newCard,
+  ) async {
+    final cards = await getEthCards();
+
+    final cardIndex = cards.indexWhere((card) => card.address == address);
+    if (cardIndex != -1) {
+      cards[cardIndex] = newCard;
+      await _save(Preferences.ethCards, cards.toSet().toList());
+    }
+  }
+
   static Future<void> replaceBar(String address, BarModel newBar) async {
     final bars = await getBars();
 
@@ -86,6 +116,12 @@ class StorageUtils {
     await _save(Preferences.cards, cards.toSet().toList());
   }
 
+  static Future<void> addEthCard(EthCardModel card) async {
+    final cards = await getEthCards();
+    cards.add(card);
+    await _save(Preferences.ethCards, cards.toSet().toList());
+  }
+
   static Future<void> addBar(BarModel bar) async {
     final bars = await getBars();
     bars.add(bar);
@@ -96,6 +132,12 @@ class StorageUtils {
     final cards = await getCards();
     cards.removeWhere((card) => card.address == address);
     await _save(Preferences.cards, cards.toSet().toList());
+  }
+
+  static Future<void> removeEthCard(String address) async {
+    final cards = await getEthCards();
+    cards.removeWhere((card) => card.address == address);
+    await _save(Preferences.ethCards, cards.toSet().toList());
   }
 
   static Future<void> removeBar(String address) async {
@@ -169,13 +211,31 @@ class StorageUtils {
     return storage.read(key: 'wif_key');
   }
 
+  static Future<void> removeAddressFromMap(String addressToRemove) async {
+    final prefs = await SharedPreferences.getInstance();
+    final map = prefs.getString('lastRefreshedMap');
+
+    if (map != null) {
+      final decodedMap = json.decode(map);
+      final lastRefreshedMap = Map<String, String>.from(decodedMap);
+
+      if (lastRefreshedMap.containsKey(addressToRemove)) {
+        lastRefreshedMap.remove(addressToRemove);
+        final updatedMap = json.encode(lastRefreshedMap);
+        await prefs.setString('lastRefreshedMap', updatedMap);
+      }
+    }
+  }
+
   static Future<void> clear() async {
     final prefs = await sharedInstance;
     await prefs.reload();
     await Future.wait([
       prefs.remove('cards'),
+      prefs.remove('ethCards'),
       prefs.remove('bars'),
       prefs.remove('bools'),
+      prefs.remove('lastRefreshedMap'),
       prefs.remove('isActivatedBool'),
       prefs.remove('switchKey'),
       prefs.remove('show_modal'),

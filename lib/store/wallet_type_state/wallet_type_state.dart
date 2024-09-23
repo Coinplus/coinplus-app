@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 
-part 'form_factor_state.g.dart';
+part 'wallet_type_state.g.dart';
 
-class FormFactorState = _FormFactorState with _$FormFactorState;
+class WalletTypeState = _WalletTypeState with _$WalletTypeState;
 
-abstract class _FormFactorState with Store {
+abstract class _WalletTypeState with Store {
   @observable
   bool isFirstWidgetZoomed = false;
   @observable
@@ -25,10 +25,5 @@ abstract class _FormFactorState with Store {
   void barSelection() {
     isSecondWidgetZoomed = true;
     isFirstWidgetVisible = !isSecondWidgetZoomed;
-  }
-
-  @action
-  void toggleWidget() {
-    isFirstWidget = !isFirstWidget;
   }
 }

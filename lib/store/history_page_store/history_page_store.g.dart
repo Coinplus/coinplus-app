@@ -536,6 +536,15 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
         .run(() => super.getSingleCardHistory(address: address));
   }
 
+  late final _$getSingleBarHistoryAsyncAction =
+      AsyncAction('_HistoryPageStore.getSingleBarHistory', context: context);
+
+  @override
+  Future<void> getSingleBarHistory({required String address}) {
+    return _$getSingleBarHistoryAsyncAction
+        .run(() => super.getSingleBarHistory(address: address));
+  }
+
   late final _$isCachedCardTransactionsAsyncAction = AsyncAction(
       '_HistoryPageStore.isCachedCardTransactions',
       context: context);
@@ -572,15 +581,6 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   Future<void> setBarActivationIndex({required int index}) {
     return _$setBarActivationIndexAsyncAction
         .run(() => super.setBarActivationIndex(index: index));
-  }
-
-  late final _$getSingleBarHistoryAsyncAction =
-      AsyncAction('_HistoryPageStore.getSingleBarHistory', context: context);
-
-  @override
-  Future<void> getSingleBarHistory({required String address}) {
-    return _$getSingleBarHistoryAsyncAction
-        .run(() => super.getSingleBarHistory(address: address));
   }
 
   late final _$getWalletStatusAsyncAction =
@@ -648,14 +648,6 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
         .run(() => super.setBarSelectedAddress(value));
   }
 
-  late final _$cardRefreshAsyncAction =
-      AsyncAction('_HistoryPageStore.cardRefresh', context: context);
-
-  @override
-  Future<void> cardRefresh(String cardAddress) {
-    return _$cardRefreshAsyncAction.run(() => super.cardRefresh(cardAddress));
-  }
-
   late final _$saveAndPatchCardAddressAsyncAction = AsyncAction(
       '_HistoryPageStore.saveAndPatchCardAddress',
       context: context);
@@ -675,6 +667,14 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
         .run(() => super.saveAndPatchBarAddress(address));
   }
 
+  late final _$cardRefreshAsyncAction =
+      AsyncAction('_HistoryPageStore.cardRefresh', context: context);
+
+  @override
+  Future<void> cardRefresh(String cardAddress) {
+    return _$cardRefreshAsyncAction.run(() => super.cardRefresh(cardAddress));
+  }
+
   late final _$barRefreshAsyncAction =
       AsyncAction('_HistoryPageStore.barRefresh', context: context);
 
@@ -689,6 +689,16 @@ mixin _$HistoryPageStore on _HistoryPageStore, Store {
   @override
   Future<void> loadLastRefreshed() {
     return _$loadLastRefreshedAsyncAction.run(() => super.loadLastRefreshed());
+  }
+
+  late final _$deleteAddressFromHistoryMapAsyncAction = AsyncAction(
+      '_HistoryPageStore.deleteAddressFromHistoryMap',
+      context: context);
+
+  @override
+  Future<void> deleteAddressFromHistoryMap({required String address}) {
+    return _$deleteAddressFromHistoryMapAsyncAction
+        .run(() => super.deleteAddressFromHistoryMap(address: address));
   }
 
   late final _$_HistoryPageStoreActionController =

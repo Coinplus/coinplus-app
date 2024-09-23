@@ -5,16 +5,16 @@ import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../store/nfc_state/nfc_state.dart';
+import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../widgets/wallet_connect_methods/bar_connect_methods.dart';
 
 class AddNewBarModal extends StatelessWidget {
   const AddNewBarModal({
     super.key,
-    required NfcStore nfcStore,
+    required AllSettingsState nfcStore,
   }) : _nfcStore = nfcStore;
 
-  final NfcStore _nfcStore;
+  final AllSettingsState _nfcStore;
 
   @override
   Widget build(BuildContext context) {

@@ -63,7 +63,7 @@ class MarketPageShimmer extends StatelessWidget {
                   width: 65,
                   margin: const EdgeInsets.only(bottom: 8),
                 ),
-                const Gap(18),
+                const Gap(55),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),

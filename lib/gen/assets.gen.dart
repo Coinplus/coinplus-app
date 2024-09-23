@@ -149,6 +149,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/error.png
   AssetGenImage get error => const AssetGenImage('assets/icons/error.png');
 
+  /// File path: assets/icons/eth_icon.png
+  AssetGenImage get ethIcon => const AssetGenImage('assets/icons/eth_icon.png');
+
   /// File path: assets/icons/face_id_settings.png
   AssetGenImage get faceIdSettings =>
       const AssetGenImage('assets/icons/face_id_settings.png');
@@ -377,6 +380,7 @@ class $AssetsIconsGen {
         dontHaveCardWithMeNow,
         edit,
         error,
+        ethIcon,
         faceIdSettings,
         facebook,
         formkitUsdc,
@@ -695,6 +699,10 @@ class $AssetsImagesCardGen {
   AssetGenImage get emptyCard =>
       const AssetGenImage('assets/images/card/empty_card.png');
 
+  /// File path: assets/images/card/ethereum_card.png
+  AssetGenImage get ethereumCard =>
+      const AssetGenImage('assets/images/card/ethereum_card.png');
+
   /// File path: assets/images/card/filled_back.png
   AssetGenImage get filledBack =>
       const AssetGenImage('assets/images/card/filled_back.png');
@@ -737,6 +745,7 @@ class $AssetsImagesCardGen {
         cardForm,
         cardStickers,
         emptyCard,
+        ethereumCard,
         filledBack,
         filledBackBrown,
         filledBackWhite,
