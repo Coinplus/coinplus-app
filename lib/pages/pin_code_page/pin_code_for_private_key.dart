@@ -16,8 +16,8 @@ import 'package:shake_animation_widget/shake_animation_widget.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
 import '../../models/bar_model/bar_model.dart';
-import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../store/bar_color_state/bar_setting_state.dart';
 import '../../store/card_color_state/card_setting_state.dart';
@@ -34,7 +34,7 @@ class PinCodeForPrivateKey extends HookWidget {
     this.isVisible,
   });
 
-  final CardModel? card;
+  final AbstractCard? card;
   final BarModel? bar;
   final CardSettingState? isVisible;
   final BarSettingState? isKeyVisible;

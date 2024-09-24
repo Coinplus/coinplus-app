@@ -15,35 +15,36 @@ import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:styled_text/styled_text.dart';
 
-import '../../../constants/card_color.dart';
-import '../../../constants/card_type.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/widget_extension.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../gen/colors.gen.dart';
-import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
-import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../models/eth_card_model/eth_card_model.dart';
-import '../../../providers/screen_service.dart';
-import '../../../router.dart';
-import '../../../services/amplitude_service.dart';
-import '../../../store/balance_store/balance_store.dart';
-import '../../../store/card_color_state/eth_card_settings_state.dart';
-import '../../../store/wallet_protect_state/wallet_protect_state.dart';
-import '../../../utils/secure_storage_utils.dart';
-import '../../../utils/wallet_activation_status.dart';
-import '../../../widgets/custom_snack_bar/snack_bar_method.dart';
-import '../../../widgets/loading_button/loading_button.dart';
-import '../../splash_screen/background.dart';
-import 'change_eth_card_name.dart';
-import 'remove_eth_card_modal.dart';
+import '../../constants/card_color.dart';
+import '../../constants/card_type.dart';
+import '../../extensions/context_extension.dart';
+import '../../extensions/widget_extension.dart';
+import '../../gen/assets.gen.dart';
+import '../../gen/colors.gen.dart';
+import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../providers/screen_service.dart';
+import '../../router.dart';
+import '../../services/amplitude_service.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../store/card_color_state/card_setting_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/secure_storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
+import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/top_snack.dart';
+import '../../widgets/loading_button/loading_button.dart';
+import '../splash_screen/background.dart';
+import 'change_card_name.dart';
+import 'remove_card_modal.dart';
 
 @RoutePage()
-class EthCardSettingsPage extends HookWidget {
-  const EthCardSettingsPage({super.key, required this.ethCard});
+class CardSettingsPage extends HookWidget {
+  const CardSettingsPage({super.key, required this.card});
 
-  final EthCardModel ethCard;
+  final AbstractCard card;
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
@@ -51,8 +52,7 @@ class EthCardSettingsPage extends HookWidget {
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
 
-    final _cardSettingsState =
-        useMemoized(() => EthCardSettingState(ethCard: ethCard));
+    final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _secureStorage = SecureStorageService();
     final _isPinSet = _secureStorage.getIsPinCodeSet();
@@ -66,7 +66,7 @@ class EthCardSettingsPage extends HookWidget {
     final privateKey = useState('');
 
     Future<void> fetchPrivateKey() async {
-      final fetchedKey = await _secureStorage.read(key: ethCard.address);
+      final fetchedKey = await _secureStorage.read(key: card.address);
       if (fetchedKey != null) {
         privateKey.value = fetchedKey;
       }
@@ -74,7 +74,7 @@ class EthCardSettingsPage extends HookWidget {
 
     Future<void> isPrivateSet() async {
       isPrivateKeySet.value =
-          await _secureStorage.getIsPrivateKeySet(ethCard.address);
+          await _secureStorage.getIsPrivateKeySet(card.address);
     }
 
     useOnAppLifecycleStateChange((previous, current) async {
@@ -122,13 +122,14 @@ class EthCardSettingsPage extends HookWidget {
       final colorWidgets = <Widget>[];
 
       final colors = <CardColor>[
-        CardColor.ETHEREUM,
+        CardColor.ORANGE,
+        CardColor.WHITE,
+        CardColor.BLACK,
       ];
 
       for (var index = 0; index < colors.length; index++) {
         colorWidgets.add(
           ScaleTap(
-            scaleMinValue: 0.98,
             enableFeedback: false,
             onPressed: () {
               _cardSettingsState.changeCardColor(colors[index]);
@@ -210,8 +211,8 @@ class EthCardSettingsPage extends HookWidget {
                         ),
                         backgroundColor: Colors.transparent,
                         builder: (context) {
-                          return EthCardNameChangeModal(
-                            ethCard: ethCard,
+                          return CardNameChangeModal(
+                            card: card,
                           );
                         },
                       );
@@ -233,7 +234,7 @@ class EthCardSettingsPage extends HookWidget {
                         ),
                         const Gap(6),
                         Text(
-                          ethCard.name,
+                          card.name,
                           style: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
                             fontSize: 14,
@@ -253,21 +254,33 @@ class EthCardSettingsPage extends HookWidget {
                       if (Platform.isIOS) {
                         await Clipboard.setData(
                           ClipboardData(
-                            text: ethCard.address.toString(),
+                            text: card.address.toString(),
                           ),
                         ).then(
                           (_) {
                             HapticFeedback.mediumImpact();
-                            showCustomSnackBar(
-                              message: 'Address was copied',
-                              context: context,
+                            showTopSnackBar(
+                              displayDuration: const Duration(
+                                milliseconds: 400,
+                              ),
+                              Overlay.of(context),
+                              CustomSnackBar.success(
+                                backgroundColor:
+                                    const Color(0xFF4A4A4A).withOpacity(0.9),
+                                message: 'Address was copied',
+                                textStyle: const TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
                             );
                           },
                         );
                       } else {
                         await Clipboard.setData(
                           ClipboardData(
-                            text: ethCard.address.toString(),
+                            text: card.address.toString(),
                           ),
                         ).then(
                           (_) {
@@ -276,13 +289,13 @@ class EthCardSettingsPage extends HookWidget {
                         );
                       }
                       final isCardActivated =
-                          isEthCardWalletActivated(balanceStore: _balanceStore);
+                          isCardWalletActivated(balanceStore: _balanceStore);
                       unawaited(
                         recordAmplitudeEvent(
                           AddressCopied(
                             source: 'Card Settings',
                             walletType: 'Card',
-                            walletAddress: ethCard.address,
+                            walletAddress: card.address,
                             activated: await isCardActivated,
                           ),
                         ),
@@ -302,7 +315,7 @@ class EthCardSettingsPage extends HookWidget {
                         ),
                         const Gap(6),
                         Text(
-                          ethCard.address.toString(),
+                          card.address.toString(),
                           style: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
                             fontSize: 14,
@@ -345,7 +358,7 @@ class EthCardSettingsPage extends HookWidget {
                                   onLongPress: () async {
                                     await recordAmplitudeEventPartTwo(
                                       PrivateKeyRevealed(
-                                        walletAddress: ethCard.address,
+                                        walletAddress: card.address,
                                         walletType: 'Card',
                                       ),
                                     );
@@ -377,6 +390,27 @@ class EthCardSettingsPage extends HookWidget {
                                               isBiometricsRunning.value = false;
                                             }
                                           } catch (e) {
+                                            if (e is PlatformException &&
+                                                e.code == 'NotAvailable') {
+                                            } else if (e is PlatformException &&
+                                                e.code == 'NotEnrolled') {
+                                              log(
+                                                'Biometrics not enrolled'
+                                                    as num,
+                                              );
+                                            } else if (e is PlatformException &&
+                                                e.code ==
+                                                    'AuthenticationFailed') {
+                                              log(
+                                                'Biometrics authentication failed or canceled'
+                                                    as num,
+                                              );
+                                            } else {
+                                              log(
+                                                'Unhandled exception: $e'
+                                                    as num,
+                                              );
+                                            }
                                             return;
                                           }
                                         } else {
@@ -387,8 +421,8 @@ class EthCardSettingsPage extends HookWidget {
                                       } else {
                                         if (await _isPinSet) {
                                           await router.push(
-                                            PinCodeForEthPrivateKey(
-                                              ethCard: ethCard,
+                                            PinCodeForPrivateKey(
+                                              card: card,
                                               isVisible: _cardSettingsState,
                                             ),
                                           );
@@ -406,7 +440,7 @@ class EthCardSettingsPage extends HookWidget {
                                       ? () {
                                           recordAmplitudeEventPartTwo(
                                             PrivateKeyCopied(
-                                              walletAddress: ethCard.address,
+                                              walletAddress: card.address,
                                               walletType: 'Card',
                                             ),
                                           );
@@ -417,10 +451,24 @@ class EthCardSettingsPage extends HookWidget {
                                           ).then(
                                             (_) {
                                               HapticFeedback.mediumImpact();
-                                              showCustomSnackBar(
-                                                message:
-                                                    'Private key was copied',
-                                                context: context,
+                                              showTopSnackBar(
+                                                displayDuration: const Duration(
+                                                  milliseconds: 400,
+                                                ),
+                                                Overlay.of(context),
+                                                CustomSnackBar.success(
+                                                  backgroundColor:
+                                                      const Color(0xFF4A4A4A)
+                                                          .withOpacity(0.9),
+                                                  message:
+                                                      'Private key was copied',
+                                                  textStyle: const TextStyle(
+                                                    fontFamily:
+                                                        FontFamily.redHatMedium,
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
                                               );
                                             },
                                           );
@@ -428,14 +476,28 @@ class EthCardSettingsPage extends HookWidget {
                                       : () {
                                           recordAmplitudeEventPartTwo(
                                             ClickedOnPrivateKey(
-                                              walletAddress: ethCard.address,
+                                              walletAddress: card.address,
                                               walletType: 'Card',
                                             ),
                                           );
-                                          showCustomSnackBar(
-                                            message:
-                                                'Hold to reveal your Private key',
-                                            context: context,
+                                          showTopSnackBar(
+                                            displayDuration: const Duration(
+                                              milliseconds: 400,
+                                            ),
+                                            Overlay.of(context),
+                                            CustomSnackBar.success(
+                                              backgroundColor:
+                                                  const Color(0xFF4A4A4A)
+                                                      .withOpacity(0.9),
+                                              message:
+                                                  'Hold to reveal your Private key',
+                                              textStyle: const TextStyle(
+                                                fontFamily:
+                                                    FontFamily.redHatMedium,
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                           );
                                         },
                                   title: Observer(
@@ -597,7 +659,7 @@ class EthCardSettingsPage extends HookWidget {
                         ),
                         const Gap(6),
                         Text(
-                          ethCard.createdAt,
+                          card.createdAt,
                           style: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
                             fontSize: 14,
@@ -608,16 +670,16 @@ class EthCardSettingsPage extends HookWidget {
                       ],
                     ),
                   ),
-                  const Gap(10),
+                  const Gap(16),
                   Divider(
                     indent: 5,
                     endIndent: 5,
                     color: Colors.grey.withOpacity(0.2),
                   ),
-                  if (ethCard.label != WalletType.TRACKER)
+                  if (card.label != WalletType.TRACKER)
                     Column(
                       children: [
-                        const Gap(10),
+                        const Gap(16),
                         ListTile(
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -654,24 +716,39 @@ class EthCardSettingsPage extends HookWidget {
                             ],
                           ),
                         ),
+                        const Gap(10),
                         Divider(
                           indent: 5,
                           endIndent: 5,
                           color: Colors.grey.withOpacity(0.2),
                         ),
+                        const Gap(10),
                       ],
                     ),
                   ListTile(
                     onTap: () async {
-                      final isCardActivated =
-                          isEthCardWalletActivated(balanceStore: _balanceStore);
-                      await recordAmplitudeEventPartTwo(
-                        RemoveCardClicked(
-                          walletAddress: ethCard.address,
-                          walletType: 'Card',
-                          activated: await isCardActivated,
-                        ),
-                      );
+                      if (card.blockchain == 'BTC') {
+                        final isCardActivated =
+                            isCardWalletActivated(balanceStore: _balanceStore);
+                        await recordAmplitudeEventPartTwo(
+                          RemoveCardClicked(
+                            walletAddress: card.address,
+                            walletType: 'Card',
+                            activated: await isCardActivated,
+                          ),
+                        );
+                      } else if (card.blockchain == 'ETH') {
+                        final isCardActivated = isEthCardWalletActivated(
+                          balanceStore: _balanceStore,
+                        );
+                        await recordAmplitudeEventPartTwo(
+                          RemoveCardClicked(
+                            walletAddress: card.address,
+                            walletType: 'Card',
+                            activated: await isCardActivated,
+                          ),
+                        );
+                      }
                       await _walletProtectState.updateModalStatus(
                         isOpened: true,
                       );
@@ -686,8 +763,8 @@ class EthCardSettingsPage extends HookWidget {
                         ),
                         backgroundColor: Colors.transparent,
                         builder: (context) {
-                          return RemoveEthCard(
-                            ethCard: ethCard,
+                          return RemoveCard(
+                            card: card,
                           );
                         },
                       );
@@ -709,27 +786,97 @@ class EthCardSettingsPage extends HookWidget {
                     ),
                   ),
                   const Gap(10),
-                  if (ethCard.label != WalletType.TRACKER)
+                  if (card.label != WalletType.TRACKER)
                     Observer(
                       builder: (context) {
                         return LoadingButton(
                           onPressed: _cardSettingsState.isColorChanged
                               ? () async {
                                   if (_cardSettingsState.selectedCardColor ==
-                                      CardColor.ETHEREUM) {
+                                      CardColor.ORANGE) {
                                     await recordAmplitudeEventPartTwo(
                                       CardColorCHanged(
-                                        walletAddress: ethCard.address,
+                                        walletAddress: card.address,
                                         color: 'ORANGE',
                                       ),
                                     );
-                                    _balanceStore.changeEthCardColorAndSave(
-                                      cardAddress: ethCard.address,
-                                      color: CardColor.ETHEREUM,
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.ORANGE,
                                     );
-                                    await showCustomSnackBar(
-                                      message: 'Your card color was changed',
-                                      context: context,
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
+                                      ),
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  } else if (_cardSettingsState
+                                          .selectedCardColor ==
+                                      CardColor.WHITE) {
+                                    await recordAmplitudeEventPartTwo(
+                                      CardColorCHanged(
+                                        walletAddress: card.address,
+                                        color: 'WHITE',
+                                      ),
+                                    );
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.WHITE,
+                                    );
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
+                                      ),
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  } else if (_cardSettingsState
+                                          .selectedCardColor ==
+                                      CardColor.BLACK) {
+                                    await recordAmplitudeEventPartTwo(
+                                      CardColorCHanged(
+                                        walletAddress: card.address,
+                                        color: 'BLACK',
+                                      ),
+                                    );
+                                    _balanceStore.changeCardColorAndSave(
+                                      cardAddress: card.address,
+                                      color: CardColor.BLACK,
+                                    );
+                                    showTopSnackBar(
+                                      displayDuration: const Duration(
+                                        milliseconds: 600,
+                                      ),
+                                      Overlay.of(context),
+                                      CustomSnackBar.success(
+                                        backgroundColor: const Color(0xFF4A4A4A)
+                                            .withOpacity(0.9),
+                                        message: 'Your card color was changed',
+                                        textStyle: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     );
                                   }
                                   await router.maybePop();
@@ -763,8 +910,12 @@ class EthCardSettingsPage extends HookWidget {
 
 Widget getColorImage(CardColor color) {
   switch (color) {
-    case CardColor.ETHEREUM:
-      return Assets.images.card.ethereumCard.image(height: 130);
+    case CardColor.ORANGE:
+      return Assets.images.card.orangeCardFront.image(height: 130);
+    case CardColor.WHITE:
+      return Assets.images.card.whiteCardFront.image(height: 130);
+    case CardColor.BLACK:
+      return Assets.images.card.brownCardFront.image(height: 130);
     default:
       return const SizedBox.shrink();
   }

@@ -22,7 +22,7 @@ CardModel _$CardModelFromJson(Map<String, dynamic> json) {
 mixin _$CardModel {
   String get address => throw _privateConstructorUsedError;
   @JsonKey(name: 'final_balance')
-  int? get finalBalance => throw _privateConstructorUsedError;
+  num? get finalBalance => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_received')
   int? get totalReceived => throw _privateConstructorUsedError;
   CardColor get color => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $CardModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String address,
-      @JsonKey(name: 'final_balance') int? finalBalance,
+      @JsonKey(name: 'final_balance') num? finalBalance,
       @JsonKey(name: 'total_received') int? totalReceived,
       CardColor color,
       CardType type,
@@ -93,7 +93,7 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
       finalBalance: freezed == finalBalance
           ? _value.finalBalance
           : finalBalance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
           : totalReceived // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ abstract class _$$CardModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String address,
-      @JsonKey(name: 'final_balance') int? finalBalance,
+      @JsonKey(name: 'final_balance') num? finalBalance,
       @JsonKey(name: 'total_received') int? totalReceived,
       CardColor color,
       CardType type,
@@ -177,7 +177,7 @@ class __$$CardModelImplCopyWithImpl<$Res>
       finalBalance: freezed == finalBalance
           ? _value.finalBalance
           : finalBalance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
       totalReceived: freezed == totalReceived
           ? _value.totalReceived
           : totalReceived // ignore: cast_nullable_to_non_nullable
@@ -231,7 +231,7 @@ class _$CardModelImpl implements _CardModel {
   final String address;
   @override
   @JsonKey(name: 'final_balance')
-  final int? finalBalance;
+  final num? finalBalance;
   @override
   @JsonKey(name: 'total_received')
   final int? totalReceived;
@@ -303,7 +303,7 @@ class _$CardModelImpl implements _CardModel {
 abstract class _CardModel implements CardModel, AbstractCard {
   const factory _CardModel(
           {required final String address,
-          @JsonKey(name: 'final_balance') final int? finalBalance,
+          @JsonKey(name: 'final_balance') final num? finalBalance,
           @JsonKey(name: 'total_received') final int? totalReceived,
           final CardColor color,
           final CardType type,
@@ -320,7 +320,7 @@ abstract class _CardModel implements CardModel, AbstractCard {
   String get address;
   @override
   @JsonKey(name: 'final_balance')
-  int? get finalBalance;
+  num? get finalBalance;
   @override
   @JsonKey(name: 'total_received')
   int? get totalReceived;

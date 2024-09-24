@@ -2,9 +2,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/abstract_card/abstract_card.dart';
 import '../models/bar_model/bar_model.dart';
-import '../models/card_model/card_model.dart';
-import '../models/eth_card_model/eth_card_model.dart';
 import '../pages/send_page/send_to/send_to_state.dart';
 import '../store/balance_store/balance_store.dart';
 
@@ -38,11 +37,7 @@ class SecureStorageService {
     return value != null;
   }
 
-  Future<void> deleteCard({required CardModel card}) async {
-    await _secureStorage.delete(key: 'card${card.address}');
-  }
-
-  Future<void> deleteEthCard({required EthCardModel card}) async {
+  Future<void> deleteCard({required AbstractCard card}) async {
     await _secureStorage.delete(key: 'card${card.address}');
   }
 

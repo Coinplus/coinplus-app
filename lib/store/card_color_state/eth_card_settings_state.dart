@@ -1,18 +1,18 @@
 import 'package:mobx/mobx.dart';
 import '../../constants/card_color.dart';
-import '../../models/eth_card_model/eth_card_model.dart';
+import '../../models/abstract_card/abstract_card.dart';
 
 part 'eth_card_settings_state.g.dart';
 
 class EthCardSettingState = _EthCardSettingState with _$EthCardSettingState;
 
 abstract class _EthCardSettingState with Store {
-  late EthCardModel ethCard;
+  late AbstractCard card;
   late CardColor previousCardColor;
 
-  _EthCardSettingState({required this.ethCard}) {
-    selectedCardColor = ethCard.color;
-    previousCardColor = ethCard.color;
+  _EthCardSettingState({required this.card}) {
+    selectedCardColor = card.color;
+    previousCardColor = card.color;
   }
 
   @observable

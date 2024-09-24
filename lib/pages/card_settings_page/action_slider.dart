@@ -5,26 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../models/eth_card_model/eth_card_model.dart';
-import '../../../providers/screen_service.dart';
-import '../../../services/amplitude_service.dart';
-import '../../../services/cloud_firestore_service.dart';
-import '../../../store/balance_store/balance_store.dart';
-import '../../../store/history_page_store/history_page_store.dart';
-import '../../../utils/secure_storage_utils.dart';
-import '../../../utils/wallet_activation_status.dart';
-import '../../../widgets/custom_snack_bar/snack_bar_method.dart';
+import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
+import '../../utils/secure_storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
+import '../../widgets/custom_snack_bar/snack_bar_method.dart';
 
-class ActionSliderForEthCardDelete extends StatelessWidget {
-  const ActionSliderForEthCardDelete({
+class ActionSliderForCardDelete extends StatelessWidget {
+  const ActionSliderForCardDelete({
     super.key,
-    required this.ethCard,
+    required this.card,
     required this.balanceStore,
   });
 
-  final EthCardModel ethCard;
+  final AbstractCard card;
   final BalanceStore balanceStore;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
@@ -49,25 +49,33 @@ class ActionSliderForEthCardDelete extends StatelessWidget {
       ),
       action: (controller) async {
         controller.loading();
-        unawaited(balanceStore.getSelectedEthCard(ethCard.address));
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
-        await _secureStorage.deleteEthCard(card: ethCard);
+        if (card.blockchain == 'BTC') {
+          await balanceStore.getSelectedCard(card.address);
+          await balanceStore.removeSelectedCard();
+        } else if (card.blockchain == 'ETH') {
+          await balanceStore.getSelectedEthCard(card.address);
+          await balanceStore.removeSelectedEthCard();
+        }
+        await _secureStorage.deleteCard(card: card);
         await _historyPageStore.deleteAddressFromHistoryMap(
-          address: ethCard.address,
+          address: card.address,
         );
-        unawaited(deleteCount(ethCard.address));
+        unawaited(deleteCount(card.address));
         await router.maybePop();
-        await balanceStore.removeSelectedEthCard();
-        _historyPageStore.cardHistories[ethCard.address]?.clear();
-        _balanceStore.onCardDeleted(ethCard.address);
+        _historyPageStore.cardHistories[card.address]?.clear();
+        _balanceStore.onCardDeleted(
+          card.address,
+        );
         await _historyPageStore.setCardHistoryIndex(0);
+        final isCardActivated =
+            isCardWalletActivated(balanceStore: _balanceStore);
         await recordAmplitudeEventPartTwo(
           CardDeleted(
-            walletAddress: ethCard.address,
+            walletAddress: card.address,
             walletType: 'Card',
-            activated:
-                await isEthCardWalletActivated(balanceStore: _balanceStore),
+            activated: await isCardActivated,
           ),
         );
         await showCustomSnackBar(

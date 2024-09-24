@@ -340,6 +340,9 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
               bottom: TabBar(
                 controller: _tabController,
                 indicatorColor: AppColors.primaryButtonColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
+                tabAlignment: TabAlignment.fill,
                 tabs: const [
                   Tab(text: 'Coins List'),
                   Tab(text: 'Overview'),
@@ -348,10 +351,10 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                 labelStyle: const TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   color: AppColors.primary,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
-                unselectedLabelColor: Colors.grey,
+                unselectedLabelColor: const Color(0xFF838995),
                 splashFactory: NoSplash.splashFactory,
               ),
             ),

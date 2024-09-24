@@ -8,7 +8,7 @@ part of 'eth_card_model.dart';
 
 _$EthCardModelImpl _$$EthCardModelImplFromJson(Map json) => _$EthCardModelImpl(
       address: json['address'] as String,
-      finalBalance: (json['amount'] as num?)?.toInt(),
+      finalBalance: json['amount'] as num?,
       totalReceived: (json['rank'] as num?)?.toInt(),
       color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
           CardColor.ORANGE,

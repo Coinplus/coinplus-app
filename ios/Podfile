@@ -10,6 +10,9 @@ project 'Runner', {
   'Release' => :release,
 }
 
+# Add Firebase SDK version constant
+$FirebaseSDKVersion = '10.29.0'
+
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
   unless File.exist?(generated_xcode_build_settings_path)
@@ -30,7 +33,14 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+
+  # Specify the Firebase SDK version
+  pod 'Firebase/Core', $FirebaseSDKVersion
+  pod 'Firebase/Auth', $FirebaseSDKVersion
+  pod 'Firebase/Firestore' # You can also add version here, if needed: , $FirebaseSDKVersion
+
   pod 'Ramp', :git => 'https://github.com/RampNetwork/ramp-sdk-ios', :tag => '4.0.1'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths

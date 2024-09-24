@@ -582,6 +582,19 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
+  void changeEthCardNameAndSave(
+      {required String cardAddress, required String newName}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(
+        name: '_BalanceStore.changeEthCardNameAndSave');
+    try {
+      return super
+          .changeEthCardNameAndSave(cardAddress: cardAddress, newName: newName);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void changeBarNameAndSave(
       {required String barAddress, required String newName}) {
     final _$actionInfo = _$_BalanceStoreActionController.startAction(

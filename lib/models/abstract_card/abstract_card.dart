@@ -16,7 +16,7 @@ abstract class AbstractCard {
 
   String get createdAt;
 
-  int? get finalBalance;
+  num? get finalBalance;
 
   int? get totalReceived;
 }

@@ -30,7 +30,6 @@ RampService get _rampService => GetIt.I<RampService>();
 
 Future<void> sendReceiveButtonModal({
   required AbstractCard selectedCard,
-  required AbstractCard selectedEthCard,
   required bool isBarList,
   required Future<bool> isCardActivated,
   required Future<bool> isBarActivated,

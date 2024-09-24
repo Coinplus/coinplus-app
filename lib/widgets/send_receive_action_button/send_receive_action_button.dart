@@ -30,7 +30,6 @@ class SendReceiveActionButton extends StatelessWidget {
     required this.isModalOpened,
     required AllSettingsState nfcStore,
     required this.onOpenSendReceiveModal,
-    required this.currentEthCard,
     required AllSettingsState allSettingsState,
   })  : _walletProtectState = walletProtectState,
         _balanceStore = balanceStore,
@@ -42,7 +41,6 @@ class SendReceiveActionButton extends StatelessWidget {
   final ValueNotifier<bool> appLocked;
   final WalletProtectState _walletProtectState;
   final ObjectRef<CardRecord> currentCard;
-  final ObjectRef<CardRecord> currentEthCard;
   final BalanceStore _balanceStore;
   final PageController _pageController;
   final ValueNotifier<bool> isModalOpened;

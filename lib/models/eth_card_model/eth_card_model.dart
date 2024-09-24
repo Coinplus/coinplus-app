@@ -15,7 +15,7 @@ class EthCardModel with _$EthCardModel {
   @Implements<AbstractCard>()
   const factory EthCardModel({
     required String address,
-    @JsonKey(name: 'amount') int? finalBalance,
+    @JsonKey(name: 'amount') num? finalBalance,
     @JsonKey(name: 'rank') int? totalReceived,
     @Default(CardColor.ORANGE) CardColor color,
     @Default(CardType.CARD) CardType type,

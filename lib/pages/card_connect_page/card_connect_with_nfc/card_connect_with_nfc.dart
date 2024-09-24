@@ -222,7 +222,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                   front: CardFront(
                     receivedData: widget.receivedData!,
                     balanceStore: _balanceStore,
-                    cardColor: widget.cardColor!,
+                    cardColor: widget.cardColor,
                     addressState: _addressState,
                     marketPageStore: _marketPageStore,
                   ),
@@ -1263,7 +1263,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
             allSettingsState: _allSettingsState,
             receivedData: widget.receivedData!,
             balanceStore: _balanceStore,
-            cardColor: widget.cardColor!,
+            cardColor: widget.cardColor,
             isOriginalCard: widget.isOriginalCard!,
             shakeAnimationController: _shakeAnimationController,
             isOldCard: widget.isOldCard,
