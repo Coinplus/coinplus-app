@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/abstract_card/abstract_card.dart';
 import '../../../../models/amplitude_event/amplitude_event.dart';
-import '../../../../models/eth_card_model/eth_card_model.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../utils/data_utils.dart';
@@ -25,7 +25,7 @@ class CardEthAddressField extends HookWidget {
   });
 
   final int index;
-  final EthCardModel ethCard;
+  final AbstractCard ethCard;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 

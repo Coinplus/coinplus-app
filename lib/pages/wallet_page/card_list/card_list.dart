@@ -17,8 +17,6 @@ import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../models/card_model/card_model.dart';
-import '../../../models/eth_card_model/eth_card_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
@@ -260,7 +258,7 @@ class _CardListState extends State<CardList>
                                     : _balanceStore.ethCards[
                                         index - _balanceStore.cards.length];
                                 if (isCard) {
-                                  final card = example as CardModel;
+                                  final card = example as AbstractCard;
 
                                   return Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -472,7 +470,7 @@ class _CardListState extends State<CardList>
                                                                     ethCard: _balanceStore.ethCards[index -
                                                                         _balanceStore
                                                                             .cards
-                                                                            .length],
+                                                                            .length] as AbstractCard,
                                                                   ),
                                                                 const Gap(4),
                                                                 if (card.blockchain ==
@@ -486,7 +484,7 @@ class _CardListState extends State<CardList>
                                                                     ethCard: _balanceStore.ethCards[index -
                                                                         _balanceStore
                                                                             .cards
-                                                                            .length],
+                                                                            .length] as AbstractCard,
                                                                     index:
                                                                         index,
                                                                   ),
@@ -506,7 +504,7 @@ class _CardListState extends State<CardList>
                                     ],
                                   );
                                 } else {
-                                  final ethCard = example as EthCardModel;
+                                  final ethCard = example as AbstractCard;
                                   return Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -562,8 +560,8 @@ class _CardListState extends State<CardList>
                                                                 );
                                                                 await router
                                                                     .push(
-                                                                  EthCardSettingsRoute(
-                                                                    ethCard:
+                                                                  CardSettingsRoute(
+                                                                    card:
                                                                         ethCard,
                                                                   ),
                                                                 );

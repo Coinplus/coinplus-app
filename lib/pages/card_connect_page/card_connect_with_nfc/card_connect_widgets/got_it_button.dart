@@ -50,7 +50,7 @@ class GotItButton extends StatelessWidget {
   final AllSettingsState allSettingsState;
   final String receivedData;
   final BalanceStore balanceStore;
-  final String cardColor;
+  final String? cardColor;
   final bool isOriginalCard;
   final ShakeAnimationController shakeAnimationController;
   final bool? isMiFareUltralight;

@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../constants/button_settings.dart';
-import '../../../extensions/elevated_button_extensions.dart';
-import '../../../extensions/extensions.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../gen/colors.gen.dart';
-import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../models/card_model/card_model.dart';
-import '../../../providers/screen_service.dart';
-import '../../../services/amplitude_service.dart';
-import '../../../store/balance_store/balance_store.dart';
-import '../../../utils/wallet_activation_status.dart';
-import '../../../widgets/loading_button/loading_button.dart';
+import '../../constants/button_settings.dart';
+import '../../extensions/elevated_button_extensions.dart';
+import '../../extensions/extensions.dart';
+import '../../gen/assets.gen.dart';
+import '../../gen/colors.gen.dart';
+import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../utils/wallet_activation_status.dart';
+import '../../widgets/loading_button/loading_button.dart';
 import 'action_slider.dart';
 
 class RemoveCard extends StatefulWidget {
   const RemoveCard({super.key, required this.card});
 
-  final CardModel card;
+  final AbstractCard card;
 
   @override
   State<RemoveCard> createState() => _RemoveCardState();
@@ -78,15 +78,28 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           const Gap(15),
           LoadingButton(
             onPressed: () async {
-              final isCardActivated =
-                  isCardWalletActivated(balanceStore: _balanceStore);
-              await recordAmplitudeEventPartTwo(
-                NotSureClicked(
-                  walletAddress: widget.card.address,
-                  walletType: 'Card',
-                  activated: await isCardActivated,
-                ),
-              );
+              if(widget.card.blockchain == 'BTC') {
+                final isCardActivated =
+                isCardWalletActivated(balanceStore: _balanceStore);
+                await recordAmplitudeEventPartTwo(
+                  NotSureClicked(
+                    walletAddress: widget.card.address,
+                    walletType: 'Card',
+                    activated: await isCardActivated,
+                  ),
+                );
+              } else if(widget.card.blockchain == 'ETH') {
+                final isCardActivated =
+                isEthCardWalletActivated(balanceStore: _balanceStore);
+                await recordAmplitudeEventPartTwo(
+                  NotSureClicked(
+                    walletAddress: widget.card.address,
+                    walletType: 'EthCard',
+                    activated: await isCardActivated,
+                  ),
+                );
+              }
+
               await router.maybePop();
             },
             style: context.theme

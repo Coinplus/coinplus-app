@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/abstract_card/abstract_card.dart';
 import '../../../../models/amplitude_event/amplitude_event.dart';
-import '../../../../models/eth_card_model/eth_card_model.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';
@@ -26,7 +26,7 @@ class CardEthBalanceField extends HookWidget {
 
   final int index;
 
-  final EthCardModel ethCard;
+  final AbstractCard ethCard;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -136,7 +136,7 @@ class CardEthBalanceField extends HookWidget {
                                               );
                                             } else {
                                               return Text(
-                                                '\$${myFormat.format(ethCard.finalBalance! * _balanceStore.ethPrice!)}',
+                                                '\$${myFormat.format(ethCard.finalBalance)}',
                                                 style: const TextStyle(
                                                   fontFamily:
                                                       FontFamily.redHatMedium,

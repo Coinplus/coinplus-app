@@ -82,15 +82,12 @@ class DashboardPage extends HookWidget {
 
     final currentCard = useRef<CardRecord>(
       (
-        card: _balanceStore.cards.firstOrNull as AbstractCard?,
-        index: 0,
-      ),
-    );
-
-    final currentEthCard = useRef<CardRecord>(
-      (
-        card: _balanceStore.ethCards.firstOrNull as AbstractCard?,
-        index: 0,
+      card: _balanceStore.cards.isNotEmpty
+          ? _balanceStore.cards.firstOrNull as AbstractCard?
+          : _balanceStore.ethCards.isNotEmpty
+          ? _balanceStore.ethCards.firstOrNull as AbstractCard?
+          : null,
+      index: 0,
       ),
     );
 
@@ -300,18 +297,13 @@ class DashboardPage extends HookWidget {
     final onOpenSendReceiveModal = useCallback(
       () async {
         final selectedCard = currentCard.value.card;
-        final selectedEthCard = currentEthCard.value.card;
-
-        if (selectedCard == null && selectedEthCard == null) {
-          return;
-        }
 
         final isBarList = currentCard.value.index == 1;
 
         dynamic isCardActivated;
         dynamic isBarActivated;
 
-        if (selectedEthCard != null) {
+        if (selectedCard?.blockchain == 'ETH') {
           isCardActivated =
               isEthCardWalletActivated(balanceStore: _balanceStore);
           isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
@@ -324,7 +316,6 @@ class DashboardPage extends HookWidget {
 
         return sendReceiveButtonModal(
           selectedCard: selectedCard!,
-          selectedEthCard: selectedEthCard!,
           isBarList: isBarList,
           isCardActivated: isCardActivated,
           isBarActivated: isBarActivated,
@@ -340,7 +331,6 @@ class DashboardPage extends HookWidget {
       },
       [
         currentCard.value,
-        currentEthCard.value,
         isModalOpened,
       ],
     );
@@ -611,7 +601,6 @@ class DashboardPage extends HookWidget {
         appLocked: appLocked,
         walletProtectState: _walletProtectState,
         currentCard: currentCard,
-        currentEthCard: currentEthCard,
         balanceStore: _balanceStore,
         pageController: _pageController,
         isModalOpened: isModalOpened,

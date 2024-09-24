@@ -63,8 +63,7 @@ class TotalBalance extends StatelessWidget {
           Observer(
             builder: (context) {
               final data = _marketPageStore.singleCoin?.result.first;
-              final ethPrice = _balanceStore.ethPrice ?? 0;
-              final ethBalance = _balanceStore.allEthCardsBalances * ethPrice;
+              final ethBalance = _balanceStore.allEthCardsBalances;
               final myFormat = NumberFormat.decimalPatternDigits(
                 locale: 'en_us',
                 decimalDigits: 2,

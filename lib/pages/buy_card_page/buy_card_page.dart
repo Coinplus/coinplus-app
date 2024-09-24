@@ -1,6 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -41,24 +41,24 @@ class BuyCardPage extends StatelessWidget {
           if (snapshot.data != null) {
             return Stack(
               children: [
-                // InAppWebView(
-                //   initialSettings: InAppWebViewSettings(
-                //     underPageBackgroundColor: Colors.white,
-                //     transparentBackground: true,
-                //   ),
-                //   initialUrlRequest: URLRequest(
-                //     httpShouldHandleCookies: false,
-                //     url: WebUri(
-                //       snapshot.data!.link.toString(),
-                //     ),
-                //   ),
-                //   onLoadStart: (_, __) {
-                //     _balanceStore.webViewStartLoading();
-                //   },
-                //   onLoadStop: (_, __) {
-                //     _balanceStore.webViewStopLoading();
-                //   },
-                // ),
+                InAppWebView(
+                  initialSettings: InAppWebViewSettings(
+                    underPageBackgroundColor: Colors.white,
+                    transparentBackground: true,
+                  ),
+                  initialUrlRequest: URLRequest(
+                    httpShouldHandleCookies: false,
+                    url: WebUri(
+                      snapshot.data!.link.toString(),
+                    ),
+                  ),
+                  onLoadStart: (_, __) {
+                    _balanceStore.webViewStartLoading();
+                  },
+                  onLoadStop: (_, __) {
+                    _balanceStore.webViewStopLoading();
+                  },
+                ),
                 Observer(
                   builder: (_) {
                     return _balanceStore.inAppWebViewLoading

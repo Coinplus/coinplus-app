@@ -110,6 +110,9 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
           : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
+      final ethCard = _tabController.index == 0
+          ? _balanceStore.ethCards.elementAtOrNull(cardCarouselIndex)
+          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
@@ -144,6 +147,12 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         (
           card: card as AbstractCard?,
           index: _tabController.index,
+        ),
+      );
+      widget.onChangeCard(
+        (
+        card: ethCard as AbstractCard?,
+        index: _tabController.index,
         ),
       );
       amplitudeEvent();

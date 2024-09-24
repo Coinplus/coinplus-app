@@ -14,7 +14,7 @@ class CardModel with _$CardModel {
   @Implements<AbstractCard>()
   const factory CardModel({
     required String address,
-    @JsonKey(name: 'final_balance') int? finalBalance,
+    @JsonKey(name: 'final_balance') num? finalBalance,
     @JsonKey(name: 'total_received') int? totalReceived,
     @Default(CardColor.ORANGE) CardColor color,
     @Default(CardType.CARD) CardType type,

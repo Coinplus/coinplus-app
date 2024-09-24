@@ -4,23 +4,23 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../gen/colors.gen.dart';
-import '../../../../gen/fonts.gen.dart';
-import '../../../extensions/widget_extension.dart';
-import '../../../gen/assets.gen.dart';
-import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../models/card_model/card_model.dart';
-import '../../../providers/screen_service.dart';
-import '../../../services/amplitude_service.dart';
-import '../../../store/all_settings_state/all_settings_state.dart';
-import '../../../store/balance_store/balance_store.dart';
-import '../../../widgets/custom_snack_bar/snack_bar_method.dart';
-import '../../../widgets/loading_button/loading_button.dart';
+import '../../../gen/colors.gen.dart';
+import '../../../gen/fonts.gen.dart';
+import '../../extensions/widget_extension.dart';
+import '../../gen/assets.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
+import '../../store/balance_store/balance_store.dart';
+import '../../widgets/custom_snack_bar/snack_bar_method.dart';
+import '../../widgets/loading_button/loading_button.dart';
 
 class CardNameChangeModal extends StatefulWidget {
   const CardNameChangeModal({super.key, required this.card});
 
-  final CardModel card;
+  final AbstractCard card;
 
   @override
   State<CardNameChangeModal> createState() => _CardNameChangeModalState();
@@ -158,10 +158,17 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                   return LoadingButton(
                     onPressed: _nameState.isButtonEnabled
                         ? () async {
-                            _balanceStore.changeCardNameAndSave(
-                              cardAddress: widget.card.address,
-                              newName: _nameState.nameController.text,
-                            );
+                            if (widget.card.blockchain == 'BTC') {
+                              _balanceStore.changeCardNameAndSave(
+                                cardAddress: widget.card.address,
+                                newName: _nameState.nameController.text,
+                              );
+                            } else if (widget.card.blockchain == 'ETH') {
+                              _balanceStore.changeEthCardNameAndSave(
+                                cardAddress: widget.card.address,
+                                newName: _nameState.nameController.text,
+                              );
+                            }
                             await router.maybePop();
                             await Future.delayed(
                               const Duration(milliseconds: 100),

@@ -31,7 +31,7 @@ class CardFront extends StatelessWidget {
 
   final String receivedData;
   final BalanceStore balanceStore;
-  final String cardColor;
+  final String? cardColor;
   final AddressState addressState;
   final MarketPageStore marketPageStore;
 
@@ -362,7 +362,7 @@ class CardFront extends StatelessWidget {
                                         return Row(
                                           children: [
                                             Text(
-                                              '\$${myFormat.format(cardBalance * data.price)}',
+                                              '\$${myFormat.format(cardBalance)}',
                                               style: const TextStyle(
                                                 fontFamily:
                                                     FontFamily.redHatMedium,

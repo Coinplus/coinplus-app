@@ -73,13 +73,6 @@ class Router extends $Router {
       fullscreenDialog: true,
     ),
     AdaptiveRoute(
-      page: PinCodeForEthPrivateKey.page,
-      fullscreenDialog: true,
-    ),
-    AdaptiveRoute(
-      page: EthCardSettingsRoute.page,
-    ),
-    AdaptiveRoute(
       page: PinCodeForAllRoutes.page,
       fullscreenDialog: true,
     ),

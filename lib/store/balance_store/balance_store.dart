@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -197,7 +196,9 @@ abstract class _BalanceStore with Store {
         );
       }
     } catch (e) {
-      log(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     } finally {
       balanceLoading = false;
     }
@@ -233,7 +234,9 @@ abstract class _BalanceStore with Store {
         );
       }
     } catch (e) {
-      log(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     } finally {
       balanceLoading = false;
     }
@@ -278,14 +281,20 @@ abstract class _BalanceStore with Store {
           continue;
         }
 
-        final firstResult = res[0] as Map<String, dynamic>;
+        num totalBalance = 0;
 
-        final resJson = {
+        for (final Map<String, dynamic> data in res) {
+          final num amount = data['amount'];
+          final num price = data['price'];
+          totalBalance += amount * price;
+        }
+
+        final cardJson = {
           'address': address,
-          'amount': firstResult['amount'],
+          'amount': totalBalance,
         };
 
-        final updatedCard = EthCardModel.fromJson(resJson);
+        final updatedCard = EthCardModel.fromJson(cardJson);
 
         _ethCards[i] = card.copyWith(
           finalBalance: updatedCard.finalBalance,
@@ -293,7 +302,9 @@ abstract class _BalanceStore with Store {
         );
       }
     } catch (e) {
-      log(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     } finally {
       balanceLoading = false;
     }
@@ -338,17 +349,24 @@ abstract class _BalanceStore with Store {
         );
         return;
       }
+      num totalBalance = 0;
 
-      final Map<String, dynamic> res = ethData.first;
+      for (final Map<String, dynamic> data in ethData) {
+        final num amount = data['amount'];
+        final num price = data['price'];
+        totalBalance += amount * price;
+      }
 
       final cardJson = {
         'address': address,
-        'amount': res['amount'] ?? 0,
+        'amount': totalBalance,
       };
 
       _selectedEthCard = EthCardModel.fromJson(cardJson);
     } catch (e) {
-      log('Error fetching Ethereum card data: $e');
+      if (kDebugMode) {
+        print('Error fetching Ethereum card data: $e');
+      }
     } finally {
       loadings[address] = false;
     }
@@ -618,6 +636,24 @@ abstract class _BalanceStore with Store {
       _cards[cardIndex] = updatedCard;
 
       StorageUtils.replaceCard(cardAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
+  void changeEthCardNameAndSave({
+    required String cardAddress,
+    required String newName,
+  }) {
+    final cardIndex =
+        _ethCards.indexWhere((element) => element.address == cardAddress);
+
+    if (cardIndex != -1) {
+      final updatedCard = _ethCards[cardIndex].copyWith(name: newName);
+      _ethCards[cardIndex] = updatedCard;
+
+      StorageUtils.replaceEthCard(cardAddress, updatedCard);
     } else {
       throw Exception('Card not found');
     }
