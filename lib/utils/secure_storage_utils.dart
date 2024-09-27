@@ -3,8 +3,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/abstract_card/abstract_card.dart';
+import '../models/amplitude_event/amplitude_event.dart';
 import '../models/bar_model/bar_model.dart';
 import '../pages/send_page/send_to/send_to_state.dart';
+import '../services/amplitude_service.dart';
 import '../store/balance_store/balance_store.dart';
 
 class SecureStorageService {
@@ -145,6 +147,7 @@ class SecureStorageService {
     final prefs = await SharedPreferences.getInstance();
     final packageInfo = await PackageInfo.fromPlatform();
     if (prefs.getBool('first_run') ?? true) {
+      await recordAmplitudeEvent(const OnboardingStarted());
       await prefs.setBool('show_modal', true);
       await prefs.setString('package_info', packageInfo.version.toString());
       await clearSecureStorage();

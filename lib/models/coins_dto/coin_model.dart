@@ -17,6 +17,19 @@ class CoinModel with _$CoinModel {
 }
 
 @freezed
+class UniqueCoinModel with _$UniqueCoinModel {
+  const factory UniqueCoinModel({
+    required CoinResultModel result,
+  }) = _UniqueCoinModel;
+
+  factory UniqueCoinModel.fromJson(Map<String, dynamic> json) {
+    return UniqueCoinModel(
+      result: CoinResultModel.fromJson(json),
+    );
+  }
+}
+
+@freezed
 class CoinResultModel with _$CoinResultModel {
   const factory CoinResultModel({
     required String id,

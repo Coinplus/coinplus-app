@@ -660,3 +660,27 @@ Map<String, dynamic> _$$Secret2ValidatedImplToJson(
       'walletType': instance.walletType,
       'runtimeType': instance.$type,
     };
+
+_$OnboardingStartedImpl _$$OnboardingStartedImplFromJson(Map json) =>
+    _$OnboardingStartedImpl(
+      eventType: json['eventType'] as String? ?? 'ONBOARDING_STARTED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$OnboardingStartedImplToJson(
+        _$OnboardingStartedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };
+
+_$WalletOpenedImpl _$$WalletOpenedImplFromJson(Map json) => _$WalletOpenedImpl(
+      eventType: json['eventType'] as String? ?? 'WALLET_OPENED',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$WalletOpenedImplToJson(_$WalletOpenedImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'runtimeType': instance.$type,
+    };

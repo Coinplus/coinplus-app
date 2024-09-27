@@ -213,6 +213,161 @@ abstract class _CoinModel implements CoinModel {
       throw _privateConstructorUsedError;
 }
 
+/// @nodoc
+mixin _$UniqueCoinModel {
+  CoinResultModel get result => throw _privateConstructorUsedError;
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UniqueCoinModelCopyWith<UniqueCoinModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UniqueCoinModelCopyWith<$Res> {
+  factory $UniqueCoinModelCopyWith(
+          UniqueCoinModel value, $Res Function(UniqueCoinModel) then) =
+      _$UniqueCoinModelCopyWithImpl<$Res, UniqueCoinModel>;
+  @useResult
+  $Res call({CoinResultModel result});
+
+  $CoinResultModelCopyWith<$Res> get result;
+}
+
+/// @nodoc
+class _$UniqueCoinModelCopyWithImpl<$Res, $Val extends UniqueCoinModel>
+    implements $UniqueCoinModelCopyWith<$Res> {
+  _$UniqueCoinModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+  }) {
+    return _then(_value.copyWith(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as CoinResultModel,
+    ) as $Val);
+  }
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CoinResultModelCopyWith<$Res> get result {
+    return $CoinResultModelCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UniqueCoinModelImplCopyWith<$Res>
+    implements $UniqueCoinModelCopyWith<$Res> {
+  factory _$$UniqueCoinModelImplCopyWith(_$UniqueCoinModelImpl value,
+          $Res Function(_$UniqueCoinModelImpl) then) =
+      __$$UniqueCoinModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({CoinResultModel result});
+
+  @override
+  $CoinResultModelCopyWith<$Res> get result;
+}
+
+/// @nodoc
+class __$$UniqueCoinModelImplCopyWithImpl<$Res>
+    extends _$UniqueCoinModelCopyWithImpl<$Res, _$UniqueCoinModelImpl>
+    implements _$$UniqueCoinModelImplCopyWith<$Res> {
+  __$$UniqueCoinModelImplCopyWithImpl(
+      _$UniqueCoinModelImpl _value, $Res Function(_$UniqueCoinModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+  }) {
+    return _then(_$UniqueCoinModelImpl(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as CoinResultModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UniqueCoinModelImpl
+    with DiagnosticableTreeMixin
+    implements _UniqueCoinModel {
+  const _$UniqueCoinModelImpl({required this.result});
+
+  @override
+  final CoinResultModel result;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UniqueCoinModel(result: $result)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UniqueCoinModel'))
+      ..add(DiagnosticsProperty('result', result));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UniqueCoinModelImpl &&
+            (identical(other.result, result) || other.result == result));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, result);
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UniqueCoinModelImplCopyWith<_$UniqueCoinModelImpl> get copyWith =>
+      __$$UniqueCoinModelImplCopyWithImpl<_$UniqueCoinModelImpl>(
+          this, _$identity);
+}
+
+abstract class _UniqueCoinModel implements UniqueCoinModel {
+  const factory _UniqueCoinModel({required final CoinResultModel result}) =
+      _$UniqueCoinModelImpl;
+
+  @override
+  CoinResultModel get result;
+
+  /// Create a copy of UniqueCoinModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UniqueCoinModelImplCopyWith<_$UniqueCoinModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 CoinResultModel _$CoinResultModelFromJson(Map<String, dynamic> json) {
   return _CoinResultModel.fromJson(json);
 }

@@ -10,6 +10,7 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../services/amplitude_service.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import 'coins_data/coins_list_widget.dart';
+import 'market_data/favorite_coins_list.dart';
 import 'market_data/market_data.dart';
 import 'market_data/overview_widget.dart';
 
@@ -67,6 +68,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
     _tabController = TabController(length: 3, vsync: this);
     _secondScrollController.addListener(_handleSecondScroll);
     _marketPageStore
+      ..loadFavoriteCoins()
       ..isSearchVisible = false
       ..isTextFieldVisible = false
       ..getMarketCap()
@@ -75,6 +77,11 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
       _marketPageStore.toggleShouldShowUpButton(
         shouldShowUpButton: _secondScrollController.offset > _showOffset,
       );
+    });
+    _tabController.addListener(() {
+      if (_tabController.index != 0) {
+        _marketPageStore.toggleShouldShowUpButton();
+      }
     });
     _marketPageStore.initAnimationController(this);
     _animation = Tween<double>(begin: -1, end: 0).animate(
@@ -370,7 +377,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                     secondScrollController: _secondScrollController,
                   ),
                   const OverviewWidget(),
-                  const Center(child: Text('Add Favorite Coins')),
+                  const FavoriteCoinsList(),
                 ],
               ),
             ),

@@ -9,10 +9,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/card_record.dart';
 import '../../extensions/extensions.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
@@ -75,9 +77,20 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   );
   bool isCardScrolledUp = false;
 
+  Future<void> _checkFirstTimeOpen() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstTime = prefs.getBool('walletOpenedFirstTime') ?? true;
+
+    if (isFirstTime) {
+      await recordAmplitudeEvent(const WalletOpened());
+      await prefs.setBool('walletOpenedFirstTime', false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _checkFirstTimeOpen();
     setWalletShown();
     controller.addListener(() async {
       if (widget.onOpenSendReceiveModal == null) {
@@ -109,9 +122,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     _tabController.addListener(() {
       final card = _tabController.index == 0
           ? _balanceStore.cards.elementAtOrNull(cardCarouselIndex)
-          : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
-      final ethCard = _tabController.index == 0
-          ? _balanceStore.ethCards.elementAtOrNull(cardCarouselIndex)
           : _balanceStore.bars.elementAtOrNull(barCarouselIndex);
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
@@ -147,12 +157,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         (
           card: card as AbstractCard?,
           index: _tabController.index,
-        ),
-      );
-      widget.onChangeCard(
-        (
-        card: ethCard as AbstractCard?,
-        index: _tabController.index,
         ),
       );
       amplitudeEvent();

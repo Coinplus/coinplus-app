@@ -98,6 +98,10 @@ AmplitudeEvent _$AmplitudeEventFromJson(Map<String, dynamic> json) {
       return Secret1Validated.fromJson(json);
     case 'secret2Validated':
       return Secret2Validated.fromJson(json);
+    case 'onboardingStarted':
+      return OnboardingStarted.fromJson(json);
+    case 'walletOpened':
+      return WalletOpened.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'AmplitudeEvent',
@@ -202,6 +206,8 @@ mixin _$AmplitudeEvent {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -288,6 +294,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -370,6 +378,8 @@ mixin _$AmplitudeEvent {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -423,6 +433,8 @@ mixin _$AmplitudeEvent {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -469,6 +481,8 @@ mixin _$AmplitudeEvent {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -515,6 +529,8 @@ mixin _$AmplitudeEvent {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -749,6 +765,8 @@ class _$ConnectWalletClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return connectWalletClicked(eventType);
   }
@@ -838,6 +856,8 @@ class _$ConnectWalletClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return connectWalletClicked?.call(eventType);
   }
@@ -923,6 +943,8 @@ class _$ConnectWalletClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectWalletClicked != null) {
@@ -982,6 +1004,8 @@ class _$ConnectWalletClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return connectWalletClicked(this);
   }
@@ -1031,6 +1055,8 @@ class _$ConnectWalletClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return connectWalletClicked?.call(this);
   }
@@ -1080,6 +1106,8 @@ class _$ConnectWalletClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectWalletClicked != null) {
@@ -1312,6 +1340,8 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return connectManuallyClicked(eventType, source);
   }
@@ -1401,6 +1431,8 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return connectManuallyClicked?.call(eventType, source);
   }
@@ -1486,6 +1518,8 @@ class _$ConnectManuallyClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectManuallyClicked != null) {
@@ -1545,6 +1579,8 @@ class _$ConnectManuallyClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return connectManuallyClicked(this);
   }
@@ -1594,6 +1630,8 @@ class _$ConnectManuallyClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return connectManuallyClicked?.call(this);
   }
@@ -1643,6 +1681,8 @@ class _$ConnectManuallyClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectManuallyClicked != null) {
@@ -1875,6 +1915,8 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return connectWithQrClicked(eventType, source);
   }
@@ -1964,6 +2006,8 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return connectWithQrClicked?.call(eventType, source);
   }
@@ -2049,6 +2093,8 @@ class _$ConnectWitchQrClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectWithQrClicked != null) {
@@ -2108,6 +2154,8 @@ class _$ConnectWitchQrClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return connectWithQrClicked(this);
   }
@@ -2157,6 +2205,8 @@ class _$ConnectWitchQrClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return connectWithQrClicked?.call(this);
   }
@@ -2206,6 +2256,8 @@ class _$ConnectWitchQrClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectWithQrClicked != null) {
@@ -2448,6 +2500,8 @@ class _$QrButtonClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return qrButtonClicked(eventType, walletType, source);
   }
@@ -2537,6 +2591,8 @@ class _$QrButtonClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return qrButtonClicked?.call(eventType, walletType, source);
   }
@@ -2622,6 +2678,8 @@ class _$QrButtonClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (qrButtonClicked != null) {
@@ -2681,6 +2739,8 @@ class _$QrButtonClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return qrButtonClicked(this);
   }
@@ -2730,6 +2790,8 @@ class _$QrButtonClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return qrButtonClicked?.call(this);
   }
@@ -2779,6 +2841,8 @@ class _$QrButtonClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (qrButtonClicked != null) {
@@ -3021,6 +3085,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return qrScanned(eventType, source, walletAddress);
   }
@@ -3110,6 +3176,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return qrScanned?.call(eventType, source, walletAddress);
   }
@@ -3195,6 +3263,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (qrScanned != null) {
@@ -3254,6 +3324,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return qrScanned(this);
   }
@@ -3303,6 +3375,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return qrScanned?.call(this);
   }
@@ -3352,6 +3426,8 @@ class _$QrScannedImpl with DiagnosticableTreeMixin implements QrScanned {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (qrScanned != null) {
@@ -3585,6 +3661,8 @@ class _$BuyNewCardClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return buyNewCardClicked(eventType, source);
   }
@@ -3674,6 +3752,8 @@ class _$BuyNewCardClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return buyNewCardClicked?.call(eventType, source);
   }
@@ -3759,6 +3839,8 @@ class _$BuyNewCardClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (buyNewCardClicked != null) {
@@ -3818,6 +3900,8 @@ class _$BuyNewCardClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return buyNewCardClicked(this);
   }
@@ -3867,6 +3951,8 @@ class _$BuyNewCardClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return buyNewCardClicked?.call(this);
   }
@@ -3916,6 +4002,8 @@ class _$BuyNewCardClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (buyNewCardClicked != null) {
@@ -4160,6 +4248,8 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return connectOptionSelected(eventType, source, connectOption);
   }
@@ -4249,6 +4339,8 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return connectOptionSelected?.call(eventType, source, connectOption);
   }
@@ -4334,6 +4426,8 @@ class _$ConnectOptionSelectedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectOptionSelected != null) {
@@ -4393,6 +4487,8 @@ class _$ConnectOptionSelectedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return connectOptionSelected(this);
   }
@@ -4442,6 +4538,8 @@ class _$ConnectOptionSelectedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return connectOptionSelected?.call(this);
   }
@@ -4491,6 +4589,8 @@ class _$ConnectOptionSelectedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (connectOptionSelected != null) {
@@ -4733,6 +4833,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return nfcTapped(eventType, source, walletAddress);
   }
@@ -4822,6 +4924,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return nfcTapped?.call(eventType, source, walletAddress);
   }
@@ -4907,6 +5011,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (nfcTapped != null) {
@@ -4966,6 +5072,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return nfcTapped(this);
   }
@@ -5015,6 +5123,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return nfcTapped?.call(this);
   }
@@ -5064,6 +5174,8 @@ class _$NfcTappedImpl with DiagnosticableTreeMixin implements NfcTapped {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (nfcTapped != null) {
@@ -5294,6 +5406,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return nfcClosed(eventType, source);
   }
@@ -5383,6 +5497,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return nfcClosed?.call(eventType, source);
   }
@@ -5468,6 +5584,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (nfcClosed != null) {
@@ -5527,6 +5645,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return nfcClosed(this);
   }
@@ -5576,6 +5696,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return nfcClosed?.call(this);
   }
@@ -5625,6 +5747,8 @@ class _$NfcClosedImpl with DiagnosticableTreeMixin implements NfcClosed {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (nfcClosed != null) {
@@ -5881,6 +6005,8 @@ class _$AddressFilledImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return addressFilled(eventType, source, walletType, walletAddress);
   }
@@ -5970,6 +6096,8 @@ class _$AddressFilledImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return addressFilled?.call(eventType, source, walletType, walletAddress);
   }
@@ -6055,6 +6183,8 @@ class _$AddressFilledImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (addressFilled != null) {
@@ -6114,6 +6244,8 @@ class _$AddressFilledImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return addressFilled(this);
   }
@@ -6163,6 +6295,8 @@ class _$AddressFilledImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return addressFilled?.call(this);
   }
@@ -6212,6 +6346,8 @@ class _$AddressFilledImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (addressFilled != null) {
@@ -6474,6 +6610,8 @@ class _$DeeplinkClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return deepLinkClicked(eventType, source, walletType, walletAddress);
   }
@@ -6563,6 +6701,8 @@ class _$DeeplinkClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return deepLinkClicked?.call(eventType, source, walletType, walletAddress);
   }
@@ -6648,6 +6788,8 @@ class _$DeeplinkClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (deepLinkClicked != null) {
@@ -6707,6 +6849,8 @@ class _$DeeplinkClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return deepLinkClicked(this);
   }
@@ -6756,6 +6900,8 @@ class _$DeeplinkClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return deepLinkClicked?.call(this);
   }
@@ -6805,6 +6951,8 @@ class _$DeeplinkClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (deepLinkClicked != null) {
@@ -7048,6 +7196,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return typeSelected(eventType, source, walletType);
   }
@@ -7137,6 +7287,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return typeSelected?.call(eventType, source, walletType);
   }
@@ -7222,6 +7374,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (typeSelected != null) {
@@ -7281,6 +7435,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return typeSelected(this);
   }
@@ -7330,6 +7486,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return typeSelected?.call(this);
   }
@@ -7379,6 +7537,8 @@ class _$TypeSelectedImpl with DiagnosticableTreeMixin implements TypeSelected {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (typeSelected != null) {
@@ -7639,6 +7799,8 @@ class _$SaveToWalletClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return saveToWalletClicked(eventType, source, walletType, walletAddress);
   }
@@ -7728,6 +7890,8 @@ class _$SaveToWalletClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return saveToWalletClicked?.call(
         eventType, source, walletType, walletAddress);
@@ -7814,6 +7978,8 @@ class _$SaveToWalletClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (saveToWalletClicked != null) {
@@ -7873,6 +8039,8 @@ class _$SaveToWalletClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return saveToWalletClicked(this);
   }
@@ -7922,6 +8090,8 @@ class _$SaveToWalletClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return saveToWalletClicked?.call(this);
   }
@@ -7971,6 +8141,8 @@ class _$SaveToWalletClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (saveToWalletClicked != null) {
@@ -8222,6 +8394,8 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return alreadySavedGotItClicked(eventType, walletType, walletAddress);
   }
@@ -8311,6 +8485,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return alreadySavedGotItClicked?.call(eventType, walletType, walletAddress);
   }
@@ -8396,6 +8572,8 @@ class _$AlreadySavedGotItClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (alreadySavedGotItClicked != null) {
@@ -8455,6 +8633,8 @@ class _$AlreadySavedGotItClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return alreadySavedGotItClicked(this);
   }
@@ -8504,6 +8684,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return alreadySavedGotItClicked?.call(this);
   }
@@ -8553,6 +8735,8 @@ class _$AlreadySavedGotItClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (alreadySavedGotItClicked != null) {
@@ -8816,6 +9000,8 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return activatedCheckboxClicked(
         eventType, source, walletType, walletAddress);
@@ -8906,6 +9092,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return activatedCheckboxClicked?.call(
         eventType, source, walletType, walletAddress);
@@ -8992,6 +9180,8 @@ class _$ActivatedCheckboxClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (activatedCheckboxClicked != null) {
@@ -9052,6 +9242,8 @@ class _$ActivatedCheckboxClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return activatedCheckboxClicked(this);
   }
@@ -9101,6 +9293,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return activatedCheckboxClicked?.call(this);
   }
@@ -9150,6 +9344,8 @@ class _$ActivatedCheckboxClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (activatedCheckboxClicked != null) {
@@ -9409,6 +9605,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return gotItClicked(eventType, source, walletType, walletAddress);
   }
@@ -9498,6 +9696,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return gotItClicked?.call(eventType, source, walletType, walletAddress);
   }
@@ -9583,6 +9783,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (gotItClicked != null) {
@@ -9642,6 +9844,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return gotItClicked(this);
   }
@@ -9691,6 +9895,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return gotItClicked?.call(this);
   }
@@ -9740,6 +9946,8 @@ class _$GotItClickedImpl with DiagnosticableTreeMixin implements GotItClicked {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (gotItClicked != null) {
@@ -9999,6 +10207,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return fakeWallet(eventType, source, walletType, walletAddress);
   }
@@ -10088,6 +10298,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return fakeWallet?.call(eventType, source, walletType, walletAddress);
   }
@@ -10173,6 +10385,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (fakeWallet != null) {
@@ -10232,6 +10446,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return fakeWallet(this);
   }
@@ -10281,6 +10497,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return fakeWallet?.call(this);
   }
@@ -10330,6 +10548,8 @@ class _$FakeWalletImpl with DiagnosticableTreeMixin implements FakeWallet {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (fakeWallet != null) {
@@ -10557,6 +10777,8 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return warningCheckboxClicked(eventType);
   }
@@ -10646,6 +10868,8 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return warningCheckboxClicked?.call(eventType);
   }
@@ -10731,6 +10955,8 @@ class _$WarningCheckboxClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (warningCheckboxClicked != null) {
@@ -10790,6 +11016,8 @@ class _$WarningCheckboxClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return warningCheckboxClicked(this);
   }
@@ -10839,6 +11067,8 @@ class _$WarningCheckboxClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return warningCheckboxClicked?.call(this);
   }
@@ -10888,6 +11118,8 @@ class _$WarningCheckboxClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (warningCheckboxClicked != null) {
@@ -11106,6 +11338,8 @@ class _$AppLockEnabledImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return appLockEnabled(eventType);
   }
@@ -11195,6 +11429,8 @@ class _$AppLockEnabledImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return appLockEnabled?.call(eventType);
   }
@@ -11280,6 +11516,8 @@ class _$AppLockEnabledImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (appLockEnabled != null) {
@@ -11339,6 +11577,8 @@ class _$AppLockEnabledImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return appLockEnabled(this);
   }
@@ -11388,6 +11628,8 @@ class _$AppLockEnabledImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return appLockEnabled?.call(this);
   }
@@ -11437,6 +11679,8 @@ class _$AppLockEnabledImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (appLockEnabled != null) {
@@ -11654,6 +11898,8 @@ class _$NotNowLockClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return notNowLockClicked(eventType);
   }
@@ -11743,6 +11989,8 @@ class _$NotNowLockClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return notNowLockClicked?.call(eventType);
   }
@@ -11828,6 +12076,8 @@ class _$NotNowLockClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (notNowLockClicked != null) {
@@ -11887,6 +12137,8 @@ class _$NotNowLockClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return notNowLockClicked(this);
   }
@@ -11936,6 +12188,8 @@ class _$NotNowLockClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return notNowLockClicked?.call(this);
   }
@@ -11985,6 +12239,8 @@ class _$NotNowLockClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (notNowLockClicked != null) {
@@ -12203,6 +12459,8 @@ class _$WalletTabClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return walletTabClicked(eventType);
   }
@@ -12292,6 +12550,8 @@ class _$WalletTabClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return walletTabClicked?.call(eventType);
   }
@@ -12377,6 +12637,8 @@ class _$WalletTabClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (walletTabClicked != null) {
@@ -12436,6 +12698,8 @@ class _$WalletTabClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return walletTabClicked(this);
   }
@@ -12485,6 +12749,8 @@ class _$WalletTabClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return walletTabClicked?.call(this);
   }
@@ -12534,6 +12800,8 @@ class _$WalletTabClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (walletTabClicked != null) {
@@ -12752,6 +13020,8 @@ class _$MarketTabClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return marketTabClicked(eventType);
   }
@@ -12841,6 +13111,8 @@ class _$MarketTabClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return marketTabClicked?.call(eventType);
   }
@@ -12926,6 +13198,8 @@ class _$MarketTabClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (marketTabClicked != null) {
@@ -12985,6 +13259,8 @@ class _$MarketTabClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return marketTabClicked(this);
   }
@@ -13034,6 +13310,8 @@ class _$MarketTabClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return marketTabClicked?.call(this);
   }
@@ -13083,6 +13361,8 @@ class _$MarketTabClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (marketTabClicked != null) {
@@ -13301,6 +13581,8 @@ class _$HistoryTabClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return historyTabClicked(eventType);
   }
@@ -13390,6 +13672,8 @@ class _$HistoryTabClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return historyTabClicked?.call(eventType);
   }
@@ -13475,6 +13759,8 @@ class _$HistoryTabClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (historyTabClicked != null) {
@@ -13534,6 +13820,8 @@ class _$HistoryTabClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return historyTabClicked(this);
   }
@@ -13583,6 +13871,8 @@ class _$HistoryTabClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return historyTabClicked?.call(this);
   }
@@ -13632,6 +13922,8 @@ class _$HistoryTabClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (historyTabClicked != null) {
@@ -13850,6 +14142,8 @@ class _$SettingsTabClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return settingsTabClicked(eventType);
   }
@@ -13939,6 +14233,8 @@ class _$SettingsTabClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return settingsTabClicked?.call(eventType);
   }
@@ -14024,6 +14320,8 @@ class _$SettingsTabClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (settingsTabClicked != null) {
@@ -14083,6 +14381,8 @@ class _$SettingsTabClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return settingsTabClicked(this);
   }
@@ -14132,6 +14432,8 @@ class _$SettingsTabClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return settingsTabClicked?.call(this);
   }
@@ -14181,6 +14483,8 @@ class _$SettingsTabClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (settingsTabClicked != null) {
@@ -14441,6 +14745,8 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return transactionsButtonClicked(
         eventType, walletType, walletAddress, activated);
@@ -14531,6 +14837,8 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return transactionsButtonClicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -14617,6 +14925,8 @@ class _$TransactionsButtonClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (transactionsButtonClicked != null) {
@@ -14677,6 +14987,8 @@ class _$TransactionsButtonClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return transactionsButtonClicked(this);
   }
@@ -14726,6 +15038,8 @@ class _$TransactionsButtonClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return transactionsButtonClicked?.call(this);
   }
@@ -14775,6 +15089,8 @@ class _$TransactionsButtonClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (transactionsButtonClicked != null) {
@@ -15009,6 +15325,8 @@ class _$AddNewClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return addNewClicked(eventType, tab);
   }
@@ -15098,6 +15416,8 @@ class _$AddNewClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return addNewClicked?.call(eventType, tab);
   }
@@ -15183,6 +15503,8 @@ class _$AddNewClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (addNewClicked != null) {
@@ -15242,6 +15564,8 @@ class _$AddNewClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return addNewClicked(this);
   }
@@ -15291,6 +15615,8 @@ class _$AddNewClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return addNewClicked?.call(this);
   }
@@ -15340,6 +15666,8 @@ class _$AddNewClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (addNewClicked != null) {
@@ -15571,6 +15899,8 @@ class _$AddNewPlusClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return addNewPlusClicked(eventType, source);
   }
@@ -15660,6 +15990,8 @@ class _$AddNewPlusClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return addNewPlusClicked?.call(eventType, source);
   }
@@ -15745,6 +16077,8 @@ class _$AddNewPlusClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (addNewPlusClicked != null) {
@@ -15804,6 +16138,8 @@ class _$AddNewPlusClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return addNewPlusClicked(this);
   }
@@ -15853,6 +16189,8 @@ class _$AddNewPlusClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return addNewPlusClicked?.call(this);
   }
@@ -15902,6 +16240,8 @@ class _$AddNewPlusClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (addNewPlusClicked != null) {
@@ -16147,6 +16487,8 @@ class _$WalletSettingsClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return walletSettingsClicked(eventType, walletAddress, walletType);
   }
@@ -16236,6 +16578,8 @@ class _$WalletSettingsClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return walletSettingsClicked?.call(eventType, walletAddress, walletType);
   }
@@ -16321,6 +16665,8 @@ class _$WalletSettingsClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (walletSettingsClicked != null) {
@@ -16380,6 +16726,8 @@ class _$WalletSettingsClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return walletSettingsClicked(this);
   }
@@ -16429,6 +16777,8 @@ class _$WalletSettingsClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return walletSettingsClicked?.call(this);
   }
@@ -16478,6 +16828,8 @@ class _$WalletSettingsClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (walletSettingsClicked != null) {
@@ -16739,6 +17091,8 @@ class _$TopUpButtonClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return topUpButtonCLicked(eventType, walletType, walletAddress, activated);
   }
@@ -16828,6 +17182,8 @@ class _$TopUpButtonClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return topUpButtonCLicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -16914,6 +17270,8 @@ class _$TopUpButtonClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (topUpButtonCLicked != null) {
@@ -16974,6 +17332,8 @@ class _$TopUpButtonClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return topUpButtonCLicked(this);
   }
@@ -17023,6 +17383,8 @@ class _$TopUpButtonClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return topUpButtonCLicked?.call(this);
   }
@@ -17072,6 +17434,8 @@ class _$TopUpButtonClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (topUpButtonCLicked != null) {
@@ -17335,6 +17699,8 @@ class _$ReceiveClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return receiveClicked(eventType, walletType, walletAddress, activated);
   }
@@ -17424,6 +17790,8 @@ class _$ReceiveClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return receiveClicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -17510,6 +17878,8 @@ class _$ReceiveClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (receiveClicked != null) {
@@ -17569,6 +17939,8 @@ class _$ReceiveClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return receiveClicked(this);
   }
@@ -17618,6 +17990,8 @@ class _$ReceiveClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return receiveClicked?.call(this);
   }
@@ -17667,6 +18041,8 @@ class _$ReceiveClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (receiveClicked != null) {
@@ -17927,6 +18303,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return sendClicked(eventType, walletType, walletAddress, activated);
   }
@@ -18016,6 +18394,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return sendClicked?.call(eventType, walletType, walletAddress, activated);
   }
@@ -18101,6 +18481,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (sendClicked != null) {
@@ -18160,6 +18542,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return sendClicked(this);
   }
@@ -18209,6 +18593,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return sendClicked?.call(this);
   }
@@ -18258,6 +18644,8 @@ class _$SendClickedImpl with DiagnosticableTreeMixin implements SendClicked {
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (sendClicked != null) {
@@ -18521,6 +18909,8 @@ class _$BuyWithCardClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return buyWithCardClicked(eventType, walletType, walletAddress, activated);
   }
@@ -18610,6 +19000,8 @@ class _$BuyWithCardClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return buyWithCardClicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -18696,6 +19088,8 @@ class _$BuyWithCardClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (buyWithCardClicked != null) {
@@ -18756,6 +19150,8 @@ class _$BuyWithCardClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return buyWithCardClicked(this);
   }
@@ -18805,6 +19201,8 @@ class _$BuyWithCardClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return buyWithCardClicked?.call(this);
   }
@@ -18854,6 +19252,8 @@ class _$BuyWithCardClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (buyWithCardClicked != null) {
@@ -19117,6 +19517,8 @@ class _$HistoryClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return historyClicked(eventType, walletType, walletAddress, activated);
   }
@@ -19206,6 +19608,8 @@ class _$HistoryClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return historyClicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -19292,6 +19696,8 @@ class _$HistoryClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (historyClicked != null) {
@@ -19351,6 +19757,8 @@ class _$HistoryClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return historyClicked(this);
   }
@@ -19400,6 +19808,8 @@ class _$HistoryClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return historyClicked?.call(this);
   }
@@ -19449,6 +19859,8 @@ class _$HistoryClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (historyClicked != null) {
@@ -19722,6 +20134,8 @@ class _$AddressCopiedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return addressCopied(
         eventType, source, walletType, walletAddress, activated);
@@ -19812,6 +20226,8 @@ class _$AddressCopiedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return addressCopied?.call(
         eventType, source, walletType, walletAddress, activated);
@@ -19898,6 +20314,8 @@ class _$AddressCopiedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (addressCopied != null) {
@@ -19958,6 +20376,8 @@ class _$AddressCopiedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return addressCopied(this);
   }
@@ -20007,6 +20427,8 @@ class _$AddressCopiedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return addressCopied?.call(this);
   }
@@ -20056,6 +20478,8 @@ class _$AddressCopiedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (addressCopied != null) {
@@ -20321,6 +20745,8 @@ class _$ShareAddressClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return shareAddressClicked(eventType, walletType, walletAddress, activated);
   }
@@ -20410,6 +20836,8 @@ class _$ShareAddressClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return shareAddressClicked?.call(
         eventType, walletType, walletAddress, activated);
@@ -20496,6 +20924,8 @@ class _$ShareAddressClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (shareAddressClicked != null) {
@@ -20556,6 +20986,8 @@ class _$ShareAddressClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return shareAddressClicked(this);
   }
@@ -20605,6 +21037,8 @@ class _$ShareAddressClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return shareAddressClicked?.call(this);
   }
@@ -20654,6 +21088,8 @@ class _$ShareAddressClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (shareAddressClicked != null) {
@@ -20878,6 +21314,8 @@ class _$GotItSendClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return gotItSendClicked(eventType);
   }
@@ -20967,6 +21405,8 @@ class _$GotItSendClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return gotItSendClicked?.call(eventType);
   }
@@ -21052,6 +21492,8 @@ class _$GotItSendClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (gotItSendClicked != null) {
@@ -21111,6 +21553,8 @@ class _$GotItSendClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return gotItSendClicked(this);
   }
@@ -21160,6 +21604,8 @@ class _$GotItSendClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return gotItSendClicked?.call(this);
   }
@@ -21209,6 +21655,8 @@ class _$GotItSendClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (gotItSendClicked != null) {
@@ -21427,6 +21875,8 @@ class _$IneedToSendNowImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return iNeedToSendNow(eventType);
   }
@@ -21516,6 +21966,8 @@ class _$IneedToSendNowImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return iNeedToSendNow?.call(eventType);
   }
@@ -21601,6 +22053,8 @@ class _$IneedToSendNowImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (iNeedToSendNow != null) {
@@ -21660,6 +22114,8 @@ class _$IneedToSendNowImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return iNeedToSendNow(this);
   }
@@ -21709,6 +22165,8 @@ class _$IneedToSendNowImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return iNeedToSendNow?.call(this);
   }
@@ -21758,6 +22216,8 @@ class _$IneedToSendNowImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (iNeedToSendNow != null) {
@@ -21975,6 +22435,8 @@ class _$IneedToSendGotItImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return iNeedToSendGotIt(eventType);
   }
@@ -22064,6 +22526,8 @@ class _$IneedToSendGotItImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return iNeedToSendGotIt?.call(eventType);
   }
@@ -22149,6 +22613,8 @@ class _$IneedToSendGotItImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (iNeedToSendGotIt != null) {
@@ -22208,6 +22674,8 @@ class _$IneedToSendGotItImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return iNeedToSendGotIt(this);
   }
@@ -22257,6 +22725,8 @@ class _$IneedToSendGotItImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return iNeedToSendGotIt?.call(this);
   }
@@ -22306,6 +22776,8 @@ class _$IneedToSendGotItImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (iNeedToSendGotIt != null) {
@@ -22535,6 +23007,8 @@ class _$BackButtonClickedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return backButtonClicked(eventType, source);
   }
@@ -22624,6 +23098,8 @@ class _$BackButtonClickedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return backButtonClicked?.call(eventType, source);
   }
@@ -22709,6 +23185,8 @@ class _$BackButtonClickedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (backButtonClicked != null) {
@@ -22768,6 +23246,8 @@ class _$BackButtonClickedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return backButtonClicked(this);
   }
@@ -22817,6 +23297,8 @@ class _$BackButtonClickedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return backButtonClicked?.call(this);
   }
@@ -22866,6 +23348,8 @@ class _$BackButtonClickedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (backButtonClicked != null) {
@@ -23110,6 +23594,8 @@ class _$Secret1ValidatedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return secret1Validated(eventType, walletAddress, walletType);
   }
@@ -23199,6 +23685,8 @@ class _$Secret1ValidatedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return secret1Validated?.call(eventType, walletAddress, walletType);
   }
@@ -23284,6 +23772,8 @@ class _$Secret1ValidatedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (secret1Validated != null) {
@@ -23343,6 +23833,8 @@ class _$Secret1ValidatedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return secret1Validated(this);
   }
@@ -23392,6 +23884,8 @@ class _$Secret1ValidatedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return secret1Validated?.call(this);
   }
@@ -23441,6 +23935,8 @@ class _$Secret1ValidatedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (secret1Validated != null) {
@@ -23687,6 +24183,8 @@ class _$Secret2ValidatedImpl
     required TResult Function(
             String eventType, String walletAddress, String walletType)
         secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
   }) {
     return secret2Validated(eventType, walletAddress, walletType);
   }
@@ -23776,6 +24274,8 @@ class _$Secret2ValidatedImpl
     TResult? Function(
             String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
   }) {
     return secret2Validated?.call(eventType, walletAddress, walletType);
   }
@@ -23861,6 +24361,8 @@ class _$Secret2ValidatedImpl
         secret1Validated,
     TResult Function(String eventType, String walletAddress, String walletType)?
         secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
     required TResult orElse(),
   }) {
     if (secret2Validated != null) {
@@ -23920,6 +24422,8 @@ class _$Secret2ValidatedImpl
     required TResult Function(BackButtonClicked value) backButtonClicked,
     required TResult Function(Secret1Validated value) secret1Validated,
     required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
   }) {
     return secret2Validated(this);
   }
@@ -23969,6 +24473,8 @@ class _$Secret2ValidatedImpl
     TResult? Function(BackButtonClicked value)? backButtonClicked,
     TResult? Function(Secret1Validated value)? secret1Validated,
     TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
   }) {
     return secret2Validated?.call(this);
   }
@@ -24018,6 +24524,8 @@ class _$Secret2ValidatedImpl
     TResult Function(BackButtonClicked value)? backButtonClicked,
     TResult Function(Secret1Validated value)? secret1Validated,
     TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
     required TResult orElse(),
   }) {
     if (secret2Validated != null) {
@@ -24053,5 +24561,1123 @@ abstract class Secret2Validated implements AmplitudeEvent {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$Secret2ValidatedImplCopyWith<_$Secret2ValidatedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnboardingStartedImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$OnboardingStartedImplCopyWith(_$OnboardingStartedImpl value,
+          $Res Function(_$OnboardingStartedImpl) then) =
+      __$$OnboardingStartedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$OnboardingStartedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$OnboardingStartedImpl>
+    implements _$$OnboardingStartedImplCopyWith<$Res> {
+  __$$OnboardingStartedImplCopyWithImpl(_$OnboardingStartedImpl _value,
+      $Res Function(_$OnboardingStartedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$OnboardingStartedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OnboardingStartedImpl
+    with DiagnosticableTreeMixin
+    implements OnboardingStarted {
+  const _$OnboardingStartedImpl(
+      {this.eventType = 'ONBOARDING_STARTED', final String? $type})
+      : $type = $type ?? 'onboardingStarted';
+
+  factory _$OnboardingStartedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OnboardingStartedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.onboardingStarted(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.onboardingStarted'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnboardingStartedImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnboardingStartedImplCopyWith<_$OnboardingStartedImpl> get copyWith =>
+      __$$OnboardingStartedImplCopyWithImpl<_$OnboardingStartedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source)
+        connectManuallyClicked,
+    required TResult Function(String eventType, String source)
+        connectWithQrClicked,
+    required TResult Function(
+            String eventType, String walletType, String source)
+        qrButtonClicked,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        qrScanned,
+    required TResult Function(String eventType, String source)
+        buyNewCardClicked,
+    required TResult Function(
+            String eventType, String source, String connectOption)
+        connectOptionSelected,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        addressFilled,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        deepLinkClicked,
+    required TResult Function(
+            String eventType, String source, String walletType)
+        typeSelected,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String walletAddress)
+        alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source)
+        addNewPlusClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletSettingsClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        receiveClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        sendClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        historyClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
+    required TResult Function(String eventType, String source)
+        backButtonClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret1Validated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
+  }) {
+    return onboardingStarted(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult? Function(
+            String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
+  }) {
+    return onboardingStarted?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
+    required TResult orElse(),
+  }) {
+    if (onboardingStarted != null) {
+      return onboardingStarted(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value)
+        connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value)
+        connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value)
+        alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value)
+        activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value)
+        warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value)
+        transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value)
+        walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
+  }) {
+    return onboardingStarted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
+  }) {
+    return onboardingStarted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
+    required TResult orElse(),
+  }) {
+    if (onboardingStarted != null) {
+      return onboardingStarted(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OnboardingStartedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class OnboardingStarted implements AmplitudeEvent {
+  const factory OnboardingStarted({final String eventType}) =
+      _$OnboardingStartedImpl;
+
+  factory OnboardingStarted.fromJson(Map<String, dynamic> json) =
+      _$OnboardingStartedImpl.fromJson;
+
+  @override
+  String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OnboardingStartedImplCopyWith<_$OnboardingStartedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$WalletOpenedImplCopyWith<$Res>
+    implements $AmplitudeEventCopyWith<$Res> {
+  factory _$$WalletOpenedImplCopyWith(
+          _$WalletOpenedImpl value, $Res Function(_$WalletOpenedImpl) then) =
+      __$$WalletOpenedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$WalletOpenedImplCopyWithImpl<$Res>
+    extends _$AmplitudeEventCopyWithImpl<$Res, _$WalletOpenedImpl>
+    implements _$$WalletOpenedImplCopyWith<$Res> {
+  __$$WalletOpenedImplCopyWithImpl(
+      _$WalletOpenedImpl _value, $Res Function(_$WalletOpenedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$WalletOpenedImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$WalletOpenedImpl with DiagnosticableTreeMixin implements WalletOpened {
+  const _$WalletOpenedImpl(
+      {this.eventType = 'WALLET_OPENED', final String? $type})
+      : $type = $type ?? 'walletOpened';
+
+  factory _$WalletOpenedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletOpenedImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String eventType;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AmplitudeEvent.walletOpened(eventType: $eventType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AmplitudeEvent.walletOpened'))
+      ..add(DiagnosticsProperty('eventType', eventType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletOpenedImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WalletOpenedImplCopyWith<_$WalletOpenedImpl> get copyWith =>
+      __$$WalletOpenedImplCopyWithImpl<_$WalletOpenedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String eventType) connectWalletClicked,
+    required TResult Function(String eventType, String source)
+        connectManuallyClicked,
+    required TResult Function(String eventType, String source)
+        connectWithQrClicked,
+    required TResult Function(
+            String eventType, String walletType, String source)
+        qrButtonClicked,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        qrScanned,
+    required TResult Function(String eventType, String source)
+        buyNewCardClicked,
+    required TResult Function(
+            String eventType, String source, String connectOption)
+        connectOptionSelected,
+    required TResult Function(
+            String eventType, String source, String walletAddress)
+        nfcTapped,
+    required TResult Function(String eventType, String source) nfcClosed,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        addressFilled,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        deepLinkClicked,
+    required TResult Function(
+            String eventType, String source, String walletType)
+        typeSelected,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        saveToWalletClicked,
+    required TResult Function(
+            String eventType, String walletType, String walletAddress)
+        alreadySavedGotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        activatedCheckboxClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        gotItClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress)
+        fakeWallet,
+    required TResult Function(String eventType) warningCheckboxClicked,
+    required TResult Function(String eventType) appLockEnabled,
+    required TResult Function(String eventType) notNowLockClicked,
+    required TResult Function(String eventType) walletTabClicked,
+    required TResult Function(String eventType) marketTabClicked,
+    required TResult Function(String eventType) historyTabClicked,
+    required TResult Function(String eventType) settingsTabClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        transactionsButtonClicked,
+    required TResult Function(String eventType, String tab) addNewClicked,
+    required TResult Function(String eventType, String source)
+        addNewPlusClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        walletSettingsClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        topUpButtonCLicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        receiveClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        sendClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        buyWithCardClicked,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        historyClicked,
+    required TResult Function(String eventType, String source,
+            String walletType, String walletAddress, bool activated)
+        addressCopied,
+    required TResult Function(String eventType, String walletType,
+            String walletAddress, bool activated)
+        shareAddressClicked,
+    required TResult Function(String eventType) gotItSendClicked,
+    required TResult Function(String eventType) iNeedToSendNow,
+    required TResult Function(String eventType) iNeedToSendGotIt,
+    required TResult Function(String eventType, String source)
+        backButtonClicked,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret1Validated,
+    required TResult Function(
+            String eventType, String walletAddress, String walletType)
+        secret2Validated,
+    required TResult Function(String eventType) onboardingStarted,
+    required TResult Function(String eventType) walletOpened,
+  }) {
+    return walletOpened(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String eventType)? connectWalletClicked,
+    TResult? Function(String eventType, String source)? connectManuallyClicked,
+    TResult? Function(String eventType, String source)? connectWithQrClicked,
+    TResult? Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult? Function(String eventType, String source)? buyNewCardClicked,
+    TResult? Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult? Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult? Function(String eventType, String source)? nfcClosed,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult? Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult? Function(
+            String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult? Function(String eventType)? warningCheckboxClicked,
+    TResult? Function(String eventType)? appLockEnabled,
+    TResult? Function(String eventType)? notNowLockClicked,
+    TResult? Function(String eventType)? walletTabClicked,
+    TResult? Function(String eventType)? marketTabClicked,
+    TResult? Function(String eventType)? historyTabClicked,
+    TResult? Function(String eventType)? settingsTabClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult? Function(String eventType, String tab)? addNewClicked,
+    TResult? Function(String eventType, String source)? addNewPlusClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult? Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult? Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult? Function(String eventType)? gotItSendClicked,
+    TResult? Function(String eventType)? iNeedToSendNow,
+    TResult? Function(String eventType)? iNeedToSendGotIt,
+    TResult? Function(String eventType, String source)? backButtonClicked,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult? Function(
+            String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult? Function(String eventType)? onboardingStarted,
+    TResult? Function(String eventType)? walletOpened,
+  }) {
+    return walletOpened?.call(eventType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String eventType)? connectWalletClicked,
+    TResult Function(String eventType, String source)? connectManuallyClicked,
+    TResult Function(String eventType, String source)? connectWithQrClicked,
+    TResult Function(String eventType, String walletType, String source)?
+        qrButtonClicked,
+    TResult Function(String eventType, String source, String walletAddress)?
+        qrScanned,
+    TResult Function(String eventType, String source)? buyNewCardClicked,
+    TResult Function(String eventType, String source, String connectOption)?
+        connectOptionSelected,
+    TResult Function(String eventType, String source, String walletAddress)?
+        nfcTapped,
+    TResult Function(String eventType, String source)? nfcClosed,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        addressFilled,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        deepLinkClicked,
+    TResult Function(String eventType, String source, String walletType)?
+        typeSelected,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        saveToWalletClicked,
+    TResult Function(String eventType, String walletType, String walletAddress)?
+        alreadySavedGotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        activatedCheckboxClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        gotItClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress)?
+        fakeWallet,
+    TResult Function(String eventType)? warningCheckboxClicked,
+    TResult Function(String eventType)? appLockEnabled,
+    TResult Function(String eventType)? notNowLockClicked,
+    TResult Function(String eventType)? walletTabClicked,
+    TResult Function(String eventType)? marketTabClicked,
+    TResult Function(String eventType)? historyTabClicked,
+    TResult Function(String eventType)? settingsTabClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        transactionsButtonClicked,
+    TResult Function(String eventType, String tab)? addNewClicked,
+    TResult Function(String eventType, String source)? addNewPlusClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        walletSettingsClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        topUpButtonCLicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        receiveClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        sendClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        buyWithCardClicked,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        historyClicked,
+    TResult Function(String eventType, String source, String walletType,
+            String walletAddress, bool activated)?
+        addressCopied,
+    TResult Function(String eventType, String walletType, String walletAddress,
+            bool activated)?
+        shareAddressClicked,
+    TResult Function(String eventType)? gotItSendClicked,
+    TResult Function(String eventType)? iNeedToSendNow,
+    TResult Function(String eventType)? iNeedToSendGotIt,
+    TResult Function(String eventType, String source)? backButtonClicked,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret1Validated,
+    TResult Function(String eventType, String walletAddress, String walletType)?
+        secret2Validated,
+    TResult Function(String eventType)? onboardingStarted,
+    TResult Function(String eventType)? walletOpened,
+    required TResult orElse(),
+  }) {
+    if (walletOpened != null) {
+      return walletOpened(eventType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectWalletClicked value) connectWalletClicked,
+    required TResult Function(ConnectManuallyClicked value)
+        connectManuallyClicked,
+    required TResult Function(ConnectWitchQrClicked value) connectWithQrClicked,
+    required TResult Function(QrButtonClicked value) qrButtonClicked,
+    required TResult Function(QrScanned value) qrScanned,
+    required TResult Function(BuyNewCardClicked value) buyNewCardClicked,
+    required TResult Function(ConnectOptionSelected value)
+        connectOptionSelected,
+    required TResult Function(NfcTapped value) nfcTapped,
+    required TResult Function(NfcClosed value) nfcClosed,
+    required TResult Function(AddressFilled value) addressFilled,
+    required TResult Function(DeeplinkClicked value) deepLinkClicked,
+    required TResult Function(TypeSelected value) typeSelected,
+    required TResult Function(SaveToWalletClicked value) saveToWalletClicked,
+    required TResult Function(AlreadySavedGotItClicked value)
+        alreadySavedGotItClicked,
+    required TResult Function(ActivatedCheckboxClicked value)
+        activatedCheckboxClicked,
+    required TResult Function(GotItClicked value) gotItClicked,
+    required TResult Function(FakeWallet value) fakeWallet,
+    required TResult Function(WarningCheckboxClicked value)
+        warningCheckboxClicked,
+    required TResult Function(AppLockEnabled value) appLockEnabled,
+    required TResult Function(NotNowLockClicked value) notNowLockClicked,
+    required TResult Function(WalletTabClicked value) walletTabClicked,
+    required TResult Function(MarketTabClicked value) marketTabClicked,
+    required TResult Function(HistoryTabClicked value) historyTabClicked,
+    required TResult Function(SettingsTabClicked value) settingsTabClicked,
+    required TResult Function(TransactionsButtonClicked value)
+        transactionsButtonClicked,
+    required TResult Function(AddNewClicked value) addNewClicked,
+    required TResult Function(AddNewPlusClicked value) addNewPlusClicked,
+    required TResult Function(WalletSettingsClicked value)
+        walletSettingsClicked,
+    required TResult Function(TopUpButtonClicked value) topUpButtonCLicked,
+    required TResult Function(ReceiveClicked value) receiveClicked,
+    required TResult Function(SendClicked value) sendClicked,
+    required TResult Function(BuyWithCardClicked value) buyWithCardClicked,
+    required TResult Function(HistoryClicked value) historyClicked,
+    required TResult Function(AddressCopied value) addressCopied,
+    required TResult Function(ShareAddressClicked value) shareAddressClicked,
+    required TResult Function(GotItSendClicked value) gotItSendClicked,
+    required TResult Function(IneedToSendNow value) iNeedToSendNow,
+    required TResult Function(IneedToSendGotIt value) iNeedToSendGotIt,
+    required TResult Function(BackButtonClicked value) backButtonClicked,
+    required TResult Function(Secret1Validated value) secret1Validated,
+    required TResult Function(Secret2Validated value) secret2Validated,
+    required TResult Function(OnboardingStarted value) onboardingStarted,
+    required TResult Function(WalletOpened value) walletOpened,
+  }) {
+    return walletOpened(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult? Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult? Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult? Function(QrButtonClicked value)? qrButtonClicked,
+    TResult? Function(QrScanned value)? qrScanned,
+    TResult? Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult? Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult? Function(NfcTapped value)? nfcTapped,
+    TResult? Function(NfcClosed value)? nfcClosed,
+    TResult? Function(AddressFilled value)? addressFilled,
+    TResult? Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult? Function(TypeSelected value)? typeSelected,
+    TResult? Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult? Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult? Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult? Function(GotItClicked value)? gotItClicked,
+    TResult? Function(FakeWallet value)? fakeWallet,
+    TResult? Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult? Function(AppLockEnabled value)? appLockEnabled,
+    TResult? Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult? Function(WalletTabClicked value)? walletTabClicked,
+    TResult? Function(MarketTabClicked value)? marketTabClicked,
+    TResult? Function(HistoryTabClicked value)? historyTabClicked,
+    TResult? Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult? Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult? Function(AddNewClicked value)? addNewClicked,
+    TResult? Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult? Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult? Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult? Function(ReceiveClicked value)? receiveClicked,
+    TResult? Function(SendClicked value)? sendClicked,
+    TResult? Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult? Function(HistoryClicked value)? historyClicked,
+    TResult? Function(AddressCopied value)? addressCopied,
+    TResult? Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult? Function(GotItSendClicked value)? gotItSendClicked,
+    TResult? Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult? Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult? Function(BackButtonClicked value)? backButtonClicked,
+    TResult? Function(Secret1Validated value)? secret1Validated,
+    TResult? Function(Secret2Validated value)? secret2Validated,
+    TResult? Function(OnboardingStarted value)? onboardingStarted,
+    TResult? Function(WalletOpened value)? walletOpened,
+  }) {
+    return walletOpened?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectWalletClicked value)? connectWalletClicked,
+    TResult Function(ConnectManuallyClicked value)? connectManuallyClicked,
+    TResult Function(ConnectWitchQrClicked value)? connectWithQrClicked,
+    TResult Function(QrButtonClicked value)? qrButtonClicked,
+    TResult Function(QrScanned value)? qrScanned,
+    TResult Function(BuyNewCardClicked value)? buyNewCardClicked,
+    TResult Function(ConnectOptionSelected value)? connectOptionSelected,
+    TResult Function(NfcTapped value)? nfcTapped,
+    TResult Function(NfcClosed value)? nfcClosed,
+    TResult Function(AddressFilled value)? addressFilled,
+    TResult Function(DeeplinkClicked value)? deepLinkClicked,
+    TResult Function(TypeSelected value)? typeSelected,
+    TResult Function(SaveToWalletClicked value)? saveToWalletClicked,
+    TResult Function(AlreadySavedGotItClicked value)? alreadySavedGotItClicked,
+    TResult Function(ActivatedCheckboxClicked value)? activatedCheckboxClicked,
+    TResult Function(GotItClicked value)? gotItClicked,
+    TResult Function(FakeWallet value)? fakeWallet,
+    TResult Function(WarningCheckboxClicked value)? warningCheckboxClicked,
+    TResult Function(AppLockEnabled value)? appLockEnabled,
+    TResult Function(NotNowLockClicked value)? notNowLockClicked,
+    TResult Function(WalletTabClicked value)? walletTabClicked,
+    TResult Function(MarketTabClicked value)? marketTabClicked,
+    TResult Function(HistoryTabClicked value)? historyTabClicked,
+    TResult Function(SettingsTabClicked value)? settingsTabClicked,
+    TResult Function(TransactionsButtonClicked value)?
+        transactionsButtonClicked,
+    TResult Function(AddNewClicked value)? addNewClicked,
+    TResult Function(AddNewPlusClicked value)? addNewPlusClicked,
+    TResult Function(WalletSettingsClicked value)? walletSettingsClicked,
+    TResult Function(TopUpButtonClicked value)? topUpButtonCLicked,
+    TResult Function(ReceiveClicked value)? receiveClicked,
+    TResult Function(SendClicked value)? sendClicked,
+    TResult Function(BuyWithCardClicked value)? buyWithCardClicked,
+    TResult Function(HistoryClicked value)? historyClicked,
+    TResult Function(AddressCopied value)? addressCopied,
+    TResult Function(ShareAddressClicked value)? shareAddressClicked,
+    TResult Function(GotItSendClicked value)? gotItSendClicked,
+    TResult Function(IneedToSendNow value)? iNeedToSendNow,
+    TResult Function(IneedToSendGotIt value)? iNeedToSendGotIt,
+    TResult Function(BackButtonClicked value)? backButtonClicked,
+    TResult Function(Secret1Validated value)? secret1Validated,
+    TResult Function(Secret2Validated value)? secret2Validated,
+    TResult Function(OnboardingStarted value)? onboardingStarted,
+    TResult Function(WalletOpened value)? walletOpened,
+    required TResult orElse(),
+  }) {
+    if (walletOpened != null) {
+      return walletOpened(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WalletOpenedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class WalletOpened implements AmplitudeEvent {
+  const factory WalletOpened({final String eventType}) = _$WalletOpenedImpl;
+
+  factory WalletOpened.fromJson(Map<String, dynamic> json) =
+      _$WalletOpenedImpl.fromJson;
+
+  @override
+  String get eventType;
+
+  /// Create a copy of AmplitudeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WalletOpenedImplCopyWith<_$WalletOpenedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
