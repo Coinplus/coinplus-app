@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -40,9 +41,12 @@ class _CoinChartPageState extends State<CoinChartPage> {
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+  bool isFavorite = false;
+
   @override
   void initState() {
     super.initState();
+    _marketPageStore.checkIfFavorite(widget.data!.id);
     _marketPageStore
       ..getChartData(
         coinId: widget.data!.id,
@@ -71,6 +75,40 @@ class _CoinChartPageState extends State<CoinChartPage> {
           ),
         ),
         iconTheme: const IconThemeData(color: AppColors.primary),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Observer(
+              builder: (context) {
+                return ScaleTap(
+                  enableFeedback: false,
+                  onPressed: () {
+                    Gaimon.heavy();
+                    _marketPageStore.toggleFavorite(
+                      coinId: widget.data!.id,
+                      context: context,
+                      coinName: widget.data!.name,
+                    );
+                    _marketPageStore.loadFavoriteCoins();
+                    _marketPageStore.checkIfFavorite(widget.data!.id);
+                  },
+                  child: Observer(
+                    builder: (context) {
+                      return Icon(
+                        _marketPageStore.isFavorite
+                            ? Icons.star
+                            : Icons.star_border,
+                        color: _marketPageStore.isFavorite
+                            ? Colors.orange
+                            : Colors.black,
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       body: Observer(
         builder: (context) {

@@ -82,12 +82,12 @@ class DashboardPage extends HookWidget {
 
     final currentCard = useRef<CardRecord>(
       (
-      card: _balanceStore.cards.isNotEmpty
-          ? _balanceStore.cards.firstOrNull as AbstractCard?
-          : _balanceStore.ethCards.isNotEmpty
-          ? _balanceStore.ethCards.firstOrNull as AbstractCard?
-          : null,
-      index: 0,
+        card: _balanceStore.cards.isNotEmpty
+            ? _balanceStore.cards.firstOrNull as AbstractCard?
+            : _balanceStore.ethCards.isNotEmpty
+                ? _balanceStore.ethCards.firstOrNull as AbstractCard?
+                : null,
+        index: 0,
       ),
     );
 

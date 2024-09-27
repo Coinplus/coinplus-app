@@ -240,6 +240,8 @@ class StorageUtils {
       prefs.remove('switchKey'),
       prefs.remove('show_modal'),
       prefs.remove('package_info'),
+      prefs.remove('walletOpenedFirstTime'),
+      prefs.remove('favoriteCoins'),
     ]);
   }
 }

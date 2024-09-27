@@ -239,6 +239,14 @@ class AmplitudeEvent with _$AmplitudeEvent {
     required String walletType,
   }) = Secret2Validated;
 
+  const factory AmplitudeEvent.onboardingStarted({
+    @Default('ONBOARDING_STARTED') String eventType,
+  }) = OnboardingStarted;
+
+  const factory AmplitudeEvent.walletOpened({
+    @Default('WALLET_OPENED') String eventType,
+  }) = WalletOpened;
+
   factory AmplitudeEvent.fromJson(Map<String, dynamic> json) =>
       _$AmplitudeEventFromJson(json);
 }

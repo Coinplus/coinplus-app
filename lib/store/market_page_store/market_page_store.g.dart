@@ -66,6 +66,22 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
+  late final _$favoriteCoinModelAtom =
+      Atom(name: '_MarketPageStore.favoriteCoinModel', context: context);
+
+  @override
+  UniqueCoinModel? get favoriteCoinModel {
+    _$favoriteCoinModelAtom.reportRead();
+    return super.favoriteCoinModel;
+  }
+
+  @override
+  set favoriteCoinModel(UniqueCoinModel? value) {
+    _$favoriteCoinModelAtom.reportWrite(value, super.favoriteCoinModel, () {
+      super.favoriteCoinModel = value;
+    });
+  }
+
   late final _$currentPageAtom =
       Atom(name: '_MarketPageStore.currentPage', context: context);
 
@@ -436,6 +452,109 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
+  late final _$isLoadingFavoritesAtom =
+      Atom(name: '_MarketPageStore.isLoadingFavorites', context: context);
+
+  @override
+  bool get isLoadingFavorites {
+    _$isLoadingFavoritesAtom.reportRead();
+    return super.isLoadingFavorites;
+  }
+
+  @override
+  set isLoadingFavorites(bool value) {
+    _$isLoadingFavoritesAtom.reportWrite(value, super.isLoadingFavorites, () {
+      super.isLoadingFavorites = value;
+    });
+  }
+
+  late final _$isFavoriteAtom =
+      Atom(name: '_MarketPageStore.isFavorite', context: context);
+
+  @override
+  bool get isFavorite {
+    _$isFavoriteAtom.reportRead();
+    return super.isFavorite;
+  }
+
+  @override
+  set isFavorite(bool value) {
+    _$isFavoriteAtom.reportWrite(value, super.isFavorite, () {
+      super.isFavorite = value;
+    });
+  }
+
+  late final _$favoriteCoinsListAtom =
+      Atom(name: '_MarketPageStore.favoriteCoinsList', context: context);
+
+  @override
+  ObservableList<CoinResultModel> get favoriteCoinsList {
+    _$favoriteCoinsListAtom.reportRead();
+    return super.favoriteCoinsList;
+  }
+
+  @override
+  set favoriteCoinsList(ObservableList<CoinResultModel> value) {
+    _$favoriteCoinsListAtom.reportWrite(value, super.favoriteCoinsList, () {
+      super.favoriteCoinsList = value;
+    });
+  }
+
+  late final _$getFavoriteCoinsAsyncAction =
+      AsyncAction('_MarketPageStore.getFavoriteCoins', context: context);
+
+  @override
+  Future<void> getFavoriteCoins({required String coinId}) {
+    return _$getFavoriteCoinsAsyncAction
+        .run(() => super.getFavoriteCoins(coinId: coinId));
+  }
+
+  late final _$checkIfFavoriteAsyncAction =
+      AsyncAction('_MarketPageStore.checkIfFavorite', context: context);
+
+  @override
+  Future<void> checkIfFavorite(String coinId) {
+    return _$checkIfFavoriteAsyncAction
+        .run(() => super.checkIfFavorite(coinId));
+  }
+
+  late final _$toggleFavoriteAsyncAction =
+      AsyncAction('_MarketPageStore.toggleFavorite', context: context);
+
+  @override
+  Future<void> toggleFavorite(
+      {required String coinId,
+      required BuildContext context,
+      required String coinName}) {
+    return _$toggleFavoriteAsyncAction.run(() => super
+        .toggleFavorite(coinId: coinId, context: context, coinName: coinName));
+  }
+
+  late final _$addToFavoritesAsyncAction =
+      AsyncAction('_MarketPageStore.addToFavorites', context: context);
+
+  @override
+  Future<void> addToFavorites(String coinId) {
+    return _$addToFavoritesAsyncAction.run(() => super.addToFavorites(coinId));
+  }
+
+  late final _$removeFromFavoritesAsyncAction =
+      AsyncAction('_MarketPageStore.removeFromFavorites', context: context);
+
+  @override
+  Future<void> removeFromFavorites(String coinId) {
+    return _$removeFromFavoritesAsyncAction
+        .run(() => super.removeFromFavorites(coinId));
+  }
+
+  late final _$loadFavoriteCoinsAsyncAction =
+      AsyncAction('_MarketPageStore.loadFavoriteCoins', context: context);
+
+  @override
+  Future<void> loadFavoriteCoins() {
+    return _$loadFavoriteCoinsAsyncAction.run(() => super.loadFavoriteCoins());
+  }
+
   late final _$triggerHapticFeedbackAsyncAction =
       AsyncAction('_MarketPageStore.triggerHapticFeedback', context: context);
 
@@ -727,6 +846,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     return '''
 q: ${q},
 filteredData: ${filteredData},
+favoriteCoinModel: ${favoriteCoinModel},
 currentPage: ${currentPage},
 displayedItemCount: ${displayedItemCount},
 totalItemCount: ${totalItemCount},
@@ -750,6 +870,9 @@ lastTouchedSpot: ${lastTouchedSpot},
 hapticDebounceTimer: ${hapticDebounceTimer},
 isHapticFeedbackActive: ${isHapticFeedbackActive},
 isCollapsed: ${isCollapsed},
+isLoadingFavorites: ${isLoadingFavorites},
+isFavorite: ${isFavorite},
+favoriteCoinsList: ${favoriteCoinsList},
 searchedList: ${searchedList}
     ''';
   }

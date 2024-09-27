@@ -8,12 +8,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/chart_period_enum.dart';
 import '../../http/interceptors/api_keys.dart';
 import '../../http/repositories/coins_repo.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
+import '../../widgets/custom_snack_bar/snack_bar_method.dart';
 
 part 'market_page_store.g.dart';
 
@@ -32,6 +34,9 @@ abstract class _MarketPageStore with Store {
 
   @observable
   List<CoinResultModel> filteredData = <CoinResultModel>[];
+
+  @observable
+  UniqueCoinModel? favoriteCoinModel;
 
   @observable
   int currentPage = 1;
@@ -100,6 +105,118 @@ abstract class _MarketPageStore with Store {
 
   @observable
   bool isCollapsed = false;
+
+  @observable
+  bool isLoadingFavorites = false;
+
+  @observable
+  bool isFavorite = false;
+
+  @observable
+  ObservableList<CoinResultModel> favoriteCoinsList =
+      ObservableList<CoinResultModel>();
+
+  @action
+  Future<void> getFavoriteCoins({required String coinId}) async {
+    final dio = Dio();
+    dio.interceptors.add(LoggingInterceptor());
+    isLoadingFavorites = true;
+    try {
+      final response = await dio.get(
+        'https://openapiv1.coinstats.app/coins/$coinId',
+        options: Options(
+          headers: {
+            'X-API-KEY': coinStatsApiKey,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final coinModel = UniqueCoinModel.fromJson(response.data);
+        favoriteCoinModel = coinModel;
+        if (!favoriteCoinsList.any((coin) => coin.id == coinModel.result.id)) {
+          favoriteCoinsList.add(coinModel.result);
+        } else {
+          debugPrint(
+            'Coin already exists in favorites: ${coinModel.result.name}',
+          );
+        }
+      } else {
+        debugPrint('Error: Received status code ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+    } finally {
+      isLoadingFavorites = false;
+    }
+  }
+
+  @action
+  Future<void> checkIfFavorite(String coinId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteCoins = prefs.getStringList('favoriteCoins') ?? [];
+    isFavorite = favoriteCoins.contains(coinId);
+  }
+
+  @action
+  Future<void> toggleFavorite({
+    required String coinId,
+    required BuildContext context,
+    required String coinName,
+  }) async {
+    if (isFavorite) {
+      await removeFromFavorites(coinId);
+      await showCustomSnackBar(
+        message: '$coinName removed from Favorites List',
+        context: context,
+      );
+    } else {
+      await addToFavorites(coinId);
+      await showCustomSnackBar(
+        message: '$coinName added to Favorites List',
+        context: context,
+      );
+    }
+  }
+
+  @action
+  Future<void> addToFavorites(String coinId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteCoins = prefs.getStringList('favoriteCoins') ?? [];
+
+    if (!favoriteCoins.contains(coinId)) {
+      favoriteCoins.add(coinId);
+      await prefs.setStringList('favoriteCoins', favoriteCoins);
+      debugPrint('$coinId added to favorites');
+    }
+  }
+
+  @action
+  Future<void> removeFromFavorites(String coinId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteCoins = prefs.getStringList('favoriteCoins') ?? [];
+
+    if (favoriteCoins.contains(coinId)) {
+      favoriteCoins.remove(coinId);
+      await prefs.setStringList('favoriteCoins', favoriteCoins);
+      debugPrint('$coinId removed from favorites');
+    }
+  }
+
+  Future<List<String>> getFavoriteCoinsFromStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('favoriteCoins') ?? [];
+  }
+
+  @action
+  Future<void> loadFavoriteCoins() async {
+    final favoriteCoinIds = await getFavoriteCoinsFromStorage();
+    favoriteCoinsList.clear();
+
+    for (final coinId in favoriteCoinIds) {
+      await getFavoriteCoins(coinId: coinId);
+    }
+  }
 
   @action
   Future<void> triggerHapticFeedback() async {
