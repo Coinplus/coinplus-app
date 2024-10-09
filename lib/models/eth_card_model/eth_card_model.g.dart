@@ -18,6 +18,7 @@ _$EthCardModelImpl _$$EthCardModelImplFromJson(Map json) => _$EthCardModelImpl(
       label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ??
           WalletType.COINPLUS_WALLET,
       blockchain: json['blockchain'] as String? ?? 'ETH',
+      isBackup: json['isBackup'] as bool? ?? false,
       createdAt: json['createdAt'] == null
           ? ''
           : timeFromJson(json['createdAt'] as String),
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$EthCardModelImplToJson(_$EthCardModelImpl instance) {
   val['name'] = instance.name;
   val['label'] = _$WalletTypeEnumMap[instance.label]!;
   val['blockchain'] = instance.blockchain;
+  val['isBackup'] = instance.isBackup;
   val['createdAt'] = instance.createdAt;
   return val;
 }

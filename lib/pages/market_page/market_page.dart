@@ -51,8 +51,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
         curve: Curves.linear,
       );
       _marketPageStore.collapseWidget();
-    } else if (_secondScrollController.offset <= 50 &&
-        _marketPageStore.isCollapsed) {
+    } else if (_secondScrollController.offset <= 50 && _marketPageStore.isCollapsed) {
       _mainScrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 200),
@@ -156,8 +155,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                       builder: (context, child) {
                         return Transform(
                           transform: Matrix4.translationValues(
-                            _animation.value *
-                                MediaQuery.of(context).size.width,
+                            _animation.value * MediaQuery.of(context).size.width,
                             0,
                             0,
                           ),
@@ -190,13 +188,11 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.transparent),
+                            borderSide: const BorderSide(color: Colors.transparent),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           contentPadding: EdgeInsets.zero,
-                          hintText:
-                              'Search among Top ${_marketPageStore.searchedList.length} coins',
+                          hintText: 'Search among Top ${_marketPageStore.searchedList.length} coins',
                           hintStyle: TextStyle(
                             fontFamily: FontFamily.redHatLight,
                             color: AppColors.primaryTextColor.withOpacity(0.5),

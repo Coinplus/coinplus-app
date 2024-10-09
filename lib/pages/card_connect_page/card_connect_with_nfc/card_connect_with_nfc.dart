@@ -45,25 +45,32 @@ class CardConnectWithNfc extends StatefulWidget {
     super.key,
     this.receivedData,
     this.cardColor,
-    this.isOriginalCard,
+    this.isOriginalNxp,
     this.isMiFareUltralight,
     this.isOldCard,
+    this.hasBackup,
+    this.backup,
     this.isActivated,
+    this.isBackupCard,
+    this.mainWalletAddress,
   });
 
   final String? receivedData;
   final String? cardColor;
-  final bool? isOriginalCard;
+  final bool? isOriginalNxp;
   final bool? isMiFareUltralight;
   final bool? isOldCard;
   final bool? isActivated;
+  final bool? hasBackup;
+  final bool? backup;
+  final bool? isBackupCard;
+  final String? mainWalletAddress;
 
   @override
   State<CardConnectWithNfc> createState() => _CardConnectWithNfcState();
 }
 
-class _CardConnectWithNfcState extends State<CardConnectWithNfc>
-    with TickerProviderStateMixin {
+class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProviderStateMixin {
   final Connectivity _connectivity = Connectivity();
 
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -75,8 +82,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
   late String ethAddress = '';
   late final TextEditingController _addressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  final ShakeAnimationController _shakeAnimationController =
-      ShakeAnimationController();
+  final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -106,9 +112,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
@@ -128,8 +132,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
       });
     }
     _connectivityStore.initConnectivity();
-    _connectivitySubscription = _connectivity.onConnectivityChanged
-        .listen(_connectivityStore.updateConnectionStatus);
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
   }
 
   @override
@@ -164,8 +167,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
               child: IconButton(
                 onPressed: () async {
                   unawaited(
-                    _flipCardController.controller!.value == 1 &&
-                            _allSettingsState.isLineVisible
+                    _flipCardController.controller!.value == 1 && _allSettingsState.isLineVisible
                         ? makeLineInvisible()
                         : router.maybePop(),
                   );
@@ -174,7 +176,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                     ..isActive = false
                     ..isAccepted = true;
                 },
-                icon: Assets.icons.arrowBackIos.image(height: 22),
+                icon: Assets.icons.arrowBackIos.image(height: 30),
               ),
             ),
             const Gap(10),
@@ -246,8 +248,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                             ],
                             image: DecorationImage(
                               image: !_addressState.isAddressVisible
-                                  ? getBackImageForCardColor(widget.cardColor)
-                                      .image
+                                  ? getBackImageForCardColor(widget.cardColor).image
                                   : getFilledBackImageForCardColor(
                                       widget.cardColor,
                                     ).image,
@@ -283,25 +284,14 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 ), //iPhone 13 Pro Max
                                               Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
-                                                  Assets.images.card.secret1
-                                                      .image(
-                                                    height: context.height > 667
-                                                        ? 180
-                                                        : 150,
+                                                  Assets.images.card.secret1.image(
+                                                    height: context.height > 667 ? 180 : 150,
                                                   ),
-                                                  if (context.height > 667)
-                                                    const Gap(70)
-                                                  else
-                                                    const Gap(50),
-                                                  Assets.images.card.secret2
-                                                      .image(
-                                                    height: context.height > 667
-                                                        ? 180
-                                                        : 150,
+                                                  if (context.height > 667) const Gap(70) else const Gap(50),
+                                                  Assets.images.card.secret2.image(
+                                                    height: context.height > 667 ? 180 : 150,
                                                   ),
                                                 ],
                                               ),
@@ -317,87 +307,52 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 Observer(
                                                   builder: (context) {
                                                     return Opacity(
-                                                      opacity: _allSettingsState
-                                                              .isLineVisible
-                                                          ? 1
-                                                          : 0,
+                                                      opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
                                                           context.height > 852
-                                                              ? context.height >
-                                                                      844
+                                                              ? context.height > 844
                                                                   ? 42
-                                                                  : context.height >
-                                                                          667
+                                                                  : context.height > 667
                                                                       ? 28
                                                                       : 38
                                                               : 30,
                                                           265,
                                                         ),
-                                                        painter:
-                                                            LineCustomPaint(),
+                                                        painter: LineCustomPaint(),
                                                       ),
                                                     );
                                                   },
                                                 ),
                                                 Opacity(
-                                                  opacity:
-                                                      _validationStore.isValid
-                                                          ? 0
-                                                          : 1,
+                                                  opacity: _validationStore.isValid ? 0 : 1,
                                                   child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
                                                       Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(15),
                                                           border: Border.all(
-                                                            color: AppColors
-                                                                .primaryTextColor,
+                                                            color: AppColors.primaryTextColor,
                                                             width: 1.5,
                                                           ),
                                                         ),
-                                                        child: Assets
-                                                            .images.card.secret1
-                                                            .image(
-                                                          height:
-                                                              context.height >
-                                                                      667
-                                                                  ? 180
-                                                                  : 150,
+                                                        child: Assets.images.card.secret1.image(
+                                                          height: context.height > 667 ? 180 : 150,
                                                         ),
                                                       ),
-                                                      if (context.height > 667)
-                                                        const Gap(70)
-                                                      else
-                                                        const Gap(50),
+                                                      if (context.height > 667) const Gap(70) else const Gap(50),
                                                       Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(15),
                                                           border: Border.all(
-                                                            color: AppColors
-                                                                .primaryTextColor,
+                                                            color: AppColors.primaryTextColor,
                                                             width: 1.5,
                                                           ),
                                                         ),
-                                                        child: Assets
-                                                            .images.card.secret2
-                                                            .image(
-                                                          height:
-                                                              context.height >
-                                                                      667
-                                                                  ? 180
-                                                                  : 150,
+                                                        child: Assets.images.card.secret2.image(
+                                                          height: context.height > 667 ? 180 : 150,
                                                         ),
                                                       ),
                                                     ],
@@ -422,11 +377,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                               else
                                 Gap(context.height * 0.049),
                               Opacity(
-                                opacity:
-                                    _allSettingsState.isLineVisible ? 0 : 1,
+                                opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     if (context.height < 932)
                                       if (context.height < 867.4)
@@ -444,17 +397,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                       children: [
                                         const Gap(15),
                                         if (!(widget.cardColor == '1'))
-                                          Assets.icons.coinplusLogo
-                                              .image(height: 32)
+                                          Assets.icons.coinplusLogo.image(height: 32)
                                         else
-                                          Assets.icons.coinplusLogoBlack
-                                              .image(height: 32),
+                                          Assets.icons.coinplusLogoBlack.image(height: 32),
                                       ],
                                     ),
-                                    if (context.height > 844)
-                                      const Gap(24)
-                                    else
-                                      const Gap(21.5),
+                                    if (context.height > 844) const Gap(24) else const Gap(21.5),
                                     ScaleTransition(
                                       scale: _textFieldAnimationController,
                                       child: Stack(
@@ -479,32 +427,23 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                         : const Color(
                                                             0xFFFBB270,
                                                           ),
-                                                width:
-                                                    _focusNode.hasFocus ? 1 : 3,
+                                                width: _focusNode.hasFocus ? 1 : 3,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
+                                              borderRadius: BorderRadius.circular(
                                                 context.height > 667 ? 28 : 25,
                                               ),
                                             ),
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 SizedBox(
                                                   width: context.height < 932
                                                       ? context.height < 867.4
                                                           ? context.height > 844
-                                                              ? context.width *
-                                                                  0.241
-                                                              : context.height >
-                                                                      667
-                                                                  ? context
-                                                                          .width *
-                                                                      0.25
-                                                                  : context
-                                                                          .width *
-                                                                      0.21
+                                                              ? context.width * 0.241
+                                                              : context.height > 667
+                                                                  ? context.width * 0.25
+                                                                  : context.width * 0.21
                                                           : context.width * 0.23
                                                       : context.width * 0.225,
                                                   height: context.height * 0.14,
@@ -512,75 +451,51 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                     builder: (context) {
                                                       return TextField(
                                                         inputFormatters: [
-                                                          if (!widget
-                                                              .receivedData!
-                                                              .startsWith('0'))
+                                                          if (!widget.receivedData!.startsWith('0'))
                                                             LengthLimitingTextInputFormatter(
                                                               35,
                                                             ),
                                                         ],
-                                                        readOnly:
-                                                            !_validationStore
-                                                                    .isValid &&
-                                                                true,
-                                                        textAlignVertical:
-                                                            TextAlignVertical
-                                                                .top,
+                                                        readOnly: !_validationStore.isValid && true,
+                                                        textAlignVertical: TextAlignVertical.top,
                                                         autocorrect: false,
-                                                        keyboardType:
-                                                            TextInputType.text,
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                        keyboardType: TextInputType.text,
+                                                        textAlign: TextAlign.center,
                                                         onChanged: (value) {
-                                                          if (widget
-                                                              .receivedData!
-                                                              .startsWith(
+                                                          if (widget.receivedData!.startsWith(
                                                             '0',
                                                           )) {
-                                                            if (value.length >=
-                                                                40) {
+                                                            if (value.length >= 40) {
                                                               _addressState
-                                                                ..ethAddress =
-                                                                    value
+                                                                ..ethAddress = value
                                                                 ..validateETHAddress();
-                                                              ethAddress =
-                                                                  value;
+                                                              ethAddress = value;
                                                             } else {
-                                                              if (value.length >
-                                                                  25) {
+                                                              if (value.length > 25) {
                                                                 _addressState
-                                                                  ..btcAddress =
-                                                                      value
+                                                                  ..btcAddress = value
                                                                   ..validateBTCAddress();
-                                                                myWalletAddress =
-                                                                    value;
+                                                                myWalletAddress = value;
                                                               }
 
-                                                              hasShownWallet()
-                                                                  .then(
+                                                              hasShownWallet().then(
                                                                 (
                                                                   hasShown,
                                                                 ) async {
                                                                   if (hasShown) {
                                                                     await recordAmplitudeEvent(
                                                                       AddressFilled(
-                                                                        source:
-                                                                            'Wallet',
-                                                                        walletAddress:
-                                                                            myWalletAddress,
-                                                                        walletType:
-                                                                            'Card',
+                                                                        source: 'Wallet',
+                                                                        walletAddress: myWalletAddress,
+                                                                        walletType: 'Card',
                                                                       ),
                                                                     );
                                                                   } else {
                                                                     await recordAmplitudeEvent(
                                                                       AddressFilled(
-                                                                        source:
-                                                                            'Onboarding',
-                                                                        walletAddress:
-                                                                            myWalletAddress,
-                                                                        walletType:
-                                                                            'Card',
+                                                                        source: 'Onboarding',
+                                                                        walletAddress: myWalletAddress,
+                                                                        walletType: 'Card',
                                                                       ),
                                                                     );
                                                                   }
@@ -590,96 +505,60 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                           }
                                                         },
                                                         onEditingComplete: () {
-                                                          if (widget
-                                                                  .receivedData!
-                                                                  .startsWith(
+                                                          if (widget.receivedData!.startsWith(
                                                                 '0',
                                                               ) &&
-                                                              ethAddress
-                                                                      .length >=
-                                                                  40) {
-                                                            _addressState
-                                                                .validateETHAddress();
-                                                          } else if (myWalletAddress
-                                                                  .length >
-                                                              25) {
-                                                            _addressState
-                                                                .validateBTCAddress();
+                                                              ethAddress.length >= 40) {
+                                                            _addressState.validateETHAddress();
+                                                          } else if (myWalletAddress.length > 25) {
+                                                            _addressState.validateBTCAddress();
                                                           }
                                                         },
-                                                        controller:
-                                                            _addressController,
+                                                        controller: _addressController,
                                                         maxLines: 15,
                                                         focusNode: _focusNode,
-                                                        cursorColor:
-                                                            AppColors.primary,
+                                                        cursorColor: AppColors.primary,
                                                         cursorWidth: 1,
                                                         style: const TextStyle(
                                                           fontSize: 12,
-                                                          color: AppColors
-                                                              .primaryTextColor,
-                                                          fontFamily: FontFamily
-                                                              .redHatLight,
+                                                          color: AppColors.primaryTextColor,
+                                                          fontFamily: FontFamily.redHatLight,
                                                         ),
                                                         onTapOutside: (_) {
-                                                          WidgetsBinding
-                                                              .instance
-                                                              .focusManager
-                                                              .primaryFocus
-                                                              ?.unfocus();
+                                                          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                                                         },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Type in your card address',
-                                                          fillColor:
-                                                              Colors.white,
+                                                        decoration: InputDecoration(
+                                                          hintText: 'Type in your card address',
+                                                          fillColor: Colors.white,
                                                           hintMaxLines: 10,
                                                           hintStyle: TextStyle(
-                                                            fontFamily:
-                                                                FontFamily
-                                                                    .redHatLight,
+                                                            fontFamily: FontFamily.redHatLight,
                                                             fontSize: 13,
-                                                            color: AppColors
-                                                                .primaryTextColor
-                                                                .withOpacity(
+                                                            color: AppColors.primaryTextColor.withOpacity(
                                                               0.5,
                                                             ),
                                                           ),
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
+                                                          contentPadding: const EdgeInsets.symmetric(
                                                             horizontal: 10,
                                                             vertical: 16,
                                                           ),
-                                                          prefixIconConstraints:
-                                                              const BoxConstraints(
+                                                          prefixIconConstraints: const BoxConstraints(
                                                             minWidth: 25,
                                                             minHeight: 25,
                                                           ),
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
+                                                          focusedBorder: OutlineInputBorder(
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               24,
                                                             ),
                                                           ),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
+                                                          enabledBorder: OutlineInputBorder(
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               24,
                                                             ),
                                                           ),
@@ -703,10 +582,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                           unawaited(
                                                             recordAmplitudeEvent(
                                                               const QrButtonClicked(
-                                                                walletType:
-                                                                    'Card',
-                                                                source:
-                                                                    'Connect',
+                                                                walletType: 'Card',
+                                                                source: 'Connect',
                                                               ),
                                                             ),
                                                           );
@@ -716,26 +593,20 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                               milliseconds: 300,
                                                             ),
                                                           );
-                                                          final res =
-                                                              await context
-                                                                  .pushRoute<
-                                                                      String?>(
+                                                          final res = await context.pushRoute<String?>(
                                                             QrScannerRoute(),
                                                           );
                                                           if (res == null) {
                                                             return;
                                                           }
-                                                          await hasShownWallet()
-                                                              .then(
+                                                          await hasShownWallet().then(
                                                             (hasShown) async {
                                                               if (hasShown) {
                                                                 unawaited(
                                                                   recordAmplitudeEvent(
                                                                     QrScanned(
-                                                                      source:
-                                                                          'Wallet',
-                                                                      walletAddress:
-                                                                          res,
+                                                                      source: 'Wallet',
+                                                                      walletAddress: res,
                                                                     ),
                                                                   ),
                                                                 );
@@ -743,10 +614,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                                 unawaited(
                                                                   recordAmplitudeEvent(
                                                                     QrScanned(
-                                                                      source:
-                                                                          'Onboarding',
-                                                                      walletAddress:
-                                                                          res,
+                                                                      source: 'Onboarding',
+                                                                      walletAddress: res,
                                                                     ),
                                                                   ),
                                                                 );
@@ -754,25 +623,16 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                             },
                                                           );
                                                           setState(() {
-                                                            _addressController
-                                                                .text = res;
+                                                            _addressController.text = res;
                                                           });
-                                                          if (widget
-                                                              .receivedData!
-                                                              .startsWith(
+                                                          if (widget.receivedData!.startsWith(
                                                             '0',
                                                           )) {
-                                                            _addressState
-                                                                    .ethAddress =
-                                                                res;
-                                                            await _addressState
-                                                                .validateETHAddress();
+                                                            _addressState.ethAddress = res;
+                                                            await _addressState.validateETHAddress();
                                                           } else {
-                                                            _addressState
-                                                                    .btcAddress =
-                                                                res;
-                                                            await _addressState
-                                                                .validateBTCAddress();
+                                                            _addressState.btcAddress = res;
+                                                            await _addressState.validateBTCAddress();
                                                           }
                                                         },
                                                         child: SizedBox(
@@ -785,20 +645,14 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                     : Lottie.asset(
                                                         'assets/lottie_animations/address_validation_success.json',
                                                         height: 40,
-                                                        controller:
-                                                            _lottieController,
-                                                        onLoaded:
-                                                            (composition) {
+                                                        controller: _lottieController,
+                                                        onLoaded: (composition) {
                                                           Future.delayed(
                                                             const Duration(
-                                                              milliseconds:
-                                                                  1000,
+                                                              milliseconds: 1000,
                                                             ),
                                                           );
-                                                          _lottieController
-                                                                  .duration =
-                                                              composition
-                                                                  .duration;
+                                                          _lottieController.duration = composition.duration;
                                                         },
                                                       ),
                                               );
@@ -807,15 +661,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible:
-                                                    !_validationStore.isValid,
+                                                visible: !_validationStore.isValid,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   top: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenTop
-                                                      .image(),
+                                                  child: Assets.icons.validationIndicatorGreenTop.image(),
                                                 ),
                                               );
                                             },
@@ -823,15 +674,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible:
-                                                    !_validationStore.isValid,
+                                                visible: !_validationStore.isValid,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   bottom: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenBottom
-                                                      .image(),
+                                                  child: Assets.icons.validationIndicatorGreenBottom.image(),
                                                 ),
                                               );
                                             },
@@ -842,27 +690,21 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                     if (context.height > 844)
                                       Gap(context.height * 0.03)
                                     else
-                                      context.height > 667
-                                          ? Gap(context.height * 0.035)
-                                          : Gap(context.height * 0.025),
+                                      context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
                                     if (!(widget.cardColor == '1'))
-                                      Assets.icons.cardBackText
-                                          .image(height: 55)
+                                      Assets.icons.cardBackText.image(height: 55)
                                     else
-                                      Assets.icons.cardBackTextBlack
-                                          .image(height: 55),
+                                      Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
                                     if (!(widget.cardColor == '1'))
                                       SizedBox(
                                         width: 115,
-                                        child:
-                                            Assets.icons.cardBackLink.image(),
+                                        child: Assets.icons.cardBackLink.image(),
                                       )
                                     else
                                       SizedBox(
                                         width: 115,
-                                        child: Assets.icons.cardBackLinkBlack
-                                            .image(),
+                                        child: Assets.icons.cardBackLinkBlack.image(),
                                       ),
                                     Gap(context.height * 0.025),
                                   ],
@@ -904,9 +746,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                 padding: const EdgeInsets.all(14),
                                 child: Column(
                                   children: [
-                                    const Text(
-                                      'Coinplus virtual card',
-                                      style: TextStyle(
+                                    Text(
+                                      widget.backup! ? 'Coinplus backup card' : 'Coinplus virtual card',
+                                      style: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16,
@@ -939,8 +781,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 ActivatedCheckboxClicked(
                                                   source: 'Wallet',
                                                   walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedEthCard!.address,
+                                                  walletAddress: _balanceStore.selectedEthCard!.address,
                                                 ),
                                               ),
                                             );
@@ -950,8 +791,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 ActivatedCheckboxClicked(
                                                   source: 'Onboarding',
                                                   walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedEthCard!.address,
+                                                  walletAddress: _balanceStore.selectedEthCard!.address,
                                                 ),
                                               ),
                                             );
@@ -967,8 +807,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 ActivatedCheckboxClicked(
                                                   source: 'Wallet',
                                                   walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedCard!.address,
+                                                  walletAddress: _balanceStore.selectedCard!.address,
                                                 ),
                                               ),
                                             );
@@ -978,8 +817,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                 ActivatedCheckboxClicked(
                                                   source: 'Onboarding',
                                                   walletType: 'Card',
-                                                  walletAddress: _balanceStore
-                                                      .selectedCard!.address,
+                                                  walletAddress: _balanceStore.selectedCard!.address,
                                                 ),
                                               ),
                                             );
@@ -995,18 +833,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
-                                        color: _allSettingsState
-                                                .isActivatedCheckBox
+                                        color: _allSettingsState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
-                                            : const Color(0xFFFF2E00)
-                                                .withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
-                                      color:
-                                          _allSettingsState.isActivatedCheckBox
-                                              ? const Color(0xFF73C3A6)
-                                                  .withOpacity(0.1)
-                                              : const Color(0xFFFF2E00)
-                                                  .withOpacity(0.05),
+                                      color: _allSettingsState.isActivatedCheckBox
+                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                          : const Color(0xFFFF2E00).withOpacity(0.05),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(14),
@@ -1015,8 +848,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                           const Text(
                                             'This card was previously activated!',
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontWeight: FontWeight.w700,
                                               fontSize: 16,
                                               color: AppColors.textHintsColor,
@@ -1026,8 +858,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                           const Text(
                                             "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontSize: 14,
                                               color: AppColors.textHintsColor,
                                             ),
@@ -1039,9 +870,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                 );
                               },
                             ),
-                            crossFadeState: widget.isActivated == true
-                                ? CrossFadeState.showSecond
-                                : CrossFadeState.showFirst,
+                            crossFadeState:
+                                widget.isActivated == true ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                             duration: const Duration(milliseconds: 400),
                           ),
                           secondChild: GestureDetector(
@@ -1062,15 +892,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                       ? const Color(0xFF73C3A6)
                                       : _allSettingsState.isAccepted
                                           ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00)
-                                              .withOpacity(0.6),
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
                                 ),
                                 color: _allSettingsState.isActive
                                     ? const Color(0xFF73C3A6).withOpacity(0.1)
                                     : _allSettingsState.isAccepted
                                         ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.05),
+                                        : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -1099,9 +927,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                               ),
                             ),
                           ),
-                          crossFadeState: !_allSettingsState.isLineVisible
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              !_allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ),
                       ],
@@ -1122,19 +949,16 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                 builder: (context) {
                                   return Checkbox(
                                     checkColor: const Color(0xFF73C3A6),
-                                    activeColor: const Color(0xFF73C3A6)
-                                        .withOpacity(0.5),
+                                    activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(4),
                                       ),
                                     ),
                                     side: BorderSide(
-                                      color: const Color(0xFFFF2E00)
-                                          .withOpacity(0.6),
+                                      color: const Color(0xFFFF2E00).withOpacity(0.6),
                                     ),
-                                    value:
-                                        _allSettingsState.isActivatedCheckBox,
+                                    value: _allSettingsState.isActivatedCheckBox,
                                     onChanged: (_) {
                                       if (myWalletAddress.startsWith('0')) {
                                         hasShownWallet().then(
@@ -1145,9 +969,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: _balanceStore.selectedEthCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1157,9 +979,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: _balanceStore.selectedEthCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1175,8 +995,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: _balanceStore.selectedCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1186,8 +1005,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: _balanceStore.selectedCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1223,8 +1041,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                   builder: (context) {
                                     return Checkbox(
                                       checkColor: const Color(0xFF73C3A6),
-                                      activeColor: const Color(0xFF73C3A6)
-                                          .withOpacity(0.5),
+                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(4),
@@ -1233,8 +1050,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
                                       side: BorderSide(
                                         color: _allSettingsState.isAccepted
                                             ? Colors.grey.withOpacity(0.5)
-                                            : const Color(0xFFFF2E00)
-                                                .withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
                                       value: _allSettingsState.isActive,
                                       onChanged: (_) {
@@ -1264,7 +1080,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
             receivedData: widget.receivedData!,
             balanceStore: _balanceStore,
             cardColor: widget.cardColor,
-            isOriginalCard: widget.isOriginalCard!,
+            isOriginalNxp: widget.isOriginalNxp!,
             shakeAnimationController: _shakeAnimationController,
             isOldCard: widget.isOldCard,
             isMiFareUltralight: widget.isMiFareUltralight,
@@ -1272,8 +1088,11 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc>
             historyPageStore: _historyPageStore,
             connectivityStore: _connectivityStore,
             addressState: _addressState,
+            hasBackup: widget.hasBackup,
+            backup: widget.backup ?? false,
             toggleCard: _toggleCard,
             flipCardController: _flipCardController,
+            mainWalletAddress: widget.mainWalletAddress ?? '',
           ),
           const Spacer(flex: 2),
         ],

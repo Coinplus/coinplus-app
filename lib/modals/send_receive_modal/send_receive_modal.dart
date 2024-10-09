@@ -13,7 +13,6 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
-import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../providers/screen_service.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/ramp_service.dart';
@@ -40,7 +39,6 @@ Future<void> sendReceiveButtonModal({
   required AllSettingsState allSettingsState,
   required TabController tabController,
   required BuildContext context,
-  required SendToState state,
 }) async {
   await showModalBottomSheet(
     shape: const RoundedRectangleBorder(
@@ -157,7 +155,6 @@ Future<void> sendReceiveButtonModal({
                 tabController: tabController,
                 walletContext: context,
                 allSettingsState: allSettingsState,
-                state: state,
               ),
             if (card.blockchain == 'ETH') const SizedBox(),
             const Gap(8),

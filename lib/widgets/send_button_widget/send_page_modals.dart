@@ -12,13 +12,11 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../providers/screen_service.dart';
 import '../loading_button/loading_button.dart';
 
 Future<void> showBarTapIssueBottomSheet({
   required ValueNotifier<bool> isModalOpened,
-  required SendToState state,
 }) async {
   isModalOpened.value = true;
   await showModalBottomSheet(
@@ -36,7 +34,7 @@ Future<void> showBarTapIssueBottomSheet({
     ),
     backgroundColor: Colors.white,
     builder: (_) {
-      return BarIssueOptionsSheet(state: state);
+      return const BarIssueOptionsSheet();
     },
   );
   isModalOpened.value = false;
@@ -125,7 +123,6 @@ Future<void> showWrongCardModal({
 
 Future<void> showAndroidCardNfcBottomSheet({
   required ValueNotifier<bool> isModalOpened,
-  required SendToState state,
 }) async {
   isModalOpened.value = true;
   await showModalBottomSheet(
@@ -142,7 +139,7 @@ Future<void> showAndroidCardNfcBottomSheet({
     ),
     backgroundColor: Colors.transparent,
     builder: (context) {
-      return AndroidCardNfcModal(state: state);
+      return const AndroidCardNfcModal();
     },
   );
   isModalOpened.value = true;
@@ -150,7 +147,6 @@ Future<void> showAndroidCardNfcBottomSheet({
 
 Future<void> showCardTapIssueBottomSheet({
   required ValueNotifier<bool> isModalOpened,
-  required SendToState state,
 }) async {
   isModalOpened.value = true;
   await showModalBottomSheet(
@@ -168,7 +164,7 @@ Future<void> showCardTapIssueBottomSheet({
     ),
     backgroundColor: Colors.white,
     builder: (_) {
-      return CardIssueOptionsSheet(state: state);
+      return const CardIssueOptionsSheet();
     },
   );
   isModalOpened.value = true;
@@ -176,7 +172,6 @@ Future<void> showCardTapIssueBottomSheet({
 
 Future<void> showAndroidBarNfcBottomSheet({
   required ValueNotifier<bool> isModalOpened,
-  required SendToState state,
 }) async {
   isModalOpened.value = true;
   await showModalBottomSheet(
@@ -193,7 +188,7 @@ Future<void> showAndroidBarNfcBottomSheet({
     ),
     backgroundColor: Colors.transparent,
     builder: (context) {
-      return AndroidBarNfcModal(state: state);
+      return const AndroidBarNfcModal();
     },
   );
   isModalOpened.value = false;

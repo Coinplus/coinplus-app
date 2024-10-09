@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../all_alert_dialogs/broadcast_error_dialog/broadcast_error_dialog.dart';
@@ -24,15 +25,15 @@ class TransactionReviewTab extends HookWidget {
   const TransactionReviewTab({
     super.key,
     required this.tabController,
-    required this.state,
     required this.allSettingsState,
     required this.isBarList,
   });
 
-  final SendToState state;
   final TabController tabController;
   final AllSettingsState allSettingsState;
   final bool isBarList;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class TransactionReviewTab extends HookWidget {
       [context.locale],
     );
     useEffect(() {
-      state.transactionsStore.createTransactionHex();
+      _sendToState.transactionsStore.createTransactionHex();
       return null;
     });
     return SingleChildScrollView(
@@ -92,11 +93,9 @@ class TransactionReviewTab extends HookWidget {
                                   Observer(
                                     builder: (context) {
                                       return Text(
-                                        state.transactionsStore.selectedCard !=
-                                                -1
-                                            ? state.formattedSelectedCardAddress ??
-                                                ''
-                                            : state.formattedSelectedBarAddress,
+                                        _sendToState.transactionsStore.selectedCard != -1
+                                            ? _sendToState.formattedSelectedCardAddress ?? ''
+                                            : _sendToState.formattedSelectedBarAddress,
                                         style: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
                                           fontSize: 14,
@@ -121,13 +120,13 @@ class TransactionReviewTab extends HookWidget {
                                     ),
                                   ),
                                   const Gap(8),
-                                  if (state.btc == null)
+                                  if (_sendToState.btc == null)
                                     const SizedBox()
                                   else
                                     Observer(
                                       builder: (_) {
                                         return Text(
-                                          '\$${formatter.format(state.balanceAfter)}',
+                                          '\$${formatter.format(_sendToState.balanceAfter)}',
                                           style: const TextStyle(
                                             fontFamily: FontFamily.redHatMedium,
                                             fontSize: 14,
@@ -171,7 +170,7 @@ class TransactionReviewTab extends HookWidget {
                                   ),
                                   const Gap(8),
                                   Text(
-                                    state.formattedAddress,
+                                    _sendToState.formattedAddress,
                                     style: const TextStyle(
                                       fontFamily: FontFamily.redHatMedium,
                                       fontSize: 14,
@@ -214,9 +213,9 @@ class TransactionReviewTab extends HookWidget {
               ),
             ),
             const Gap(8),
-            if (state.currency == Currency.USD)
+            if (_sendToState.currency == Currency.USD)
               Text(
-                '-\$${formatter.format(state.amount)}',
+                '-\$${formatter.format(_sendToState.amount)}',
                 style: const TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontWeight: FontWeight.w700,
@@ -226,7 +225,7 @@ class TransactionReviewTab extends HookWidget {
               )
             else
               Text(
-                '-${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice).toStringAsFixed(8)} BTC',
+                '-${_sendToState.amount.usdToBtc(btcCurrentPrice: _sendToState.btcPrice).toStringAsFixed(8)} BTC',
                 style: const TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontWeight: FontWeight.w700,
@@ -234,11 +233,11 @@ class TransactionReviewTab extends HookWidget {
                   fontSize: 24,
                 ),
               ),
-            if (state.currency == Currency.USD)
+            if (_sendToState.currency == Currency.USD)
               Observer(
                 builder: (context) {
                   return Text(
-                    '≈ ${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice).toStringAsFixed(8)} BTC',
+                    '≈ ${_sendToState.amount.usdToBtc(btcCurrentPrice: _sendToState.btcPrice).toStringAsFixed(8)} BTC',
                     style: const TextStyle(
                       fontSize: 14,
                       fontFamily: FontFamily.redHatMedium,
@@ -250,7 +249,7 @@ class TransactionReviewTab extends HookWidget {
               )
             else
               Text(
-                '≈ \$ ${formatter.format(state.amount)}',
+                '≈ \$ ${formatter.format(_sendToState.amount)}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontFamily: FontFamily.redHatMedium,
@@ -291,7 +290,7 @@ class TransactionReviewTab extends HookWidget {
                               Observer(
                                 builder: (context) {
                                   return Text(
-                                    '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                                    '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))} ≈ ${_sendToState.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
                                     style: const TextStyle(
                                       fontFamily: FontFamily.redHatMedium,
                                       fontSize: 14,
@@ -356,7 +355,7 @@ class TransactionReviewTab extends HookWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '\$${formatter.format(state.maxTotal)}',
+                                '\$${formatter.format(_sendToState.maxTotal)}',
                                 style: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
                                   fontWeight: FontWeight.w500,
@@ -381,17 +380,17 @@ class TransactionReviewTab extends HookWidget {
                     try {
                       await recordAmplitudeEventPartTwo(
                         SendClicked(
-                          sendToAddress: state.outputAddress,
-                          sendFromAddress: state.selectedCardAddress!,
-                          amount: '${state.amount.toStringAsFixed(3)} \$',
+                          sendToAddress: _sendToState.outputAddress,
+                          sendFromAddress: _sendToState.selectedCardAddress!,
+                          amount: '${_sendToState.amount.toStringAsFixed(3)} \$',
                           balance:
-                              '${state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice).toStringAsFixed(3)} \$',
+                              '${_sendToState.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice).toStringAsFixed(3)} \$',
                           fee:
-                              '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))}',
-                          txHash: state.transactionsStore.txHex,
+                              '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))}',
+                          txHash: _sendToState.transactionsStore.txHex,
                         ),
                       );
-                      await state.transactionsStore.broadcastTransaction();
+                      await _sendToState.transactionsStore.broadcastTransaction();
                       await router.maybePop();
                       await transactionSubmittedAlert(
                         context: context,
@@ -401,7 +400,7 @@ class TransactionReviewTab extends HookWidget {
                       await broadcastFailAlertDialog(context);
                     }
                   },
-                  child: state.transactionsStore.broadcastLoading
+                  child: _sendToState.transactionsStore.broadcastLoading
                       ? const SizedBox(
                           height: 20,
                           width: 20,

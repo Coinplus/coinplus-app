@@ -4,6 +4,7 @@ import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../../../constants/button_settings.dart';
 import '../../../extensions/context_extension.dart';
@@ -95,6 +96,10 @@ class RemoveUserData extends StatelessWidget {
                   recordAmplitudeEventPartTwo(const EraseMyDataConfirmed()),
                 );
                 await router.pushAndPopAll(const OnboardingRoute());
+                await Restart.restartApp(
+                  notificationTitle: 'Coinplus',
+                  notificationBody: 'Please tap here to open the app again.',
+                );
               },
               boxShadow: [
                 BoxShadow(

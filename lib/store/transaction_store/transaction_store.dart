@@ -26,7 +26,8 @@ abstract class _TransactionStore with Store {
   final _balanceStore = GetIt.I<BalanceStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
-  final _marketPageStore = GetIt.I<MarketPageStore>();
+
+  MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   final _disposer = <ReactionDisposer>[];
 

@@ -32,9 +32,7 @@ class CardAddressField extends HookWidget {
       enableFeedback: false,
       onPressed: _balanceStore.cardCurrentIndex == index
           ? () async {
-              final isCardActivated = isCardWalletActivated(
-                balanceStore: _balanceStore,
-              );
+              final isCardActivated = isCardWalletActivated();
               await recordAmplitudeEvent(
                 AddressCopied(
                   walletType: 'Card',
@@ -60,9 +58,7 @@ class CardAddressField extends HookWidget {
           : null,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: context.height > 667
-              ? context.height * 0.035
-              : context.height * 0.043,
+          horizontal: context.height > 667 ? context.height * 0.035 : context.height * 0.043,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(6),
@@ -99,8 +95,7 @@ class CardAddressField extends HookWidget {
                   ),
                   Observer(
                     builder: (context) {
-                      if (_balanceStore.loadings[state.cards[index].address] ??
-                          false) {
+                      if (_balanceStore.loadings[state.cards[index].address] ?? false) {
                         return Text(
                           getSplitAddress(state.cards[index].address),
                           overflow: TextOverflow.ellipsis,

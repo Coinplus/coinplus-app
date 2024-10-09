@@ -34,22 +34,19 @@ class PinCodePage extends HookWidget {
     final _pinController = useTextEditingController();
     final isResumed = useState(false);
     final isFirstTime = useState(true);
-    final _enteredPinShakeController =
-        useMemoized(ShakeAnimationController.new);
+    final _enteredPinShakeController = useMemoized(ShakeAnimationController.new);
     final _secureStorage = SecureStorageService();
 
     final isLocalAuthChanged = useCallback<Future<bool> Function()>(
       () async {
-        final currentToken =
-            await StorageUtils.getString(key: 'biometricsToken');
+        final currentToken = await StorageUtils.getString(key: 'biometricsToken');
 
         if (currentToken == null) {
           return false;
         }
 
         final status = Platform.isIOS
-            ? await DidChangeAuthLocal.instance
-                .checkBiometricIOS(token: currentToken)
+            ? await DidChangeAuthLocal.instance.checkBiometricIOS(token: currentToken)
             : await DidChangeAuthLocal.instance.checkBiometricAndroid();
         return status == AuthLocalStatus.changed;
       },
@@ -66,8 +63,7 @@ class PinCodePage extends HookWidget {
             _walletProtectState.isBiometricsEnabled = false;
           }
           if (_walletProtectState.isBiometricsEnabled && !isAuthChanged) {
-            final currentToken =
-                await DidChangeAuthLocal.instance.getTokenBiometric();
+            final currentToken = await DidChangeAuthLocal.instance.getTokenBiometric();
             await StorageUtils.setString(
               key: 'biometricsToken',
               value: currentToken,
@@ -123,9 +119,8 @@ class PinCodePage extends HookWidget {
                       color: AppColors.red,
                     ),
                   ),
-                  crossFadeState: _walletProtectState.isCreatedPinMatch
-                      ? CrossFadeState.showSecond
-                      : CrossFadeState.showFirst,
+                  crossFadeState:
+                      _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                   duration: const Duration(milliseconds: 1),
                 );
               },
@@ -245,8 +240,7 @@ class PinCodePage extends HookWidget {
                             onPressed: () {
                               _walletProtectState.authenticateWithBiometrics();
                             },
-                            child: _walletProtectState.availableBiometric ==
-                                    BiometricType.fingerprint
+                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint
                                 ? Assets.icons.iphoneTouchId.image(
                                     height: 30,
                                   )

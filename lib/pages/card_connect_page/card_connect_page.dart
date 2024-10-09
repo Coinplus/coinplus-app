@@ -61,8 +61,7 @@ class CardConnectPage extends StatefulWidget {
   State<CardConnectPage> createState() => _CardConnectPageState();
 }
 
-class _CardConnectPageState extends State<CardConnectPage>
-    with TickerProviderStateMixin {
+class _CardConnectPageState extends State<CardConnectPage> with TickerProviderStateMixin {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late int cardCarouselIndex = _balanceStore.cards.length - 1;
@@ -73,10 +72,8 @@ class _CardConnectPageState extends State<CardConnectPage>
   final _connectivityStore = ConnectivityStore();
   late String btcAddress = '';
   late AnimationController _textFieldAnimationController;
-  late final TextEditingController _btcAddressController =
-      TextEditingController();
-  final ShakeAnimationController _shakeAnimationController =
-      ShakeAnimationController();
+  late final TextEditingController _btcAddressController = TextEditingController();
+  final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
 
   late AnimationController _lottieController;
 
@@ -111,9 +108,7 @@ class _CardConnectPageState extends State<CardConnectPage>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
     _textFieldAnimationController = AnimationController(
       vsync: this,
@@ -121,8 +116,7 @@ class _CardConnectPageState extends State<CardConnectPage>
       lowerBound: 1,
       upperBound: 1.09,
     );
-    _connectivitySubscription = _connectivity.onConnectivityChanged
-        .listen(_connectivityStore.updateConnectionStatus);
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     if (widget.receivedData != null) {
       Future.delayed(const Duration(milliseconds: 300), () {
         _btcAddressController.text = widget.receivedData ?? '';
@@ -163,8 +157,7 @@ class _CardConnectPageState extends State<CardConnectPage>
               child: IconButton(
                 onPressed: () async {
                   unawaited(
-                    _flipCardController.controller!.value == 1 &&
-                            _allSettingsState.isLineVisible
+                    _flipCardController.controller!.value == 1 && _allSettingsState.isLineVisible
                         ? makeLineInvisible()
                         : router.maybePop(),
                   );
@@ -248,17 +241,12 @@ class _CardConnectPageState extends State<CardConnectPage>
                                     horizontal: context.height < 932
                                         ? context.height < 867.4
                                             ? context.height > 844
-                                                ? context.width *
-                                                    0.11 // iPhone 14 Pro (ok)
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
                                                 : context.height > 667
-                                                    ? context.width *
-                                                        0.17 //iPhone 13 Pro
-                                                    : context.width *
-                                                        0.23 // iPhone 7/8/SE (ok)
-                                            : context.width *
-                                                0.15 //Samsung large display
-                                        : context.width *
-                                            0.15, //iPhone 13 Pro Max,
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -266,8 +254,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       await recordAmplitudeEvent(
                                         AddressCopied(
                                           walletType: 'Card',
-                                          walletAddress: _balanceStore
-                                              .selectedCard!.address,
+                                          walletAddress: _balanceStore.selectedCard!.address,
                                           activated: false,
                                           source: 'Balance',
                                         ),
@@ -275,9 +262,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       if (Platform.isIOS) {
                                         await Clipboard.setData(
                                           ClipboardData(
-                                            text: _balanceStore
-                                                .selectedCard!.address
-                                                .toString(),
+                                            text: _balanceStore.selectedCard!.address.toString(),
                                           ),
                                         ).then(
                                           (_) {
@@ -295,8 +280,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                 ).withOpacity(0.9),
                                                 message: 'Address was copied',
                                                 textStyle: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
                                                   color: Colors.white,
                                                 ),
@@ -307,9 +291,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       } else {
                                         await Clipboard.setData(
                                           ClipboardData(
-                                            text: _balanceStore
-                                                .selectedCard!.address
-                                                .toString(),
+                                            text: _balanceStore.selectedCard!.address.toString(),
                                           ),
                                         ).then(
                                           (_) {
@@ -348,8 +330,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                     'Address',
                                                     style: TextStyle(
                                                       fontSize: 11,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       color: Colors.white,
                                                     ),
                                                   ),
@@ -357,10 +338,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                               ),
                                               Observer(
                                                 builder: (context) {
-                                                  if (_balanceStore.loadings[
-                                                          _balanceStore
-                                                              .selectedCard
-                                                              ?.address] ??
+                                                  if (_balanceStore.loadings[_balanceStore.selectedCard?.address] ??
                                                       false) {
                                                     return const Padding(
                                                       padding: EdgeInsets.all(
@@ -371,30 +349,23 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                           SizedBox(
                                                             height: 10,
                                                             width: 10,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.white,
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     );
                                                   }
-                                                  final visibleAddress =
-                                                      getSplitAddress(
-                                                    _balanceStore
-                                                        .selectedCard!.address,
+                                                  final visibleAddress = getSplitAddress(
+                                                    _balanceStore.selectedCard!.address,
                                                   );
                                                   return Text(
                                                     visibleAddress,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                     ),
@@ -414,17 +385,12 @@ class _CardConnectPageState extends State<CardConnectPage>
                                     horizontal: context.height < 932
                                         ? context.height < 867.4
                                             ? context.height > 844
-                                                ? context.width *
-                                                    0.11 // iPhone 14 Pro (ok)
+                                                ? context.width * 0.11 // iPhone 14 Pro (ok)
                                                 : context.height > 667
-                                                    ? context.width *
-                                                        0.17 //iPhone 13 Pro
-                                                    : context.width *
-                                                        0.23 // iPhone 7/8/SE (ok)
-                                            : context.width *
-                                                0.15 //Samsung large display
-                                        : context.width *
-                                            0.15, //iPhone 13 Pro Max,
+                                                    ? context.width * 0.17 //iPhone 13 Pro
+                                                    : context.width * 0.23 // iPhone 7/8/SE (ok)
+                                            : context.width * 0.15 //Samsung large display
+                                        : context.width * 0.15, //iPhone 13 Pro Max,
                                   ),
                                   child: ScaleTap(
                                     enableFeedback: false,
@@ -455,8 +421,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                   Text(
                                                     'Balance',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       color: Colors.white,
                                                       fontSize: 11,
                                                     ),
@@ -465,39 +430,26 @@ class _CardConnectPageState extends State<CardConnectPage>
                                               ),
                                               Observer(
                                                 builder: (context) {
-                                                  final myFormat = NumberFormat
-                                                      .decimalPatternDigits(
+                                                  final myFormat = NumberFormat.decimalPatternDigits(
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
-                                                  final data = _marketPageStore
-                                                      .singleCoin?.result.first;
-                                                  if (_balanceStore
-                                                              .selectedCard !=
-                                                          null &&
-                                                      _balanceStore
-                                                              .selectedCard!
-                                                              .finalBalance !=
-                                                          null &&
+                                                  final data = _marketPageStore.singleCoin?.result.first;
+                                                  if (_balanceStore.selectedCard != null &&
+                                                      _balanceStore.selectedCard!.finalBalance != null &&
                                                       data != null) {
-                                                    final cardBalance =
-                                                        _balanceStore
-                                                            .selectedCard!
-                                                            .finalBalance!;
+                                                    final cardBalance = _balanceStore.selectedCard!.finalBalance!;
 
                                                     if (cardBalance.isNaN) {
                                                       return const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(4),
+                                                        padding: EdgeInsets.all(4),
                                                         child: Row(
                                                           children: [
                                                             SizedBox(
                                                               height: 10,
                                                               width: 10,
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                color: Colors
-                                                                    .white,
+                                                              child: CircularProgressIndicator(
+                                                                color: Colors.white,
                                                               ),
                                                             ),
                                                           ],
@@ -509,12 +461,9 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                       children: [
                                                         Text(
                                                           '\$${myFormat.format(cardBalance / 100000000 * data.price)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w700,
                                                             color: Colors.white,
                                                             fontSize: 20,
                                                           ),
@@ -523,17 +472,14 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                     );
                                                   } else {
                                                     return const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(4),
+                                                      padding: EdgeInsets.all(4),
                                                       child: Row(
                                                         children: [
                                                           SizedBox(
                                                             height: 10,
                                                             width: 10,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
+                                                            child: CircularProgressIndicator(
+                                                              color: Colors.white,
                                                             ),
                                                           ),
                                                         ],
@@ -612,25 +558,14 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                 ), //iPhone 13 Pro Max
                                               Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
-                                                  Assets.images.card.secret1
-                                                      .image(
-                                                    height: context.height > 667
-                                                        ? 180
-                                                        : 150,
+                                                  Assets.images.card.secret1.image(
+                                                    height: context.height > 667 ? 180 : 150,
                                                   ),
-                                                  if (context.height > 667)
-                                                    const Gap(70)
-                                                  else
-                                                    const Gap(50),
-                                                  Assets.images.card.secret2
-                                                      .image(
-                                                    height: context.height > 667
-                                                        ? 180
-                                                        : 150,
+                                                  if (context.height > 667) const Gap(70) else const Gap(50),
+                                                  Assets.images.card.secret2.image(
+                                                    height: context.height > 667 ? 180 : 150,
                                                   ),
                                                 ],
                                               ),
@@ -646,87 +581,52 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                 Observer(
                                                   builder: (context) {
                                                     return Opacity(
-                                                      opacity: _allSettingsState
-                                                              .isLineVisible
-                                                          ? 1
-                                                          : 0,
+                                                      opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
                                                           context.height > 852
-                                                              ? context.height >
-                                                                      844
+                                                              ? context.height > 844
                                                                   ? 42
-                                                                  : context.height >
-                                                                          667
+                                                                  : context.height > 667
                                                                       ? 28
                                                                       : 38
                                                               : 30,
                                                           265,
                                                         ),
-                                                        painter:
-                                                            LineCustomPaint(),
+                                                        painter: LineCustomPaint(),
                                                       ),
                                                     );
                                                   },
                                                 ),
                                                 Opacity(
-                                                  opacity:
-                                                      _validationStore.isValid
-                                                          ? 0
-                                                          : 1,
+                                                  opacity: _validationStore.isValid ? 0 : 1,
                                                   child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
                                                       Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(15),
                                                           border: Border.all(
-                                                            color: AppColors
-                                                                .primaryTextColor,
+                                                            color: AppColors.primaryTextColor,
                                                             width: 1.5,
                                                           ),
                                                         ),
-                                                        child: Assets
-                                                            .images.card.secret1
-                                                            .image(
-                                                          height:
-                                                              context.height >
-                                                                      667
-                                                                  ? 180
-                                                                  : 150,
+                                                        child: Assets.images.card.secret1.image(
+                                                          height: context.height > 667 ? 180 : 150,
                                                         ),
                                                       ),
-                                                      if (context.height > 667)
-                                                        const Gap(70)
-                                                      else
-                                                        const Gap(50),
+                                                      if (context.height > 667) const Gap(70) else const Gap(50),
                                                       Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(15),
                                                           border: Border.all(
-                                                            color: AppColors
-                                                                .primaryTextColor,
+                                                            color: AppColors.primaryTextColor,
                                                             width: 1.5,
                                                           ),
                                                         ),
-                                                        child: Assets
-                                                            .images.card.secret2
-                                                            .image(
-                                                          height:
-                                                              context.height >
-                                                                      667
-                                                                  ? 180
-                                                                  : 150,
+                                                        child: Assets.images.card.secret2.image(
+                                                          height: context.height > 667 ? 180 : 150,
                                                         ),
                                                       ),
                                                     ],
@@ -751,11 +651,9 @@ class _CardConnectPageState extends State<CardConnectPage>
                               else
                                 Gap(context.height * 0.049),
                               Opacity(
-                                opacity:
-                                    _allSettingsState.isLineVisible ? 0 : 1,
+                                opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     if (context.height < 932)
                                       if (context.height < 867.4)
@@ -772,14 +670,10 @@ class _CardConnectPageState extends State<CardConnectPage>
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        Assets.icons.coinplusLogo
-                                            .image(height: 32),
+                                        Assets.icons.coinplusLogo.image(height: 32),
                                       ],
                                     ),
-                                    if (context.height > 844)
-                                      const Gap(24)
-                                    else
-                                      const Gap(21.5),
+                                    if (context.height > 844) const Gap(24) else const Gap(21.5),
                                     ScaleTransition(
                                       scale: _textFieldAnimationController,
                                       child: Stack(
@@ -795,35 +689,24 @@ class _CardConnectPageState extends State<CardConnectPage>
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
-                                                color: _focusNode.hasFocus
-                                                    ? Colors.blue
-                                                    : const Color(0xFFFBB270),
-                                                width:
-                                                    _focusNode.hasFocus ? 1 : 3,
+                                                color: _focusNode.hasFocus ? Colors.blue : const Color(0xFFFBB270),
+                                                width: _focusNode.hasFocus ? 1 : 3,
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
+                                              borderRadius: BorderRadius.circular(
                                                 context.height > 667 ? 28 : 25,
                                               ),
                                             ),
                                             child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 SizedBox(
                                                   width: context.height < 932
                                                       ? context.height < 867.4
                                                           ? context.height > 844
-                                                              ? context.width *
-                                                                  0.241
-                                                              : context.height >
-                                                                      667
-                                                                  ? context
-                                                                          .width *
-                                                                      0.25
-                                                                  : context
-                                                                          .width *
-                                                                      0.21
+                                                              ? context.width * 0.241
+                                                              : context.height > 667
+                                                                  ? context.width * 0.25
+                                                                  : context.width * 0.21
                                                           : context.width * 0.23
                                                       : context.width * 0.225,
                                                   height: context.height * 0.14,
@@ -835,49 +718,33 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                             35,
                                                           ),
                                                         ],
-                                                        readOnly:
-                                                            !_validationStore
-                                                                    .isValid &&
-                                                                true,
-                                                        textAlignVertical:
-                                                            TextAlignVertical
-                                                                .top,
+                                                        readOnly: !_validationStore.isValid && true,
+                                                        textAlignVertical: TextAlignVertical.top,
                                                         autocorrect: false,
-                                                        keyboardType:
-                                                            TextInputType.text,
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                        keyboardType: TextInputType.text,
+                                                        textAlign: TextAlign.center,
                                                         onChanged: (value) {
-                                                          if (value.length >
-                                                              25) {
+                                                          if (value.length > 25) {
                                                             _addressState
-                                                              ..btcAddress =
-                                                                  value
+                                                              ..btcAddress = value
                                                               ..validateBTCAddress();
                                                             btcAddress = value;
-                                                            hasShownWallet()
-                                                                .then(
+                                                            hasShownWallet().then(
                                                               (hasShown) async {
                                                                 if (hasShown) {
                                                                   await recordAmplitudeEvent(
                                                                     AddressFilled(
-                                                                      source:
-                                                                          'Wallet',
-                                                                      walletAddress:
-                                                                          btcAddress,
-                                                                      walletType:
-                                                                          'Card',
+                                                                      source: 'Wallet',
+                                                                      walletAddress: btcAddress,
+                                                                      walletType: 'Card',
                                                                     ),
                                                                   );
                                                                 } else {
                                                                   await recordAmplitudeEvent(
                                                                     AddressFilled(
-                                                                      source:
-                                                                          'Onboarding',
-                                                                      walletAddress:
-                                                                          btcAddress,
-                                                                      walletType:
-                                                                          'Card',
+                                                                      source: 'Onboarding',
+                                                                      walletAddress: btcAddress,
+                                                                      walletType: 'Card',
                                                                     ),
                                                                   );
                                                                 }
@@ -886,86 +753,55 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                           }
                                                         },
                                                         onEditingComplete: () {
-                                                          if (btcAddress
-                                                                  .length >
-                                                              25) {
-                                                            _addressState
-                                                                .validateBTCAddress();
+                                                          if (btcAddress.length > 25) {
+                                                            _addressState.validateBTCAddress();
                                                           }
                                                         },
-                                                        controller:
-                                                            _btcAddressController,
+                                                        controller: _btcAddressController,
                                                         maxLines: 15,
                                                         focusNode: _focusNode,
-                                                        cursorColor:
-                                                            AppColors.primary,
+                                                        cursorColor: AppColors.primary,
                                                         cursorWidth: 1,
                                                         style: const TextStyle(
                                                           fontSize: 12,
-                                                          color: AppColors
-                                                              .primaryTextColor,
-                                                          fontFamily: FontFamily
-                                                              .redHatLight,
+                                                          color: AppColors.primaryTextColor,
+                                                          fontFamily: FontFamily.redHatLight,
                                                         ),
                                                         onTapOutside: (_) {
-                                                          WidgetsBinding
-                                                              .instance
-                                                              .focusManager
-                                                              .primaryFocus
-                                                              ?.unfocus();
+                                                          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                                                         },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Type in your card address',
-                                                          fillColor:
-                                                              Colors.white,
+                                                        decoration: InputDecoration(
+                                                          hintText: 'Type in your card address',
+                                                          fillColor: Colors.white,
                                                           hintMaxLines: 10,
                                                           hintStyle: TextStyle(
-                                                            fontFamily:
-                                                                FontFamily
-                                                                    .redHatLight,
+                                                            fontFamily: FontFamily.redHatLight,
                                                             fontSize: 13,
-                                                            color: AppColors
-                                                                .primaryTextColor
-                                                                .withOpacity(
+                                                            color: AppColors.primaryTextColor.withOpacity(
                                                               0.5,
                                                             ),
                                                           ),
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
+                                                          contentPadding: const EdgeInsets.symmetric(
                                                             horizontal: 10,
                                                             vertical: 16,
                                                           ),
-                                                          prefixIconConstraints:
-                                                              const BoxConstraints(
+                                                          prefixIconConstraints: const BoxConstraints(
                                                             minWidth: 25,
                                                             minHeight: 25,
                                                           ),
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
+                                                          focusedBorder: OutlineInputBorder(
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               24,
                                                             ),
                                                           ),
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color: Colors
-                                                                  .transparent,
+                                                          enabledBorder: OutlineInputBorder(
+                                                            borderSide: const BorderSide(
+                                                              color: Colors.transparent,
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               24,
                                                             ),
                                                           ),
@@ -989,10 +825,8 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                           unawaited(
                                                             recordAmplitudeEvent(
                                                               const QrButtonClicked(
-                                                                walletType:
-                                                                    'Card',
-                                                                source:
-                                                                    'Connect',
+                                                                walletType: 'Card',
+                                                                source: 'Connect',
                                                               ),
                                                             ),
                                                           );
@@ -1002,26 +836,20 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                               milliseconds: 300,
                                                             ),
                                                           );
-                                                          final res =
-                                                              await context
-                                                                  .pushRoute<
-                                                                      String?>(
+                                                          final res = await context.pushRoute<String?>(
                                                             QrScannerRoute(),
                                                           );
                                                           if (res == null) {
                                                             return;
                                                           }
-                                                          await hasShownWallet()
-                                                              .then(
+                                                          await hasShownWallet().then(
                                                             (hasShown) async {
                                                               if (hasShown) {
                                                                 unawaited(
                                                                   recordAmplitudeEvent(
                                                                     QrScanned(
-                                                                      source:
-                                                                          'Wallet',
-                                                                      walletAddress:
-                                                                          res,
+                                                                      source: 'Wallet',
+                                                                      walletAddress: res,
                                                                     ),
                                                                   ),
                                                                 );
@@ -1029,10 +857,8 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                                 unawaited(
                                                                   recordAmplitudeEvent(
                                                                     QrScanned(
-                                                                      source:
-                                                                          'Onboarding',
-                                                                      walletAddress:
-                                                                          res,
+                                                                      source: 'Onboarding',
+                                                                      walletAddress: res,
                                                                     ),
                                                                   ),
                                                                 );
@@ -1040,14 +866,11 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                             },
                                                           );
                                                           setState(() {
-                                                            _btcAddressController
-                                                                .text = res;
+                                                            _btcAddressController.text = res;
                                                           });
-                                                          _addressState
-                                                              .btcAddress = res;
+                                                          _addressState.btcAddress = res;
 
-                                                          await _addressState
-                                                              .validateBTCAddress();
+                                                          await _addressState.validateBTCAddress();
                                                         },
                                                         child: SizedBox(
                                                           height: 50,
@@ -1059,20 +882,14 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                     : Lottie.asset(
                                                         'assets/lottie_animations/address_validation_success.json',
                                                         height: 40,
-                                                        controller:
-                                                            _lottieController,
-                                                        onLoaded:
-                                                            (composition) {
+                                                        controller: _lottieController,
+                                                        onLoaded: (composition) {
                                                           Future.delayed(
                                                             const Duration(
-                                                              milliseconds:
-                                                                  1000,
+                                                              milliseconds: 1000,
                                                             ),
                                                           );
-                                                          _lottieController
-                                                                  .duration =
-                                                              composition
-                                                                  .duration;
+                                                          _lottieController.duration = composition.duration;
                                                         },
                                                       ),
                                               );
@@ -1081,15 +898,12 @@ class _CardConnectPageState extends State<CardConnectPage>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible:
-                                                    !_validationStore.isValid,
+                                                visible: !_validationStore.isValid,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   top: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenTop
-                                                      .image(),
+                                                  child: Assets.icons.validationIndicatorGreenTop.image(),
                                                 ),
                                               );
                                             },
@@ -1097,15 +911,12 @@ class _CardConnectPageState extends State<CardConnectPage>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible:
-                                                    !_validationStore.isValid,
+                                                visible: !_validationStore.isValid,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   bottom: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenBottom
-                                                      .image(),
+                                                  child: Assets.icons.validationIndicatorGreenBottom.image(),
                                                 ),
                                               );
                                             },
@@ -1113,15 +924,13 @@ class _CardConnectPageState extends State<CardConnectPage>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible: !_validationStore
-                                                    .isInvalidAddress,
+                                                visible: !_validationStore.isInvalidAddress,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   top: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenTop
-                                                      .image(color: Colors.red),
+                                                  child:
+                                                      Assets.icons.validationIndicatorGreenTop.image(color: Colors.red),
                                                 ),
                                               );
                                             },
@@ -1129,14 +938,12 @@ class _CardConnectPageState extends State<CardConnectPage>
                                           Observer(
                                             builder: (context) {
                                               return Visibility(
-                                                visible: !_validationStore
-                                                    .isInvalidAddress,
+                                                visible: !_validationStore.isInvalidAddress,
                                                 child: Positioned(
                                                   left: 6,
                                                   right: 6,
                                                   bottom: 6,
-                                                  child: Assets.icons
-                                                      .validationIndicatorGreenBottom
+                                                  child: Assets.icons.validationIndicatorGreenBottom
                                                       .image(color: Colors.red),
                                                 ),
                                               );
@@ -1148,9 +955,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                     if (context.height > 844)
                                       Gap(context.height * 0.03)
                                     else
-                                      context.height > 667
-                                          ? Gap(context.height * 0.035)
-                                          : Gap(context.height * 0.025),
+                                      context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
                                     Assets.icons.cardBackText.image(height: 55),
                                     Gap(context.height * 0.02),
                                     SizedBox(
@@ -1206,8 +1011,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: _balanceStore.selectedCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1217,8 +1021,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                   ActivatedCheckboxClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: _balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: _balanceStore.selectedCard!.address,
                                                   ),
                                                 ),
                                               );
@@ -1230,21 +1033,15 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                           border: Border.all(
-                                            color: _allSettingsState
-                                                    .isActivatedCheckBox
+                                            color: _allSettingsState.isActivatedCheckBox
                                                 ? const Color(0xFF73C3A6)
-                                                : const Color(0xFFFF2E00)
-                                                    .withOpacity(0.6),
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
                                           ),
-                                          color: _allSettingsState
-                                                  .isActivatedCheckBox
-                                              ? const Color(0xFF73C3A6)
-                                                  .withOpacity(0.1)
-                                              : const Color(0xFFFF2E00)
-                                                  .withOpacity(0.05),
+                                          color: _allSettingsState.isActivatedCheckBox
+                                              ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                              : const Color(0xFFFF2E00).withOpacity(0.05),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(14),
@@ -1253,23 +1050,19 @@ class _CardConnectPageState extends State<CardConnectPage>
                                               const Text(
                                                 'This card was previously activated!',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 16,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
                                               const Gap(4),
                                               const Text(
                                                 "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
                                             ],
@@ -1297,27 +1090,22 @@ class _CardConnectPageState extends State<CardConnectPage>
                                               firstChild: const Text(
                                                 'Fill in the address of your physical card wallet',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 16,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
                                               secondChild: const Text(
                                                 'Coinplus Virtual Card',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 16,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
-                                              crossFadeState: _addressState
-                                                      .isAddressVisible
+                                              crossFadeState: _addressState.isAddressVisible
                                                   ? CrossFadeState.showSecond
                                                   : CrossFadeState.showFirst,
                                               duration: const Duration(
@@ -1329,25 +1117,20 @@ class _CardConnectPageState extends State<CardConnectPage>
                                               firstChild: const Text(
                                                 'Please fill the address from your physical card into the address input field, or scan the QR code.',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
                                               secondChild: const Text(
                                                 'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontSize: 14,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                               ).expandedHorizontally(),
-                                              crossFadeState: _addressState
-                                                      .isAddressVisible
+                                              crossFadeState: _addressState.isAddressVisible
                                                   ? CrossFadeState.showSecond
                                                   : CrossFadeState.showFirst,
                                               duration: const Duration(
@@ -1360,9 +1143,8 @@ class _CardConnectPageState extends State<CardConnectPage>
                                     );
                                   },
                                 ),
-                                crossFadeState: isActivated == true
-                                    ? CrossFadeState.showFirst
-                                    : CrossFadeState.showSecond,
+                                crossFadeState:
+                                    isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                 duration: const Duration(milliseconds: 400),
                               );
                             },
@@ -1385,15 +1167,13 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       ? const Color(0xFF73C3A6)
                                       : _allSettingsState.isAccepted
                                           ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00)
-                                              .withOpacity(0.6),
+                                          : const Color(0xFFFF2E00).withOpacity(0.6),
                                 ),
                                 color: _allSettingsState.isActive
                                     ? const Color(0xFF73C3A6).withOpacity(0.1)
                                     : _allSettingsState.isAccepted
                                         ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00)
-                                            .withOpacity(0.05),
+                                        : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -1422,9 +1202,8 @@ class _CardConnectPageState extends State<CardConnectPage>
                               ),
                             ),
                           ),
-                          crossFadeState: !_allSettingsState.isLineVisible
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              !_allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ).paddingHorizontal(16),
                         Visibility(
@@ -1450,19 +1229,16 @@ class _CardConnectPageState extends State<CardConnectPage>
                                         builder: (context) {
                                           return Checkbox(
                                             checkColor: const Color(0xFF73C3A6),
-                                            activeColor: const Color(0xFF73C3A6)
-                                                .withOpacity(0.5),
+                                            activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                             shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(4),
                                               ),
                                             ),
                                             side: BorderSide(
-                                              color: const Color(0xFFFF2E00)
-                                                  .withOpacity(0.6),
+                                              color: const Color(0xFFFF2E00).withOpacity(0.6),
                                             ),
-                                            value: _allSettingsState
-                                                .isActivatedCheckBox,
+                                            value: _allSettingsState.isActivatedCheckBox,
                                             onChanged: (_) {
                                               hasShownWallet().then(
                                                 (hasShown) async {
@@ -1472,10 +1248,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                         ActivatedCheckboxClicked(
                                                           source: 'Wallet',
                                                           walletType: 'Card',
-                                                          walletAddress:
-                                                              _balanceStore
-                                                                  .selectedCard!
-                                                                  .address,
+                                                          walletAddress: _balanceStore.selectedCard!.address,
                                                         ),
                                                       ),
                                                     );
@@ -1485,10 +1258,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                         ActivatedCheckboxClicked(
                                                           source: 'Onboarding',
                                                           walletType: 'Card',
-                                                          walletAddress:
-                                                              _balanceStore
-                                                                  .selectedCard!
-                                                                  .address,
+                                                          walletAddress: _balanceStore.selectedCard!.address,
                                                         ),
                                                       ),
                                                     );
@@ -1496,8 +1266,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                 },
                                               );
 
-                                              _allSettingsState
-                                                  .makeActiveCheckbox();
+                                              _allSettingsState.makeActiveCheckbox();
                                             },
                                             splashRadius: 15,
                                           );
@@ -1524,8 +1293,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                   builder: (context) {
                                     return Checkbox(
                                       checkColor: const Color(0xFF73C3A6),
-                                      activeColor: const Color(0xFF73C3A6)
-                                          .withOpacity(0.5),
+                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(4),
@@ -1534,8 +1302,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                       side: BorderSide(
                                         color: _allSettingsState.isAccepted
                                             ? Colors.grey.withOpacity(0.5)
-                                            : const Color(0xFFFF2E00)
-                                                .withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withOpacity(0.6),
                                       ),
                                       value: _allSettingsState.isActive,
                                       onChanged: (_) {
@@ -1574,8 +1341,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                 GotItClicked(
                                   source: 'Wallet',
                                   walletType: 'Card',
-                                  walletAddress:
-                                      _balanceStore.selectedCard!.address,
+                                  walletAddress: _balanceStore.selectedCard!.address,
                                 ),
                               );
                             } else {
@@ -1583,8 +1349,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                 GotItClicked(
                                   source: 'Onboarding',
                                   walletType: 'Card',
-                                  walletAddress:
-                                      _balanceStore.selectedCard!.address,
+                                  walletAddress: _balanceStore.selectedCard!.address,
                                 ),
                               );
                             }
@@ -1595,8 +1360,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                             _balanceStore.cardCurrentIndex,
                           );
                           if (widget.receivedData == null) {
-                            final card =
-                                await getCardData(_btcAddressController.text);
+                            final card = await getCardData(_btcAddressController.text);
                             if (card != null) {
                               unawaited(
                                 connectedCount(_btcAddressController.text),
@@ -1614,8 +1378,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                               );
                             }
                           } else {
-                            final card =
-                                await getCardData(widget.receivedData!);
+                            final card = await getCardData(widget.receivedData!);
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
                               _balanceStore.saveSelectedCardManually(
@@ -1683,8 +1446,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                         return Observer(
                           builder: (context) {
                             return LoadingButton(
-                              onPressed: _connectivityStore.connectionStatus ==
-                                      ConnectivityResult.none
+                              onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
                                   ? null
                                   : _addressState.isAddressVisible
                                       ? _allSettingsState.isActivatedCheckBox
@@ -1696,10 +1458,7 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                       SaveToWalletClicked(
                                                         source: 'Wallet',
                                                         walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedCard!
-                                                                .address,
+                                                        walletAddress: _balanceStore.selectedCard!.address,
                                                       ),
                                                     );
                                                   } else {
@@ -1707,37 +1466,23 @@ class _CardConnectPageState extends State<CardConnectPage>
                                                       SaveToWalletClicked(
                                                         source: 'Onboarding',
                                                         walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedCard!
-                                                                .address,
+                                                        walletAddress: _balanceStore.selectedCard!.address,
                                                       ),
                                                     );
                                                   }
                                                 },
                                               );
-                                              final cardIndex = _balanceStore
-                                                  .cards
-                                                  .indexWhere(
-                                                (element) =>
-                                                    element.address ==
-                                                    _balanceStore
-                                                        .selectedCard?.address,
+                                              final cardIndex = _balanceStore.cards.indexWhere(
+                                                (element) => element.address == _balanceStore.selectedCard?.address,
                                               );
 
-                                              final barIndex =
-                                                  _balanceStore.bars.indexWhere(
-                                                (element) =>
-                                                    element.address ==
-                                                    _balanceStore
-                                                        .selectedCard?.address,
+                                              final barIndex = _balanceStore.bars.indexWhere(
+                                                (element) => element.address == _balanceStore.selectedCard?.address,
                                               );
-                                              if (cardIndex != -1 ||
-                                                  barIndex != -1) {
+                                              if (cardIndex != -1 || barIndex != -1) {
                                                 await alreadySavedCard(
                                                   context,
-                                                  _balanceStore
-                                                      .selectedCard!.address,
+                                                  _balanceStore.selectedCard!.address,
                                                 );
                                               } else {
                                                 await _toggleCard();
@@ -1752,47 +1497,30 @@ class _CardConnectPageState extends State<CardConnectPage>
                                           : () async {
                                               if (isActivated == true) {
                                                 await HapticFeedback.vibrate();
-                                                _allSettingsState
-                                                    .checkboxAccept();
-                                                _shakeAnimationController
-                                                    .start();
+                                                _allSettingsState.checkboxAccept();
+                                                _shakeAnimationController.start();
                                                 await Future.delayed(
                                                   const Duration(
                                                     milliseconds: 600,
                                                   ),
                                                 );
-                                                _shakeAnimationController
-                                                    .stop();
+                                                _shakeAnimationController.stop();
                                               } else {
-                                                final cardIndex = _balanceStore
-                                                    .cards
-                                                    .indexWhere(
-                                                  (element) =>
-                                                      element.address ==
-                                                      _balanceStore.selectedCard
-                                                          ?.address,
+                                                final cardIndex = _balanceStore.cards.indexWhere(
+                                                  (element) => element.address == _balanceStore.selectedCard?.address,
                                                 );
-                                                final barIndex = _balanceStore
-                                                    .bars
-                                                    .indexWhere(
-                                                  (element) =>
-                                                      element.address ==
-                                                      _balanceStore.selectedCard
-                                                          ?.address,
+                                                final barIndex = _balanceStore.bars.indexWhere(
+                                                  (element) => element.address == _balanceStore.selectedCard?.address,
                                                 );
-                                                if (cardIndex != -1 ||
-                                                    barIndex != -1) {
+                                                if (cardIndex != -1 || barIndex != -1) {
                                                   await alreadySavedCard(
                                                     context,
-                                                    _balanceStore
-                                                        .selectedCard!.address,
+                                                    _balanceStore.selectedCard!.address,
                                                   );
                                                 } else {
-                                                  if (_flipCardController
-                                                      .state!.isFront) {
+                                                  if (_flipCardController.state!.isFront) {
                                                     await _toggleCard();
-                                                    _allSettingsState
-                                                        .makeVisible();
+                                                    _allSettingsState.makeVisible();
                                                   }
                                                 }
                                               }

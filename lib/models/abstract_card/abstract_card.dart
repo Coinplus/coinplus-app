@@ -14,6 +14,8 @@ abstract class AbstractCard {
 
   String get blockchain;
 
+  bool get isBackup;
+
   String get createdAt;
 
   num? get finalBalance;

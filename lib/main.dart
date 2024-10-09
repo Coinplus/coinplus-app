@@ -20,6 +20,7 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   await Firebase.initializeApp();
   await initNotifications();
   final _secureStorage = SecureStorageService();
+  // await StorageUtils.clear();
 
   unawaited(
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[

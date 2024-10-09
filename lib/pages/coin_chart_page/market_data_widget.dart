@@ -15,10 +15,8 @@ class MarketCapData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedMarketCap =
-        formatNumberToBillions(widget.data!.marketCap.toDouble());
-    final formattedVolume =
-        formatNumberToBillions(widget.data!.volume.toDouble());
+    final formattedMarketCap = formatNumberToBillions(widget.data!.marketCap.toDouble());
+    final formattedVolume = formatNumberToBillions(widget.data!.volume.toDouble());
     final formattedAvailableSupply = formatNumberBillions(
       widget.data!.availableSupply.toDouble(),
     );

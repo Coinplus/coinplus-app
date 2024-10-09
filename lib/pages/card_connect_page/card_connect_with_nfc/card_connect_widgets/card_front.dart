@@ -71,8 +71,7 @@ class CardFront extends StatelessWidget {
                                   ? context.width * 0.11 // iPhone 14 Pro (ok)
                                   : context.height > 667
                                       ? context.width * 0.17 //iPhone 13 Pro
-                                      : context.width *
-                                          0.23 // iPhone 7/8/SE (ok)
+                                      : context.width * 0.23 // iPhone 7/8/SE (ok)
                               : context.width * 0.15 //Samsung large display
                           : context.width * 0.15, //iPhone 13 Pro Max,
                     ),
@@ -90,8 +89,7 @@ class CardFront extends StatelessWidget {
                         if (Platform.isIOS) {
                           await Clipboard.setData(
                             ClipboardData(
-                              text:
-                                  balanceStore.selectedCard!.address.toString(),
+                              text: balanceStore.selectedCard!.address.toString(),
                             ),
                           ).then(
                             (_) {
@@ -120,8 +118,7 @@ class CardFront extends StatelessWidget {
                         } else {
                           await Clipboard.setData(
                             ClipboardData(
-                              text:
-                                  balanceStore.selectedCard!.address.toString(),
+                              text: balanceStore.selectedCard!.address.toString(),
                             ),
                           ).then(
                             (_) {
@@ -169,11 +166,8 @@ class CardFront extends StatelessWidget {
                                 if (receivedData.startsWith('0'))
                                   Observer(
                                     builder: (context) {
-                                      final selectedEthCard =
-                                          balanceStore.selectedEthCard;
-                                      if (balanceStore.loadings[
-                                              selectedEthCard?.address] ??
-                                          false) {
+                                      final selectedEthCard = balanceStore.selectedEthCard;
+                                      if (balanceStore.loadings[selectedEthCard?.address] ?? false) {
                                         return const Padding(
                                           padding: EdgeInsets.all(4),
                                           child: Row(
@@ -181,8 +175,7 @@ class CardFront extends StatelessWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: Colors.white,
                                                   strokeWidth: 3,
                                                 ),
@@ -199,8 +192,7 @@ class CardFront extends StatelessWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: Colors.white,
                                                   strokeWidth: 3,
                                                 ),
@@ -227,9 +219,7 @@ class CardFront extends StatelessWidget {
                                 else
                                   Observer(
                                     builder: (context) {
-                                      if (balanceStore.loadings[balanceStore
-                                              .selectedCard?.address] ??
-                                          false) {
+                                      if (balanceStore.loadings[balanceStore.selectedCard?.address] ?? false) {
                                         return const Padding(
                                           padding: EdgeInsets.all(
                                             4,
@@ -239,8 +229,7 @@ class CardFront extends StatelessWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: Colors.white,
                                                   strokeWidth: 3,
                                                 ),
@@ -280,8 +269,7 @@ class CardFront extends StatelessWidget {
                                   ? context.width * 0.11 // iPhone 14 Pro (ok)
                                   : context.height > 667
                                       ? context.width * 0.17 //iPhone 13 Pro
-                                      : context.width *
-                                          0.23 // iPhone 7/8/SE (ok)
+                                      : context.width * 0.23 // iPhone 7/8/SE (ok)
                               : context.width * 0.15 //Samsung large display
                           : context.width * 0.15, //iPhone 13 Pro Max,
                     ),
@@ -324,21 +312,15 @@ class CardFront extends StatelessWidget {
                                 if (receivedData.startsWith('0'))
                                   Observer(
                                     builder: (context) {
-                                      final myFormat =
-                                          NumberFormat.decimalPatternDigits(
+                                      final myFormat = NumberFormat.decimalPatternDigits(
                                         locale: 'en_us',
                                         decimalDigits: 2,
                                       );
-                                      final data =
-                                          marketPageStore.singleCoin?.result[1];
-                                      if (balanceStore.selectedEthCard !=
-                                              null &&
-                                          balanceStore.selectedEthCard!
-                                                  .finalBalance !=
-                                              null &&
+                                      final data = marketPageStore.singleCoin?.result[1];
+                                      if (balanceStore.selectedEthCard != null &&
+                                          balanceStore.selectedEthCard!.finalBalance != null &&
                                           data != null) {
-                                        final cardBalance = balanceStore
-                                            .selectedEthCard!.finalBalance!;
+                                        final cardBalance = balanceStore.selectedEthCard!.finalBalance!;
 
                                         if (cardBalance.isNaN) {
                                           return const Padding(
@@ -348,8 +330,7 @@ class CardFront extends StatelessWidget {
                                                 SizedBox(
                                                   height: 10,
                                                   width: 10,
-                                                  child:
-                                                      CircularProgressIndicator(
+                                                  child: CircularProgressIndicator(
                                                     color: Colors.white,
                                                     strokeWidth: 3,
                                                   ),
@@ -364,8 +345,7 @@ class CardFront extends StatelessWidget {
                                             Text(
                                               '\$${myFormat.format(cardBalance)}',
                                               style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.white,
                                                 fontSize: 20,
@@ -381,8 +361,7 @@ class CardFront extends StatelessWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -395,20 +374,15 @@ class CardFront extends StatelessWidget {
                                 else
                                   Observer(
                                     builder: (context) {
-                                      final myFormat =
-                                          NumberFormat.decimalPatternDigits(
+                                      final myFormat = NumberFormat.decimalPatternDigits(
                                         locale: 'en_us',
                                         decimalDigits: 2,
                                       );
-                                      final data = marketPageStore
-                                          .singleCoin?.result.first;
+                                      final data = marketPageStore.singleCoin?.result.first;
                                       if (balanceStore.selectedCard != null &&
-                                          balanceStore
-                                                  .selectedCard!.finalBalance !=
-                                              null &&
+                                          balanceStore.selectedCard!.finalBalance != null &&
                                           data != null) {
-                                        final cardBalance = balanceStore
-                                            .selectedCard!.finalBalance!;
+                                        final cardBalance = balanceStore.selectedCard!.finalBalance!;
 
                                         if (cardBalance.isNaN) {
                                           return const Padding(
@@ -418,8 +392,7 @@ class CardFront extends StatelessWidget {
                                                 SizedBox(
                                                   height: 10,
                                                   width: 10,
-                                                  child:
-                                                      CircularProgressIndicator(
+                                                  child: CircularProgressIndicator(
                                                     color: Colors.white,
                                                     strokeWidth: 3,
                                                   ),
@@ -434,8 +407,7 @@ class CardFront extends StatelessWidget {
                                             Text(
                                               '\$${myFormat.format(cardBalance / 100000000 * data.price)}',
                                               style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.white,
                                                 fontSize: 20,
@@ -451,8 +423,7 @@ class CardFront extends StatelessWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   color: Colors.white,
                                                 ),
                                               ),

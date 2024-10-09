@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:get_it/get_it.dart';
 
 import '/../../../../extensions/num_extension.dart';
 import '../../../../../../extensions/extensions.dart';
@@ -19,11 +20,11 @@ class BtcAmountTextField extends HookWidget {
   const BtcAmountTextField({
     super.key,
     required this.btcFocusNode,
-    required this.state,
   });
 
   final FocusNode btcFocusNode;
-  final SendToState state;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +45,10 @@ class BtcAmountTextField extends HookWidget {
         if (_hasPrinted.value == false) {
           recordAmplitudeEventPartTwo(
             AmountEntered(
-              amount:
-                  '${state.amount.usdToBtc(btcCurrentPrice: state.btcPrice)}BTC',
-              balance:
-                  '${state.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
+              amount: '${_sendToState.amount.usdToBtc(btcCurrentPrice: _sendToState.btcPrice)}BTC',
+              balance: '${_sendToState.selectedCard!.finalBalance!.satoshiToBtc()} BTC',
               fee:
-                  '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                  '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))} ≈ ${_sendToState.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
             ),
           );
           _hasPrinted.value = true;
@@ -58,7 +57,7 @@ class BtcAmountTextField extends HookWidget {
     }
 
     useEffect(() {
-      state.btcController.addListener(_onTextChanged);
+      _sendToState.btcController.addListener(_onTextChanged);
       return null;
     });
     return Expanded(
@@ -83,7 +82,7 @@ class BtcAmountTextField extends HookWidget {
                     ),
                     Flexible(
                       child: TextField(
-                        controller: state.btcController,
+                        controller: _sendToState.btcController,
                         focusNode: btcFocusNode,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -113,34 +112,33 @@ class BtcAmountTextField extends HookWidget {
                         onChanged: (value) {
                           var previousTextLength = 0;
                           Gaimon.selection();
-                          state.handleBtcAmountSelection();
-                          if (state.isUseMaxClicked) {
+                          _sendToState.handleBtcAmountSelection();
+                          if (_sendToState.isUseMaxClicked) {
                             if (value.length > previousTextLength) {
-                              state.hideMaxValue();
+                              _sendToState.hideMaxValue();
                             }
                           }
                           final btcDoubleAMount = double.tryParse(value);
                           final btcToUsd = btcDoubleAMount?.btcToUsd(
-                            btcCurrentPrice: state.btcPrice,
+                            btcCurrentPrice: _sendToState.btcPrice,
                           );
-                          state.setAmount(btcToUsd.toString());
-                          state.transactionsStore.findOptimalUtxo();
+                          _sendToState.setAmount(btcToUsd.toString());
+                          _sendToState.transactionsStore.findOptimalUtxo();
                           final amountToDouble = double.tryParse(value);
                           if (value.isNotEmpty) {
                             if (value == '0') {
-                              state.usdController.text = '0';
+                              _sendToState.usdController.text = '0';
                             } else {
                               final usdAmount = amountToDouble?.btcToUsd(
-                                    btcCurrentPrice: state.btcPrice,
+                                    btcCurrentPrice: _sendToState.btcPrice,
                                   ) ??
                                   0;
-                              final stringUsdAmount =
-                                  usdAmount.toStringAsFixed(3);
-                              state.usdController.text = stringUsdAmount;
+                              final stringUsdAmount = usdAmount.toStringAsFixed(3);
+                              _sendToState.usdController.text = stringUsdAmount;
                             }
                           } else {
-                            state.usdController.text = '0';
-                            state.btcController.text = '0';
+                            _sendToState.usdController.text = '0';
+                            _sendToState.btcController.text = '0';
                           }
                           previousTextLength = value.length;
                         },

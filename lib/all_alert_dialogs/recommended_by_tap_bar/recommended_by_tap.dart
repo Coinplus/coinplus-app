@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
@@ -16,7 +15,6 @@ Future<void> recommendedByTapBarAlert({
   required String walletAddress,
   required String walletType,
   required bool activated,
-  required SendToState state,
 }) {
   return showDialogBox(
     context,
@@ -57,7 +55,7 @@ Future<void> recommendedByTapBarAlert({
             ),
           ),
         );
-        await router.push(BarActivationRoute(state: state));
+        await router.push(BarActivationRoute());
       },
     ),
     isDismissible: true,

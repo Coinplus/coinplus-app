@@ -36,20 +36,17 @@ class BarList extends StatefulWidget {
     required this.onCardSelected,
     required this.onCarouselScroll,
     required this.tabController,
-    required this.state,
   });
 
   final ValueChanged<AbstractCard?> onCardSelected;
   final ValueChanged<int> onCarouselScroll;
   final TabController tabController;
-  final SendToState state;
 
   @override
   State<BarList> createState() => _BarListState();
 }
 
-class _BarListState extends State<BarList>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
+class _BarListState extends State<BarList> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<BarList> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
@@ -62,6 +59,8 @@ class _BarListState extends State<BarList>
 
   AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
+  SendToState get _sendToState => GetIt.I<SendToState>();
+
   final _nfcStore = AllSettingsState();
 
   final carouselController = CarouselSliderController();
@@ -71,13 +70,11 @@ class _BarListState extends State<BarList>
     super.initState();
     _nfcStore.checkNfcSupport();
     if (_balanceStore.bars.isNotEmpty) {
-      _rampService.configuration.userAddress =
-          _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+      _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
     }
     _balanceStore
       ..setOnBarDeletedCallback((address) {
-        final index = _balanceStore.bars
-            .indexWhere((element) => element.address == address);
+        final index = _balanceStore.bars.indexWhere((element) => element.address == address);
         if (index.isNegative) {
           carouselController.jumpToPage(0);
           return;
@@ -85,8 +82,7 @@ class _BarListState extends State<BarList>
         carouselController.jumpToPage(0);
       })
       ..setOnBarActivatedCallback((address) {
-        final index = _balanceStore.bars
-            .indexWhere((element) => element.address == address);
+        final index = _balanceStore.bars.indexWhere((element) => element.address == address);
         carouselController.jumpToPage(index);
       });
   }
@@ -111,13 +107,10 @@ class _BarListState extends State<BarList>
                     _historyPageStore
                       ..setBarHistoryIndex(length - 1)
                       ..setBarActivationIndex(index: length - 1);
-                    widget.state.transactionsStore.selectedBar =
-                        widget.state.historyPageStore.barHistoryIndex;
-                    _rampService.configuration.userAddress = _balanceStore
-                        .bars[_balanceStore.barCurrentIndex].address;
+                    _sendToState.transactionsStore.selectedBar = _sendToState.historyPageStore.barHistoryIndex;
+                    _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                   } else {
-                    _rampService.configuration.userAddress = _balanceStore
-                        .bars[_balanceStore.barCurrentIndex].address;
+                    _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                     _historyPageStore.setBarHistoryIndex(0);
                     final bar = _balanceStore.bars.first;
                     widget.onCardSelected(bar as AbstractCard);
@@ -125,8 +118,7 @@ class _BarListState extends State<BarList>
                   }
                 } else {
                   widget.onCardSelected(null);
-                  _rampService.configuration.userAddress =
-                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                 }
               }
             });
@@ -139,8 +131,7 @@ class _BarListState extends State<BarList>
                   builder: (context) {
                     return ScaleTap(
                       enableFeedback: false,
-                      onPressed: _balanceStore.barCurrentIndex ==
-                              _balanceStore.bars.length
+                      onPressed: _balanceStore.barCurrentIndex == _balanceStore.bars.length
                           ? () async {
                               await _walletProtectState.updateModalStatus(
                                 isOpened: true,
@@ -186,17 +177,14 @@ class _BarListState extends State<BarList>
                               duration: const Duration(milliseconds: 400),
                               child: _balanceStore.barCurrentIndex == index
                                   ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: const EdgeInsets.only(left: 30),
                                           child: Text(
                                             bar.name,
                                             style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontSize: 15,
                                             ),
                                           ),
@@ -241,12 +229,10 @@ class _BarListState extends State<BarList>
                               enableFeedback: false,
                               opacityMinValue: .993,
                               scaleMinValue: .993,
-                              onLongPress: _balanceStore.barCurrentIndex ==
-                                      index
+                              onLongPress: _balanceStore.barCurrentIndex == index
                                   ? _balanceStore.bars.length > 1
                                       ? () async {
-                                          await _walletProtectState
-                                              .updateModalStatus(
+                                          await _walletProtectState.updateModalStatus(
                                             isOpened: true,
                                           );
                                           await HapticFeedback.mediumImpact();
@@ -265,19 +251,14 @@ class _BarListState extends State<BarList>
                                                 index: index,
                                                 rampService: _rampService,
                                                 bar: bar,
-                                                marketPageStore:
-                                                    _marketPageStore,
-                                                accelerometerStore:
-                                                    _accelerometerStore,
-                                                onCardSelected:
-                                                    widget.onCardSelected,
-                                                onCarouselScroll:
-                                                    widget.onCarouselScroll,
+                                                marketPageStore: _marketPageStore,
+                                                accelerometerStore: _accelerometerStore,
+                                                onCardSelected: widget.onCardSelected,
+                                                onCarouselScroll: widget.onCarouselScroll,
                                               );
                                             },
                                           );
-                                          await _walletProtectState
-                                              .updateModalStatus(
+                                          await _walletProtectState.updateModalStatus(
                                             isOpened: false,
                                           );
                                         }
@@ -339,11 +320,10 @@ class _BarListState extends State<BarList>
                 );
                 await _balanceStore.setBarCurrentIndex(index);
                 if (index != _balanceStore.bars.length) {
-                  _rampService.configuration.userAddress =
-                      _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+                  _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
                   await _historyPageStore.setBarHistoryIndex(index);
                   await _historyPageStore.setBarActivationIndex(index: index);
-                  widget.state.transactionsStore.onSelectBar(index);
+                  _sendToState.transactionsStore.onSelectBar(index);
                 }
               },
               enlargeFactor: 0.35,

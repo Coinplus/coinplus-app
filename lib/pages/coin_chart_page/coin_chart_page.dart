@@ -95,12 +95,8 @@ class _CoinChartPageState extends State<CoinChartPage> {
                   child: Observer(
                     builder: (context) {
                       return Icon(
-                        _marketPageStore.isFavorite
-                            ? Icons.star
-                            : Icons.star_border,
-                        color: _marketPageStore.isFavorite
-                            ? Colors.orange
-                            : Colors.black,
+                        _marketPageStore.isFavorite ? Icons.star : Icons.star_border,
+                        color: _marketPageStore.isFavorite ? Colors.orange : Colors.black,
                       );
                     },
                   ),
@@ -131,8 +127,7 @@ class _CoinChartPageState extends State<CoinChartPage> {
               const SliverToBoxAdapter(
                 child: Gap(20),
               ),
-              if (_marketPageStore.chartLoading ||
-                  _marketPageStore.chartData.isEmpty)
+              if (_marketPageStore.chartLoading || _marketPageStore.chartData.isEmpty)
                 SliverToBoxAdapter(
                   child: ChartLoadingIndicator(widget: widget),
                 )
@@ -165,9 +160,7 @@ class _CoinChartPageState extends State<CoinChartPage> {
               const SliverToBoxAdapter(
                 child: Gap(24),
               ),
-              if (widget.data!.symbol == 'BTC' &&
-                      _balanceStore.cards.isNotEmpty ||
-                  _balanceStore.bars.isNotEmpty)
+              if (widget.data!.symbol == 'BTC' && _balanceStore.cards.isNotEmpty || _balanceStore.bars.isNotEmpty)
                 SliverToBoxAdapter(
                   child: ScaleTap(
                     enableFeedback: false,

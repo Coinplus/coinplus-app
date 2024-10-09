@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -9,15 +8,8 @@ import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
-import 'package:lottie/lottie.dart';
-import 'package:nfc_manager/nfc_manager.dart';
-import 'package:nfc_manager/platform_tags.dart';
-import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
-import '../../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../../constants/button_settings.dart';
-import '../../constants/card_type.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/widget_extension.dart';
@@ -29,33 +21,26 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/amplitude_service.dart';
-import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
-import '../../store/balance_store/balance_store.dart';
-import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/deep_link_util.dart';
 import '../../widgets/connect_manually_button/connect_manually_button.dart';
 import '../../widgets/loading_button/loading_button.dart';
+import '../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class OnboardingPage extends HookWidget {
   const OnboardingPage({Key? key}) : super(key: key);
-
-  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
-
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   Widget build(BuildContext context) {
     final _nfcState = useMemoized(AllSettingsState.new);
     final deepLinkRes = useRef<String?>(null);
     final resumed = useState(false);
-    final isMifareUltralight = useRef<bool?>(false);
 
     useOnAppLifecycleStateChange(
-      (previous, current) =>
-          resumed.value = [AppLifecycleState.resumed].contains(current),
+      (previous, current) => resumed.value = [AppLifecycleState.resumed].contains(current),
     );
 
     useEffect(
@@ -69,8 +54,7 @@ class OnboardingPage extends HookWidget {
                 router.current.name != CardConnectRoute.name &&
                 router.current.name != BarConnectRoute.name &&
                 router.current.name != BarConnectWithNfc.name) {
-              await router
-                  .push(CardConnectRoute(receivedData: deepLinkRes.value));
+              await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Onboarding',
@@ -127,434 +111,7 @@ class OnboardingPage extends HookWidget {
               const Spacer(flex: 3),
               if (_nfcState.isNfcSupported)
                 LoadingButton(
-                  onPressed: Platform.isIOS
-                      ? () async {
-                          await recordAmplitudeEvent(
-                            const ConnectWalletClicked(),
-                          );
-                          await router.maybePop();
-                          await NfcManager.instance.startSession(
-                            alertMessage:
-                                'It’s easy! Hold your phone near the Coinplus Card or on top of your Coinplus Bar’s box',
-                            onDiscovered: (tag) async {
-                              final ndef = Ndef.from(tag);
-                              final records = ndef!.cachedMessage!.records;
-                              dynamic walletAddress;
-                              dynamic cardColor;
-                              dynamic formFactor;
-                              dynamic isOriginalTag = false;
-                              if (records.length >= 2) {
-                                final hasJson = records[1].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasJson);
-                                final Map payloadData =
-                                    await json.decode(payloadString);
-                                walletAddress = payloadData['a'];
-                                if (walletAddress.toString().startsWith('0')) {
-                                  await _balanceStore.setChainType(
-                                    blockchain: BlockchainType.ETHEREUM,
-                                  );
-                                }
-                                cardColor = payloadData['c'];
-                                formFactor = payloadData['t'];
-                              } else {
-                                final hasUrl = records[0].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasUrl);
-                                final parts = payloadString
-                                    .split('air.coinplus.com/btc/');
-                                walletAddress = parts[1];
-                              }
-                              await signInAnonymously();
-                              await recordAmplitudeEvent(
-                                NfcTapped(
-                                  source: 'Onboarding',
-                                  walletAddress: walletAddress,
-                                ),
-                              );
-                              final card = await getCardData(walletAddress);
-                              final mifare = MiFare.from(tag);
-                              final tagId = mifare!.identifier;
-                              final formattedTagId = tagId
-                                  .map(
-                                    (e) => e.toRadixString(16).padLeft(2, '0'),
-                                  )
-                                  .join(':')
-                                  .toUpperCase();
-                              Uint8List? signature;
-                              try {
-                                final response = await mifare.sendMiFareCommand(
-                                  Uint8List.fromList(
-                                    [0x3C, 0x00],
-                                  ),
-                                );
-                                signature = Uint8List.fromList(response);
-                              } catch (e) {
-                                signature = null;
-                              }
-                              if (signature != null && signature.length > 2) {
-                                isOriginalTag = OriginalityVerifier().verify(
-                                  tagId,
-                                  signature,
-                                );
-                              }
-                              if (isOriginalTag && card != null) {
-                                await NfcManager.instance.stopSession();
-                                if (card.nfcId == formattedTagId) {
-                                  await Future.delayed(
-                                    const Duration(milliseconds: 2700),
-                                  );
-                                  if (formFactor == 'c') {
-                                    await router.push(
-                                      CardConnectWithNfc(
-                                        isOriginalCard: isOriginalTag,
-                                        receivedData: walletAddress,
-                                        cardColor: cardColor,
-                                        isActivated: card.activated,
-                                      ),
-                                    );
-                                  } else if (formFactor == 'b') {
-                                    await router.push(
-                                      BarConnectWithNfc(
-                                        isOriginalTag: isOriginalTag,
-                                        receivedData: walletAddress,
-                                        barColor: cardColor,
-                                        isActivated: card.activated,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  await NfcManager.instance.stopSession();
-                                  await Future.delayed(
-                                    const Duration(milliseconds: 2700),
-                                  );
-                                  await notCoinplusCardAlert(
-                                    context:
-                                        router.navigatorKey.currentContext!,
-                                    walletAddress: walletAddress,
-                                    walletType: 'Card',
-                                    source: 'Onboarding',
-                                  );
-                                }
-                              } else {
-                                await NfcManager.instance.stopSession();
-                                await Future.delayed(
-                                  const Duration(milliseconds: 2700),
-                                );
-                                if (tag.data.containsKey('mifare')) {
-                                  isMifareUltralight.value = true;
-                                  if (card != null &&
-                                      card.possibleOldCard == true) {
-                                    if (card.nfcId == formattedTagId) {
-                                      //Connect as Coinplus Bitcoin Wallet
-                                      await router.push(
-                                        CardConnectWithNfc(
-                                          isOldCard: card.possibleOldCard,
-                                          isMiFareUltralight:
-                                              isMifareUltralight.value,
-                                          isOriginalCard: false,
-                                          receivedData: walletAddress,
-                                          isActivated: card.activated,
-                                        ),
-                                      );
-                                    } else {
-                                      //Fake card
-                                      await NfcManager.instance.stopSession();
-                                      await Future.delayed(
-                                        const Duration(milliseconds: 2700),
-                                      );
-                                      await notCoinplusCardAlert(
-                                        context:
-                                            router.navigatorKey.currentContext!,
-                                        walletAddress: walletAddress,
-                                        walletType: 'Card',
-                                        source: 'Onboarding',
-                                      );
-                                    }
-                                  } else {
-                                    //Connect as TrackerPlus
-                                    await router.push(
-                                      CardConnectWithNfc(
-                                        isOldCard: card?.possibleOldCard,
-                                        isMiFareUltralight:
-                                            isMifareUltralight.value,
-                                        isOriginalCard: false,
-                                        receivedData: walletAddress,
-                                        isActivated: card?.activated,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  //Connect as Tracker
-                                  await router.push(
-                                    CardConnectWithNfc(
-                                      isOriginalCard: false,
-                                      isMiFareUltralight: false,
-                                      receivedData: walletAddress,
-                                    ),
-                                  );
-                                }
-                              }
-                              await _walletProtectState.updateNfcSessionStatus(
-                                isStarted: false,
-                              );
-                            },
-                            onError: (_) => Future(() async {
-                              await recordAmplitudeEvent(
-                                const NfcClosed(source: 'Onboarding'),
-                              );
-                              await _walletProtectState.updateNfcSessionStatus(
-                                isStarted: false,
-                              );
-                            }),
-                          );
-                        }
-                      : () async {
-                          await recordAmplitudeEvent(
-                            const ConnectWalletClicked(),
-                          );
-                          await router.maybePop();
-                          await NfcManager.instance.startSession(
-                            onDiscovered: (tag) async {
-                              final ndef = Ndef.from(tag);
-                              final records = ndef!.cachedMessage!.records;
-                              dynamic walletAddress;
-                              dynamic cardColor;
-                              dynamic formFactor;
-
-                              if (records.length >= 2) {
-                                final hasJson = records[1].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasJson);
-                                final Map payloadData =
-                                    await json.decode(payloadString);
-                                walletAddress = payloadData['a'];
-                                cardColor = payloadData['c'];
-                                formFactor = payloadData['t'];
-                              } else {
-                                final hasUrl = records[0].payload;
-                                final payloadString =
-                                    String.fromCharCodes(hasUrl);
-                                final parts = payloadString
-                                    .split('air.coinplus.com/btc/');
-                                walletAddress = parts[1];
-                              }
-                              await recordAmplitudeEvent(
-                                NfcTapped(
-                                  source: 'Onboarding',
-                                  walletAddress: walletAddress,
-                                ),
-                              );
-                              await signInAnonymously();
-                              final nfcA = NfcA.from(tag);
-                              final uid = nfcA!.identifier;
-
-                              Uint8List? signature;
-                              var isOriginalTag = false;
-
-                              try {
-                                final response = await nfcA.transceive(
-                                  data: Uint8List.fromList([0x3C, 0x00]),
-                                );
-                                signature = Uint8List.fromList(response);
-                                if (signature.length > 2) {
-                                  isOriginalTag = OriginalityVerifier().verify(
-                                    uid,
-                                    signature,
-                                  );
-                                }
-                              } catch (e) {
-                                signature = null;
-                              }
-                              await router.maybePop();
-                              final card = await getCardData(walletAddress);
-                              final formattedTagId = uid
-                                  .map(
-                                    (e) => e.toRadixString(16).padLeft(2, '0'),
-                                  )
-                                  .join(':')
-                                  .toUpperCase();
-                              if (isOriginalTag && card != null) {
-                                await NfcManager.instance.stopSession();
-                                if (card.nfcId == formattedTagId) {
-                                  await Future.delayed(
-                                    const Duration(milliseconds: 2700),
-                                  );
-                                  if (formFactor == 'c') {
-                                    await router.push(
-                                      CardConnectWithNfc(
-                                        isOriginalCard: isOriginalTag,
-                                        receivedData: walletAddress,
-                                        cardColor: cardColor,
-                                      ),
-                                    );
-                                  } else if (formFactor == 'b') {
-                                    await router.push(
-                                      BarConnectWithNfc(
-                                        isOriginalTag: isOriginalTag,
-                                        receivedData: walletAddress,
-                                        barColor: cardColor,
-                                        isActivated: card.activated,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  await notCoinplusCardAlert(
-                                    context:
-                                        router.navigatorKey.currentContext!,
-                                    walletAddress: walletAddress,
-                                    walletType: 'Card',
-                                    source: 'Onboarding',
-                                  );
-                                }
-                              } else {
-                                if (tag.data.containsKey('mifareultralight')) {
-                                  isMifareUltralight.value = true;
-                                  if (card != null &&
-                                      card.possibleOldCard == true) {
-                                    if (card.nfcId == formattedTagId) {
-                                      await signInAnonymously();
-                                      await router.push(
-                                        CardConnectWithNfc(
-                                          isOldCard: card.possibleOldCard,
-                                          isMiFareUltralight:
-                                              isMifareUltralight.value,
-                                          isOriginalCard: false,
-                                          receivedData: walletAddress,
-                                        ),
-                                      );
-                                    } else {
-                                      await notCoinplusCardAlert(
-                                        context:
-                                            router.navigatorKey.currentContext!,
-                                        walletAddress: walletAddress,
-                                        walletType: 'Card',
-                                        source: 'Onboarding',
-                                      );
-                                    }
-                                  } else {
-                                    await router.push(
-                                      CardConnectWithNfc(
-                                        isOldCard: card?.possibleOldCard,
-                                        isMiFareUltralight:
-                                            isMifareUltralight.value,
-                                        isOriginalCard: false,
-                                        receivedData: walletAddress,
-                                      ),
-                                    );
-                                  }
-                                } else {
-                                  await router.push(
-                                    CardConnectWithNfc(
-                                      isOriginalCard: false,
-                                      isMiFareUltralight: false,
-                                      receivedData: walletAddress,
-                                    ),
-                                  );
-                                }
-                              }
-                              await _walletProtectState.updateNfcSessionStatus(
-                                isStarted: false,
-                              );
-                            },
-                            onError: (_) => Future(() async {
-                              await recordAmplitudeEvent(
-                                const NfcClosed(source: 'Onboarding'),
-                              );
-                              await _walletProtectState.updateNfcSessionStatus(
-                                isStarted: false,
-                              );
-                            }),
-                          );
-
-                          await showModalBottomSheet(
-                            context: context,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                            backgroundColor: Colors.transparent,
-                            builder: (context) {
-                              return AnimatedOpacity(
-                                duration: const Duration(
-                                  milliseconds: 300,
-                                ),
-                                opacity: 1,
-                                child: Container(
-                                  height: 400,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(
-                                        40,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      const Gap(10),
-                                      Assets.icons.notch.image(
-                                        height: 4,
-                                      ),
-                                      const Gap(15),
-                                      const Text(
-                                        'Ready to Scan',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: FontFamily.redHatSemiBold,
-                                          fontSize: 22,
-                                          color: AppColors.primaryTextColor,
-                                        ),
-                                      ),
-                                      const Gap(40),
-                                      SizedBox(
-                                        height: 150,
-                                        width: 150,
-                                        child: Lottie.asset(
-                                          'assets/lottie_animations/nfcanimation.json',
-                                        ).expandedHorizontally(),
-                                      ),
-                                      const Gap(25),
-                                      const Text(
-                                        'It’s easy! Hold your phone near the Coinplus Card \nor on top of your Coinplus Bar’s box',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: FontFamily.redHatMedium,
-                                        ),
-                                      ).paddingHorizontal(50),
-                                      const Gap(20),
-                                      LoadingButton(
-                                        onPressed: () async {
-                                          await router.maybePop();
-                                        },
-                                        style: context.theme
-                                            .buttonStyle(
-                                              textStyle: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                color:
-                                                    AppColors.primaryTextColor,
-                                                fontSize: 15,
-                                              ),
-                                            )
-                                            .copyWith(
-                                              backgroundColor:
-                                                  WidgetStateProperty.all(
-                                                Colors.grey.withOpacity(0.3),
-                                              ),
-                                            ),
-                                        child: const Text('Cancel'),
-                                      ).paddingHorizontal(60),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                  onPressed: Platform.isIOS ? nfcSessionIos : nfcSessionAndroid,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -587,6 +144,7 @@ class OnboardingPage extends HookWidget {
                     ),
                   );
                   await signInAnonymously();
+                  await setWalletShown();
                   await router.pushAndPopAll(const DashboardRoute());
                 },
                 style: context.theme

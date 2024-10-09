@@ -66,8 +66,7 @@ class QrScannerPage extends HookWidget {
                     await HapticFeedback.mediumImpact();
                     await router.maybePop(_data);
                   } else if (_data!.startsWith('https')) {
-                    final newAddress =
-                        _data.split('https://air.coinplus.com/btc/');
+                    final newAddress = _data.split('https://air.coinplus.com/btc/');
                     final splitAddress = newAddress[1];
                     await HapticFeedback.heavyImpact();
                     await router.maybePop(splitAddress);
@@ -80,14 +79,11 @@ class QrScannerPage extends HookWidget {
                     await HapticFeedback.mediumImpact();
                     await router.maybePop(_data);
                   } else if (_data!.startsWith('https')) {
-                    final newAddress =
-                        _data.split('https://air.coinplus.com/btc/');
+                    final newAddress = _data.split('https://air.coinplus.com/btc/');
                     final splitAddress = newAddress[1];
                     await HapticFeedback.heavyImpact();
-                    final cardExists = _balanceStore.cards
-                        .any((element) => element.address == splitAddress);
-                    final barExists = _balanceStore.bars
-                        .any((element) => element.address == splitAddress);
+                    final cardExists = _balanceStore.cards.any((element) => element.address == splitAddress);
+                    final barExists = _balanceStore.bars.any((element) => element.address == splitAddress);
                     if (cardExists || barExists) {
                       await router.maybePop();
                       await alreadySavedWallet(context, splitAddress);
@@ -98,10 +94,8 @@ class QrScannerPage extends HookWidget {
                     }
                   } else {
                     await HapticFeedback.mediumImpact();
-                    final cardExists = _balanceStore.cards
-                        .any((element) => element.address == _data);
-                    final barExists = _balanceStore.bars
-                        .any((element) => element.address == _data);
+                    final cardExists = _balanceStore.cards.any((element) => element.address == _data);
+                    final barExists = _balanceStore.bars.any((element) => element.address == _data);
                     if (cardExists || barExists) {
                       await router.maybePop();
                       await alreadySavedWallet(context, _data);
@@ -122,9 +116,7 @@ class QrScannerPage extends HookWidget {
                   decoration: ShapeDecoration(
                     shape: QrOverlayShape(
                       overlayColor: AppColors.primary.withOpacity(0.9),
-                      borderColor: qrDetect.isDetected
-                          ? (qrDetect.isValid ? Colors.green : Colors.red)
-                          : Colors.blue,
+                      borderColor: qrDetect.isDetected ? (qrDetect.isValid ? Colors.green : Colors.red) : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
                       borderWidth: 5,

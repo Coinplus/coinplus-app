@@ -221,11 +221,9 @@ class BarReorderWidget extends StatelessWidget {
                                 ),
                                 Builder(
                                   builder: (context) {
-                                    final data = marketPageStore
-                                        .singleCoin?.result.first;
+                                    final data = marketPageStore.singleCoin?.result.first;
 
-                                    final myFormat =
-                                        NumberFormat.decimalPatternDigits(
+                                    final myFormat = NumberFormat.decimalPatternDigits(
                                       locale: 'en_us',
                                       decimalDigits: 2,
                                     );
@@ -251,14 +249,12 @@ class BarReorderWidget extends StatelessWidget {
                                     return Observer(
                                       builder: (_) {
                                         final balance = bar.finalBalance;
-                                        if (accelerometerStore
-                                            .hasPerformedAction) {
+                                        if (accelerometerStore.hasPerformedAction) {
                                           return const Text(
                                             r'$*****',
                                             style: TextStyle(
                                               fontSize: 13,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                             ),
                                           );
                                         } else {
@@ -266,8 +262,7 @@ class BarReorderWidget extends StatelessWidget {
                                             '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
                                             style: const TextStyle(
                                               fontSize: 13,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                             ),
                                           );
                                         }

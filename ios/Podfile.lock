@@ -1315,6 +1315,8 @@ PODS:
     - Ramp
   - ReachabilitySwift (5.2.3)
   - RecaptchaInterop (100.0.0)
+  - restart_app (0.0.1):
+    - Flutter
   - sensors_plus (0.0.1):
     - Flutter
   - share_plus (0.0.1):
@@ -1359,6 +1361,7 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - Ramp (from `https://github.com/RampNetwork/ramp-sdk-ios`, tag `4.0.1`)
   - ramp_flutter (from `.symlinks/plugins/ramp_flutter/ios`)
+  - restart_app (from `.symlinks/plugins/restart_app/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -1463,6 +1466,8 @@ EXTERNAL SOURCES:
     :tag: 4.0.1
   ramp_flutter:
     :path: ".symlinks/plugins/ramp_flutter/ios"
+  restart_app:
+    :path: ".symlinks/plugins/restart_app/ios"
   sensors_plus:
     :path: ".symlinks/plugins/sensors_plus/ios"
   share_plus:
@@ -1549,6 +1554,7 @@ SPEC CHECKSUMS:
   ramp_flutter: aac85dee8bc93b5f7563c909ba15a37727fe3fe8
   ReachabilitySwift: 7f151ff156cea1481a8411701195ac6a984f4979
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  restart_app: 806659942bf932f6ce51c5372f91ce5e81c8c14a
   sensors_plus: 4b7c4bd9c9be2efbd575649368fe77ef09b429ad
   share_plus: 8875f4f2500512ea181eef553c3e27dba5135aad
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78

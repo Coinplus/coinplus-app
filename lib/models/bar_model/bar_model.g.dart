@@ -18,6 +18,7 @@ _$BarModelImpl _$$BarModelImplFromJson(Map json) => _$BarModelImpl(
           WalletType.COINPLUS_WALLET,
       name: json['name'] as String? ?? 'Coinplus Bitcoin Bar',
       blockchain: json['blockchain'] as String? ?? 'BTC',
+      isBackup: json['isBackup'] as bool? ?? false,
       createdAt: json['createdAt'] == null
           ? ''
           : timeFromJson(json['createdAt'] as String),
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$BarModelImplToJson(_$BarModelImpl instance) {
   val['label'] = _$WalletTypeEnumMap[instance.label]!;
   val['name'] = instance.name;
   val['blockchain'] = instance.blockchain;
+  val['isBackup'] = instance.isBackup;
   val['createdAt'] = instance.createdAt;
   return val;
 }

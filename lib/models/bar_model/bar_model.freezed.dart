@@ -30,6 +30,7 @@ mixin _$BarModel {
   WalletType get label => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get blockchain => throw _privateConstructorUsedError;
+  bool get isBackup => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
 
@@ -57,6 +58,7 @@ abstract class $BarModelCopyWith<$Res> {
       WalletType label,
       String name,
       String blockchain,
+      bool isBackup,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
@@ -83,6 +85,7 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
+    Object? isBackup = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -118,6 +121,10 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
+      isBackup: null == isBackup
+          ? _value.isBackup
+          : isBackup // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -143,6 +150,7 @@ abstract class _$$BarModelImplCopyWith<$Res>
       WalletType label,
       String name,
       String blockchain,
+      bool isBackup,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
@@ -167,6 +175,7 @@ class __$$BarModelImplCopyWithImpl<$Res>
     Object? label = null,
     Object? name = null,
     Object? blockchain = null,
+    Object? isBackup = null,
     Object? createdAt = null,
   }) {
     return _then(_$BarModelImpl(
@@ -202,6 +211,10 @@ class __$$BarModelImplCopyWithImpl<$Res>
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
+      isBackup: null == isBackup
+          ? _value.isBackup
+          : isBackup // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -222,6 +235,7 @@ class _$BarModelImpl implements _BarModel {
       this.label = WalletType.COINPLUS_WALLET,
       this.name = 'Coinplus Bitcoin Bar',
       this.blockchain = 'BTC',
+      this.isBackup = false,
       @JsonKey(fromJson: timeFromJson) this.createdAt = ''});
 
   factory _$BarModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -251,12 +265,15 @@ class _$BarModelImpl implements _BarModel {
   @JsonKey()
   final String blockchain;
   @override
+  @JsonKey()
+  final bool isBackup;
+  @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
 
   @override
   String toString() {
-    return 'BarModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, createdAt: $createdAt)';
+    return 'BarModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, isBackup: $isBackup, createdAt: $createdAt)';
   }
 
   @override
@@ -275,6 +292,8 @@ class _$BarModelImpl implements _BarModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.blockchain, blockchain) ||
                 other.blockchain == blockchain) &&
+            (identical(other.isBackup, isBackup) ||
+                other.isBackup == isBackup) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -282,7 +301,7 @@ class _$BarModelImpl implements _BarModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, finalBalance,
-      totalReceived, color, type, label, name, blockchain, createdAt);
+      totalReceived, color, type, label, name, blockchain, isBackup, createdAt);
 
   /// Create a copy of BarModel
   /// with the given fields replaced by the non-null parameter values.
@@ -310,6 +329,7 @@ abstract class _BarModel implements BarModel, AbstractCard {
           final WalletType label,
           final String name,
           final String blockchain,
+          final bool isBackup,
           @JsonKey(fromJson: timeFromJson) final String createdAt}) =
       _$BarModelImpl;
 
@@ -334,6 +354,8 @@ abstract class _BarModel implements BarModel, AbstractCard {
   String get name;
   @override
   String get blockchain;
+  @override
+  bool get isBackup;
   @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;

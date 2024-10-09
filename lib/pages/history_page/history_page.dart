@@ -22,7 +22,6 @@ import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/data_utils.dart';
 import '../../widgets/card_and_bar_tab/card_and_bar_tab.dart';
 import '../../widgets/shimmers/history_dropdown_shimmer.dart';
-import '../send_page/send_to/send_to_state.dart';
 import '../wallet_page/tab_controller_listener/tab_controller_listener.dart';
 import 'bars_history_tab/bars_history_page.dart';
 import 'cards_history_tab/cards_history_page.dart';
@@ -31,18 +30,15 @@ class HistoryPage extends StatefulWidget {
   const HistoryPage({
     super.key,
     required this.onChangeCard,
-    required this.state,
   });
 
   final CardChangeCallBack onChangeCard;
-  final SendToState state;
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage>
-    with TickerProviderStateMixin {
+class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
@@ -70,7 +66,6 @@ class _HistoryPageState extends State<HistoryPage>
       historyPageStore: _historyPageStore,
       onChangeCard: widget.onChangeCard,
       rampService: _rampService,
-      state: widget.state,
       tabController: _tabController,
     );
   }
@@ -138,13 +133,11 @@ class _HistoryPageState extends State<HistoryPage>
                     builder: (_) {
                       return _marketPageStore.singleCoin?.result == null
                           ? const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 28, right: 28, top: 14),
+                              padding: EdgeInsets.only(left: 28, right: 28, top: 14),
                               child: HistoryDropdownShimmer(),
                             )
                           : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 28),
+                              padding: const EdgeInsets.symmetric(horizontal: 28),
                               child: ScaleTap(
                                 enableFeedback: false,
                                 onPressed: _balanceStore.cards.length > 1
@@ -163,8 +156,7 @@ class _HistoryPageState extends State<HistoryPage>
                                             return CardSelectionModal(
                                               balanceStore: _balanceStore,
                                               marketPageStore: _marketPageStore,
-                                              historyPageStore:
-                                                  _historyPageStore,
+                                              historyPageStore: _historyPageStore,
                                             );
                                           },
                                         );
@@ -181,21 +173,16 @@ class _HistoryPageState extends State<HistoryPage>
                                   ),
                                   child: Observer(
                                     builder: (_) {
-                                      final data = _marketPageStore
-                                          .singleCoin?.result.first;
-                                      final myFormat =
-                                          NumberFormat.decimalPatternDigits(
+                                      final data = _marketPageStore.singleCoin?.result.first;
+                                      final myFormat = NumberFormat.decimalPatternDigits(
                                         locale: 'en_us',
                                         decimalDigits: 2,
                                       );
-                                      final singleCard = _balanceStore.cards[
-                                          _historyPageStore.cardHistoryIndex];
-                                      final formattedAddress =
-                                          getSplitAddress(singleCard.address);
+                                      final singleCard = _balanceStore.cards[_historyPageStore.cardHistoryIndex];
+                                      final formattedAddress = getSplitAddress(singleCard.address);
 
                                       return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -204,44 +191,36 @@ class _HistoryPageState extends State<HistoryPage>
                                                 width: 25,
                                                 decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                    image: singleCard
-                                                        .color.image
-                                                        .image()
-                                                        .image,
+                                                    image: singleCard.color.image.image().image,
                                                   ),
                                                   boxShadow: [
                                                     BoxShadow(
                                                       blurRadius: 10,
                                                       spreadRadius: 5,
-                                                      color: Colors.grey
-                                                          .withOpacity(0.2),
+                                                      color: Colors.grey.withOpacity(0.2),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               const Gap(10),
                                               Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
                                                     singleCard.name,
                                                     style: const TextStyle(
                                                       fontSize: 15,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       color: AppColors.primary,
                                                     ),
                                                   ),
                                                   Text(
                                                     formattedAddress,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ),
                                                 ],
@@ -249,57 +228,37 @@ class _HistoryPageState extends State<HistoryPage>
                                             ],
                                           ),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.end,
                                             children: [
                                               Observer(
                                                 builder: (context) {
-                                                  return _accelerometerStore
-                                                          .hasPerformedAction
+                                                  return _accelerometerStore.hasPerformedAction
                                                       ? Text(
                                                           r'$*****',
                                                           style: TextStyle(
-                                                            fontSize: singleCard
-                                                                        .finalBalance
-                                                                        .toString()
-                                                                        .length >
-                                                                    9
-                                                                ? 17
-                                                                : 20,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: AppColors
-                                                                .textHintsColor,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                            fontSize:
+                                                                singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            color: AppColors.textHintsColor,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
                                                         )
                                                       : Text(
                                                           '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
                                                           style: TextStyle(
-                                                            fontSize: singleCard
-                                                                        .finalBalance
-                                                                        .toString()
-                                                                        .length >
-                                                                    9
-                                                                ? 17
-                                                                : 20,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: AppColors
-                                                                .textHintsColor,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                            fontSize:
+                                                                singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            color: AppColors.textHintsColor,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
                                                         );
                                                 },
                                               ),
-                                              if (_balanceStore.cards.length >
-                                                  1)
+                                              if (_balanceStore.cards.length > 1)
                                                 const Icon(
                                                   Icons.keyboard_arrow_down,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                             ],
                                           ),
@@ -319,13 +278,11 @@ class _HistoryPageState extends State<HistoryPage>
                     builder: (_) {
                       return _marketPageStore.singleCoin?.result == null
                           ? const Padding(
-                              padding:
-                                  EdgeInsets.only(left: 28, right: 28, top: 14),
+                              padding: EdgeInsets.only(left: 28, right: 28, top: 14),
                               child: HistoryDropdownShimmer(),
                             )
                           : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 28),
+                              padding: const EdgeInsets.symmetric(horizontal: 28),
                               child: ScaleTap(
                                 onPressed: _balanceStore.bars.length > 1
                                     ? () {
@@ -343,8 +300,7 @@ class _HistoryPageState extends State<HistoryPage>
                                             return BarSelectionModal(
                                               balanceStore: _balanceStore,
                                               marketPageStore: _marketPageStore,
-                                              historyPageStore:
-                                                  _historyPageStore,
+                                              historyPageStore: _historyPageStore,
                                             );
                                           },
                                         );
@@ -361,20 +317,15 @@ class _HistoryPageState extends State<HistoryPage>
                                   ),
                                   child: Observer(
                                     builder: (_) {
-                                      final data = _marketPageStore
-                                          .singleCoin?.result.first;
-                                      final myFormat =
-                                          NumberFormat.decimalPatternDigits(
+                                      final data = _marketPageStore.singleCoin?.result.first;
+                                      final myFormat = NumberFormat.decimalPatternDigits(
                                         locale: 'en_us',
                                         decimalDigits: 2,
                                       );
-                                      final singleCard = _balanceStore.bars[
-                                          _historyPageStore.barHistoryIndex];
-                                      final formattedAddress =
-                                          getSplitAddress(singleCard.address);
+                                      final singleCard = _balanceStore.bars[_historyPageStore.barHistoryIndex];
+                                      final formattedAddress = getSplitAddress(singleCard.address);
                                       return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -383,44 +334,36 @@ class _HistoryPageState extends State<HistoryPage>
                                                 width: 25,
                                                 decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                    image: singleCard
-                                                        .color.image
-                                                        .image()
-                                                        .image,
+                                                    image: singleCard.color.image.image().image,
                                                   ),
                                                   boxShadow: [
                                                     BoxShadow(
                                                       blurRadius: 10,
                                                       spreadRadius: 5,
-                                                      color: Colors.grey
-                                                          .withOpacity(0.2),
+                                                      color: Colors.grey.withOpacity(0.2),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               const Gap(10),
                                               Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
                                                     singleCard.name,
                                                     style: const TextStyle(
                                                       fontSize: 15,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       color: AppColors.primary,
                                                     ),
                                                   ),
                                                   Text(
                                                     formattedAddress,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ),
                                                 ],
@@ -428,47 +371,29 @@ class _HistoryPageState extends State<HistoryPage>
                                             ],
                                           ),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.end,
                                             children: [
                                               Observer(
                                                 builder: (context) {
-                                                  return _accelerometerStore
-                                                          .hasPerformedAction
+                                                  return _accelerometerStore.hasPerformedAction
                                                       ? Text(
                                                           r'$*****',
                                                           style: TextStyle(
-                                                            fontSize: singleCard
-                                                                        .finalBalance
-                                                                        .toString()
-                                                                        .length >
-                                                                    9
-                                                                ? 17
-                                                                : 20,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: AppColors
-                                                                .textHintsColor,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                            fontSize:
+                                                                singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            color: AppColors.textHintsColor,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
                                                         )
                                                       : Text(
                                                           '\$${myFormat.format((singleCard.finalBalance ?? 0) / 100000000 * data!.price)}',
                                                           style: TextStyle(
-                                                            fontSize: singleCard
-                                                                        .finalBalance
-                                                                        .toString()
-                                                                        .length >
-                                                                    9
-                                                                ? 17
-                                                                : 20,
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            color: AppColors
-                                                                .textHintsColor,
-                                                            fontWeight:
-                                                                FontWeight.w700,
+                                                            fontSize:
+                                                                singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            color: AppColors.textHintsColor,
+                                                            fontWeight: FontWeight.w700,
                                                           ),
                                                         );
                                                 },
@@ -476,8 +401,7 @@ class _HistoryPageState extends State<HistoryPage>
                                               if (_balanceStore.bars.length > 1)
                                                 const Icon(
                                                   Icons.keyboard_arrow_down,
-                                                  color:
-                                                      AppColors.textHintsColor,
+                                                  color: AppColors.textHintsColor,
                                                 ),
                                             ],
                                           ),

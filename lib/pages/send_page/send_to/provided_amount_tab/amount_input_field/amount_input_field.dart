@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../constants/currency.dart';
 import '../../../../../extensions/num_extension.dart';
@@ -19,12 +20,12 @@ class AmountInputField extends HookWidget {
     super.key,
     required this.usdFocusNode,
     required this.btcFocusNode,
-    required this.state,
   });
 
-  final SendToState state;
   final FocusNode usdFocusNode;
   final FocusNode btcFocusNode;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +39,23 @@ class AmountInputField extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Gap(60),
-                    if (state.currency == Currency.USD)
+                    if (_sendToState.currency == Currency.USD)
                       UsdAmountTextField(
-                        state: state,
                         usdFocusNode: usdFocusNode,
                       )
-                    else if (state.currency == Currency.USD)
+                    else if (_sendToState.currency == Currency.USD)
                       const SizedBox()
                     else
                       BtcAmountTextField(
-                        state: state,
                         btcFocusNode: btcFocusNode,
                       ),
                     IconButton(
                       splashRadius: 25,
                       onPressed: () async {
-                        await state.onToggleCurrency();
+                        await _sendToState.onToggleCurrency();
                         await recordAmplitudeEventPartTwo(
                           SendCurrencyChanged(
-                            currency: state.currency.name.toString(),
+                            currency: _sendToState.currency.name.toString(),
                           ),
                         );
                       },
@@ -92,9 +91,9 @@ class AmountInputField extends HookWidget {
                             const Gap(6),
                             Observer(
                               builder: (context) {
-                                final value = state.amount
+                                final value = _sendToState.amount
                                     .usdToBtc(
-                                      btcCurrentPrice: state.btcPrice,
+                                      btcCurrentPrice: _sendToState.btcPrice,
                                     )
                                     .toStringAsFixed(8);
                                 final formattedValue = value.replaceAll(
@@ -102,7 +101,7 @@ class AmountInputField extends HookWidget {
                                   '',
                                 );
                                 return Text(
-                                  state.currency == Currency.USD
+                                  _sendToState.currency == Currency.USD
                                       ? formattedValue.isEmpty
                                           ? '0'
                                           : formattedValue
@@ -120,7 +119,7 @@ class AmountInputField extends HookWidget {
                         ),
                         secondChild: Observer(
                           builder: (context) {
-                            final value = state.amount.toStringAsFixed(3);
+                            final value = _sendToState.amount.toStringAsFixed(3);
                             return Text(
                               '\$ $value',
                               style: const TextStyle(
@@ -132,7 +131,7 @@ class AmountInputField extends HookWidget {
                             );
                           },
                         ),
-                        crossFadeState: state.currency == Currency.USD
+                        crossFadeState: _sendToState.currency == Currency.USD
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
                         duration: const Duration(milliseconds: 300),
@@ -140,8 +139,7 @@ class AmountInputField extends HookWidget {
                     ],
                   ),
                   secondChild: const SizedBox(),
-                  crossFadeState: state.isConvertedAmountVisible &&
-                          !state.isInputtedAmountBiggerTotal
+                  crossFadeState: _sendToState.isConvertedAmountVisible && !_sendToState.isInputtedAmountBiggerTotal
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 300),
@@ -156,7 +154,7 @@ class AmountInputField extends HookWidget {
               secondChild: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
-                  state.isUseMaxClicked ? 'Maximum spendable amount' : '',
+                  _sendToState.isUseMaxClicked ? 'Maximum spendable amount' : '',
                   style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 15,
@@ -173,10 +171,10 @@ class AmountInputField extends HookWidget {
                   ),
                 ),
                 onPressed: () {
-                  final res = state.onUseMax();
+                  final res = _sendToState.onUseMax();
                   if (res == 0) {
-                    state.usdController.text = '0';
-                    state.btcController.text = '0';
+                    _sendToState.usdController.text = '0';
+                    _sendToState.btcController.text = '0';
                     recordAmplitudeEventPartTwo(
                       const UseMaxClicked(amount: '0', enoughFunds: 'false'),
                     );
@@ -185,38 +183,33 @@ class AmountInputField extends HookWidget {
                   }
                   if (res != 0 &&
                       res >
-                          state.transactionsStore.txFee.satoshiToUsd(
-                            btcCurrentPrice: state.btcPrice,
+                          _sendToState.transactionsStore.txFee.satoshiToUsd(
+                            btcCurrentPrice: _sendToState.btcPrice,
                           )) {
                     final maxSendAmount = res -
-                        state.transactionsStore.txFee.satoshiToUsd(
-                          btcCurrentPrice: state.btcPrice,
+                        _sendToState.transactionsStore.txFee.satoshiToUsd(
+                          btcCurrentPrice: _sendToState.btcPrice,
                         );
-                    state.setAmount(maxSendAmount.toString());
+                    _sendToState.setAmount(maxSendAmount.toString());
                     recordAmplitudeEventPartTwo(
                       UseMaxClicked(
                         amount: maxSendAmount.toString(),
                         enoughFunds: 'true',
                       ),
                     );
-                    state.usdController.text = maxSendAmount.toStringAsFixed(3);
-                    final btcAmount =
-                        res.usdToBtc(btcCurrentPrice: state.btcPrice);
+                    _sendToState.usdController.text = maxSendAmount.toStringAsFixed(3);
+                    final btcAmount = res.usdToBtc(btcCurrentPrice: _sendToState.btcPrice);
 
-                    final txFeeInBtc =
-                        state.transactionsStore.txFee.satoshiToBtc();
+                    final txFeeInBtc = _sendToState.transactionsStore.txFee.satoshiToBtc();
 
                     final maxSendAmountInBtc = btcAmount - txFeeInBtc;
-                    state.setAmount(
-                      maxSendAmountInBtc
-                          .btcToUsd(btcCurrentPrice: state.btcPrice)
-                          .toString(),
+                    _sendToState.setAmount(
+                      maxSendAmountInBtc.btcToUsd(btcCurrentPrice: _sendToState.btcPrice).toString(),
                     );
-                    state.btcController.text =
-                        maxSendAmountInBtc.toStringAsFixed(8).toString();
+                    _sendToState.btcController.text = maxSendAmountInBtc.toStringAsFixed(8).toString();
                   } else {
-                    state.usdController.text = '0';
-                    state.btcController.text = '0';
+                    _sendToState.usdController.text = '0';
+                    _sendToState.btcController.text = '0';
                     recordAmplitudeEventPartTwo(
                       const UseMaxClicked(amount: '0', enoughFunds: 'false'),
                     );
@@ -224,7 +217,7 @@ class AmountInputField extends HookWidget {
                   }
                 },
                 child: Text(
-                  !state.isUseMaxClicked ? 'Use max' : '',
+                  !_sendToState.isUseMaxClicked ? 'Use max' : '',
                   style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 15,
@@ -233,9 +226,7 @@ class AmountInputField extends HookWidget {
                   ),
                 ),
               ),
-              crossFadeState: state.isUseMaxClicked
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
+              crossFadeState: _sendToState.isUseMaxClicked ? CrossFadeState.showSecond : CrossFadeState.showFirst,
               duration: const Duration(milliseconds: 300),
               firstCurve: Curves.bounceIn,
             );

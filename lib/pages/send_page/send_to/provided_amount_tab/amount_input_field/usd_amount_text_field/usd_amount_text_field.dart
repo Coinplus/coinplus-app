@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../../extensions/extensions.dart';
 import '../../../../../../extensions/num_extension.dart';
@@ -19,11 +20,11 @@ class UsdAmountTextField extends HookWidget {
   const UsdAmountTextField({
     super.key,
     required this.usdFocusNode,
-    required this.state,
   });
 
   final FocusNode usdFocusNode;
-  final SendToState state;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +43,16 @@ class UsdAmountTextField extends HookWidget {
       _hasPrinted.value = false;
       _typingTimer = Timer(const Duration(milliseconds: 1000), () {
         if (_hasPrinted.value == false) {
-          final text = state.usdController.text;
+          final text = _sendToState.usdController.text;
           final textToInt = double.tryParse(text);
           if (textToInt != 0) {
             recordAmplitudeEventPartTwo(
               AmountEntered(
-                amount: '${state.amount}\$',
+                amount: '${_sendToState.amount}\$',
                 balance:
-                    '${formatter.format(state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice))}\$',
+                    '${formatter.format(_sendToState.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))}\$',
                 fee:
-                    '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                    '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))} ≈ ${_sendToState.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
               ),
             );
           }
@@ -61,7 +62,7 @@ class UsdAmountTextField extends HookWidget {
     }
 
     useEffect(() {
-      state.usdController.addListener(_onTextChanged);
+      _sendToState.usdController.addListener(_onTextChanged);
       return null;
     });
     return Expanded(
@@ -86,7 +87,7 @@ class UsdAmountTextField extends HookWidget {
                     ),
                     Flexible(
                       child: TextField(
-                        controller: state.usdController,
+                        controller: _sendToState.usdController,
                         focusNode: usdFocusNode,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -109,11 +110,11 @@ class UsdAmountTextField extends HookWidget {
                         cursorColor: Colors.blue,
                         onChanged: (value) {
                           Gaimon.selection();
-                          state.handleUsdAmountSelection();
+                          _sendToState.handleUsdAmountSelection();
                           var previousTextLength = 0;
-                          if (state.isUseMaxClicked) {
+                          if (_sendToState.isUseMaxClicked) {
                             if (value.length > previousTextLength) {
-                              state.hideMaxValue();
+                              _sendToState.hideMaxValue();
                             }
                           }
 
@@ -121,18 +122,17 @@ class UsdAmountTextField extends HookWidget {
                             final amountToDouble = double.tryParse(value);
                             if (amountToDouble != null) {
                               final btcAmount = amountToDouble.usdToBtc(
-                                btcCurrentPrice: state.btcPrice,
+                                btcCurrentPrice: _sendToState.btcPrice,
                               );
-                              final stringBtcAmount =
-                                  btcAmount.toStringAsFixed(8);
-                              state.btcController.text = stringBtcAmount;
+                              final stringBtcAmount = btcAmount.toStringAsFixed(8);
+                              _sendToState.btcController.text = stringBtcAmount;
                             }
                           } else {
-                            state.btcController.text = '0';
-                            state.usdController.text = '0';
+                            _sendToState.btcController.text = '0';
+                            _sendToState.usdController.text = '0';
                           }
-                          state.setAmount(value);
-                          state.transactionsStore.findOptimalUtxo();
+                          _sendToState.setAmount(value);
+                          _sendToState.transactionsStore.findOptimalUtxo();
                           previousTextLength = value.length;
                         },
                         style: const TextStyle(

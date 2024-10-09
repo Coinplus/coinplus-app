@@ -25,18 +25,18 @@ import 'card_select_dropdown/card_select_dropdown.dart';
 class ProvideAddressTab extends HookWidget {
   const ProvideAddressTab({
     super.key,
-    required this.state,
     required this.tabController,
     required this.isBarList,
     required this.sendFocusNode,
   });
 
-  final SendToState state;
   final TabController tabController;
   final bool isBarList;
   final FocusNode sendFocusNode;
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,11 @@ class ProvideAddressTab extends HookWidget {
     useAutomaticKeepAlive();
     final isCardActivated = _secureStorage.isCardWalletActivated(
       balanceStore: _balanceStore,
-      state: state,
+      state: _sendToState,
     );
     final isBarActivated = _secureStorage.isBarWalletActivated(
       balanceStore: _balanceStore,
-      state: state,
+      state: _sendToState,
     );
     return Column(
       children: [
@@ -71,16 +71,15 @@ class ProvideAddressTab extends HookWidget {
           child: Observer(
             builder: (context) {
               return SizedBox(
-                height: state.isValidReceiverAddress ? 50 : 72,
+                height: _sendToState.isValidReceiverAddress ? 50 : 72,
                 child: Observer(
                   builder: (context) {
                     return TextField(
-                      controller: state.addressController,
+                      controller: _sendToState.addressController,
                       focusNode: sendFocusNode,
                       scrollController: _scrollController,
                       decoration: InputDecoration(
-                        errorText: state.shouldValidateReceiverAddress &&
-                                !state.isValidReceiverAddress
+                        errorText: _sendToState.shouldValidateReceiverAddress && !_sendToState.isValidReceiverAddress
                             ? 'Invalid receiver address'
                             : null,
                         errorStyle: const TextStyle(color: Colors.red),
@@ -132,10 +131,9 @@ class ProvideAddressTab extends HookWidget {
                               if (res == null) {
                                 return;
                               }
-                              state.addressController.text = res;
-                              state.transactionsStore
-                                  .setReceiverWalletAddress(res);
-                              state
+                              _sendToState.addressController.text = res;
+                              _sendToState.transactionsStore.setReceiverWalletAddress(res);
+                              _sendToState
                                 ..onAddressChanges(res)
                                 ..setOutputAddress(res);
                               await recordAmplitudeEvent(
@@ -167,13 +165,12 @@ class ProvideAddressTab extends HookWidget {
                       enableSuggestions: false,
                       scribbleEnabled: false,
                       onTapOutside: (_) {
-                        WidgetsBinding.instance.focusManager.primaryFocus
-                            ?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                         _scrollController.jumpTo(0);
                       },
                       onChanged: (value) {
-                        state.transactionsStore.setReceiverWalletAddress(value);
-                        state
+                        _sendToState.transactionsStore.setReceiverWalletAddress(value);
+                        _sendToState
                           ..onAddressChanges(value)
                           ..setOutputAddress(value)
                           ..handleNextButtonStatus();
@@ -186,8 +183,7 @@ class ProvideAddressTab extends HookWidget {
                       textAlignVertical: TextAlignVertical.center,
                       textInputAction: TextInputAction.done,
                       onEditingComplete: () {
-                        WidgetsBinding.instance.focusManager.primaryFocus
-                            ?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                         _scrollController.jumpTo(0);
                       },
                     );
@@ -215,13 +211,12 @@ class ProvideAddressTab extends HookWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Observer(
             builder: (_) {
-              return state.btc == null
+              return _sendToState.btc == null
                   ? const Padding(
                       padding: EdgeInsets.only(top: 14),
                       child: HistoryDropdownShimmer(),
                     )
                   : CardSelectDropdown(
-                      state: state,
                       isBarList: isBarList,
                     );
             },
@@ -231,36 +226,36 @@ class ProvideAddressTab extends HookWidget {
         Observer(
           builder: (context) {
             return LoadingButton(
-              onPressed: state.transactionsStore.utxoData != null &&
-                      state.nextButtonStatus &&
-                      state.addressController.text.length > 27
+              onPressed: _sendToState.transactionsStore.utxoData != null &&
+                      _sendToState.nextButtonStatus &&
+                      _sendToState.addressController.text.length > 27
                   ? () async {
                       await mempoolRepo.getFees();
-                      await state.transactionsStore.getUtxosData();
+                      await _sendToState.transactionsStore.getUtxosData();
                       await recordAmplitudeEventPartTwo(
                         SendNextClicked(
-                          sendToAddress: state.outputAddress,
-                          sendFromAddress: state.selectedCardAddress!,
+                          sendToAddress: _sendToState.outputAddress,
+                          sendFromAddress: _sendToState.selectedCardAddress!,
                         ),
                       );
-                      if (state.transactionsStore.cards.length == 1 &&
-                          state.transactionsStore.bars.isEmpty) {
+                      if (_sendToState.transactionsStore.cards.length == 1 &&
+                          _sendToState.transactionsStore.bars.isEmpty) {
                         if (await isCardActivated) {
                           tabController.animateTo(1);
                         }
-                        state.transactionsStore.onSelectCard(0);
-                      } else if (state.transactionsStore.cards.isEmpty &&
-                          state.transactionsStore.bars.length == 1) {
+                        _sendToState.transactionsStore.onSelectCard(0);
+                      } else if (_sendToState.transactionsStore.cards.isEmpty &&
+                          _sendToState.transactionsStore.bars.length == 1) {
                         if (await isBarActivated) {
                           tabController.animateTo(1);
                         }
-                        state.transactionsStore.onSelectBar(0);
+                        _sendToState.transactionsStore.onSelectBar(0);
                       } else {
                         tabController.animateTo(1);
                       }
                     }
                   : null,
-              child: state.transactionsStore.utxoLoading
+              child: _sendToState.transactionsStore.utxoLoading
                   ? const SizedBox(
                       height: 20,
                       width: 20,

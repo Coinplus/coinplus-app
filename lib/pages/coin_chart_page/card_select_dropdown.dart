@@ -72,11 +72,9 @@ class CardSelectDropdown extends StatelessWidget {
                             final item = items[index];
                             if (item is CardModel) {
                               final card = item;
-                              final formattedCardAddress =
-                                  getSplitAddress(card.address);
+                              final formattedCardAddress = getSplitAddress(card.address);
                               final data = _balanceStore.btcPrice;
-                              final myFormat =
-                                  NumberFormat.decimalPatternDigits(
+                              final myFormat = NumberFormat.decimalPatternDigits(
                                 locale: 'en_us',
                                 decimalDigits: 2,
                               );
@@ -96,8 +94,7 @@ class CardSelectDropdown extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -106,23 +103,19 @@ class CardSelectDropdown extends StatelessWidget {
                                               width: 30,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
-                                                  image: card.color.image
-                                                      .image()
-                                                      .image,
+                                                  image: card.color.image.image().image,
                                                 ),
                                               ),
                                             ),
                                             const Gap(12),
                                             Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   card.name,
                                                   style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 15,
                                                     color: AppColors.primary,
                                                   ),
@@ -130,11 +123,9 @@ class CardSelectDropdown extends StatelessWidget {
                                                 Text(
                                                   formattedCardAddress,
                                                   style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 14,
-                                                    color: AppColors
-                                                        .textHintsColor,
+                                                    color: AppColors.textHintsColor,
                                                   ),
                                                 ),
                                               ],
@@ -157,11 +148,9 @@ class CardSelectDropdown extends StatelessWidget {
                               );
                             } else {
                               final bar = item as BarModel;
-                              final formattedBarAddress =
-                                  getSplitAddress(bar.address);
+                              final formattedBarAddress = getSplitAddress(bar.address);
                               final data = _balanceStore.btcPrice;
-                              final myFormat =
-                                  NumberFormat.decimalPatternDigits(
+                              final myFormat = NumberFormat.decimalPatternDigits(
                                 locale: 'en_us',
                                 decimalDigits: 2,
                               );
@@ -171,8 +160,7 @@ class CardSelectDropdown extends StatelessWidget {
                                   return InkWell(
                                     onTap: () async {
                                       await router.maybePop();
-                                      _rampService.configuration.userAddress =
-                                          bar.address;
+                                      _rampService.configuration.userAddress = bar.address;
                                       _rampService.presentRamp();
                                     },
                                     child: Container(
@@ -183,8 +171,7 @@ class CardSelectDropdown extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
@@ -193,37 +180,29 @@ class CardSelectDropdown extends StatelessWidget {
                                                   width: 30,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: bar.color.image
-                                                          .image()
-                                                          .image,
+                                                      image: bar.color.image.image().image,
                                                     ),
                                                   ),
                                                 ),
                                                 const Gap(12),
                                                 Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       bar.name,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 15,
-                                                        color:
-                                                            AppColors.primary,
+                                                        color: AppColors.primary,
                                                       ),
                                                     ),
                                                     Text(
                                                       formattedBarAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
-                                                        color: AppColors
-                                                            .textHintsColor,
+                                                        color: AppColors.textHintsColor,
                                                       ),
                                                     ),
                                                   ],
@@ -234,8 +213,7 @@ class CardSelectDropdown extends StatelessWidget {
                                               '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data!)}',
                                               style: const TextStyle(
                                                 fontSize: 16,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),

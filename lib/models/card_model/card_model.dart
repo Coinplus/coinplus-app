@@ -21,6 +21,7 @@ class CardModel with _$CardModel {
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Card') String name,
     @Default('BTC') String blockchain,
+    @Default(false) bool isBackup,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _CardModel;
 

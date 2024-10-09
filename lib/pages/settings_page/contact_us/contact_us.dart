@@ -126,8 +126,7 @@ class _ContactUsState extends State<ContactUs> {
                   },
                   controller: store.nameController,
                   onTapOutside: (_) {
-                    WidgetsBinding.instance.focusManager.primaryFocus
-                        ?.unfocus();
+                    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                   },
                   onEditingComplete: _nameFocusNode.nextFocus,
                   cursorColor: AppColors.secondaryButtons,
@@ -193,8 +192,7 @@ class _ContactUsState extends State<ContactUs> {
                       keyboardType: TextInputType.emailAddress,
                       controller: store.mailController,
                       onEditingComplete: () {
-                        if (!_mailFocusNode.hasFocus &&
-                            store.mailController.text.isNotEmpty) {
+                        if (!_mailFocusNode.hasFocus && store.mailController.text.isNotEmpty) {
                           store.validateEmail(store.mailController.text);
                         }
                       },
@@ -213,14 +211,12 @@ class _ContactUsState extends State<ContactUs> {
                         if (store.mailController.text.isNotEmpty) {
                           store.validateEmail(store.mailController.text);
                         }
-                        WidgetsBinding.instance.focusManager.primaryFocus
-                            ?.unfocus();
+                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                       },
                       cursorColor: AppColors.secondaryButtons,
                       decoration: InputDecoration(
                         filled: true,
-                        errorText:
-                            store.isEmailValid ? null : 'Invalid email address',
+                        errorText: store.isEmailValid ? null : 'Invalid email address',
                         errorStyle: const TextStyle(color: Colors.red),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -297,8 +293,7 @@ class _ContactUsState extends State<ContactUs> {
                   minLines: 10,
                   maxLines: 20,
                   onTapOutside: (_) {
-                    WidgetsBinding.instance.focusManager.primaryFocus
-                        ?.unfocus();
+                    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                   },
                   cursorColor: AppColors.secondaryButtons,
                   decoration: InputDecoration(

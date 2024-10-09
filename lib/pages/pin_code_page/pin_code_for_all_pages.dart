@@ -89,9 +89,8 @@ class PinCodeForAllPages extends HookWidget {
                     color: AppColors.red,
                   ),
                 ),
-                crossFadeState: _walletProtectState.isCreatedPinMatch
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
+                crossFadeState:
+                    _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                 duration: const Duration(milliseconds: 1),
               );
             },
@@ -175,8 +174,7 @@ class PinCodeForAllPages extends HookWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        decoration:
-                            BoxDecoration(color: Colors.grey.withOpacity(0.3)),
+                        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.3)),
                         height: 1,
                         width: 155,
                       ),
@@ -205,8 +203,7 @@ class PinCodeForAllPages extends HookWidget {
                     onPressed: () {
                       _walletProtectState.authenticateWithBiometrics();
                     },
-                    child: _walletProtectState.availableBiometric ==
-                            BiometricType.fingerprint
+                    child: _walletProtectState.availableBiometric == BiometricType.fingerprint
                         ? Assets.icons.iphoneTouchId.image(
                             height: 30,
                           )

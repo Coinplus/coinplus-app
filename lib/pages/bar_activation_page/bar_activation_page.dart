@@ -34,25 +34,23 @@ import '../../utils/compute_private_key.dart';
 import '../../utils/secrets_validation.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../widgets/loading_button/loading_button.dart';
-import '../send_page/send_to/send_to_state.dart';
 
 @RoutePage()
 class BarActivationPage extends StatefulWidget {
   const BarActivationPage({
     super.key,
     this.receivedData,
-    required this.state,
+    this.hasBackup,
   });
 
   final String? receivedData;
-  final SendToState state;
+  final bool? hasBackup;
 
   @override
   State<BarActivationPage> createState() => _BarActivationPageState();
 }
 
-class _BarActivationPageState extends State<BarActivationPage>
-    with TickerProviderStateMixin {
+class _BarActivationPageState extends State<BarActivationPage> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
@@ -60,10 +58,8 @@ class _BarActivationPageState extends State<BarActivationPage>
   late String secret1B58 = '';
   late String secret2B58 = '';
   late String walletAddress = '';
-  late final TextEditingController _secretOneController =
-      TextEditingController();
-  late final TextEditingController _secretTwoController =
-      TextEditingController();
+  late final TextEditingController _secretOneController = TextEditingController();
+  late final TextEditingController _secretTwoController = TextEditingController();
   late AnimationController _lottieController;
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
@@ -236,8 +232,7 @@ class _BarActivationPageState extends State<BarActivationPage>
                                 ),
                               ],
                               image: DecorationImage(
-                                image:
-                                    getBackImageForCardColor(bar.color).image,
+                                image: getBackImageForCardColor(bar.color).image,
                               ),
                             ),
                             child: Row(
@@ -252,31 +247,26 @@ class _BarActivationPageState extends State<BarActivationPage>
                                       sigmaY: 8,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Observer(
                                           builder: (context) {
                                             return Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                                               children: [
                                                 ScaleTransition(
-                                                  scale:
-                                                      _secretOneAnimationController,
+                                                  scale: _secretOneAnimationController,
                                                   child: AnimatedCrossFade(
                                                     secondChild: Stack(
                                                       children: [
                                                         Container(
                                                           height: 160,
                                                           width: 160,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             color: Colors.white,
                                                             border: Border.all(
-                                                              color: _secretOneFocusNode
-                                                                      .hasFocus
+                                                              color: _secretOneFocusNode.hasFocus
                                                                   ? Colors.blue
                                                                   : const Color(
                                                                       0xFFB5B5B5,
@@ -284,143 +274,85 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                                       0.6,
                                                                     ),
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               100,
                                                             ),
                                                           ),
                                                           child: Center(
                                                             child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
+                                                              mainAxisAlignment: MainAxisAlignment.end,
                                                               children: [
                                                                 SizedBox(
                                                                   width: 85,
                                                                   height: 100,
-                                                                  child:
-                                                                      TextField(
+                                                                  child: TextField(
                                                                     inputFormatters: [
                                                                       LengthLimitingTextInputFormatter(
                                                                         30,
                                                                       ),
                                                                     ],
-                                                                    textAlignVertical:
-                                                                        TextAlignVertical
-                                                                            .top,
-                                                                    autocorrect:
-                                                                        false,
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .text,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
+                                                                    textAlignVertical: TextAlignVertical.top,
+                                                                    autocorrect: false,
+                                                                    keyboardType: TextInputType.text,
+                                                                    textAlign: TextAlign.center,
                                                                     onChanged: (
                                                                       value,
                                                                     ) {
-                                                                      if (value
-                                                                              .length ==
-                                                                          30) {
+                                                                      if (value.length == 30) {
                                                                         _validateSecretOne();
-                                                                      } else if (value
-                                                                              .length <
-                                                                          30) {
-                                                                        _validationStore
-                                                                            .invalidSecretOne();
-                                                                        _secretOneLottieController
-                                                                            .reset();
+                                                                      } else if (value.length < 30) {
+                                                                        _validationStore.invalidSecretOne();
+                                                                        _secretOneLottieController.reset();
                                                                       }
 
-                                                                      secret1B58 =
-                                                                          value;
+                                                                      secret1B58 = value;
                                                                     },
-                                                                    controller:
-                                                                        _secretOneController,
-                                                                    maxLines:
-                                                                        15,
-                                                                    focusNode:
-                                                                        _secretOneFocusNode,
-                                                                    cursorColor:
-                                                                        AppColors
-                                                                            .primary,
-                                                                    cursorWidth:
-                                                                        1,
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: AppColors
-                                                                          .primaryTextColor,
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatLight,
+                                                                    controller: _secretOneController,
+                                                                    maxLines: 15,
+                                                                    focusNode: _secretOneFocusNode,
+                                                                    cursorColor: AppColors.primary,
+                                                                    cursorWidth: 1,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 12,
+                                                                      color: AppColors.primaryTextColor,
+                                                                      fontFamily: FontFamily.redHatLight,
                                                                     ),
-                                                                    onTapOutside:
-                                                                        (
+                                                                    onTapOutside: (
                                                                       _,
                                                                     ) {
-                                                                      WidgetsBinding
-                                                                          .instance
-                                                                          .focusManager
-                                                                          .primaryFocus
+                                                                      WidgetsBinding.instance.focusManager.primaryFocus
                                                                           ?.unfocus();
                                                                     },
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      hintText:
-                                                                          'Write here your \nsecret 1',
-                                                                      fillColor:
-                                                                          Colors
-                                                                              .white,
-                                                                      hintMaxLines:
-                                                                          10,
-                                                                      hintStyle:
-                                                                          const TextStyle(
-                                                                        fontFamily:
-                                                                            FontFamily.redHatLight,
-                                                                        fontSize:
-                                                                            13,
-                                                                        color: Colors
-                                                                            .grey,
+                                                                    decoration: InputDecoration(
+                                                                      hintText: 'Write here your \nsecret 1',
+                                                                      fillColor: Colors.white,
+                                                                      hintMaxLines: 10,
+                                                                      hintStyle: const TextStyle(
+                                                                        fontFamily: FontFamily.redHatLight,
+                                                                        fontSize: 13,
+                                                                        color: Colors.grey,
                                                                       ),
-                                                                      contentPadding:
-                                                                          const EdgeInsets
-                                                                              .symmetric(
-                                                                        horizontal:
-                                                                            10,
-                                                                        vertical:
-                                                                            16,
+                                                                      contentPadding: const EdgeInsets.symmetric(
+                                                                        horizontal: 10,
+                                                                        vertical: 16,
                                                                       ),
-                                                                      prefixIconConstraints:
-                                                                          const BoxConstraints(
-                                                                        minWidth:
-                                                                            25,
-                                                                        minHeight:
-                                                                            25,
+                                                                      prefixIconConstraints: const BoxConstraints(
+                                                                        minWidth: 25,
+                                                                        minHeight: 25,
                                                                       ),
-                                                                      focusedBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide:
-                                                                            const BorderSide(
-                                                                          color:
-                                                                              Colors.transparent,
+                                                                      focusedBorder: OutlineInputBorder(
+                                                                        borderSide: const BorderSide(
+                                                                          color: Colors.transparent,
                                                                         ),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
+                                                                        borderRadius: BorderRadius.circular(
                                                                           100,
                                                                         ),
                                                                       ),
-                                                                      enabledBorder:
-                                                                          OutlineInputBorder(
-                                                                        borderSide:
-                                                                            const BorderSide(
-                                                                          color:
-                                                                              Colors.transparent,
+                                                                      enabledBorder: OutlineInputBorder(
+                                                                        borderSide: const BorderSide(
+                                                                          color: Colors.transparent,
                                                                         ),
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
+                                                                        borderRadius: BorderRadius.circular(
                                                                           100,
                                                                         ),
                                                                       ),
@@ -437,61 +369,43 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                               top: 15,
                                                               left: 0,
                                                               right: 0,
-                                                              child: !_validationStore
-                                                                      .isSecret1Valid
+                                                              child: !_validationStore.isSecret1Valid
                                                                   ? ScaleTap(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        _secretOneFocusNode
-                                                                            .unfocus();
-                                                                        await Future
-                                                                            .delayed(
+                                                                      onPressed: () async {
+                                                                        _secretOneFocusNode.unfocus();
+                                                                        await Future.delayed(
                                                                           const Duration(
-                                                                            milliseconds:
-                                                                                300,
+                                                                            milliseconds: 300,
                                                                           ),
                                                                         );
-                                                                        final res =
-                                                                            await context.pushRoute<String?>(
+                                                                        final res = await context.pushRoute<String?>(
                                                                           QrScannerRoute(),
                                                                         );
-                                                                        if (res ==
-                                                                            null) {
+                                                                        if (res == null) {
                                                                           return;
                                                                         }
-                                                                        _secretOneController.text =
-                                                                            res.replaceAll(
+                                                                        _secretOneController.text = res.replaceAll(
                                                                           '\n',
                                                                           '',
                                                                         );
-                                                                        secret1B58 =
-                                                                            _secretOneController.text;
+                                                                        secret1B58 = _secretOneController.text;
                                                                         await _validateSecretOne();
                                                                       },
-                                                                      child:
-                                                                          SizedBox(
-                                                                        height:
-                                                                            45,
-                                                                        child: Image
-                                                                            .asset(
+                                                                      child: SizedBox(
+                                                                        height: 45,
+                                                                        child: Image.asset(
                                                                           'assets/icons/qr_code.png',
                                                                         ),
                                                                       ),
                                                                     )
-                                                                  : Lottie
-                                                                      .asset(
+                                                                  : Lottie.asset(
                                                                       'assets/lottie_animations/address_validation_success.json',
-                                                                      height:
-                                                                          40,
-                                                                      controller:
-                                                                          _secretOneLottieController,
-                                                                      onLoaded:
-                                                                          (composition) {
-                                                                        Future
-                                                                            .delayed(
+                                                                      height: 40,
+                                                                      controller: _secretOneLottieController,
+                                                                      onLoaded: (composition) {
+                                                                        Future.delayed(
                                                                           const Duration(
-                                                                            milliseconds:
-                                                                                1000,
+                                                                            milliseconds: 1000,
                                                                           ),
                                                                         );
                                                                         _secretOneLottieController.duration =
@@ -508,22 +422,13 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                         Container(
                                                           height: 160,
                                                           width: 160,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            image:
-                                                                DecorationImage(
-                                                              image: Assets
-                                                                  .images
-                                                                  .bar
-                                                                  .hologramWithFrame
-                                                                  .image()
-                                                                  .image,
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: Assets.images.bar.hologramWithFrame.image().image,
                                                             ),
                                                           ),
                                                           child: Center(
-                                                            child: Assets.images
-                                                                .bar.barSecret1
-                                                                .image(
+                                                            child: Assets.images.bar.barSecret1.image(
                                                               height: 44,
                                                             ),
                                                           ),
@@ -533,50 +438,38 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                     duration: const Duration(
                                                       milliseconds: 500,
                                                     ),
-                                                    crossFadeState:
-                                                        !_validationStore
-                                                                .secretOneVisibility
-                                                            ? CrossFadeState
-                                                                .showFirst
-                                                            : CrossFadeState
-                                                                .showSecond,
+                                                    crossFadeState: !_validationStore.secretOneVisibility
+                                                        ? CrossFadeState.showFirst
+                                                        : CrossFadeState.showSecond,
                                                   ),
                                                 ),
                                                 Container(
                                                   height: 33,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: Assets
-                                                          .images.bar.barAddress
-                                                          .image()
-                                                          .image,
+                                                      image: Assets.images.bar.barAddress.image().image,
                                                     ),
                                                   ),
                                                 ),
                                                 const Gap(55),
                                                 Opacity(
                                                   opacity: 0,
-                                                  child: Assets.images.bar
-                                                      .barCoinplusLogo
-                                                      .image(
+                                                  child: Assets.images.bar.barCoinplusLogo.image(
                                                     height: 40,
                                                   ),
                                                 ),
                                                 const Gap(15),
                                                 ScaleTransition(
-                                                  scale:
-                                                      _secretTwoAnimationController,
+                                                  scale: _secretTwoAnimationController,
                                                   child: AnimatedCrossFade(
                                                     secondChild: Stack(
                                                       children: [
                                                         Container(
                                                           width: 180,
-                                                          decoration:
-                                                              BoxDecoration(
+                                                          decoration: BoxDecoration(
                                                             color: Colors.white,
                                                             border: Border.all(
-                                                              color: _secretTwoFocusNode
-                                                                      .hasFocus
+                                                              color: _secretTwoFocusNode.hasFocus
                                                                   ? Colors.blue
                                                                   : const Color(
                                                                       0xFFB5B5B5,
@@ -584,149 +477,88 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                                       0.6,
                                                                     ),
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                            borderRadius: BorderRadius.circular(
                                                               10,
                                                             ),
                                                           ),
                                                           child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
+                                                            mainAxisAlignment: MainAxisAlignment.end,
                                                             children: [
                                                               SizedBox(
                                                                 height: 44,
-                                                                child:
-                                                                    TextField(
+                                                                child: TextField(
                                                                   inputFormatters: [
                                                                     LengthLimitingTextInputFormatter(
                                                                       30,
                                                                     ),
                                                                   ],
-                                                                  textAlignVertical:
-                                                                      TextAlignVertical
-                                                                          .top,
-                                                                  autocorrect:
-                                                                      false,
-                                                                  keyboardType:
-                                                                      TextInputType
-                                                                          .text,
+                                                                  textAlignVertical: TextAlignVertical.top,
+                                                                  autocorrect: false,
+                                                                  keyboardType: TextInputType.text,
                                                                   onChanged: (
                                                                     value,
                                                                   ) {
-                                                                    if (value
-                                                                            .length ==
-                                                                        30) {
+                                                                    if (value.length == 30) {
                                                                       _validateSecretTwo();
-                                                                    } else if (value
-                                                                            .length <
-                                                                        30) {
-                                                                      _validationStore
-                                                                          .invalidSecretTwo();
-                                                                      _secretTwoLottieController
-                                                                          .reset();
+                                                                    } else if (value.length < 30) {
+                                                                      _validationStore.invalidSecretTwo();
+                                                                      _secretTwoLottieController.reset();
                                                                     }
 
-                                                                    secret2B58 =
-                                                                        value;
+                                                                    secret2B58 = value;
                                                                   },
-                                                                  controller:
-                                                                      _secretTwoController,
+                                                                  controller: _secretTwoController,
                                                                   maxLines: 2,
                                                                   minLines: 1,
-                                                                  focusNode:
-                                                                      _secretTwoFocusNode,
-                                                                  cursorColor:
-                                                                      AppColors
-                                                                          .primary,
-                                                                  cursorWidth:
-                                                                      1,
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: AppColors
-                                                                        .primaryTextColor,
-                                                                    fontFamily:
-                                                                        FontFamily
-                                                                            .redHatLight,
+                                                                  focusNode: _secretTwoFocusNode,
+                                                                  cursorColor: AppColors.primary,
+                                                                  cursorWidth: 1,
+                                                                  style: const TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: AppColors.primaryTextColor,
+                                                                    fontFamily: FontFamily.redHatLight,
                                                                   ),
-                                                                  onTapOutside:
-                                                                      (_) {
-                                                                    WidgetsBinding
-                                                                        .instance
-                                                                        .focusManager
-                                                                        .primaryFocus
+                                                                  onTapOutside: (_) {
+                                                                    WidgetsBinding.instance.focusManager.primaryFocus
                                                                         ?.unfocus();
                                                                   },
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    hintText:
-                                                                        'Write here your \nsecret 2',
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    hintMaxLines:
-                                                                        2,
-                                                                    hintStyle:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          FontFamily
-                                                                              .redHatLight,
-                                                                      fontSize:
-                                                                          13,
-                                                                      color: AppColors
-                                                                          .primaryTextColor
-                                                                          .withOpacity(
+                                                                  decoration: InputDecoration(
+                                                                    hintText: 'Write here your \nsecret 2',
+                                                                    fillColor: Colors.white,
+                                                                    hintMaxLines: 2,
+                                                                    hintStyle: TextStyle(
+                                                                      fontFamily: FontFamily.redHatLight,
+                                                                      fontSize: 13,
+                                                                      color: AppColors.primaryTextColor.withOpacity(
                                                                         0.4,
                                                                       ),
                                                                     ),
-                                                                    contentPadding:
-                                                                        const EdgeInsets
-                                                                            .symmetric(
-                                                                      horizontal:
-                                                                          10,
-                                                                      vertical:
-                                                                          5,
+                                                                    contentPadding: const EdgeInsets.symmetric(
+                                                                      horizontal: 10,
+                                                                      vertical: 5,
                                                                     ),
-                                                                    prefixIconConstraints:
-                                                                        const BoxConstraints(
-                                                                      minWidth:
-                                                                          25,
-                                                                      minHeight:
-                                                                          25,
+                                                                    prefixIconConstraints: const BoxConstraints(
+                                                                      minWidth: 25,
+                                                                      minHeight: 25,
                                                                     ),
-                                                                    focusedBorder:
-                                                                        OutlineInputBorder(
-                                                                      borderSide:
-                                                                          const BorderSide(
-                                                                        color: Colors
-                                                                            .transparent,
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                        color: Colors.transparent,
                                                                       ),
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
+                                                                      borderRadius: BorderRadius.circular(
                                                                         24,
                                                                       ),
                                                                     ),
-                                                                    enabledBorder:
-                                                                        OutlineInputBorder(
-                                                                      borderSide:
-                                                                          const BorderSide(
-                                                                        color: Colors
-                                                                            .transparent,
+                                                                    enabledBorder: OutlineInputBorder(
+                                                                      borderSide: const BorderSide(
+                                                                        color: Colors.transparent,
                                                                       ),
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
+                                                                      borderRadius: BorderRadius.circular(
                                                                         24,
                                                                       ),
                                                                     ),
-                                                                    prefixIcon:
-                                                                        Observer(
-                                                                      builder:
-                                                                          (context) {
+                                                                    prefixIcon: Observer(
+                                                                      builder: (context) {
                                                                         return !_validationStore.isSecret2Valid
                                                                             ? Padding(
                                                                                 padding: const EdgeInsets.all(8),
@@ -738,17 +570,20 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                                                         milliseconds: 300,
                                                                                       ),
                                                                                     );
-                                                                                    final res = await context.pushRoute<String?>(
+                                                                                    final res = await context
+                                                                                        .pushRoute<String?>(
                                                                                       QrScannerRoute(),
                                                                                     );
                                                                                     if (res == null) {
                                                                                       return;
                                                                                     }
-                                                                                    _secretTwoController.text = res.replaceAll(
+                                                                                    _secretTwoController.text =
+                                                                                        res.replaceAll(
                                                                                       '\n',
                                                                                       '',
                                                                                     );
-                                                                                    secret2B58 = _secretTwoController.text;
+                                                                                    secret2B58 =
+                                                                                        _secretTwoController.text;
                                                                                     await _validateSecretTwo();
                                                                                   },
                                                                                   child: SizedBox(
@@ -769,7 +604,8 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                                                       milliseconds: 1000,
                                                                                     ),
                                                                                   );
-                                                                                  _secretTwoLottieController.duration = composition.duration;
+                                                                                  _secretTwoLottieController.duration =
+                                                                                      composition.duration;
                                                                                 },
                                                                               );
                                                                       },
@@ -782,21 +618,15 @@ class _BarActivationPageState extends State<BarActivationPage>
                                                         ),
                                                       ],
                                                     ),
-                                                    firstChild: Assets
-                                                        .images.bar.barSecret2
-                                                        .image(
+                                                    firstChild: Assets.images.bar.barSecret2.image(
                                                       height: 44,
                                                     ),
                                                     duration: const Duration(
                                                       milliseconds: 500,
                                                     ),
-                                                    crossFadeState:
-                                                        !_validationStore
-                                                                .secretTwoVisibility
-                                                            ? CrossFadeState
-                                                                .showFirst
-                                                            : CrossFadeState
-                                                                .showSecond,
+                                                    crossFadeState: !_validationStore.secretTwoVisibility
+                                                        ? CrossFadeState.showFirst
+                                                        : CrossFadeState.showSecond,
                                                   ),
                                                 ),
                                                 const Gap(20),
@@ -855,10 +685,9 @@ class _BarActivationPageState extends State<BarActivationPage>
                                   color: AppColors.textHintsColor,
                                 ),
                               ).expandedHorizontally(),
-                              crossFadeState:
-                                  _validationStore.secretTwoVisibility
-                                      ? CrossFadeState.showSecond
-                                      : CrossFadeState.showFirst,
+                              crossFadeState: _validationStore.secretTwoVisibility
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
                               duration: const Duration(milliseconds: 400),
                             ),
                             const Gap(4),
@@ -879,10 +708,9 @@ class _BarActivationPageState extends State<BarActivationPage>
                                   color: AppColors.textHintsColor,
                                 ),
                               ).expandedHorizontally(),
-                              crossFadeState:
-                                  _validationStore.secretTwoVisibility
-                                      ? CrossFadeState.showSecond
-                                      : CrossFadeState.showFirst,
+                              crossFadeState: _validationStore.secretTwoVisibility
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
                               duration: const Duration(milliseconds: 400),
                             ),
                           ],
@@ -953,7 +781,7 @@ class _BarActivationPageState extends State<BarActivationPage>
                               walletAddress: walletAddress,
                               walletType: 'Bar',
                               isBarList: true,
-                              state: widget.state,
+                              hasBackup: widget.hasBackup,
                               bar: bar,
                               balanceStore: _balanceStore,
                             );

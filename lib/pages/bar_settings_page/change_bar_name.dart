@@ -177,8 +177,7 @@ class _BarNameChangeModalState extends State<BarNameChangeModal> {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor:
-                                    const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                 message: 'Your bar name was changed',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,

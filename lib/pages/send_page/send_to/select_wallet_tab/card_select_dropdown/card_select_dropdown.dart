@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../constants/card_color.dart';
 import '../../../../../extensions/extensions.dart';
@@ -16,12 +17,12 @@ import '../../send_to_state.dart';
 class CardSelectDropdown extends HookWidget {
   const CardSelectDropdown({
     super.key,
-    required this.state,
     required this.isBarList,
   });
 
-  final SendToState state;
   final bool isBarList;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class CardSelectDropdown extends HookWidget {
       ),
       child: ScaleTap(
         enableFeedback: false,
-        onPressed: state.hasMoreThanOneWallets
+        onPressed: _sendToState.hasMoreThanOneWallets
             ? () {
                 showModalBottomSheet(
                   isScrollControlled: true,
@@ -45,14 +46,13 @@ class CardSelectDropdown extends HookWidget {
                   ),
                   builder: (_) => ChangeSelectedAddressModal(
                     isBarList: isBarList,
-                    state: state,
                   ),
                 );
               }
             : null,
         child: Observer(
           builder: (context) {
-            if (state.transactionsStore.selectedCard != -1) {
+            if (_sendToState.transactionsStore.selectedCard != -1) {
               return Padding(
                 padding: const EdgeInsets.all(10),
                 child: Container(
@@ -61,15 +61,14 @@ class CardSelectDropdown extends HookWidget {
                   ),
                   child: Observer(
                     builder: (_) {
-                      final data = state.btc;
+                      final data = _sendToState.btc;
                       final myFormat = NumberFormat.decimalPatternDigits(
                         locale: 'en_us',
                         decimalDigits: 2,
                       );
-                      final singleCard = state.transactionsStore
-                          .cards[state.transactionsStore.selectedCard];
-                      final formattedAddress =
-                          getSplitAddress(singleCard.address);
+                      final singleCard =
+                          _sendToState.transactionsStore.cards[_sendToState.transactionsStore.selectedCard];
+                      final formattedAddress = getSplitAddress(singleCard.address);
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -126,33 +125,23 @@ class CardSelectDropdown extends HookWidget {
                                 children: [
                                   Observer(
                                     builder: (context) {
-                                      return state.hasPerformedAction
+                                      return _sendToState.hasPerformedAction
                                           ? Text(
                                               r'$*****',
                                               style: TextStyle(
-                                                fontSize: singleCard
-                                                            .finalBalance
-                                                            .toString()
-                                                            .length >
-                                                        9
-                                                    ? 17
-                                                    : 20,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontSize: singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             )
                                           : Text(
                                               '\$${myFormat.format(
-                                                (singleCard.finalBalance ?? 0) /
-                                                    100000000 *
-                                                    data!.price,
+                                                (singleCard.finalBalance ?? 0) / 100000000 * data!.price,
                                               )}',
                                               style: const TextStyle(
                                                 fontSize: 14,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -171,7 +160,7 @@ class CardSelectDropdown extends HookWidget {
                                   ),
                                 ],
                               ),
-                              if (state.hasMoreThanOneWallets)
+                              if (_sendToState.hasMoreThanOneWallets)
                                 const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: AppColors.primary,
@@ -184,7 +173,7 @@ class CardSelectDropdown extends HookWidget {
                   ),
                 ),
               );
-            } else if (state.transactionsStore.selectedBar != -1) {
+            } else if (_sendToState.transactionsStore.selectedBar != -1) {
               return Padding(
                 padding: const EdgeInsets.all(10),
                 child: Container(
@@ -193,15 +182,13 @@ class CardSelectDropdown extends HookWidget {
                   ),
                   child: Observer(
                     builder: (_) {
-                      final data = state.btc;
+                      final data = _sendToState.btc;
                       final myFormat = NumberFormat.decimalPatternDigits(
                         locale: 'en_us',
                         decimalDigits: 2,
                       );
-                      final singleBar = state.transactionsStore
-                          .bars[state.transactionsStore.selectedBar];
-                      final formattedAddress =
-                          getSplitAddress(singleBar.address);
+                      final singleBar = _sendToState.transactionsStore.bars[_sendToState.transactionsStore.selectedBar];
+                      final formattedAddress = getSplitAddress(singleBar.address);
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,32 +245,23 @@ class CardSelectDropdown extends HookWidget {
                                 children: [
                                   Observer(
                                     builder: (context) {
-                                      return state.hasPerformedAction
+                                      return _sendToState.hasPerformedAction
                                           ? Text(
                                               r'$*****',
                                               style: TextStyle(
-                                                fontSize: singleBar.finalBalance
-                                                            .toString()
-                                                            .length >
-                                                        9
-                                                    ? 17
-                                                    : 20,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontSize: singleBar.finalBalance.toString().length > 9 ? 17 : 20,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             )
                                           : Text(
                                               '\$${myFormat.format(
-                                                (singleBar.finalBalance ?? 0) /
-                                                    100000000 *
-                                                    data!.price,
+                                                (singleBar.finalBalance ?? 0) / 100000000 * data!.price,
                                               )}',
                                               style: const TextStyle(
                                                 fontSize: 14,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -302,7 +280,7 @@ class CardSelectDropdown extends HookWidget {
                                   ),
                                 ],
                               ),
-                              if (state.hasMoreThanOneWallets)
+                              if (_sendToState.hasMoreThanOneWallets)
                                 const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: AppColors.primary,
@@ -324,15 +302,14 @@ class CardSelectDropdown extends HookWidget {
                   ),
                   child: Observer(
                     builder: (_) {
-                      final data = state.btc;
+                      final data = _sendToState.btc;
                       final myFormat = NumberFormat.decimalPatternDigits(
                         locale: 'en_us',
                         decimalDigits: 2,
                       );
-                      final singleCard = state.transactionsStore
-                          .cards[state.historyPageStore.cardHistoryIndex];
-                      final formattedAddress =
-                          getSplitAddress(singleCard.address);
+                      final singleCard =
+                          _sendToState.transactionsStore.cards[_sendToState.historyPageStore.cardHistoryIndex];
+                      final formattedAddress = getSplitAddress(singleCard.address);
 
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -389,33 +366,23 @@ class CardSelectDropdown extends HookWidget {
                                 children: [
                                   Observer(
                                     builder: (context) {
-                                      return state.hasPerformedAction
+                                      return _sendToState.hasPerformedAction
                                           ? Text(
                                               r'$*****',
                                               style: TextStyle(
-                                                fontSize: singleCard
-                                                            .finalBalance
-                                                            .toString()
-                                                            .length >
-                                                        9
-                                                    ? 17
-                                                    : 20,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontSize: singleCard.finalBalance.toString().length > 9 ? 17 : 20,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             )
                                           : Text(
                                               '\$${myFormat.format(
-                                                (singleCard.finalBalance ?? 0) /
-                                                    100000000 *
-                                                    data!.price,
+                                                (singleCard.finalBalance ?? 0) / 100000000 * data!.price,
                                               )}',
                                               style: const TextStyle(
                                                 fontSize: 14,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -434,7 +401,7 @@ class CardSelectDropdown extends HookWidget {
                                   ),
                                 ],
                               ),
-                              if (state.hasMoreThanOneWallets)
+                              if (_sendToState.hasMoreThanOneWallets)
                                 const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: AppColors.primary,

@@ -26,7 +26,6 @@ import '../../utils/card_nfc_session.dart';
 import '../../utils/header_custom_paint.dart';
 import '../../widgets/card_and_bar_tab/card_and_bar_tab.dart';
 import '../send_page/send_to/send_to_state.dart';
-import '../splash_screen/splash_screen.dart';
 import 'bar_list/bar_list.dart';
 import 'card_list/card_list.dart';
 import 'favorite_coin/favorite_coin.dart';
@@ -38,14 +37,12 @@ class WalletPage extends StatefulWidget {
     required this.onChangeCard,
     required this.pageController,
     required this.allSettingsState,
-    required this.state,
     this.onOpenSendReceiveModal,
   });
 
   final CardChangeCallBack onChangeCard;
   final PageController pageController;
   final AllSettingsState allSettingsState;
-  final SendToState state;
   final Future<void> Function()? onOpenSendReceiveModal;
 
   @override
@@ -60,6 +57,8 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   ScrollController controller = ScrollController();
 
@@ -91,7 +90,6 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _checkFirstTimeOpen();
-    setWalletShown();
     controller.addListener(() async {
       if (widget.onOpenSendReceiveModal == null) {
         return;
@@ -126,21 +124,18 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
       if (_tabController.index == 1 &&
           _balanceStore.bars.isNotEmpty &&
           _balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.bars[_balanceStore.barCurrentIndex].address;
+        _rampService.configuration.userAddress = _balanceStore.bars[_balanceStore.barCurrentIndex].address;
       }
       if (_tabController.index == 0 &&
           _balanceStore.cards.isNotEmpty &&
           _balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-        _rampService.configuration.userAddress =
-            _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
+        _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
       }
       if (_tabController.index == 0) {
         _historyPageStore.setTabIndex(0);
         if (_balanceStore.cards.isNotEmpty) {
           if (_balanceStore.cardCurrentIndex != _balanceStore.cards.length) {
-            widget.state.transactionsStore
-                .onSelectCard(_balanceStore.cardCurrentIndex);
+            _sendToState.transactionsStore.onSelectCard(_balanceStore.cardCurrentIndex);
           }
         }
       }
@@ -148,8 +143,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         _historyPageStore.setTabIndex(1);
         if (_balanceStore.bars.isNotEmpty) {
           if (_balanceStore.barCurrentIndex != _balanceStore.bars.length) {
-            widget.state.transactionsStore
-                .onSelectBar(_balanceStore.barCurrentIndex);
+            _sendToState.transactionsStore.onSelectBar(_balanceStore.barCurrentIndex);
           }
         }
       }
@@ -209,18 +203,13 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
             CustomPaint(
               size: Size(
                 context.height,
-                (context.height > 667
-                        ? context.height * 0.205
-                        : context.height * 0.2)
-                    .toDouble(),
+                (context.height > 667 ? context.height * 0.205 : context.height * 0.2).toDouble(),
               ),
               painter: HeaderCustomPainter(),
             ),
             Positioned(
               bottom: context.height > 667 ? 6 : 0,
-              right: context.height < 932
-                  ? context.height * 0.017
-                  : context.height * 0.025,
+              right: context.height < 932 ? context.height * 0.017 : context.height * 0.025,
               child: CardAndBarTab(tabController: _tabController),
             ),
             const Positioned(
@@ -306,10 +295,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                     SliverFillRemaining(
                       child: Column(
                         children: [
-                          if (context.height > 667)
-                            const Gap(15)
-                          else
-                            const SizedBox(),
+                          if (context.height > 667) const Gap(15) else const SizedBox(),
                           Expanded(
                             flex: context.height > 667 ? 7 : 10,
                             child: TabBarView(
@@ -322,19 +308,15 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
                                   onCardSelected: (card) => widget.onChangeCard(
                                     (card: card, index: 0),
                                   ),
-                                  onCarouselScroll: (val) =>
-                                      cardCarouselIndex = val,
+                                  onCarouselScroll: (val) => cardCarouselIndex = val,
                                   tabController: _tabController,
-                                  state: widget.state,
                                 ),
                                 BarList(
                                   onCardSelected: (card) => widget.onChangeCard(
                                     (card: card, index: 1),
                                   ),
-                                  onCarouselScroll: (val) =>
-                                      barCarouselIndex = val,
+                                  onCarouselScroll: (val) => barCarouselIndex = val,
                                   tabController: _tabController,
-                                  state: widget.state,
                                 ),
                               ],
                             ),

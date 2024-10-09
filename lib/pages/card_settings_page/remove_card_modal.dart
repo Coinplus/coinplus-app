@@ -79,8 +79,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           LoadingButton(
             onPressed: () async {
               if (widget.card.blockchain == 'BTC') {
-                final isCardActivated =
-                    isCardWalletActivated(balanceStore: _balanceStore);
+                final isCardActivated = isCardWalletActivated();
                 await recordAmplitudeEventPartTwo(
                   NotSureClicked(
                     walletAddress: widget.card.address,
@@ -89,8 +88,7 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
                   ),
                 );
               } else if (widget.card.blockchain == 'ETH') {
-                final isCardActivated =
-                    isEthCardWalletActivated(balanceStore: _balanceStore);
+                final isCardActivated = isEthCardWalletActivated();
                 await recordAmplitudeEventPartTwo(
                   NotSureClicked(
                     walletAddress: widget.card.address,

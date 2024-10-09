@@ -12,7 +12,6 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
@@ -31,7 +30,6 @@ Future<void> cardRecommendedToWaitDialog({
   required ValueNotifier<bool> isModalOpened,
   required AbstractCard card,
   required bool isBarList,
-  required SendToState state,
 }) async {
   await showDialogBox(
     context,
@@ -116,7 +114,6 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress.toString(),
-                            state: state,
                           ),
                         );
                       } else {
@@ -151,7 +148,6 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress.toString(),
-                            state: state,
                           ),
                         );
                       } else {
@@ -187,7 +183,6 @@ Future<void> cardRecommendedToWaitDialog({
                   return Future(
                     () => showCardTapIssueBottomSheet(
                       isModalOpened: isModalOpened,
-                      state: state,
                     ),
                   );
                 },
@@ -256,7 +251,6 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress,
-                            state: state,
                           ),
                         );
                       } else {
@@ -282,7 +276,6 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress.toString(),
-                            state: state,
                           ),
                         );
                       } else {
@@ -321,7 +314,6 @@ Future<void> cardRecommendedToWaitDialog({
                     return Future(
                       () => showCardTapIssueBottomSheet(
                         isModalOpened: isModalOpened,
-                        state: state,
                       ),
                     );
                   });
@@ -330,7 +322,6 @@ Future<void> cardRecommendedToWaitDialog({
               await router.maybePop();
               await showAndroidCardNfcBottomSheet(
                 isModalOpened: isModalOpened,
-                state: state,
               );
             },
       secondaryActionText: 'Got it',

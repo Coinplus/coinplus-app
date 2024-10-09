@@ -21,8 +21,7 @@ class MarketDataWidget extends StatelessWidget {
       builder: (context) {
         final marketData = _marketPageStore.marketCap;
         if (marketData != null) {
-          final formattedNumber =
-              formatLargeNumber(marketData.marketCap.toInt());
+          final formattedNumber = formatLargeNumber(marketData.marketCap.toInt());
           final formattedVolume = formatLargeNumber(marketData.volume.toInt());
 
           return AnimatedSwitcher(
@@ -88,9 +87,7 @@ class MarketDataWidget extends StatelessWidget {
                                 '${marketData.marketCapChange.toStringAsFixed(2)}%',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: marketData.marketCapChange > 0
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: marketData.marketCapChange > 0 ? Colors.green : Colors.red,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -150,9 +147,7 @@ class MarketDataWidget extends StatelessWidget {
                                 '${marketData.volumeChange.toStringAsFixed(2)}%',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: marketData.volumeChange > 0
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: marketData.volumeChange > 0 ? Colors.green : Colors.red,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -212,9 +207,7 @@ class MarketDataWidget extends StatelessWidget {
                                 '${marketData.btcDominanceChange.toStringAsFixed(2)}%',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: marketData.btcDominanceChange > 0
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: marketData.btcDominanceChange > 0 ? Colors.green : Colors.red,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

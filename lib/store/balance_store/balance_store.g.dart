@@ -82,6 +82,24 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$_backupCardsAtom =
+      Atom(name: '_BalanceStore._backupCards', context: context);
+
+  ObservableList<CardModel> get backupCards {
+    _$_backupCardsAtom.reportRead();
+    return super._backupCards;
+  }
+
+  @override
+  ObservableList<CardModel> get _backupCards => backupCards;
+
+  @override
+  set _backupCards(ObservableList<CardModel> value) {
+    _$_backupCardsAtom.reportWrite(value, super._backupCards, () {
+      super._backupCards = value;
+    });
+  }
+
   late final _$_ethCardsAtom =
       Atom(name: '_BalanceStore._ethCards', context: context);
 
@@ -180,6 +198,24 @@ mixin _$BalanceStore on _BalanceStore, Store {
   set _selectedCard(CardModel? value) {
     _$_selectedCardAtom.reportWrite(value, super._selectedCard, () {
       super._selectedCard = value;
+    });
+  }
+
+  late final _$_selectedBackupCardAtom =
+      Atom(name: '_BalanceStore._selectedBackupCard', context: context);
+
+  CardModel? get selectedBackupCard {
+    _$_selectedBackupCardAtom.reportRead();
+    return super._selectedBackupCard;
+  }
+
+  @override
+  CardModel? get _selectedBackupCard => selectedBackupCard;
+
+  @override
+  set _selectedBackupCard(CardModel? value) {
+    _$_selectedBackupCardAtom.reportWrite(value, super._selectedBackupCard, () {
+      super._selectedBackupCard = value;
     });
   }
 
@@ -380,6 +416,63 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$mainWalletAddressAtom =
+      Atom(name: '_BalanceStore.mainWalletAddress', context: context);
+
+  @override
+  String get mainWalletAddress {
+    _$mainWalletAddressAtom.reportRead();
+    return super.mainWalletAddress;
+  }
+
+  @override
+  set mainWalletAddress(String value) {
+    _$mainWalletAddressAtom.reportWrite(value, super.mainWalletAddress, () {
+      super.mainWalletAddress = value;
+    });
+  }
+
+  late final _$backupSingleCardAtom =
+      Atom(name: '_BalanceStore.backupSingleCard', context: context);
+
+  @override
+  CardModel? get backupSingleCard {
+    _$backupSingleCardAtom.reportRead();
+    return super.backupSingleCard;
+  }
+
+  @override
+  set backupSingleCard(CardModel? value) {
+    _$backupSingleCardAtom.reportWrite(value, super.backupSingleCard, () {
+      super.backupSingleCard = value;
+    });
+  }
+
+  late final _$backupCardLoadingAtom =
+      Atom(name: '_BalanceStore.backupCardLoading', context: context);
+
+  @override
+  bool get backupCardLoading {
+    _$backupCardLoadingAtom.reportRead();
+    return super.backupCardLoading;
+  }
+
+  @override
+  set backupCardLoading(bool value) {
+    _$backupCardLoadingAtom.reportWrite(value, super.backupCardLoading, () {
+      super.backupCardLoading = value;
+    });
+  }
+
+  late final _$loadBackupCardAsyncAction =
+      AsyncAction('_BalanceStore.loadBackupCard', context: context);
+
+  @override
+  Future<void> loadBackupCard(String mainCardAddress) {
+    return _$loadBackupCardAsyncAction
+        .run(() => super.loadBackupCard(mainCardAddress));
+  }
+
   late final _$getCardsInfoAsyncAction =
       AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
@@ -412,6 +505,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
     return _$getEthCardsInfoAsyncAction.run(() => super.getEthCardsInfo());
   }
 
+  late final _$getBackupCardsInfoAsyncAction =
+      AsyncAction('_BalanceStore.getBackupCardsInfo', context: context);
+
+  @override
+  Future<void> getBackupCardsInfo() {
+    return _$getBackupCardsInfoAsyncAction
+        .run(() => super.getBackupCardsInfo());
+  }
+
   late final _$updateCardIndicatorIndexAsyncAction =
       AsyncAction('_BalanceStore.updateCardIndicatorIndex', context: context);
 
@@ -437,6 +539,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
   Future<void> getSelectedCard(String address) {
     return _$getSelectedCardAsyncAction
         .run(() => super.getSelectedCard(address));
+  }
+
+  late final _$getSelectedBackupCardAsyncAction =
+      AsyncAction('_BalanceStore.getSelectedBackupCard', context: context);
+
+  @override
+  Future<void> getSelectedBackupCard(String address) {
+    return _$getSelectedBackupCardAsyncAction
+        .run(() => super.getSelectedBackupCard(address));
   }
 
   late final _$getSelectedBarAsyncAction =
@@ -501,6 +612,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
   Future<void> setBarCurrentIndex(int index) {
     return _$setBarCurrentIndexAsyncAction
         .run(() => super.setBarCurrentIndex(index));
+  }
+
+  late final _$setMainWalletAddressAsyncAction =
+      AsyncAction('_BalanceStore.setMainWalletAddress', context: context);
+
+  @override
+  Future<void> setMainWalletAddress({required String walletAddress}) {
+    return _$setMainWalletAddressAsyncAction
+        .run(() => super.setMainWalletAddress(walletAddress: walletAddress));
   }
 
   late final _$setChainTypeAsyncAction =
@@ -689,6 +809,9 @@ inAppWebViewLoading: ${inAppWebViewLoading},
 cardIndicatorIndex: ${cardIndicatorIndex},
 isCardIndicatorTapped: ${isCardIndicatorTapped},
 chainType: ${chainType},
+mainWalletAddress: ${mainWalletAddress},
+backupSingleCard: ${backupSingleCard},
+backupCardLoading: ${backupCardLoading},
 btcPrice: ${btcPrice},
 ethPrice: ${ethPrice},
 allCardsBalances: ${allCardsBalances},
